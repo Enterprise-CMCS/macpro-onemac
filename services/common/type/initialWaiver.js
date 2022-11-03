@@ -1,5 +1,5 @@
 export const initialWaiver = {
-  packageGroup: "waiver",
+  whichTab: "waiver",
   componentType: "waivernew",
   typeLabel: "1915(b) Initial Waiver",
   idLabel: "Initial Waiver Number",

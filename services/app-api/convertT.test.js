@@ -1,11 +1,11 @@
 import dynamoDb from "./libs/dynamodb-lib";
 import { main } from "./convert";
 
-import newSubmission from "./utils/newSubmission";
+import newComponent from "./utils/newComponent";
 import { validateSubmission } from "./form/validateSubmission";
 
 jest.mock("./libs/dynamodb-lib");
-jest.mock("./utils/newSubmission");
+jest.mock("./utils/newComponent");
 //jest.mock("./form/validateSubmission");
 
 beforeAll(() => {
@@ -240,7 +240,7 @@ beforeAll(() => {
       ],
     };
   });
-  newSubmission.mockResolvedValue(() => {
+  newComponent.mockResolvedValue(() => {
     return true;
   });
   //   validateSubmission.mockReturnValue(() => {

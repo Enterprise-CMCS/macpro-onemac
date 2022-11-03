@@ -12,8 +12,6 @@ beforeAll(() => {
 const testData = {
   email: "testemail",
   submissionTimestamp: "timestamp",
-  submissionId: "submissionid",
-  submitterId: "submitterId",
   submitterName: "submitterName",
   submitterEmail: "submitterEmail",
   attachments: ["attachments"],

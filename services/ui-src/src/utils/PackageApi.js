@@ -23,7 +23,7 @@ const WITHDRAW_API_CALL = {
   [Workflow.ONEMAC_TYPE.MEDICAID_SPA_RAI]: "withdrawSPARAIResponse",
   [Workflow.ONEMAC_TYPE.WAIVER_INITIAL]: "withdrawInitialWaiver",
   [Workflow.ONEMAC_TYPE.WAIVER_RENEWAL]: "withdrawWaiverRenewal",
-  [Workflow.ONEMAC_TYPE.WAIVER_APP_K]: "withdrawAppendixKAmendment",
+  [Workflow.ONEMAC_TYPE.WAIVER_APP_K]: "withdrawWaiverAppendixK",
   [Workflow.ONEMAC_TYPE.WAIVER_EXTENSION]: "withdrawWaiverTemporaryExtension",
   [Workflow.ONEMAC_TYPE.WAIVER_AMENDMENT]: "withdrawWaiverAmendment",
   [Workflow.ONEMAC_TYPE.WAIVER_RAI]: "withdrawWaiverRAIResponse",

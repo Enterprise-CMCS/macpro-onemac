@@ -23,8 +23,6 @@ const getCommonSchema = (idRegex, possibleAttachmentTitles) => {
     attachments: Joi.array().items(attachmentSchema).min(1).required(),
     submitterName: Joi.string().required(),
     submitterEmail: Joi.string().required(),
-    submitterId: Joi.string().allow(""),
-    submissionId: Joi.string().allow(""),
   });
 
   return basicSchema;

@@ -170,39 +170,14 @@ const filterFromDateRange = <
   );
 };
 
-const filterFromDateRangeAndText = <
-  R extends { values: V },
-  V extends Record<string, any>
->(
-  rows: R[],
-  [columnId]: [string],
-  filterValue: [Date, Date, ...string[]]
-) => {
-  if (filterValue.length === 0) return rows;
-
-  const [dateA, dateB, ...textFilters] = filterValue;
-  const noDatesSpecified = !dateA && !dateB;
-
-  return rows.filter(({ values: { [columnId]: cellValue } }) => {
-    const matchesText = textFilters.includes(cellValue);
-    return noDatesSpecified
-      ? // if date range is blank, only filter by text - include all dates
-        matchesText || typeof cellValue !== "string"
-      : // if date range is specified, filter by that, but also include text matching checkboxes
-        betweenDates(dateA, dateB, cellValue) || matchesText;
-  });
-};
-
 export enum CustomFilterTypes {
   MultiCheckbox = "matchingTokens",
   DateRange = "betweenDates",
-  DateRangeAndMultiCheckbox = "betweenDatesOrMatchingTokens",
 }
 
 export const customFilterTypes = {
   [CustomFilterTypes.MultiCheckbox]: filterFromMultiCheckbox,
   [CustomFilterTypes.DateRange]: filterFromDateRange,
-  [CustomFilterTypes.DateRangeAndMultiCheckbox]: filterFromDateRangeAndText,
 };
 
 type FilterProps = {
@@ -332,78 +307,6 @@ function DateFilter({
   );
 }
 
-function DateAndTextFilter({
-  column,
-  column: { filterValue, setFilter },
-  ...props
-}: FilterProps) {
-  const onChangeTextFilter = useCallback(
-    (transformer) => {
-      setFilter(
-        typeof transformer === "function"
-          ? (oldFilterValue: [Date, Date, ...string[]]) => {
-              const [dateA, dateB, ...oldTextFilters] = oldFilterValue ?? [
-                undefined,
-                undefined,
-              ];
-              return [
-                dateA,
-                dateB,
-                ...transformer(
-                  // pass in undefined so TextFilter knows no filters are active
-                  (oldFilterValue?.length ?? 0) < 2 ? undefined : oldTextFilters
-                ),
-              ];
-            }
-          : transformer
-      );
-    },
-    [setFilter]
-  );
-
-  const onChangeDateFilter = useCallback(
-    (newDates) => {
-      if (newDates.length === 0) {
-        newDates = [undefined, undefined];
-      }
-
-      setFilter(
-        (
-          [, , ...rest]: [Date, Date, ...string[]] = [undefined!, undefined!]
-        ) => [...newDates, ...rest]
-      );
-    },
-    [setFilter]
-  );
-
-  const isEmptyFilter = !filterValue || filterValue?.length === 0;
-  const dateFiltersEmpty =
-    filterValue?.length >= 2 &&
-    filterValue[0] === undefined &&
-    filterValue[1] === undefined;
-
-  return (
-    <>
-      <TextFilter
-        column={{
-          ...column,
-          filterValue: isEmptyFilter ? undefined : filterValue,
-          setFilter: onChangeTextFilter,
-        }}
-        {...props}
-      />
-      <DateFilter
-        column={{
-          ...column,
-          filterValue: isEmptyFilter || dateFiltersEmpty ? [] : filterValue,
-          setFilter: onChangeDateFilter,
-        }}
-        {...props}
-      />
-    </>
-  );
-}
-
 const customComponents = {
   IndicatorSeparator: () => null,
 };
@@ -449,7 +352,6 @@ export const CustomFilterUi = {
   ),
   DateRange: DateFilter,
   DateRangeInPast: (props: FilterProps) => <DateFilter inThePast {...props} />,
-  DateRangeAndMultiCheckbox: DateAndTextFilter,
 };
 
 type FilterPaneProps<V extends {}> = {
@@ -476,8 +378,6 @@ function FilterPane<V extends {}>({
         if (!canFilter) return [];
         switch (filter) {
           case CustomFilterTypes.DateRange:
-          case CustomFilterTypes.DateRangeAndMultiCheckbox:
-            return { id, value: [] };
           default:
             return { id, value: undefined };
         }

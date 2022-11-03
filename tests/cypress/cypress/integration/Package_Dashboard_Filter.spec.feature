@@ -9,12 +9,12 @@ Feature: OY2-13092 Package Dashboard - Filter
         And verify Filter By Exists
         And verify Close Exists
         And verify Type Exists
-        And verify 90th day filter dropdown exists
+        #        And verify 90th day filter dropdown exists
         And verify status DropDown Filter exists
-        And verify date submitted filter dropdown exists
+        # And verify date submitted filter dropdown exists
         And verify reset Exists
 
-     Scenario: Waivers Tab - Screen enhancement
+    Scenario: Waivers Tab - Screen enhancement
         Given I am on Login Page
         When Clicking on Development Login
         When Login with state submitter user
@@ -25,10 +25,10 @@ Feature: OY2-13092 Package Dashboard - Filter
         And verify Filter By Exists
         And verify Close Exists
         And verify Type Exists
-        And verify 90th day filter dropdown exists
-        And verify expiration date filter dropdown exists
+        #        And verify 90th day filter dropdown exists
+        #        And verify expiration date filter dropdown exists
         And verify status DropDown Filter exists
-        And verify date submitted filter dropdown exists
+        # And verify date submitted filter dropdown exists
         And verify reset Exists
 
     Scenario: SPAs tab - demonstrate that all options match column header and all types of Status columns in the filter
@@ -45,7 +45,7 @@ Feature: OY2-13092 Package Dashboard - Filter
         And verify Withdrawn status checkbox exists
         And verify RAI Issued status checkbox exists
 
-        Scenario: Waivers tab - demonstrate that all type filters for waivers exist
+    Scenario: Waivers tab - demonstrate that all type filters for waivers exist
         Given I am on Login Page
         When Clicking on Development Login
         When Login with state submitter user
@@ -70,7 +70,7 @@ Feature: OY2-13092 Package Dashboard - Filter
         And click Medicaid SPA check box
         And verify Medicaid SPA Exists in list
 
-        Scenario: Waivers tab - deselect all and verify error message, then select one and verify it exists
+    Scenario: Waivers tab - deselect all and verify error message, then select one and verify it exists
         Given I am on Login Page
         When Clicking on Development Login
         When Login with state submitter user

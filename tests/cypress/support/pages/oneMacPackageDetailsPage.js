@@ -15,7 +15,7 @@ const packageActionsHeader =
   "//div[@class='detail-card']//section[@class='package-actions']//h3";
 const packageActionsList = "//ul[@class='action-list']";
 const respondToRAIAction = "//a[text()='Respond to RAI']";
-const withdrawPackageAction = "//a[text()='Withdraw']";
+const withdrawPackageAction = "//a[text()='Withdraw Package']";
 const requestTempExtensionPackageAction =
   "//a[text()='Request Temporary Extension']";
 const addAmendmentPackageAction = "//a[text()='Add Amendment']";
@@ -26,7 +26,7 @@ const typeHeader = "//h3[contains(text(),'Type')]";
 const parentWaiverNumberHeader =
   "//h3[contains(text(),'Parent Waiver Number')]";
 const stateHeader = "//h3[text()='State']";
-const initialSubmittedDateHeader = "//h3[text()='Initial Submission Date']";
+const initialSubmittedDateHeader = "//h3[text()='Date Submitted']";
 const raiResponsesHeader = "//section//h2[text()='Formal RAI Responses']";
 const packageOverviewNavBtn = "//button[text()='Package Overview']";
 const packageDetailsNavBtn =
@@ -42,13 +42,13 @@ const downloadAllBtn = "//button[contains(text(),'Download All')]";
 const amendmentTitleHeader = "//h3[text()='Amendment Title']";
 const amendmentNumberHeader = "//h3[text()='Amendment Number']";
 const successMessage = "#alert-bar";
-const withdrawConfirmationBtn = "//button[text()='Withdraw?']";
-const withdrawBtn = "//a[text()='Withdraw']";
+const withdrawConfirmationBtn = "//button[text()='Withdraw Package?']";
+const withdrawBtn = "//a[text()='Withdraw Package']";
 const amendmentHeaders = "//h2[text()='Waiver Amendment']";
 const tempExtensionsNavBtn =
   "//li[contains(@class, 'nav')]//a[text()='Temporary Extension']";
 const tempExtensionID = "//td[contains(@id,'componentId-')]";
-const withdrawBtnOnTempExt = "//li[text()='Withdraw']";
+const withdrawBtnOnTempExt = "//li[text()='Withdraw Package']";
 const packageAction = "//td[contains(@id,'packageActions-')]";
 
 export class oneMacPackageDetailsPage {

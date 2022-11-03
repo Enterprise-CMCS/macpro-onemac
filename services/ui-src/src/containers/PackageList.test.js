@@ -126,29 +126,29 @@ it("switches to waiver columns if wavier tab selected", async () => {
   screen.getByText("Waiver Number");
 });
 
-it("does not display waiver rais", async () => {
-  PackageApi.getMyPackages.mockResolvedValue(packageList);
+// it("does not display waiver rais", async () => {
+//   PackageApi.getMyPackages.mockResolvedValue(packageList);
 
-  render(<PackageList />, { wrapper: ContextWrapper });
+//   render(<PackageList />, { wrapper: ContextWrapper });
 
-  // wait for loading screen to disappear so package table displays
-  await waitForElementToBeRemoved(() => screen.getByTestId(LOADER_TEST_ID));
+//   // wait for loading screen to disappear so package table displays
+//   await waitForElementToBeRemoved(() => screen.getByTestId(LOADER_TEST_ID));
 
-  const waiversButtonEl = screen.getByRole("button", {
-    name: "switch to showing waiver packages",
-  });
+//   const waiversButtonEl = screen.getByRole("button", {
+//     name: "switch to showing waiver packages",
+//   });
 
-  userEvent.click(waiversButtonEl);
-  await waitForElementToBeRemoved(() => screen.getByTestId(LOADER_TEST_ID));
+//   userEvent.click(waiversButtonEl);
+//   await waitForElementToBeRemoved(() => screen.getByTestId(LOADER_TEST_ID));
 
-  screen.getByText("Waiver Number");
+//   screen.getByText("Waiver Number");
 
-  expect(
-    screen
-      .getByText("MD.83420.R00.00")
-      .parentElement.parentElement.querySelector("button")
-  ).toBeDisabled();
-});
+//   expect(
+//     screen
+//       .getByText("MD.83420.R00.00")
+//       .parentElement.parentElement.querySelector("button")
+//   ).toBeDisabled();
+// });
 
 // it.each`
 //   filterFieldType    | filterFieldValue                      | inName                 | inValue          | textShown

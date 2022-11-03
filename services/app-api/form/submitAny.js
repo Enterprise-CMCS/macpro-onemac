@@ -10,7 +10,7 @@ import {
 import sendEmail from "../libs/email-lib";
 import { getUser } from "../getUser";
 import { validateSubmission } from "./validateSubmission";
-import newSubmission from "../utils/newSubmission";
+import newComponent from "../utils/newComponent";
 import { CMSSubmissionNotice } from "../email/CMSSubmissionNotice";
 import { stateSubmissionReceipt } from "../email/stateSubmissionReceipt";
 import packageExists from "../utils/packageExists";
@@ -79,8 +79,10 @@ export const submitAny = async (event, config) => {
 
   try {
     // Add the details from this submission action
-    data.submissionTimestamp = Date.now();
+    const rightNowNormalized = Date.now();
+    data.submissionTimestamp = rightNowNormalized;
     data.currentStatus = Workflow.ONEMAC_STATUS.SUBMITTED;
+    data.currentStatusTimestamp = rightNowNormalized;
 
     // record the current end timestamp (can be start/stopped/changed)
     // 90 days is current CMS review period and it is based on CMS time!!
@@ -91,7 +93,7 @@ export const submitAny = async (event, config) => {
       .plus({ days: 90 })
       .toMillis();
 
-    await newSubmission(data, config);
+    await newComponent(data, config);
     console.log("Successfully submitted the following:", data);
   } catch (error) {
     console.log("Error is: ", error.message);
