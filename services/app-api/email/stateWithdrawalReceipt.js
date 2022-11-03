@@ -2,7 +2,7 @@ import { formatPackageDetails } from "./formatPackageDetails.js";
 
 export const getAllActiveStateUserEmailAddresses = (territory) => {
   return [
-    `Kristin ${territory} Grue <k.grue.stateadmin@gmail.com>`,
+    `Kristin ${territory} Grue <k.grue.stateadmn@gmail.com>`,
     `Kristin  ${territory} Grue2 <k.grue.stateuser@gmail.com>`,
   ];
 };
@@ -14,7 +14,9 @@ export const getAllActiveStateUserEmailAddresses = (territory) => {
  * @returns {Object} email parameters in generic format.
  */
 export const stateWithdrawalReceipt = (data, config) => ({
-  ToAddresses: getAllActiveStateUserEmailAddresses(data.territory),
+  ToAddresses: getAllActiveStateUserEmailAddresses(
+    data.componentId.substring(0, 2)
+  ),
   Subject: `${config.typeLabel} Package ${data.componentId} Withdraw Request`,
   HTML: `
       <p>This is confirmation that you have requested to withdraw the package below. The package will no longer be considered for CMS review:</p>
