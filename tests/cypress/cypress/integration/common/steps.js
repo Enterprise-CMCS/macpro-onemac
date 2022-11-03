@@ -153,6 +153,26 @@ And("Click on Submit Button", () => {
 And("Click the Submit Button without waiting", () => {
   OneMacDefaultForms.clicksubmitBTNWithoutWait();
 });
+And("verify the modal pop-up is visible", () => {
+  OneMacRespondToRAIPage.verifyModalContainerExists();
+});
+And(
+  "verify the title of the modal pop-up is Do you want to submit your official formal RAI response",
+  () => {
+    OneMacRespondToRAIPage.verifyModalTitleIs(
+      "Do you want to submit your official formal RAI response"
+    );
+  }
+);
+And(
+  "verify the detailed text in the modal contains you are submitting your official formal RAI Response to start the 90 day clock review process",
+  () => {
+    OneMacRespondToRAIPage.verifyModalTextIs(
+      "you are submitting your official formal RAI Response to start the 90 day clock review process"
+    );
+  }
+);
+
 And("click yes, submit RAI response button", () => {
   OneMacRespondToRAIPage.clickYesSubmitBTN();
 });
