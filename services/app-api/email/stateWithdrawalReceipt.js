@@ -26,7 +26,7 @@ export const getAllActiveStateUserEmailAddresses = async (territory) => {
         const results = await dynamoDb.query(qParams);
         console.log("Found these results in One Table: ", results);
         stateSubmittingUsers.push(
-          results.Items.map((fullname, email) => `${fullname} <${email}>`)
+          results.Items.map(({ fullname, email }) => `${fullname} <${email}>`)
         );
       } catch (e) {
         console.log("query error: ", e.message);
