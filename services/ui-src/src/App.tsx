@@ -36,7 +36,7 @@ export function App() {
     heading: string;
     acceptText: string;
     cancelText: string;
-    message: string;
+    message: JSX.Element | string;
     onAccept: any;
     onDeny: any;
   } | null>(null);
@@ -50,7 +50,7 @@ export function App() {
       heading: string,
       acceptText: string,
       cancelText: string,
-      message: string,
+      message: JSX.Element | string,
       onAccept: any,
       onDeny: any
     ) =>

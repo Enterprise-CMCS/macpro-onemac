@@ -1791,27 +1791,7 @@ And("verify the Waivers tab is clickable", () => {
 And("refresh the page", () => {
   cy.reload();
 });
-And("verify the Waiver Family # column does not exist", () => {
-  OneMacPackagePage.verifyWaiverFamilyNumColumnDoesNotExists();
-});
-And("verify the Waiver Family checkbox does not exist", () => {
-  OneMacPackagePage.verifyWaiverFamilyCheckboxDoesNotExists();
-});
-And("verify the Waivers Family # column exists", () => {
-  OneMacPackagePage.verifyWaiverFamilyNumColumnExists();
-});
-And("verify Waiver Family # column is sortable", () => {
-  OneMacPackagePage.verifyWaiverFamilyNumColumnIsSortable();
-});
-And("verify the Waiver family format in row one is SS.#### or SS.#####", () => {
-  OneMacPackagePage.verifyWaiverFamilyRowOneFormat();
-});
-And("verify the Waivers Family checkbox exists", () => {
-  OneMacPackagePage.verifyWaiverFamilyCheckboxExists();
-});
-And("click the Waivers Family checkbox", () => {
-  OneMacPackagePage.clickOnWaiverFamilyCheckbox();
-});
+
 And("verify that Clock Stopped checkbox exists", () => {
   OneMacPackagePage.verifyNinetiethDayClockStoppedCheckboxExists();
 });
@@ -2243,6 +2223,12 @@ And(
   }
 );
 And(
+  "verify the Appendix K RAI Responses caret at the top of the list exists and is enabled",
+  () => {
+    OneMacPackageDetailsPage.verifyAppKTopRaiRespCaretExistsAndEnabled();
+  }
+);
+And(
   "verify the title of the Medicaid RAI Responses caret at the top of the list is in Submitted on format",
   () => {
     OneMacPackageDetailsPage.verifyMedicaidTopRaiRespCaretTitle();
@@ -2255,6 +2241,12 @@ And(
   }
 );
 And(
+  "verify the title of the Appendix K RAI Responses caret at the top of the list is in Submitted on format",
+  () => {
+    OneMacPackageDetailsPage.verifyAppKTopRaiRespCaretTitle();
+  }
+);
+And(
   "verify the Medicaid RAI response card at the top of the list exists",
   () => {
     OneMacPackageDetailsPage.verifyMedicaidTopRaiRespCardExists();
@@ -2263,6 +2255,12 @@ And(
 And("verify the CHIP RAI response card at the top of the list exists", () => {
   OneMacPackageDetailsPage.verifyCHIPTopRaiRespCardExists();
 });
+And(
+  "verify the Appendix K RAI response card at the top of the list exists",
+  () => {
+    OneMacPackageDetailsPage.verifyAppKTopRaiRespCardExists();
+  }
+);
 And(
   "verify the download button for the Medicaid RAI response at the top of the list exists",
   () => {
@@ -2273,6 +2271,12 @@ And(
   "verify the download button for the CHIP RAI response at the top of the list exists",
   () => {
     OneMacPackageDetailsPage.verifyCHIPTopRaiRespDownloadBtnExistsAndEnabled();
+  }
+);
+And(
+  "verify the download button for the Appendix K RAI response at the top of the list exists",
+  () => {
+    OneMacPackageDetailsPage.verifyAppKTopRaiRespDownloadBtnxistsAndEnabled();
   }
 );
 And("verify the first RAI response does not have Additional Info", () => {

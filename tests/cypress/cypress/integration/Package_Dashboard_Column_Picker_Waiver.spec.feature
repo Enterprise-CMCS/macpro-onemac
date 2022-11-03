@@ -8,7 +8,6 @@ Feature: OY2-13095 Package Dashboard - Column Picker
         And click on the Waivers tab
         And verify show hide columns button exists
         And verify IDNumber column exists
-        And verify the Waiver Family # column does not exist
         And verify type column exists
         And verify state column exists
 #        And verify 90th day column exists
@@ -19,7 +18,6 @@ Feature: OY2-13095 Package Dashboard - Column Picker
 #        And verify expiration date column does not exist
         And verify actions column exists
         And click show hide columns button
-        And verify the Waivers Family checkbox exists
 #        And verify 90th day exists
         And verify date submitted exists
 #        And verify expiration date exists 
@@ -42,7 +40,6 @@ Feature: OY2-13095 Package Dashboard - Column Picker
         And click status checkbox
         And click submitted by checkbox
         And click type checkbox
-        And click the Waivers Family checkbox
         And click show hide columns button
         And verify Waiver Number column exists
         And verify actions column exists
@@ -53,7 +50,3 @@ Feature: OY2-13095 Package Dashboard - Column Picker
         And verify status column does not exist
         And verify date submitted column does not exist
         And verify submitted by column does not exist
-        And verify the Waivers Family # column exists
-        And verify the Waivers Family # column exists
-        And verify Waiver Family # column is sortable
-        And verify the Waiver family format in row one is SS.#### or SS.#####
