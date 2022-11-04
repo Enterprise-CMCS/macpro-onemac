@@ -6,10 +6,11 @@ Feature: RAI Response for Medicaid SPA package view
         And click on Packages
         And Click on Filter Button
         And click on Type
-        And click CHIP SPA check box
+        And uncheck all of the type checkboxes
+        And click Medicaid SPA check box
         And click on Type
         And click on Status
-        And click all of the status checkboxes
+        And uncheck all of the status checkboxes
         And click RAI Issued checkbox
         And Click on Filter Button
 

@@ -38,7 +38,8 @@ const closeButton = "//header/button[1]";
 const typeDropDownFilter = "//button[text()='Type']";
 const typeDropDown = "#componentType-button";
 const statusDropDown = "#packageStatus-button";
-const statusFilterCheckboxes = "#packageStatus label";
+const statusFilterCheckboxes = "#packageStatus input";
+const typeFilterCheckboxes = "#componentType input";
 //Element is Xpath use cy.xpath instead of cy.get
 const ninetiethDayFilterDropdown = "//button[text()='90th Day']";
 //Element is Xpath use cy.xpath instead of cy.get
@@ -155,6 +156,7 @@ const waiversTab = "#show-waivers-button";
 const spasTab = "#show-spas-button";
 //Element is Xpath use cy.xpath instead of cy.get
 const raiIssuedCheckbox = "//span[contains(text(),'RAI Issued')]";
+const packageApprovedCheckbox = "//span[contains(text(),'Package Approved')]";
 //Element is Xpath use cy.xpath instead of cy.get
 const approvedCheckbox =
   "//label[contains(@for,'checkbox_packageStatus-Approved')]";
@@ -675,6 +677,9 @@ export class oneMacPackagePage {
   clickRaiIssuedCheckbox() {
     cy.xpath(raiIssuedCheckbox).click();
   }
+  clickPackageApprovedCheckbox() {
+    cy.xpath(packageApprovedCheckbox).click();
+  }
   verifyApprovedCheckboxExists() {
     cy.xpath(approvedCheckbox).should("be.visible");
   }
@@ -699,9 +704,24 @@ export class oneMacPackagePage {
   clickUnsubmittedCheckbox() {
     cy.xpath(unsubmittedCheckbox).click();
   }
-  clickAllStatusFilterCheckboxes() {
+  checkAllStatusFilterCheckboxes() {
     cy.get(statusFilterCheckboxes).each(($el) => {
-      cy.wrap($el).click();
+      cy.wrap($el).check({ force: true });
+    });
+  }
+  uncheckAllStatusFilterCheckboxes() {
+    cy.get(statusFilterCheckboxes).each(($el) => {
+      cy.wrap($el).uncheck({ force: true });
+    });
+  }
+  checkAllTypeFilterCheckboxes() {
+    cy.get(typeFilterCheckboxes).each(($el) => {
+      cy.wrap($el).check({ force: true });
+    });
+  }
+  uncheckAllTypeFilterCheckboxes() {
+    cy.get(typeFilterCheckboxes).each(($el) => {
+      cy.wrap($el).uncheck({ force: true });
     });
   }
   verify90thDayRowOneIsPending() {

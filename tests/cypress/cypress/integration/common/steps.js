@@ -165,6 +165,14 @@ And(
   }
 );
 And(
+  "verify the detailed text in the modal contains you are submitting your official formal RAI Response to restart the SPA review process and a new 90th day will be identified",
+  () => {
+    OneMacRespondToRAIPage.verifyModalTextIs(
+      "you are submitting your official formal RAI Response to restart the SPA review process and a new 90th day will be identified."
+    );
+  }
+);
+And(
   "verify the detailed text in the modal contains you are submitting your official formal RAI Response to start the 90 day clock review process",
   () => {
     OneMacRespondToRAIPage.verifyModalTextIs(
@@ -1795,11 +1803,23 @@ And("refresh the page", () => {
 And("verify that Clock Stopped checkbox exists", () => {
   OneMacPackagePage.verifyNinetiethDayClockStoppedCheckboxExists();
 });
-And("click all of the status checkboxes", () => {
-  OneMacPackagePage.clickAllStatusFilterCheckboxes();
+And("check all of the status checkboxes", () => {
+  OneMacPackagePage.checkAllStatusFilterCheckboxes();
+});
+And("uncheck all of the status checkboxes", () => {
+  OneMacPackagePage.uncheckAllStatusFilterCheckboxes();
+});
+And("check all of the type checkboxes", () => {
+  OneMacPackagePage.checkAllTypeFilterCheckboxes();
+});
+And("uncheck all of the type checkboxes", () => {
+  OneMacPackagePage.uncheckAllTypeFilterCheckboxes();
 });
 And("click RAI Issued checkbox", () => {
   OneMacPackagePage.clickRaiIssuedCheckbox();
+});
+And("click Package Approved checkbox", () => {
+  OneMacPackagePage.clickPackageApprovedCheckbox();
 });
 And(
   "verify that the value of the column for the 90th day is Clock Stopped",

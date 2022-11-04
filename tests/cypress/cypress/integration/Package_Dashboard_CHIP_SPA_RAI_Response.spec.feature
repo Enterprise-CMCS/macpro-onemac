@@ -9,7 +9,7 @@ Feature: RAI Response for CHIP SPA package view
         And click Medicaid SPA check box
         And click on Type
         And click on Status
-        And click all of the status checkboxes
+        And uncheck all of the status checkboxes
         And click RAI Issued checkbox
         And Click on Filter Button
 
@@ -24,7 +24,7 @@ Feature: RAI Response for CHIP SPA package view
         And Click the Submit Button without waiting
         And verify the modal pop-up is visible
         And verify the title of the modal pop-up is Do you want to submit your official formal RAI response
-        And verify the detailed text in the modal contains you are submitting your official formal RAI Response to start the 90 day clock review process
+        And verify the detailed text in the modal contains you are submitting your official formal RAI Response to restart the SPA review process and a new 90th day will be identified
         And click yes, submit RAI response button
         And click on Packages
         And search for the ID copied from the link in the first row
@@ -49,7 +49,7 @@ Feature: RAI Response for CHIP SPA package view
         And Click the Submit Button without waiting
         And verify the modal pop-up is visible
         And verify the title of the modal pop-up is Do you want to submit your official formal RAI response
-        And verify the detailed text in the modal contains you are submitting your official formal RAI Response to start the 90 day clock review process
+        And verify the detailed text in the modal contains you are submitting your official formal RAI Response to restart the SPA review process and a new 90th day will be identified
         And click yes, submit RAI response button
         And click on Packages
         And search for the ID copied from the link in the first row
