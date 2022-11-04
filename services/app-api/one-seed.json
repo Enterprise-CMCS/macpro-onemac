@@ -17,6 +17,8 @@
     "fullName": "Valencia McMurray",
     "GSI1pk": "USER",
     "GSI1sk": "Boss",
+    "GSI2pk": "cmsroleapprover#N/A",
+    "GSI2sk": "denied",
     "Latest": 2,
     "role": "cmsroleapprover",
     "status": "denied",
@@ -86,6 +88,8 @@
     "fullName": "Ronald Revoked",
     "doneByEmail": "systemadmintest@cms.hhs.local",
     "GSI1pk": "USER",
+    "GSI2pk": "defaultcmsuser#N/A",
+    "GSI2sk": "active",
     "date": 1617149287000,
     "role": "defaultcmsuser",
     "territory": "N/A",
@@ -131,6 +135,8 @@
     "fullName": "Ronald Revoked",
     "doneByEmail": "systemadmintest@cms.hhs.local",
     "GSI1pk": "USER",
+    "GSI2pk": "cmsreviewer#N/A",
+    "GSI2sk": "revoked",
     "date": 1617149287000,
     "role": "cmsreviewer",
     "territory": "N/A",
@@ -176,6 +182,8 @@
     "fullName": "Daniel Denied",
     "doneByEmail": "systemadmintest@cms.hhs.local",
     "GSI1pk": "USER",
+    "GSI2pk": "statesystemadmin#MI",
+    "GSI2sk": "denied",
     "date": 1617149287000,
     "role": "statesystemadmin",
     "territory": "MI",
@@ -191,6 +199,8 @@
     "fullName": "Daniel Denied",
     "doneByEmail": "systemadmintest@cms.hhs.local",
     "GSI1pk": "USER",
+    "GSI2pk": "statesystemadmin#VA",
+    "GSI2sk": "denied",
     "date": 1617149287000,
     "role": "statesystemadmin",
     "territory": "VA",
@@ -246,6 +256,8 @@
     "fullName": "David Denied",
     "doneByEmail": "systemadmintest@cms.hhs.local",
     "GSI1pk": "USER",
+    "GSI2pk": "helpdesk#N/A",
+    "GSI2sk": "denied",
     "date": 1617149287000,
     "role": "helpdesk",
     "territory": "N/A",
@@ -281,6 +293,8 @@
     "fullName": "Abby Active",
     "doneByEmail": "systemadmintest@cms.hhs.local",
     "GSI1pk": "USER",
+    "GSI2pk": "statesystemadmin#MI",
+    "GSI2sk": "active",
     "date": 1617149287000,
     "role": "statesystemadmin",
     "territory": "MI",
@@ -316,6 +330,8 @@
     "fullName": "CMSReviewer Nightwatch",
     "doneByEmail": "systemadmin@nightwatch.test",
     "GSI1pk": "USER",
+    "GSI2pk": "defaultcmsuser#N/A",
+    "GSI2sk": "revoked",
     "date": 1617149287000,
     "role": "defaultcmsuser",
     "territory": "N/A",
@@ -351,6 +367,8 @@
     "fullName": "CMSReviewer Nightwatch",
     "doneByEmail": "systemadmin@nightwatch.test",
     "GSI1pk": "USER",
+    "GSI2pk": "cmsreviewer#N/A",
+    "GSI2sk": "active",
     "date": 1617149287000,
     "role": "cmsreviewer",
     "territory": "N/A",
@@ -386,6 +404,8 @@
     "fullName": "Pamela Pending",
     "doneByEmail": "systemadmintest@cms.hhs.local",
     "GSI1pk": "USER",
+    "GSI2pk": "defaultcmsuser#N/A",
+    "GSI2sk": "active",
     "date": 1617149287000,
     "role": "defaultcmsuser",
     "territory": "N/A",
@@ -411,6 +431,8 @@
     "fullName": "Pamela Pending",
     "doneByEmail": "systemadmintest@cms.hhs.local",
     "GSI1pk": "USER",
+    "GSI2pk": "cmsreviewer#N/A",
+    "GSI2sk": "pending",
     "date": 1617149287000,
     "role": "cmsreviewer",
     "territory": "N/A",
@@ -436,6 +458,8 @@
     "fullName": "StateSubmitter Nightwatch",
     "doneByEmail": "statesystemadmin@nightwatch.test",
     "GSI1pk": "USER",
+    "GSI2pk": "statesubmitter#MD",
+    "GSI2sk": "active",
     "date": 1617149287000,
     "role": "statesubmitter",
     "territory": "MD",
@@ -471,6 +495,8 @@
     "fullName": "Helping Hands",
     "doneByEmail": "systemadmintest@cms.hhs.local",
     "GSI1pk": "USER",
+    "GSI2pk": "helpdesk#N/A",
+    "GSI2sk": "active",
     "date": 1617149287000,
     "role": "helpdesk",
     "territory": "N/A",
@@ -506,6 +532,8 @@
     "fullName": "CMSroleapprover Nightwatch",
     "doneByEmail": "systemadmin@nightwatch.test",
     "GSI1pk": "USER",
+    "GSI2pk": "defaultcmsuser#N/A",
+    "GSI2sk": "revoked",
     "date": 1617149287000,
     "role": "defaultcmsuser",
     "territory": "N/A",
@@ -541,6 +569,8 @@
     "fullName": "CMSroleapprover Nightwatch",
     "doneByEmail": "systemadmin@nightwatch.test",
     "GSI1pk": "USER",
+    "GSI2pk": "cmsroleapprover#N/A",
+    "GSI2sk": "active",
     "date": 1617149287000,
     "role": "cmsroleapprover",
     "territory": "N/A",
@@ -576,6 +606,8 @@
     "fullName": "Arnold Active",
     "doneByEmail": "systemadmintest@cms.hhs.local",
     "GSI1pk": "USER",
+    "GSI2pk": "defaultcmsuser#N/A",
+    "GSI2sk": "revoked",
     "date": 1617149287000,
     "role": "defaultcmsuser",
     "territory": "N/A",
@@ -611,6 +643,8 @@
     "fullName": "Arnold Active",
     "doneByEmail": "systemadmintest@cms.hhs.local",
     "GSI1pk": "USER",
+    "GSI2pk": "cmsroleapprover#N/A",
+    "GSI2sk": "active",
     "date": 1617149287000,
     "role": "cmsroleapprover",
     "territory": "N/A",
@@ -646,6 +680,8 @@
     "fullName": "Statesystemadmin Nightwatch",
     "doneByEmail": "cmsroleapprover@nightwatch.test",
     "GSI1pk": "USER",
+    "GSI2pk": "statesystemadmin#MD",
+    "GSI2sk": "active",
     "date": 1617149287000,
     "role": "statesystemadmin",
     "territory": "MD",
@@ -681,6 +717,8 @@
     "fullName": "Ricky Revoked",
     "doneByEmail": "systemadmintest@cms.hhs.local",
     "GSI1pk": "USER",
+    "GSI2pk": "statesystemadmin#MI",
+    "GSI2sk": "revoked",
     "date": 1617149287000,
     "role": "statesystemadmin",
     "territory": "MI",
@@ -696,6 +734,8 @@
     "fullName": "Ricky Revoked",
     "doneByEmail": "systemadmintest@cms.hhs.local",
     "GSI1pk": "USER",
+    "GSI2pk": "statesystemadmin#VA",
+    "GSI2sk": "revoked",
     "date": 1617149287000,
     "role": "statesystemadmin",
     "territory": "VA",
@@ -771,6 +811,8 @@
     "fullName": "Rhonda Revoked",
     "doneByEmail": "systemadmintest@cms.hhs.local",
     "GSI1pk": "USER",
+    "GSI2pk": "defaultcmsuser#N/A",
+    "GSI2sk": "active",
     "date": 1617149287000,
     "role": "defaultcmsuser",
     "territory": "N/A",
@@ -816,6 +858,8 @@
     "fullName": "Rhonda Revoked",
     "doneByEmail": "systemadmintest@cms.hhs.local",
     "GSI1pk": "USER",
+    "GSI2pk": "cmsroleapprover#N/A",
+    "GSI2sk": "revoked",
     "date": 1617149287000,
     "role": "cmsroleapprover",
     "territory": "N/A",
@@ -861,6 +905,8 @@
     "fullName": "Darrell Denied",
     "doneByEmail": "systemadmintest@cms.hhs.local",
     "GSI1pk": "USER",
+    "GSI2pk": "statesubmitter#MI",
+    "GSI2sk": "denied",
     "date": 1617149287000,
     "role": "statesubmitter",
     "territory": "MI",
@@ -876,6 +922,8 @@
     "fullName": "Darrell Denied",
     "doneByEmail": "systemadmintest@cms.hhs.local",
     "GSI1pk": "USER",
+    "GSI2pk": "statesubmitter#VA",
+    "GSI2sk": "denied",
     "date": 1617149287000,
     "role": "statesubmitter",
     "territory": "VA",
@@ -931,6 +979,8 @@
     "fullName": "Helpdesk Nightwatch",
     "doneByEmail": "systemadmin@nightwatch.test",
     "GSI1pk": "USER",
+    "GSI2pk": "helpdesk#N/A",
+    "GSI2sk": "active",
     "date": 1617149287000,
     "role": "helpdesk",
     "territory": "N/A",
@@ -966,6 +1016,8 @@
     "fullName": "Randy Revoked",
     "doneByEmail": "systemadmintest@cms.hhs.local",
     "GSI1pk": "USER",
+    "GSI2pk": "statesubmitter#MI",
+    "GSI2sk": "revoked",
     "date": 1617149287000,
     "role": "statesubmitter",
     "territory": "MI",
@@ -981,6 +1033,8 @@
     "fullName": "Randy Revoked",
     "doneByEmail": "systemadmintest@cms.hhs.local",
     "GSI1pk": "USER",
+    "GSI2pk": "statesubmitter#VA",
+    "GSI2sk": "revoked",
     "date": 1617149287000,
     "role": "statesubmitter",
     "territory": "VA",
@@ -1046,6 +1100,8 @@
     "fullName": "Donny Denied",
     "doneByEmail": "systemadmintest@cms.hhs.local",
     "GSI1pk": "USER",
+    "GSI2pk": "defaultcmsuser#N/A",
+    "GSI2sk": "active",
     "date": 1617149287000,
     "role": "defaultcmsuser",
     "territory": "N/A",
@@ -1071,6 +1127,8 @@
     "fullName": "Donny Denied",
     "doneByEmail": "systemadmintest@cms.hhs.local",
     "GSI1pk": "USER",
+    "GSI2pk": "cmsreviewer#N/A",
+    "GSI2sk": "denied",
     "date": 1617149287000,
     "role": "cmsreviewer",
     "territory": "N/A",
@@ -1106,6 +1164,8 @@
     "fullName": "Arthur Active",
     "doneByEmail": "systemadmintest@cms.hhs.local",
     "GSI1pk": "USER",
+    "GSI2pk": "helpdesk#N/A",
+    "GSI2sk": "active",
     "date": 1617149287000,
     "role": "helpdesk",
     "territory": "N/A",
@@ -1141,6 +1201,8 @@
     "fullName": "Peter Pending",
     "doneByEmail": "systemadmintest@cms.hhs.local",
     "GSI1pk": "USER",
+    "GSI2pk": "defaultcmsuser#N/A",
+    "GSI2sk": "active",
     "date": 1617149287000,
     "role": "defaultcmsuser",
     "territory": "N/A",
@@ -1166,6 +1228,8 @@
     "fullName": "Peter Pending",
     "doneByEmail": "systemadmintest@cms.hhs.local",
     "GSI1pk": "USER",
+    "GSI2pk": "cmsroleapprover#N/A",
+    "GSI2sk": "pending",
     "date": 1617149287000,
     "role": "cmsroleapprover",
     "territory": "N/A",
@@ -1191,6 +1255,8 @@
     "fullName": "Anthony Active",
     "doneByEmail": "systemadmintest@cms.hhs.local",
     "GSI1pk": "USER",
+    "GSI2pk": "statesystemadmin#MI",
+    "GSI2sk": "active",
     "date": 1617149287000,
     "role": "statesystemadmin",
     "territory": "MI",
@@ -1226,6 +1292,8 @@
     "fullName": "Perry Pending",
     "doneByEmail": "systemadmintest@cms.hhs.local",
     "GSI1pk": "USER",
+    "GSI2pk": "helpdesk#N/A",
+    "GSI2sk": "pending",
     "date": 1617149287000,
     "role": "helpdesk",
     "territory": "N/A",
@@ -1251,6 +1319,8 @@
     "fullName": "Amanda Active",
     "doneByEmail": "systemadmintest@cms.hhs.local",
     "GSI1pk": "USER",
+    "GSI2pk": "defaultcmsuser#N/A",
+    "GSI2sk": "revoked",
     "date": 1617149287000,
     "role": "defaultcmsuser",
     "territory": "N/A",
@@ -1286,6 +1356,8 @@
     "fullName": "Amanda Active",
     "doneByEmail": "systemadmintest@cms.hhs.local",
     "GSI1pk": "USER",
+    "GSI2pk": "cmsreviewer#N/A",
+    "GSI2sk": "active",
     "date": 1617149287000,
     "role": "cmsreviewer",
     "territory": "N/A",
@@ -1321,6 +1393,8 @@
     "fullName": "Arlene Active",
     "doneByEmail": "systemadmintest@cms.hhs.local",
     "GSI1pk": "USER",
+    "GSI2pk": "statesystemadmin#VA",
+    "GSI2sk": "active",
     "date": 1617149287000,
     "role": "statesystemadmin",
     "territory": "VA",
@@ -1356,6 +1430,8 @@
     "fullName": "Teresa Test",
     "doneByEmail": "systemadmintest@cms.hhs.local",
     "GSI1pk": "USER",
+    "GSI2pk": "systemadmin#N/A",
+    "GSI2sk": "active",
     "date": 1584194366000,
     "role": "systemadmin",
     "territory": "N/A",
@@ -1381,6 +1457,8 @@
     "fullName": "Patricia Pending",
     "doneByEmail": "statesystemadminpending@cms.hhs.local",
     "GSI1pk": "USER",
+    "GSI2pk": "statesystemadmin#DE",
+    "GSI2sk": "pending",
     "date": 1617149287000,
     "role": "statesystemadmin",
     "territory": "DE",
@@ -1406,6 +1484,8 @@
     "fullName": "Systemadmin Nightwatch",
     "doneByEmail": "systemadmin@nightwatch.test",
     "GSI1pk": "USER",
+    "GSI2pk": "systemadmin#N/A",
+    "GSI2sk": "active",
     "date": 1584194366000,
     "role": "systemadmin",
     "territory": "N/A",
@@ -1431,6 +1511,8 @@
     "fullName": "Pauline Pending",
     "doneByEmail": "systemadmintest@cms.hhs.local",
     "GSI1pk": "USER",
+    "GSI2pk": "statesubmitter#MI",
+    "GSI2sk": "pending",
     "date": 1617149287000,
     "role": "statesubmitter",
     "territory": "MI",
@@ -1446,6 +1528,8 @@
     "fullName": "Pauline Pending",
     "doneByEmail": "systemadmintest@cms.hhs.local",
     "GSI1pk": "USER",
+    "GSI2pk": "statesubmitter#VA",
+    "GSI2sk": "pending",
     "date": 1617149287000,
     "role": "statesubmitter",
     "territory": "VA",
@@ -1481,6 +1565,8 @@
     "fullName": "Angie Active",
     "doneByEmail": "systemadmintest@cms.hhs.local",
     "GSI1pk": "USER",
+    "GSI2pk": "statesubmitter#MI",
+    "GSI2sk": "active",
     "date": 1617149287000,
     "role": "statesubmitter",
     "territory": "MI",
@@ -1496,6 +1582,8 @@
     "fullName": "Angie Active",
     "doneByEmail": "systemadmintest@cms.hhs.local",
     "GSI1pk": "USER",
+    "GSI2pk": "statesubmitter#VA",
+    "GSI2sk": "active",
     "date": 1617149287000,
     "role": "statesubmitter",
     "territory": "VA",
@@ -1551,6 +1639,8 @@
     "fullName": "Raymond Revoked",
     "doneByEmail": "systemadmintest@cms.hhs.local",
     "GSI1pk": "USER",
+    "GSI2pk": "helpdesk#N/A",
+    "GSI2sk": "revoked",
     "date": 1617149287000,
     "role": "helpdesk",
     "territory": "N/A",
@@ -1596,6 +1686,8 @@
     "fullName": "Debbie Denied",
     "doneByEmail": "systemadmintest@cms.hhs.local",
     "GSI1pk": "USER",
+    "GSI2pk": "defaultcmsuser#N/A",
+    "GSI2sk": "active",
     "date": 1617149287000,
     "role": "defaultcmsuser",
     "territory": "N/A",
@@ -1621,6 +1713,8 @@
     "fullName": "Debbie Denied",
     "doneByEmail": "systemadmintest@cms.hhs.local",
     "GSI1pk": "USER",
+    "GSI2pk": "cmsroleapprover#N/A",
+    "GSI2sk": "denied",
     "date": 1617149287000,
     "role": "cmsroleapprover",
     "territory": "N/A",
@@ -1867,7 +1961,6 @@
     "pk": "MD-13-1122",
     "sk": "v0#medicaidspa",
     "devComment": "Package added via seed data for application testing",
-    "submitterId": "us-east-1:afa582ca-4e4c-4d3b-be9b-d2dbc24c3d1a",
     "componentType": "medicaidspa",
     "currentStatus": "In Review",
     "attachments": [
@@ -1887,14 +1980,6 @@
       }
     ],
     "GSI1sk": "MD-13-1122",
-    "sparai": [
-      {
-        "componentType": "sparai",
-        "componentTimestamp": 1643218567141,
-        "submitterName": "StateSubmitter Nightwatch",
-        "componentId": "MD-13-1122"
-      }
-    ],
     "additionalInformation": "This is just a test",
     "submissionTimestamp": 1639696185888,
     "GSI1pk": "OneMAC#spa",
@@ -1902,14 +1987,12 @@
     "clockEndTimestamp": 1647286706000,
     "submitterEmail": "statesubmitter@nightwatch.test",
     "componentId": "MD-13-1122",
-    "submitterName": "StateSubmitter Nightwatch",
-    "submissionId": "4240e440-5ec5-11ec-b2ea-eb35c89f340d"
+    "submitterName": "StateSubmitter Nightwatch"
   },
   {
     "pk": "MD-13-1122",
     "sk": "v1#medicaidspa",
     "devComment": "Package added via seed data for application testing",
-    "submitterId": "us-east-1:afa582ca-4e4c-4d3b-be9b-d2dbc24c3d1a",
     "componentType": "medicaidspa",
     "currentStatus": "In Review",
     "attachments": [
@@ -1928,27 +2011,17 @@
         "url": "https://uploads-states-of-withdrawal-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Aafa582ca-4e4c-4d3b-be9b-d2dbc24c3d1a/1639696180278/adobe.pdf"
       }
     ],
-    "sparai": [
-      {
-        "componentType": "sparai",
-        "componentTimestamp": 1643218567141,
-        "submitterName": "StateSubmitter Nightwatch",
-        "componentId": "MD-13-1122"
-      }
-    ],
     "additionalInformation": "This is just a test",
     "submissionTimestamp": 1639696185888,
     "Latest": 1,
     "clockEndTimestamp": 1647286706000,
     "submitterEmail": "statesubmitter@nightwatch.test",
     "componentId": "MD-13-1122",
-    "submitterName": "StateSubmitter Nightwatch",
-    "submissionId": "4240e440-5ec5-11ec-b2ea-eb35c89f340d"
+    "submitterName": "StateSubmitter Nightwatch"
   },
   {
     "pk": "MD-13-1122",
     "sk": "v0#medicaidsparai#1643218567141",
-    "submitterId": "us-east-1:17735f75-6535-4e48-bc51-c224a6d2a2d9",
     "componentType": "sparai",
     "currentStatus": "Submitted",
     "attachments": [
@@ -1966,13 +2039,11 @@
     "Latest": 1,
     "submitterEmail": "k.grue@theta-llc.com",
     "componentId": "MD-13-1122",
-    "submitterName": "Kristin Grue",
-    "submissionId": "710db810-7ece-11ec-b6d3-3bd98b0823f6"
+    "submitterName": "Kristin Grue"
   },
   {
     "pk": "MD-13-1122",
     "sk": "v1#medicaidsparai#1643218567141",
-    "submitterId": "us-east-1:17735f75-6535-4e48-bc51-c224a6d2a2d9",
     "componentType": "sparai",
     "currentStatus": "Submitted",
     "attachments": [
@@ -1990,14 +2061,12 @@
     "Latest": 1,
     "submitterEmail": "k.grue@theta-llc.com",
     "componentId": "MD-13-1122",
-    "submitterName": "Kristin Grue",
-    "submissionId": "710db810-7ece-11ec-b6d3-3bd98b0823f6"
+    "submitterName": "Kristin Grue"
   },
   {
     "pk": "MI-13-1122",
     "sk": "v0#medicaidspa",
     "devComment": "Package added via seed data for application testing",
-    "submitterId": "us-east-1:afa582ca-4e4c-4d3b-be9b-d2dbc24c3d1a",
     "componentType": "medicaidspa",
     "currentStatus": "In Review",
     "attachments": [
@@ -2017,14 +2086,6 @@
       }
     ],
     "GSI1sk": "MI-13-1122",
-    "sparai": [
-      {
-        "componentType": "sparai",
-        "componentTimestamp": 1643218567141,
-        "submitterName": "Kristin Grue",
-        "componentId": "MI-13-1122"
-      }
-    ],
     "additionalInformation": "This is just a test",
     "submissionTimestamp": 1639696185888,
     "GSI1pk": "OneMAC#spa",
@@ -2032,14 +2093,12 @@
     "Latest": 1,
     "submitterEmail": "statesubmitter@nightwatch.test",
     "componentId": "MI-13-1122",
-    "submitterName": "StateSubmitter Nightwatch",
-    "submissionId": "4240e440-5ec5-11ec-b2ea-eb35c89f340d"
+    "submitterName": "StateSubmitter Nightwatch"
   },
   {
     "pk": "MI-13-1122",
     "sk": "v1#medicaidspa",
     "devComment": "Package added via seed data for application testing",
-    "submitterId": "us-east-1:afa582ca-4e4c-4d3b-be9b-d2dbc24c3d1a",
     "componentType": "medicaidspa",
     "currentStatus": "In Review",
     "attachments": [
@@ -2058,27 +2117,17 @@
         "url": "https://uploads-states-of-withdrawal-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Aafa582ca-4e4c-4d3b-be9b-d2dbc24c3d1a/1639696180278/adobe.pdf"
       }
     ],
-    "sparai": [
-      {
-        "componentType": "sparai",
-        "componentTimestamp": 1643218567141,
-        "submitterName": "Kristin Grue",
-        "componentId": "MI-13-1122"
-      }
-    ],
     "additionalInformation": "This is just a test",
     "submissionTimestamp": 1639696185888,
     "clockEndTimestamp": 1647286706000,
     "Latest": 1,
     "submitterEmail": "statesubmitter@nightwatch.test",
     "componentId": "MI-13-1122",
-    "submitterName": "StateSubmitter Nightwatch",
-    "submissionId": "4240e440-5ec5-11ec-b2ea-eb35c89f340d"
+    "submitterName": "StateSubmitter Nightwatch"
   },
   {
     "pk": "MI-13-1122",
     "sk": "v0#medicaidsparai#1643218567141",
-    "submitterId": "us-east-1:17735f75-6535-4e48-bc51-c224a6d2a2d9",
     "componentType": "sparai",
     "currentStatus": "Submitted",
     "attachments": [
@@ -2096,13 +2145,11 @@
     "parentId": "MI-13-1122",
     "submitterEmail": "k.grue@theta-llc.com",
     "componentId": "MI-13-1122",
-    "submitterName": "Kristin Grue",
-    "submissionId": "710db810-7ece-11ec-b6d3-3bd98b0823f6"
+    "submitterName": "Kristin Grue"
   },
   {
     "pk": "MI-13-1122",
     "sk": "v1#medicaidsparai#1643218567141",
-    "submitterId": "us-east-1:17735f75-6535-4e48-bc51-c224a6d2a2d9",
     "componentType": "sparai",
     "currentStatus": "Submitted",
     "attachments": [
@@ -2120,14 +2167,12 @@
     "parentId": "MI-13-1122",
     "submitterEmail": "k.grue@theta-llc.com",
     "componentId": "MI-13-1122",
-    "submitterName": "Kristin Grue",
-    "submissionId": "710db810-7ece-11ec-b6d3-3bd98b0823f6"
+    "submitterName": "Kristin Grue"
   },
   {
     "pk": "MD-77-2985",
     "sk": "v0#chipspa",
     "devComment": "Package added via seed data for application testing",
-    "submitterId": "us-east-1:afa582ca-4e4c-4d3b-be9b-d2dbc24c3d1a",
     "componentType": "chipspa",
     "currentStatus": "In Review",
     "attachments": [
@@ -2161,14 +2206,12 @@
     "clockEndTimestamp": 1646941106000,
     "submitterEmail": "statesubmitter@nightwatch.test",
     "componentId": "MD-77-2985",
-    "submitterName": "StateSubmitter Nightwatch",
-    "submissionId": "9d1ac120-5ec4-11ec-b2ea-eb35c89f340d"
+    "submitterName": "StateSubmitter Nightwatch"
   },
   {
     "pk": "MD-77-2985",
     "sk": "v1#chipspa",
     "devComment": "Package added via seed data for application testing",
-    "submitterId": "us-east-1:afa582ca-4e4c-4d3b-be9b-d2dbc24c3d1a",
     "componentType": "chipspa",
     "currentStatus": "In Review",
     "attachments": [
@@ -2200,14 +2243,12 @@
     "clockEndTimestamp": 1646941106000,
     "submitterEmail": "statesubmitter@nightwatch.test",
     "componentId": "MD-77-2985",
-    "submitterName": "StateSubmitter Nightwatch",
-    "submissionId": "9d1ac120-5ec4-11ec-b2ea-eb35c89f340d"
+    "submitterName": "StateSubmitter Nightwatch"
   },
   {
     "pk": "MI-77-2985",
     "sk": "v0#chipspa",
     "devComment": "Package added via seed data for application testing",
-    "submitterId": "us-east-1:afa582ca-4e4c-4d3b-be9b-d2dbc24c3d1a",
     "componentType": "chipspa",
     "currentStatus": "In Review",
     "attachments": [
@@ -2241,14 +2282,12 @@
     "clockEndTimestamp": 1646941106000,
     "submitterEmail": "statesubmitter@nightwatch.test",
     "componentId": "MI-77-2985",
-    "submitterName": "StateSubmitter Nightwatch",
-    "submissionId": "9d1ac120-5ec4-11ec-b2ea-eb35c89f340d"
+    "submitterName": "StateSubmitter Nightwatch"
   },
   {
     "pk": "MI-77-2985",
     "sk": "v1#chipspa",
     "devComment": "Package added via seed data for application testing",
-    "submitterId": "us-east-1:afa582ca-4e4c-4d3b-be9b-d2dbc24c3d1a",
     "componentType": "chipspa",
     "currentStatus": "In Review",
     "attachments": [
@@ -2280,14 +2319,12 @@
     "clockEndTimestamp": 1646941106000,
     "submitterEmail": "statesubmitter@nightwatch.test",
     "componentId": "MI-77-2985",
-    "submitterName": "StateSubmitter Nightwatch",
-    "submissionId": "9d1ac120-5ec4-11ec-b2ea-eb35c89f340d"
+    "submitterName": "StateSubmitter Nightwatch"
   },
   {
     "pk": "MI-34-2211",
     "sk": "v0#medicaidspa",
     "devComment": "Package added via seed data for application testing",
-    "submitterId": "us-east-1:3211a6ff-043f-436b-8313-1b314582b2a5",
     "componentType": "medicaidspa",
     "currentStatus": "Unsubmitted",
     "attachments": [
@@ -2313,14 +2350,12 @@
     "GSI1pk": "OneMAC#spa",
     "submitterEmail": "statesubmitteractive@cms.hhs.local",
     "componentId": "MI-34-2211",
-    "submitterName": "Angie Active",
-    "submissionId": "81072990-5f52-11ec-aa55-53498423bdfa"
+    "submitterName": "Angie Active"
   },
   {
     "pk": "MI-34-2211",
     "sk": "v1#medicaidspa",
     "devComment": "Package added via seed data for application testing",
-    "submitterId": "us-east-1:3211a6ff-043f-436b-8313-1b314582b2a5",
     "componentType": "medicaidspa",
     "currentStatus": "Unsubmitted",
     "attachments": [
@@ -2344,14 +2379,12 @@
     "submissionTimestamp": 1639756850916,
     "submitterEmail": "statesubmitteractive@cms.hhs.local",
     "componentId": "MI-34-2211",
-    "submitterName": "Angie Active",
-    "submissionId": "81072990-5f52-11ec-aa55-53498423bdfa"
+    "submitterName": "Angie Active"
   },
   {
     "pk": "MD-34-2211",
     "sk": "v0#medicaidspa",
     "devComment": "Package added via seed data for application testing",
-    "submitterId": "us-east-1:3211a6ff-043f-436b-8313-1b314582b2a5",
     "componentType": "medicaidspa",
     "currentStatus": "Unsubmitted",
     "attachments": [
@@ -2377,14 +2410,12 @@
     "GSI1pk": "OneMAC#spa",
     "submitterEmail": "statesubmitteractive@cms.hhs.local",
     "componentId": "MD-34-2211",
-    "submitterName": "Angie Active",
-    "submissionId": "81072990-5f52-11ec-aa55-53498423bdfa"
+    "submitterName": "Angie Active"
   },
   {
     "pk": "MD-34-2211",
     "sk": "v1#medicaidspa",
     "devComment": "Package added via seed data for application testing",
-    "submitterId": "us-east-1:3211a6ff-043f-436b-8313-1b314582b2a5",
     "componentType": "medicaidspa",
     "currentStatus": "Unsubmitted",
     "attachments": [
@@ -2408,14 +2439,12 @@
     "submissionTimestamp": 1639756850916,
     "submitterEmail": "statesubmitteractive@cms.hhs.local",
     "componentId": "MD-34-2211",
-    "submitterName": "Angie Active",
-    "submissionId": "81072990-5f52-11ec-aa55-53498423bdfa"
+    "submitterName": "Angie Active"
   },
   {
     "pk": "MI-93-2234",
     "sk": "v0#medicaidspa",
     "devComment": "Package added via seed data for application testing",
-    "submitterId": "us-east-1:3211a6ff-043f-436b-8313-1b314582b2a5",
     "componentType": "medicaidspa",
     "currentStatus": "RAI Issued",
     "attachments": [
@@ -2441,14 +2470,12 @@
     "Latest": 1,
     "submitterEmail": "statesubmitteractive@cms.hhs.local",
     "componentId": "MI-93-2234",
-    "submitterName": "Angie Active",
-    "submissionId": "7a50e650-5d03-11ec-ac34-4373607d3ed6"
+    "submitterName": "Angie Active"
   },
   {
     "pk": "MI-93-2234",
     "sk": "v1#medicaidspa",
     "devComment": "Package added via seed data for application testing",
-    "submitterId": "us-east-1:3211a6ff-043f-436b-8313-1b314582b2a5",
     "componentType": "medicaidspa",
     "currentStatus": "RAI Issued",
     "attachments": [
@@ -2472,14 +2499,12 @@
     "Latest": 1,
     "submitterEmail": "statesubmitteractive@cms.hhs.local",
     "componentId": "MI-93-2234",
-    "submitterName": "Angie Active",
-    "submissionId": "7a50e650-5d03-11ec-ac34-4373607d3ed6"
+    "submitterName": "Angie Active"
   },
   {
     "pk": "MD-93-2234",
     "sk": "v0#medicaidspa",
     "devComment": "Package added via seed data for application testing",
-    "submitterId": "us-east-1:3211a6ff-043f-436b-8313-1b314582b2a5",
     "componentType": "medicaidspa",
     "currentStatus": "RAI Issued",
     "attachments": [
@@ -2505,14 +2530,12 @@
     "Latest": 1,
     "submitterEmail": "statesubmitteractive@cms.hhs.local",
     "componentId": "MD-93-2234",
-    "submitterName": "Angie Active",
-    "submissionId": "7a50e650-5d03-11ec-ac34-4373607d3ed6"
+    "submitterName": "Angie Active"
   },
   {
     "pk": "MD-93-2234",
     "sk": "v1#medicaidspa",
     "devComment": "Package added via seed data for application testing",
-    "submitterId": "us-east-1:3211a6ff-043f-436b-8313-1b314582b2a5",
     "componentType": "medicaidspa",
     "currentStatus": "RAI Issued",
     "attachments": [
@@ -2536,14 +2559,12 @@
     "Latest": 1,
     "submitterEmail": "statesubmitteractive@cms.hhs.local",
     "componentId": "MD-93-2234",
-    "submitterName": "Angie Active",
-    "submissionId": "7a50e650-5d03-11ec-ac34-4373607d3ed6"
+    "submitterName": "Angie Active"
   },
   {
     "pk": "MD-22-2345",
     "sk": "v0#chipspa",
     "devComment": "Package added via seed data for application testing",
-    "submitterId": "us-east-1:afa582ca-4e4c-4d3b-be9b-d2dbc24c3d1a",
     "componentType": "chipspa",
     "currentStatus": "RAI Issued",
     "attachments": [
@@ -2577,14 +2598,12 @@
     "clockEndTimestamp": 1646941106000,
     "submitterEmail": "statesubmitter@nightwatch.test",
     "componentId": "MD-22-2345",
-    "submitterName": "StateSubmitter Nightwatch",
-    "submissionId": "9d1ac120-5ec4-11ec-b2ea-eb35c89f340d"
+    "submitterName": "StateSubmitter Nightwatch"
   },
   {
     "pk": "MD-22-2345",
     "sk": "v1#chipspa",
     "devComment": "Package added via seed data for application testing",
-    "submitterId": "us-east-1:afa582ca-4e4c-4d3b-be9b-d2dbc24c3d1a",
     "componentType": "chipspa",
     "currentStatus": "RAI Issued",
     "attachments": [
@@ -2616,14 +2635,12 @@
     "clockEndTimestamp": 1646941106000,
     "submitterEmail": "statesubmitter@nightwatch.test",
     "componentId": "MD-22-2345",
-    "submitterName": "StateSubmitter Nightwatch",
-    "submissionId": "9d1ac120-5ec4-11ec-b2ea-eb35c89f340d"
+    "submitterName": "StateSubmitter Nightwatch"
   },
   {
     "pk": "MD-22-2345",
     "sk": "v0#chipsparai#1639604007869",
     "devComment": "Package added via seed data for application testing",
-    "submitterId": "us-east-1:3211a6ff-043f-436b-8313-1b314582b2a5",
     "componentType": "chipsparai",
     "currentStatus": "Submitted",
     "attachments": [
@@ -2649,14 +2666,12 @@
     "Latest": 1,
     "submitterEmail": "statesubmitteractive@cms.hhs.local",
     "componentId": "MD-22-2345",
-    "submitterName": "Angie Active",
-    "submissionId": "7a50e650-5d03-11ec-ac34-4373607d3ed6"
+    "submitterName": "Angie Active"
   },
   {
     "pk": "MD-22-2345",
     "sk": "v1#chipsparai#1639604007869",
     "devComment": "Package added via seed data for application testing",
-    "submitterId": "us-east-1:3211a6ff-043f-436b-8313-1b314582b2a5",
     "componentType": "chipsparai",
     "currentStatus": "Submitted",
     "attachments": [
@@ -2680,14 +2695,12 @@
     "Latest": 1,
     "submitterEmail": "statesubmitteractive@cms.hhs.local",
     "componentId": "MD-22-2345",
-    "submitterName": "Angie Active",
-    "submissionId": "7a50e650-5d03-11ec-ac34-4373607d3ed6"
+    "submitterName": "Angie Active"
   },
   {
     "pk": "MD-22-2345",
     "sk": "v0#chipsparai#1639503006869",
     "devComment": "Package added via seed data for application testing",
-    "submitterId": "us-east-1:3211a6ff-043f-436b-8313-1b314582b2a5",
     "componentType": "chipsparai",
     "currentStatus": "Submitted",
     "attachments": [
@@ -2713,14 +2726,12 @@
     "Latest": 1,
     "submitterEmail": "statesubmitteractive@cms.hhs.local",
     "componentId": "MD-22-2345",
-    "submitterName": "Angie Active",
-    "submissionId": "7a50e650-5d03-11ec-ac34-4373607d3ed6"
+    "submitterName": "Angie Active"
   },
   {
     "pk": "MD-22-2345",
     "sk": "v1#chipsparai#1639503006869",
     "devComment": "Package added via seed data for application testing",
-    "submitterId": "us-east-1:3211a6ff-043f-436b-8313-1b314582b2a5",
     "componentType": "chipsparai",
     "currentStatus": "Submitted",
     "attachments": [
@@ -2744,13 +2755,11 @@
     "Latest": 1,
     "submitterEmail": "statesubmitteractive@cms.hhs.local",
     "componentId": "MD-22-2345",
-    "submitterName": "Angie Active",
-    "submissionId": "7a50e650-5d03-11ec-ac34-4373607d3ed6"
+    "submitterName": "Angie Active"
   },
   {
-    "pk": "VA.1117.R00.00",
+    "pk": "VA-1117.R00.00",
     "sk": "v0#waivernew",
-    "submitterId": "us-east-1:3211a6ff-043f-436b-8313-1b314582b2a5",
     "clockEndTimestamp": 1645990706000,
     "componentType": "waivernew",
     "currentStatus": "Submitted",
@@ -2784,79 +2793,20 @@
         "url": "https://uploads-withdraw-actions-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Aae2ae6cf-fa41-4d1a-aac7-2b1db9d5dd5c/1644847043902/CMS%20179%20Form%20Acronym%20Removal%20Signed.pdf"
       }
     ],
-    "GSI1sk": "VA.1117.R00.00",
+    "GSI1sk": "VA-1117.R00.00",
     "additionalInformation": "Initial waiver for testing the waiver renewals",
-    "children": [
-      {
-        "componentType": "waiverrai",
-        "componentId": "VA.1117.R00.00",
-        "currentStatus": "Submitted",
-        "submitterName": "Angie Active",
-        "displayId": "VA.1117.R00.00",
-        "submitterEmail": "statesubmitteractive@cms.hhs.local",
-        "submissionTimestamp": 1643296612626
-      },
-      {
-        "componentType": "waiveramendment",
-        "componentId": "VA.1117.R00.M01",
-        "currentStatus": "Submitted",
-        "submitterName": "Angie Active",
-        "displayId": "R00.01",
-        "submitterEmail": "statesubmitteractive@cms.hhs.local",
-        "submissionTimestamp": 1644846937626
-      },
-      {
-        "componentType": "waiveramendment",
-        "componentId": "VA.1117.R00.M02",
-        "currentStatus": "Submitted",
-        "submitterName": "Angie Active",
-        "displayId": "R00.02",
-        "submitterEmail": "statesubmitteractive@cms.hhs.local",
-        "submissionTimestamp": 1644847044969
-      }
-    ],
     "submissionTimestamp": 1638473560098,
     "waiverAuthority": "1915(b)(4)",
     "GSI1pk": "OneMAC#waiver",
     "Latest": 1,
     "submitterEmail": "statesubmitteractive@cms.hhs.local",
-    "waiverrenewal": [
-      {
-        "componentType": "waiverrenewal",
-        "componentTimestamp": 1638473598762,
-        "submitterName": "Angie Active",
-        "componentId": "VA.1117.R01.00"
-      }
-    ],
     "devComment": "Package added via seed data for application testing",
-    "componentId": "VA.1117.R00.00",
-    "waiveramendment": [
-      {
-        "componentType": "waiveramendment",
-        "componentId": "VA.1117.R00.M01",
-        "currentStatus": "Submitted",
-        "submitterName": "Angie Active",
-        "displayId": "R00.01",
-        "submitterEmail": "statesubmitteractive@cms.hhs.local",
-        "submissionTimestamp": 1644846937626
-      },
-      {
-        "componentType": "waiveramendment",
-        "componentId": "VA.1117.R00.M02",
-        "currentStatus": "Submitted",
-        "submitterName": "Angie Active",
-        "displayId": "R00.02",
-        "submitterEmail": "statesubmitteractive@cms.hhs.local",
-        "submissionTimestamp": 1644847044969
-      }
-    ],
-    "submitterName": "Angie Active",
-    "submissionId": "9c5c8b70-53a6-11ec-b5bc-c9173b9fa278"
+    "componentId": "VA-1117.R00.00",
+    "submitterName": "Angie Active"
   },
   {
-    "pk": "VA.1117.R00.00",
+    "pk": "VA-1117.R00.00",
     "sk": "v1#waivernew",
-    "submitterId": "us-east-1:3211a6ff-043f-436b-8313-1b314582b2a5",
     "clockEndTimestamp": 1645990706000,
     "componentType": "waivernew",
     "currentStatus": "Submitted",
@@ -2896,16 +2846,18 @@
     "Latest": 1,
     "submitterEmail": "statesubmitteractive@cms.hhs.local",
     "devComment": "Package added via seed data for application testing",
-    "componentId": "VA.1117.R00.00",
-    "submitterName": "Angie Active",
-    "submissionId": "9c5c8b70-53a6-11ec-b5bc-c9173b9fa278"
+    "componentId": "VA-1117.R00.00",
+    "submitterName": "Angie Active"
   },
   {
-    "pk": "VA.1117.R00.M01",
+    "pk": "VA-1117.R00.01",
     "sk": "v0#waiveramendment",
-    "parentId": "VA.1117.R00.00",
+    "GSI1pk": "OneMAC#waiver",
+    "GSI1sk": "VA-1117.R00.01",
+    "GSI2pk": "VA-1117.R00.00",
+    "GSI2sk": "waiveramendment",
+    "parentId": "VA-1117.R00.00",
     "parentType": "waivernew",
-    "submitterId": "us-east-1:ae2ae6cf-fa41-4d1a-aac7-2b1db9d5dd5c",
     "componentType": "waiveramendment",
     "currentStatus": "Submitted",
     "attachments": [
@@ -2922,16 +2874,14 @@
     "submissionTimestamp": 1644846937626,
     "waiverAuthority": "1915(b)(4)",
     "submitterEmail": "statesubmitteractive@cms.hhs.local",
-    "componentId": "VA.1117.R00.M01",
-    "submitterName": "Angie Active",
-    "submissionId": "c8dea8a0-8d9d-11ec-9b4c-db1b8db92a85"
+    "componentId": "VA-1117.R00.01",
+    "submitterName": "Angie Active"
   },
   {
-    "pk": "VA.1117.R00.M01",
+    "pk": "VA-1117.R00.01",
     "sk": "v1#waiveramendment",
-    "parentId": "VA.1117.R00.00",
+    "parentId": "VA-1117.R00.00",
     "parentType": "waivernew",
-    "submitterId": "us-east-1:ae2ae6cf-fa41-4d1a-aac7-2b1db9d5dd5c",
     "componentType": "waiveramendment",
     "currentStatus": "Submitted",
     "attachments": [
@@ -2948,16 +2898,18 @@
     "submissionTimestamp": 1644846937626,
     "waiverAuthority": "1915(b)(4)",
     "submitterEmail": "statesubmitteractive@cms.hhs.local",
-    "componentId": "VA.1117.R00.M01",
-    "submitterName": "Angie Active",
-    "submissionId": "c8dea8a0-8d9d-11ec-9b4c-db1b8db92a85"
+    "componentId": "VA-1117.R00.01",
+    "submitterName": "Angie Active"
   },
   {
-    "pk": "VA.1117.R00.M02",
+    "pk": "VA-1117.R00.02",
     "sk": "v0#waiveramendment",
-    "parentId": "VA.1117.R00.00",
+    "GSI1pk": "OneMAC#waiver",
+    "GSI1sk": "VA-1117.R00.02",
+    "GSI2pk": "VA-1117.R00.00",
+    "GSI2sk": "waiveramendment",
+    "parentId": "VA-1117.R00.00",
     "parentType": "waivernew",
-    "submitterId": "us-east-1:ae2ae6cf-fa41-4d1a-aac7-2b1db9d5dd5c",
     "componentType": "waiveramendment",
     "currentStatus": "Submitted",
     "attachments": [
@@ -2974,16 +2926,14 @@
     "waiverAuthority": "1915(b)(4)",
     "Latest": 1,
     "submitterEmail": "statesubmitteractive@cms.hhs.local",
-    "componentId": "VA.1117.R00.M02",
-    "submitterName": "Angie Active",
-    "submissionId": "096e1040-8d9e-11ec-9e2e-03e84108d863"
+    "componentId": "VA-1117.R00.02",
+    "submitterName": "Angie Active"
   },
   {
-    "pk": "VA.1117.R00.M02",
+    "pk": "VA-1117.R00.02",
     "sk": "v1#waiveramendment",
-    "parentId": "VA.1117.R00.00",
+    "parentId": "VA-1117.R00.00",
     "parentType": "waivernew",
-    "submitterId": "us-east-1:ae2ae6cf-fa41-4d1a-aac7-2b1db9d5dd5c",
     "componentType": "waiveramendment",
     "currentStatus": "Submitted",
     "attachments": [
@@ -3000,15 +2950,13 @@
     "waiverAuthority": "1915(b)(4)",
     "Latest": 1,
     "submitterEmail": "statesubmitteractive@cms.hhs.local",
-    "componentId": "VA.1117.R00.M02",
-    "submitterName": "Angie Active",
-    "submissionId": "096e1040-8d9e-11ec-9e2e-03e84108d863"
+    "componentId": "VA-1117.R00.02",
+    "submitterName": "Angie Active"
   },
   {
     "pk": "MD-1117.R00.00",
     "sk": "v0#waivernew",
     "devComment": "Package added via seed data for application testing",
-    "submitterId": "us-east-1:3211a6ff-043f-436b-8313-1b314582b2a5",
     "componentType": "waivernew",
     "currentStatus": "Approved",
     "attachments": [
@@ -3044,13 +2992,11 @@
       }
     ],
     "componentId": "MD-1117.R00.00",
-    "submitterName": "Angie Active",
-    "submissionId": "9c5c8b70-53a6-11ec-b5bc-c9173b9fa278"
+    "submitterName": "Angie Active"
   },
   {
     "pk": "MD-1117.R01.00",
     "sk": "v1#waiverrenewal",
-    "submitterId": "us-east-1:fca18499-f892-4266-ad18-8b53c6fb7f39",
     "componentType": "waiverrenewal",
     "currentStatus": "Approved",
     "attachments": [
@@ -3075,14 +3021,12 @@
     "Latest": 1,
     "submitterEmail": "statesubmitter@nightwatch.test",
     "componentId": "MD-1117.R01.00",
-    "submitterName": "StateSubmitter Nightwatch",
-    "submissionId": "8c52e960-7ebf-11ec-bd30-a11f4457ce6b"
+    "submitterName": "StateSubmitter Nightwatch"
   },
   {
-    "pk": "MD.1117.R00.00",
+    "pk": "MD-1117.R00.00",
     "sk": "v1#waivernew",
     "devComment": "Package added via seed data for application testing",
-    "submitterId": "us-east-1:3211a6ff-043f-436b-8313-1b314582b2a5",
     "componentType": "waivernew",
     "currentStatus": "In Review",
     "attachments": [
@@ -3107,14 +3051,12 @@
     "waiverAuthority": "1915(b)(4)",
     "Latest": 1,
     "submitterEmail": "statesubmitteractive@cms.hhs.local",
-    "componentId": "MD.1117.R00.00",
-    "submitterName": "Angie Active",
-    "submissionId": "9c5c8b70-53a6-11ec-b5bc-c9173b9fa278"
+    "componentId": "MD-1117.R00.00",
+    "submitterName": "Angie Active"
   },
   {
     "pk": "VA-33-2244-CHIP",
     "sk": "v0#chipspa",
-    "submitterId": "us-east-1:3211a6ff-043f-436b-8313-1b314582b2a5",
     "componentType": "chipspa",
     "currentStatus": "Submitted",
     "attachments": [
@@ -3147,13 +3089,11 @@
     "Latest": 1,
     "submitterEmail": "statesubmitteractive@cms.hhs.local",
     "componentId": "VA-33-2244-CHIP",
-    "submitterName": "Angie Active",
-    "submissionId": "41103ac0-61aa-11ec-af2f-49cb8bfb8860"
+    "submitterName": "Angie Active"
   },
   {
     "pk": "VA-33-2244-CHIP",
     "sk": "v1#chipspa",
-    "submitterId": "us-east-1:3211a6ff-043f-436b-8313-1b314582b2a5",
     "componentType": "chipspa",
     "currentStatus": "Submitted",
     "attachments": [
@@ -3184,13 +3124,11 @@
     "Latest": 1,
     "submitterEmail": "statesubmitteractive@cms.hhs.local",
     "componentId": "VA-33-2244-CHIP",
-    "submitterName": "Angie Active",
-    "submissionId": "41103ac0-61aa-11ec-af2f-49cb8bfb8860"
+    "submitterName": "Angie Active"
   },
   {
     "pk": "MD-33-2244-CHIP",
     "sk": "v0#chipspa",
-    "submitterId": "us-east-1:3211a6ff-043f-436b-8313-1b314582b2a5",
     "componentType": "chipspa",
     "currentStatus": "Submitted",
     "attachments": [
@@ -3223,13 +3161,11 @@
     "Latest": 1,
     "submitterEmail": "statesubmitteractive@cms.hhs.local",
     "componentId": "MD-33-2244-CHIP",
-    "submitterName": "Angie Active",
-    "submissionId": "41103ac0-61aa-11ec-af2f-49cb8bfb8860"
+    "submitterName": "Angie Active"
   },
   {
     "pk": "MD-33-2244-CHIP",
     "sk": "v1#chipspa",
-    "submitterId": "us-east-1:3211a6ff-043f-436b-8313-1b314582b2a5",
     "componentType": "chipspa",
     "currentStatus": "Submitted",
     "attachments": [
@@ -3260,13 +3196,11 @@
     "Latest": 1,
     "submitterEmail": "statesubmitteractive@cms.hhs.local",
     "componentId": "MD-33-2244-CHIP",
-    "submitterName": "Angie Active",
-    "submissionId": "41103ac0-61aa-11ec-af2f-49cb8bfb8860"
+    "submitterName": "Angie Active"    
   },
   {
     "pk": "MI-42-1122",
     "sk": "v0#medicaidspa",
-    "submitterId": "us-east-1:3211a6ff-043f-436b-8313-1b314582b2a5",
     "componentType": "medicaidspa",
     "currentStatus": "In Review",
     "attachments": [
@@ -3300,13 +3234,11 @@
     "Latest": 1,
     "submitterEmail": "statesubmitteractive@cms.hhs.local",
     "componentId": "MI-42-1122",
-    "submitterName": "Angie Active",
-    "submissionId": "d5ce3b80-61aa-11ec-9823-2780a6e1c177"
+    "submitterName": "Angie Active"
   },
   {
     "pk": "MI-42-1122",
     "sk": "v1#medicaidspa",
-    "submitterId": "us-east-1:3211a6ff-043f-436b-8313-1b314582b2a5",
     "componentType": "medicaidspa",
     "currentStatus": "In Review",
     "attachments": [
@@ -3338,13 +3270,11 @@
     "Latest": 1,
     "submitterEmail": "statesubmitteractive@cms.hhs.local",
     "componentId": "MI-42-1122",
-    "submitterName": "Angie Active",
-    "submissionId": "d5ce3b80-61aa-11ec-9823-2780a6e1c177"
+    "submitterName": "Angie Active"
   },
   {
     "pk": "MD-42-1122",
     "sk": "v0#medicaidspa",
-    "submitterId": "us-east-1:3211a6ff-043f-436b-8313-1b314582b2a5",
     "componentType": "medicaidspa",
     "currentStatus": "In Review",
     "attachments": [
@@ -3378,13 +3308,11 @@
     "Latest": 1,
     "submitterEmail": "statesubmitteractive@cms.hhs.local",
     "componentId": "MD-42-1122",
-    "submitterName": "Angie Active",
-    "submissionId": "d5ce3b80-61aa-11ec-9823-2780a6e1c177"
+    "submitterName": "Angie Active"
   },
   {
     "pk": "MD-42-1122",
     "sk": "v1#medicaidspa",
-    "submitterId": "us-east-1:3211a6ff-043f-436b-8313-1b314582b2a5",
     "componentType": "medicaidspa",
     "currentStatus": "In Review",
     "attachments": [
@@ -3416,13 +3344,11 @@
     "Latest": 1,
     "submitterEmail": "statesubmitteractive@cms.hhs.local",
     "componentId": "MD-42-1122",
-    "submitterName": "Angie Active",
-    "submissionId": "d5ce3b80-61aa-11ec-9823-2780a6e1c177"
+    "submitterName": "Angie Active"
   },
   {
     "pk": "MD-12-8214",
     "sk": "v0#medicaidspa",
-    "submitterId": "us-east-1:86a190fe-b195-42bf-9685-9761bf0ff14b",
     "componentType": "medicaidspa",
     "currentStatus": "Approved",
     "attachments": [
@@ -3469,13 +3395,11 @@
     "Latest": 1,
     "submitterEmail": "statesubmitter@nightwatch.test",
     "componentId": "MD-12-8214",
-    "submitterName": "Statesubmitter Nightwatch",
-    "submissionId": "90176080-5eb7-11ec-a327-f1c37bb28fc1"
+    "submitterName": "Statesubmitter Nightwatch"
   },
   {
     "pk": "MD-12-8214",
     "sk": "v1#medicaidspa",
-    "submitterId": "us-east-1:86a190fe-b195-42bf-9685-9761bf0ff14b",
     "componentType": "medicaidspa",
     "currentStatus": "Approved",
     "attachments": [
@@ -3520,13 +3444,11 @@
     "Latest": 1,
     "submitterEmail": "statesubmitter@nightwatch.test",
     "componentId": "MD-12-8214",
-    "submitterName": "Statesubmitter Nightwatch",
-    "submissionId": "90176080-5eb7-11ec-a327-f1c37bb28fc1"
+    "submitterName": "Statesubmitter Nightwatch"
   },
   {
     "pk": "MI-12-8214",
     "sk": "v0#medicaidspa",
-    "submitterId": "us-east-1:86a190fe-b195-42bf-9685-9761bf0ff14b",
     "componentType": "medicaidspa",
     "currentStatus": "Approved",
     "attachments": [
@@ -3573,13 +3495,11 @@
     "Latest": 1,
     "submitterEmail": "statesubmitter@nightwatch.test",
     "componentId": "MI-12-8214",
-    "submitterName": "Statesubmitter Nightwatch",
-    "submissionId": "90176080-5eb7-11ec-a327-f1c37bb28fc1"
+    "submitterName": "Statesubmitter Nightwatch"
   },
   {
     "pk": "MI-12-8214",
     "sk": "v1#medicaidspa",
-    "submitterId": "us-east-1:86a190fe-b195-42bf-9685-9761bf0ff14b",
     "componentType": "medicaidspa",
     "currentStatus": "Approved",
     "attachments": [
@@ -3624,13 +3544,11 @@
     "Latest": 1,
     "submitterEmail": "statesubmitter@nightwatch.test",
     "componentId": "MI-12-8214",
-    "submitterName": "Statesubmitter Nightwatch",
-    "submissionId": "90176080-5eb7-11ec-a327-f1c37bb28fc1"
+    "submitterName": "Statesubmitter Nightwatch"
   },
   {
     "pk": "MD-45-5913",
     "sk": "v0#medicaidspa",
-    "submitterId": "us-east-1:86a190fe-b195-42bf-9685-9761bf0ff14b",
     "componentType": "medicaidspa",
     "currentStatus": "Disapproved",
     "attachments": [
@@ -3677,13 +3595,11 @@
     "Latest": 1,
     "submitterEmail": "statesubmitter@nightwatch.test",
     "componentId": "MD-45-5913",
-    "submitterName": "Statesubmitter Nightwatch",
-    "submissionId": "cb9978d0-5dfb-11ec-a7a2-c5995198046c"
+    "submitterName": "Statesubmitter Nightwatch"
   },
   {
     "pk": "MD-45-5913",
     "sk": "v1#medicaidspa",
-    "submitterId": "us-east-1:86a190fe-b195-42bf-9685-9761bf0ff14b",
     "componentType": "medicaidspa",
     "currentStatus": "Disapproved",
     "attachments": [
@@ -3728,13 +3644,11 @@
     "Latest": 1,
     "submitterEmail": "statesubmitter@nightwatch.test",
     "componentId": "MD-45-5913",
-    "submitterName": "Statesubmitter Nightwatch",
-    "submissionId": "cb9978d0-5dfb-11ec-a7a2-c5995198046c"
+    "submitterName": "Statesubmitter Nightwatch"
   },
   {
     "pk": "VA-45-5913",
     "sk": "v0#medicaidspa",
-    "submitterId": "us-east-1:86a190fe-b195-42bf-9685-9761bf0ff14b",
     "componentType": "medicaidspa",
     "currentStatus": "Disapproved",
     "attachments": [
@@ -3781,13 +3695,11 @@
     "Latest": 1,
     "submitterEmail": "statesubmitter@nightwatch.test",
     "componentId": "VA-45-5913",
-    "submitterName": "Statesubmitter Nightwatch",
-    "submissionId": "cb9978d0-5dfb-11ec-a7a2-c5995198046c"
+    "submitterName": "Statesubmitter Nightwatch"
   },
   {
     "pk": "VA-45-5913",
     "sk": "v1#medicaidspa",
-    "submitterId": "us-east-1:86a190fe-b195-42bf-9685-9761bf0ff14b",
     "componentType": "medicaidspa",
     "currentStatus": "Disapproved",
     "attachments": [
@@ -3832,13 +3744,11 @@
     "Latest": 1,
     "submitterEmail": "statesubmitter@nightwatch.test",
     "componentId": "VA-45-5913",
-    "submitterName": "Statesubmitter Nightwatch",
-    "submissionId": "cb9978d0-5dfb-11ec-a7a2-c5995198046c"
+    "submitterName": "Statesubmitter Nightwatch"
   },
   {
     "pk": "MD-13-8218",
     "sk": "v0#medicaidspa",
-    "submitterId": "us-east-1:86a190fe-b195-42bf-9685-9761bf0ff14b",
     "componentType": "medicaidspa",
     "currentStatus": "Withdrawn",
     "attachments": [
@@ -3864,13 +3774,11 @@
     "Latest": 1,
     "submitterEmail": "statesubmitter@nightwatch.test",
     "componentId": "MD-13-8218",
-    "submitterName": "Statesubmitter Nightwatch",
-    "submissionId": "18858520-5dda-11ec-b9f1-03b9820992ae"
+    "submitterName": "Statesubmitter Nightwatch"
   },
   {
     "pk": "MD-13-8218",
     "sk": "v1#medicaidspa",
-    "submitterId": "us-east-1:86a190fe-b195-42bf-9685-9761bf0ff14b",
     "componentType": "medicaidspa",
     "currentStatus": "Withdrawn",
     "attachments": [
@@ -3894,13 +3802,11 @@
     "Latest": 1,
     "submitterEmail": "statesubmitter@nightwatch.test",
     "componentId": "MD-13-8218",
-    "submitterName": "Statesubmitter Nightwatch",
-    "submissionId": "18858520-5dda-11ec-b9f1-03b9820992ae"
+    "submitterName": "Statesubmitter Nightwatch"
   },
   {
     "pk": "MI-13-8218",
     "sk": "v0#medicaidspa",
-    "submitterId": "us-east-1:86a190fe-b195-42bf-9685-9761bf0ff14b",
     "componentType": "medicaidspa",
     "currentStatus": "Withdrawn",
     "attachments": [
@@ -3926,13 +3832,11 @@
     "Latest": 1,
     "submitterEmail": "statesubmitter@nightwatch.test",
     "componentId": "MI-13-8218",
-    "submitterName": "Statesubmitter Nightwatch",
-    "submissionId": "18858520-5dda-11ec-b9f1-03b9820992ae"
+    "submitterName": "Statesubmitter Nightwatch"
   },
   {
     "pk": "MI-13-8218",
     "sk": "v1#medicaidspa",
-    "submitterId": "us-east-1:86a190fe-b195-42bf-9685-9761bf0ff14b",
     "componentType": "medicaidspa",
     "currentStatus": "Withdrawn",
     "attachments": [
@@ -3956,13 +3860,11 @@
     "Latest": 1,
     "submitterEmail": "statesubmitter@nightwatch.test",
     "componentId": "MI-13-8218",
-    "submitterName": "Statesubmitter Nightwatch",
-    "submissionId": "18858520-5dda-11ec-b9f1-03b9820992ae"
+    "submitterName": "Statesubmitter Nightwatch"
   },
   {
-    "pk": "MD.10330.R00.00",
+    "pk": "MD-10330.R00.00",
     "sk": "v0#waivernew",
-    "submitterId": "us-east-1:86a190fe-b195-42bf-9685-9761bf0ff14b",
     "componentType": "waivernew",
     "currentStatus": "Terminated",
     "attachments": [
@@ -3981,52 +3883,19 @@
         "url": "https://uploads-oy2-15674-inc2-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Afca18499-f892-4266-ad18-8b53c6fb7f39/1643212113804/IMG_0954.jpg"
       }
     ],
-    "children": [
-      {
-        "componentType": "waiverextension",
-        "componentId": "MD.10330.R00.TE00",
-        "currentStatus": "Submitted",
-        "submitterName": "Statesubmitter Nightwatch",
-        "displayId": "MD.10330.R00.TE00",
-        "submitterEmail": "statesubmitter@nightwatch.test",
-        "submissionTimestamp": 1643138320362
-      },
-      {
-        "componentType": "waiveramendment",
-        "componentId": "MD.10330.R00.M01",
-        "currentStatus": "Submitted",
-        "submitterName": "StateSubmitter Nightwatch",
-        "displayId": "R00.01",
-        "submitterEmail": "statesubmitter@nightwatch.test",
-        "submissionTimestamp": 1643212119072
-      }
-    ],
-    "GSI1sk": "MD.10330.R00.00",
+    "GSI1sk": "MD-10330.R00.00",
     "additionalInformation": "This is just a test",
     "submissionTimestamp": 1636137490470,
     "waiverAuthority": "1915(b)(4)",
     "GSI1pk": "OneMAC#waiver",
     "Latest": 1,
     "submitterEmail": "statesubmitter@nightwatch.test",
-    "componentId": "MD.10330.R00.00",
-    "waiveramendment": [
-      {
-        "componentType": "waiveramendment",
-        "componentId": "MD.10330.R00.M01",
-        "currentStatus": "Submitted",
-        "submitterName": "StateSubmitter Nightwatch",
-        "displayId": "R00.01",
-        "submitterEmail": "statesubmitter@nightwatch.test",
-        "submissionTimestamp": 1643212119072
-      }
-    ],
-    "submitterName": "Statesubmitter Nightwatch",
-    "submissionId": "86573ae0-3e67-11ec-b244-9b7cbfa0a2c8"
+    "componentId": "MD-10330.R00.00",
+    "submitterName": "Statesubmitter Nightwatch"
   },
   {
-    "pk": "MD.10330.R00.00",
+    "pk": "MD-10330.R00.00",
     "sk": "v1#waivernew",
-    "submitterId": "us-east-1:86a190fe-b195-42bf-9685-9761bf0ff14b",
     "componentType": "waivernew",
     "currentStatus": "Terminated",
     "attachments": [
@@ -4045,52 +3914,19 @@
         "url": "https://uploads-oy2-15674-inc2-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Afca18499-f892-4266-ad18-8b53c6fb7f39/1643212113804/IMG_0954.jpg"
       }
     ],
-    "children": [
-      {
-        "componentType": "waiverextension",
-        "componentId": "MD.10330.R00.TE00",
-        "currentStatus": "Submitted",
-        "submitterName": "Statesubmitter Nightwatch",
-        "displayId": "MD.10330.R00.TE00",
-        "submitterEmail": "statesubmitter@nightwatch.test",
-        "submissionTimestamp": 1643138320362
-      },
-      {
-        "componentType": "waiveramendment",
-        "componentId": "MD.10330.R00.M01",
-        "currentStatus": "Submitted",
-        "submitterName": "StateSubmitter Nightwatch",
-        "displayId": "R00.01",
-        "submitterEmail": "statesubmitter@nightwatch.test",
-        "submissionTimestamp": 1643212119072
-      }
-    ],
     "additionalInformation": "This is just a test",
     "submissionTimestamp": 1636137490470,
     "waiverAuthority": "1915(b)(4)",
     "Latest": 1,
     "submitterEmail": "statesubmitter@nightwatch.test",
-    "componentId": "MD.10330.R00.00",
-    "waiveramendment": [
-      {
-        "componentType": "waiveramendment",
-        "componentId": "MD.10330.R00.M01",
-        "currentStatus": "Submitted",
-        "submitterName": "StateSubmitter Nightwatch",
-        "displayId": "R00.01",
-        "submitterEmail": "statesubmitter@nightwatch.test",
-        "submissionTimestamp": 1643212119072
-      }
-    ],
-    "submitterName": "Statesubmitter Nightwatch",
-    "submissionId": "86573ae0-3e67-11ec-b244-9b7cbfa0a2c8"
+    "componentId": "MD-10330.R00.00",
+    "submitterName": "Statesubmitter Nightwatch"
   },
   {
-    "pk": "MD.10330.R00.M01",
+    "pk": "MD-10330.R00.01",
     "sk": "v0#waiveramendment",
-    "parentId": "MD.10330.R00.M00",
+    "parentId": "MD-10330.R00.00",
     "parentType": "waivernew",
-    "submitterId": "us-east-1:ae2ae6cf-fa41-4d1a-aac7-2b1db9d5dd5c",
     "componentType": "waiveramendment",
     "currentStatus": "Submitted",
     "attachments": [
@@ -4104,19 +3940,21 @@
     ],
     "additionalInformation": "",
     "Latest": 1,
+    "GSI2pk": "MD-10330.R00.00",
+    "GSI2sk": "waiveramendment",
+    "GSI1pk": "OneMAC#waiver",
+    "GSI1sk": "MD-10330.R00.01",
     "submissionTimestamp": 1644846937626,
     "waiverAuthority": "1915(b)(4)",
     "submitterEmail": "statesubmitteractive@cms.hhs.local",
-    "componentId": "MD.10330.R00.M01",
-    "submitterName": "Angie Active",
-    "submissionId": "c8dea8a0-8d9d-11ec-9b4c-db1b8db92a85"
+    "componentId": "MD-10330.R00.01",
+    "submitterName": "Angie Active"
   },
   {
-    "pk": "MD.10330.R00.M01",
+    "pk": "MD-10330.R00.01",
     "sk": "v1#waiveramendment",
-    "parentId": "MD.10330.R00.M00",
+    "parentId": "MD-10330.R00.00",
     "parentType": "waivernew",
-    "submitterId": "us-east-1:ae2ae6cf-fa41-4d1a-aac7-2b1db9d5dd5c",
     "componentType": "waiveramendment",
     "currentStatus": "Submitted",
     "attachments": [
@@ -4133,14 +3971,12 @@
     "submissionTimestamp": 1644846937626,
     "waiverAuthority": "1915(b)(4)",
     "submitterEmail": "statesubmitteractive@cms.hhs.local",
-    "componentId": "MD.10330.R00.M01",
-    "submitterName": "Angie Active",
-    "submissionId": "c8dea8a0-8d9d-11ec-9b4c-db1b8db92a85"
+    "componentId": "MD-10330.R00.01",
+    "submitterName": "Angie Active"
   },
   {
-    "pk": "MD.10330.R01.00",
+    "pk": "MD-10330.R01.00",
     "sk": "v0#waiverrenewal",
-    "submitterId": "us-east-1:fca18499-f892-4266-ad18-8b53c6fb7f39",
     "componentType": "waiverrenewal",
     "currentStatus": "Submitted",
     "attachments": [
@@ -4159,43 +3995,19 @@
         "url": "https://uploads-oy2-15674-inc2-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Afca18499-f892-4266-ad18-8b53c6fb7f39/1643212211505/plain.pdf"
       }
     ],
-    "GSI1sk": "MD.10330.R01.00",
+    "GSI1sk": "MD-10330.R01.00",
     "additionalInformation": "renew",
-    "children": [
-      {
-        "componentType": "waiveramendment",
-        "componentId": "MD.10330.R01.M01",
-        "currentStatus": "Submitted",
-        "submitterName": "StateSubmitter Nightwatch",
-        "displayId": "R01.01",
-        "submitterEmail": "statesubmitter@nightwatch.test",
-        "submissionTimestamp": 1643212212642
-      }
-    ],
     "submissionTimestamp": 1643212170520,
     "waiverAuthority": "1915(b)(4)",
     "GSI1pk": "OneMAC#waiver",
     "Latest": 1,
     "submitterEmail": "statesubmitter@nightwatch.test",
-    "componentId": "MD.10330.R01.00",
-    "waiveramendment": [
-      {
-        "componentType": "waiveramendment",
-        "componentId": "MD.10330.R01.M01",
-        "currentStatus": "Submitted",
-        "submitterName": "StateSubmitter Nightwatch",
-        "displayId": "R01.01",
-        "submitterEmail": "statesubmitter@nightwatch.test",
-        "submissionTimestamp": 1643212212642
-      }
-    ],
-    "submitterName": "StateSubmitter Nightwatch",
-    "submissionId": "8c52e960-7ebf-11ec-bd30-a11f4457ce6b"
+    "componentId": "MD-10330.R01.00",
+    "submitterName": "StateSubmitter Nightwatch"
   },
   {
-    "pk": "MD.10330.R01.00",
+    "pk": "MD-10330.R01.00",
     "sk": "v1#waiverrenewal",
-    "submitterId": "us-east-1:fca18499-f892-4266-ad18-8b53c6fb7f39",
     "componentType": "waiverrenewal",
     "currentStatus": "Submitted",
     "attachments": [
@@ -4215,40 +4027,16 @@
       }
     ],
     "additionalInformation": "renew",
-    "children": [
-      {
-        "componentType": "waiveramendment",
-        "componentId": "MD.10330.R01.M01",
-        "currentStatus": "Submitted",
-        "submitterName": "StateSubmitter Nightwatch",
-        "displayId": "R01.01",
-        "submitterEmail": "statesubmitter@nightwatch.test",
-        "submissionTimestamp": 1643212212642
-      }
-    ],
     "submissionTimestamp": 1643212170520,
     "waiverAuthority": "1915(b)(4)",
     "Latest": 1,
     "submitterEmail": "statesubmitter@nightwatch.test",
-    "componentId": "MD.10330.R01.00",
-    "waiveramendment": [
-      {
-        "componentType": "waiveramendment",
-        "componentId": "MD.10330.R01.M01",
-        "currentStatus": "Submitted",
-        "submitterName": "StateSubmitter Nightwatch",
-        "displayId": "R01.01",
-        "submitterEmail": "statesubmitter@nightwatch.test",
-        "submissionTimestamp": 1643212212642
-      }
-    ],
-    "submitterName": "StateSubmitter Nightwatch",
-    "submissionId": "8c52e960-7ebf-11ec-bd30-a11f4457ce6b"
+    "componentId": "MD-10330.R01.00",
+    "submitterName": "StateSubmitter Nightwatch"
   },
   {
-    "pk": "MI.10330.R00.00",
+    "pk": "MI-10330.R00.00",
     "sk": "v0#waivernew",
-    "submitterId": "us-east-1:86a190fe-b195-42bf-9685-9761bf0ff14b",
     "componentType": "waivernew",
     "currentStatus": "Terminated",
     "attachments": [
@@ -4267,52 +4055,19 @@
         "url": "https://uploads-oy2-15674-inc2-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Afca18499-f892-4266-ad18-8b53c6fb7f39/1643212113804/IMG_0954.jpg"
       }
     ],
-    "children": [
-      {
-        "componentType": "waiverextension",
-        "componentId": "MI.10330.R00.TE00",
-        "currentStatus": "Submitted",
-        "submitterName": "Statesubmitter Nightwatch",
-        "displayId": "MI.10330.R00.TE00",
-        "submitterEmail": "statesubmitter@nightwatch.test",
-        "submissionTimestamp": 1643138320362
-      },
-      {
-        "componentType": "waiveramendment",
-        "componentId": "MI.10330.R00.M01",
-        "currentStatus": "Submitted",
-        "submitterName": "StateSubmitter Nightwatch",
-        "displayId": "R00.01",
-        "submitterEmail": "statesubmitter@nightwatch.test",
-        "submissionTimestamp": 1643212119072
-      }
-    ],
-    "GSI1sk": "MI.10330.R00.00",
+    "GSI1sk": "MI-10330.R00.00",
     "additionalInformation": "This is just a test",
     "submissionTimestamp": 1636137490470,
     "waiverAuthority": "1915(b)(4)",
     "GSI1pk": "OneMAC#waiver",
     "Latest": 1,
     "submitterEmail": "statesubmitter@nightwatch.test",
-    "componentId": "MI.10330.R00.00",
-    "waiveramendment": [
-      {
-        "componentType": "waiveramendment",
-        "componentId": "MI.10330.R00.M01",
-        "currentStatus": "Submitted",
-        "submitterName": "StateSubmitter Nightwatch",
-        "displayId": "R00.01",
-        "submitterEmail": "statesubmitter@nightwatch.test",
-        "submissionTimestamp": 1643212119072
-      }
-    ],
-    "submitterName": "Statesubmitter Nightwatch",
-    "submissionId": "86573ae0-3e67-11ec-b244-9b7cbfa0a2c8"
+    "componentId": "MI-10330.R00.00",
+    "submitterName": "Statesubmitter Nightwatch"
   },
   {
-    "pk": "MI.10330.R00.00",
+    "pk": "MI-10330.R00.00",
     "sk": "v1#waivernew",
-    "submitterId": "us-east-1:86a190fe-b195-42bf-9685-9761bf0ff14b",
     "componentType": "waivernew",
     "currentStatus": "Terminated",
     "attachments": [
@@ -4331,50 +4086,17 @@
         "url": "https://uploads-oy2-15674-inc2-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Afca18499-f892-4266-ad18-8b53c6fb7f39/1643212113804/IMG_0954.jpg"
       }
     ],
-    "children": [
-      {
-        "componentType": "waiverextension",
-        "componentId": "MI.10330.R00.TE00",
-        "currentStatus": "Submitted",
-        "submitterName": "Statesubmitter Nightwatch",
-        "displayId": "MI.10330.R00.TE00",
-        "submitterEmail": "statesubmitter@nightwatch.test",
-        "submissionTimestamp": 1643138320362
-      },
-      {
-        "componentType": "waiveramendment",
-        "componentId": "MI.10330.R00.M01",
-        "currentStatus": "Submitted",
-        "submitterName": "StateSubmitter Nightwatch",
-        "displayId": "R00.01",
-        "submitterEmail": "statesubmitter@nightwatch.test",
-        "submissionTimestamp": 1643212119072
-      }
-    ],
     "additionalInformation": "This is just a test",
     "submissionTimestamp": 1636137490470,
     "waiverAuthority": "1915(b)(4)",
     "Latest": 1,
     "submitterEmail": "statesubmitter@nightwatch.test",
-    "componentId": "MI.10330.R00.00",
-    "waiveramendment": [
-      {
-        "componentType": "waiveramendment",
-        "componentId": "MI.10330.R00.M01",
-        "currentStatus": "Submitted",
-        "submitterName": "StateSubmitter Nightwatch",
-        "displayId": "R00.01",
-        "submitterEmail": "statesubmitter@nightwatch.test",
-        "submissionTimestamp": 1643212119072
-      }
-    ],
-    "submitterName": "Statesubmitter Nightwatch",
-    "submissionId": "86573ae0-3e67-11ec-b244-9b7cbfa0a2c8"
+    "componentId": "MI-10330.R00.00",
+    "submitterName": "Statesubmitter Nightwatch"
   },
   {
-    "pk": "MI.10330.R01.00",
+    "pk": "MI-10330.R01.00",
     "sk": "v0#waiverrenewal",
-    "submitterId": "us-east-1:fca18499-f892-4266-ad18-8b53c6fb7f39",
     "componentType": "waiverrenewal",
     "currentStatus": "Submitted",
     "attachments": [
@@ -4393,43 +4115,19 @@
         "url": "https://uploads-oy2-15674-inc2-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Afca18499-f892-4266-ad18-8b53c6fb7f39/1643212211505/plain.pdf"
       }
     ],
-    "GSI1sk": "MI.10330.R01.00",
+    "GSI1sk": "MI-10330.R01.00",
     "additionalInformation": "renew",
-    "children": [
-      {
-        "componentType": "waiveramendment",
-        "componentId": "MI.10330.R01.M01",
-        "currentStatus": "Submitted",
-        "submitterName": "StateSubmitter Nightwatch",
-        "displayId": "R01.01",
-        "submitterEmail": "statesubmitter@nightwatch.test",
-        "submissionTimestamp": 1643212212642
-      }
-    ],
     "submissionTimestamp": 1643212170520,
     "waiverAuthority": "1915(b)(4)",
     "GSI1pk": "OneMAC#waiver",
     "Latest": 1,
     "submitterEmail": "statesubmitter@nightwatch.test",
-    "componentId": "MI.10330.R01.00",
-    "waiveramendment": [
-      {
-        "componentType": "waiveramendment",
-        "componentId": "MI.10330.R01.M01",
-        "currentStatus": "Submitted",
-        "submitterName": "StateSubmitter Nightwatch",
-        "displayId": "R01.01",
-        "submitterEmail": "statesubmitter@nightwatch.test",
-        "submissionTimestamp": 1643212212642
-      }
-    ],
-    "submitterName": "StateSubmitter Nightwatch",
-    "submissionId": "8c52e960-7ebf-11ec-bd30-a11f4457ce6b"
+    "componentId": "MI-10330.R01.00",
+    "submitterName": "StateSubmitter Nightwatch"
   },
   {
-    "pk": "MI.10330.R01.00",
+    "pk": "MI-10330.R01.00",
     "sk": "v1#waiverrenewal",
-    "submitterId": "us-east-1:fca18499-f892-4266-ad18-8b53c6fb7f39",
     "componentType": "waiverrenewal",
     "currentStatus": "Submitted",
     "attachments": [
@@ -4449,40 +4147,16 @@
       }
     ],
     "additionalInformation": "renew",
-    "children": [
-      {
-        "componentType": "waiveramendment",
-        "componentId": "MI.10330.R01.M01",
-        "currentStatus": "Submitted",
-        "submitterName": "StateSubmitter Nightwatch",
-        "displayId": "R01.01",
-        "submitterEmail": "statesubmitter@nightwatch.test",
-        "submissionTimestamp": 1643212212642
-      }
-    ],
     "submissionTimestamp": 1643212170520,
     "waiverAuthority": "1915(b)(4)",
     "Latest": 1,
     "submitterEmail": "statesubmitter@nightwatch.test",
-    "componentId": "MI.10330.R01.00",
-    "waiveramendment": [
-      {
-        "componentType": "waiveramendment",
-        "componentId": "MI.10330.R01.M01",
-        "currentStatus": "Submitted",
-        "submitterName": "StateSubmitter Nightwatch",
-        "displayId": "R01.01",
-        "submitterEmail": "statesubmitter@nightwatch.test",
-        "submissionTimestamp": 1643212212642
-      }
-    ],
-    "submitterName": "StateSubmitter Nightwatch",
-    "submissionId": "8c52e960-7ebf-11ec-bd30-a11f4457ce6b"
+    "componentId": "MI-10330.R01.00",
+    "submitterName": "StateSubmitter Nightwatch"
   },
   {
     "pk": "MD-3420.R00.00",
     "sk": "v0#waivernew",
-    "submitterId": "us-east-1:86a190fe-b195-42bf-9685-9761bf0ff14b",
     "componentType": "waivernew",
     "currentStatus": "In Review",
     "attachments": [
@@ -4502,13 +4176,11 @@
     "Latest": 1,
     "submitterEmail": "statesubmitter@nightwatch.test",
     "componentId": "MD-3420.R00.00",
-    "submitterName": "Statesubmitter Nightwatch",
-    "submissionId": "94a77310-5d0e-11ec-b95c-0fbf3f3ed947"
+    "submitterName": "Statesubmitter Nightwatch"
   },
   {
     "pk": "MD-3420.R00.00",
     "sk": "v1#waivernew",
-    "submitterId": "us-east-1:86a190fe-b195-42bf-9685-9761bf0ff14b",
     "componentType": "waivernew",
     "currentStatus": "In Review",
     "attachments": [
@@ -4526,13 +4198,11 @@
     "Latest": 1,
     "submitterEmail": "statesubmitter@nightwatch.test",
     "componentId": "MD-3420.R00.00",
-    "submitterName": "Statesubmitter Nightwatch",
-    "submissionId": "94a77310-5d0e-11ec-b95c-0fbf3f3ed947"
+    "submitterName": "Statesubmitter Nightwatch"
   },
   {
-    "pk": "MD.83420.R00.00",
+    "pk": "MD-83420.R00.00",
     "sk": "v0#waivernew",
-    "submitterId": "us-east-1:86a190fe-b195-42bf-9685-9761bf0ff14b",
     "componentType": "waivernew",
     "currentStatus": "Unsubmitted",
     "attachments": [
@@ -4544,32 +4214,19 @@
         "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1639507770586/15MB.pdf"
       }
     ],
-    "children": [
-      {
-        "componentType": "waiverrai",
-        "componentId": "MD.83420.R00.00",
-        "currentStatus": "Submitted",
-        "submitterName": "Statesubmitter Nightwatch",
-        "displayId": "MD.83420.R00.00",
-        "submitterEmail": "statesubmitter@nightwatch.test",
-        "submissionTimestamp": 1643296612626
-      }
-    ],
-    "GSI1sk": "MD.83420.R00.00",
+    "GSI1sk": "MD-83420.R00.00",
     "additionalInformation": "This is just a test",
     "submissionTimestamp": 1639507775282,
     "waiverAuthority": "1915(b)(4)",
     "GSI1pk": "OneMAC#waiver",
     "Latest": 1,
     "submitterEmail": "statesubmitter@nightwatch.test",
-    "componentId": "MD.83420.R00.00",
-    "submitterName": "Statesubmitter Nightwatch",
-    "submissionId": "94a77310-5d0e-11ec-b95c-0fbf3f3ed945"
+    "componentId": "MD-83420.R00.00",
+    "submitterName": "Statesubmitter Nightwatch"
   },
   {
-    "pk": "MD.83420.R00.00",
+    "pk": "MD-83420.R00.00",
     "sk": "v1#waivernew",
-    "submitterId": "us-east-1:86a190fe-b195-42bf-9685-9761bf0ff14b",
     "componentType": "waivernew",
     "currentStatus": "Unsubmitted",
     "attachments": [
@@ -4581,35 +4238,23 @@
         "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1639507770586/15MB.pdf"
       }
     ],
-    "children": [
-      {
-        "componentType": "waiverrai",
-        "componentId": "MD.83420.R00.00",
-        "currentStatus": "Submitted",
-        "submitterName": "Statesubmitter Nightwatch",
-        "displayId": "MD.83420.R00.00",
-        "submitterEmail": "statesubmitter@nightwatch.test",
-        "submissionTimestamp": 1643296612626
-      }
-    ],
     "additionalInformation": "This is just a test",
     "submissionTimestamp": 1639507775282,
     "waiverAuthority": "1915(b)(4)",
     "Latest": 1,
     "submitterEmail": "statesubmitter@nightwatch.test",
-    "componentId": "MD.83420.R00.00",
-    "submitterName": "Statesubmitter Nightwatch",
-    "submissionId": "94a77310-5d0e-11ec-b95c-0fbf3f3ed945"
+    "componentId": "MD-83420.R00.00",
+    "submitterName": "Statesubmitter Nightwatch"
   },
   {
-    "pk": "MD.83420.R00.00",
+    "pk": "MD-83420.R00.00",
     "sk": "v0#waiverrai#1643296612626",
     "componentType": "waiverrai",
-    "componentId": "MD.83420.R00.00",
+    "componentId": "MD-83420.R00.00",
     "Latest": 1,
     "currentStatus": "Submitted",
     "submitterName": "Statesubmitter Nightwatch",
-    "displayId": "MD.83420.R00.00",
+    "displayId": "MD-83420.R00.00",
     "submitterEmail": "statesubmitter@nightwatch.test",
     "submissionTimestamp": 1643296612626,
     "attachments": [
@@ -4623,14 +4268,14 @@
     ]
   },
   {
-    "pk": "MD.83420.R00.00",
+    "pk": "MD-83420.R00.00",
     "sk": "v1#waiverrai#1643296612626",
     "componentType": "waiverrai",
-    "componentId": "MD.83420.R00.00",
+    "componentId": "MD-83420.R00.00",
     "currentStatus": "Submitted",
     "Latest": 1,
     "submitterName": "Statesubmitter Nightwatch",
-    "displayId": "MD.83420.R00.00",
+    "displayId": "MD-83420.R00.00",
     "submitterEmail": "statesubmitter@nightwatch.test",
     "submissionTimestamp": 1643296612626,
     "attachments": [
@@ -4644,9 +4289,8 @@
     ]
   },
   {
-    "pk": "MI.83420.R00.00",
+    "pk": "MI-83420.R00.00",
     "sk": "v0#waivernew",
-    "submitterId": "us-east-1:86a190fe-b195-42bf-9685-9761bf0ff14b",
     "componentType": "waivernew",
     "currentStatus": "Unsubmitted",
     "attachments": [
@@ -4658,32 +4302,19 @@
         "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1639507770586/15MB.pdf"
       }
     ],
-    "children": [
-      {
-        "componentType": "waiverrai",
-        "componentId": "MI.83420.R00.00",
-        "currentStatus": "Submitted",
-        "submitterName": "Statesubmitter Nightwatch",
-        "displayId": "MI.83420.R00.00",
-        "submitterEmail": "statesubmitter@nightwatch.test",
-        "submissionTimestamp": 1643296612626
-      }
-    ],
-    "GSI1sk": "MI.83420.R00.00",
+    "GSI1sk": "MI-83420.R00.00",
     "additionalInformation": "This is just a test",
     "submissionTimestamp": 1639507775282,
     "waiverAuthority": "1915(b)(4)",
     "GSI1pk": "OneMAC#waiver",
     "Latest": 1,
     "submitterEmail": "statesubmitter@nightwatch.test",
-    "componentId": "MI.83420.R00.00",
-    "submitterName": "Statesubmitter Nightwatch",
-    "submissionId": "94a77310-5d0e-11ec-b95c-0fbf3f3ed945"
+    "componentId": "MI-83420.R00.00",
+    "submitterName": "Statesubmitter Nightwatch"
   },
   {
-    "pk": "MI.83420.R00.00",
+    "pk": "MI-83420.R00.00",
     "sk": "v1#waivernew",
-    "submitterId": "us-east-1:86a190fe-b195-42bf-9685-9761bf0ff14b",
     "componentType": "waivernew",
     "currentStatus": "Unsubmitted",
     "attachments": [
@@ -4698,10 +4329,10 @@
     "children": [
       {
         "componentType": "waiverrai",
-        "componentId": "MI.83420.R00.00",
+        "componentId": "MI-83420.R00.00",
         "currentStatus": "Submitted",
         "submitterName": "Statesubmitter Nightwatch",
-        "displayId": "MI.83420.R00.00",
+        "displayId": "MI-83420.R00.00",
         "submitterEmail": "statesubmitter@nightwatch.test",
         "submissionTimestamp": 1643296612626
       }
@@ -4711,19 +4342,18 @@
     "waiverAuthority": "1915(b)(4)",
     "Latest": 1,
     "submitterEmail": "statesubmitter@nightwatch.test",
-    "componentId": "MI.83420.R00.00",
-    "submitterName": "Statesubmitter Nightwatch",
-    "submissionId": "94a77310-5d0e-11ec-b95c-0fbf3f3ed945"
+    "componentId": "MI-83420.R00.00",
+    "submitterName": "Statesubmitter Nightwatch"
   },
   {
-    "pk": "MI.83420.R00.00",
+    "pk": "MI-83420.R00.00",
     "sk": "v0#waiverrai#1643296612626",
     "componentType": "waiverrai",
-    "componentId": "MI.83420.R00.00",
+    "componentId": "MI-83420.R00.00",
     "Latest": 1,
     "currentStatus": "Submitted",
     "submitterName": "Statesubmitter Nightwatch",
-    "displayId": "MI.83420.R00.00",
+    "displayId": "MI-83420.R00.00",
     "submitterEmail": "statesubmitter@nightwatch.test",
     "submissionTimestamp": 1643296612626,
     "attachments": [
@@ -4748,19 +4378,17 @@
         "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1652811485216/Attachment%203.1-A%2C%20%234b%2C%20Page%203f%20Track.pdf"
       }
     ],
-    "componentId": "MD.3322.R00.00",
+    "componentId": "MD-3322.R00.00",
     "waiverAuthority": "1915(b)(4)",
     "currentStatus": "Terminated",
     "submissionTimestamp": 1652811485757,
     "clockEndTimestamp": 1660587485757,
     "proposedEffectiveDate": "",
-    "submissionId": "b25cae20-d60d-11ec-b340-0b8c3db0bac3",
     "GSI1pk": "OneMAC#waiver",
-    "submitterId": "offlineContext_cognitoIdentityId",
-    "GSI1sk": "MD.3322.R00.00",
+    "GSI1sk": "MD-3322.R00.00",
     "sk": "v0#waivernew",
     "Latest": 1,
-    "pk": "MD.3322.R00.00",
+    "pk": "MD-3322.R00.00",
     "submitterName": "Statesubmitter Nightwatch",
     "submitterEmail": "statesubmitter@nightwatch.test"
   },
@@ -4776,17 +4404,15 @@
         "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1652811485216/Attachment%203.1-A%2C%20%234b%2C%20Page%203f%20Track.pdf"
       }
     ],
-    "componentId": "MD.3322.R00.00",
+    "componentId": "MD-3322.R00.00",
     "waiverAuthority": "1915(b)(4)",
     "currentStatus": "Terminated",
     "submissionTimestamp": 1652811485757,
     "clockEndTimestamp": 1660587485757,
     "proposedEffectiveDate": "",
-    "submissionId": "b25cae20-d60d-11ec-b340-0b8c3db0bac3",
-    "submitterId": "offlineContext_cognitoIdentityId",
     "sk": "v1#waivernew",
     "Latest": 1,
-    "pk": "MD.3322.R00.00",
+    "pk": "MD-3322.R00.00",
     "submitterName": "Statesubmitter Nightwatch",
     "submitterEmail": "statesubmitter@nightwatch.test"
   },
@@ -4868,7 +4494,6 @@
     "pk": "MD-1118.R00.00",
     "sk": "v0#waivernew",
     "devComment": "Package added via seed data for application testing",
-    "submitterId": "us-east-1:3211a6ff-043f-436b-8313-1b314582b2a5",
     "componentType": "waivernew",
     "currentStatus": "RAI Issued",
     "attachments": [
@@ -4896,14 +4521,12 @@
     "Latest": 1,
     "submitterEmail": "statesubmitteractive@cms.hhs.local",
     "componentId": "MD-1118.R00.00",
-    "submitterName": "Angie Active",
-    "submissionId": "9c5c8b70-53a6-11ec-b5bc-c9173b9fa278"
+    "submitterName": "Angie Active"
   },
   {
     "pk": "MD-1118.R00.00",
     "sk": "v1#waivernew",
     "devComment": "Package added via seed data for application testing",
-    "submitterId": "us-east-1:3211a6ff-043f-436b-8313-1b314582b2a5",
     "componentType": "waivernew",
     "currentStatus": "RAI Issued",
     "attachments": [
@@ -4929,14 +4552,12 @@
     "Latest": 1,
     "submitterEmail": "statesubmitteractive@cms.hhs.local",
     "componentId": "MD-1118.R00.00",
-    "submitterName": "Angie Active",
-    "submissionId": "9c5c8b70-53a6-11ec-b5bc-c9173b9fa278"
+    "submitterName": "Angie Active"
   },
   {
     "pk": "MD-13150.R00.01",
     "sk": "v0#waiverappk",
     "devComment": "Package added via seed data for application testing",
-    "submitterId": "us-east-1:3211a6ff-043f-436b-8313-1b314582b2a5",
     "componentType": "waiverappk",
     "currentStatus": "Approved",
     "attachments": [
@@ -4965,14 +4586,12 @@
     "Latest": 0,
     "submitterEmail": "statesubmitteractive@cms.hhs.local",
     "componentId": "MD-13150.R00.01",
-    "submitterName": "Angie Active",
-    "submissionId": "9c5c8b70-53a6-11ec-b5bc-c9173b9fa278"
+    "submitterName": "Angie Active"
   },
   {
     "pk": "MD-13220.R00.01",
     "sk": "v0#waiverappk",
     "devComment": "Package added via seed data for application testing",
-    "submitterId": "us-east-1:3211a6ff-043f-436b-8313-1b314582b2a5",
     "componentType": "waiverappk",
     "currentStatus": "RAI Issued",
     "attachments": [
@@ -5001,8 +4620,7 @@
     "Latest": 0,
     "submitterEmail": "statesubmitteractive@cms.hhs.local",
     "componentId": "MD-13220.R00.01",
-    "submitterName": "Angie Active",
-    "submissionId": "9c5c8b70-53a6-11ec-b5bc-c9173b9fa278"
+    "submitterName": "Angie Active"
   },
   {
     "additionalInformation": "Here is a new Renewal on 1117",
@@ -5025,6 +4643,8 @@
     "proposedEffectiveDate": "2022-10-01",
     "GSI1pk": "OneMAC#waiver",
     "GSI1sk": "MD-1117.R02.00",
+    "GSI2pk": "MD-1117.R00.00",
+    "GSI2sk": "waiverrenewal",
     "sk": "v0#waiverrenewal",
     "Latest": 2,
     "pk": "MD-1117.R02.00",
@@ -5100,8 +4720,10 @@
     "submissionTimestamp": 1664475197823,
     "clockEndTimestamp": 1672254797823,
     "proposedEffectiveDate": "2022-12-01",
-    "GSI1pk": "MD-1117.R01.00",
-    "GSI1sk": "waiveramendment",
+    "GSI1pk": "OneMAC#waiver",
+    "GSI1sk": "MD-1117.R01.01",
+    "GSI2pk": "MD-1117.R01.00",
+    "GSI2sk": "waiveramendment",
     "sk": "v0#waiveramendment",
     "Latest": 2,
     "pk": "MD-1117.R01.01",
@@ -5180,36 +4802,8 @@
     "componentId": "MD-1117.R01.00",
     "waiverAuthority": "1915(b)(4)",
     "currentStatus": "Approved",
-    "waiveramendment": [
-      {
-        "componentType": "waiveramendment",
-        "clockEndTimestamp": 1672254797823,
-        "componentId": "MD-1117.R01.01",
-        "currentStatus": "RAI Issued",
-        "submitterName": "Statesubmitter Nightwatch",
-        "displayId": "MD-1117.R01.01",
-        "territory": "MD",
-        "submissionTimestamp": 1664475197823,
-        "submitterEmail": "statesubmitter@nightwatch.test"
-      }
-    ],
     "submissionTimestamp": 1643212170520,
-    "submissionId": "8c52e960-7ebf-11ec-bd30-a11f4457ce6b",
     "GSI1pk": "OneMAC#waiver",
-    "children": [
-      {
-        "componentType": "waiveramendment",
-        "clockEndTimestamp": 1672254797823,
-        "componentId": "MD-1117.R01.01",
-        "currentStatus": "RAI Issued",
-        "submitterName": "Statesubmitter Nightwatch",
-        "displayId": "MD-1117.R01.01",
-        "territory": "MD",
-        "submissionTimestamp": 1664475197823,
-        "submitterEmail": "statesubmitter@nightwatch.test"
-      }
-    ],
-    "submitterId": "us-east-1:fca18499-f892-4266-ad18-8b53c6fb7f39",
     "GSI1sk": "MD-1117.R01.00",
     "sk": "v0#waiverrenewal",
     "Latest": 2,
@@ -5239,35 +4833,7 @@
     "componentId": "MD-1117.R01.00",
     "waiverAuthority": "1915(b)(4)",
     "currentStatus": "Approved",
-    "waiveramendment": [
-      {
-        "componentType": "waiveramendment",
-        "clockEndTimestamp": 1672254797823,
-        "componentId": "MD-1117.R01.01",
-        "currentStatus": "Submitted",
-        "submitterName": "Statesubmitter Nightwatch",
-        "displayId": "MD-1117.R01.01",
-        "territory": "MD",
-        "submissionTimestamp": 1664475197823,
-        "submitterEmail": "statesubmitter@nightwatch.test"
-      }
-    ],
     "submissionTimestamp": 1643212170520,
-    "submissionId": "8c52e960-7ebf-11ec-bd30-a11f4457ce6b",
-    "children": [
-      {
-        "componentType": "waiveramendment",
-        "clockEndTimestamp": 1672254797823,
-        "componentId": "MD-1117.R01.01",
-        "currentStatus": "Submitted",
-        "submitterName": "Statesubmitter Nightwatch",
-        "displayId": "MD-1117.R01.01",
-        "territory": "MD",
-        "submissionTimestamp": 1664475197823,
-        "submitterEmail": "statesubmitter@nightwatch.test"
-      }
-    ],
-    "submitterId": "us-east-1:fca18499-f892-4266-ad18-8b53c6fb7f39",
     "sk": "v2#waiverrenewal",
     "Latest": 2,
     "pk": "MD-1117.R01.00",
