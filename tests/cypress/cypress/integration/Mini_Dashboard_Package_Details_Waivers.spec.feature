@@ -13,7 +13,7 @@ Feature: OY2-11585 Waiver Package Details View: Initial Waivers and Waiver Renew
         And click 1915c Appendix K Amendment check box
         And click on Type
         And click on Status
-        And click all of the status checkboxes
+        And uncheck all of the status checkboxes
         And click In Review checkbox
         And click the Waiver Number link in the first row
         And verify the package details page is visible
@@ -36,7 +36,7 @@ Feature: OY2-11585 Waiver Package Details View: Initial Waivers and Waiver Renew
         And click 1915c Appendix K Amendment check box
         And click on Type
         And click on Status
-        And click all of the status checkboxes
+        And uncheck all of the status checkboxes
         And click Terminated checkbox
         And click the Waiver Number link in the first row
         And verify the package details page is visible
@@ -58,7 +58,7 @@ Feature: OY2-11585 Waiver Package Details View: Initial Waivers and Waiver Renew
         And click 1915c Appendix K Amendment check box
         And click on Type
         And click on Status
-        And click all of the status checkboxes
+        And uncheck all of the status checkboxes
         And click Submitted checkbox
         And click the Waiver Number link in the first row
         And verify the package details page is visible
@@ -80,7 +80,7 @@ Feature: OY2-11585 Waiver Package Details View: Initial Waivers and Waiver Renew
         And click 1915c Appendix K Amendment check box
         And click on Type
         And click on Status
-        And click all of the status checkboxes
+        And uncheck all of the status checkboxes
         And click Submitted checkbox
         And click the Waiver Number link in the first row
         And verify the package details page is visible
@@ -100,7 +100,7 @@ Feature: OY2-11585 Waiver Package Details View: Initial Waivers and Waiver Renew
         And click 1915c Appendix K Amendment check box
         And click on Type
         And click on Status
-        And click all of the status checkboxes
+        And uncheck all of the status checkboxes
         And click Approved checkbox
         And click the Waiver Number link in the first row
         And verify the package details page is visible
@@ -121,7 +121,7 @@ Feature: OY2-11585 Waiver Package Details View: Initial Waivers and Waiver Renew
         And click 1915c Appendix K Amendment check box
         And click on Type
         And click on Status
-        And click all of the status checkboxes
+        And uncheck all of the status checkboxes
         And click RAI Issued checkbox
         And click the Waiver Number link in the first row
         And verify the package details page is visible
@@ -144,7 +144,7 @@ Feature: OY2-11585 Waiver Package Details View: Initial Waivers and Waiver Renew
         And click 1915c Appendix K Amendment check box
         And click on Type
         And click on Status
-        And click all of the status checkboxes
+        And uncheck all of the status checkboxes
         And click Approved checkbox
         And click the Waiver Number link in the first row
         And verify the package details page is visible
@@ -167,7 +167,7 @@ Feature: OY2-11585 Waiver Package Details View: Initial Waivers and Waiver Renew
         And click 1915b Initial Waiver check box
         And click on Type
         And click on Status
-        And click all of the status checkboxes
+        And uncheck all of the status checkboxes
         And click Approved checkbox
         And click the Waiver Number link in the first row
         And verify the package details page is visible
@@ -192,7 +192,7 @@ Feature: OY2-11585 Waiver Package Details View: Initial Waivers and Waiver Renew
         And click 1915b Initial Waiver check box
         And click on Type
         And click on Status
-        And click all of the status checkboxes
+        And uncheck all of the status checkboxes
         And click RAI Issued checkbox
         And click the Waiver Number link in the first row
         And verify the package details page is visible

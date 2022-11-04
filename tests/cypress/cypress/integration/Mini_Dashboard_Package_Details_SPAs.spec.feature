@@ -6,7 +6,7 @@ Feature: OY2-15620 Updated SPA Details View - Card View with Actions
         And click on Packages
         And Click on Filter Button
         And click on Status
-        And click all of the status checkboxes
+        And uncheck all of the status checkboxes
 
     Scenario: Screen Enhance - Approved SPA
         And click Approved checkbox
