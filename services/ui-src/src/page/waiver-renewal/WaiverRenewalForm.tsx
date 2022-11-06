@@ -20,6 +20,9 @@ export const waiverRenewalFormInfo: OneMACFormConfig = {
         ". For renewals, the “R##” starts with ‘R01’ and ascends.",
     },
   ],
+  idAdditionalErrorMessage: [
+    "For renewals, the “R##” starts with ‘01’ and ascends.",
+  ],
   proposedEffectiveDate: true,
   landingPage: ONEMAC_ROUTES.PACKAGE_LIST_WAIVER,
   parentLabel: "Existing Waiver Number to Renew",

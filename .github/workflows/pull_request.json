@@ -1,0 +1,10 @@
+{
+  "pull_request": {
+    "head": {
+      "ref": "oy2-20996"
+    },
+    "base": {
+      "ref": "develop"
+    }
+  }
+}
