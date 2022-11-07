@@ -49,6 +49,8 @@ export const getAllActiveStateUserEmailAddresses = async (territory) => {
  */
 export const stateWithdrawalReceipt = async (data, config) => {
   const stateReceipt = {
+    ToAddresses: [],
+    CcAddresses: [],
     Subject: `${config.typeLabel} Package ${data.componentId} Withdraw Request`,
     HTML: `
         <p>This is confirmation that you have requested to withdraw the package below. The package will no longer be considered for CMS review:</p>
