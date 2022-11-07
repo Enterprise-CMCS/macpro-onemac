@@ -47,37 +47,11 @@ export const changeStatusAny = async (event, config) => {
       )
     );
     console.log("the Emails: ", theEmails);
-    theEmails.map(sendEmail);
-    const awsRet = sendEmail({
+    await sendEmail(theEmails[0]);
+    await sendEmail(theEmails[1]);
+    const awsRet = await sendEmail({
       Subject: "TEST 1: Medicaid SPA Package MD-22-4234 Withdraw Request",
-      HTML:
-        "\n" +
-        "        <p>This is confirmation that you have requested to withdraw the package below. The package will no longer be considered for CMS review:</p>\n" +
-        "        \n" +
-        "      <p>\n" +
-        "        <br><b>State or territory</b>: MD\n" +
-        "        <br><b>Name</b>: StateSubmitter Nightwatch<br><b>Email Address</b>: statesubmitter@nightwatch.test\n" +
-        "        \n" +
-        "        <br><b>SPA ID</b>: MD-22-4234\n" +
-        "        \n" +
-        "        \n" +
-        "        <br><b>Proposed Effective Date</b>: Nov 7 2022\n" +
-        "        \n" +
-        "      </p>\n" +
-        "        <p>\n" +
-        "          <b>Summary</b>:\n" +
-        "          <br>This is just a test\n" +
-        "        </p>\n" +
-        "      \n" +
-        "            <p>\n" +
-        "            <b>Files</b>:\n" +
-        "            <ul>\n" +
-        "            <li>CMS Form 179: 15MB.pdf</li><li>SPA Pages: adobe.pdf</li>\n" +
-        "            </ul>\n" +
-        "            </p>\n" +
-        "          \n" +
-        "        <p>Thank you!</p>\n" +
-        "        ",
+      HTML: "\n<p>This is confirmation that you have requested to withdraw the package below. The package will no longer be considered for CMS review:</p>\n",
       CcAddresses: [],
       ToAddresses: [
         "StateSubmitter Nightwatch <statesubmitter@nightwatch.test>",
@@ -86,36 +60,9 @@ export const changeStatusAny = async (event, config) => {
       ],
     });
     console.log("the return is: ", awsRet);
-    const awsRet2 = sendEmail({
+    const awsRet2 = await sendEmail({
       Subject: "TEST 2: Medicaid SPA Package MD-22-4234 Withdraw Request",
-      HTML:
-        "\n" +
-        "        <p>This is confirmation that you have requested to withdraw the package below. The package will no longer be considered for CMS review:</p>\n" +
-        "        \n" +
-        "      <p>\n" +
-        "        <br><b>State or territory</b>: MD\n" +
-        "        <br><b>Name</b>: StateSubmitter Nightwatch<br><b>Email Address</b>: statesubmitter@nightwatch.test\n" +
-        "        \n" +
-        "        <br><b>SPA ID</b>: MD-22-4234\n" +
-        "        \n" +
-        "        \n" +
-        "        <br><b>Proposed Effective Date</b>: Nov 7 2022\n" +
-        "        \n" +
-        "      </p>\n" +
-        "        <p>\n" +
-        "          <b>Summary</b>:\n" +
-        "          <br>This is just a test\n" +
-        "        </p>\n" +
-        "      \n" +
-        "            <p>\n" +
-        "            <b>Files</b>:\n" +
-        "            <ul>\n" +
-        "            <li>CMS Form 179: 15MB.pdf</li><li>SPA Pages: adobe.pdf</li>\n" +
-        "            </ul>\n" +
-        "            </p>\n" +
-        "          \n" +
-        "        <p>Thank you!</p>\n" +
-        "        ",
+      HTML: "Could it be?",
       CcAddresses: [],
       ToAddresses: ["KristinState GrueAdmin <k.grue.stateadmn@gmail.com>"],
     });
