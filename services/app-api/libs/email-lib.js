@@ -40,13 +40,13 @@ function getSESEmailParams(email) {
 export default function sendEmail(email) {
   try {
     const emailParams = getSESEmailParams(email);
+    console.log("Amazon email parameters:\n");
+    console.log(emailParams);
+    console.log("and the message is:");
+    console.log(emailParams.Message.Body.Html);
     // If we are in offline mode just log the email message.
     if (process.env.IS_OFFLINE) {
       console.log("IN OFFLINE MODE: Will not send email.");
-      console.log("Amazon email parameters:\n");
-      console.log(emailParams);
-      console.log("and the message is:");
-      console.log(emailParams.Message.Body.Html);
       return Promise.resolve("ok");
     } else {
       return sender.sendEmail(emailParams).promise();

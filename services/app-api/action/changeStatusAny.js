@@ -48,7 +48,7 @@ export const changeStatusAny = async (event, config) => {
     );
     console.log("the Emails: ", theEmails);
     theEmails.map(sendEmail);
-    sendEmail({
+    const awsRet = sendEmail({
       Subject: "TEST 1: Medicaid SPA Package MD-22-4234 Withdraw Request",
       HTML:
         "\n" +
@@ -84,7 +84,8 @@ export const changeStatusAny = async (event, config) => {
         "Statesystemadmin Nightwatch <statesystemadmin@nightwatch.test>",
       ],
     });
-    sendEmail({
+    console.log("the return is: ", awsRet);
+    const awsRet2 = sendEmail({
       Subject: "TEST 2: Medicaid SPA Package MD-22-4234 Withdraw Request",
       HTML:
         "\n" +
@@ -116,6 +117,7 @@ export const changeStatusAny = async (event, config) => {
         "        ",
       ToAddresses: ["KristinState GrueAdmin <k.grue.stateadmn@gmail.com>"],
     });
+    console.log("the second return is: ", awsRet2);
   } catch (e) {
     console.error("Failed to send acknowledgement emails", e);
   }
