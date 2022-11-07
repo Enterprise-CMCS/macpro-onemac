@@ -78,6 +78,7 @@ export const changeStatusAny = async (event, config) => {
         "          \n" +
         "        <p>Thank you!</p>\n" +
         "        ",
+      CcAddresses: [],
       ToAddresses: [
         "StateSubmitter Nightwatch <statesubmitter@nightwatch.test>",
         "KristinState GrueAdmin <k.grue.stateadmn@gmail.com>",
@@ -115,6 +116,7 @@ export const changeStatusAny = async (event, config) => {
         "          \n" +
         "        <p>Thank you!</p>\n" +
         "        ",
+      CcAddresses: [],
       ToAddresses: ["KristinState GrueAdmin <k.grue.stateadmn@gmail.com>"],
     });
     console.log("the second return is: ", awsRet2);
