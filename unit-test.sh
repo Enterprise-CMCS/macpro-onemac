@@ -12,7 +12,7 @@ for d in services/*/; do
       echo "failed in $d"
       RET=1
       # looks like there is an unhandled promise in a part we can't change....
-      RET=0
+      # RET=0
     fi
   fi
   popd

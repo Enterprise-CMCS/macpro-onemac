@@ -1,8 +1,6 @@
-import { ONEMAC_TYPE } from "cmscommonlib/workflow";
 import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
 
-const fixThese = [ONEMAC_TYPE.WAIVER_AMENDMENT, ONEMAC_TYPE.WAIVER_EXTENSION];
 /**
  * Perform data migrations
  */
@@ -11,32 +9,27 @@ export const main = handler(async () => {
   // Scan it all... but really only need v0s
   const oneparams = {
     TableName: process.env.oneMacTableName,
-    FilterExpression: "begins_with(sk, :begin)",
+    IndexName: "GSI1",
+    KeyConditionExpression: "GSI1pk = :userpk",
     ExpressionAttributeValues: {
-      ":begin": "v0",
+      ":userpk": "USER",
     },
   };
   const onePromiseItems = [];
-  // SPA group
-  do {
-    const results = await dynamoDb.scan(oneparams);
-    for (const item of results.Items) {
-      // if the item does not need correcting, skip it
-      if (!fixThese.includes(item.componentType)) continue;
 
+  do {
+    const results = await dynamoDb.query(oneparams);
+    for (const item of results.Items) {
       const updateParam = {
         TableName: process.env.oneMacTableName,
         Key: {
           pk: item.pk,
           sk: item.sk,
         },
-        UpdateExpression:
-          "SET GSI1pk = :gsi1pk, GSI1sk = :gsi1sk, GSI2pk = :gsi2pk, GSI2sk = :gsi2sk",
+        UpdateExpression: "SET GSI2pk = :gsi2pk, GSI2sk = :gsi2sk",
         ExpressionAttributeValues: {
-          ":gsi1pk": `OneMAC#waiver`,
-          ":gsi1sk": item.pk,
-          ":gsi2pk": item.parentId,
-          ":gsi2sk": item.componentType,
+          ":gsi2pk": `${item.role}#${item.territory}`,
+          ":gsi2sk": item.status,
         },
       };
       onePromiseItems.push(updateParam);
