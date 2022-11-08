@@ -11,8 +11,6 @@ for d in services/*/; do
     if ! npm test -- --coverage --ci --reporters='default' --reporters='../../github-actions-reporter'; then
       echo "failed in $d"
       RET=1
-      # looks like there is an unhandled promise in a part we can't change....
-      # RET=0
     fi
   fi
   popd
