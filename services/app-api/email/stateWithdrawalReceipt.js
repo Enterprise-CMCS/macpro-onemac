@@ -8,8 +8,7 @@ export const getAllActiveStateUserEmailAddresses = async (territory) => {
     USER_ROLE.STATE_SUBMITTER,
     USER_ROLE.STATE_SYSTEM_ADMIN,
   ];
-  const stateSubmittingUsers = []; // `Kristin ${territory} Grue <k.grue.stateadmn@gmail.com>`,
-  //`Kristin  ${territory} Grue2 <k.grue.stateuser@gmail.com>`];
+  const stateSubmittingUsers = [];
 
   await Promise.all(
     stateSubmittingUserRoles.map(async (role) => {

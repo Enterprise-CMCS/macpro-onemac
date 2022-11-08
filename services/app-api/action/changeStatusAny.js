@@ -47,26 +47,27 @@ export const changeStatusAny = async (event, config) => {
       )
     );
     console.log("the Emails: ", theEmails);
-    await sendEmail(theEmails[0]);
-    await sendEmail(theEmails[1]);
-    const awsRet = await sendEmail({
-      Subject: "TEST 1: Medicaid SPA Package MD-22-4234 Withdraw Request",
-      HTML: "\n<p>This is confirmation that you have requested to withdraw the package below. The package will no longer be considered for CMS review:</p>\n",
-      CcAddresses: [],
-      ToAddresses: [
-        "StateSubmitter Nightwatch <statesubmitter@nightwatch.test>",
-        "KristinState GrueAdmin <k.grue.stateadmn@gmail.com>",
-        "Statesystemadmin Nightwatch <statesystemadmin@nightwatch.test>",
-      ],
-    });
-    console.log("the return is: ", awsRet);
-    const awsRet2 = await sendEmail({
-      Subject: "TEST 2: Medicaid SPA Package MD-22-4234 Withdraw Request",
-      HTML: "Could it be?",
-      CcAddresses: [],
-      ToAddresses: ["KristinState GrueAdmin <k.grue.stateadmn@gmail.com>"],
-    });
-    console.log("the second return is: ", awsRet2);
+    // await sendEmail(theEmails[0]);
+    // await sendEmail(theEmails[1]);
+    await Promise.all.theEmails.map(sendEmail);
+    // const awsRet = await sendEmail({
+    //   Subject: "TEST 1: Medicaid SPA Package MD-22-4234 Withdraw Request",
+    //   HTML: "\n<p>This is confirmation that you have requested to withdraw the package below. The package will no longer be considered for CMS review:</p>\n",
+    //   CcAddresses: [],
+    //   ToAddresses: [
+    //     "StateSubmitter Nightwatch <statesubmitter@nightwatch.test>",
+    //     "KristinState GrueAdmin <k.grue.stateadmn@gmail.com>",
+    //     "Statesystemadmin Nightwatch <statesystemadmin@nightwatch.test>",
+    //   ],
+    // });
+    // console.log("the return is: ", awsRet);
+    // const awsRet2 = await sendEmail({
+    //   Subject: "TEST 2: Medicaid SPA Package MD-22-4234 Withdraw Request",
+    //   HTML: "Could it be?",
+    //   CcAddresses: [],
+    //   ToAddresses: ["KristinState GrueAdmin <k.grue.stateadmn@gmail.com>"],
+    // });
+    // console.log("the second return is: ", awsRet2);
   } catch (e) {
     console.error("Failed to send acknowledgement emails", e);
   }
