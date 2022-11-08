@@ -22,7 +22,7 @@ Feature: OY2-11950 State should not be able to withdraw a package in OneMAC in S
         And click on Packages
         And Click on Filter Button
         And click on Status
-        And click all of the status checkboxes
+        And uncheck all of the status checkboxes
         And click the Withdrawn checkbox
         And click on Status
         And Click on Filter Button

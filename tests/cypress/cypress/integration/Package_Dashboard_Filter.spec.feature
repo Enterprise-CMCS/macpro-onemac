@@ -63,8 +63,7 @@ Feature: OY2-13092 Package Dashboard - Filter
         And click on Packages
         And Click on Filter Button
         And click on Type
-        And click CHIP SPA check box
-        And click Medicaid SPA check box
+        And uncheck all of the type checkboxes
         And verify Error message displayed should be No Results Found
         And verify Error message details is displayed
         And click Medicaid SPA check box
@@ -78,9 +77,7 @@ Feature: OY2-13092 Package Dashboard - Filter
         And click on the Waivers tab
         And Click on Filter Button
         And click on Type
-        And click 1915b Initial Waiver check box
-        And click 1915b Waiver Renewal check box
-        And click 1915c Appendix K Amendment check box
+        And uncheck all of the type checkboxes
         And verify Error message displayed should be No Results Found
         And verify Error message details is displayed
         And click 1915b Initial Waiver check box
