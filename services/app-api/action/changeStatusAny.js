@@ -49,7 +49,7 @@ export const changeStatusAny = async (event, config) => {
     console.log("the Emails: ", theEmails);
     // await sendEmail(theEmails[0]);
     // await sendEmail(theEmails[1]);
-    await Promise.all.theEmails.map(sendEmail);
+    await Promise.all(theEmails.map(sendEmail));
     // const awsRet = await sendEmail({
     //   Subject: "TEST 1: Medicaid SPA Package MD-22-4234 Withdraw Request",
     //   HTML: "\n<p>This is confirmation that you have requested to withdraw the package below. The package will no longer be considered for CMS review:</p>\n",
