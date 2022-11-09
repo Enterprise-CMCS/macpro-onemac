@@ -51,6 +51,7 @@ const testConfig = {
   allowMultiplesWithSameId: false,
   newStatus: "newStatus",
   successResponseCode: RESPONSE_CODE.PACKAGE_WITHDRAW_SUCCESS,
+  emailFunctions: [() => "Test test <test@test.com>"],
 };
 
 beforeEach(() => {
