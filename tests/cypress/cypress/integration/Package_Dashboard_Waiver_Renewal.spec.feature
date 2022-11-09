@@ -15,6 +15,7 @@ Feature: Waiver Renewal in Package Dashboard
     Scenario: Existing Waiver Number Input Field format
         And click on Waiver Renewal
         And Click on 1915 b 4 FFS Selective Contracting waivers under Waiver Authority
+        And verify help text under Existing Waiver Number to Renew field
         And type bad format into Existing Waiver Number to Renew field
         And type new waiver renewal number 2 in 1915b Waiver Renewal Number field
         And select proposed effective date 3 months from today

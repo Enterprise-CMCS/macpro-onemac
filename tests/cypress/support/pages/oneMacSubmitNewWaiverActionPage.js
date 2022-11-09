@@ -17,6 +17,7 @@ const parentIDInputBox = "#parent-componentId";
 const parentErrMsgForWaiverNumber = "#parent-componentIdStatusMsg0";
 const parentIDLabel =
   "//h3[text()='Approved Initial or Renewal Waiver Number']";
+const parentIDHelpText = "#parent-fieldHint0";
 
 export class oneMacSubmitNewWaiverActionPage {
   inputWaiverNumberNewForms(s) {
@@ -125,6 +126,11 @@ export class oneMacSubmitNewWaiverActionPage {
   }
   clearWaiverParentNumber() {
     cy.get(parentIDInputBox).clear();
+  }
+  verifyParentFieldHelpText() {
+    cy.get(parentIDHelpText).contains(
+      "Enter the existing waiver number in the format it was approved, using a dash after the two character state abbreviation"
+    );
   }
 }
 export default oneMacSubmitNewWaiverActionPage;
