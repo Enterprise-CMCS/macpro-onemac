@@ -2883,3 +2883,9 @@ And("type Appendix K Submission 1 into Amendment Title field", () => {
 And("verify id number in the first row matches Appendix K number", () => {
   OneMacPackagePage.verifyIDNumberInFirstRowIs("MD-10330.R00.12");
 });
+And(
+  "verify the error message for renewals includes For renewals, the “R##” starts with ‘01’ and ascends.",
+  () => {
+    OneMacSubmitNewWaiverActionPage.verifyRenewalWaiverErrorMsgPt2();
+  }
+);

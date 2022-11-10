@@ -3,6 +3,7 @@ const oldWaiverNumberInputBox = "#transmittal-number";
 const actionTypeDropDown = "#action-type";
 const oldErrMsgForWaiverNumber = "#transmittal-number-status-msg";
 const newErrMsgForWaiverNumber = "#componentIdStatusMsg0";
+const errorMsgPart2 = "#componentIdStatusMsg1";
 const waiverAuthority = "#waiver-authority";
 //this is xpath, use cy.xpath();
 const addFile1915b4 =
@@ -125,6 +126,12 @@ export class oneMacSubmitNewWaiverActionPage {
   }
   clearWaiverParentNumber() {
     cy.get(parentIDInputBox).clear();
+  }
+
+  verifyRenewalWaiverErrorMsgPt2() {
+    cy.get(errorMsgPart2).contains(
+      "For renewals, the “R##” starts with ‘01’ and ascends."
+    );
   }
 }
 export default oneMacSubmitNewWaiverActionPage;
