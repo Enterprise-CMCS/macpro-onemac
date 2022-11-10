@@ -35,7 +35,7 @@ export const temporaryExtensionFormInfo: OneMACFormConfig = {
   parentLabel: "Approved Initial or Renewal Waiver Number",
   parentFieldHint: [
     {
-      text: "Please enter the initial or renewal waiver number for which you are requesting a Temporary Extension.",
+      text: "Enter the existing waiver number in the format it was approved, using a dash after the two character state abbreviation.",
     },
   ],
   parentNotFoundMessage:

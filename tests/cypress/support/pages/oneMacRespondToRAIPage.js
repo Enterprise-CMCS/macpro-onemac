@@ -8,10 +8,23 @@ const prepopulatedWaiverNumber =
   "//h3[text()='Waiver Number']/following-sibling::div";
 const prepopulatedWaiverAmendmentNumber =
   "//h3[text()='Waiver Amendment Number']/following-sibling::div";
+const modalContainer = "#react-aria-modal-dialog";
+const modalTitle = "#dialog-title";
+const modalText = "#dialog-content";
 
 export class oneMacRespondToRAIPage {
   verifyPageHeader() {
     cy.xpath(pageHeader).should("be.visible");
+  }
+
+  verifyModalContainerExists() {
+    cy.get(modalContainer).should("be.visible");
+  }
+  verifyModalTitleIs(s) {
+    cy.get(modalTitle).contains(s);
+  }
+  verifyModalTextIs(s) {
+    cy.get(modalText).contains(s);
   }
 
   clickBackArrow() {
@@ -21,6 +34,7 @@ export class oneMacRespondToRAIPage {
   clickLeaveAnyway() {
     cy.xpath(leaveAnywaysBtn).click();
   }
+
   clickYesSubmitBTN() {
     cy.xpath(yesSubmitBtn).click();
     cy.wait(8000);

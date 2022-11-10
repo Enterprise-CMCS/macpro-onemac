@@ -153,6 +153,34 @@ And("Click on Submit Button", () => {
 And("Click the Submit Button without waiting", () => {
   OneMacDefaultForms.clicksubmitBTNWithoutWait();
 });
+And("verify the modal pop-up is visible", () => {
+  OneMacRespondToRAIPage.verifyModalContainerExists();
+});
+And(
+  "verify the title of the modal pop-up is Do you want to submit your official formal RAI response",
+  () => {
+    OneMacRespondToRAIPage.verifyModalTitleIs(
+      "Do you want to submit your official formal RAI response"
+    );
+  }
+);
+And(
+  "verify the detailed text in the modal contains you are submitting your official formal RAI Response to restart the SPA review process and a new 90th day will be identified",
+  () => {
+    OneMacRespondToRAIPage.verifyModalTextIs(
+      "you are submitting your official formal RAI Response to restart the SPA review process and a new 90th day will be identified."
+    );
+  }
+);
+And(
+  "verify the detailed text in the modal contains you are submitting your official formal RAI Response to start the 90 day clock review process",
+  () => {
+    OneMacRespondToRAIPage.verifyModalTextIs(
+      "you are submitting your official formal RAI Response to start the 90 day clock review process"
+    );
+  }
+);
+
 And("click yes, submit RAI response button", () => {
   OneMacRespondToRAIPage.clickYesSubmitBTN();
 });
@@ -1771,35 +1799,27 @@ And("verify the Waivers tab is clickable", () => {
 And("refresh the page", () => {
   cy.reload();
 });
-And("verify the Waiver Family # column does not exist", () => {
-  OneMacPackagePage.verifyWaiverFamilyNumColumnDoesNotExists();
-});
-And("verify the Waiver Family checkbox does not exist", () => {
-  OneMacPackagePage.verifyWaiverFamilyCheckboxDoesNotExists();
-});
-And("verify the Waivers Family # column exists", () => {
-  OneMacPackagePage.verifyWaiverFamilyNumColumnExists();
-});
-And("verify Waiver Family # column is sortable", () => {
-  OneMacPackagePage.verifyWaiverFamilyNumColumnIsSortable();
-});
-And("verify the Waiver family format in row one is SS.#### or SS.#####", () => {
-  OneMacPackagePage.verifyWaiverFamilyRowOneFormat();
-});
-And("verify the Waivers Family checkbox exists", () => {
-  OneMacPackagePage.verifyWaiverFamilyCheckboxExists();
-});
-And("click the Waivers Family checkbox", () => {
-  OneMacPackagePage.clickOnWaiverFamilyCheckbox();
-});
+
 And("verify that Clock Stopped checkbox exists", () => {
   OneMacPackagePage.verifyNinetiethDayClockStoppedCheckboxExists();
 });
-And("click all of the status checkboxes", () => {
-  OneMacPackagePage.clickAllStatusFilterCheckboxes();
+And("check all of the status checkboxes", () => {
+  OneMacPackagePage.checkAllStatusFilterCheckboxes();
+});
+And("uncheck all of the status checkboxes", () => {
+  OneMacPackagePage.uncheckAllStatusFilterCheckboxes();
+});
+And("check all of the type checkboxes", () => {
+  OneMacPackagePage.checkAllTypeFilterCheckboxes();
+});
+And("uncheck all of the type checkboxes", () => {
+  OneMacPackagePage.uncheckAllTypeFilterCheckboxes();
 });
 And("click RAI Issued checkbox", () => {
   OneMacPackagePage.clickRaiIssuedCheckbox();
+});
+And("click Package Approved checkbox", () => {
+  OneMacPackagePage.clickPackageApprovedCheckbox();
 });
 And(
   "verify that the value of the column for the 90th day is Clock Stopped",
@@ -2223,6 +2243,12 @@ And(
   }
 );
 And(
+  "verify the Appendix K RAI Responses caret at the top of the list exists and is enabled",
+  () => {
+    OneMacPackageDetailsPage.verifyAppKTopRaiRespCaretExistsAndEnabled();
+  }
+);
+And(
   "verify the title of the Medicaid RAI Responses caret at the top of the list is in Submitted on format",
   () => {
     OneMacPackageDetailsPage.verifyMedicaidTopRaiRespCaretTitle();
@@ -2235,6 +2261,12 @@ And(
   }
 );
 And(
+  "verify the title of the Appendix K RAI Responses caret at the top of the list is in Submitted on format",
+  () => {
+    OneMacPackageDetailsPage.verifyAppKTopRaiRespCaretTitle();
+  }
+);
+And(
   "verify the Medicaid RAI response card at the top of the list exists",
   () => {
     OneMacPackageDetailsPage.verifyMedicaidTopRaiRespCardExists();
@@ -2243,6 +2275,12 @@ And(
 And("verify the CHIP RAI response card at the top of the list exists", () => {
   OneMacPackageDetailsPage.verifyCHIPTopRaiRespCardExists();
 });
+And(
+  "verify the Appendix K RAI response card at the top of the list exists",
+  () => {
+    OneMacPackageDetailsPage.verifyAppKTopRaiRespCardExists();
+  }
+);
 And(
   "verify the download button for the Medicaid RAI response at the top of the list exists",
   () => {
@@ -2253,6 +2291,12 @@ And(
   "verify the download button for the CHIP RAI response at the top of the list exists",
   () => {
     OneMacPackageDetailsPage.verifyCHIPTopRaiRespDownloadBtnExistsAndEnabled();
+  }
+);
+And(
+  "verify the download button for the Appendix K RAI response at the top of the list exists",
+  () => {
+    OneMacPackageDetailsPage.verifyAppKTopRaiRespDownloadBtnxistsAndEnabled();
   }
 );
 And("verify the first RAI response does not have Additional Info", () => {
@@ -2839,3 +2883,14 @@ And("type Appendix K Submission 1 into Amendment Title field", () => {
 And("verify id number in the first row matches Appendix K number", () => {
   OneMacPackagePage.verifyIDNumberInFirstRowIs("MD-10330.R00.12");
 });
+
+And("verify help text under Existing Waiver Number to Renew field", () => {
+  OneMacSubmitNewWaiverActionPage.verifyParentFieldHelpText();
+});
+
+And(
+  "verify the error message for renewals includes For renewals, the “R##” starts with ‘01’ and ascends.",
+  () => {
+    OneMacSubmitNewWaiverActionPage.verifyRenewalWaiverErrorMsgPt2();
+  }
+);

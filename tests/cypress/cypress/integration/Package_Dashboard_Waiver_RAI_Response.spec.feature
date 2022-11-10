@@ -13,7 +13,11 @@ Feature: RAI Response for Initial Waiver - Package View
         And click the Respond to RAI button
         And verify the Initial Waiver Number in RAI Issued status is pre-populated and uneditable
         And Add file for Waiver RAI Response
-        And Click on Submit Button
+        And Click the Submit Button without waiting
+        And verify the modal pop-up is visible
+        And verify the title of the modal pop-up is Do you want to submit your official formal RAI response
+        And verify the detailed text in the modal contains you are submitting your official formal RAI Response to start the 90 day clock review process
+        And click yes, submit RAI response button
         And verify submission successful message in the alert bar
 
     Scenario: Respond to RAI from package details page
@@ -21,5 +25,9 @@ Feature: RAI Response for Initial Waiver - Package View
         And click on Respond to RAI package action
         And verify the Initial Waiver Number in RAI Issued status is pre-populated and uneditable
         And Add file for Waiver RAI Response
-        And Click on Submit Button
+        And Click the Submit Button without waiting
+        And verify the modal pop-up is visible
+        And verify the title of the modal pop-up is Do you want to submit your official formal RAI response
+        And verify the detailed text in the modal contains you are submitting your official formal RAI Response to start the 90 day clock review process
+        And click yes, submit RAI response button
         And verify submission successful message in the alert bar

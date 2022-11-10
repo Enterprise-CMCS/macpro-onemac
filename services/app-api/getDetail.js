@@ -54,9 +54,10 @@ export const getDetails = async (event) => {
     },
   };
 
-  const raiComponentType = componentType.includes("waiver")
-    ? "waiver"
-    : componentType;
+  const raiComponentType =
+    componentType.includes("waiver") && componentType !== "waiverappk"
+      ? "waiver"
+      : componentType;
   const raiSk = `v0#${raiComponentType}rai`;
   const raiParams = {
     TableName: process.env.oneMacTableName,

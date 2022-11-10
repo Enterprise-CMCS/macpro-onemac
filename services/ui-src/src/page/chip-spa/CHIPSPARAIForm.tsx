@@ -1,6 +1,10 @@
 import React, { FC } from "react";
 import OneMACForm from "../OneMACForm";
-import { defaultOneMACFormConfig, OneMACFormConfig } from "../../libs/formLib";
+import {
+  defaultConfirmSubmitHeadingRAI,
+  defaultOneMACFormConfig,
+  OneMACFormConfig,
+} from "../../libs/formLib";
 import { ONEMAC_ROUTES, chipSPARAIResponse } from "cmscommonlib";
 import { FormLocationState } from "../../domain-types";
 import { useLocation } from "react-router-dom";
@@ -11,7 +15,16 @@ export const chipSPARAIFormInfo: OneMACFormConfig = {
   pageTitle: "Formal Request for Additional Information Response",
   detailsHeader: "Formal CHIP SPA RAI",
   landingPage: ONEMAC_ROUTES.CHIP_SPA_DETAIL,
-  confirmSubmit: true,
+  confirmSubmit: {
+    confirmSubmitHeading: defaultConfirmSubmitHeadingRAI,
+    confirmSubmitMessage: (
+      <p>
+        By Clicking <b>Yes, Submit</b>, you are submitting your official formal
+        RAI Response to restart the SPA review process and a new 90th day will
+        be identified.
+      </p>
+    ),
+  },
 };
 
 const CHIPSPARAIForm: FC = () => {

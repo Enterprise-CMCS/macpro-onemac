@@ -13,13 +13,41 @@ Feature: RAI Response for Appendix K Amendment - Package View
         And click the Respond to RAI button
         And verify the Appendix K Amendment in RAI Issued status is pre-populated and uneditable
         And Add file for Waiver RAI Response
-        And Click on Submit Button
+        And Click the Submit Button without waiting
+        And verify the modal pop-up is visible
+        And verify the title of the modal pop-up is Do you want to submit your official formal RAI response
+        And verify the detailed text in the modal contains you are submitting your official formal RAI Response to start the 90 day clock review process
+        And click yes, submit RAI response button
         And verify submission successful message in the alert bar
+        And verify the Waivers tab is selected
+        And search for the Appendix K Amendment in RAI Issued status
+        And click the Waiver Number link in the first row
+        And verify RAI Responses header exists
+        And verify the first RAI Response header is titled
+        And verify the Appendix K RAI Responses caret at the top of the list exists and is enabled
+        And verify the title of the Appendix K RAI Responses caret at the top of the list is in Submitted on format
+        And verify the Appendix K RAI response card at the top of the list exists
+        And verify the download button for the Appendix K RAI response at the top of the list exists
+        And verify the first RAI response does not have Additional Info
 
     Scenario: Respond to RAI from package details page
         And click the Waiver Number link in the first row
         And click on Respond to RAI package action
         And verify the Appendix K Amendment in RAI Issued status is pre-populated and uneditable
         And Add file for Waiver RAI Response
-        And Click on Submit Button
+        And Click the Submit Button without waiting
+        And verify the modal pop-up is visible
+        And verify the title of the modal pop-up is Do you want to submit your official formal RAI response
+        And verify the detailed text in the modal contains you are submitting your official formal RAI Response to start the 90 day clock review process
+        And click yes, submit RAI response button
         And verify submission successful message in the alert bar
+        And verify the Waivers tab is selected
+        And search for the Appendix K Amendment in RAI Issued status
+        And click the Waiver Number link in the first row
+        And verify RAI Responses header exists
+        And verify the first RAI Response header is titled
+        And verify the Appendix K RAI Responses caret at the top of the list exists and is enabled
+        And verify the title of the Appendix K RAI Responses caret at the top of the list is in Submitted on format
+        And verify the Appendix K RAI response card at the top of the list exists
+        And verify the download button for the Appendix K RAI response at the top of the list exists
+        And verify the first RAI response does not have Additional Info
