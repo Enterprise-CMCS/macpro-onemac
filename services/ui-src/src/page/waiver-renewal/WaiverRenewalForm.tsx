@@ -28,7 +28,7 @@ export const waiverRenewalFormInfo: OneMACFormConfig = {
   parentLabel: "Existing Waiver Number to Renew",
   parentFieldHint: [
     {
-      text: "Enter the currently approved waiver number to renew.",
+      text: "Enter the existing waiver number in the format it was approved, using a dash after the two character state abbreviation.",
     },
   ],
   parentNotFoundMessage:
