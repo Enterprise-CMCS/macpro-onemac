@@ -40,6 +40,7 @@ Feature: Waiver Renewal in Package Dashboard
         And select proposed effective date 3 months from today
         And Upload 1915 b 4 file
         And verify error message is present on package dashboard New Waiver Page
+        And verify the error message for renewals includes For renewals, the “R##” starts with ‘01’ and ascends.
         And verify the submit button is disabled
         And clear 1915b Waiver Renewal Number field
         And type new waiver renewal number 2 in 1915b Waiver Renewal Number field
@@ -48,6 +49,7 @@ Feature: Waiver Renewal in Package Dashboard
         And clear 1915b Waiver Renewal Number field
         And type bad format into 1915b Waiver Renewal Number field
         And verify error message is present on package dashboard New Waiver Page
+        And verify the error message for renewals includes For renewals, the “R##” starts with ‘01’ and ascends.
         And verify the submit button is disabled
         And clear 1915b Waiver Renewal Number field
 
