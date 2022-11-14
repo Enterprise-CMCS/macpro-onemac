@@ -46,13 +46,17 @@ export const getAllActiveStateUserEmailAddresses = async (territory) => {
  * @param {Object} config for the package.
  * @returns {Object} email parameters in generic format.
  */
-export const stateWithdrawalReceipt = async (data, config) => {
+export const stateWithdrawalReceipt = async (data, config, user) => {
   const stateReceipt = {
     ToAddresses: [],
     CcAddresses: [],
     Subject: `${config.typeLabel} Package ${data.componentId} Withdraw Request`,
     HTML: `
-        <p>This is confirmation that you have requested to withdraw the package below. The package will no longer be considered for CMS review:</p>
+        <p>The OneMAC submission portal received a request to withdraw a package. You are receiving this email notification as ${
+          data.componentId
+        } was withdrawn by ${user.fullName} and ${
+      user.email
+    }. The package will no longer be considered for CMS review.</p>
         ${formatPackageDetails(data, config)}
         <p>Thank you!</p>
         `,
