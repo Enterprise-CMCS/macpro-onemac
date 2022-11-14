@@ -27,6 +27,7 @@ services=(
   'ui'
   'uploads'
   'app-api'
+  'one-stream'
   #'stream-functions'
   'ui-waf-log-assoc'
   'ui-auth'
