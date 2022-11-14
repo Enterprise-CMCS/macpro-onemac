@@ -94,6 +94,13 @@ Resources:
                   - dynamodb:UpdateItem
                   - dynamodb:DeleteItem
                 Resource: arn:aws:dynamodb:*:*:table/${self:custom.oneMacTableName}
+              - Effect: 'Allow'
+                Action:
+                  - dynamodb:DescribeStream
+                  - dynamodb:GetRecords
+                  - dynamodb:GetShardIterator
+                  - dynamodb:ListStreams
+                Resource: !GetAtt OneMacTable.StreamArn
               - Effect: Allow
                 Action:
                   - dynamodb:Query
