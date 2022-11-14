@@ -451,19 +451,6 @@ functions:
           cors: true
           authorizer: aws_iam
 
-  handleOneStream:
-    handler: handleOneStream.main
-    events:
-      - stream:
-          arn: !GetAtt OneMacTable.StreamArn
-          startingPosition: LATEST
-          maximumRetryAttempts: 2
-    role: LambdaApiRole
-    environment:
-      STAGE: ${self:custom.stage}
-      oneMacTableName: ${self:custom.oneMacTableName}
-    maximumRetryAttempts: 2
-
 resources:
   - ${file(resources/base.yml)}
 
