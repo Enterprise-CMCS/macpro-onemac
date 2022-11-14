@@ -19,5 +19,5 @@ it("builds the CMS Withdrawal Notice Email", async () => {
   };
 
   const response2 = CMSWithdrawalNotice(testData, testConfig, user);
-  expect(response2.HTML.length).toBe(402);
+  expect(response2.HTML.length).toBe(499);
 });
