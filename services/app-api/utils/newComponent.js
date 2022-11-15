@@ -6,7 +6,7 @@ const topLevelAttributes = [
   "GSI1sk",
   "GSI2pk",
   "GSI2sk",
-  "componentId",
+  // "componentId",
   "componentType",
   "submissionTimestamp",
   "proposedEffectiveDate",
@@ -44,6 +44,8 @@ export default async function newComponent(newData, config) {
       sk,
     },
     ConditionExpression: "attribute_not_exists(pk)",
+    ExpressionAttributeValues: { ":componentId": newData.componentId },
+    UpdateExpression: "SET componentId = :componentId",
   };
 
   topLevelAttributes.forEach((attributeName) => {
