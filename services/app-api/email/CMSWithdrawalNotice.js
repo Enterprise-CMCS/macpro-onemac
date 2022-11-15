@@ -15,9 +15,8 @@ export const CMSWithdrawalNotice = (data, config, user) => ({
   HTML: `
       <p>The OneMAC submission portal received a request to withdraw a package. You are receiving this email notification as ${
         data.componentId
-      } was withdrawn by ${user.fullName} and ${
-    user.email
-  }. The package will no longer be considered for CMS review.</p>
+      } was withdrawn by ${user.fullName} (${user.email}). 
+      The package will no longer be considered for CMS review.</p>
       ${formatPackageDetails(data, config)}
       <p>Thank you!</p>
     `,
