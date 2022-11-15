@@ -1,4 +1,5 @@
-import updateWithVersion from "./updateWithVersion";
+//import updateWithVersion from "./updateWithVersion";
+import dynamoDb from "../libs/dynamodb-lib";
 
 const topLevelAttributes = [
   "GSI1pk",
@@ -25,8 +26,7 @@ const topLevelAttributes = [
 
 export default async function newComponent(newData, config) {
   const pk = newData.componentId;
-  let sk = config.componentType;
-  if (config.allowMultiplesWithSameId) sk += `#${newData.submissionTimestamp}`;
+  const sk = `OneMAC#${newData.submissionTimestamp}`;
   newData.componentType = config.componentType;
 
   if (config.whichTab) {
@@ -37,40 +37,25 @@ export default async function newComponent(newData, config) {
     newData.GSI2pk = newData.parentId;
     newData.GSI2sk = config.componentType;
   }
-  console.log("newData is: ", newData);
-
   const params = {
     TableName: process.env.oneMacTableName,
     Key: {
       pk,
       sk,
     },
-    UpdateExpression:
-      "SET Latest = if_not_exists(Latest, :defaultval) + :incrval",
-    ExpressionAttributeValues: {
-      ":defaultval": 0,
-      ":incrval": 1,
-      //      ":emptyList": [],
-    },
+    ConditionExpression: "attribute_not_exists(pk)",
   };
 
-  if (!config.allowMultiplesWithSameId) {
-    params.ConditionExpression = "attribute_not_exists(pk)";
-  }
-
-  console.log("params in newComponent are: ", params);
   topLevelAttributes.forEach((attributeName) => {
     if (newData[attributeName]) {
       const label = `:${attributeName}`;
       params.ExpressionAttributeValues[label] = newData[attributeName];
-      //      if (Array.isArray(newData[attributeName]))
-      //        params.UpdateExpression += `, ${attributeName} = list_append(:emptyList, ${label})`;
-      //      else
       params.UpdateExpression += `, ${attributeName} = ${label}`;
     }
   });
 
   console.log("params in newComponent are: ", JSON.stringify(params, null, 2));
+  return await dynamoDb.update(params);
 
-  return await updateWithVersion(params);
+  //  return await updateWithVersion(params);
 }
