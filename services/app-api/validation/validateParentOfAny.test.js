@@ -1,13 +1,22 @@
-import dynamoDb from "../libs/dynamodb-lib";
+import AWS from "aws-sdk";
 import { validateParentOfAny } from "./validateParentOfAny";
 
-jest.mock("../libs/dynamodb-lib");
+jest.mock("aws-sdk");
+AWS.DynamoDB.DocumentClient.mockImplementation(() => {
+  return {
+    query: () => ({ Attributes: { Latest: 2 } }),
+    put: () => {},
+  };
+});
 
 beforeEach(() => {
   jest.clearAllMocks();
 
-  dynamoDb.query.mockImplementation(() => {
-    return { Attributes: { Latest: 2 } };
+  AWS.DynamoDB.DocumentClient.mockImplementation(() => {
+    return {
+      query: () => ({ Attributes: { Latest: 2 } }),
+      put: () => {},
+    };
   });
 });
 
@@ -36,7 +45,13 @@ const queryResults2 = {
 };
 
 it("returns false if it does not find the parent", async () => {
-  dynamoDb.query.mockResolvedValue(queryResults0);
+  AWS.DynamoDB.DocumentClient.mockImplementation(() => {
+    return {
+      query: () => queryResults0,
+      put: () => {},
+    };
+  });
+  // dynamoDb.query.mockResolvedValue(queryResults0);
 
   expect(validateParentOfAny(testEvent, testConfig1))
     .resolves.toEqual(false)
@@ -46,7 +61,13 @@ it("returns false if it does not find the parent", async () => {
 });
 
 it("returns true if any Items return and there are no config specifics", async () => {
-  dynamoDb.query.mockResolvedValue(queryResults1);
+  AWS.DynamoDB.DocumentClient.mockImplementation(() => {
+    return {
+      query: () => queryResults1,
+      put: () => {},
+    };
+  });
+  // dynamoDb.query.mockResolvedValue(queryResults1);
 
   expect(validateParentOfAny(testEvent, testConfig1))
     .resolves.toEqual(true)
@@ -56,7 +77,13 @@ it("returns true if any Items return and there are no config specifics", async (
 });
 
 it("returns false if Items do not match config specifics", async () => {
-  dynamoDb.query.mockResolvedValue(queryResults1);
+  AWS.DynamoDB.DocumentClient.mockImplementation(() => {
+    return {
+      query: () => queryResults1,
+      put: () => {},
+    };
+  });
+  // dynamoDb.query.mockResolvedValue(queryResults1);
 
   expect(validateParentOfAny(testEvent, testConfig2))
     .resolves.toEqual(false)
@@ -66,7 +93,13 @@ it("returns false if Items do not match config specifics", async () => {
 });
 
 it("returns true if an Item does match config specifics", async () => {
-  dynamoDb.query.mockResolvedValue(queryResults2);
+  AWS.DynamoDB.DocumentClient.mockImplementation(() => {
+    return {
+      query: () => queryResults2,
+      put: () => {},
+    };
+  });
+  // dynamoDb.query.mockResolvedValue(queryResults2);
 
   expect(validateParentOfAny(testEvent, testConfig2))
     .resolves.toEqual(true)

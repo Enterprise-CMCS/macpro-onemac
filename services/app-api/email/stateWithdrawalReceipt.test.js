@@ -1,19 +1,21 @@
-import dynamoDb from "../libs/dynamodb-lib";
+import AWS from "aws-sdk";
 import {
   stateWithdrawalReceipt,
   getAllActiveStateUserEmailAddresses,
 } from "./stateWithdrawalReceipt";
 
-jest.mock("../libs/dynamodb-lib");
+jest.mock("aws-sdk");
 
-dynamoDb.query.mockImplementation(() => {
+AWS.DynamoDB.DocumentClient.mockImplementation(() => {
   return {
-    Items: [
-      {
-        fullname: "test test",
-        email: "test@test.com",
-      },
-    ],
+    query: () => ({
+      Items: [
+        {
+          fullname: "test test",
+          email: "test@test.com",
+        },
+      ],
+    }),
   };
 });
 
@@ -39,9 +41,14 @@ it("builds the State Withdrawal Receipt Email", async () => {
 });
 
 it("handles a query exception", async () => {
-  dynamoDb.query.mockImplementationOnce(() => {
-    throw new Error("this is an error");
+  AWS.DynamoDB.DocumentClient.mockImplementation(() => {
+    return {
+      query: () => {
+        throw new Error("this is an error");
+      },
+    };
   });
+
   try {
     expect(await getAllActiveStateUserEmailAddresses("TT")).toThrow(
       "this is an error"

@@ -1,20 +1,22 @@
-import dynamoDb from "./libs/dynamodb-lib";
+import AWS from "aws-sdk";
 import { main } from "./getMyApprovers";
 
-jest.mock("./libs/dynamodb-lib");
+jest.mock("aws-sdk");
 
 beforeAll(() => {
   jest.clearAllMocks();
 
-  dynamoDb.query.mockImplementation(() => {
+  AWS.DynamoDB.DocumentClient.mockImplementation(() => {
     return {
-      Items: [
-        {
-          email: "systemadmintest@cms.hhs.local",
-          firstName: "Teresa",
-          lastName: "Test",
-        },
-      ],
+      query: () => ({
+        Items: [
+          {
+            email: "systemadmintest@cms.hhs.local",
+            firstName: "Teresa",
+            lastName: "Test",
+          },
+        ],
+      }),
     };
   });
 });
@@ -71,8 +73,13 @@ it("catches any exception from dynamo query", async () => {
       "Access-Control-Allow-Credentials": true,
     },
   };
-  dynamoDb.query.mockImplementationOnce(() => {
-    throw new Error();
+
+  AWS.DynamoDB.DocumentClient.mockImplementation(() => {
+    return {
+      query: () => {
+        throw new Error();
+      },
+    };
   });
 
   expect(main(eventObject))

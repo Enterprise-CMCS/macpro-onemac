@@ -1,15 +1,17 @@
-import dynamoDb from "../libs/dynamodb-lib";
+import AWS from "aws-sdk";
 import updateWithVersion from "./updateWithVersion";
 
-jest.mock("../libs/dynamodb-lib");
+jest.mock("aws-sdk");
 
 beforeAll(() => {
   jest.clearAllMocks();
 
-  dynamoDb.update.mockImplementation(() => {
-    return { Attributes: { Latest: 2, pk: "aPK", sk: `v0#anSK` } };
+  AWS.DynamoDB.DocumentClient.mockImplementation(() => {
+    return {
+      update: () => ({ Attributes: { Latest: 2, pk: "aPK", sk: `v0#anSK` } }),
+      put: () => {},
+    };
   });
-  dynamoDb.put.mockImplementation(() => {});
 });
 
 const testParams = {
@@ -34,8 +36,13 @@ it("passes Update exceptions up to the caller", async () => {
     code: "ConditionalCheckFailedException",
     message: "an error",
   });
-  dynamoDb.update.mockImplementation(() => {
-    throw theError;
+  AWS.DynamoDB.DocumentClient.mockImplementation(() => {
+    return {
+      update: () => {
+        throw theError;
+      },
+      put: () => {},
+    };
   });
   expect(updateWithVersion(testParams))
     .rejects.toThrow(theError)

@@ -1,15 +1,17 @@
-import dynamoDb from "../libs/dynamodb-lib";
+import AWS from "aws-sdk";
 import { buildSK, changeUserStatus } from "./changeUserStatus";
 
-jest.mock("../libs/dynamodb-lib");
+jest.mock("aws-sdk");
 
 beforeAll(() => {
   jest.clearAllMocks();
 
-  dynamoDb.update.mockImplementation(() => {
-    return { Attributes: { Latest: 2 } };
+  AWS.DynamoDB.DocumentClient.mockImplementation(() => {
+    return {
+      update: () => ({ Attributes: { Latest: 2 } }),
+      put: () => {},
+    };
   });
-  dynamoDb.put.mockImplementation(() => {});
 });
 
 const testParams = {
@@ -53,9 +55,15 @@ it("runs without crashing with different variables", async () => {
 });
 
 it("handles a put exception", () => {
-  dynamoDb.put.mockImplementationOnce(() => {
-    throw new Error("an exception");
+  AWS.DynamoDB.DocumentClient.mockImplementation(() => {
+    return {
+      update: () => ({ Attributes: { Latest: 2 } }),
+      put: () => {
+        throw new Error("an exception");
+      },
+    };
   });
+
   expect(() => changeUserStatus(testParams))
     .rejects.toThrow("an exception")
     .catch((error) => {

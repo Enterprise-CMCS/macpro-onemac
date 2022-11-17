@@ -1,12 +1,16 @@
-import dynamoDb from "../libs/dynamodb-lib";
+import AWS from "aws-sdk";
 import { newUser } from "./newUser";
 
-jest.mock("../libs/dynamodb-lib");
+jest.mock("aws-sdk");
 
 beforeAll(() => {
   jest.clearAllMocks();
 
-  dynamoDb.put.mockResolvedValue({});
+  AWS.DynamoDB.DocumentClient.mockImplementation(() => {
+    return {
+      put: () => {},
+    };
+  });
 });
 
 const testData = {
@@ -27,9 +31,14 @@ it("calls the update", () => {
 });
 
 it("handles a put exception", () => {
-  dynamoDb.put.mockImplementationOnce(() => {
-    throw new Error("an exception");
+  AWS.DynamoDB.DocumentClient.mockImplementation(() => {
+    return {
+      put: () => {
+        throw new Error("an exception");
+      },
+    };
   });
+
   expect(() => newUser(testData))
     .rejects.toThrow("an exception")
     .catch((error) => {

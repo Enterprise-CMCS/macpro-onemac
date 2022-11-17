@@ -1,11 +1,9 @@
-import dynamoDb from "./libs/dynamodb-lib";
 import AWS from "aws-sdk";
 import { main, getDetails } from "./getDetail";
 import { getUser } from "./getUser";
 import { RESPONSE_CODE } from "cmscommonlib";
 
 jest.mock("./getUser");
-jest.mock("./libs/dynamodb-lib");
 jest.mock("aws-sdk");
 
 beforeAll(() => {
@@ -74,14 +72,17 @@ const testItems = [{ id: 1234 }];
 beforeEach(() => {
   getUser.mockResolvedValue(validDoneBy);
 
-  dynamoDb.get.mockResolvedValue({
-    Item: {
-      field1: "one",
-      attachments: [{ url: "aURL" }, { url: "anotherURL" }],
-    },
+  AWS.DynamoDB.DocumentClient.mockImplementation(() => {
+    return {
+      get: () => ({
+        Item: {
+          field1: "one",
+          attachments: [{ url: "aURL" }, { url: "anotherURL" }],
+        },
+      }),
+      query: () => ({ Items: testItems, Count: 1 }),
+    };
   });
-
-  dynamoDb.query.mockResolvedValue({ Items: testItems, Count: 1 });
 
   AWS.S3.mockImplementation(() => {
     return {
@@ -136,7 +137,19 @@ describe("handles errors and exceptions", () => {
 
   it("handles dynamo exception", async () => {
     const expectedReturn = {};
-    dynamoDb.query.mockRejectedValueOnce("dynamoDb exception");
+    AWS.DynamoDB.DocumentClient.mockImplementation(() => {
+      return {
+        get: () => ({
+          Item: {
+            field1: "one",
+            attachments: [{ url: "aURL" }, { url: "anotherURL" }],
+          },
+        }),
+        query: () => {
+          throw "dynamoDb exception";
+        },
+      };
+    });
 
     await expect(getDetails(validEvent))
       .resolves.toStrictEqual(expectedReturn)
@@ -148,7 +161,12 @@ describe("handles errors and exceptions", () => {
 
 describe("component details are returned", () => {
   it("returns empty object if no results", async () => {
-    dynamoDb.get.mockResolvedValueOnce({ notAnItem: "something" });
+    AWS.DynamoDB.DocumentClient.mockImplementation(() => {
+      return {
+        get: () => ({ notAnItem: "something" }),
+        query: () => ({ Items: testItems, Count: 1 }),
+      };
+    });
 
     await expect(getDetails(validEvent))
       .resolves.toStrictEqual({})
@@ -198,7 +216,17 @@ describe("component details are returned", () => {
 
 describe("rai responses are returned", () => {
   it("returns rai responses if spa type", async () => {
-    dynamoDb.query.mockResolvedValue({ Items: [{ item: "any" }], Count: 1 });
+    AWS.DynamoDB.DocumentClient.mockImplementation(() => {
+      return {
+        get: () => ({
+          Item: {
+            field1: "one",
+            attachments: [{ url: "aURL" }, { url: "anotherURL" }],
+          },
+        }),
+        query: () => ({ Items: [{ item: "any" }], Count: 1 }),
+      };
+    });
     await expect(getDetails(validEvent))
       .resolves.toStrictEqual({
         field1: "one",

@@ -1,8 +1,13 @@
-import dynamoDb from "../libs/dynamodb-lib";
+import AWS from "aws-sdk";
 import updateParent from "./updateParent";
 
-jest.mock("../libs/dynamodb-lib");
-dynamoDb.update.mockResolvedValue({});
+jest.mock("aws-sdk");
+AWS.DynamoDB.DocumentClient.mockImplementation(() => {
+  return {
+    update: () => ({}),
+    put: () => {},
+  };
+});
 
 const mockReturnedParent = {
   Item: {
@@ -33,7 +38,11 @@ describe("parents can be updated", () => {
       componentType: "componentType",
       currentStatus: "currentStatus",
     };
-    dynamoDb.update.mockResolvedValue(mockReturnedUpdate);
+    AWS.DynamoDB.DocumentClient.mockImplementation(() => {
+      return {
+        update: () => mockReturnedUpdate,
+      };
+    });
     expect(updateParent(testData))
       .resolves.toBe(mockReturnedUpdate)
       .catch((error) => {
@@ -42,8 +51,13 @@ describe("parents can be updated", () => {
   });
 
   it("calls update children if found", () => {
-    dynamoDb.get.mockResolvedValue(mockReturnedParent);
-    dynamoDb.update.mockResolvedValue(mockReturnedUpdate);
+    AWS.DynamoDB.DocumentClient.mockImplementation(() => {
+      return {
+        get: () => mockReturnedParent,
+        update: () => mockReturnedUpdate,
+      };
+    });
+
     const testData = {
       submissionTimestamp: "timestamp",
       parentId: "parentId",
@@ -69,10 +83,13 @@ describe("parents can be updated", () => {
       componentType: "componentType",
       currentStatus: "currentStatus",
     };
-    dynamoDb.update.mockResolvedValue(mockReturnedUpdate);
-    const mockError = new Error("Put error");
-    dynamoDb.put.mockImplementation(() => {
-      throw mockError;
+    AWS.DynamoDB.DocumentClient.mockImplementation(() => {
+      return {
+        put: () => {
+          throw new Error("Put error");
+        },
+        update: () => mockReturnedUpdate,
+      };
     });
     const logSpy = jest.spyOn(console, "log");
 

@@ -1,11 +1,11 @@
+import AWS from "aws-sdk";
 import { main } from "./submit";
 import { RESPONSE_CODE } from "cmscommonlib";
-import dynamoDb from "./libs/dynamodb-lib";
 import { getUser } from "./getUser";
 import sendEmail from "./libs/email-lib";
 import packageExists from "./utils/packageExists";
 
-jest.mock("./libs/dynamodb-lib");
+jest.mock("aws-sdk");
 jest.mock("./getUser");
 jest.mock("./libs/email-lib");
 jest.mock("./utils/packageExists");
@@ -57,9 +57,12 @@ beforeEach(() => {
   getUser.mockImplementation(() => {
     return validDoneBy;
   });
-
-  dynamoDb.put.mockImplementation(() => {
-    return;
+  AWS.DynamoDB.DocumentClient.mockImplementation(() => {
+    return {
+      put: () => {
+        return;
+      },
+    };
   });
 
   sendEmail.mockImplementation(() => {

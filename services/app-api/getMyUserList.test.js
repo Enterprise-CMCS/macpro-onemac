@@ -1,7 +1,9 @@
-import dynamoDb from "./libs/dynamodb-lib";
+import AWS from "aws-sdk";
 import { getUser } from "./getUser";
 import { getMyUserList, buildParams } from "./getMyUserList";
 import { RESPONSE_CODE, /*getUserRoleObj,*/ USER_ROLE } from "cmscommonlib";
+
+jest.mock("aws-sdk");
 
 const testDoneBy = {
   roleList: [{ role: "statesystemadmin", status: "active", territory: "MD" }],
@@ -28,7 +30,6 @@ const testCantBeDoneBy = {
 };
 
 jest.mock("./getUser");
-jest.mock("./libs/dynamodb-lib");
 //jest.mock("cmscommonlib");
 
 beforeAll(() => {
@@ -40,8 +41,10 @@ beforeAll(() => {
   /* getUserRoleObj.mockImplementation(() => {
     return { canAccessUserManagement: true };
   }); */
-  dynamoDb.query.mockImplementation(() => {
-    return { Items: "something" };
+  AWS.DynamoDB.DocumentClient.mockImplementation(() => {
+    return {
+      query: () => ({ Items: "something" }),
+    };
   });
 });
 
@@ -174,8 +177,12 @@ it("returns Items when successful", async () => {
 });
 
 it("handle exceptions", async () => {
-  dynamoDb.query.mockImplementationOnce(() => {
-    throw "an exception";
+  AWS.DynamoDB.DocumentClient.mockImplementation(() => {
+    return {
+      query: () => {
+        throw "an exception";
+      },
+    };
   });
 
   const expectedReturn = RESPONSE_CODE.DATA_RETRIEVAL_ERROR;

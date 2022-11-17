@@ -1,9 +1,13 @@
-import dynamoDb from "../libs/dynamodb-lib";
+import AWS from "aws-sdk";
 import newComponent from "./newComponent";
 
-jest.mock("../libs/dynamodb-lib");
-dynamoDb.put.mockResolvedValue({});
-dynamoDb.update.mockResolvedValue({ Attributes: { Latest: 2 } });
+jest.mock("aws-sdk");
+AWS.DynamoDB.DocumentClient.mockImplementation(() => {
+  return {
+    update: () => ({ Attributes: { Latest: 2 } }),
+    put: () => {},
+  };
+});
 
 jest.mock("cmscommonlib");
 
@@ -66,8 +70,13 @@ it("handles excpetions", () => {
     componentType: "aType",
     getParentInfo: (id) => [id, "parentType"],
   };
-  dynamoDb.update.mockImplementation(() => {
-    throw new Error("this error");
+  AWS.DynamoDB.DocumentClient.mockImplementation(() => {
+    return {
+      update: () => {
+        throw new Error("this error");
+      },
+      put: () => {},
+    };
   });
 
   expect(newComponent(testDataChild, testConfigChild))

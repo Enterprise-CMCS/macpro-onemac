@@ -1,12 +1,14 @@
+import AWS from "aws-sdk";
 import { main } from "./putPhoneNumber";
 
 import { RESPONSE_CODE } from "cmscommonlib";
-import dynamoDb from "./libs/dynamodb-lib";
 
-jest.mock("./libs/dynamodb-lib");
+jest.mock("aws-sdk");
 
-dynamoDb.update.mockImplementation(() => {
-  return true;
+AWS.DynamoDB.DocumentClient.mockImplementation(() => {
+  return {
+    update: () => true,
+  };
 });
 
 const mockObject = {
@@ -48,17 +50,13 @@ it("validation of input", () => {
     });
 });
 
-it("runs through validation of input and tries to update dynamoDb, exception", () => {
-  dynamoDb.update.mockImplementation(() => {
-    throw "Error";
-  });
-
+it("runs through validation of input and tries to update dynamoDb, success", () => {
   mockObject.body = JSON.stringify({
     id: "statesubmitteractive@cms.hhs.local",
     phoneNumber: "5558773444",
   });
 
-  expectedResponse.body = JSON.stringify(RESPONSE_CODE.USER_SUBMISSION_FAILED);
+  expectedResponse.body = JSON.stringify(RESPONSE_CODE.USER_SUBMITTED);
 
   expect(main(mockObject))
     .resolves.toStrictEqual(expectedResponse)
@@ -67,9 +65,13 @@ it("runs through validation of input and tries to update dynamoDb, exception", (
     });
 });
 
-it("runs through validation of input and tries to update dynamoDb, success", () => {
-  dynamoDb.update.mockImplementation(() => {
-    return true;
+it("runs through validation of input and tries to update dynamoDb, exception", () => {
+  AWS.DynamoDB.DocumentClient.mockImplementation(() => {
+    return {
+      update: () => {
+        throw "Error";
+      },
+    };
   });
 
   mockObject.body = JSON.stringify({
@@ -77,7 +79,7 @@ it("runs through validation of input and tries to update dynamoDb, success", () 
     phoneNumber: "5558773444",
   });
 
-  expectedResponse.body = JSON.stringify(RESPONSE_CODE.USER_SUBMITTED);
+  expectedResponse.body = JSON.stringify(RESPONSE_CODE.USER_SUBMISSION_FAILED);
 
   expect(main(mockObject))
     .resolves.toStrictEqual(expectedResponse)

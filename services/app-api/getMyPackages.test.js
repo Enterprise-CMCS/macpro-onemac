@@ -1,5 +1,5 @@
+import AWS from "aws-sdk";
 import { main } from "./getMyPackages";
-import dynamoDb from "./libs/dynamodb-lib";
 import {
   RESPONSE_CODE,
   getActiveTerritories,
@@ -9,7 +9,7 @@ import { getUser } from "./getUser";
 
 jest.mock("./getUser");
 jest.mock("cmscommonlib");
-jest.mock("./libs/dynamodb-lib");
+jest.mock("aws-sdk");
 
 const expectedResponse = {
   statusCode: 200,
@@ -59,35 +59,39 @@ beforeAll(() => {
     return ["VA"];
   });
 
-  dynamoDb.query.mockResolvedValue({
-    Items: [
-      {
-        componentType: "waivernew",
-        componentId: "VA.1117",
-        currentStatus: "In Review",
-        submitterName: "Angie Active",
-        submissionTimestamp: 1638473560098,
-        submitterEmail: "statesubmitteractive@cms.hhs.local",
-      },
-      {
-        componentType: "medicaidspa",
-        componentId: "VA-45-5913",
-        currentStatus: "Disapproved",
-        submitterName: "Statesubmitter Nightwatch",
-        submissionTimestamp: 1639609658284,
-        submitterEmail: "statesubmitter@nightwatch.test",
-      },
-      {
-        componentType: "chipspa",
-        componentId: "VA-33-2244-CHIP",
-        currentStatus: "Submitted",
-        submitterName: "Angie Active",
-        submissionTimestamp: 1640014441278,
-        submitterEmail: "statesubmitteractive@cms.hhs.local",
-      },
-    ],
-    Count: 3,
-    ScannedCount: 3,
+  AWS.DynamoDB.DocumentClient.mockImplementation(() => {
+    return {
+      query: () => ({
+        Items: [
+          {
+            componentType: "waivernew",
+            componentId: "VA.1117",
+            currentStatus: "In Review",
+            submitterName: "Angie Active",
+            submissionTimestamp: 1638473560098,
+            submitterEmail: "statesubmitteractive@cms.hhs.local",
+          },
+          {
+            componentType: "medicaidspa",
+            componentId: "VA-45-5913",
+            currentStatus: "Disapproved",
+            submitterName: "Statesubmitter Nightwatch",
+            submissionTimestamp: 1639609658284,
+            submitterEmail: "statesubmitter@nightwatch.test",
+          },
+          {
+            componentType: "chipspa",
+            componentId: "VA-33-2244-CHIP",
+            currentStatus: "Submitted",
+            submitterName: "Angie Active",
+            submissionTimestamp: 1640014441278,
+            submitterEmail: "statesubmitteractive@cms.hhs.local",
+          },
+        ],
+        Count: 3,
+        ScannedCount: 3,
+      }),
+    };
   });
 });
 
