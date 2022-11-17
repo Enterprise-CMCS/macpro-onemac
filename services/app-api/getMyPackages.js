@@ -1,11 +1,14 @@
+import AWS from "aws-sdk";
 import handler from "./libs/handler-lib";
-import dynamoDb from "./libs/dynamodb-lib";
 import {
   RESPONSE_CODE,
   getActiveTerritories,
   getUserRoleObj,
+  dynamoConfig,
 } from "cmscommonlib";
 import { getUser } from "./getUser";
+
+const dynamoDb = new AWS.DynamoDB.DocumentClient(dynamoConfig);
 
 /**
  * Gets all packages from the DynamoDB one table
@@ -64,7 +67,7 @@ export const getMyPackages = async (email, group) => {
         paramList.map(async (params) => {
           const promiseItems = [];
           do {
-            const results = await dynamoDb.query(params);
+            const results = await dynamoDb.query(params).promise();
             promiseItems.push(...results.Items);
             params.ExclusiveStartKey = results.LastEvaluatedKey;
           } while (params.ExclusiveStartKey);

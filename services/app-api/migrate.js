@@ -1,5 +1,8 @@
+import AWS from "aws-sdk";
 import handler from "./libs/handler-lib";
-import dynamoDb from "./libs/dynamodb-lib";
+import { dynamoConfig } from "cmscommonlib";
+
+const dynamoDb = new AWS.DynamoDB.DocumentClient(dynamoConfig);
 
 /**
  * Perform data migrations
@@ -18,7 +21,7 @@ export const main = handler(async () => {
   const onePromiseItems = [];
 
   do {
-    const results = await dynamoDb.query(oneparams);
+    const results = await dynamoDb.query(oneparams).promise();
     for (const item of results.Items) {
       const updateParam = {
         TableName: process.env.oneMacTableName,
@@ -40,7 +43,7 @@ export const main = handler(async () => {
   await Promise.all(
     onePromiseItems.map(async (anUpdate) => {
       console.log("updating: ", anUpdate);
-      await dynamoDb.update(anUpdate);
+      await dynamoDb.update(anUpdate).promise();
     })
   );
 

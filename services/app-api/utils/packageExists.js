@@ -1,4 +1,7 @@
-import dynamoDb from "../libs/dynamodb-lib";
+import AWS from "aws-sdk";
+import { dynamoConfig } from "cmscommonlib";
+
+const dynamoDb = new AWS.DynamoDB.DocumentClient(dynamoConfig);
 
 /**
  * Check to see if the included id exists in the data
@@ -18,7 +21,7 @@ export default async function packageExists(id) {
 
   let result;
   try {
-    result = await dynamoDb.query(params);
+    result = await dynamoDb.query(params).promise();
 
     if (result.Count <= 0) {
       params = {
@@ -28,7 +31,7 @@ export default async function packageExists(id) {
           ":pk": id,
         },
       };
-      result = await dynamoDb.query(params);
+      result = await dynamoDb.query(params).promise();
     }
 
     if (result.Count <= 0) {
@@ -42,7 +45,7 @@ export default async function packageExists(id) {
         },
       };
       do {
-        result = await dynamoDb.scan(params);
+        result = await dynamoDb.scan(params).promise();
         params.ExclusiveStartKey = result.LastEvaluatedKey;
       } while (params.ExclusiveStartKey && result.Count <= 0);
     }

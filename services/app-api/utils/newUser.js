@@ -1,4 +1,7 @@
-import dynamoDb from "../libs/dynamodb-lib";
+import AWS from "aws-sdk";
+import { dynamoConfig } from "cmscommonlib";
+
+const dynamoDb = new AWS.DynamoDB.DocumentClient(dynamoConfig);
 
 export const newUser = async (userDetails) => {
   try {
@@ -11,7 +14,7 @@ export const newUser = async (userDetails) => {
       },
     };
 
-    await dynamoDb.put(contactParams);
+    await dynamoDb.put(contactParams).promise();
   } catch (e) {
     console.log("newUser put error: ", e);
     throw e;

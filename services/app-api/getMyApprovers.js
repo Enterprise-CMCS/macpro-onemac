@@ -1,6 +1,8 @@
+import AWS from "aws-sdk";
 import handler from "./libs/handler-lib";
-import dynamoDb from "./libs/dynamodb-lib";
-import { APPROVING_USER_ROLE, USER_ROLE } from "cmscommonlib";
+import { APPROVING_USER_ROLE, USER_ROLE, dynamoConfig } from "cmscommonlib";
+
+const dynamoDb = new AWS.DynamoDB.DocumentClient(dynamoConfig);
 
 export const getMyApprovers = async (role, territory) => {
   if (!territory) territory = "N/A";
@@ -17,7 +19,7 @@ export const getMyApprovers = async (role, territory) => {
       },
       ProjectionExpression: "email,firstName,lastName, fullName",
     };
-    adminList = await dynamoDb.query(queryParams);
+    adminList = await dynamoDb.query(queryParams).promise();
   } catch (e) {
     console.log("Error is: ", e);
   }

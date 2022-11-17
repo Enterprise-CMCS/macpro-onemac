@@ -1,11 +1,11 @@
 import AWS from "aws-sdk";
-import { RESPONSE_CODE, Workflow } from "cmscommonlib";
+import { RESPONSE_CODE, Workflow, dynamoConfig } from "cmscommonlib";
 import handler from "./libs/handler-lib";
-import dynamoDb from "./libs/dynamodb-lib";
 import { getUser } from "./getUser";
 import { validateUserReadOnly } from "./utils/validateUser";
 
 const s3 = new AWS.S3();
+const dynamoDb = new AWS.DynamoDB.DocumentClient(dynamoConfig);
 
 async function assignAttachmentUrls(item) {
   if (Array.isArray(item.attachments)) {
@@ -70,14 +70,14 @@ export const getDetails = async (event) => {
   };
 
   try {
-    const result = await dynamoDb.get(params);
+    const result = await dynamoDb.get(params).promise();
     if (!result.Item) {
       return {};
     }
 
     await assignAttachmentUrls(result.Item);
 
-    const raiResult = await dynamoDb.query(raiParams);
+    const raiResult = await dynamoDb.query(raiParams).promise();
     if (raiResult.Count > 0) {
       for (const child of raiResult.Items) {
         await assignAttachmentUrls(child);
@@ -97,7 +97,9 @@ export const getDetails = async (event) => {
         },
       };
 
-      const waiverExtensionResult = await dynamoDb.query(waiverExtensionParams);
+      const waiverExtensionResult = await dynamoDb
+        .query(waiverExtensionParams)
+        .promise();
       result.Item.waiverExtensions = [...waiverExtensionResult.Items];
     }
 

@@ -1,8 +1,8 @@
+import AWS from "aws-sdk";
 import { DateTime } from "luxon";
-import { Workflow } from "cmscommonlib";
+import { Workflow, dynamoConfig } from "cmscommonlib";
 
 import handler from "./libs/handler-lib";
-import dynamoDb from "./libs/dynamodb-lib";
 import newComponent from "./utils/newComponent";
 
 import { validateSubmission } from "./form/validateSubmission";
@@ -17,6 +17,7 @@ import { waiverAmendmentFormConfig } from "./form/submitWaiverAmendment";
 import { waiverAppendixKFormConfig } from "./form/submitWaiverAppendixK";
 import { waiverRAIResponseFormConfig } from "./form/submitWaiverRAIResponse";
 
+const dynamoDb = new AWS.DynamoDB.DocumentClient(dynamoConfig);
 /**
  * Perform data conversions
  */
@@ -45,7 +46,7 @@ export const main = handler(async () => {
   };
 
   do {
-    const results = await dynamoDb.scan(params);
+    const results = await dynamoDb.scan(params).promise();
     for (const item of results.Items) {
       //      console.log("Item is: ", item);
 

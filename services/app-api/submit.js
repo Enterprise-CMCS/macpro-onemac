@@ -1,3 +1,4 @@
+import AWS from "aws-sdk";
 import { DateTime } from "luxon";
 import * as uuid from "uuid";
 
@@ -11,10 +12,11 @@ import getChangeRequestFunctions, {
   validateSubmission,
 } from "./changeRequest/changeRequest-util";
 import handler from "./libs/handler-lib";
-import dynamoDb from "./libs/dynamodb-lib";
 import sendEmail from "./libs/email-lib";
-import { RESPONSE_CODE } from "cmscommonlib";
+import { RESPONSE_CODE, dynamoConfig } from "cmscommonlib";
 import { getUser } from "./getUser";
+
+const dynamoDb = new AWS.DynamoDB.DocumentClient(dynamoConfig);
 
 /**
  * Submission states for the change requests.
@@ -90,10 +92,12 @@ export const main = handler(async (event) => {
     if (config.overrideType) data.type = config.overrideType;
     if (config.overrideActionType) data.actionType = config.overrideActionType;
 
-    await dynamoDb.put({
-      TableName: process.env.tableName,
-      Item: data,
-    });
+    await dynamoDb
+      .put({
+        TableName: process.env.tableName,
+        Item: data,
+      })
+      .promise();
   } catch (error) {
     console.log("Error is: ", error);
     return error;

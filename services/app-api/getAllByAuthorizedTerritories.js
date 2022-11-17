@@ -1,8 +1,15 @@
+import AWS from "aws-sdk";
 import { USER_ROLE } from "cmscommonlib";
 import handler from "./libs/handler-lib";
-import dynamoDb from "./libs/dynamodb-lib";
-import { RESPONSE_CODE, USER_STATUS, effectiveRoleForUser } from "cmscommonlib";
+import {
+  RESPONSE_CODE,
+  USER_STATUS,
+  effectiveRoleForUser,
+  dynamoConfig,
+} from "cmscommonlib";
 import { getUser } from "./getUser";
+
+const dynamoDb = new AWS.DynamoDB.DocumentClient(dynamoConfig);
 
 const commonQueryConfig = {
   TableName: process.env.tableName,
@@ -29,13 +36,15 @@ async function helpdeskOrReviewerDynamoDbQuery(
   keepSearching,
   allResults
 ) {
-  const results = await dynamoDb.scan({
-    ...commonQueryConfig,
-    ExpressionAttributeValues: {
-      ":submittedState": "submitted",
-    },
-    ExclusiveStartKey: startingKey,
-  });
+  const results = await dynamoDb
+    .scan({
+      ...commonQueryConfig,
+      ExpressionAttributeValues: {
+        ":submittedState": "submitted",
+      },
+      ExclusiveStartKey: startingKey,
+    })
+    .promise();
   allResults.push(results);
   if (results.LastEvaluatedKey) {
     startingKey = results.LastEvaluatedKey;
@@ -61,19 +70,21 @@ async function stateSubmitterDynamoDbQuery(
   keepSearching,
   allResults
 ) {
-  const results = await dynamoDb.query({
-    ...commonQueryConfig,
-    ExclusiveStartKey: startingKey,
-    IndexName: "territory-submittedAt-index",
-    KeyConditionExpression:
-      "territory = :v_territory and submittedAt > :v_submittedAt",
-    ExpressionAttributeValues: {
-      ":v_territory": territory,
-      ":v_submittedAt": 0,
-      ":submittedState": "submitted",
-    },
-    ScanIndexForward: false, // sorts the results by submittedAt in descending order (most recent first)
-  });
+  const results = await dynamoDb
+    .query({
+      ...commonQueryConfig,
+      ExclusiveStartKey: startingKey,
+      IndexName: "territory-submittedAt-index",
+      KeyConditionExpression:
+        "territory = :v_territory and submittedAt > :v_submittedAt",
+      ExpressionAttributeValues: {
+        ":v_territory": territory,
+        ":v_submittedAt": 0,
+        ":submittedState": "submitted",
+      },
+      ScanIndexForward: false, // sorts the results by submittedAt in descending order (most recent first)
+    })
+    .promise();
   allResults.push(results);
   if (results.LastEvaluatedKey) {
     startingKey = results.LastEvaluatedKey;

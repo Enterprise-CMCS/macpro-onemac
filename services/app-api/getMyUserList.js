@@ -1,13 +1,16 @@
+import AWS from "aws-sdk";
 import handler from "./libs/handler-lib";
-import dynamoDb from "./libs/dynamodb-lib";
 import {
   RESPONSE_CODE,
   USER_ROLE,
   getUserRoleObj,
   effectiveRoleForUser,
   getActiveTerritories,
+  dynamoConfig,
 } from "cmscommonlib";
 import { getUser } from "./getUser";
+
+const dynamoDb = new AWS.DynamoDB.DocumentClient(dynamoConfig);
 
 export const buildParams = (role, territory) => {
   const startParams = {
@@ -72,9 +75,9 @@ export const getMyUserList = async (event) => {
     const territories = getActiveTerritories(doneBy.roleList);
     if (territories.length > 1) return RESPONSE_CODE.USER_NOT_AUTHORIZED;
 
-    const listResult = await dynamoDb.query(
-      buildParams(umRole, territories.shift())
-    );
+    const listResult = await dynamoDb
+      .query(buildParams(umRole, territories.shift()))
+      .promise();
 
     return listResult.Items;
   } catch (e) {

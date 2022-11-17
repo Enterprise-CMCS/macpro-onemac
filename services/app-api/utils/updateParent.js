@@ -1,5 +1,7 @@
-import { Validate } from "cmscommonlib";
-import dynamoDb from "../libs/dynamodb-lib";
+import AWS from "aws-sdk";
+import { Validate, dynamoConfig } from "cmscommonlib";
+
+const dynamoDb = new AWS.DynamoDB.DocumentClient(dynamoConfig);
 
 export default async function updateParent(childData) {
   if (!childData.parentType) {
@@ -15,7 +17,7 @@ export default async function updateParent(childData) {
   };
   console.log("parent Component params: ", params);
 
-  const parentComponent = await dynamoDb.get(params);
+  const parentComponent = await dynamoDb.get(params).promise();
   console.log("parent Component: ", parentComponent);
   console.log("children are: ", parentComponent.Item.children);
   if (parentComponent.Item) {
@@ -55,7 +57,7 @@ export default async function updateParent(childData) {
       ReturnValues: "ALL_NEW",
     };
 
-    const result = await dynamoDb.update(updateParams);
+    const result = await dynamoDb.update(updateParams).promise();
     console.log("the updated details returned are: ", result);
 
     try {
@@ -72,7 +74,7 @@ export default async function updateParent(childData) {
           sk: putsk,
         },
       };
-      await dynamoDb.put(putParams);
+      await dynamoDb.put(putParams).promise();
 
       // remove GSI
       const gsiParams = {
@@ -84,7 +86,7 @@ export default async function updateParent(childData) {
       };
       gsiParams.UpdateExpression = "REMOVE GSI1pk, GSI1sk";
 
-      await dynamoDb.update(gsiParams);
+      await dynamoDb.update(gsiParams).promise();
 
       return result.Attributes;
     } catch (error) {
@@ -148,7 +150,7 @@ const backup = () => {
 
   try {
     console.log("updateParentParams: ", updateParentParams);
-    const result = await dynamoDb.update(updateParentParams);
+    const result = await dynamoDb.update(updateParentParams).promise();
     console.log("Result is: ", result);
     try {
       const latestVersion = result["Attributes"]["Latest"];
@@ -161,7 +163,7 @@ const backup = () => {
           sk: putsk,
         },
       };
-      await dynamoDb.put(putParams);
+      await dynamoDb.put(putParams).promise();
 
       // remove GSI
       const gsiParams = {
@@ -173,7 +175,7 @@ const backup = () => {
       };
       gsiParams.UpdateExpression = "REMOVE GSI1pk, GSI1sk";
 
-      await dynamoDb.update(gsiParams);
+      await dynamoDb.update(gsiParams).promise();
     } catch (error) {
       console.log(`Error:  ${error.message}`);
     }

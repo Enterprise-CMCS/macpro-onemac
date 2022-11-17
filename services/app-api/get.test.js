@@ -33,21 +33,22 @@ const testGetEvent = {
 beforeEach(() => jest.resetModules());
 
 it("returns the submission", async () => {
-  const testSubmission = {
-    Item: {
-      transmittalNumber: "MI.7778.R11",
-      uploads: [{ s3Key: "aKey" }, { s3Key: "anotherKey" }],
-    },
-  };
-
-  jest.mock("./libs/dynamodb-lib", () => ({
-    get: () => testSubmission,
-  }));
-
   jest.mock("aws-sdk", () => ({
     S3: () => ({
       getSignedUrlPromise: () => "Signed URL",
     }),
+    DynamoDB: {
+      DocumentClient: () => ({
+        get: () => ({
+          promise: () => ({
+            Item: {
+              transmittalNumber: "MI.7778.R11",
+              uploads: [{ s3Key: "aKey" }, { s3Key: "anotherKey" }],
+            },
+          }),
+        }),
+      }),
+    },
   }));
 
   const { main } = require("./get");
@@ -59,14 +60,20 @@ it("returns the submission", async () => {
 });
 
 it("throws an error if no item", async () => {
-  const badSubmission = {
-    notAnItem: {},
-  };
-
-  jest.mock("./libs/dynamodb-lib", () => ({
-    get: () => badSubmission,
+  jest.mock("aws-sdk", () => ({
+    S3: () => ({
+      getSignedUrlPromise: () => "Signed URL",
+    }),
+    DynamoDB: {
+      DocumentClient: () => ({
+        get: () => ({
+          promise: () => ({
+            notAnItem: {},
+          }),
+        }),
+      }),
+    },
   }));
-
   const exceptionResponse = {
     statusCode: 500,
     body: '{"error":"Item not found."}',
@@ -86,23 +93,24 @@ it("throws an error if no item", async () => {
 });
 
 it("throws an error if can't get signed URLs", async () => {
-  const testSubmission = {
-    Item: {
-      transmittalNumber: "MI.7778.R11",
-      uploads: [{ s3Key: "aKey" }, { s3Key: "anotherKey" }],
-    },
-  };
-
-  jest.mock("./libs/dynamodb-lib", () => ({
-    get: () => testSubmission,
-  }));
-
   jest.mock("aws-sdk", () => ({
     S3: () => ({
       getSignedUrlPromise: () => {
         throw "no URL";
       },
     }),
+    DynamoDB: {
+      DocumentClient: () => ({
+        get: () => ({
+          promise: () => ({
+            Item: {
+              transmittalNumber: "MI.7778.R11",
+              uploads: [{ s3Key: "aKey" }, { s3Key: "anotherKey" }],
+            },
+          }),
+        }),
+      }),
+    },
   }));
 
   const exceptionResponse = {

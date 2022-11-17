@@ -1,4 +1,7 @@
-import dynamoDb from "../libs/dynamodb-lib";
+import AWS from "aws-sdk";
+import { dynamoConfig } from "cmscommonlib";
+
+const dynamoDb = new AWS.DynamoDB.DocumentClient(dynamoConfig);
 
 export const validateParentOfAny = async (event, config) => {
   const parentId = event.pathParameters.parentId;
@@ -13,7 +16,7 @@ export const validateParentOfAny = async (event, config) => {
     },
     ProjectionExpression: "componentType, currentStatus",
   };
-  const result = await dynamoDb.query(parentParams);
+  const result = await dynamoDb.query(parentParams).promise();
 
   // no matches, no parent found
   if (!result?.Items) return false;

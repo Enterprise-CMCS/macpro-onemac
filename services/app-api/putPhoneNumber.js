@@ -1,9 +1,11 @@
-import { RESPONSE_CODE } from "cmscommonlib";
+import AWS from "aws-sdk";
+import { RESPONSE_CODE, dynamoConfig } from "cmscommonlib";
 import { isEmpty, isObject } from "lodash";
 import Joi from "joi";
 
 import handler from "./libs/handler-lib";
-import dynamoDb from "./libs/dynamodb-lib";
+
+const dynamoDb = new AWS.DynamoDB.DocumentClient(dynamoConfig);
 
 const validateInput = (input) => {
   const schema = Joi.object().keys({
@@ -41,12 +43,14 @@ export const main = handler(async (event) => {
   }
 
   try {
-    await dynamoDb.update({
-      TableName: process.env.oneMacTableName,
-      Key: { pk: input.id, sk: "ContactInfo" },
-      UpdateExpression: "SET phoneNumber = :phoneNumber",
-      ExpressionAttributeValues: { ":phoneNumber": input.phoneNumber },
-    });
+    await dynamoDb
+      .update({
+        TableName: process.env.oneMacTableName,
+        Key: { pk: input.id, sk: "ContactInfo" },
+        UpdateExpression: "SET phoneNumber = :phoneNumber",
+        ExpressionAttributeValues: { ":phoneNumber": input.phoneNumber },
+      })
+      .promise();
 
     return RESPONSE_CODE.USER_SUBMITTED;
   } catch (error) {

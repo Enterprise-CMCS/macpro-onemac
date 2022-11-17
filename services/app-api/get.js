@@ -1,10 +1,10 @@
 import AWS from "aws-sdk";
-import { RESPONSE_CODE } from "cmscommonlib";
+import { RESPONSE_CODE, dynamoConfig } from "cmscommonlib";
 
 import handler from "./libs/handler-lib";
-import dynamoDb from "./libs/dynamodb-lib";
 
 const s3 = new AWS.S3();
+const dynamoDb = new AWS.DynamoDB.DocumentClient(dynamoConfig);
 
 export const main = handler(async (event) => {
   const params = {
@@ -18,7 +18,7 @@ export const main = handler(async (event) => {
     },
   };
 
-  const result = await dynamoDb.get(params);
+  const result = await dynamoDb.get(params).promise();
   if (!result.Item) {
     throw new Error("Item not found.");
   }

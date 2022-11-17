@@ -1,7 +1,9 @@
-import dynamoDb from "../libs/dynamodb-lib";
-import { USER_ROLE, USER_STATUS } from "cmscommonlib";
+import AWS from "aws-sdk";
+import { USER_ROLE, USER_STATUS, dynamoConfig } from "cmscommonlib";
 
 import { formatPackageDetails } from "./formatPackageDetails.js";
+
+const dynamoDb = new AWS.DynamoDB.DocumentClient(dynamoConfig);
 
 export const getAllActiveStateUserEmailAddresses = async (territory) => {
   const stateSubmittingUserRoles = [
@@ -24,7 +26,7 @@ export const getAllActiveStateUserEmailAddresses = async (territory) => {
         ProjectionExpression: "email, fullName",
       };
       try {
-        const results = await dynamoDb.query(qParams);
+        const results = await dynamoDb.query(qParams).promise();
         console.log("Found these results in One Table: ", results);
         stateSubmittingUsers.push(
           results.Items.map(({ fullName, email }) => `${fullName} <${email}>`)

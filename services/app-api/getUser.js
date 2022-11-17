@@ -1,7 +1,9 @@
+import AWS from "aws-sdk";
 import handler from "./libs/handler-lib";
-import dynamoDb from "./libs/dynamodb-lib";
 
-import { getUserRoleObj } from "cmscommonlib";
+import { getUserRoleObj, dynamoConfig } from "cmscommonlib";
+
+const dynamoDb = new AWS.DynamoDB.DocumentClient(dynamoConfig);
 
 /**
  * returns the User Table entry who's id is this email
@@ -39,12 +41,12 @@ export const getUser = async (userEmail) => {
   let cResult;
 
   try {
-    cResult = await dynamoDb.get(cParams);
+    cResult = await dynamoDb.get(cParams).promise();
 
-    result = await dynamoDb.query(params);
+    result = await dynamoDb.query(params).promise();
 
     if (!result.Items) {
-      result = setTimeout(await dynamoDb.query(params), 1500);
+      result = setTimeout(await dynamoDb.query(params).promise(), 1500);
     }
   } catch (dbError) {
     console.log(`Error happened while reading from DB:  ${dbError}`);

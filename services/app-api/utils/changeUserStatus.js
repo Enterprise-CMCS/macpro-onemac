@@ -1,5 +1,7 @@
-import dynamoDb from "../libs/dynamodb-lib";
-import { USER_ROLE, USER_STATUS } from "cmscommonlib";
+import AWS from "aws-sdk";
+import { USER_ROLE, USER_STATUS, dynamoConfig } from "cmscommonlib";
+
+const dynamoDb = new AWS.DynamoDB.DocumentClient(dynamoConfig);
 
 export const buildSK = (role, territory) => {
   switch (role) {
@@ -71,7 +73,7 @@ export const changeUserStatus = async ({
       },
     };
 
-    const response = await dynamoDb.update(updateParams);
+    const response = await dynamoDb.update(updateParams).promise();
 
     const latestVersion = response["Attributes"]["Latest"];
 
@@ -88,7 +90,7 @@ export const changeUserStatus = async ({
         date,
       },
     };
-    await dynamoDb.put(putParams);
+    await dynamoDb.put(putParams).promise();
   } catch (e) {
     console.log("newUser put error: ", e);
     throw e;
