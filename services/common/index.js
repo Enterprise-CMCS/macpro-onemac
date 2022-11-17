@@ -24,6 +24,12 @@ export { chipSPARAIResponse } from "./type/chipSPARAIResponse.js";
 import { ROUTES, ONEMAC_ROUTES } from "./routes.js";
 export { ROUTES, ONEMAC_ROUTES, TYPE_TO_DETAIL_ROUTE } from "./routes.js";
 
+export const dynamoConfig = process.env.IS_OFFLINE
+  ? {
+      endpoint: "http://localhost:8000",
+    }
+  : {};
+
 /**
  * Codes to send to front end
  */
