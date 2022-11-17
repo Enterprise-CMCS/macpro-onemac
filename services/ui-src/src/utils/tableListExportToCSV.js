@@ -59,7 +59,7 @@ const rowTransformer = {
     row.territory,
     userStatus[row.status],
     roleLabels[row.role],
-    serializeDate(row.date * 1000),
+    serializeDate(row.date),
     JSON.stringify(row.doneByName),
   ],
 };

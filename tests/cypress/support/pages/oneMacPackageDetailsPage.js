@@ -5,6 +5,9 @@ const topRaiRespAddInfo = "#addl-info-rai-0";
 const chipTopRaiRespCaret = "#chipsparai0_caret-button";
 const chipTopRaiRespDownloadBtn = "#dl_chipsparai0";
 const chipTopRaiRespCard = "#chipsparai0_caret";
+const appKTopRaiRespCaret = "#waiverappkrai0_caret-button";
+const appKTopRaiRespDownloadBtn = "#dl_waiverappkrai0";
+const appKTopRaiRespCard = "#waiverappkrai0_caret";
 
 //Elements are Xpath use cy.xpath instead of cy.xpath
 const detailsPage = "//div[@class='form-container']";
@@ -150,17 +153,27 @@ export class oneMacPackageDetailsPage {
     cy.get(medicaidTopRaiRespCaret).scrollIntoView().should("be.visible");
     cy.get(medicaidTopRaiRespCaret).should("be.enabled");
   }
+  verifyAppKTopRaiRespCaretExistsAndEnabled() {
+    cy.get(appKTopRaiRespCaret).scrollIntoView().should("be.visible");
+    cy.get(appKTopRaiRespCaret).should("be.enabled");
+  }
   verifyCHIPTopRaiRespCaretTitle() {
     cy.get(chipTopRaiRespCaret).scrollIntoView().contains("Submitted on");
   }
   verifyMedicaidTopRaiRespCaretTitle() {
     cy.get(medicaidTopRaiRespCaret).scrollIntoView().contains("Submitted on");
   }
+  verifyAppKTopRaiRespCaretTitle() {
+    cy.get(appKTopRaiRespCaret).scrollIntoView().contains("Submitted on");
+  }
   verifyCHIPTopRaiRespCardExists() {
     cy.get(chipTopRaiRespCard).scrollIntoView().should("be.visible");
   }
   verifyMedicaidTopRaiRespCardExists() {
     cy.get(medicaidTopRaiRespCard).scrollIntoView().should("be.visible");
+  }
+  verifyAppKTopRaiRespCardExists() {
+    cy.get(appKTopRaiRespCard).scrollIntoView().should("be.visible");
   }
   verifyCHIPTopRaiRespDownloadBtnExistsAndEnabled() {
     cy.get(chipTopRaiRespDownloadBtn).scrollIntoView().should("be.visible");
@@ -170,6 +183,11 @@ export class oneMacPackageDetailsPage {
     cy.get(medicaidTopRaiRespDownloadBtn).scrollIntoView().should("be.visible");
     cy.get(medicaidTopRaiRespDownloadBtn).should("be.enabled");
   }
+  verifyAppKTopRaiRespDownloadBtnxistsAndEnabled() {
+    cy.get(appKTopRaiRespDownloadBtn).scrollIntoView().should("be.visible");
+    cy.get(appKTopRaiRespDownloadBtn).should("be.enabled");
+  }
+
   verifyTopRaiRespAddInfoDoesNotExist() {
     cy.get(topRaiRespAddInfo).should("not.exist");
   }
