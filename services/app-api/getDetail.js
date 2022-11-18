@@ -77,13 +77,15 @@ export const getDetails = async (event) => {
 
     await assignAttachmentUrls(result.Item);
 
-    const raiResult = await dynamoDb.query(raiParams);
-    if (raiResult.Count > 0) {
-      for (const child of raiResult.Items) {
+    if (result.Item?.raiResponses.length === 0) {
+      const raiResult = await dynamoDb.query(raiParams);
+      result.Item.raiResponses = [...raiResult.Items];
+    }
+    if (result.Item?.raiResponses.length > 0) {
+      for (const child of result.Item?.raiResponses) {
         await assignAttachmentUrls(child);
       }
     }
-    result.Item.raiResponses = [...raiResult.Items];
 
     if (Workflow.ALLOW_WAIVER_EXTENSION_TYPE.includes(componentType)) {
       //fetch any waiver extensions associated to this component
