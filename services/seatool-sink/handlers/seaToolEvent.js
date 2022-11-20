@@ -69,6 +69,9 @@ function myHandler(event) {
   // use the offset as a version number/event tracker... highest id is most recent
   const sk = `SEATool#${changeDate}`;
 
+  const GSI1pk = `SEATool#${componentType}`;
+  const GSI1sk = value.STATE_PLAN.ID_NUMBER;
+
   // put the SEATool Entry - don't bother if already exists
   const updateSEAToolParams = {
     TableName: process.env.oneMacTableName,
@@ -78,7 +81,7 @@ function myHandler(event) {
     },
     ConditionExpression: "attribute_not_exists(pk)", // so update fails if this SEATool change exists
 
-    Item: { pk, sk, ...value },
+    Item: { pk, sk, GSI1pk, GSI1sk, ...value },
     ReturnValues: "ALL_OLD", // ReturnValues for put can only be NONE or ALL_OLD
   };
 

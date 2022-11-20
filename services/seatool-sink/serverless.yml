@@ -20,6 +20,7 @@ custom:
   oneMacTableArn: ${cf:app-api-${self:custom.stage}.OneMacTableArn}
   bootstrapBrokerStringTls: ${ssm:/configuration/${self:custom.stage}/bigmac/bootstrapBrokerStringTls, ssm:/configuration/default/bigmac/bootstrapBrokerStringTls}
   vpcId: ${ssm:/configuration/${self:custom.stage}/vpc/id, ssm:/configuration/default/vpc/id}
+  connectGroup: mgmt.connect.${self:service}-${self:custom.stage}
   dataSubnets:
     - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/data/a/id, ssm:/configuration/default/vpc/subnets/data/a/id}
     - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/data/b/id, ssm:/configuration/default/vpc/subnets/data/b/id}
@@ -158,13 +159,13 @@ resources:
                 Value: >-
                   ${self:custom.bootstrapBrokerStringTls}
               - Name: CONNECT_GROUP_ID
-                Value: mgmt.connect.${self:service}-${self:custom.stage}
+                Value: ${self:custom.connectGroup}
               - Name: CONNECT_CONFIG_STORAGE_TOPIC
-                Value: mgmt.connect.${self:service}-${self:custom.stage}.config
+                Value: ${self:custom.connectGroup}.config
               - Name: CONNECT_OFFSET_STORAGE_TOPIC
-                Value: mgmt.connect.${self:service}-${self:custom.stage}.offsets
+                Value: ${self:custom.connectGroup}.offsets
               - Name: CONNECT_STATUS_STORAGE_TOPIC
-                Value: mgmt.connect.${self:service}-${self:custom.stage}.status
+                Value: ${self:custom.connectGroup}.status
               - Name: CONNECT_OFFSET_STORAGE_PARTITIONS
                 Value: 5
               - Name: CONNECT_STATUS_STORAGE_PARTITIONS
