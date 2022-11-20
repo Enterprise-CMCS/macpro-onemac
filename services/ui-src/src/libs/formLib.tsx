@@ -4,6 +4,7 @@ import {
   FileUploadProps,
   ONEMAC_ROUTES,
 } from "cmscommonlib";
+import React from "react";
 
 export type OneMACFormConfig = {
   idFormat: string;
@@ -14,7 +15,7 @@ export type OneMACFormConfig = {
   addlIntroJSX?: JSX.Element;
   detailsHeader?: string;
   landingPage: string;
-  confirmSubmit: boolean;
+  confirmSubmit?: ConfirmSubmitType;
   proposedEffectiveDate?: boolean;
   titleLabel?: string;
 } & PackageType &
@@ -30,21 +31,39 @@ type ParentPackageType = {
   getParentInfo?: (id: string) => string[];
 };
 
+type ConfirmSubmitType = {
+  confirmSubmitHeading: string;
+  confirmSubmitMessage: JSX.Element | string;
+};
+
 export const defaultOneMACFormConfig = {
   idFormat: "",
   idFieldHint: [],
   idFAQLink: "",
   landingPage: ONEMAC_ROUTES.PACKAGE_LIST,
   proposedEffectiveDate: false,
-  confirmSubmit: false,
 };
 
 export const defaultWaiverAuthority = [
   { label: "-- select a waiver authority --", value: "" },
 ];
 
+export const defaultConfirmSubmitHeadingRAI =
+  "Do you want to submit your official formal RAI response?";
+export const defaultConfirmSubmitMessageRAI = (
+  <p>
+    By Clicking <b>Yes, Submit</b>, you are submitting your official formal RAI
+    Response to start the 90 day clock review process.
+  </p>
+);
+
+export const defaultConfirmSubmitRAI = {
+  confirmSubmitHeading: defaultConfirmSubmitHeadingRAI,
+  confirmSubmitMessage: defaultConfirmSubmitMessageRAI,
+};
+
 export type PackageType = {
-  packageGroup?: string;
+  whichTab?: string;
   componentType: string;
   typeLabel: string;
   idLabel: string;

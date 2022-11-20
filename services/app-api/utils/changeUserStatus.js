@@ -38,7 +38,7 @@ export const changeUserStatus = async ({
         "#email = :email, #status = :status, #fullName = :fullName, " +
         "#doneByEmail = :doneByEmail, #doneByName = :doneByName, " +
         "#role = :role, #territory = :territory, #date = :date, " +
-        "#GSI1pk = :GSI1pk, #GSI1sk = :GSI1sk",
+        "#GSI1pk = :GSI1pk, #GSI1sk = :GSI1sk, #GSI2pk = :GSI2pk, #GSI2sk = :GSI2sk",
       ExpressionAttributeNames: {
         "#email": "email",
         "#status": "status",
@@ -50,6 +50,8 @@ export const changeUserStatus = async ({
         "#date": "date",
         "#GSI1pk": "GSI1pk",
         "#GSI1sk": "GSI1sk",
+        "#GSI2pk": "GSI2pk",
+        "#GSI2sk": "GSI2sk",
       },
       ExpressionAttributeValues: {
         ":email": email.toLowerCase(),
@@ -62,6 +64,8 @@ export const changeUserStatus = async ({
         ":date": date,
         ":GSI1pk": "USER",
         ":GSI1sk": buildSK(role, territory),
+        ":GSI2pk": `${role}#${territory}`,
+        ":GSI2sk": status,
         ":defaultval": 0,
         ":incrval": 1,
       },

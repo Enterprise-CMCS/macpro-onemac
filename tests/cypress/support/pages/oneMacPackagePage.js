@@ -38,7 +38,8 @@ const closeButton = "//header/button[1]";
 const typeDropDownFilter = "//button[text()='Type']";
 const typeDropDown = "#componentType-button";
 const statusDropDown = "#packageStatus-button";
-const statusFilterCheckboxes = "#packageStatus label";
+const statusFilterCheckboxes = "#packageStatus input";
+const typeFilterCheckboxes = "#componentType input";
 //Element is Xpath use cy.xpath instead of cy.get
 const ninetiethDayFilterDropdown = "//button[text()='90th Day']";
 //Element is Xpath use cy.xpath instead of cy.get
@@ -153,13 +154,9 @@ const statesSelected = "#territory";
 const removeBtn = (state) => `//*[@aria-label='Remove ${state}']`;
 const waiversTab = "#show-waivers-button";
 const spasTab = "#show-spas-button";
-const waiverFamilyNumColumn = "#familyNumberColHeader";
-//Element is Xpath use cy.xpath instead of cy.get
-const waiverFamilyCheckbox =
-  "//label[contains(@for,'checkbox_columnPicker-Waiver Family')]";
-const waiverFamilyRowOne = "#familyNumber-0";
 //Element is Xpath use cy.xpath instead of cy.get
 const raiIssuedCheckbox = "//span[contains(text(),'RAI Issued')]";
+const packageApprovedCheckbox = "//span[contains(text(),'Package Approved')]";
 //Element is Xpath use cy.xpath instead of cy.get
 const approvedCheckbox =
   "//label[contains(@for,'checkbox_packageStatus-Approved')]";
@@ -191,7 +188,8 @@ const packageRowTwoExpirationDate = "#expirationTimestamp-1";
 const childRows = "//tr[@class = 'child-row-expanded']";
 const withdrawPackageBtn =
   "//li[text()='Withdraw Package'][@aria-disabled='false']";
-const withdrawPackageConfirmBtn = "//button[contains(text(),'Yes, withdraw')]";
+const withdrawPackageConfirmBtn =
+  "//button[contains(text(),'Yes, withdraw package')]";
 const successMessage = "#alert-bar";
 //Element is Xpath use cy.xpath instead of cy.get
 const packageRowOneIDLink = "//td[@id='componentId-0']//a";
@@ -673,32 +671,14 @@ export class oneMacPackagePage {
   verifyWaiversTabIsClickable() {
     cy.get(waiversTab).should("not.be.disabled");
   }
-  verifyWaiverFamilyNumColumnExists() {
-    cy.get(waiverFamilyNumColumn).should("be.visible");
-  }
-  verifyWaiverFamilyNumColumnDoesNotExists() {
-    cy.get(waiverFamilyNumColumn).should("not.exist");
-  }
-  verifyWaiverFamilyNumColumnIsSortable() {
-    cy.get(waiverFamilyNumColumn).should("have.attr", "title", "Toggle SortBy");
-  }
-  verifyWaiverFamilyCheckboxExists() {
-    cy.xpath(waiverFamilyCheckbox).should("be.visible");
-  }
-  verifyWaiverFamilyCheckboxDoesNotExists() {
-    cy.xpath(waiverFamilyCheckbox).should("not.exist");
-  }
-  clickOnWaiverFamilyCheckbox() {
-    cy.xpath(waiverFamilyCheckbox).click();
-  }
-  verifyWaiverFamilyRowOneFormat() {
-    cy.get(waiverFamilyRowOne).contains(/[A-Z]{2}\.\d{4}||[A-Z]{2}\.\d{5}/);
-  }
   verifyRaiIssuedCheckboxExists() {
     cy.xpath(raiIssuedCheckbox).should("be.visible");
   }
   clickRaiIssuedCheckbox() {
     cy.xpath(raiIssuedCheckbox).click();
+  }
+  clickPackageApprovedCheckbox() {
+    cy.xpath(packageApprovedCheckbox).click();
   }
   verifyApprovedCheckboxExists() {
     cy.xpath(approvedCheckbox).should("be.visible");
@@ -724,9 +704,24 @@ export class oneMacPackagePage {
   clickUnsubmittedCheckbox() {
     cy.xpath(unsubmittedCheckbox).click();
   }
-  clickAllStatusFilterCheckboxes() {
+  checkAllStatusFilterCheckboxes() {
     cy.get(statusFilterCheckboxes).each(($el) => {
-      cy.wrap($el).click();
+      cy.wrap($el).check({ force: true });
+    });
+  }
+  uncheckAllStatusFilterCheckboxes() {
+    cy.get(statusFilterCheckboxes).each(($el) => {
+      cy.wrap($el).uncheck({ force: true });
+    });
+  }
+  checkAllTypeFilterCheckboxes() {
+    cy.get(typeFilterCheckboxes).each(($el) => {
+      cy.wrap($el).check({ force: true });
+    });
+  }
+  uncheckAllTypeFilterCheckboxes() {
+    cy.get(typeFilterCheckboxes).each(($el) => {
+      cy.wrap($el).uncheck({ force: true });
     });
   }
   verify90thDayRowOneIsPending() {

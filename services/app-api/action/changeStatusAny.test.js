@@ -2,7 +2,6 @@ import { RESPONSE_CODE } from "cmscommonlib";
 import { changeStatusAny } from "./changeStatusAny";
 import { getUser } from "../getUser";
 import updateComponent from "../utils/updateComponent";
-import updateParent from "../utils/updateParent";
 import sendEmail from "../libs/email-lib";
 
 jest.mock("../getUser");
@@ -31,7 +30,6 @@ const testUnauthUser = {
 const testUpdatedPackageData = {
   submissionTimestamp: Date.now(),
   componentId: "1111",
-  //parentId: '',
 };
 
 const eventBody = {
@@ -53,6 +51,7 @@ const testConfig = {
   allowMultiplesWithSameId: false,
   newStatus: "newStatus",
   successResponseCode: RESPONSE_CODE.PACKAGE_WITHDRAW_SUCCESS,
+  emailFunctions: [() => "Test test <test@test.com>"],
 };
 
 beforeEach(() => {

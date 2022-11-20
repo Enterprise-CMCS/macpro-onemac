@@ -5,12 +5,12 @@ import { initialWaiverFormConfig } from "./submitInitialWaiver";
 import { waiverTemporaryExtensionFormConfig } from "./submitWaiverExtension";
 import packageExists from "../utils/packageExists";
 import sendEmail from "../libs/email-lib";
-import newSubmission from "../utils/newSubmission";
+import newComponent from "../utils/newComponent";
 
 jest.mock("../getUser");
 jest.mock("../utils/packageExists");
 jest.mock("../libs/email-lib");
-jest.mock("../utils/newSubmission");
+jest.mock("../utils/newComponent");
 
 const testDoneBy = {
   roleList: [
@@ -125,7 +125,7 @@ beforeEach(() => {
   getUser.mockResolvedValue(testDoneBy);
   packageExists.mockResolvedValue(false);
   sendEmail.mockResolvedValue(null);
-  newSubmission.mockResolvedValue(null);
+  newComponent.mockResolvedValue(null);
 });
 
 it("catches a badly parsed event", async () => {
@@ -168,7 +168,7 @@ it("returns error code for unauthorized user", async () => {
 });
 
 it("returns error code when new submission fails", async () => {
-  newSubmission.mockImplementation((testEvent, testConfig) => {
+  newComponent.mockImplementation((testEvent, testConfig) => {
     throw new Error("Submit error");
   });
   const response = await submitAny(testEvent, testConfig);

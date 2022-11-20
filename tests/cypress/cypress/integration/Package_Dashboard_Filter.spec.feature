@@ -9,12 +9,12 @@ Feature: OY2-13092 Package Dashboard - Filter
         And verify Filter By Exists
         And verify Close Exists
         And verify Type Exists
-        And verify 90th day filter dropdown exists
+        #        And verify 90th day filter dropdown exists
         And verify status DropDown Filter exists
-        And verify date submitted filter dropdown exists
+        # And verify date submitted filter dropdown exists
         And verify reset Exists
 
-     Scenario: Waivers Tab - Screen enhancement
+    Scenario: Waivers Tab - Screen enhancement
         Given I am on Login Page
         When Clicking on Development Login
         When Login with state submitter user
@@ -25,10 +25,10 @@ Feature: OY2-13092 Package Dashboard - Filter
         And verify Filter By Exists
         And verify Close Exists
         And verify Type Exists
-        And verify 90th day filter dropdown exists
-        And verify expiration date filter dropdown exists
+        #        And verify 90th day filter dropdown exists
+        #        And verify expiration date filter dropdown exists
         And verify status DropDown Filter exists
-        And verify date submitted filter dropdown exists
+        # And verify date submitted filter dropdown exists
         And verify reset Exists
 
     Scenario: SPAs tab - demonstrate that all options match column header and all types of Status columns in the filter
@@ -45,7 +45,7 @@ Feature: OY2-13092 Package Dashboard - Filter
         And verify Withdrawn status checkbox exists
         And verify RAI Issued status checkbox exists
 
-        Scenario: Waivers tab - demonstrate that all type filters for waivers exist
+    Scenario: Waivers tab - demonstrate that all type filters for waivers exist
         Given I am on Login Page
         When Clicking on Development Login
         When Login with state submitter user
@@ -63,14 +63,13 @@ Feature: OY2-13092 Package Dashboard - Filter
         And click on Packages
         And Click on Filter Button
         And click on Type
-        And click CHIP SPA check box
-        And click Medicaid SPA check box
+        And uncheck all of the type checkboxes
         And verify Error message displayed should be No Results Found
         And verify Error message details is displayed
         And click Medicaid SPA check box
         And verify Medicaid SPA Exists in list
 
-        Scenario: Waivers tab - deselect all and verify error message, then select one and verify it exists
+    Scenario: Waivers tab - deselect all and verify error message, then select one and verify it exists
         Given I am on Login Page
         When Clicking on Development Login
         When Login with state submitter user
@@ -78,9 +77,7 @@ Feature: OY2-13092 Package Dashboard - Filter
         And click on the Waivers tab
         And Click on Filter Button
         And click on Type
-        And click 1915b Initial Waiver check box
-        And click 1915b Waiver Renewal check box
-        And click 1915c Appendix K Amendment check box
+        And uncheck all of the type checkboxes
         And verify Error message displayed should be No Results Found
         And verify Error message details is displayed
         And click 1915b Initial Waiver check box
