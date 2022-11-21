@@ -20,7 +20,7 @@ custom:
   oneMacTableArn: ${cf:app-api-${self:custom.stage}.OneMacTableArn}
   bootstrapBrokerStringTls: ${ssm:/configuration/${self:custom.stage}/bigmac/bootstrapBrokerStringTls, ssm:/configuration/default/bigmac/bootstrapBrokerStringTls}
   vpcId: ${ssm:/configuration/${self:custom.stage}/vpc/id, ssm:/configuration/default/vpc/id}
-  connectGroup: mgmt.connect.${self:service}-${self:custom.stage}.v1
+  connectGroup: mgmt.connect.${self:service}-${self:custom.stage}.v2
   dataSubnets:
     - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/data/a/id, ssm:/configuration/default/vpc/subnets/data/a/id}
     - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/data/b/id, ssm:/configuration/default/vpc/subnets/data/b/id}
