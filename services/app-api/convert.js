@@ -3,7 +3,7 @@ import { Workflow } from "cmscommonlib";
 
 import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
-import newComponent from "./utils/newComponent";
+// import newComponent from "./utils/newComponent";
 
 import { validateSubmission } from "./form/validateSubmission";
 import { chipSPAFormConfig } from "./form/submitCHIPSPA";
@@ -89,7 +89,7 @@ export const main = handler(async () => {
         .plus({ days: 90 })
         .toMillis();
       console.log("Submitting data: ", data);
-      await newComponent(data, config);
+      // await newComponent(data, config);
     }
 
     // console.log("results number: ", results.Items.length);

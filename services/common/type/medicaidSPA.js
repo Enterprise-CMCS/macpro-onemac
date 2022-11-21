@@ -20,4 +20,16 @@ export const medicaidSPA = {
     "Tribal Consultation",
     "Other",
   ],
+  theAttributes: [
+    "componentId",
+    "submissionTimestamp",
+    "proposedEffectiveDate",
+    "clockEndTimestamp",
+    "currentStatus",
+    "currentStatusTimestamp",
+    "attachments",
+    "additionalInformation",
+    "submitterName",
+    "submitterEmail",
+  ],
 };

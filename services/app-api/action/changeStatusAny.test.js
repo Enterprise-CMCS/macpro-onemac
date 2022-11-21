@@ -1,15 +1,12 @@
 import { RESPONSE_CODE } from "cmscommonlib";
 import { changeStatusAny } from "./changeStatusAny";
 import { getUser } from "../getUser";
-// import updateComponent from "../utils/updateComponent";
 import sendEmail from "../libs/email-lib";
+import dynamoDb from "../libs/dynamodb-lib";
 
 jest.mock("../getUser");
-// jest.mock("../utils/updateComponent");
 jest.mock("../libs/email-lib");
-jest.mock("../libs/dynamodb-lib", () => ({
-  put: () => {},
-}));
+jest.mock("../libs/dynamodb-lib");
 
 const testDoneBy = {
   roleList: [
@@ -28,11 +25,6 @@ const testUnauthUser = {
   firstName: "firsty",
   lastName: "lasty",
   fullName: "firsty lastly",
-};
-
-const testUpdatedPackageData = {
-  submissionTimestamp: Date.now(),
-  componentId: "1111",
 };
 
 const eventBody = {
@@ -62,7 +54,7 @@ beforeEach(() => {
 
   getUser.mockResolvedValue(testDoneBy);
 
-  // updateComponent.mockResolvedValue(testUpdatedPackageData);
+  dynamoDb.put.mockResolvedValue({});
 
   sendEmail.mockResolvedValue(null);
 });
@@ -76,8 +68,8 @@ it("catches a badly parsed event", async () => {
 });
 
 it("updates status on a parent package", async () => {
-  // const response = await changeStatusAny(testEvent, testConfig);
-  // expect(response).toEqual(RESPONSE_CODE.PACKAGE_WITHDRAW_SUCCESS);
+  const response = await changeStatusAny(testEvent, testConfig);
+  expect(response).toEqual(RESPONSE_CODE.PACKAGE_WITHDRAW_SUCCESS);
 });
 
 it("returns error code for unauthorized user", async () => {
@@ -95,11 +87,11 @@ it("returns validation error code when error occurs getting user", async () => {
 });
 
 it("returns data retrieval error code when error occurs calling update", async () => {
-  // updateComponent.mockImplementation(() => {
-  //   throw new Error("Update error");
-  // });
-  // const response = await changeStatusAny(testEvent, testConfig);
-  // expect(response).toEqual(RESPONSE_CODE.DATA_RETRIEVAL_ERROR);
+  dynamoDb.put.mockImplementation(() => {
+    throw new Error("Update error");
+  });
+  const response = await changeStatusAny(testEvent, testConfig);
+  expect(response).toEqual(RESPONSE_CODE.DATA_RETRIEVAL_ERROR);
 });
 
 it("logs email error but still returns success code", async () => {

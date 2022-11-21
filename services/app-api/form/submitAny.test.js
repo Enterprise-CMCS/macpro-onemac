@@ -5,15 +5,12 @@ import { initialWaiverFormConfig } from "./submitInitialWaiver";
 import { waiverTemporaryExtensionFormConfig } from "./submitWaiverExtension";
 import packageExists from "../utils/packageExists";
 import sendEmail from "../libs/email-lib";
-// import newComponent from "../utils/newComponent";
+import dynamoDb from "../libs/dynamodb-lib";
 
 jest.mock("../getUser");
 jest.mock("../utils/packageExists");
 jest.mock("../libs/email-lib");
-// jest.mock("../utils/newComponent");
-jest.mock("../libs/dynamodb-lib", () => ({
-  put: () => {},
-}));
+jest.mock("../libs/dynamodb-lib");
 
 const testDoneBy = {
   roleList: [
@@ -128,7 +125,7 @@ beforeEach(() => {
   getUser.mockResolvedValue(testDoneBy);
   packageExists.mockResolvedValue(false);
   sendEmail.mockResolvedValue(null);
-  // newComponent.mockResolvedValue(null);
+  dynamoDb.put.mockResolvedValue({});
 });
 
 it("catches a badly parsed event", async () => {
@@ -145,54 +142,54 @@ it("submits a initial waiver", async () => {
 });
 
 it("rejects a duplicate id initial waiver", async () => {
-  // packageExists.mockResolvedValue(true);
-  // const response = await submitAny(testEvent, testConfig);
-  // expect(response).toEqual(RESPONSE_CODE.DUPLICATE_ID);
+  packageExists.mockResolvedValue(true);
+  const response = await submitAny(testEvent, testConfig);
+  expect(response).toEqual(RESPONSE_CODE.DUPLICATE_ID);
 });
 
 it("rejects a duplicate id for temp extension", async () => {
-  // packageExists.mockResolvedValue(true);
-  // const response = await submitAny(
-  //   tempExtensionTestEvent,
-  //   tempExtentsionTestConfig
-  // );
-  // expect(response).toEqual(RESPONSE_CODE.DUPLICATE_ID);
+  packageExists.mockResolvedValue(true);
+  const response = await submitAny(
+    tempExtensionTestEvent,
+    tempExtentsionTestConfig
+  );
+  expect(response).toEqual(RESPONSE_CODE.DUPLICATE_ID);
 });
 
 it("returns error code for validation error", async () => {
-  // const response = await submitAny(invalidTestEvent, testConfig);
-  // expect(response).toEqual(RESPONSE_CODE.VALIDATION_ERROR);
+  const response = await submitAny(invalidTestEvent, testConfig);
+  expect(response).toEqual(RESPONSE_CODE.VALIDATION_ERROR);
 });
 
 it("returns error code for unauthorized user", async () => {
-  // getUser.mockResolvedValue(testUnauthUser);
-  // const response = await submitAny(testEvent, testConfig);
-  // expect(response).toEqual(RESPONSE_CODE.USER_NOT_AUTHORIZED);
+  getUser.mockResolvedValue(testUnauthUser);
+  const response = await submitAny(testEvent, testConfig);
+  expect(response).toEqual(RESPONSE_CODE.USER_NOT_AUTHORIZED);
 });
 
 it("returns error code when new submission fails", async () => {
-  // newComponent.mockImplementation((testEvent, testConfig) => {
-  //   throw new Error("Submit error");
-  // });
-  // const response = await submitAny(testEvent, testConfig);
-  // expect(response).toEqual(RESPONSE_CODE.SUBMISSION_SAVE_FAILURE);
+  dynamoDb.put.mockImplementation(() => {
+    throw new Error("Submit error");
+  });
+  const response = await submitAny(testEvent, testConfig);
+  expect(response).toEqual(RESPONSE_CODE.SUBMISSION_SAVE_FAILURE);
 });
 
 it("returns error code when CMS email fails", async () => {
-  // sendEmail.mockImplementation(() => {
-  //   throw new Error("Email error");
-  // });
-  // const response = await submitAny(testEvent, testConfig);
-  // expect(response).toEqual(RESPONSE_CODE.EMAIL_NOT_SENT);
+  sendEmail.mockImplementation(() => {
+    throw new Error("Email error");
+  });
+  const response = await submitAny(testEvent, testConfig);
+  expect(response).toEqual(RESPONSE_CODE.EMAIL_NOT_SENT);
 });
 
 it("returns success code even when State email fails", async () => {
-  // sendEmail.mockImplementationOnce(() => {
-  //   return null; //success - first email is CMS email
-  // });
-  // sendEmail.mockImplementationOnce(() => {
-  //   throw new Error("Email error"); //second email is state email
-  // });
-  // const response = await submitAny(testEvent, testConfig);
-  // expect(response).toEqual(RESPONSE_CODE.SUCCESSFULLY_SUBMITTED);
+  sendEmail.mockImplementationOnce(() => {
+    return null; //success - first email is CMS email
+  });
+  sendEmail.mockImplementationOnce(() => {
+    throw new Error("Email error"); //second email is state email
+  });
+  const response = await submitAny(testEvent, testConfig);
+  expect(response).toEqual(RESPONSE_CODE.SUCCESSFULLY_SUBMITTED);
 });

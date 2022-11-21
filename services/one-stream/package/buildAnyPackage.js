@@ -4,22 +4,6 @@ import { dynamoConfig } from "cmscommonlib";
 
 const dynamoDb = new AWS.DynamoDB.DocumentClient(dynamoConfig);
 
-const topLevelAttributes = [
-  "GSI1pk",
-  "GSI1sk",
-  "componentId",
-  "componentType",
-  "submissionTimestamp",
-  "proposedEffectiveDate",
-  "clockEndTimestamp",
-  "currentStatus",
-  "currentStatusTimestamp",
-  "lastModifiedTimestamp",
-  "attachments",
-  "additionalInformation",
-  "submitterName",
-  "submitterEmail",
-];
 export const buildAnyPackage = async (packageId, config) => {
   console.log("Building package: ", packageId);
   const queryParams = {
@@ -44,6 +28,7 @@ export const buildAnyPackage = async (packageId, config) => {
         raiResponses: [],
       },
     };
+    console.log("starting putParams: ", putParams);
     const sources = {};
     let currentPackage;
     let lmTimestamp = 0;
@@ -71,9 +56,9 @@ export const buildAnyPackage = async (packageId, config) => {
       }
       const [source, timestamp] = anEvent.sk.split("#");
       if (!sources[source] || timestamp > sources[source].submissionTimestamp) {
-        sources[source] = anEvent;
+        sources[source] = { ...anEvent };
 
-        topLevelAttributes.forEach((attributeName) => {
+        config.theAttributes.forEach((attributeName) => {
           if (anEvent[attributeName]) {
             putParams.Item[attributeName] = anEvent[attributeName];
           }
