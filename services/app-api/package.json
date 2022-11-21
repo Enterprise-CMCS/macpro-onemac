@@ -30,7 +30,7 @@
     "date-fns": "^2.16.1",
     "joi": "^17.4.0",
     "luxon": "^1.25.0",
-    "serverless-dynamodb-local": "^0.2.39",
+    "serverless-dynamodb-local": "^1.0.2",
     "uuid": "^7.0.3"
   },
   "jest": {

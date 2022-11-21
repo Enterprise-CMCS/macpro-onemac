@@ -24,4 +24,17 @@ export const initialWaiver = {
     },
     { label: "All other 1915(b) Waivers", value: "1915(b)" },
   ],
+  theAttributes: [
+    "componentId",
+    "submissionTimestamp",
+    "proposedEffectiveDate",
+    "clockEndTimestamp",
+    "currentStatus",
+    "currentStatusTimestamp",
+    "attachments",
+    "additionalInformation",
+    "submitterName",
+    "submitterEmail",
+    "waiverAuthority",
+  ],
 };

@@ -1,5 +1,5 @@
 import { chipSPA } from "cmscommonlib";
 import { buildAnyPackage } from "./buildAnyPackage";
 
-export const buildMedicaidSpa = async (packageId) =>
+export const buildChipSpa = async (packageId) =>
   buildAnyPackage(packageId, chipSPA);

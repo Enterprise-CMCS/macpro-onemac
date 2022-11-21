@@ -7,4 +7,14 @@ export const waiverAppendixKRAIResponse = {
   allowMultiplesWithSameId: true,
   requiredAttachments: ["1915(c) Appendix K RAI Response"],
   optionalAttachments: ["Other"],
+  theAttributes: [
+    "componentId",
+    "submissionTimestamp",
+    "currentStatus",
+    "currentStatusTimestamp",
+    "attachments",
+    "additionalInformation",
+    "submitterName",
+    "submitterEmail",
+  ],
 };

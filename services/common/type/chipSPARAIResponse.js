@@ -16,4 +16,14 @@ export const chipSPARAIResponse = {
     "Tribal Consultation",
     "Other",
   ],
+  theAttributes: [
+    "componentId",
+    "submissionTimestamp",
+    "currentStatus",
+    "currentStatusTimestamp",
+    "attachments",
+    "additionalInformation",
+    "submitterName",
+    "submitterEmail",
+  ],
 };

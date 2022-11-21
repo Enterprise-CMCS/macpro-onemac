@@ -7,10 +7,11 @@ import {
   Workflow,
 } from "cmscommonlib";
 
+import dynamoDb from "../libs/dynamodb-lib";
 import sendEmail from "../libs/email-lib";
+
 import { getUser } from "../getUser";
 import { validateSubmission } from "./validateSubmission";
-import newComponent from "../utils/newComponent";
 import { CMSSubmissionNotice } from "../email/CMSSubmissionNotice";
 import { stateSubmissionReceipt } from "../email/stateSubmissionReceipt";
 import packageExists from "../utils/packageExists";
@@ -93,7 +94,27 @@ export const submitAny = async (event, config) => {
       .plus({ days: 90 })
       .toMillis();
 
-    await newComponent(data, config);
+    const putParams = {
+      TableName: process.env.oneMacTableName,
+      Item: {
+        pk: data.componentId,
+        sk: `OneMAC#${data.submissionTimestamp}`,
+        GSI1pk: `OneMAC#submit${config.componentType}`,
+        GSI1sk: data.componentId,
+        componentType: config.componentType,
+      },
+      ConditionExpression: "attribute_not_exists(pk)",
+    };
+
+    config.theAttributes.forEach((attributeName) => {
+      if (data[attributeName]) {
+        putParams.Item[attributeName] = data[attributeName];
+      }
+    });
+
+    console.log("params for submitAny: ", JSON.stringify(putParams, null, 2));
+    await dynamoDb.put(putParams);
+    // await newComponent(data, config);
     console.log("Successfully submitted the following:", data);
   } catch (error) {
     console.log("Error is: ", error.message);
@@ -122,5 +143,5 @@ export const submitAny = async (event, config) => {
       error
     );
   }
-  return RESPONSE_CODE.SUCCESSFULLY_SUBMITTED;
+  return config.successResponseCode;
 };

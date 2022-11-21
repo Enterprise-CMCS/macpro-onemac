@@ -18,4 +18,16 @@ export const chipSPA = {
     "Tribal Consultation",
     "Other",
   ],
+  theAttributes: [
+    "componentId",
+    "submissionTimestamp",
+    "proposedEffectiveDate",
+    "clockEndTimestamp",
+    "currentStatus",
+    "currentStatusTimestamp",
+    "attachments",
+    "additionalInformation",
+    "submitterName",
+    "submitterEmail",
+  ],
 };
