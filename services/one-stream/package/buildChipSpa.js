@@ -1,5 +1,5 @@
-import { medicaidSPA } from "cmscommonlib";
+import { chipSPA } from "cmscommonlib";
 import { buildAnyPackage } from "./buildAnyPackage;";
 
 export const buildMedicaidSpa = async (packageId) =>
-  buildAnyPackage(packageId, medicaidSPA);
+  buildAnyPackage(packageId, chipSPA);

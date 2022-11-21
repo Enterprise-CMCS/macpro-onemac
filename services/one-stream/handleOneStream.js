@@ -1,4 +1,5 @@
 import { buildMedicaidSpa } from "./package/buildMedicaidSpa";
+import { buildChipSpa } from "./package/buildChipSpa";
 
 export const main = async (eventBatch) => {
   console.log("One Stream event: ", eventBatch);
@@ -24,12 +25,15 @@ export const main = async (eventBatch) => {
         ) {
           console.log("is a medicaidspa rai!");
           await buildMedicaidSpa(event.dynamodb.NewImage.parentId.S);
+        } else if (event.dynamodb.NewImage.componentType.S === "chipspa") {
+          console.log("is a chipspa!");
+          await buildChipSpa(event.dynamodb.NewImage.pk.S);
+        } else if (event.dynamodb.NewImage.componentType.S === "chipsparai") {
+          console.log("is a chipspa rai!");
+          await buildChipSpa(event.dynamodb.NewImage.parentId.S);
         } else {
           console.log("This is a: ", event.dynamodb.NewImage.componentType.S);
         }
-
-        // const oneParams = {};
-        // updateWithVersion(oneParams);
       } else {
         console.log(`skipping ${event.eventName} of: `, event.dynamodb);
       }
