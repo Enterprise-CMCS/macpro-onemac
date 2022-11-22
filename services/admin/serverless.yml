@@ -15,6 +15,7 @@ custom:
   stage: ${opt:stage, self:provider.stage}
   iamPermissionsBoundaryPolicy: ${ssm:/configuration/${self:custom.stage}/iam/permissionsBoundaryPolicy, ssm:/configuration/default/iam/permissionsBoundaryPolicy, ""}
   tableName: cms-spa-form-${self:custom.stage}-change-requests
+  practicetableName: product-change-request-2
   spaIdTableName: cms-spa-form-${self:custom.stage}-spa-ids
   oneMacTableName: onemac-${self:custom.stage}-one
 provider:
@@ -62,4 +63,8 @@ functions:
 
   batchUpdateChangeRequestId:
     handler: ./handlers/batchUpdateChangeRequestId.main
+    timeout: 180
+
+  convertChangeRequests:
+    handler: ./handlers/convertChangeRequests.main
     timeout: 180
