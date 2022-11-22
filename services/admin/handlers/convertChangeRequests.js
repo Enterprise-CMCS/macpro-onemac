@@ -1,7 +1,5 @@
 import AWS from "aws-sdk";
 
-import { Workflow } from "cmscommonlib";
-
 const dynamoDb = new AWS.DynamoDB.DocumentClient(
   process.env.IS_OFFLINE
     ? {
@@ -38,7 +36,7 @@ export const main = async () => {
               componentType,
               submissionTimestamp: item.submittedAt,
               attachments: item.uploads,
-              currentStatus: Workflow.ONEMAC_STATUS.SUBMITTED,
+              currentStatus: "Submitted",
               currentStatusTimestamp: item.submittedAt,
               proposedEffectiveDate: "none",
               clockEndTimestamp: item.ninetyDayClockEnd,
