@@ -25,6 +25,7 @@ export const buildAnyPackage = async (packageId, config) => {
         sk: packageSk,
         GSI1pk: `OneMAC#${config.whichTab}`,
         GSI1sk: packageId,
+        componentType: config.componentType,
         raiResponses: [],
       },
     };
@@ -55,8 +56,8 @@ export const buildAnyPackage = async (packageId, config) => {
         return;
       }
       const [source, timestamp] = anEvent.sk.split("#");
-      if (!sources[source] || timestamp > sources[source].submissionTimestamp) {
-        sources[source] = { ...anEvent };
+      if (!sources[source] || timestamp > sources[source]) {
+        sources[source] = timestamp;
 
         config.theAttributes.forEach((attributeName) => {
           if (anEvent[attributeName]) {
@@ -65,19 +66,21 @@ export const buildAnyPackage = async (packageId, config) => {
         });
       }
     });
-    putParams.Item.lastModifiedTimestamp = lmTimestamp;
+    delete currentPackage.lastModifiedTimestamp;
     console.log("currentPackage: ", currentPackage);
     console.log("newItem: ", putParams.Item);
     console.log("evaluates to: ", _.isEqual(currentPackage, putParams.Item));
     if (_.isEqual(currentPackage, putParams.Item)) return;
+
+    putParams.Item.lastModifiedTimestamp = lmTimestamp;
     putParams.ConditionExpression = `attribute_not_exists(pk) OR lastModifiedTimestamp < :newModifiedTimestamp`;
     putParams.ExpressionAttributeValues = {
       ":newModifiedTimestamp": putParams.Item.lastModifiedTimestamp,
     };
-    console.log("and putParams: ", putParams);
-    await dynamoDb.put(putParams).promise();
+    console.log("just before put: ", putParams);
+    const putResult = await dynamoDb.put(putParams).promise();
 
-    console.log("put result: ", result);
+    console.log("put result: ", putResult);
   } catch (e) {
     console.log("buildAnyPackage error: ", e);
   }
