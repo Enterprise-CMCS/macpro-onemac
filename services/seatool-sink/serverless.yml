@@ -20,7 +20,7 @@ custom:
   oneMacTableArn: ${cf:app-api-${self:custom.stage}.OneMacTableArn}
   bootstrapBrokerStringTls: ${ssm:/configuration/${self:custom.stage}/bigmac/bootstrapBrokerStringTls, ssm:/configuration/default/bigmac/bootstrapBrokerStringTls}
   vpcId: ${ssm:/configuration/${self:custom.stage}/vpc/id, ssm:/configuration/default/vpc/id}
-  connectGroup: mgmt.connect.${self:service}-${self:custom.stage}.v3
+  connectGroup: mgmt.connect.${self:service}-${self:custom.stage}
   dataSubnets:
     - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/data/a/id, ssm:/configuration/default/vpc/subnets/data/a/id}
     - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/data/b/id, ssm:/configuration/default/vpc/subnets/data/b/id}
@@ -71,7 +71,7 @@ functions:
         - Arn
       sessionName: ${self:custom.stage}-sink-role
       topics: aws.ksqldb.seatool.agg.StatePlan_Medicaid_SPA,aws.ksqldb.seatool.agg.StatePlan_CHIP_SPA,aws.ksqldb.seatool.agg.StatePlan_1915b_waivers,aws.ksqldb.seatool.agg.StatePlan_1915c_waivers,aws.ksqldb.seatool.agg.StatePlan_1915c_Indep_Plus,aws.ksqldb.seatool.agg.StatePlan_1115,aws.ksqldb.seatool.agg.StatePlan_UPL
-      sinkPrefix: onemac-${self:custom.stage}-
+      sinkPrefix: onemac-${self:custom.stage}-v4
     maximumRetryAttempts: 2
     timeout: 120
     vpc:
