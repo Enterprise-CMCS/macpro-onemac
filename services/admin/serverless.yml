@@ -15,7 +15,6 @@ custom:
   stage: ${opt:stage, self:provider.stage}
   iamPermissionsBoundaryPolicy: ${ssm:/configuration/${self:custom.stage}/iam/permissionsBoundaryPolicy, ssm:/configuration/default/iam/permissionsBoundaryPolicy, ""}
   tableName: cms-spa-form-${self:custom.stage}-change-requests
-  practicetableName: product-change-request-2
   spaIdTableName: cms-spa-form-${self:custom.stage}-spa-ids
   oneMacTableName: onemac-${self:custom.stage}-one
 provider:
@@ -37,6 +36,7 @@ provider:
             - dynamodb:UpdateItem
             - dynamodb:DeleteItem
           Resource:
+            - arn:aws:dynamodb:*:*:table/product-change-request-2
             - arn:aws:dynamodb:*:*:table/${self:custom.oneMacTableName}
             - arn:aws:dynamodb:*:*:table/${self:custom.oneMacTableName}/index/*
             - arn:aws:dynamodb:*:*:table/${self:custom.tableName}

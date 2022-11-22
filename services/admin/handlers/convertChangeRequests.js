@@ -8,15 +8,17 @@ const dynamoDb = new AWS.DynamoDB.DocumentClient(
     : {}
 );
 
-export const main = async () => {
+export const main = async (event) => {
   // scan changeRequest table
   const params = {
-    TableName: process.env.practicetableName,
-    ExclusiveStartKey: null,
+    TableName: event.fromTable ? event.fromTable : process.env.tableName,
+    ExclusiveStartKey: event.ExclusiveStartKey ? event.ExclusiveStartKey : null,
   };
+  if (event.Limit) params.Limit = event.Limit;
 
   do {
     try {
+      console.log("params are: ", params);
       const results = await dynamoDb.scan(params).promise();
       await Promise.all(
         results.Items.map(async (item) => {
