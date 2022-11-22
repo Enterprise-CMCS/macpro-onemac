@@ -66,7 +66,8 @@ export const buildAnyPackage = async (packageId, config) => {
         });
       }
     });
-    delete currentPackage.lastModifiedTimestamp;
+    if (currentPackage && currentPackage?.lastModifiedTimestamp)
+      delete currentPackage.lastModifiedTimestamp;
     console.log("currentPackage: ", currentPackage);
     console.log("newItem: ", putParams.Item);
     console.log("evaluates to: ", _.isEqual(currentPackage, putParams.Item));

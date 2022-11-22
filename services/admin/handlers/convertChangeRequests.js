@@ -24,6 +24,7 @@ export const main = async (event) => {
         results.Items.map(async (item) => {
           let componentType = item.type;
           if (componentType === "spa") componentType = "medicaidspa";
+          if (componentType === "sparai") componentType = "medicaidsparai";
           if (componentType === "waiver") componentType += item.actionType;
           console.log("change-request %s becomes %s", item.type, componentType);
 
@@ -68,7 +69,7 @@ export const main = async (event) => {
     } catch (e) {
       console.log("error! ", e);
     }
-  } while (params.ExclusiveStartKey);
+  } while (!params.Limit && params.ExclusiveStartKey);
 
-  return "Done";
+  return "Done at : " + JSON.stringify(params.ExclusiveStartKey);
 };
