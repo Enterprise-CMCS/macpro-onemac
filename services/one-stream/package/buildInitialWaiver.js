@@ -1,5 +1,5 @@
 import { initialWaiver } from "cmscommonlib";
 import { buildAnyPackage } from "./buildAnyPackage";
 
-export const buildMedicaidSpa = async (packageId) =>
+export const buildInitialWaiver = async (packageId) =>
   buildAnyPackage(packageId, initialWaiver);

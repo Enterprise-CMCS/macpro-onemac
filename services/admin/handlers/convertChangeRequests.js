@@ -12,7 +12,9 @@ export const main = async (event) => {
   // scan changeRequest table
   const params = {
     TableName: event.fromTable ? event.fromTable : process.env.tableName,
-    ExclusiveStartKey: event.ExclusiveStartKey ? event.ExclusiveStartKey : null,
+    ExclusiveStartKey: event.ExclusiveStartKey
+      ? JSON.parse(event.ExclusiveStartKey)
+      : null,
   };
   if (event.Limit) params.Limit = event.Limit;
 

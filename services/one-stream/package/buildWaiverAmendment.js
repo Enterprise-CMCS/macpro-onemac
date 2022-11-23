@@ -1,5 +1,5 @@
 import { waiverAmendment } from "cmscommonlib";
 import { buildAnyPackage } from "./buildAnyPackage";
 
-export const buildMedicaidSpa = async (packageId) =>
+export const buildWaiverAmendment = async (packageId) =>
   buildAnyPackage(packageId, waiverAmendment);
