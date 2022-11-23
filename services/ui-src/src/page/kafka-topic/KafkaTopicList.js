@@ -100,7 +100,7 @@ const KafkaTopicList = () => {
           disableGlobalFilter: false,
         },
       ].filter(Boolean),
-    []
+    [renderId]
   );
 
   const initialTableState = useMemo(
