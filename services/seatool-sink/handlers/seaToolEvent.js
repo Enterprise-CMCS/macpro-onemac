@@ -63,11 +63,11 @@ function myHandler(event) {
   console.log(`Type: ${componentType} Topic: ${event.topic}`);
 
   const pk = value.STATE_PLAN.ID_NUMBER;
-  const changeDate = value.STATE_PLAN.CHANGED_DATE;
-  if (!pk || !changeDate) return;
+  const changedDate = value.STATE_PLAN.CHANGED_DATE;
+  if (!pk || !changedDate) return;
 
   // use the offset as a version number/event tracker... highest id is most recent
-  const sk = `SEATool#${changeDate}`;
+  const sk = `SEATool#${changedDate}`;
 
   const GSI1pk = `SEATool#${componentType}`;
   const GSI1sk = value.STATE_PLAN.ID_NUMBER;

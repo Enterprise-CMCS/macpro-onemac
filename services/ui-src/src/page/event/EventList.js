@@ -35,7 +35,7 @@ const TOPICS = [
 /**
  * Component containing topic lists
  */
-const KafkaTopicList = () => {
+const EventList = () => {
   const dashboardRef = useRef();
   const [topicList, setTopicList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -71,7 +71,7 @@ const KafkaTopicList = () => {
   const renderId = useCallback(
     ({ row, value }) => (
       <Link
-        to={`${ONEMAC_ROUTES.TOPIC_DETAIL}/${value}/${row.original.STATE_PLAN.CHANGED_DATE}`}
+        to={`${ONEMAC_ROUTES.EVENT}/${value}/${row.original.STATE_PLAN.CHANGED_DATE}`}
       >
         {value}
       </Link>
@@ -174,4 +174,4 @@ const KafkaTopicList = () => {
   );
 };
 
-export default KafkaTopicList;
+export default EventList;

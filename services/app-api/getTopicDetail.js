@@ -8,9 +8,9 @@ import { getUser } from "./getUser";
  * that correspond to the user's active access to states/territories
  */
 
-export const getTopicDetail = async (email, id, changeDate) => {
+export const getTopicDetail = async (email, id, changedDate) => {
   if (!email) return RESPONSE_CODE.USER_NOT_FOUND;
-  if (!changeDate || !id) return RESPONSE_CODE.DATA_MISSING;
+  if (!changedDate || !id) return RESPONSE_CODE.DATA_MISSING;
 
   const user = await getUser(email);
 
@@ -27,7 +27,7 @@ export const getTopicDetail = async (email, id, changeDate) => {
     KeyConditionExpression: "pk = :pk and sk = :sk",
     ExpressionAttributeValues: {
       ":pk": id,
-      ":sk": `SEATool#${changeDate}`,
+      ":sk": `SEATool#${changedDate}`,
     },
   };
 
@@ -43,6 +43,6 @@ export const main = handler(async (event) => {
   return await getTopicDetail(
     event?.queryStringParameters?.email,
     event?.queryStringParameters?.id,
-    event?.queryStringParameters?.changeDate
+    event?.queryStringParameters?.changedDate
   );
 });

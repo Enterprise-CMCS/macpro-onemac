@@ -2,20 +2,19 @@ import { ONEMAC_ROUTES, RESPONSE_CODE } from "cmscommonlib";
 import { format } from "date-fns";
 import React, { useCallback, useEffect, useState } from "react";
 import { useHistory, useParams, useLocation } from "react-router-dom";
-import AlertBar from "../components/AlertBar";
-import LoadingScreen from "../components/LoadingScreen";
+import AlertBar from "../../components/AlertBar";
+import LoadingScreen from "../../components/LoadingScreen";
 
-import PageTitleBar from "../components/PageTitleBar";
-import { LocationState } from "../domain-types";
-import PackageApi from "../utils/PackageApi";
+import PageTitleBar from "../../components/PageTitleBar";
+import { LocationState } from "../../domain-types";
+import PackageApi from "../../utils/PackageApi";
 
 type PathParams = {
-  changeDate: string;
+  changedDate: string;
   id: string;
 };
 
-const KafkaTopicDetail: React.FC = () => {
-  console.log("im here");
+const EventDetail: React.FC = () => {
   const location = useLocation<LocationState>();
   const history = useHistory();
   const [alertCode, setAlertCode] = useState(location?.state?.passCode);
@@ -23,8 +22,8 @@ const KafkaTopicDetail: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   // The record we are using for the page
   const [detail, setDetail] = useState<String>();
-  const { changeDate, id } = useParams<PathParams>();
-  console.log(changeDate, id);
+  const { changedDate, id } = useParams<PathParams>();
+  console.log(changedDate, id);
   function closedAlert() {
     setAlertCode(RESPONSE_CODE.NONE);
   }
@@ -37,14 +36,14 @@ const KafkaTopicDetail: React.FC = () => {
       try {
         fetchedDetail = (await PackageApi.getTopicDetail(
           id,
-          changeDate
+          changedDate
         )) as String;
         console.log("got the record: ", fetchedDetail);
         stillLoading = false;
       } catch (e) {
         console.log("error in getDetail call?? ", e);
         history.push({
-          pathname: ONEMAC_ROUTES.TOPIC_LIST,
+          pathname: ONEMAC_ROUTES.EVENT,
           state: {
             passCode: RESPONSE_CODE.SYSTEM_ERROR,
           },
@@ -53,7 +52,7 @@ const KafkaTopicDetail: React.FC = () => {
       if (!ctrlr?.signal.aborted) setDetail(fetchedDetail);
       if (!ctrlr?.signal.aborted) setIsLoading(stillLoading);
     },
-    [changeDate, history, id]
+    [changedDate, history, id]
   );
 
   useEffect(() => {
@@ -64,13 +63,13 @@ const KafkaTopicDetail: React.FC = () => {
     return function cleanup() {
       ctrlr.abort();
     };
-  }, [id, changeDate, loadDetail]);
+  }, [id, changedDate, loadDetail]);
 
   return (
     <LoadingScreen isLoading={isLoading}>
       <PageTitleBar
-        backTo="/topic-list"
-        heading={`${id} - ${format(+changeDate, "MMM d, yyyy hh:mm:ss a")}`}
+        backTo={ONEMAC_ROUTES.EVENT}
+        heading={`${id} - ${format(+changedDate, "MMM d, yyyy hh:mm:ss a")}`}
         enableBackNav
       />
       <AlertBar alertCode={alertCode} closeCallback={closedAlert} />
@@ -87,4 +86,4 @@ const KafkaTopicDetail: React.FC = () => {
   );
 };
 
-export default KafkaTopicDetail;
+export default EventDetail;

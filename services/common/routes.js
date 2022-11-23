@@ -65,8 +65,7 @@ export const ONEMAC_ROUTES = {
   TEMPORARY_EXTENSION: "/temporary-extension",
   TEMPORARY_EXTENSION_DETAIL: "/detail/temporary-extension",
   FORMS_DESCRIBE: "/forms-describe",
-  TOPIC_LIST: "/topic-list",
-  TOPIC_DETAIL: "/topic-detail",
+  EVENT: "/event",
 };
 
 export const TYPE_TO_DETAIL_ROUTE = {

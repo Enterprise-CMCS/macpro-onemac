@@ -150,11 +150,7 @@ describe("component details are returned", () => {
   it("returns empty object if no results", async () => {
     dynamoDb.get.mockResolvedValueOnce({ notAnItem: "something" });
 
-    await expect(getDetails(validEvent))
-      .resolves.toStrictEqual({})
-      .catch((error) => {
-        console.log("caught test error: ", error);
-      });
+    await expect(getDetails(validEvent)).resolves.toStrictEqual({});
   });
 
   it("returns details", async () => {

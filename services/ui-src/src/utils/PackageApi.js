@@ -142,22 +142,22 @@ class PackageApi {
 
   /**
    * Fetch all topic records that correspond to the selected topic tab
-   * @param {string} tab the topic to retrieve
+   * @param {string} topic the topic to retrieve
    * @return {Promise<Array>} a list of topic records
    */
-  async getTopic(userEmail, tab) {
-    if (!tab) return [];
+  async getTopic(userEmail, topic) {
+    if (!topic) return [];
 
     try {
       return await API.get(
         "oneMacAPI",
-        `/getTopic?email=${userEmail}&topic=${tab}`
+        `/getTopic?email=${userEmail}&topic=${topic}`
       );
     } catch (error) {
       handleApiError(
         error,
         "FETCH_ERROR",
-        `There was an error fetching the topic items for ${tab}.`
+        `There was an error fetching the topic items for ${topic}.`
       );
     }
   }
@@ -165,11 +165,11 @@ class PackageApi {
   /**
    * Fetch topic record by id
    * @param {string} id the id to retrieve
-   * @param {string} changeDate the date of record change in seatool
+   * @param {string} changedDate the date of record change in seatool
    * @return {Promise<String>} a json string of a single topic record
    */
-  async getTopicDetail(id, changeDate) {
-    if (!id || !changeDate) return [];
+  async getTopicDetail(id, changedDate) {
+    if (!id || !changedDate) return [];
 
     const userAuth = await Auth.currentAuthenticatedUser();
     const userEmail =
@@ -178,7 +178,7 @@ class PackageApi {
     try {
       return await API.get(
         "oneMacAPI",
-        `/getTopicDetail?email=${userEmail}&id=${id}&changeDate=${changeDate}`
+        `/getTopicDetail?email=${userEmail}&id=${id}&changedDate=${changedDate}`
       );
     } catch (error) {
       handleApiError(
