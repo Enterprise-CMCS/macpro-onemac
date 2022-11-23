@@ -23,7 +23,7 @@ const EventDetail: React.FC = () => {
   // The record we are using for the page
   const [detail, setDetail] = useState<String>();
   const { changedDate, id } = useParams<PathParams>();
-  console.log(changedDate, id);
+
   function closedAlert() {
     setAlertCode(RESPONSE_CODE.NONE);
   }
