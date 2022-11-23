@@ -111,6 +111,21 @@ functions:
       default:
         enabled: false
 
+  handleOneMacTableStream:
+    handler: handleOneMacTableStream.main
+    events:
+      - stream:
+          type: dynamodb
+          arn: !GetAtt OneMacTable.StreamArn
+          startingPosition: LATEST
+          maximumRetryAttempts: 2
+          enabled: true
+    role: LambdaStreamRole
+    environment:
+      STAGE: ${self:custom.stage}
+      oneMacTableName: ${self:custom.oneMacTableName}
+    maximumRetryAttempts: 2
+
   submitInitialWaiver:
     handler: form/submitInitialWaiver.main
     role: LambdaApiRole
