@@ -57,6 +57,7 @@ export const main = async (event) => {
           // default to only processing new
           if (event.processAll !== "true")
             putParams.ConditionExpression = "attribute_not_exists(pk)";
+          else console.log("processAll is ", event.processAll);
 
           console.log(
             "params for convert: ",

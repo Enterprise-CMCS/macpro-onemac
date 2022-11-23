@@ -25,8 +25,13 @@ export const buildAnyPackage = async (packageId, config) => {
         sk: packageSk,
         GSI1pk: `OneMAC#${config.whichTab}`,
         GSI1sk: packageId,
+        componentId: packageId,
         componentType: config.componentType,
         raiResponses: [],
+        currentStatus: "Dummy Status", // include for ophans
+        submissionTimestamp: 11,
+        submitterName: "Dummy Submitter",
+        submitterEmail: "dumb@dadumb.dum",
       },
     };
     console.log("starting putParams: ", putParams);
@@ -66,6 +71,7 @@ export const buildAnyPackage = async (packageId, config) => {
         });
       }
     });
+
     if (currentPackage && currentPackage?.lastModifiedTimestamp)
       delete currentPackage.lastModifiedTimestamp;
     console.log("currentPackage: ", currentPackage);
