@@ -57,6 +57,10 @@ functions:
     handler: ./handlers/resetData.main
     timeout: 180
 
+  resetOneTable:
+    handler: ./handlers/resetOneTable.main
+    timeout: 180
+
   softDeleteChangeRequest:
     handler: ./handlers/softDeleteChangeRequest.main
     timeout: 180
