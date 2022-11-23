@@ -48,11 +48,13 @@ export const main = async (event) => {
               submitterName: `${item.user.firstName} ${item.user.lastName}`,
               originallyFrom: `${process.env.practicetableName}`,
             },
-            ConditionExpression: "attribute_not_exists(pk)",
           };
 
           if (item.waiverAuthority !== "")
             putParams.Item.waiverAuthority = item.waiverAuthority;
+          // default to only processing new
+          if (event.processAll !== "true")
+            putParams.ConditionExpression = "attribute_not_exists(pk)";
 
           console.log(
             "params for convert: ",
