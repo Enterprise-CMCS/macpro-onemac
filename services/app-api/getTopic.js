@@ -29,6 +29,7 @@ export const getTopic = async (email, topic) => {
     ExpressionAttributeValues: {
       ":pk": `SEATool#${topic}`,
     },
+    ScanIndexForward: false, //DESC ORDER
     Limit: 100,
     ProjectionExpression: "STATE_PLAN,SPW_STATUS",
   };
