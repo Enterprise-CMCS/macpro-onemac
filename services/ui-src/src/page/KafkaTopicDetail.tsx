@@ -1,4 +1,5 @@
 import { ONEMAC_ROUTES, RESPONSE_CODE } from "cmscommonlib";
+import { format } from "date-fns";
 import React, { useCallback, useEffect, useState } from "react";
 import { useHistory, useParams, useLocation } from "react-router-dom";
 import AlertBar from "../components/AlertBar";
@@ -69,7 +70,7 @@ const KafkaTopicDetail: React.FC = () => {
     <LoadingScreen isLoading={isLoading}>
       <PageTitleBar
         backTo="/topic-list"
-        heading={`${id} Detail`}
+        heading={`${id} - ${format(+changeDate, "MMM d, yyyy hh:mm:ss a")}`}
         enableBackNav
       />
       <AlertBar alertCode={alertCode} closeCallback={closedAlert} />
