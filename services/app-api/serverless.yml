@@ -370,6 +370,26 @@ functions:
           method: get
           cors: true
           authorizer: aws_iam
+  
+  getTopic:
+    handler: getTopic.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: getTopic
+          method: get
+          cors: true
+          authorizer: aws_iam
+  
+  getTopicDetail:
+    handler: getTopicDetail.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: getTopicDetail
+          method: get
+          cors: true
+          authorizer: aws_iam
 
   package-exists:
     handler: package-exists.main

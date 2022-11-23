@@ -141,6 +141,55 @@ class PackageApi {
   }
 
   /**
+   * Fetch all topic records that correspond to the selected topic tab
+   * @param {string} tab the topic to retrieve
+   * @return {Promise<Array>} a list of topic records
+   */
+  async getTopic(userEmail, tab) {
+    if (!tab) return [];
+
+    try {
+      return await API.get(
+        "oneMacAPI",
+        `/getTopic?email=${userEmail}&topic=${tab}`
+      );
+    } catch (error) {
+      handleApiError(
+        error,
+        "FETCH_ERROR",
+        `There was an error fetching the topic items for ${tab}.`
+      );
+    }
+  }
+
+  /**
+   * Fetch topic record by id
+   * @param {string} id the id to retrieve
+   * @param {string} changeDate the date of record change in seatool
+   * @return {Promise<String>} a json string of a single topic record
+   */
+  async getTopicDetail(id, changeDate) {
+    if (!id || !changeDate) return [];
+
+    const userAuth = await Auth.currentAuthenticatedUser();
+    const userEmail =
+      userAuth.signInUserSession.idToken.payload.email.toLowerCase();
+
+    try {
+      return await API.get(
+        "oneMacAPI",
+        `/getTopicDetail?email=${userEmail}&id=${id}&changeDate=${changeDate}`
+      );
+    } catch (error) {
+      handleApiError(
+        error,
+        "FETCH_ERROR",
+        `There was an error fetching the topic item detail for ${id}.`
+      );
+    }
+  }
+
+  /**
    * Set a component's status to Withdrawn
    * @param {string} componentId the component to be withdrawn
    * @return {Promise<string>} the response code

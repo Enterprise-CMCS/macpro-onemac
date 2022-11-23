@@ -2572,6 +2572,15 @@ aside#faq-contact-info-box {
   border-right: none;
   border-bottom: 3px solid $color-gray-lighter;
 }
+
+.tab-button-wide {
+  width: 150px;
+}
+
+.tab-button-tall {
+  height: 60px;
+}
+
 .tab-button:disabled {
   background-color: $color-primary-alt-lightest;
   color: $color-primary;

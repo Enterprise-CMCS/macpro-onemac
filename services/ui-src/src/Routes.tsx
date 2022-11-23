@@ -53,6 +53,8 @@ import WaiverAmendmentForm from "./page/waiver-amendment/WaiverAmendmentForm";
 import WaiverAppendixKForm from "./page/waiver-appendix-k/WaiverAppendixKForm";
 import WaiverAppendixKRAIForm from "./page/waiver-appendix-k/WaiverAppendixKRAIForm";
 import DescribeForms from "./page/DescribeForms";
+import KafkaTopicList from "./page/kafka-topic/KafkaTopicList";
+import KafkaTopicDetail from "./page/KafkaTopicDetail";
 
 // this is legacy and should not be touched!
 const FORM_TYPES = {
@@ -373,6 +375,28 @@ const ROUTE_LIST: RouteSpec[] = [
         path: ONEMAC_ROUTES.FORMS_DESCRIBE,
         exact: true,
         component: DescribeForms,
+      },
+    ],
+  },
+  {
+    path: ONEMAC_ROUTES.TOPIC_LIST,
+    component: accessGuardRouteListRenderer("canAccessAdminTools"),
+    routes: [
+      {
+        path: ONEMAC_ROUTES.TOPIC_LIST,
+        exact: true,
+        component: KafkaTopicList,
+      },
+    ],
+  },
+  {
+    path: ONEMAC_ROUTES.TOPIC_DETAIL,
+    component: accessGuardRouteListRenderer("canAccessAdminTools"),
+    routes: [
+      {
+        path: ONEMAC_ROUTES.TOPIC_DETAIL + "/:id/:changeDate",
+        exact: true,
+        component: KafkaTopicDetail,
       },
     ],
   },
