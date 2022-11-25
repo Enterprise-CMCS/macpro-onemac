@@ -28,6 +28,9 @@ export const main = async (event) => {
           if (componentType === "spa") componentType = "medicaidspa";
           if (componentType === "sparai") componentType = "medicaidsparai";
           if (componentType === "waiver") componentType += item.actionType;
+          let currentStatus = "Submitted";
+          if (item.state === "inactivated") currentStatus = "Inactivated";
+
           console.log("change-request %s becomes %s", item.type, componentType);
 
           const putParams = {
@@ -41,7 +44,7 @@ export const main = async (event) => {
               componentType,
               submissionTimestamp: item.submittedAt,
               attachments: item.uploads,
-              currentStatus: "Submitted",
+              currentStatus,
               currentStatusTimestamp: item.submittedAt,
               proposedEffectiveDate: "none",
               clockEndTimestamp: item.ninetyDayClockEnd,
