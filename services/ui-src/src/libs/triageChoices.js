@@ -60,7 +60,7 @@ export const choicesFromRoute = {
       },
       {
         title: "Request Temporary Extension",
-        description: "Submit for 1915(b) and 1915(c)",
+        description: "Submit for 1915(b) or 1915(c)",
         linkTo: ONEMAC_ROUTES.TEMPORARY_EXTENSION,
       },
     ],

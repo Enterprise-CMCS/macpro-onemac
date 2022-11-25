@@ -13,6 +13,11 @@ it("builds the CMS Withdrawal Notice Email", async () => {
     typeLabel: "Test Type",
   };
 
-  const response2 = CMSWithdrawalNotice(testData, testConfig);
-  expect(response2.HTML.length).toBe(402);
+  const user = {
+    fullName: "Tester",
+    email: "tester@test.test",
+  };
+
+  const response2 = CMSWithdrawalNotice(testData, testConfig, user);
+  expect(response2.HTML.length).toBe(504);
 });
