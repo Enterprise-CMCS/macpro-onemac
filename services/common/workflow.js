@@ -35,6 +35,7 @@ export const ONEMAC_STATUS = {
   WITHDRAWN: "Withdrawn",
   TERMINATED: "Terminated",
   PAUSED: "Review Paused, Off the Clock",
+  UNKNOWN: "-- --",
 };
 
 export const PACKAGE_ACTION = {
@@ -61,6 +62,7 @@ export const defaultActionsByStatus = {
   [ONEMAC_STATUS.DISAPPROVED]: [],
   [ONEMAC_STATUS.WITHDRAWN]: [],
   [ONEMAC_STATUS.TERMINATED]: [],
+  [ONEMAC_STATUS.UNKNOWN]: [],
 };
 
 export const initialWaiverActionsByStatus = {

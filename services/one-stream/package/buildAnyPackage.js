@@ -28,10 +28,10 @@ export const buildAnyPackage = async (packageId, config) => {
         componentId: packageId,
         componentType: config.componentType,
         raiResponses: [],
-        currentStatus: "Dummy Status", // include for ophans
-        submissionTimestamp: 11,
-        submitterName: "Dummy Submitter",
-        submitterEmail: "dumb@dadumb.dum",
+        currentStatus: "-- --", // include for ophans
+        submissionTimestamp: 0,
+        submitterName: "-- --",
+        submitterEmail: "-- --",
       },
     };
     console.log("starting putParams: ", putParams);

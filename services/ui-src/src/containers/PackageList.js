@@ -51,6 +51,7 @@ const initialStatuses = [
   Workflow.ONEMAC_STATUS.WITHDRAWN,
   Workflow.ONEMAC_STATUS.TERMINATED,
   Workflow.ONEMAC_STATUS.PAUSED,
+  Workflow.ONEMAC_STATUS.UNKNOWN,
 ];
 
 /**

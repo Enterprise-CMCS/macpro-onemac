@@ -48,7 +48,7 @@ export const main = async (event) => {
               additionalInformation: item.summary,
               submitterEmail: item.user.email.toLowerCase(),
               submitterName: `${item.user.firstName} ${item.user.lastName}`,
-              originallyFrom: `${process.env.practicetableName}`,
+              originallyFrom: `${params.TableName}`,
             },
           };
 
