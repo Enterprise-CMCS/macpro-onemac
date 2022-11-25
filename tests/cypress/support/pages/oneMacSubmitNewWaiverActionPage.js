@@ -138,7 +138,6 @@ export class oneMacSubmitNewWaiverActionPage {
   verifyRenewalWaiverErrorMsgPt2() {
     cy.get(errorMsgPart2).contains(
       "For renewals, the “R##” starts with ‘01’ and ascends."
-
     );
   }
 }
