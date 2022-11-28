@@ -38,7 +38,7 @@ import { tableListExportToCSV } from "../utils/tableListExportToCSV";
 const renderDate = ({ value }) =>
   typeof value === "number" && value > 0
     ? format(value, "MMM d, yyyy")
-    : value ?? "-- --";
+    : "-- --";
 
 export const getState = ({ componentId }) =>
   componentId ? componentId.toString().substring(0, 2) : "--";
