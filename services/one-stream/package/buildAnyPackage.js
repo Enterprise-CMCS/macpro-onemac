@@ -17,7 +17,7 @@ export const buildAnyPackage = async (packageId, config) => {
     const result = await dynamoDb.query(queryParams).promise();
     console.log("query result: ", result);
 
-    const packageSk = `PackageDetails`;
+    const packageSk = `Package`;
     const putParams = {
       TableName: process.env.oneMacTableName,
       Item: {

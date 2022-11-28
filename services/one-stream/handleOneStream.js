@@ -14,7 +14,8 @@ export const main = async (eventBatch) => {
   await Promise.all(
     eventBatch.Records.map(async (event) => {
       console.log(
-        `Processing eventName: ${event.eventName} and dynamodb object: `,
+        `Processing eventName: %s and dynamodb object: `,
+        event.eventName,
         event.dynamodb
       );
       if (event.eventName === "REMOVE") return;
@@ -76,7 +77,7 @@ export const main = async (eventBatch) => {
             break;
         }
       } else {
-        console.log(`skipping ${event.eventName} of: `, event.dynamodb);
+        console.log(`skipping %s of: `, event.eventName, event.dynamodb);
       }
     })
   );
