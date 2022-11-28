@@ -20,7 +20,7 @@ export const main = async (event) => {
 
   do {
     try {
-      console.log("params are: ", params);
+      console.log("scan params are: ", params);
       const results = await dynamoDb.scan(params).promise();
       await Promise.all(
         results.Items.map(async (item) => {
@@ -28,6 +28,12 @@ export const main = async (event) => {
           if (componentType === "spa") componentType = "medicaidspa";
           if (componentType === "sparai") componentType = "medicaidsparai";
           if (componentType === "waiver") componentType += item.actionType;
+          if (
+            componentType === "waiverrai" &&
+            item?.parentType === "waiverappk"
+          )
+            componentType = "waiverappkrai";
+
           let currentStatus = "Submitted";
           if (item.state === "inactivated") currentStatus = "Inactivated";
 
@@ -63,6 +69,8 @@ export const main = async (event) => {
 
           if (item.waiverAuthority !== "")
             putParams.Item.waiverAuthority = item.waiverAuthority;
+          if (item.parentType !== "")
+            putParams.Item.parentType = item.parentType;
           // default to only processing new
           if (event.processAll !== "true")
             putParams.ConditionExpression = "attribute_not_exists(pk)";

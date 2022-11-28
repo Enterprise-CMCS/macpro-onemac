@@ -24,7 +24,7 @@ export const main = async (eventBatch) => {
       let packageType = newEventData.componentType.S;
 
       // stream doesn't trigger on package updates
-      if (inSK.substring(0, 1) === "v") return;
+      if (inSK === "Package") return;
 
       console.log("pk: %s sk: %s", inPK, inSK);
       if (event.eventName === "INSERT" || event.eventName === "MODIFY") {
@@ -38,7 +38,7 @@ export const main = async (eventBatch) => {
             );
             // waiverrai components influence parentType
             if (packageType === ONEMAC_TYPE.WAIVER_RAI)
-              packageType = newEventData.parentType.S;
+              packageType = newEventData?.parentType?.S;
             switch (packageType) {
               case ONEMAC_TYPE.MEDICAID_SPA:
               case ONEMAC_TYPE.MEDICAID_SPA_RAI:

@@ -17,7 +17,7 @@ export const buildAnyPackage = async (packageId, config) => {
     const result = await dynamoDb.query(queryParams).promise();
     console.log("query result: ", result);
 
-    const packageSk = `v0#${config.componentType}`;
+    const packageSk = `PackageDetails`;
     const putParams = {
       TableName: process.env.oneMacTableName,
       Item: {
@@ -52,7 +52,10 @@ export const buildAnyPackage = async (packageId, config) => {
         return;
       }
 
-      if (anEvent.componentType === `${config.componentType}rai`) {
+      if (
+        anEvent.componentType === `${config.componentType}rai` ||
+        anEvent.componentType === `waiverrai`
+      ) {
         putParams.Item.raiResponses.push({
           submissionTimestamp: anEvent.submissionTimestamp,
           attachments: anEvent.attachments,
