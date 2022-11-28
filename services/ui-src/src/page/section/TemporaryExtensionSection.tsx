@@ -149,10 +149,10 @@ export const TemporaryExtensionSection: FC<{
       <PortalTable
         className={tableClassName}
         columns={tempExtColumns}
-        data={detail.waiverExtensions}
+        data={detail?.waiverExtensions}
         pageContentRef={extTableRef}
       />
-      {detail.waiverExtensions.length === 0 && (
+      {detail?.waiverExtensions.length === 0 && (
         <div className="no-results no-results-message">
           <p>No currently submitted temporary extensions</p>
         </div>
