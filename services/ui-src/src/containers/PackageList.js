@@ -36,7 +36,9 @@ import { pendingMessage, deniedOrRevokedMessage } from "../libs/userLib";
 import { tableListExportToCSV } from "../utils/tableListExportToCSV";
 
 const renderDate = ({ value }) =>
-  typeof value === "number" ? format(value, "MMM d, yyyy") : value ?? "N/A";
+  typeof value === "number" && value > 0
+    ? format(value, "MMM d, yyyy")
+    : value ?? "-- --";
 
 export const getState = ({ componentId }) =>
   componentId ? componentId.toString().substring(0, 2) : "--";

@@ -31,7 +31,12 @@ export const main = async (event) => {
           let currentStatus = "Submitted";
           if (item.state === "inactivated") currentStatus = "Inactivated";
 
-          console.log("change-request %s becomes %s", item.type, componentType);
+          console.log(
+            "for %s: %s becomes %s",
+            item.pk,
+            item.type,
+            componentType
+          );
 
           const putParams = {
             TableName: process.env.oneMacTableName,
@@ -52,6 +57,7 @@ export const main = async (event) => {
               submitterEmail: item.user.email.toLowerCase(),
               submitterName: `${item.user.firstName} ${item.user.lastName}`,
               originallyFrom: `${params.TableName}`,
+              convertTimestamp: Date.now(),
             },
           };
 
@@ -60,7 +66,6 @@ export const main = async (event) => {
           // default to only processing new
           if (event.processAll !== "true")
             putParams.ConditionExpression = "attribute_not_exists(pk)";
-          else console.log("processAll is ", event.processAll);
 
           console.log(
             "params for convert: ",
@@ -69,7 +74,7 @@ export const main = async (event) => {
           try {
             await dynamoDb.put(putParams).promise();
           } catch (e) {
-            console.log("error received: ", e);
+            console.log("error received for %s: ", item.pk, e);
           }
         })
       );

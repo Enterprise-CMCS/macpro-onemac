@@ -103,14 +103,6 @@ functions:
     role: LambdaApiRole
     timeout: 180
 
-  convert:
-    handler: convert.main
-    role: LambdaApiRole
-    timeout: 180
-    warmup:
-      default:
-        enabled: false
-
   submitInitialWaiver:
     handler: form/submitInitialWaiver.main
     role: LambdaApiRole
