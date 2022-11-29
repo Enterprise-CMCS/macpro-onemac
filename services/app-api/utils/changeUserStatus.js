@@ -64,7 +64,7 @@ export const changeUserStatus = async ({
         ":date": date,
         ":GSI1pk": "USER",
         ":GSI1sk": buildSK(role, territory),
-        ":GSI2pk": buildSK(role, territory),
+        ":GSI2pk": `${role}#${territory}`,
         ":GSI2sk": status,
         ":defaultval": 0,
         ":incrval": 1,

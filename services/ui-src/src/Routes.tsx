@@ -53,6 +53,8 @@ import WaiverAmendmentForm from "./page/waiver-amendment/WaiverAmendmentForm";
 import WaiverAppendixKForm from "./page/waiver-appendix-k/WaiverAppendixKForm";
 import WaiverAppendixKRAIForm from "./page/waiver-appendix-k/WaiverAppendixKRAIForm";
 import DescribeForms from "./page/DescribeForms";
+import EventList from "./page/event/EventList";
+import EventDetail from "./page/event/EventDetail";
 
 // this is legacy and should not be touched!
 const FORM_TYPES = {
@@ -373,6 +375,22 @@ const ROUTE_LIST: RouteSpec[] = [
         path: ONEMAC_ROUTES.FORMS_DESCRIBE,
         exact: true,
         component: DescribeForms,
+      },
+    ],
+  },
+  {
+    path: ONEMAC_ROUTES.EVENT,
+    component: accessGuardRouteListRenderer("canAccessAdminTools"),
+    routes: [
+      {
+        path: ONEMAC_ROUTES.EVENT + "/:id/:changedDate",
+        exact: true,
+        component: EventDetail,
+      },
+      {
+        path: ONEMAC_ROUTES.EVENT,
+        exact: true,
+        component: EventList,
       },
     ],
   },

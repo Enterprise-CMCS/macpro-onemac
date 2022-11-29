@@ -14,8 +14,9 @@ export const changeStatusAny = async (event, config) => {
     throw error;
   }
 
+  let user;
   try {
-    const user = await getUser(body.changedByEmail);
+    user = await getUser(body.changedByEmail);
     if (!validateUserSubmitting(user, body.componentId.substring(0, 2))) {
       return RESPONSE_CODE.USER_NOT_AUTHORIZED;
     }
@@ -43,7 +44,7 @@ export const changeStatusAny = async (event, config) => {
   try {
     const theEmails = await Promise.all(
       config.emailFunctions.map(
-        async (f) => await f(updatedPackageData, config)
+        async (f) => await f(updatedPackageData, config, user)
       )
     );
     console.log("the Emails: ", theEmails);
