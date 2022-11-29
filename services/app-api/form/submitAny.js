@@ -13,6 +13,7 @@ import { getUser } from "../getUser";
 import { validateSubmission } from "./validateSubmission";
 import packageExists from "../utils/packageExists";
 import { newEvent } from "../utils/newEvent";
+import { getPackageType } from "../utils/getPackageType";
 
 import { CMSSubmissionNotice } from "../email/CMSSubmissionNotice";
 import { stateSubmissionReceipt } from "../email/stateSubmissionReceipt";
@@ -76,6 +77,21 @@ export const submitAny = async (event, config) => {
   } catch (error) {
     console.log("Error is: ", error);
     return error;
+  }
+
+  // if a parent ID is included, need to validate parent and grab type
+  if (data.parentId) {
+    try {
+      data.parentType = await getPackageType(data.parentId);
+    } catch (e) {
+      console.log(
+        "%s parent ID %s validation failed: ",
+        data.componentId,
+        data.parentId,
+        e
+      );
+      //      throw RESPONSE_CODE.VALIDATION_ERROR; eh... probably still want to save it
+    }
   }
 
   try {
