@@ -13,9 +13,18 @@ export const buildAnyPackage = async (packageId, config) => {
       ":pk": packageId,
     },
   };
+  const childrenParams = {
+    TableName: process.env.oneMacTableName,
+    IndexName: "GSI2",
+    KeyConditionExpression: "GSI2pk = :pk",
+    ExpressionAttributeValues: {
+      ":pk": packageId,
+    },
+  };
+
   try {
     const result = await dynamoDb.query(queryParams).promise();
-    console.log("query result: ", result);
+    console.log("%s query result: ", packageId, result);
 
     const packageSk = `Package`;
     const putParams = {
@@ -28,6 +37,7 @@ export const buildAnyPackage = async (packageId, config) => {
         componentId: packageId,
         componentType: config.componentType,
         raiResponses: [],
+        waiverExtensions: [],
         currentStatus: "-- --", // include for ophans
         submissionTimestamp: 0,
         submitterName: "-- --",
@@ -69,10 +79,26 @@ export const buildAnyPackage = async (packageId, config) => {
 
         config.theAttributes.forEach((attributeName) => {
           if (anEvent[attributeName]) {
+            if (attributeName === "parentId") {
+              // having a parent adds the GSI2pk index
+              putParams.Item.GSI2pk = anEvent.parentId;
+              putParams.Item.GSI2sk = anEvent.componentType;
+            }
             putParams.Item[attributeName] = anEvent[attributeName];
           }
         });
       }
+    });
+
+    const children = await dynamoDb.query(childrenParams).promise();
+    console.log("%s children result: ", packageId, children);
+    children?.Items.forEach((aChild) => {
+      if (aChild.componentType === "waiverextension")
+        putParams.Item.waiverExtensions.push({
+          submissionTimestamp: aChild.submissionTimestamp,
+          componentId: aChild.componentId,
+          currentStatus: aChild.currentStatus,
+        });
     });
 
     if (currentPackage && currentPackage?.lastModifiedTimestamp)

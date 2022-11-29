@@ -109,6 +109,11 @@ resources:
                   - dynamodb:UpdateItem
                   - dynamodb:DeleteItem
                 Resource: arn:aws:dynamodb:*:*:table/${self:custom.oneMacTableName}
+              - Effect: Allow
+                Action:
+                  - dynamodb:Query
+                Resource:
+                  - arn:aws:dynamodb:*:*:table/${self:custom.oneMacTableName}/index/*
               - Effect: 'Allow'
                 Action:
                 - dynamodb:DescribeStream

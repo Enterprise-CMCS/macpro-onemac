@@ -72,3 +72,7 @@ functions:
   convertChangeRequests:
     handler: ./handlers/convertChangeRequests.main
     timeout: 180
+
+  verifyChangeRequests:
+    handler: ./handlers/verifyChangeRequests.main
+    timeout: 180

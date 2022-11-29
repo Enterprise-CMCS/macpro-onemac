@@ -9,6 +9,8 @@ const dynamoDb = new AWS.DynamoDB.DocumentClient(
 );
 
 export const main = async (event) => {
+  const badIDs = [];
+
   // scan changeRequest table
   const params = {
     TableName: event.fromTable ? event.fromTable : process.env.tableName,
@@ -20,7 +22,6 @@ export const main = async (event) => {
 
   do {
     try {
-      console.log("scan params are: ", params);
       const results = await dynamoDb.scan(params).promise();
       await Promise.all(
         results.Items.map(async (item) => {
@@ -28,7 +29,7 @@ export const main = async (event) => {
             TableName: process.env.oneMacTableName,
             KeyConditionExpression: "pk = :inPk AND sk = :package",
             ExpressionAttributeValues: {
-              ":inPk": item.pk,
+              ":inPk": item.transmittalNumber,
               ":package": "Package",
             },
             ProjectionExpression: "pk,sk",
@@ -36,9 +37,10 @@ export const main = async (event) => {
 
           try {
             const qresults = await dynamoDb.query(queryParams).promise();
-            console.log("%s qresults: ", item.pk, qresults);
+            if (qresults.Count !== 1) badIDs.push(item.transmittalNumber);
+            console.log("%s qresults: ", item.transmittalNumber, qresults);
           } catch (e) {
-            console.log("error received for %s: ", item.pk, e);
+            console.log("error received for %s: ", item.transmittalNumber, e);
           }
         })
       );
@@ -47,6 +49,6 @@ export const main = async (event) => {
       console.log("error! ", e);
     }
   } while (!params.Limit && params.ExclusiveStartKey);
-
+  console.log("the Bad Ids are: ", badIDs);
   return "Done at : " + JSON.stringify(params.ExclusiveStartKey);
 };

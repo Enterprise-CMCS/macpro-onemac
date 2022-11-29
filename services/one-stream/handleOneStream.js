@@ -1,4 +1,4 @@
-import { ONEMAC_TYPE } from "cmscommonlib/workflow";
+import { Workflow } from "cmscommonlib";
 
 import { buildMedicaidSpa } from "./package/buildMedicaidSpa";
 import { buildChipSpa } from "./package/buildChipSpa";
@@ -8,6 +8,18 @@ import { buildWaiverAmendment } from "./package/buildWaiverAmendment";
 import { buildWaiverAppendixK } from "./package/buildWaiverAppendixK";
 import { buildWaiverExtension } from "./package/buildWaiverExtension";
 
+const BUILD_PACKAGE_CALL = {
+  [Workflow.ONEMAC_TYPE.CHIP_SPA]: buildChipSpa,
+  [Workflow.ONEMAC_TYPE.CHIP_SPA_RAI]: buildChipSpa,
+  [Workflow.ONEMAC_TYPE.MEDICAID_SPA]: buildMedicaidSpa,
+  [Workflow.ONEMAC_TYPE.MEDICAID_SPA_RAI]: buildMedicaidSpa,
+  [Workflow.ONEMAC_TYPE.WAIVER_INITIAL]: buildInitialWaiver,
+  [Workflow.ONEMAC_TYPE.WAIVER_RENEWAL]: buildWaiverRenewal,
+  [Workflow.ONEMAC_TYPE.WAIVER_APP_K]: buildWaiverAppendixK,
+  [Workflow.ONEMAC_TYPE.WAIVER_APP_K_RAI]: buildWaiverAppendixK,
+  [Workflow.ONEMAC_TYPE.WAIVER_EXTENSION]: buildWaiverExtension,
+  [Workflow.ONEMAC_TYPE.WAIVER_AMENDMENT]: buildWaiverAmendment,
+};
 export const main = async (eventBatch) => {
   console.log("One Stream event: ", eventBatch);
 
@@ -22,60 +34,70 @@ export const main = async (eventBatch) => {
       const newEventData = event.dynamodb.NewImage;
       const inPK = newEventData.pk.S;
       const inSK = newEventData.sk.S;
-      let packageType = newEventData.componentType.S;
-
-      // stream doesn't trigger on package updates
-      if (inSK === "Package") return;
+      const packageToBuild = {
+        type: newEventData.componentType.S,
+        id: inPK,
+      };
 
       console.log("pk: %s sk: %s", inPK, inSK);
       if (event.eventName === "INSERT" || event.eventName === "MODIFY") {
         const [eventSource] = inSK.split("#");
         switch (eventSource) {
+          case "Package":
+            packageToBuild.type = newEventData?.parentType.S;
+            packageToBuild.id = newEventData?.parentId.S;
+            break;
           case "OneMAC":
-            console.log(
-              "processing a %s %s ",
-              eventSource,
-              newEventData.componentType.S
-            );
-            // waiverrai components influence parentType
-            if (packageType === ONEMAC_TYPE.WAIVER_RAI)
-              packageType = newEventData?.parentType?.S;
-            switch (packageType) {
-              case ONEMAC_TYPE.MEDICAID_SPA:
-              case ONEMAC_TYPE.MEDICAID_SPA_RAI:
-                await buildMedicaidSpa(inPK);
-                break;
-              case ONEMAC_TYPE.CHIP_SPA:
-              case ONEMAC_TYPE.CHIP_SPA_RAI:
-                await buildChipSpa(inPK);
-                break;
-              case ONEMAC_TYPE.WAIVER_INITIAL:
-                await buildInitialWaiver(inPK);
-                break;
-              case ONEMAC_TYPE.WAIVER_AMENDMENT:
-                await buildWaiverAmendment(inPK);
-                break;
-              case ONEMAC_TYPE.WAIVER_RENEWAL:
-                await buildWaiverRenewal(inPK);
-                break;
-              case ONEMAC_TYPE.WAIVER_EXTENSION:
-                await buildWaiverExtension(inPK);
-                break;
-              case ONEMAC_TYPE.WAIVER_APP_K:
-              case ONEMAC_TYPE.WAIVER_APP_K_RAI:
-                await buildWaiverAppendixK(inPK);
-                break;
-              default:
-                console.log("type not handled");
-                break;
-            }
+            // for all but Waiver RAIs, the type maps to the build
+            if (packageToBuild.type === Workflow.ONEMAC_TYPE.WAIVER_RAI)
+              packageToBuild.type = newEventData?.parentType?.S;
+            // switch (packageType) {
+            //   case ONEMAC_TYPE.MEDICAID_SPA:
+            //   case ONEMAC_TYPE.MEDICAID_SPA_RAI:
+            //     await buildMedicaidSpa(inPK);
+            //     break;
+            //   case ONEMAC_TYPE.CHIP_SPA:
+            //   case ONEMAC_TYPE.CHIP_SPA_RAI:
+            //     await buildChipSpa(inPK);
+            //     break;
+            //   case ONEMAC_TYPE.WAIVER_INITIAL:
+            //     await buildInitialWaiver(inPK);
+            //     break;
+            //   case ONEMAC_TYPE.WAIVER_AMENDMENT:
+            //     await buildWaiverAmendment(inPK);
+            //     break;
+            //   case ONEMAC_TYPE.WAIVER_RENEWAL:
+            //     await buildWaiverRenewal(inPK);
+            //     break;
+            //   case ONEMAC_TYPE.WAIVER_EXTENSION:
+            //     await buildWaiverExtension(inPK);
+            //     break;
+            //   case ONEMAC_TYPE.WAIVER_APP_K:
+            //   case ONEMAC_TYPE.WAIVER_APP_K_RAI:
+            //     await buildWaiverAppendixK(inPK);
+            //     break;
+            //   default:
+            //     console.log("type not handled");
+            //     break;
+            // }
             break;
           case "SEATool":
             break;
           default:
             console.log("source %s unknown", eventSource);
+            packageToBuild.id = null;
             break;
         }
+        if (!packageToBuild.type || !packageToBuild.id) {
+          console.log(
+            "%s did not map? source: %s packageToBuild: %s",
+            inPK,
+            eventSource,
+            JSON.stringify(packageToBuild, null, 2)
+          );
+          return;
+        }
+        await BUILD_PACKAGE_CALL[packageToBuild.type](packageToBuild.id);
       } else {
         console.log(`skipping %s of: `, event.eventName, event.dynamodb);
       }
