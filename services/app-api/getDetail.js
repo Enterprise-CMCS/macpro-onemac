@@ -59,13 +59,7 @@ export const getDetails = async (event) => {
         await assignAttachmentUrls(child);
       }
     }
-    result.Item.waiverExtensions = [
-      {
-        componentId: "tempextension ID",
-        currentStatus: "temp extension Status",
-        componentType: "waiverextension",
-      },
-    ];
+
     // if (Workflow.ALLOW_WAIVER_EXTENSION_TYPE.includes(componentType)) {
     //   //fetch any waiver extensions associated to this component
     //   const waiverExtensionParams = {

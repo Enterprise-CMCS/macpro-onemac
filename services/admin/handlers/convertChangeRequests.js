@@ -34,8 +34,8 @@ export const main = async (event) => {
           )
             componentType = "waiverappkrai";
 
-          let currentStatus = "Submitted";
-          if (item.state === "inactivated") currentStatus = "Inactivated";
+          const currentStatus =
+            item.state.charAt(0).toUpperCase() + item.state.slice(1);
 
           console.log(
             "for %s: %s becomes %s",
@@ -69,6 +69,8 @@ export const main = async (event) => {
 
           if (item.waiverAuthority !== "")
             putParams.Item.waiverAuthority = item.waiverAuthority;
+          if (item.parentNumber !== "")
+            putParams.Item.parentId = item.parentNumber;
           if (item.parentType !== "")
             putParams.Item.parentType = item.parentType;
           // default to only processing new

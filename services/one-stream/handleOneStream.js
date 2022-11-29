@@ -31,16 +31,17 @@ export const main = async (eventBatch) => {
         event.dynamodb
       );
       if (event.eventName === "REMOVE") return;
-      const newEventData = event.dynamodb.NewImage;
-      const inPK = newEventData.pk.S;
-      const inSK = newEventData.sk.S;
-      const packageToBuild = {
-        type: newEventData.componentType.S,
-        id: inPK,
-      };
-
-      console.log("pk: %s sk: %s", inPK, inSK);
       if (event.eventName === "INSERT" || event.eventName === "MODIFY") {
+        const newEventData = event.dynamodb.NewImage;
+        const inPK = newEventData.pk.S;
+        const inSK = newEventData.sk.S;
+        const packageToBuild = {
+          type: newEventData.componentType.S,
+          id: inPK,
+        };
+
+        console.log("pk: %s sk: %s", inPK, inSK);
+
         const [eventSource] = inSK.split("#");
         switch (eventSource) {
           case "Package":
@@ -97,7 +98,9 @@ export const main = async (eventBatch) => {
           );
           return;
         }
-        await BUILD_PACKAGE_CALL[packageToBuild.type](packageToBuild.id);
+        if (typeof BUILD_PACKAGE_CALL[packageToBuild.type] === "function")
+          await BUILD_PACKAGE_CALL[packageToBuild.type](packageToBuild.id);
+        else console.log(`%s has no build package function??`, inPK);
       } else {
         console.log(`skipping %s of: `, event.eventName, event.dynamodb);
       }
