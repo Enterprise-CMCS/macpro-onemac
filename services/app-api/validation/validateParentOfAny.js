@@ -6,7 +6,7 @@ export const validateParentOfAny = async (event, config) => {
 
   const parentParams = {
     TableName: process.env.oneMacTableName,
-    KeyConditionExpression: "pk = :pk AND sk = :package)",
+    KeyConditionExpression: "pk = :pk AND sk = :package",
     ExpressionAttributeValues: {
       ":pk": parentId,
       ":package": "Package",
