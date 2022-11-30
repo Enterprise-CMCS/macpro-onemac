@@ -11,7 +11,6 @@ export const waiverAppendixKRAIResponse = {
     "componentId",
     "submissionTimestamp",
     "currentStatus",
-    "currentStatusTimestamp",
     "attachments",
     "additionalInformation",
     "submitterName",

@@ -30,7 +30,6 @@ export const initialWaiver = {
     "proposedEffectiveDate",
     "clockEndTimestamp",
     "currentStatus",
-    "currentStatusTimestamp",
     "attachments",
     "additionalInformation",
     "submitterName",

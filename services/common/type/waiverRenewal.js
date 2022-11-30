@@ -30,7 +30,6 @@ export const waiverRenewal = {
     "proposedEffectiveDate",
     "clockEndTimestamp",
     "currentStatus",
-    "currentStatusTimestamp",
     "attachments",
     "additionalInformation",
     "submitterName",

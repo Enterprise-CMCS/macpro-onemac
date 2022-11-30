@@ -26,7 +26,6 @@ export const medicaidSPA = {
     "proposedEffectiveDate",
     "clockEndTimestamp",
     "currentStatus",
-    "currentStatusTimestamp",
     "attachments",
     "additionalInformation",
     "submitterName",

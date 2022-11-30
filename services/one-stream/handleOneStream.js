@@ -45,8 +45,8 @@ export const main = async (eventBatch) => {
         const [eventSource] = inSK.split("#");
         switch (eventSource) {
           case "Package":
-            packageToBuild.type = newEventData?.parentType.S;
-            packageToBuild.id = newEventData?.parentId.S;
+            packageToBuild.type = newEventData?.parentType?.S;
+            packageToBuild.id = newEventData?.parentId?.S;
             break;
           case "OneMAC":
             // for all but Waiver RAIs, the type maps to the build

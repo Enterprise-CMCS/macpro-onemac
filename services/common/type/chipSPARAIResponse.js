@@ -20,7 +20,6 @@ export const chipSPARAIResponse = {
     "componentId",
     "submissionTimestamp",
     "currentStatus",
-    "currentStatusTimestamp",
     "attachments",
     "additionalInformation",
     "submitterName",

@@ -24,7 +24,6 @@ export const chipSPA = {
     "proposedEffectiveDate",
     "clockEndTimestamp",
     "currentStatus",
-    "currentStatusTimestamp",
     "attachments",
     "additionalInformation",
     "submitterName",

@@ -14,7 +14,6 @@ export const waiverTemporaryExtension = {
     "componentId",
     "submissionTimestamp",
     "currentStatus",
-    "currentStatusTimestamp",
     "attachments",
     "additionalInformation",
     "submitterName",

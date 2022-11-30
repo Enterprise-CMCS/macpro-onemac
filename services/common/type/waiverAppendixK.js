@@ -15,7 +15,6 @@ export const waiverAppendixK = {
     "proposedEffectiveDate",
     "clockEndTimestamp",
     "currentStatus",
-    "currentStatusTimestamp",
     "attachments",
     "additionalInformation",
     "submitterName",

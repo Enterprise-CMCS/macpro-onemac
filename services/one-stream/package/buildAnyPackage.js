@@ -98,10 +98,11 @@ export const buildAnyPackage = async (packageId, config) => {
     console.log("%s children result: ", packageId, children);
     children?.Items.forEach((aChild) => {
       if (aChild.componentType === "waiverextension") {
-        if (aChild.eventTimestamp > lmTimestamp)
-          lmTimestamp = aChild.eventTimestamp;
+        if (aChild.lastEventTimestamp > lmTimestamp)
+          lmTimestamp = aChild.lastEventTimestamp;
 
         putParams.Item.waiverExtensions.push({
+          lastEventTimestamp: aChild.lastEventTimestamp,
           submissionTimestamp: aChild.submissionTimestamp,
           componentId: aChild.componentId,
           currentStatus: aChild.currentStatus,
@@ -109,17 +110,17 @@ export const buildAnyPackage = async (packageId, config) => {
       }
     });
 
-    if (currentPackage && currentPackage?.lastModifiedTimestamp)
-      delete currentPackage.lastModifiedTimestamp;
+    if (currentPackage && currentPackage?.lastEventTimestamp)
+      delete currentPackage.lastEventTimestamp;
     console.log("currentPackage: ", currentPackage);
     console.log("newItem: ", putParams.Item);
     console.log("evaluates to: ", _.isEqual(currentPackage, putParams.Item));
     if (_.isEqual(currentPackage, putParams.Item)) return;
 
-    putParams.Item.lastModifiedTimestamp = lmTimestamp;
-    putParams.ConditionExpression = `attribute_not_exists(pk) OR lastModifiedTimestamp < :newModifiedTimestamp`;
+    putParams.Item.lastEventTimestamp = lmTimestamp;
+    putParams.ConditionExpression = `attribute_not_exists(pk) OR lastEventTimestamp < :newModifiedTimestamp`;
     putParams.ExpressionAttributeValues = {
-      ":newModifiedTimestamp": putParams.Item.lastModifiedTimestamp,
+      ":newModifiedTimestamp": putParams.Item.lastEventTimestamp,
     };
     console.log("just before put: ", putParams);
     const putResult = await dynamoDb.put(putParams).promise();

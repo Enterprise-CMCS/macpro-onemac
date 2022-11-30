@@ -12,7 +12,6 @@ export const medicaidSPARAIResponse = {
     "componentId",
     "submissionTimestamp",
     "currentStatus",
-    "currentStatusTimestamp",
     "attachments",
     "additionalInformation",
     "submitterName",

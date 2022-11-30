@@ -12,7 +12,6 @@ export const waiverRAIResponse = {
     "componentId",
     "submissionTimestamp",
     "currentStatus",
-    "currentStatusTimestamp",
     "attachments",
     "additionalInformation",
     "submitterName",
