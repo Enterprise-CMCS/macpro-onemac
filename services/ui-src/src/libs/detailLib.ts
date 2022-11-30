@@ -9,7 +9,6 @@ export type AttributeDetail = {
 
 export type OneMACDetail = {
   defaultTitle: null;
-  usesVerticalNav: boolean;
   componentType: string;
   navItems: DetailNavGroup[];
   actionLabel: string;
@@ -94,7 +93,6 @@ export const defaultDetail: OneMACDetail = {
   actionLabel: "Package Actions",
   componentType: "none",
   attachmentsHeading: "Attachments",
-  usesVerticalNav: true,
   navItems: [
     {
       label: defaultPackageOverviewLabel,

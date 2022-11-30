@@ -5,7 +5,7 @@ const successMessage = "#alert_3";
 const successMessage1 = "#alert-bar";
 //Element is Xpath use cy.xpath instead of cy.get
 const successMessageAfterRAIResponse =
-  '//*[contains(text(),"Thanks for your submission. We truly value your feedback. Please consider taking our ")]';
+  '//*[contains(text(),"Your submission has been received.")]';
 
 //Element is Xpath use cy.xpath instead of cy.get
 const IDNUMBER = (id) => `//a[text()="${id}"]`;
@@ -53,7 +53,7 @@ export class oneMacDashboardPage {
 
   verifySuccessMessageIsDisplayedAfterRAIResponse() {
     cy.xpath(successMessageAfterRAIResponse).contains(
-      "Thanks for your submission"
+      "Your submission has been received."
     );
   }
 

@@ -162,7 +162,7 @@ export const DetailSection = ({
             </Accordion>
           </section>
         )}
-        {!pageConfig.usesVerticalNav && (
+        {pageConfig.navItems.length <= 0 && (
           <AdditionalInfoSection detail={detail} />
         )}
       </div>
