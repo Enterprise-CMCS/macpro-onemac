@@ -54,6 +54,7 @@ export const main = async (event) => {
               componentId: item.transmittalNumber,
               componentType,
               submissionTimestamp: item.submittedAt,
+              eventTimestamp: item.submittedAt,
               attachments: item.uploads,
               currentStatus,
               currentStatusTimestamp: item.submittedAt,
