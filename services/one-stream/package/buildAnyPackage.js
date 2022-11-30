@@ -49,8 +49,8 @@ export const buildAnyPackage = async (packageId, config) => {
     let currentPackage;
     let lmTimestamp = 0;
     result?.Items.forEach((anEvent) => {
-      if (anEvent.submissionTimestamp > lmTimestamp)
-        lmTimestamp = anEvent.submissionTimestamp;
+      if (anEvent.eventTimestamp > lmTimestamp)
+        lmTimestamp = anEvent.eventTimestamp;
       if (anEvent.sk === packageSk) {
         if (!currentPackage) currentPackage = anEvent;
         else console.log("ERROR: There should be ONLY ONE!", anEvent);
@@ -90,15 +90,23 @@ export const buildAnyPackage = async (packageId, config) => {
       }
     });
 
+    putParams.Item.raiResponses.sort(
+      (a, b) => b.submissionTimestamp - a.submissionTimestamp
+    );
+
     const children = await dynamoDb.query(childrenParams).promise();
     console.log("%s children result: ", packageId, children);
     children?.Items.forEach((aChild) => {
-      if (aChild.componentType === "waiverextension")
+      if (aChild.componentType === "waiverextension") {
+        if (aChild.eventTimestamp > lmTimestamp)
+          lmTimestamp = aChild.eventTimestamp;
+
         putParams.Item.waiverExtensions.push({
           submissionTimestamp: aChild.submissionTimestamp,
           componentId: aChild.componentId,
           currentStatus: aChild.currentStatus,
         });
+      }
     });
 
     if (currentPackage && currentPackage?.lastModifiedTimestamp)

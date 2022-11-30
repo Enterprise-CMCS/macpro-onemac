@@ -98,8 +98,8 @@ export const submitAny = async (event, config) => {
     // Add the details from this submission action
     const rightNowNormalized = Date.now();
     data.submissionTimestamp = rightNowNormalized;
+    data.eventTimestamp = rightNowNormalized;
     data.currentStatus = Workflow.ONEMAC_STATUS.SUBMITTED;
-    data.currentStatusTimestamp = rightNowNormalized;
     data.componentType = config.componentType;
 
     // record the current end timestamp (can be start/stopped/changed)

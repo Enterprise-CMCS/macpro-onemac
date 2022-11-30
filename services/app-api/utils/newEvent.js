@@ -5,7 +5,7 @@ export const newEvent = async (eventName, data) => {
     TableName: process.env.oneMacTableName,
     Item: {
       pk: data.componentId,
-      sk: `OneMAC#${data.submissionTimestamp}`,
+      sk: `OneMAC#${data.eventTimestamp}`,
       GSI1pk: `OneMAC#${eventName}`,
       GSI1sk: data.componentId,
       ...data,

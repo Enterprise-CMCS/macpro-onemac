@@ -26,12 +26,10 @@ export const changeStatusAny = async (event, config) => {
 
   try {
     const rightNowNormalized = Date.now();
-    data.submissionTimestamp = rightNowNormalized;
     data.currentStatus = config.newStatus;
-    data.currentStatusTimestamp = rightNowNormalized;
+    data.eventTimestamp = rightNowNormalized;
     data.lastModifiedEmail = data.changedByEmail.toLowerCase();
     data.lastModifiedName = data.changedByName;
-    data.lastModifiedTimestamp = rightNowNormalized;
     data.componentType = config.componentType;
 
     await newEvent(`withdraw${config.componentType}`, data);
