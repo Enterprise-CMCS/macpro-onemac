@@ -115,8 +115,12 @@ jobs:
         uses: actions/cache@v2
         with:
           path: |
+            services/.sechub/node_modules
+            services/admin/node_modules
+            services/seatool-sink/node_modules
             services/uploads/node_modules
             services/app-api/node_modules
+            services/one-stream/node_modules
             services/stream-functions/node_modules
             services/ui/node_modules
             services/ui-auth/node_modules
@@ -153,6 +157,15 @@ jobs:
       - name: Load Test Users
         if: ${{ env.branch_name != 'production'}}
         run: ./loadTestUsers.py $STAGE_PREFIX$branch_name
+      - name: Reset One Table Data
+        if: ${{ env.branch_name != 'production'}}
+        run: cd ./services/admin && sls invoke -s $STAGE_PREFIX$branch_name -f resetOneTable -p ./handlers/workflowResetOneTable.json
+      - name: Convert Change Requests
+        if: ${{ env.branch_name != 'production'}}
+        run: cd ./services/admin && sls invoke -s $STAGE_PREFIX$branch_name -f convertChangeRequests -p ./handlers/workflowConvertChangeRequests.json
+      - name: Verify Change Requests
+        if: ${{ env.branch_name != 'production'}}
+        run: cd ./services/admin && sls invoke -s $STAGE_PREFIX$branch_name -f verifyChangeRequests -p ./handlers/workflowVerifyChangeRequests.json
       - name: Migrate Data
         if: ${{ env.branch_name != 'production'}}
         run: cd ./services/app-api && sls invoke -s $STAGE_PREFIX$branch_name -f migrate
