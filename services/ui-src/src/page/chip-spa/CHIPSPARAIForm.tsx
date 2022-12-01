@@ -25,6 +25,7 @@ export const chipSPARAIFormInfo: OneMACFormConfig = {
       </p>
     ),
   },
+  validateParentAPI: "validateParentOfChipSpaRaiResponse",
 };
 
 const CHIPSPARAIForm: FC = () => {

@@ -190,6 +190,7 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
     const checkId = async () => {
       try {
         const parentStatusMessages: Message[] = [];
+        console.log("validateParentAPI is: %s", formConfig.validateParentAPI);
         if (!!oneMacFormData.parentId) {
           const isParentIdValid = await PackageApi.validateParent(
             oneMacFormData.parentId,
