@@ -4,13 +4,13 @@ import { getUser } from "../getUser";
 import { initialWaiverFormConfig } from "./submitInitialWaiver";
 import { waiverTemporaryExtensionFormConfig } from "./submitWaiverExtension";
 import packageExists from "../utils/packageExists";
+import { newEvent } from "../utils/newEvent";
 import sendEmail from "../libs/email-lib";
-import dynamoDb from "../libs/dynamodb-lib";
 
 jest.mock("../getUser");
 jest.mock("../utils/packageExists");
+jest.mock("../utils/newEvent");
 jest.mock("../libs/email-lib");
-jest.mock("../libs/dynamodb-lib");
 
 const testDoneBy = {
   roleList: [
@@ -125,7 +125,7 @@ beforeEach(() => {
   getUser.mockResolvedValue(testDoneBy);
   packageExists.mockResolvedValue(false);
   sendEmail.mockResolvedValue(null);
-  dynamoDb.put.mockResolvedValue({});
+  newEvent.mockResolvedValue({});
 });
 
 it("catches a badly parsed event", async () => {
@@ -168,7 +168,7 @@ it("returns error code for unauthorized user", async () => {
 });
 
 it("returns error code when new submission fails", async () => {
-  dynamoDb.put.mockImplementation(() => {
+  newEvent.mockImplementation(() => {
     throw new Error("Submit error");
   });
   const response = await submitAny(testEvent, testConfig);
