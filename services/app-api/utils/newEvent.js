@@ -18,5 +18,33 @@ export const newEvent = async (eventName, data) => {
     eventName,
     JSON.stringify(putParams, null, 2)
   );
-  return await dynamoDb.put(putParams);
+  let putResponse;
+
+  try {
+    putResponse = await dynamoDb.put(putParams);
+  } catch (e) {
+    console.log("%s put error: ", data.componentId, e);
+  }
+
+  // ugh.... there's got to be a better way... but for now, block on the package update...
+  let packageUpdated = false;
+  const checkParams = {
+    TableName: process.env.oneMacTableName,
+    Key: {
+      pk: data.componentId,
+      sk: `Package`,
+    },
+  };
+  do {
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      const chkResponse = await dynamoDb.get(checkParams);
+      packageUpdated =
+        chkResponse?.Item?.lastEventTimestamp >= data.eventTimestamp;
+    } catch (e) {
+      console.log("%s check error:", data.componentId, e);
+    }
+  } while (!packageUpdated);
+
+  return putResponse;
 };

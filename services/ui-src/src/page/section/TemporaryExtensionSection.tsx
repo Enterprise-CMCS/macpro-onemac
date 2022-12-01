@@ -50,7 +50,7 @@ export const TemporaryExtensionSection: FC<{
           userProfile?.userData?.fullName,
           userProfile?.email,
           packageToModify.componentId,
-          packageToModify.componentType
+          Workflow.ONEMAC_TYPE.WAIVER_EXTENSION
         );
         setAlertCode(resp);
         loadDetail();
