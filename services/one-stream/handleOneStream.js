@@ -82,7 +82,7 @@ export const main = async (eventBatch) => {
             //     break;
             // }
             break;
-          case "SEATool":
+          case "SEATool": {
             const [, topic] = newEventData.GSI1pk.split("#");
             switch (topic) {
               case "Medicaid_SPA":
@@ -109,6 +109,7 @@ export const main = async (eventBatch) => {
               packageToBuild.type
             );
             break;
+          }
           default:
             console.log("source %s unknown", eventSource);
             packageToBuild.id = null;
