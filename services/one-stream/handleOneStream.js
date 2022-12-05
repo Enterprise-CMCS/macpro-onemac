@@ -83,6 +83,31 @@ export const main = async (eventBatch) => {
             // }
             break;
           case "SEATool":
+            const [, topic] = newEventData.GSI1pk.split("#");
+            switch (topic) {
+              case "Medicaid_SPA":
+                packageToBuild.type = Workflow.ONEMAC_TYPE.MEDICAID_SPA;
+                break;
+              case "CHIP_SPA":
+                packageToBuild.type = Workflow.ONEMAC_TYPE.CHIP_SPA;
+                break;
+              case "1915b_waivers":
+                if (newEventData?.ACTIONTYPES?.ACTION_NAME === "Renew")
+                  packageToBuild.type = Workflow.ONEMAC_TYPE.WAIVER_RENEWAL;
+                else if (newEventData?.ACTIONTYPES?.ACTION_NAME === "Amend")
+                  packageToBuild.type = Workflow.ONEMAC_TYPE.WAIVER_AMENDMENT;
+                else if (newEventData?.ACTIONTYPES?.ACTION_NAME === "New")
+                  packageToBuild.type = Workflow.ONEMAC_TYPE.WAIVER_INITIAL;
+                break;
+              default:
+                break;
+            }
+            console.log(
+              "%s topic %s is type %s",
+              inPK,
+              topic,
+              packageToBuild.type
+            );
             break;
           default:
             console.log("source %s unknown", eventSource);
