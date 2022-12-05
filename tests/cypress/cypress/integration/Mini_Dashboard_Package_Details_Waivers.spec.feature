@@ -7,10 +7,10 @@ Feature: OY2-11585 Waiver Package Details View: Initial Waivers and Waiver Renew
         And click on the Waivers tab
         And Click on Filter Button
         And click on Type
+        And uncheck all of the type checkboxes
 
     Scenario: Screen Enhance: Initial Waiver Details View - In Review
-        And click 1915b Waiver Renewal check box
-        And click 1915c Appendix K Amendment check box
+        And click 1915b Initial Waiver check box
         And click on Type
         And click on Status
         And uncheck all of the status checkboxes
@@ -32,8 +32,7 @@ Feature: OY2-11585 Waiver Package Details View: Initial Waivers and Waiver Renew
         And verify the Proposed Effective Date is NA
 
     Scenario: Screen Enhance: Initial Waiver Details View - Terminated
-        And click 1915b Waiver Renewal check box
-        And click 1915c Appendix K Amendment check box
+        And click 1915b Initial Waiver check box
         And click on Type
         And click on Status
         And uncheck all of the status checkboxes
@@ -54,8 +53,7 @@ Feature: OY2-11585 Waiver Package Details View: Initial Waivers and Waiver Renew
         And verify the Proposed Effective Date is NA
 
     Scenario: Screen Enhance: Initial Waiver Details View - Submitted
-        And click 1915b Waiver Renewal check box
-        And click 1915c Appendix K Amendment check box
+        And click 1915b Initial Waiver check box
         And click on Type
         And click on Status
         And uncheck all of the status checkboxes
@@ -76,8 +74,7 @@ Feature: OY2-11585 Waiver Package Details View: Initial Waivers and Waiver Renew
         And verify there is a Proposed Effective Date header in the details section
 
     Scenario: Screen Enhance: Waiver Renewals Details View - Submitted
-        And click 1915b Initial Waiver check box
-        And click 1915c Appendix K Amendment check box
+        And click 1915b Waiver Renewal check box
         And click on Type
         And click on Status
         And uncheck all of the status checkboxes
@@ -96,8 +93,7 @@ Feature: OY2-11585 Waiver Package Details View: Initial Waivers and Waiver Renew
         And verify there is a Proposed Effective Date header in the details section
 
     Scenario: Screen Enhance: Waiver Renewals Details View - Approved
-        And click 1915b Initial Waiver check box
-        And click 1915c Appendix K Amendment check box
+        And click 1915b Waiver Renewal check box
         And click on Type
         And click on Status
         And uncheck all of the status checkboxes
@@ -117,8 +113,7 @@ Feature: OY2-11585 Waiver Package Details View: Initial Waivers and Waiver Renew
         And verify there is a Proposed Effective Date header in the details section
 
     Scenario: Screen Enhance: Initial Waiver Details View - RAI Issued
-        And click 1915b Waiver Renewal check box
-        And click 1915c Appendix K Amendment check box
+        And click 1915b Initial Waiver check box
         And click on Type
         And click on Status
         And uncheck all of the status checkboxes
@@ -140,8 +135,7 @@ Feature: OY2-11585 Waiver Package Details View: Initial Waivers and Waiver Renew
         And verify there is a Proposed Effective Date header in the details section
 
     Scenario: Screen Enhance: Initial Waiver Details View - Approved
-        And click 1915b Waiver Renewal check box
-        And click 1915c Appendix K Amendment check box
+        And click 1915b Initial Waiver check box
         And click on Type
         And click on Status
         And uncheck all of the status checkboxes
@@ -163,8 +157,7 @@ Feature: OY2-11585 Waiver Package Details View: Initial Waivers and Waiver Renew
         And verify there is a Proposed Effective Date header in the details section
 
     Scenario: Screen Enhance: Appendix K Details View - Approved
-        And click 1915b Waiver Renewal check box
-        And click 1915b Initial Waiver check box
+        And click 1915c Appendix K Amendment check box
         And click on Type
         And click on Status
         And uncheck all of the status checkboxes
@@ -188,8 +181,7 @@ Feature: OY2-11585 Waiver Package Details View: Initial Waivers and Waiver Renew
 
 
     Scenario: Screen Enhance: Appendix K Details View - RAI Issued
-        And click 1915b Waiver Renewal check box
-        And click 1915b Initial Waiver check box
+        And click 1915c Appendix K Amendment check box
         And click on Type
         And click on Status
         And uncheck all of the status checkboxes

@@ -5,6 +5,7 @@ const waiverExtensionRequest =
 const firstFileUploadBtn = "#uploader-input-0";
 const parentWaiverNumberInputBox = "#parent-number";
 const errorMsgForParentWaiverNumber = "#parent-number-status-msg";
+const tempExtensionTypeBtn = "#temp-ext-type";
 
 export class oneMacRequestWaiverTemporaryExtension {
   inputWaiverNumber(s) {
@@ -43,6 +44,12 @@ export class oneMacRequestWaiverTemporaryExtension {
   }
   clearApprovedBaseOrRenewalWaiverNumberInputBox() {
     cy.get(parentWaiverNumberInputBox).clear();
+  }
+  selectOption1915bInTempExtensionType() {
+    cy.get(tempExtensionTypeBtn).select("1915(b)");
+  }
+  selectOption1915cInTempExtensionType() {
+    cy.get(tempExtensionTypeBtn).select("1915(c)");
   }
 }
 export default oneMacRequestWaiverTemporaryExtension;

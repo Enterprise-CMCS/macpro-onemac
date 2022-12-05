@@ -31,7 +31,7 @@ Feature: Left Hand Navigation for Package Details View
         And verify Package Overview navigation button is expanded
         And verify Package Details is listed under Package Overview
 
-
+@focus 
     Scenario: Screen Enhancement - Initial Waiver
         Given I am on Login Page
         When Clicking on Development Login
