@@ -36,7 +36,7 @@ export const main = async (eventBatch) => {
         const inPK = newEventData.pk.S;
         const inSK = newEventData.sk.S;
         const packageToBuild = {
-          type: newEventData.componentType.S,
+          type: "",
           id: inPK,
         };
 
@@ -52,6 +52,7 @@ export const main = async (eventBatch) => {
             // for all but Waiver RAIs, the type maps to the build
             if (packageToBuild.type === Workflow.ONEMAC_TYPE.WAIVER_RAI)
               packageToBuild.type = newEventData?.parentType?.S;
+            else packageToBuild.type = newEventData.componentType.S;
             // switch (packageType) {
             //   case ONEMAC_TYPE.MEDICAID_SPA:
             //   case ONEMAC_TYPE.MEDICAID_SPA_RAI:
@@ -83,7 +84,7 @@ export const main = async (eventBatch) => {
             // }
             break;
           case "SEATool": {
-            const [, topic] = newEventData.GSI1pk.split("#");
+            const [, topic] = newEventData.GSI1pk.S.split("#");
             switch (topic) {
               case "Medicaid_SPA":
                 packageToBuild.type = Workflow.ONEMAC_TYPE.MEDICAID_SPA;
