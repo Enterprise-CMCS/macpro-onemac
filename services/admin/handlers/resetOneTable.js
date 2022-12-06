@@ -31,8 +31,8 @@ export const main = async (event) => {
         results.Items.map(async (item) => {
           if (!item.pk.includes("@")) {
             const [eventSource] = item.sk.split("#");
-            console.log(" the event Source: ", eventSource);
             if (eventSource !== "SEATool") {
+              console.log("%s deleted Source: %s ", item.pk, eventSource);
               await dynamoDb
                 .delete({
                   TableName: process.env.oneMacTableName,
@@ -42,7 +42,8 @@ export const main = async (event) => {
                   },
                 })
                 .promise();
-            }
+            } else
+              console.log("%s un-deleted Source: %s ", item.pk, eventSource);
           }
         })
       );
