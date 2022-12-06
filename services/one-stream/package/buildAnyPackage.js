@@ -25,7 +25,10 @@ export const buildAnyPackage = async (packageId, config) => {
   try {
     const result = await dynamoDb.query(queryParams).promise();
     console.log("%s query result: ", packageId, result);
-
+    if (result?.Items.length <= 0) {
+      console.log("%s did not have Items?", packageId);
+      return;
+    }
     const packageSk = `Package`;
     const putParams = {
       TableName: process.env.oneMacTableName,
@@ -44,10 +47,10 @@ export const buildAnyPackage = async (packageId, config) => {
         submitterEmail: "-- --",
       },
     };
-    console.log("starting putParams: ", putParams);
     let currentPackage;
     let lmTimestamp = 0;
-    result?.Items.forEach((anEvent) => {
+
+    result.Items.forEach((anEvent) => {
       // we ignore all other v's (for now)
       if (anEvent.sk.substring(0, 1) === "v") {
         console.log("ignoring: ", anEvent.sk);
@@ -68,7 +71,37 @@ export const buildAnyPackage = async (packageId, config) => {
       }
 
       // all updates after this influence lmtimestamp
-      const [source, timestamp] = anEvent.sk.split("#");
+      const [source, timestring] = anEvent.sk.split("#");
+      const timestamp = Number(timestring);
+
+      // since we only report on SEATool status at this time, only the STATUS_DATE
+      // is relevant to OneMAC package reporting
+      if (source === "SEATool") {
+        if (!anEvent.STATE_PLAN?.STATUS_DATE || !anEvent.SPW_STATUS) {
+          console.log(
+            "%s SEATool event has bad status details... ",
+            anEvent.pk,
+            anEvent
+          );
+        } else {
+          console.log(
+            "%s has lmTimestamp %d and status date %d",
+            anEvent.pk,
+            lmTimestamp,
+            anEvent.STATE_PLAN.STATUS_DATE
+          );
+          if (anEvent.STATE_PLAN.STATUS_DATE > lmTimestamp) {
+            putParams.Item.currentStatus =
+              anEvent.SPW_STATUS[0].SPW_STATUS_DESC;
+            lmTimestamp = anEvent.STATE_PLAN.STATUS_DATE;
+          }
+        }
+        return;
+      }
+
+      if (timestamp > lmTimestamp) {
+        lmTimestamp = timestamp;
+      }
 
       // we include ALL rai events in package details
       if (
@@ -82,29 +115,6 @@ export const buildAnyPackage = async (packageId, config) => {
         });
         return;
       }
-
-      // since we only report on SEATool status at this time, only the STATUS_DATE
-      // is relevant to OneMAC package reporting
-      if (source === "SEATool") {
-        if (
-          !anEvent.STATE_PLAN?.STATUS_DATE ||
-          !anEvent?.SPW_STATUS?.SPW_STATUS_DESC
-        ) {
-          console.log(
-            "%s SEATool event has bad status details... ",
-            anEvent.pk,
-            anEvent
-          );
-        } else {
-          if (anEvent.STATE_PLAN.STATUS_DATE > lmTimestamp) {
-            anEvent.currentStatus = anEvent.SPW_STATUS.SPW_STATUS_DESC;
-            lmTimestamp = anEvent.STATE_PLAN.STATUS_DATE;
-          }
-        }
-        return;
-      }
-
-      if (timestamp > lmTimestamp) lmTimestamp = timestamp;
 
       config.theAttributes.forEach((attributeName) => {
         if (anEvent[attributeName]) {
