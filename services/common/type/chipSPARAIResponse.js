@@ -16,4 +16,6 @@ export const chipSPARAIResponse = {
     "Tribal Consultation",
     "Other",
   ],
+  allowedParentTypes: ["chipspa"],
+  allowedParentStatuses: ["RAI Issued"],
 };
