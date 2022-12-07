@@ -5817,5 +5817,510 @@
        "ID_NUMBER": "MD-0027.R01.00",
        "STATUS_DATE": 1659988588750
       }
+     },
+     {
+      "pk": "MD-0801.R00.01",
+      "sk": "SEATool#1650917395996",
+      "GSI1pk": "SEATool#1915b_waivers",
+      "GSI1sk": "MD-0801.R00.01",
+      "ACTIONTYPES": [
+         {
+           "ACTION_NAME": "Amend"
+         }
+       ],
+      "PLAN_TYPES": [
+       {
+        "PLAN_TYPE_NAME": "1915(b)"
+       }
+      ],
+      "RAI": [
+       {
+        "ID_NUMBER": "MD-0801.R00.01",
+        "RAI_RECEIVED_DATE": null,
+        "RAI_REQUESTED_DATE": 1650917395996,
+        "RAI_WITHDRAWN_DATE": null
+       }
+      ],
+      "SPW_STATUS": [
+       {
+        "SPW_STATUS_DESC": "Pending-RAI",
+        "SPW_STATUS_ID": 2
+       }
+      ],
+      "STATE_PLAN": {
+       "CHANGED_DATE": 1650917395996,
+       "ID_NUMBER": "MD-0801.R00.01",
+       "STATUS_DATE": 1650917395996
+      }
+     },
+     {
+      "pk": "MD-77-0024",
+      "sk": "SEATool#1665549125264",
+      "GSI1pk": "SEATool#Medicaid_SPA",
+      "GSI1sk": "MD-77-0024",
+      "PLAN_TYPES": [
+       {
+        "PLAN_TYPE_NAME": "Medicaid SPA"
+       }
+      ],
+      "RAI": [
+       {
+        "ID_NUMBER": "MD-77-0024",
+        "RAI_RECEIVED_DATE": null,
+        "RAI_REQUESTED_DATE": 1665549125264,
+        "RAI_WITHDRAWN_DATE": null
+       }
+      ],
+      "SPW_STATUS": [
+       {
+        "SPW_STATUS_DESC": "Pending-RAI",
+        "SPW_STATUS_ID": 2
+       }
+      ],
+      "STATE_PLAN": {
+       "CHANGED_DATE": 1665549125264,
+       "ID_NUMBER": "MD-77-0024",
+       "STATUS_DATE": 1665549125264
+      }
+     },
+     {
+      "pk": "MD-1118.R00.00",
+      "sk": "SEATool#1649584977662",
+      "ACTIONTYPES": [
+       {
+        "ACTION_NAME": "New"
+       }
+      ],
+      "GSI1pk": "SEATool#1915b_waivers",
+      "GSI1sk": "MD-1118.R00.00",
+      "PLAN_TYPES": [
+       {
+        "PLAN_TYPE_NAME": "1915(b)"
+       }
+      ],
+      "RAI": [
+       {
+        "ID_NUMBER": "MD-1118.R00.00",
+        "RAI_RECEIVED_DATE": null,
+        "RAI_REQUESTED_DATE": 1649584977662,
+        "RAI_WITHDRAWN_DATE": null
+       }
+      ],
+      "SPW_STATUS": [
+       {
+        "SPW_STATUS_DESC": "Pending-RAI",
+        "SPW_STATUS_ID": 2
+       }
+      ],
+      "STATE_PLAN": {
+       "CHANGED_DATE": 1649584977662,
+       "ID_NUMBER": "MD-1118.R00.00",
+       "STATUS_DATE": 1649584977662
+      }
+     },
+     {
+      "pk": "MD-0775.R00.00",
+      "sk": "SEATool#1622584977662",
+      "ACTIONTYPES": [
+       {
+        "ACTION_NAME": "New"
+       }
+      ],
+      "GSI1pk": "SEATool#1915b_waivers",
+      "GSI1sk": "MD-0775.R00.00",
+      "PLAN_TYPES": [
+       {
+        "PLAN_TYPE_NAME": "1915(b)"
+       }
+      ],
+      "RAI": [
+       {
+        "ID_NUMBER": "MD-0775.R00.00",
+        "RAI_RECEIVED_DATE": null,
+        "RAI_REQUESTED_DATE": 1622584977662,
+        "RAI_WITHDRAWN_DATE": null
+       }
+      ],
+      "SPW_STATUS": [
+       {
+        "SPW_STATUS_DESC": "Pending-RAI",
+        "SPW_STATUS_ID": 2
+       }
+      ],
+      "STATE_PLAN": {
+       "CHANGED_DATE": 1622584977662,
+       "ID_NUMBER": "MD-0775.R00.00",
+       "STATUS_DATE": 1622584977662
+      }
+     },
+     {
+      "pk": "MD-0777.R00.00",
+      "sk": "SEATool#1650584977662",
+      "ACTIONTYPES": [
+       {
+        "ACTION_NAME": "New"
+       }
+      ],
+      "GSI1pk": "SEATool#1915b_waivers",
+      "GSI1sk": "MD-0777.R00.00",
+      "PLAN_TYPES": [
+       {
+        "PLAN_TYPE_NAME": "1915(b)"
+       }
+      ],
+      "RAI": [
+       {
+        "ID_NUMBER": "MD-0777.R00.00",
+        "RAI_RECEIVED_DATE": null,
+        "RAI_REQUESTED_DATE": 1650584977662,
+        "RAI_WITHDRAWN_DATE": null
+       }
+      ],
+      "SPW_STATUS": [
+       {
+        "SPW_STATUS_DESC": "Approved",
+        "SPW_STATUS_ID": 2
+       }
+      ],
+      "STATE_PLAN": {
+       "CHANGED_DATE": 1650584977662,
+       "ID_NUMBER": "MD-0777.R00.00",
+       "STATUS_DATE": 1650584977662
+      }
+     },
+     {
+      "pk": "MD-5533.R00.00",
+      "sk": "SEATool#1650584977662",
+      "ACTIONTYPES": [
+       {
+        "ACTION_NAME": "New"
+       }
+      ],
+      "GSI1pk": "SEATool#1915b_waivers",
+      "GSI1sk": "MD-5533.R00.00",
+      "PLAN_TYPES": [
+       {
+        "PLAN_TYPE_NAME": "1915(b)"
+       }
+      ],
+      "RAI": [
+       {
+        "ID_NUMBER": "MD-5533.R00.00",
+        "RAI_RECEIVED_DATE": null,
+        "RAI_REQUESTED_DATE": 1650584977662,
+        "RAI_WITHDRAWN_DATE": null
+       }
+      ],
+      "SPW_STATUS": [
+       {
+        "SPW_STATUS_DESC": "Approved",
+        "SPW_STATUS_ID": 2
+       }
+      ],
+      "STATE_PLAN": {
+       "CHANGED_DATE": 1650584977662,
+       "ID_NUMBER": "MD-5533.R00.00",
+       "STATUS_DATE": 1650584977662
+      }
+     },{
+      "pk": "MD-0003.R13.00",
+      "sk": "SEATool#1658708386545",
+      "ACTIONTYPES": [
+       {
+        "ACTION_NAME": "Renew"
+       }
+      ],
+      "GSI1pk": "SEATool#1915b_waivers",
+      "GSI1sk": "MD-0003.R13.00",
+      "PLAN_TYPES": [
+       {
+        "PLAN_TYPE_NAME": "1915(b)"
+       }
+      ],
+      "RAI": [
+       {
+        "ID_NUMBER": "MD-0003.R13.00",
+        "RAI_RECEIVED_DATE": null,
+        "RAI_REQUESTED_DATE": 1650584977662,
+        "RAI_WITHDRAWN_DATE": null
+       }
+      ],
+      "SPW_STATUS": [
+       {
+        "SPW_STATUS_DESC": "Approved",
+        "SPW_STATUS_ID": 2
+       }
+      ],
+      "STATE_PLAN": {
+       "CHANGED_DATE": 1658708386545,
+       "ID_NUMBER": "MD-0003.R13.00",
+       "STATUS_DATE": 1658708386545
+      }
+     },
+     {
+      "pk": "MD-0148.R00.00",
+      "sk": "SEATool#1622272039453",
+      "ACTIONTYPES": [
+       {
+        "ACTION_NAME": "New"
+       }
+      ],
+      "GSI1pk": "SEATool#1915b_waivers",
+      "GSI1sk": "MD-0148.R00.00",
+      "PLAN_TYPES": [
+       {
+        "PLAN_TYPE_NAME": "1915(b)"
+       }
+      ],
+      "RAI": [
+       {
+        "ID_NUMBER": "MD-0148.R00.00",
+        "RAI_RECEIVED_DATE": null,
+        "RAI_REQUESTED_DATE": 1622272039453,
+        "RAI_WITHDRAWN_DATE": null
+       }
+      ],
+      "SPW_STATUS": [
+       {
+        "SPW_STATUS_DESC": "Approved",
+        "SPW_STATUS_ID": 2
+       }
+      ],
+      "STATE_PLAN": {
+       "CHANGED_DATE": 1622272039453,
+       "ID_NUMBER": "MD-0148.R00.00",
+       "STATUS_DATE": 1622272039453
+      }
+     },
+     {
+      "pk": "MD-22-0008",
+      "sk": "SEATool#1652577796728",
+      "GSI1pk": "SEATool#Medicaid_SPA",
+      "GSI1sk": "MD-22-0008",
+      "PLAN_TYPES": [
+       {
+        "PLAN_TYPE_NAME": "Medicaid SPA"
+       }
+      ],
+      "SPW_STATUS": [
+       {
+        "SPW_STATUS_DESC": "Disapproved",
+        "SPW_STATUS_ID": 2
+       }
+      ],
+      "STATE_PLAN": {
+       "CHANGED_DATE": 1652577796728,
+       "ID_NUMBER": "MD-22-0008",
+       "STATUS_DATE": 1652577796728
+      }
+     },
+     {
+      "pk": "MD-2027.R01.00",
+      "sk": "SEATool#1660388588750",
+      "ACTIONTYPES": [
+       {
+        "ACTION_NAME": "Renew"
+       }
+      ],
+      "GSI1pk": "SEATool#1915b_waivers",
+      "GSI1sk": "MD-2027.R01.00",
+      "PLAN_TYPES": [
+       {
+        "PLAN_TYPE_NAME": "1915(b)"
+       }
+      ],
+      "RAI": [
+       {
+        "ID_NUMBER": "MD-2027.R01.00",
+        "RAI_RECEIVED_DATE": null,
+        "RAI_REQUESTED_DATE": 1660388588750,
+        "RAI_WITHDRAWN_DATE": null
+       }
+      ],
+      "SPW_STATUS": [
+       {
+        "SPW_STATUS_DESC": "Disapproved",
+        "SPW_STATUS_ID": 2
+       }
+      ],
+      "STATE_PLAN": {
+       "CHANGED_DATE": 1660388588750,
+       "ID_NUMBER": "MD-2027.R01.00",
+       "STATUS_DATE": 1660388588750
+      }
+     },
+     {
+      "pk": "MD-22-0001",
+      "sk": "SEATool#1652825140199",
+      "GSI1pk": "SEATool#Medicaid_SPA",
+      "GSI1sk": "MD-22-0001",
+      "PLAN_TYPES": [
+       {
+        "PLAN_TYPE_NAME": "Medicaid SPA"
+       }
+      ],
+      "SPW_STATUS": [
+       {
+        "SPW_STATUS_DESC": "Withdrawn",
+        "SPW_STATUS_ID": 2
+       }
+      ],
+      "STATE_PLAN": {
+       "CHANGED_DATE": 1652825140199,
+       "ID_NUMBER": "MD-22-0001",
+       "STATUS_DATE": 1652825140199
+      }
+     },
+     {
+      "pk": "MD-1029.R01.00",
+      "sk": "SEATool#1661388588750",
+      "ACTIONTYPES": [
+       {
+        "ACTION_NAME": "Renew"
+       }
+      ],
+      "GSI1pk": "SEATool#1915b_waivers",
+      "GSI1sk": "MD-1029.R01.00",
+      "PLAN_TYPES": [
+       {
+        "PLAN_TYPE_NAME": "1915(b)"
+       }
+      ],
+      "SPW_STATUS": [
+       {
+        "SPW_STATUS_DESC": "Withdrawn",
+        "SPW_STATUS_ID": 2
+       }
+      ],
+      "STATE_PLAN": {
+       "CHANGED_DATE": 1661388588750,
+       "ID_NUMBER": "MD-1029.R01.00",
+       "STATUS_DATE": 1661388588750
+      }
+     },
+     {
+      "pk": "MD-6777.R00.00",
+      "sk": "SEATool#1650584977662",
+      "ACTIONTYPES": [
+       {
+        "ACTION_NAME": "New"
+       }
+      ],
+      "GSI1pk": "SEATool#1915b_waivers",
+      "GSI1sk": "MD-6777.R00.00",
+      "PLAN_TYPES": [
+       {
+        "PLAN_TYPE_NAME": "1915(b)"
+       }
+      ],
+      "SPW_STATUS": [
+       {
+        "SPW_STATUS_DESC": "Unsubmitted",
+        "SPW_STATUS_ID": 2
+       }
+      ],
+      "STATE_PLAN": {
+       "CHANGED_DATE": 1650584977662,
+       "ID_NUMBER": "MD-6777.R00.00",
+       "STATUS_DATE": 1650584977662
+      }
+     },
+     {
+      "pk": "MD-22-1018",
+      "sk": "SEATool#1665696818833",
+      "GSI1pk": "SEATool#Medicaid_SPA",
+      "GSI1sk": "MD-22-1018",
+      "PLAN_TYPES": [
+       {
+        "PLAN_TYPE_NAME": "Medicaid SPA"
+       }
+      ],
+      "SPW_STATUS": [
+       {
+        "SPW_STATUS_DESC": "Unsubmitted",
+        "SPW_STATUS_ID": 2
+       }
+      ],
+      "STATE_PLAN": {
+       "CHANGED_DATE": 1665696818833,
+       "ID_NUMBER": "MD-22-1018",
+       "STATUS_DATE": 1665696818833
+      }
+     },
+     {
+      "pk": "MD-22-0002",
+      "sk": "SEATool#1648825662861",
+      "GSI1pk": "SEATool#Medicaid_SPA",
+      "GSI1sk": "MD-22-0002",
+      "PLAN_TYPES": [
+       {
+        "PLAN_TYPE_NAME": "Medicaid SPA"
+       }
+      ],
+      "SPW_STATUS": [
+       {
+        "SPW_STATUS_DESC": "Pending",
+        "SPW_STATUS_ID": 2
+       }
+      ],
+      "STATE_PLAN": {
+       "CHANGED_DATE": 1648825662861,
+       "ID_NUMBER": "MD-22-0002",
+       "STATUS_DATE": 1648825662861
+      }
+     },
+     {
+      "pk": "MD-0027.R01.00",
+      "sk": "SEATool#1662388588750",
+      "ACTIONTYPES": [
+       {
+        "ACTION_NAME": "Renew"
+       }
+      ],
+      "GSI1pk": "SEATool#1915b_waivers",
+      "GSI1sk": "MD-0027.R01.00",
+      "PLAN_TYPES": [
+       {
+        "PLAN_TYPE_NAME": "1915(b)"
+       }
+      ],
+      "SPW_STATUS": [
+       {
+        "SPW_STATUS_DESC": "Pending",
+        "SPW_STATUS_ID": 2
+       }
+      ],
+      "STATE_PLAN": {
+       "CHANGED_DATE": 1662388588750,
+       "ID_NUMBER": "MD-0027.R01.00",
+       "STATUS_DATE": 1662388588750
+      }
+     },
+     {
+      "pk": "MD-3777.R00.00",
+      "sk": "SEATool#1651584977662",
+      "ACTIONTYPES": [
+       {
+        "ACTION_NAME": "New"
+       }
+      ],
+      "GSI1pk": "SEATool#1915b_waivers",
+      "GSI1sk": "MD-3777.R00.00",
+      "PLAN_TYPES": [
+       {
+        "PLAN_TYPE_NAME": "1915(b)"
+       }
+      ],
+      "SPW_STATUS": [
+       {
+        "SPW_STATUS_DESC": "Unsubmitted",
+        "SPW_STATUS_ID": 2
+       }
+      ],
+      "STATE_PLAN": {
+       "CHANGED_DATE": 1651584977662,
+       "ID_NUMBER": "MD-3777.R00.00",
+       "STATUS_DATE": 1651584977662
+      }
      }
 ]

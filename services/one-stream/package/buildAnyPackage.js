@@ -168,10 +168,10 @@ export const buildAnyPackage = async (packageId, config) => {
     if (_.isEqual(currentPackage, putParams.Item)) return;
 
     putParams.Item.lastEventTimestamp = lmTimestamp;
-    putParams.ConditionExpression = `attribute_not_exists(pk) OR lastEventTimestamp < :newModifiedTimestamp`;
-    putParams.ExpressionAttributeValues = {
-      ":newModifiedTimestamp": putParams.Item.lastEventTimestamp,
-    };
+    // putParams.ConditionExpression = `attribute_not_exists(pk) OR lastEventTimestamp < :newModifiedTimestamp`;
+    // putParams.ExpressionAttributeValues = {
+    //   ":newModifiedTimestamp": putParams.Item.lastEventTimestamp,
+    // };
     console.log("just before put: ", putParams);
     const putResult = await dynamoDb.put(putParams).promise();
 
