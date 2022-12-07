@@ -5971,8 +5971,8 @@
       "RAI": [
        {
         "ID_NUMBER": "MD-0777.R00.00",
-        "RAI_RECEIVED_DATE": null,
-        "RAI_REQUESTED_DATE": 1650584977662,
+        "RAI_RECEIVED_DATE": 1640584977662,
+        "RAI_REQUESTED_DATE": 1630584977662,
         "RAI_WITHDRAWN_DATE": null
        }
       ],
