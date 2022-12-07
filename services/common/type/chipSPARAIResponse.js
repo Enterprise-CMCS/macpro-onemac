@@ -25,4 +25,6 @@ export const chipSPARAIResponse = {
     "submitterName",
     "submitterEmail",
   ],
+  allowedParentTypes: ["chipspa"],
+  allowedParentStatuses: ["RAI Issued"],
 };

@@ -17,4 +17,6 @@ export const waiverRAIResponse = {
     "submitterName",
     "submitterEmail",
   ],
+  allowedParentTypes: ["waivernew", "waiverrenewal", "waiveramendment"],
+  allowedParentStatuses: ["RAI Issued"],
 };
