@@ -12,7 +12,8 @@ plugins:
   - serverless-plugin-scripts
   - serverless-plugin-warmup
   - serverless-s3-bucket-helper
-
+  - serverless-plugin-offline-dynamodb-stream
+  - serverless-offline
 custom:
   stage: ${opt:stage, self:provider.stage}
   iamPath: ${ssm:/configuration/${self:custom.stage}/iam/path, ssm:/configuration/default/iam/path}
@@ -38,6 +39,14 @@ custom:
   oneMacTableStreamArn: ${cf:app-api-${self:custom.stage}.OneMacTableStreamArn}
   oneMacTableName: ${cf:app-api-${self:custom.stage}.OneMacTableName}
   oneMacTableArn: ${cf:app-api-${self:custom.stage}.OneMacTableArn}
+  dynamodbStream:
+    host: localhost
+    port: 8000
+    pollForever: true
+    streams:
+      - table: onemac-dev-one
+        functions:
+          - handleOneStream
 
 provider:
   name: aws
