@@ -41,6 +41,9 @@ const OneMacDefaultForms = new oneMacDefaultForms();
 Given("I am on Login Page", () => {
   OneMacHomePage.launch();
 });
+And("Verify I am on the login page and not logged in", () => {
+  OneMacHomePage.verifyUserIsNotLoggedInOnLoginPage();
+});
 
 When("Clicking on Development Login", () => {
   OneMacHomePage.clickDevelopmentLogin();
