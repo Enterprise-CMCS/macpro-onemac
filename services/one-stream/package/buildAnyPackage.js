@@ -1,8 +1,22 @@
 const _ = require("lodash");
 import AWS from "aws-sdk";
-import { dynamoConfig } from "cmscommonlib";
+import { dynamoConfig, Workflow } from "cmscommonlib";
 
 const dynamoDb = new AWS.DynamoDB.DocumentClient(dynamoConfig);
+
+const SEATOOL_TO_ONEMAC_STATUS = {
+  [Workflow.SEATOOL_STATUS.PENDING]: Workflow.ONEMAC_STATUS.IN_REVIEW,
+  [Workflow.SEATOOL_STATUS.PENDING_RAI]: Workflow.ONEMAC_STATUS.RAI_ISSUED,
+  [Workflow.SEATOOL_STATUS.APPROVED]: Workflow.ONEMAC_STATUS.APPROVED,
+  [Workflow.SEATOOL_STATUS.DISAPPROVED]: Workflow.ONEMAC_STATUS.DISAPPROVED,
+  [Workflow.SEATOOL_STATUS.WITHDRAWN]: Workflow.ONEMAC_STATUS.WITHDRAWN,
+  [Workflow.SEATOOL_STATUS.TERMINATED]: Workflow.ONEMAC_STATUS.TERMINATED,
+  [Workflow.SEATOOL_STATUS.PENDING_CONCURRANCE]:
+    Workflow.ONEMAC_STATUS.IN_REVIEW,
+  [Workflow.SEATOOL_STATUS.UNSUBMITTED]: Workflow.ONEMAC_STATUS.UNSUBMITTED,
+  [Workflow.SEATOOL_STATUS.PENDING_APPROVAL]: Workflow.ONEMAC_STATUS.IN_REVIEW,
+  [Workflow.SEATOOL_STATUS.UNKNOWN]: Workflow.ONEMAC_STATUS.SUBMITTED,
+};
 
 export const buildAnyPackage = async (packageId, config) => {
   console.log("Building package: ", packageId);
@@ -92,7 +106,7 @@ export const buildAnyPackage = async (packageId, config) => {
           );
           if (anEvent.STATE_PLAN.STATUS_DATE > lmTimestamp) {
             putParams.Item.currentStatus =
-              anEvent.SPW_STATUS[0].SPW_STATUS_DESC;
+              SEATOOL_TO_ONEMAC_STATUS[anEvent.SPW_STATUS[0].SPW_STATUS_DESC];
             lmTimestamp = anEvent.STATE_PLAN.STATUS_DATE;
           }
         }

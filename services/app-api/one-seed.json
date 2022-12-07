@@ -5786,5 +5786,36 @@
       "STATE_PLAN_SERVICETYPES": null,
       "STATE_PLAN_SERVICE_SUBTYPES": null,
       "STOP_RESUME_DATES": null
+     },
+     {
+      "pk": "MD-0027.R01.00",
+      "sk": "SEATool#1659988588750",
+      "GSI1pk": "SEATool#1915b_waivers",
+      "GSI1sk": "MD-0027.R01.00",
+      "PLAN_TYPES": [
+       {
+        "PLAN_TYPE_ID": 122,
+        "PLAN_TYPE_NAME": "1915(b)"
+       }
+      ],
+      "RAI": [
+       {
+        "ID_NUMBER": "MD-0027.R01.00",
+        "RAI_RECEIVED_DATE": null,
+        "RAI_REQUESTED_DATE": 1659988588750,
+        "RAI_WITHDRAWN_DATE": null
+       }
+      ],
+      "SPW_STATUS": [
+       {
+        "SPW_STATUS_DESC": "Pending-RAI",
+        "SPW_STATUS_ID": 2
+       }
+      ],
+      "STATE_PLAN": {
+       "CHANGED_DATE": 1659988588750,
+       "ID_NUMBER": "MD-0027.R01.00",
+       "STATUS_DATE": 1659988588750
+      }
      }
 ]

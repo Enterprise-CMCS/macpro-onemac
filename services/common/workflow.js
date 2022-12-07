@@ -38,6 +38,19 @@ export const ONEMAC_STATUS = {
   UNKNOWN: "-- --",
 };
 
+export const SEATOOL_STATUS = {
+  PENDING: "Pending",
+  PENDING_RAI: "Pending-RAI",
+  APPROVED: "Approved",
+  DISAPPROVED: "Disapproved",
+  WITHDRAWN: "Withdrawn",
+  TERMINATED: "Terminated",
+  PENDING_CONCURRANCE: "Pending-Concurrence",
+  UNSUBMITTED: "Unsubmitted",
+  PENDING_APPROVAL: "Pending-Approval",
+  UNKNOWN: "unknown",
+};
+
 export const PACKAGE_ACTION = {
   RESPOND_TO_RAI: "Respond to RAI",
   WITHDRAW: "Withdraw Package",
