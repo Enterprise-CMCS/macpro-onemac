@@ -31,7 +31,7 @@ Feature: Left Hand Navigation for Package Details View
         And verify Package Overview navigation button is expanded
         And verify Package Details is listed under Package Overview
 
-@focus 
+
     Scenario: Screen Enhancement - Initial Waiver
         Given I am on Login Page
         When Clicking on Development Login
@@ -40,8 +40,8 @@ Feature: Left Hand Navigation for Package Details View
         And click on the Waivers tab
         And Click on Filter Button
         And click on Type
-        And click 1915b Waiver Renewal check box
-        And click 1915c Appendix K Amendment check box
+        And uncheck all of the type checkboxes
+        And click 1915b Initial Waiver check box
         And Click on Filter Button
         And click the Waiver Number link in the first row
         And verify Package Overview navigation button exists

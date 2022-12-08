@@ -10,6 +10,9 @@ describe("Waiver Mini-Dashboard: Temporary Extension", () => {
   it("Screen Enhancement", () => {
     cy.get("#packageListLink").click();
     cy.get("#show-waivers-button").click();
+    cy.get("#search-bar-input").clear();
+    cy.get("#search-bar-input").type("MD-39253.R00.00");
+    cy.wait(1000);
     cy.get("#componentId-0 > a").scrollIntoView().click({ force: true });
     cy.get(".component-detail-wrapper").click();
     cy.xpath('//a[text()="Temporary Extension"]').should("be.visible");
