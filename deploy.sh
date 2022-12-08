@@ -28,6 +28,7 @@ services=(
   'uploads'
   'app-api'
   #'stream-functions'
+  'seatool-sink'
   'ui-waf-log-assoc'
   'ui-auth'
   'ui-src'

@@ -53,6 +53,26 @@ it("exists without crashing", () => {
     .catch((error) => {
       console.log("caught test error: ", error);
     });
+
+  const response5 = PackageApi.default.getTopic(
+    "test@test.com",
+    "Medicaid_SPA"
+  );
+  expect(response5)
+    .resolves.toBeInstanceOf(Promise)
+    .catch((error) => {
+      console.log("caught test error: ", error);
+    });
+
+  const response6 = PackageApi.default.getTopicDetail(
+    "AK-00-0885",
+    "1657824888790"
+  );
+  expect(response6)
+    .resolves.toBeInstanceOf(Promise)
+    .catch((error) => {
+      console.log("caught test error: ", error);
+    });
 });
 
 it("sucessfully submits a form", async () => {
