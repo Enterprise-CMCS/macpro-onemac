@@ -8,4 +8,6 @@ export const medicaidSPARAIResponse = {
   allowMultiplesWithSameId: true, // Medicaid SPA RAI can only have one but until business decides how to handle we will allow multiple
   requiredAttachments: ["RAI Response"],
   optionalAttachments: ["Other"],
+  allowedParentTypes: ["medicaidspa"],
+  allowedParentStatuses: ["RAI Issued"],
 };
