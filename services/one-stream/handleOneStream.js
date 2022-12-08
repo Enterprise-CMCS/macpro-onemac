@@ -93,11 +93,15 @@ export const main = async (eventBatch) => {
                 packageToBuild.type = Workflow.ONEMAC_TYPE.CHIP_SPA;
                 break;
               case "1915b_waivers":
-                if (newEventData?.ACTIONTYPES?.M.ACTION_NAME.S === "Renew")
+                if (newEventData?.ACTIONTYPES?.L[0].M.ACTION_NAME.S === "Renew")
                   packageToBuild.type = Workflow.ONEMAC_TYPE.WAIVER_RENEWAL;
-                else if (newEventData?.ACTIONTYPES?.M.ACTION_NAME.S === "Amend")
+                else if (
+                  newEventData?.ACTIONTYPES?.L[0].M.ACTION_NAME.S === "Amend"
+                )
                   packageToBuild.type = Workflow.ONEMAC_TYPE.WAIVER_AMENDMENT;
-                else if (newEventData?.ACTIONTYPES?.M.ACTION_NAME.S === "New")
+                else if (
+                  newEventData?.ACTIONTYPES?.L[0].M.ACTION_NAME.S === "New"
+                )
                   packageToBuild.type = Workflow.ONEMAC_TYPE.WAIVER_INITIAL;
                 break;
               case "1915c_waivers":
@@ -105,7 +109,7 @@ export const main = async (eventBatch) => {
                   "newEventData?.ACTIONTYPES?.M.ACTION_NAME.S is: ",
                   newEventData?.ACTIONTYPES?.M.ACTION_NAME.S
                 );
-                if (newEventData?.ACTIONTYPES?.M.ACTION_NAME.S === "Amend")
+                if (newEventData?.ACTIONTYPES?.L[0].M.ACTION_NAME.S === "Amend")
                   packageToBuild.type = Workflow.ONEMAC_TYPE.WAIVER_APP_K;
                 else console.log("newEventData is: ", newEventData);
                 break;

@@ -49,8 +49,6 @@ export const buildAnyPackage = async (packageId, config) => {
       Item: {
         pk: packageId,
         sk: packageSk,
-        GSI1pk: `OneMAC#${config.whichTab}`,
-        GSI1sk: packageId,
         componentId: packageId,
         componentType: config.componentType,
         raiResponses: [],
@@ -112,6 +110,9 @@ export const buildAnyPackage = async (packageId, config) => {
         }
         return;
       }
+      // if we get this far, it is a OneMAC package and should be on dashboard
+      putParams.Item.GSI1pk = `OneMAC#${config.whichTab}`;
+      putParams.Item.GSI1sk = packageId;
 
       if (timestamp > lmTimestamp) {
         lmTimestamp = timestamp;
@@ -141,6 +142,9 @@ export const buildAnyPackage = async (packageId, config) => {
         }
       });
     });
+
+    // if we don't have the package indexes, don't need the package item
+    if (!putParams.Item.GSI1pk) return;
 
     putParams.Item.raiResponses.sort(
       (a, b) => b.submissionTimestamp - a.submissionTimestamp
