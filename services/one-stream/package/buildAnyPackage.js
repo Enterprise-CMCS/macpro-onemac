@@ -1,6 +1,7 @@
 const _ = require("lodash");
 import AWS from "aws-sdk";
 import { dynamoConfig, Workflow } from "cmscommonlib";
+import { ONEMAC_STATUS } from "cmscommonlib/workflow";
 
 const dynamoDb = new AWS.DynamoDB.DocumentClient(dynamoConfig);
 
@@ -128,6 +129,7 @@ export const buildAnyPackage = async (packageId, config) => {
           attachments: anEvent.attachments,
           additionalInformation: anEvent.additionalInformation,
         });
+        putParams.Item.currentStatus = Workflow.ONEMAC_STATUS.RAI_SUBMITTED;
         return;
       }
 

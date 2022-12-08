@@ -28,6 +28,7 @@ export const ONEMAC_STATUS = {
   INACTIVATED: "Inactivated",
   UNSUBMITTED: "Unsubmitted",
   SUBMITTED: "Submitted",
+  RAI_SUBMITTED: "RAI Submitted",
   IN_REVIEW: "Under Review",
   RAI_ISSUED: "RAI Issued",
   APPROVED: "Approved",
