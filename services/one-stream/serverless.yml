@@ -36,10 +36,10 @@ custom:
       cleanFolder: false
     configureConnectors:
       enabled: false
-  oneMacTableStreamArn: ${cf:app-api-${self:custom.stage}.OneMacTableStreamArn}
-  oneMacTableName: ${cf:app-api-${self:custom.stage}.OneMacTableName}
-  oneMacTableArn: ${cf:app-api-${self:custom.stage}.OneMacTableArn}
   localTableName: onemac-dev-one
+  oneMacTableStreamArn: ${cf:app-api-${self:custom.stage}.OneMacTableStreamArn, ""}
+  oneMacTableName: ${cf:app-api-${self:custom.stage}.OneMacTableName, ""}
+  oneMacTableArn: ${cf:app-api-${self:custom.stage}.OneMacTableArn, ""}
   dynamodbStream:
     host: localhost
     port: 8000
