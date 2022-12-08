@@ -1,7 +1,6 @@
 const _ = require("lodash");
 import AWS from "aws-sdk";
 import { dynamoConfig, Workflow } from "cmscommonlib";
-import { ONEMAC_STATUS } from "cmscommonlib/workflow";
 
 const dynamoDb = new AWS.DynamoDB.DocumentClient(dynamoConfig);
 
