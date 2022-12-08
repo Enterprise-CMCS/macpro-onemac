@@ -1,20 +1,25 @@
 const _ = require("lodash");
 import AWS from "aws-sdk";
 import { dynamoConfig } from "cmscommonlib";
+import { createImportSpecifier } from "typescript";
 
 const dynamoDb = new AWS.DynamoDB.DocumentClient(dynamoConfig);
+
+const oneMacTableName = process.env.IS_OFFLINE
+  ? process.env.localTableName
+  : process.env.oneMacTableName;
 
 export const buildAnyPackage = async (packageId, config) => {
   console.log("Building package: ", packageId);
   const queryParams = {
-    TableName: process.env.oneMacTableName,
+    TableName: oneMacTableName,
     KeyConditionExpression: "pk = :pk",
     ExpressionAttributeValues: {
       ":pk": packageId,
     },
   };
   const childrenParams = {
-    TableName: process.env.oneMacTableName,
+    TableName: oneMacTableName,
     IndexName: "GSI2",
     KeyConditionExpression: "GSI2pk = :pk",
     ExpressionAttributeValues: {
@@ -28,7 +33,7 @@ export const buildAnyPackage = async (packageId, config) => {
 
     const packageSk = `Package`;
     const putParams = {
-      TableName: process.env.oneMacTableName,
+      TableName: oneMacTableName,
       Item: {
         pk: packageId,
         sk: packageSk,

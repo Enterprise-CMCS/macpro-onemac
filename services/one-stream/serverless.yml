@@ -39,12 +39,13 @@ custom:
   oneMacTableStreamArn: ${cf:app-api-${self:custom.stage}.OneMacTableStreamArn}
   oneMacTableName: ${cf:app-api-${self:custom.stage}.OneMacTableName}
   oneMacTableArn: ${cf:app-api-${self:custom.stage}.OneMacTableArn}
+  localTableName: onemac-dev-one
   dynamodbStream:
     host: localhost
     port: 8000
     pollForever: true
     streams:
-      - table: onemac-dev-one
+      - table: ${self:custom.localTableName}
         functions:
           - handleOneStream
 
@@ -66,6 +67,7 @@ functions:
     environment:
       STAGE: ${self:custom.stage}
       oneMacTableName: ${self:custom.oneMacTableName}
+      localTableName: ${self:custom.localTableName}
     maximumRetryAttempts: 2
 
 resources:
