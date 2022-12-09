@@ -12,7 +12,8 @@ plugins:
   - serverless-plugin-scripts
   - serverless-plugin-warmup
   - serverless-s3-bucket-helper
-
+  - serverless-plugin-offline-dynamodb-stream
+  - serverless-offline
 custom:
   stage: ${opt:stage, self:provider.stage}
   iamPath: ${ssm:/configuration/${self:custom.stage}/iam/path, ssm:/configuration/default/iam/path}
@@ -35,9 +36,18 @@ custom:
       cleanFolder: false
     configureConnectors:
       enabled: false
-  oneMacTableStreamArn: ${cf:app-api-${self:custom.stage}.OneMacTableStreamArn}
-  oneMacTableName: ${cf:app-api-${self:custom.stage}.OneMacTableName}
-  oneMacTableArn: ${cf:app-api-${self:custom.stage}.OneMacTableArn}
+  localTableName: onemac-dev-one
+  oneMacTableStreamArn: ${cf:app-api-${self:custom.stage}.OneMacTableStreamArn, ""}
+  oneMacTableName: ${cf:app-api-${self:custom.stage}.OneMacTableName, ""}
+  oneMacTableArn: ${cf:app-api-${self:custom.stage}.OneMacTableArn, ""}
+  dynamodbStream:
+    host: localhost
+    port: 8000
+    pollForever: true
+    streams:
+      - table: ${self:custom.localTableName}
+        functions:
+          - handleOneStream
 
 provider:
   name: aws
@@ -57,6 +67,7 @@ functions:
     environment:
       STAGE: ${self:custom.stage}
       oneMacTableName: ${self:custom.oneMacTableName}
+      localTableName: ${self:custom.localTableName}
     maximumRetryAttempts: 2
 
 resources:
