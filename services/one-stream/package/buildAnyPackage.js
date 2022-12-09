@@ -1,7 +1,6 @@
 const _ = require("lodash");
 import AWS from "aws-sdk";
 import { dynamoConfig } from "cmscommonlib";
-import { createImportSpecifier } from "typescript";
 
 const dynamoDb = new AWS.DynamoDB.DocumentClient(dynamoConfig);
 
