@@ -251,6 +251,46 @@ functions:
           cors: true
           authorizer: aws_iam
 
+  validateParentOfMedicaidSpaRaiResponse:
+    handler: validation/validateParentOfMedicaidSpaRaiResponse.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: validateParentOfMedicaidSpaRaiResponse/{parentId}
+          method: get
+          cors: true
+          authorizer: aws_iam
+
+  validateParentOfChipSpaRaiResponse:
+    handler: validation/validateParentOfChipSpaRaiResponse.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: validateParentOfChipSpaRaiResponse/{parentId}
+          method: get
+          cors: true
+          authorizer: aws_iam
+
+  validateParentOfWaiverRaiResponse:
+    handler: validation/validateParentOfWaiverRaiResponse.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: validateParentOfWaiverRaiResponse/{parentId}
+          method: get
+          cors: true
+          authorizer: aws_iam
+
+  validateParentOfWaiverAppendixKRaiResponse:
+    handler: validation/validateParentOfWaiverAppendixKRaiResponse.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: validateParentOfWaiverAppendixKRaiResponse/{parentId}
+          method: get
+          cors: true
+          authorizer: aws_iam
+
   withdrawInitialWaiver:
     handler: action/withdrawInitialWaiver.main
     role: LambdaApiRole
