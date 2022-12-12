@@ -123,7 +123,7 @@ export class oneMacSubmitNewWaiverActionPage {
   }
 
   inputWaiverParentNumber(s) {
-    cy.get(parentIDInputBox).type(s);
+    cy.get(parentIDInputBox).type(s, { delay: 500 });
   }
   clearWaiverParentNumber() {
     cy.get(parentIDInputBox).clear();

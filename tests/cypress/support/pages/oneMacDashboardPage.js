@@ -1,5 +1,3 @@
-import { assert } from "console";
-
 const newSubmissionBTN = "#new-submission-button";
 const successMessage = "#alert_3";
 const successMessage1 = "#alert-bar";

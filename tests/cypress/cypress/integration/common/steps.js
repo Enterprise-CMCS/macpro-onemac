@@ -41,6 +41,9 @@ const OneMacDefaultForms = new oneMacDefaultForms();
 Given("I am on Login Page", () => {
   OneMacHomePage.launch();
 });
+And("Verify I am on the login page and not logged in", () => {
+  OneMacHomePage.verifyUserIsNotLoggedInOnLoginPage();
+});
 
 When("Clicking on Development Login", () => {
   OneMacHomePage.clickDevelopmentLogin();
@@ -2155,13 +2158,13 @@ And("verify the type is 1915b Temporary Extension", () => {
   OneMacPackageDetailsPage.verifyTypeContainsTempExtension();
 });
 And(
-  "verify there is a Parent Waiver Number header in the details section",
+  "verify there is a Approved Initial or Renewal Number header in the details section",
   () => {
     OneMacPackageDetailsPage.verifyParentWaiverNumberHeaderExists();
   }
 );
 And(
-  "verify the Parent Waiver Number ID is the approved intial waiver number 1",
+  "verify the Approved Initial or Renewal Number ID is the approved intial waiver number 1",
   () => {
     cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
       OneMacPackageDetailsPage.verifyParentWaiverNumber(
@@ -2894,3 +2897,10 @@ And(
     OneMacSubmitNewWaiverActionPage.verifyRenewalWaiverErrorMsgPt2();
   }
 );
+
+And("select the 1915b Temporary Extension Type button", () => {
+  OneMacRequestWaiverTemporaryExtension.selectOption1915bInTempExtensionType();
+});
+And("select the 1915c Temporary Extension Type button", () => {
+  OneMacRequestWaiverTemporaryExtension.selectOption1915cInTempExtensionType();
+});
