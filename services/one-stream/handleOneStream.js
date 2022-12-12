@@ -50,7 +50,9 @@ export const main = async (eventBatch) => {
             break;
           case "OneMAC":
             // for all but Waiver RAIs, the type maps to the build
-            if (packageToBuild.type === Workflow.ONEMAC_TYPE.WAIVER_RAI)
+            if (
+              newEventData.componentType.S === Workflow.ONEMAC_TYPE.WAIVER_RAI
+            )
               packageToBuild.type = newEventData?.parentType?.S;
             else packageToBuild.type = newEventData.componentType.S;
             // switch (packageType) {
@@ -140,7 +142,12 @@ export const main = async (eventBatch) => {
         }
         if (typeof BUILD_PACKAGE_CALL[packageToBuild.type] === "function")
           await BUILD_PACKAGE_CALL[packageToBuild.type](packageToBuild.id);
-        else console.log(`%s has no build package function??`, inPK);
+        else
+          console.log(
+            `%s with type <%s> has no build package function??`,
+            inPK,
+            packageToBuild.type
+          );
       } else {
         console.log(`skipping %s of: `, event.eventName, event.dynamodb);
       }
