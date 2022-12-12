@@ -36,7 +36,7 @@ export const main = async (eventBatch) => {
         const inPK = newEventData.pk.S;
         const inSK = newEventData.sk.S;
         const packageToBuild = {
-          type: newEventData.componentType.S,
+          type: "",
           id: inPK,
         };
 
@@ -52,6 +52,7 @@ export const main = async (eventBatch) => {
             // for all but Waiver RAIs, the type maps to the build
             if (packageToBuild.type === Workflow.ONEMAC_TYPE.WAIVER_RAI)
               packageToBuild.type = newEventData?.parentType?.S;
+            else packageToBuild.type = newEventData.componentType.S;
             // switch (packageType) {
             //   case ONEMAC_TYPE.MEDICAID_SPA:
             //   case ONEMAC_TYPE.MEDICAID_SPA_RAI:
@@ -82,8 +83,47 @@ export const main = async (eventBatch) => {
             //     break;
             // }
             break;
-          case "SEATool":
+          case "SEATool": {
+            const [, topic] = newEventData.GSI1pk.S.split("#");
+            switch (topic) {
+              case "Medicaid_SPA":
+                packageToBuild.type = Workflow.ONEMAC_TYPE.MEDICAID_SPA;
+                break;
+              case "CHIP_SPA":
+                packageToBuild.type = Workflow.ONEMAC_TYPE.CHIP_SPA;
+                break;
+              case "1915b_waivers":
+                if (newEventData?.ACTIONTYPES?.L[0].M.ACTION_NAME.S === "Renew")
+                  packageToBuild.type = Workflow.ONEMAC_TYPE.WAIVER_RENEWAL;
+                else if (
+                  newEventData?.ACTIONTYPES?.L[0].M.ACTION_NAME.S === "Amend"
+                )
+                  packageToBuild.type = Workflow.ONEMAC_TYPE.WAIVER_AMENDMENT;
+                else if (
+                  newEventData?.ACTIONTYPES?.L[0].M.ACTION_NAME.S === "New"
+                )
+                  packageToBuild.type = Workflow.ONEMAC_TYPE.WAIVER_INITIAL;
+                break;
+              case "1915c_waivers":
+                console.log(
+                  "newEventData?.ACTIONTYPES?.M.ACTION_NAME.S is: ",
+                  newEventData?.ACTIONTYPES?.M.ACTION_NAME.S
+                );
+                if (newEventData?.ACTIONTYPES?.L[0].M.ACTION_NAME.S === "Amend")
+                  packageToBuild.type = Workflow.ONEMAC_TYPE.WAIVER_APP_K;
+                else console.log("newEventData is: ", newEventData);
+                break;
+              default:
+                break;
+            }
+            console.log(
+              "%s topic %s is type %s",
+              inPK,
+              topic,
+              packageToBuild.type
+            );
             break;
+          }
           default:
             console.log("source %s unknown", eventSource);
             packageToBuild.id = null;

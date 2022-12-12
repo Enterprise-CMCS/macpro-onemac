@@ -30,15 +30,20 @@ export const main = async (event) => {
       await Promise.all(
         results.Items.map(async (item) => {
           if (!item.pk.includes("@")) {
-            await dynamoDb
-              .delete({
-                TableName: process.env.oneMacTableName,
-                Key: {
-                  pk: item.pk,
-                  sk: item.sk,
-                },
-              })
-              .promise();
+            const [eventSource] = item.sk.split("#");
+            if (eventSource !== "SEATool") {
+              console.log("%s deleted Source: %s ", item.pk, eventSource);
+              await dynamoDb
+                .delete({
+                  TableName: process.env.oneMacTableName,
+                  Key: {
+                    pk: item.pk,
+                    sk: item.sk,
+                  },
+                })
+                .promise();
+            } else
+              console.log("%s un-deleted Source: %s ", item.pk, eventSource);
           }
         })
       );

@@ -28,14 +28,28 @@ export const ONEMAC_STATUS = {
   INACTIVATED: "Inactivated",
   UNSUBMITTED: "Unsubmitted",
   SUBMITTED: "Submitted",
-  IN_REVIEW: "In Review",
+  RAI_SUBMITTED: "RAI Submitted",
+  IN_REVIEW: "Under Review",
   RAI_ISSUED: "RAI Issued",
+  APPROVED: "Approved",
+  DISAPPROVED: "Disapproved",
+  WITHDRAWN: "Package Withdrawn",
+  TERMINATED: "Waiver Terminated",
+  PAUSED: "Review Paused, Off the Clock",
+  UNKNOWN: "-- --",
+};
+
+export const SEATOOL_STATUS = {
+  PENDING: "Pending",
+  PENDING_RAI: "Pending-RAI",
   APPROVED: "Approved",
   DISAPPROVED: "Disapproved",
   WITHDRAWN: "Withdrawn",
   TERMINATED: "Terminated",
-  PAUSED: "Review Paused, Off the Clock",
-  UNKNOWN: "-- --",
+  PENDING_CONCURRANCE: "Pending-Concurrence",
+  UNSUBMITTED: "Unsubmitted",
+  PENDING_APPROVAL: "Pending-Approval",
+  UNKNOWN: "unknown",
 };
 
 export const PACKAGE_ACTION = {

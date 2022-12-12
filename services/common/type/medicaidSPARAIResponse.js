@@ -17,4 +17,6 @@ export const medicaidSPARAIResponse = {
     "submitterName",
     "submitterEmail",
   ],
+  allowedParentTypes: ["medicaidspa"],
+  allowedParentStatuses: ["RAI Issued"],
 };
