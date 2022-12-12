@@ -81,12 +81,18 @@ export const getMyPackages = async (email, group) => {
           const promiseItems = [];
           do {
             const results = await dynamoDb.query(params);
-            promiseItems.push(
-              ...results.Items.map((oneItem) => {
+            results.Items.map((oneItem) => {
+              if (!cmsStatusUIMap[oneItem.currentStatus])
+                console.log(
+                  "%s status of %s not mapped!",
+                  oneItem.pk,
+                  oneItem.currentStatus
+                );
+              else {
                 oneItem.currentStatus = cmsStatusUIMap[oneItem.currentStatus];
-                return oneItem;
-              })
-            );
+                promiseItems.push(oneItem);
+              }
+            });
             params.ExclusiveStartKey = results.LastEvaluatedKey;
           } while (params.ExclusiveStartKey);
           return promiseItems;
