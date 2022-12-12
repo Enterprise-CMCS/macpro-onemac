@@ -8,6 +8,21 @@ import {
 } from "cmscommonlib";
 import { getUser } from "./getUser";
 
+/*  from packagelist to know what the "clean" statuses are
+const initialStatuses = [
+  Workflow.ONEMAC_STATUS.UNSUBMITTED,
+  Workflow.ONEMAC_STATUS.SUBMITTED,
+  Workflow.ONEMAC_STATUS.IN_REVIEW,
+  Workflow.ONEMAC_STATUS.RAI_ISSUED,
+  Workflow.ONEMAC_STATUS.APPROVED,
+  Workflow.ONEMAC_STATUS.DISAPPROVED,
+  Workflow.ONEMAC_STATUS.WITHDRAWN,
+  Workflow.ONEMAC_STATUS.TERMINATED,
+  Workflow.ONEMAC_STATUS.PAUSED,
+  Workflow.ONEMAC_STATUS.UNKNOWN,
+];
+*/
+
 const cmsStatusUIMap = {
   [Workflow.ONEMAC_STATUS.SUBMITTED]: "Submitted",
   [Workflow.ONEMAC_STATUS.INACTIVATED]: "CMS Inactivated",
