@@ -4,8 +4,24 @@ import {
   RESPONSE_CODE,
   getActiveTerritories,
   getUserRoleObj,
+  Workflow,
 } from "cmscommonlib";
 import { getUser } from "./getUser";
+
+const cmsStatusUIMap = {
+  [Workflow.ONEMAC_STATUS.SUBMITTED]: "Submitted",
+  [Workflow.ONEMAC_STATUS.INACTIVATED]: "CMS Inactivated",
+  [Workflow.ONEMAC_STATUS.UNSUBMITTED]: "CMS Unsubmitted",
+  [Workflow.ONEMAC_STATUS.RAI_SUBMITTED]: "CMS RAI Submitted",
+  [Workflow.ONEMAC_STATUS.IN_REVIEW]: "CMS Under Review",
+  [Workflow.ONEMAC_STATUS.RAI_ISSUED]: "CMS RAI Issued",
+  [Workflow.ONEMAC_STATUS.APPROVED]: "CMS Approved",
+  [Workflow.ONEMAC_STATUS.DISAPPROVED]: "CMS Disapproved",
+  [Workflow.ONEMAC_STATUS.WITHDRAWN]: "CMS Package Withdrawn",
+  [Workflow.ONEMAC_STATUS.TERMINATED]: "CMS Waiver Terminated",
+  [Workflow.ONEMAC_STATUS.PAUSED]: "CMS Review Paused, Off the Clock",
+  [Workflow.ONEMAC_STATUS.UNKNOWN]: "CMS -- --",
+};
 
 /**
  * Gets all packages from the DynamoDB one table
@@ -65,7 +81,12 @@ export const getMyPackages = async (email, group) => {
           const promiseItems = [];
           do {
             const results = await dynamoDb.query(params);
-            promiseItems.push(...results.Items);
+            promiseItems.push(
+              ...results.Items.map((oneItem) => {
+                oneItem.currentStatus = cmsStatusUIMap[oneItem.currentStatus];
+                return oneItem;
+              })
+            );
             params.ExclusiveStartKey = results.LastEvaluatedKey;
           } while (params.ExclusiveStartKey);
           return promiseItems;
