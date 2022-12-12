@@ -17,18 +17,21 @@ const SEATOOL_TO_ONEMAC_STATUS = {
   [Workflow.SEATOOL_STATUS.PENDING_APPROVAL]: Workflow.ONEMAC_STATUS.IN_REVIEW,
   [Workflow.SEATOOL_STATUS.UNKNOWN]: Workflow.ONEMAC_STATUS.SUBMITTED,
 };
+const oneMacTableName = process.env.IS_OFFLINE
+  ? process.env.localTableName
+  : process.env.oneMacTableName;
 
 export const buildAnyPackage = async (packageId, config) => {
   console.log("Building package: ", packageId);
   const queryParams = {
-    TableName: process.env.oneMacTableName,
+    TableName: oneMacTableName,
     KeyConditionExpression: "pk = :pk",
     ExpressionAttributeValues: {
       ":pk": packageId,
     },
   };
   const childrenParams = {
-    TableName: process.env.oneMacTableName,
+    TableName: oneMacTableName,
     IndexName: "GSI2",
     KeyConditionExpression: "GSI2pk = :pk",
     ExpressionAttributeValues: {
@@ -45,7 +48,7 @@ export const buildAnyPackage = async (packageId, config) => {
     }
     const packageSk = `Package`;
     const putParams = {
-      TableName: process.env.oneMacTableName,
+      TableName: oneMacTableName,
       Item: {
         pk: packageId,
         sk: packageSk,
