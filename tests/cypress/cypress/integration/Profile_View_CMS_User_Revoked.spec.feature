@@ -1,4 +1,4 @@
-Feature: OY2_12596_CMSUserRevoked
+Feature: CMS User Revoked
     Background: Reoccuring Steps
         Given I am on Login Page
         When Clicking on Development Login

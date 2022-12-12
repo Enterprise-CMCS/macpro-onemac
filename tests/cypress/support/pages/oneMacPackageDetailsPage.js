@@ -27,7 +27,7 @@ const detailSection =
 const CHIPSPAIDHeader = "//h3[contains(text(),'SPA ID')]";
 const typeHeader = "//h3[contains(text(),'Type')]";
 const parentWaiverNumberHeader =
-  "//h3[contains(text(),'Parent Waiver Number')]";
+  "//h3[contains(text(),'Approved Initial or Renewal Number')]";
 const stateHeader = "//h3[text()='State']";
 const initialSubmittedDateHeader = "//h3[text()='Date Submitted']";
 const raiResponsesHeader = "//section//h2[text()='Formal RAI Responses']";

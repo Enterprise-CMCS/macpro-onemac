@@ -1,5 +1,5 @@
 import { validateParentOfAny } from "./validateParentOfAny";
-import { main } from "./validateParentOfWaiverAppendixKRaiResponse";
+import { main } from "./validateParentOfAppKRaiResponse";
 
 jest.mock("./validateParentOfAny");
 validateParentOfAny.mockResolvedValue(true);

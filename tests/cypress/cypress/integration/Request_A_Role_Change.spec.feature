@@ -59,16 +59,16 @@ Feature: OY2-12679 Users can request a role change in OneMAC
         And click stay on page in the modal
         And verify the cancel button is clickable
 
-    Scenario: Screen enhance - CMS Reviewer role change
-        Given I am on Login Page
-        When Clicking on Development Login
-        When Login with CMS Reviewer User
-        Then i am on Dashboard Page
-        Then Click on My Account
-        And verify that Request a Role Change button exists
-        And click on Request a Role Change button
-        And verify Select the role for which you are registering is visible
-        And verify the CMS Role Approver role is available
+    # Scenario: Screen enhance - CMS Reviewer role change
+    #     Given I am on Login Page
+    #     When Clicking on Development Login
+    #     When Login with CMS Reviewer User
+    #     Then i am on Dashboard Page
+    #     Then Click on My Account
+    #     And verify that Request a Role Change button exists
+    #     And click on Request a Role Change button
+    #     And verify Select the role for which you are registering is visible
+    #     And verify the CMS Role Approver role is available
 
     Scenario: Screen enhance - cms system admin role change
         Given I am on Login Page
