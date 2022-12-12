@@ -6,7 +6,6 @@ import {
   waitForElementToBeRemoved,
 } from "@testing-library/react";
 
-import userEvent from "@testing-library/user-event";
 import { Router, Route } from "react-router-dom";
 import { createMemoryHistory } from "history";
 import { stateSubmitterInitialAuthState } from "../../libs/testDataAppContext";
