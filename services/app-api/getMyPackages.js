@@ -38,6 +38,21 @@ const cmsStatusUIMap = {
   [Workflow.ONEMAC_STATUS.UNKNOWN]: "CMS -- --",
 };
 
+const stateStatusUIMap = {
+  [Workflow.ONEMAC_STATUS.SUBMITTED]: "Submitted",
+  [Workflow.ONEMAC_STATUS.INACTIVATED]: "State Inactivated",
+  [Workflow.ONEMAC_STATUS.UNSUBMITTED]: "State Unsubmitted",
+  [Workflow.ONEMAC_STATUS.RAI_SUBMITTED]: "State RAI Submitted",
+  [Workflow.ONEMAC_STATUS.IN_REVIEW]: "State Under Review",
+  [Workflow.ONEMAC_STATUS.RAI_ISSUED]: "State RAI Issued",
+  [Workflow.ONEMAC_STATUS.APPROVED]: "State Approved",
+  [Workflow.ONEMAC_STATUS.DISAPPROVED]: "State Disapproved",
+  [Workflow.ONEMAC_STATUS.WITHDRAWN]: "State Package Withdrawn",
+  [Workflow.ONEMAC_STATUS.TERMINATED]: "State Waiver Terminated",
+  [Workflow.ONEMAC_STATUS.PAUSED]: "State Review Paused, Off the Clock",
+  [Workflow.ONEMAC_STATUS.UNKNOWN]: "State -- --",
+};
+
 /**
  * Gets all packages from the DynamoDB one table
  * that correspond to the user's active access to states/territories
@@ -53,6 +68,9 @@ export const getMyPackages = async (email, group) => {
 
       const userRoleObj = getUserRoleObj(user.roleList);
       const territoryList = getActiveTerritories(user.roleList);
+      const statusMap = userRoleObj.isCMSUser
+        ? cmsStatusUIMap
+        : stateStatusUIMap;
 
       if (!userRoleObj.canAccessDashboard || territoryList === []) {
         throw RESPONSE_CODE.USER_NOT_AUTHORIZED;
@@ -97,14 +115,14 @@ export const getMyPackages = async (email, group) => {
           do {
             const results = await dynamoDb.query(params);
             results.Items.map((oneItem) => {
-              if (!cmsStatusUIMap[oneItem.currentStatus])
+              if (!statusMap[oneItem.currentStatus])
                 console.log(
                   "%s status of %s not mapped!",
                   oneItem.pk,
                   oneItem.currentStatus
                 );
               else {
-                oneItem.currentStatus = cmsStatusUIMap[oneItem.currentStatus];
+                oneItem.currentStatus = statusMap[oneItem.currentStatus];
                 promiseItems.push(oneItem);
               }
             });
