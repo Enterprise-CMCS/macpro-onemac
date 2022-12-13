@@ -1,8 +1,9 @@
 import AWS from "aws-sdk";
-import { RESPONSE_CODE } from "cmscommonlib";
+import { RESPONSE_CODE, getUserRoleObj } from "cmscommonlib";
 import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
 import { getUser } from "./getUser";
+import { cmsStatusUIMap, stateStatusUIMap } from "./libs/status-lib";
 import { validateUserReadOnly } from "./utils/validateUser";
 
 const s3 = new AWS.S3();
@@ -26,10 +27,13 @@ async function assignAttachmentUrls(item) {
 }
 export const getDetails = async (event) => {
   const componentId = event?.pathParameters?.id;
+  let userRoleObj;
   if (!componentId) return RESPONSE_CODE.VALIDATION_ERROR;
 
   try {
     const user = await getUser(event.queryStringParameters.email);
+    userRoleObj = getUserRoleObj(user.roleList);
+
     if (!validateUserReadOnly(user, componentId.substring(0, 2))) {
       return RESPONSE_CODE.USER_NOT_AUTHORIZED;
     }
@@ -60,23 +64,12 @@ export const getDetails = async (event) => {
       }
     }
 
-    // if (Workflow.ALLOW_WAIVER_EXTENSION_TYPE.includes(componentType)) {
-    //   //fetch any waiver extensions associated to this component
-    //   const waiverExtensionParams = {
-    //     TableName: process.env.oneMacTableName,
-    //     IndexName: "GSI2",
-    //     KeyConditionExpression: "GSI2pk = :pk AND GSI2sk = :sk",
-    //     ExpressionAttributeValues: {
-    //       ":pk": componentId,
-    //       ":sk": `${Workflow.ONEMAC_TYPE.WAIVER_EXTENSION}`,
-    //     },
-    //   };
+    result.Item.currentStatus = userRoleObj.isCMSUser
+      ? cmsStatusUIMap[result.Item.currentStatus]
+      : stateStatusUIMap[result.Item.currentStatus];
 
-    //   const waiverExtensionResult = await dynamoDb.query(waiverExtensionParams);
-    // result.Item.waiverExtensions = [...waiverExtensionResult.Items];
-    // }
+    oneItem.currentStatus = statusMap[oneItem.currentStatus];
 
-    console.log("Sending back result:", JSON.stringify(result, null, 2));
     return { ...result.Item };
   } catch (e) {
     console.log("Error is: ", e);

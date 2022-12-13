@@ -260,7 +260,6 @@ class Helpdesk extends Role {
     this.canAccessUserManagement = true;
     this.canAccessMetrics = true;
     this.canDownloadCsv = true;
-    this.isCMSUser = true;
   }
 }
 
