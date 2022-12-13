@@ -155,7 +155,7 @@ it("switches to waiver columns if wavier tab selected", async () => {
 //   ${"currentStatus"} | ${Workflow.ONEMAC_STATUS.WITHDRAWN}   | ${"clockEndTimestamp"} | ${null}          | ${"N/A"}
 //   ${"currentStatus"} | ${Workflow.ONEMAC_STATUS.TERMINATED}  | ${"clockEndTimestamp"} | ${null}          | ${"N/A"}
 //   ${"currentStatus"} | ${Workflow.ONEMAC_STATUS.UNSUBMITTED} | ${"clockEndTimestamp"} | ${null}          | ${"Pending"}
-//   ${"currentStatus"} | ${Workflow.ONEMAC_STATUS.IN_REVIEW}   | ${"clockEndTimestamp"} | ${null}          | ${"Pending"}
+//   ${"currentStatus"} | ${Workflow.ONEMAC_STATUS.PENDING}   | ${"clockEndTimestamp"} | ${null}          | ${"Pending"}
 //   ${"currentStatus"} | ${Workflow.ONEMAC_STATUS.SUBMITTED}   | ${"clockEndTimestamp"} | ${1570378876000} | ${"Pending"}
 //   ${"currentStatus"} | ${Workflow.ONEMAC_STATUS.RAI_ISSUED}  | ${"clockEndTimestamp"} | ${null}          | ${"Clock Stopped"}
 // `(

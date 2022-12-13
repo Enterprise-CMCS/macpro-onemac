@@ -1,5 +1,4 @@
 {
-    "fromTable": "product-change-request-2",
     "Limit": "10",
     "ExclusiveStartKey": null
 }

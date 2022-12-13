@@ -12,7 +12,7 @@ import { getUser } from "./getUser";
 const initialStatuses = [
   Workflow.ONEMAC_STATUS.UNSUBMITTED,
   Workflow.ONEMAC_STATUS.SUBMITTED,
-  Workflow.ONEMAC_STATUS.IN_REVIEW,
+  Workflow.ONEMAC_STATUS.PENDING,
   Workflow.ONEMAC_STATUS.RAI_ISSUED,
   Workflow.ONEMAC_STATUS.APPROVED,
   Workflow.ONEMAC_STATUS.DISAPPROVED,
