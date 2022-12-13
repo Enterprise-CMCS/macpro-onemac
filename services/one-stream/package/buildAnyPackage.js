@@ -11,9 +11,11 @@ const SEATOOL_TO_ONEMAC_STATUS = {
   [Workflow.SEATOOL_STATUS.DISAPPROVED]: Workflow.ONEMAC_STATUS.DISAPPROVED,
   [Workflow.SEATOOL_STATUS.WITHDRAWN]: Workflow.ONEMAC_STATUS.WITHDRAWN,
   [Workflow.SEATOOL_STATUS.TERMINATED]: Workflow.ONEMAC_STATUS.TERMINATED,
-  [Workflow.SEATOOL_STATUS.PENDING_CONCURRANCE]: Workflow.ONEMAC_STATUS.PENDING,
+  [Workflow.SEATOOL_STATUS.PENDING_CONCURRANCE]:
+    Workflow.ONEMAC_STATUS.PENDING_CONCURRANCE,
   [Workflow.SEATOOL_STATUS.UNSUBMITTED]: Workflow.ONEMAC_STATUS.UNSUBMITTED,
-  [Workflow.SEATOOL_STATUS.PENDING_APPROVAL]: Workflow.ONEMAC_STATUS.PENDING,
+  [Workflow.SEATOOL_STATUS.PENDING_APPROVAL]:
+    Workflow.ONEMAC_STATUS.PENDING_APPROVAL,
   [Workflow.SEATOOL_STATUS.UNKNOWN]: Workflow.ONEMAC_STATUS.SUBMITTED,
 };
 const oneMacTableName = process.env.IS_OFFLINE
@@ -122,8 +124,9 @@ export const buildAnyPackage = async (packageId, config) => {
 
       // we include ALL rai events in package details
       if (
-        anEvent.componentType === `${config.componentType}rai` ||
-        anEvent.componentType === `waiverrai`
+        (anEvent.componentType === `${config.componentType}rai` ||
+          anEvent.componentType === `waiverrai`) &&
+        anEvent.currentStatus !== Workflow.ONEMAC_STATUS.INACTIVATED
       ) {
         putParams.Item.raiResponses.push({
           submissionTimestamp: anEvent.submissionTimestamp,
