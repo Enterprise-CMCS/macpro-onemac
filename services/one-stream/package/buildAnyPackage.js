@@ -131,7 +131,7 @@ export const buildAnyPackage = async (packageId, config) => {
           attachments: anEvent.attachments,
           additionalInformation: anEvent.additionalInformation,
         });
-        putParams.Item.currentStatus = Workflow.ONEMAC_STATUS.RAI_SUBMITTED;
+        putParams.Item.currentStatus = Workflow.ONEMAC_STATUS.SUBMITTED;
         return;
       }
 
