@@ -4,6 +4,7 @@ import {
   RESPONSE_CODE,
   getActiveTerritories,
   getUserRoleObj,
+  Workflow,
 } from "cmscommonlib";
 import { cmsStatusUIMap, stateStatusUIMap } from "./libs/status-lib";
 import { getUser } from "./getUser";
@@ -78,7 +79,10 @@ export const getMyPackages = async (email, group) => {
                 );
               else {
                 oneItem.currentStatus = statusMap[oneItem.currentStatus];
-                promiseItems.push(oneItem);
+                if (
+                  oneItem.currentStatus !== Workflow.ONEMAC_STATUS.INACTIVATED
+                )
+                  promiseItems.push(oneItem);
               }
             });
             params.ExclusiveStartKey = results.LastEvaluatedKey;

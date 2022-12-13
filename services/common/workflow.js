@@ -34,6 +34,7 @@ export const ONEMAC_STATUS = {
   APPROVED: "Approved",
   DISAPPROVED: "Disapproved",
   WITHDRAWN: "Withdrawn",
+  WITHDRAWAL_REQUESTED: "Withdrawal Requested",
   TERMINATED: "Terminated",
   UNKNOWN: "-- --",
 };
