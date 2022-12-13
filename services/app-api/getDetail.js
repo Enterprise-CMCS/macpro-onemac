@@ -68,8 +68,6 @@ export const getDetails = async (event) => {
       ? cmsStatusUIMap[result.Item.currentStatus]
       : stateStatusUIMap[result.Item.currentStatus];
 
-    oneItem.currentStatus = statusMap[oneItem.currentStatus];
-
     return { ...result.Item };
   } catch (e) {
     console.log("Error is: ", e);
