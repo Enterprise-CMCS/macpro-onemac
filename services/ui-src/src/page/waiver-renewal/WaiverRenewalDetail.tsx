@@ -3,10 +3,6 @@ import DetailView from "../DetailView";
 import {
   OneMACDetail,
   defaultDetail,
-  waiverAuthorityDefault,
-  territoryDefault,
-  submissionDateDefault,
-  proposedEffectiveDateDefault,
   defaultPackageOverviewNavItems,
   defaultPackageOverviewLabel,
   tempExtensionSectionNavItem,
