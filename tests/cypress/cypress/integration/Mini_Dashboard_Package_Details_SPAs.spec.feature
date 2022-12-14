@@ -70,13 +70,13 @@ Feature: OY2-15620 Updated SPA Details View - Card View with Actions
         And verify there is a Proposed Effective Date header in the details section
 
 
-    Scenario: Screen Enhance - In Review SPA
-        And click In Review checkbox
+    Scenario: Screen Enhance - Under Review SPA
+        And click Under Review checkbox
         And Click on Filter Button
         And click the SPA ID link in the first row
         And verify the package details page is visible
         And verify action card exists
-        And verify the status on the card is "In Review"
+        And verify the status on the card is "Under Review"
         And verify package actions header is visible
         And verify withdraw package action exists
         And verify the details section exists

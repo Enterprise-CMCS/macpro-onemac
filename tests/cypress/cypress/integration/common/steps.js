@@ -1489,7 +1489,7 @@ And("verify Withdrawn status checkbox exists", () => {
 And("verify RAI Issued status checkbox exists", () => {
   OneMacPackagePage.verifyRaiIssuedCheckboxExists();
 });
-And("click In Review checkbox", () => {
+And("click Under Review checkbox", () => {
   OneMacPackagePage.clickInReviewCheckBox();
 });
 And("click Terminated checkbox", () => {
@@ -1549,7 +1549,7 @@ And("verify type exists", () => {
 And("verify 90th day column exists", () => {
   OneMacPackagePage.verify90thDayColumn();
 });
-And("verify date submitted column exists", () => {
+And("verify Initial Submission Date column exists", () => {
   OneMacPackagePage.verifydateSubmittedColumnExists();
 });
 And("verify expiration date column exists", () => {
@@ -1977,7 +1977,7 @@ And("verify 90th day column exists for the child", () => {
 And("verify status column exists for the child", () => {
   OneMacPackagePage.verifystatusColumnExistsForChild();
 });
-And("verify date submitted column exists for the child", () => {
+And("verify Initial Submission Date column exists for the child", () => {
   OneMacPackagePage.verifyDateSubmittedColumnExistsForChild();
 });
 And("verify submitted by column exists for the child", () => {

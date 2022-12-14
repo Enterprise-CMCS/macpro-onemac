@@ -91,7 +91,7 @@ const MedicaidSPACheckBox =
 //Element is Xpath use cy.xpath instead of cy.get
 const approveCheckBox = "//span[contains(text(),'Approved')]";
 //Element is Xpath use cy.xpath instead of cy.get
-const inReviewCheckBox = "//span[contains(text(),'In Review')]";
+const inReviewCheckBox = "//span[contains(text(),'Under Review')]";
 const terminatedCheckBox = "//span[contains(text(),'Terminated')]";
 //Element is Xpath use cy.xpath instead of cy.get
 const withdrawnCheckBox = "//span[contains(text(),'Withdrawn')]";

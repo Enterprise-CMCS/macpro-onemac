@@ -8,17 +8,17 @@ Feature: OY2-11585 Waiver Package Details View: Initial Waivers and Waiver Renew
         And Click on Filter Button
         And click on Type
 
-    Scenario: Screen Enhance: Initial Waiver Details View - In Review
+    Scenario: Screen Enhance: Initial Waiver Details View - Under Review
         And click 1915b Waiver Renewal check box
         And click 1915c Appendix K Amendment check box
         And click on Type
         And click on Status
         And uncheck all of the status checkboxes
-        And click In Review checkbox
+        And click Under Review checkbox
         And click the Waiver Number link in the first row
         And verify the package details page is visible
         And verify action card exists
-        And verify the status on the card is "In Review"
+        And verify the status on the card is "Under Review"
         And verify package actions header is visible
         And verify withdraw package action exists
         And verify the details section exists
