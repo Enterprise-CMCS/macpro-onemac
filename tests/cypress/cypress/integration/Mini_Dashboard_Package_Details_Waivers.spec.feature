@@ -30,6 +30,9 @@ Feature: OY2-11585 Waiver Package Details View: Initial Waivers and Waiver Renew
         And verify a date exists for the Initial Submission Date
         And verify there is a Proposed Effective Date header in the details section
         And verify the Proposed Effective Date is NA
+        And verify the supporting documentation section exists
+        And verify the download all button exists
+        And verify the additional information section exists
 
     Scenario: Screen Enhance: Initial Waiver Details View - Terminated
         And click 1915b Initial Waiver check box
@@ -51,6 +54,9 @@ Feature: OY2-11585 Waiver Package Details View: Initial Waivers and Waiver Renew
         And verify a date exists for the Initial Submission Date
         And verify there is a Proposed Effective Date header in the details section
         And verify the Proposed Effective Date is NA
+        And verify the supporting documentation section exists
+        And verify the download all button exists
+        And verify the additional information section exists
 
     Scenario: Screen Enhance: Initial Waiver Details View - Submitted
         And click 1915b Initial Waiver check box
@@ -72,6 +78,9 @@ Feature: OY2-11585 Waiver Package Details View: Initial Waivers and Waiver Renew
         And verify there is an Initial Submission Date header in the details section
         And verify a date exists for the Initial Submission Date
         And verify there is a Proposed Effective Date header in the details section
+        And verify the supporting documentation section exists
+        And verify the download all button exists
+        And verify the additional information section exists
 
     Scenario: Screen Enhance: Waiver Renewals Details View - Submitted
         And click 1915b Waiver Renewal check box
@@ -91,6 +100,9 @@ Feature: OY2-11585 Waiver Package Details View: Initial Waivers and Waiver Renew
         And verify there is an Initial Submission Date header in the details section
         And verify a date exists for the Initial Submission Date
         And verify there is a Proposed Effective Date header in the details section
+        And verify the supporting documentation section exists
+        And verify the download all button exists
+        And verify the additional information section exists
 
     Scenario: Screen Enhance: Waiver Renewals Details View - Approved
         And click 1915b Waiver Renewal check box
@@ -111,6 +123,9 @@ Feature: OY2-11585 Waiver Package Details View: Initial Waivers and Waiver Renew
         And verify there is an Initial Submission Date header in the details section
         And verify a date exists for the Initial Submission Date
         And verify there is a Proposed Effective Date header in the details section
+        And verify the supporting documentation section exists
+        And verify the download all button exists
+        And verify the additional information section exists
 
     Scenario: Screen Enhance: Initial Waiver Details View - RAI Issued
         And click 1915b Initial Waiver check box
@@ -133,6 +148,9 @@ Feature: OY2-11585 Waiver Package Details View: Initial Waivers and Waiver Renew
         And verify there is an Initial Submission Date header in the details section
         And verify a date exists for the Initial Submission Date
         And verify there is a Proposed Effective Date header in the details section
+        And verify the supporting documentation section exists
+        And verify the download all button exists
+        And verify the additional information section exists
 
     Scenario: Screen Enhance: Initial Waiver Details View - Approved
         And click 1915b Initial Waiver check box
@@ -155,6 +173,9 @@ Feature: OY2-11585 Waiver Package Details View: Initial Waivers and Waiver Renew
         And verify there is an Initial Submission Date header in the details section
         And verify a date exists for the Initial Submission Date
         And verify there is a Proposed Effective Date header in the details section
+        And verify the supporting documentation section exists
+        And verify the download all button exists
+        And verify the additional information section exists
 
     Scenario: Screen Enhance: Appendix K Details View - Approved
         And click 1915c Appendix K Amendment check box
@@ -178,6 +199,9 @@ Feature: OY2-11585 Waiver Package Details View: Initial Waivers and Waiver Renew
         And verify there is an Initial Submission Date header in the details section
         And verify a date exists for the Initial Submission Date
         And verify there is a Proposed Effective Date header in the details section
+        And verify the supporting documentation section exists
+        And verify the download all button exists
+        And verify the additional information section exists
 
 
     Scenario: Screen Enhance: Appendix K Details View - RAI Issued
@@ -203,3 +227,6 @@ Feature: OY2-11585 Waiver Package Details View: Initial Waivers and Waiver Renew
         And verify there is an Initial Submission Date header in the details section
         And verify a date exists for the Initial Submission Date
         And verify there is a Proposed Effective Date header in the details section
+        And verify the supporting documentation section exists
+        And verify the download all button exists
+        And verify the additional information section exists
