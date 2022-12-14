@@ -3,14 +3,10 @@ import DetailView from "../DetailView";
 import {
   OneMACDetail,
   defaultDetail,
-  typeDefault,
-  waiverAuthorityDefault,
-  territoryDefault,
-  submissionDateDefault,
-  proposedEffectiveDateDefault,
   defaultPackageOverviewNavItems,
   defaultPackageOverviewLabel,
   tempExtensionSectionNavItem,
+  defaultWaiverDetailSectionItems,
 } from "../../libs/detailLib";
 import { initialWaiver, Workflow } from "cmscommonlib";
 
@@ -23,13 +19,7 @@ export const initialWaiverDetail: OneMACDetail = {
       items: [...defaultPackageOverviewNavItems, tempExtensionSectionNavItem],
     },
   ],
-  detailSection: [
-    waiverAuthorityDefault,
-    typeDefault,
-    territoryDefault,
-    submissionDateDefault,
-    proposedEffectiveDateDefault,
-  ],
+  detailSection: [...defaultWaiverDetailSectionItems],
   actionsByStatus: Workflow.initialWaiverActionsByStatus,
 };
 

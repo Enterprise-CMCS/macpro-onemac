@@ -10,6 +10,7 @@ import {
   defaultPackageOverviewNavItems,
   defaultPackageOverviewLabel,
   tempExtensionSectionNavItem,
+  defaultWaiverDetailSectionItems,
 } from "../../libs/detailLib";
 import { waiverRenewal, Workflow } from "cmscommonlib";
 
@@ -23,12 +24,7 @@ export const waiverRenewalDetail: OneMACDetail = {
       items: [...defaultPackageOverviewNavItems, tempExtensionSectionNavItem],
     },
   ],
-  detailSection: [
-    waiverAuthorityDefault,
-    territoryDefault,
-    submissionDateDefault,
-    proposedEffectiveDateDefault,
-  ],
+  detailSection: [...defaultWaiverDetailSectionItems],
   actionsByStatus: Workflow.renewalWaiverActionsByStatus,
 };
 

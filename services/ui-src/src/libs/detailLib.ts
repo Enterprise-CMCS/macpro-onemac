@@ -90,6 +90,18 @@ export const defaultPackageOverviewNavItems: DetailNavItem[] = [
 
 export const defaultPackageOverviewLabel: string = "Package Overview";
 
+export const defaultDetailSectionItems = [
+  typeDefault,
+  territoryDefault,
+  submissionDateDefault,
+  proposedEffectiveDateDefault,
+];
+
+export const defaultWaiverDetailSectionItems = [
+  waiverAuthorityDefault,
+  ...defaultDetailSectionItems,
+];
+
 export const defaultDetail: OneMACDetail = {
   actionLabel: "Package Actions",
   componentType: "none",
@@ -107,10 +119,5 @@ export const defaultDetail: OneMACDetail = {
   detailHeader: "Package",
   defaultTitle: null,
   allowWaiverExtension: false,
-  detailSection: [
-    typeDefault,
-    territoryDefault,
-    submissionDateDefault,
-    proposedEffectiveDateDefault,
-  ],
+  detailSection: [...defaultDetailSectionItems],
 };
