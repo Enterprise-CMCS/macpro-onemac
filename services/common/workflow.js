@@ -27,7 +27,7 @@ export const ONEMAC_LABEL = {
 export const ONEMAC_STATUS = {
   INACTIVATED: "Inactivated",
   SUBMITTED: "Submitted",
-  PENDING: "Under Review",
+  PENDING: "Pending",
   PENDING_CONCURRANCE: "Pending - Concurrance",
   PENDING_APPROVAL: "Pending - Approval",
   RAI_ISSUED: "Pending - RAI",
