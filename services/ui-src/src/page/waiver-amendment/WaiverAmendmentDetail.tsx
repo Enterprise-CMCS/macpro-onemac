@@ -4,6 +4,10 @@ import {
   OneMACDetail,
   defaultDetail,
   waiverAuthorityDefault,
+  typeDefault,
+  territoryDefault,
+  submissionDateDefault,
+  proposedEffectiveDateDefault,
 } from "../../libs/detailLib";
 import { waiverAmendment } from "cmscommonlib";
 
@@ -11,16 +15,15 @@ export const waiverAmendmentDetail: OneMACDetail = {
   ...defaultDetail,
   ...waiverAmendment,
   actionLabel: "Amendment Actions",
-  detailHeader: "Waiver Amendment",
+  detailHeader: "Waiver Amendment Package",
   navItems: [],
   detailSection: [
     { heading: "Amendment Number", fieldName: "componentId", default: "N/A" },
-    {
-      heading: "Amendment Title",
-      fieldName: "title",
-      default: "Waiver Amendment",
-    },
     waiverAuthorityDefault,
+    typeDefault,
+    territoryDefault,
+    submissionDateDefault,
+    proposedEffectiveDateDefault,
   ],
 };
 
