@@ -5,12 +5,8 @@ import {
   ROUTES,
   waiverTemporaryExtension,
   ONEMAC_ROUTES,
-  TYPE_TO_DETAIL_ROUTE,
   SelectOption,
 } from "cmscommonlib";
-import { FormLocationState } from "../../domain-types";
-import { useLocation } from "react-router-dom";
-import { DetailViewTab } from "../../libs/detailLib";
 
 export const temporaryExtensionTypes: SelectOption[] = [
   { label: "1915(b) Temporary Extension", value: "1915(b)" },
@@ -45,12 +41,6 @@ export const temporaryExtensionFormInfo: OneMACFormConfig = {
 };
 
 const TemporaryExtensionForm: FC = () => {
-  const location = useLocation<FormLocationState>();
-  if (location.state?.parentType && location.state?.parentId)
-    temporaryExtensionFormInfo.landingPage =
-      TYPE_TO_DETAIL_ROUTE[location.state?.parentType] +
-      `/${location.state?.parentId}#${DetailViewTab.EXTENSION}`;
-
   return <OneMACForm formConfig={temporaryExtensionFormInfo} />;
 };
 
