@@ -46,6 +46,60 @@ export const proposedEffectiveDateDefault: AttributeDetail = {
   default: "N/A",
 };
 
+export enum DetailViewTab {
+  MAIN = "main",
+  DETAIL = "component-details",
+  ADDITIONAL = "additional-info",
+  EXTENSION = "temp-extension",
+}
+
+export type DetailNavGroup = {
+  label: string;
+  items: DetailNavItem[];
+};
+export type DetailNavItem = {
+  id: DetailViewTab;
+  label: string;
+  url: string;
+};
+
+export const detailSectionNavItem: DetailNavItem = {
+  id: DetailViewTab.DETAIL,
+  label: "Package Details",
+  url: `#${DetailViewTab.DETAIL}`,
+};
+
+export const additionalInfoSectionNavItem: DetailNavItem = {
+  id: DetailViewTab.ADDITIONAL,
+  label: "Additional Information",
+  url: `#${DetailViewTab.ADDITIONAL}`,
+};
+
+export const tempExtensionSectionNavItem: DetailNavItem = {
+  id: DetailViewTab.EXTENSION,
+  label: "Temporary Extension",
+  url: `#${DetailViewTab.EXTENSION}`,
+};
+
+export const defaultPackageOverviewNavItems: DetailNavItem[] = [
+  detailSectionNavItem,
+  additionalInfoSectionNavItem,
+];
+
+export const defaultPackageOverviewLabel: string = "Package Overview";
+
+export const defaultDetailSectionItems = [
+  typeDefault,
+  territoryDefault,
+  submissionDateDefault,
+  proposedEffectiveDateDefault,
+];
+
+export const defaultWaiverDetailSectionItems = [
+  waiverAuthorityDefault,
+  ...defaultDetailSectionItems,
+];
+
 export const defaultDetail: OneMACDetail = {
   actionLabel: "Package Actions",
   componentType: "none",
@@ -56,10 +110,5 @@ export const defaultDetail: OneMACDetail = {
   detailHeader: "Package",
   defaultTitle: null,
   allowWaiverExtension: false,
-  detailSection: [
-    typeDefault,
-    territoryDefault,
-    submissionDateDefault,
-    proposedEffectiveDateDefault,
-  ],
+  detailSection: [...defaultDetailSectionItems],
 };

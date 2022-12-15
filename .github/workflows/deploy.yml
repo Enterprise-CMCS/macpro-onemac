@@ -207,6 +207,7 @@ jobs:
             Package_Dashboard_Medicaid_SPA_Form.spec.feature,
             CMS_Read_Only_View.spec.feature,
             Package_Dashboard_Appendix_K.spec.feature,
+            Package_Dashboard_Amendment_Details.spec.feature,
             Package_Dashboard_Waiver_Amendment.spec.feature,
             Package_Dashboard_Waiver_Renewal.spec.feature,
             Package_Dashboard_CHIP_SPA_RAI_Response.spec.feature,

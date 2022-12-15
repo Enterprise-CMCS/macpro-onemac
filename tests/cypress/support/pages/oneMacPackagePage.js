@@ -84,6 +84,8 @@ const waiverRenewal1915bCheckBox =
   "//label[contains(@for,'checkbox_componentType-1915(b) Waiver Renewal')]";
 const appendixKAmendmentCheckBox =
   "//label[contains(@for,'checkbox_componentType-1915(c) Appendix K Amendment')]";
+const waiverAmendment1915bCheckbox =
+  "//label[contains(@for,'checkbox_componentType-1915(b) Waiver Amendment')]";
 //Element is Xpath use cy.xpath instead of cy.get
 const CHIPSPACheckBox =
   "//label[contains(@for,'checkbox_componentType-CHIP SPA')]";
@@ -454,6 +456,9 @@ export class oneMacPackagePage {
   }
   click1915cAppendixKAmendmentCheckBox() {
     cy.xpath(appendixKAmendmentCheckBox).click();
+  }
+  click1915bWaiverAmendmentCheckBox() {
+    cy.xpath(waiverAmendment1915bCheckbox).click();
   }
   clickCHIPSPACheckBox() {
     cy.xpath(CHIPSPACheckBox).click();

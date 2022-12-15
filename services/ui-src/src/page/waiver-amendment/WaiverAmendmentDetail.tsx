@@ -3,7 +3,7 @@ import DetailView from "../DetailView";
 import {
   OneMACDetail,
   defaultDetail,
-  waiverAuthorityDefault,
+  defaultWaiverDetailSectionItems,
 } from "../../libs/detailLib";
 import { waiverAmendment } from "cmscommonlib";
 
@@ -11,16 +11,8 @@ export const waiverAmendmentDetail: OneMACDetail = {
   ...defaultDetail,
   ...waiverAmendment,
   actionLabel: "Amendment Actions",
-  detailHeader: "Waiver Amendment",
-  detailSection: [
-    { heading: "Amendment Number", fieldName: "componentId", default: "N/A" },
-    {
-      heading: "Amendment Title",
-      fieldName: "title",
-      default: "Waiver Amendment",
-    },
-    waiverAuthorityDefault,
-  ],
+  detailHeader: "Waiver Amendment Package",
+  detailSection: [...defaultWaiverDetailSectionItems],
 };
 
 const WaiverAmendmentDetail: FC = () => {

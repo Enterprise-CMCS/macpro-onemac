@@ -3,10 +3,7 @@ import DetailView from "../DetailView";
 import {
   OneMACDetail,
   defaultDetail,
-  waiverAuthorityDefault,
-  territoryDefault,
-  submissionDateDefault,
-  proposedEffectiveDateDefault,
+  defaultWaiverDetailSectionItems,
 } from "../../libs/detailLib";
 import { waiverRenewal, Workflow } from "cmscommonlib";
 
@@ -14,12 +11,7 @@ export const waiverRenewalDetail: OneMACDetail = {
   ...defaultDetail,
   ...waiverRenewal,
   show90thDayInfo: false,
-  detailSection: [
-    waiverAuthorityDefault,
-    territoryDefault,
-    submissionDateDefault,
-    proposedEffectiveDateDefault,
-  ],
+  detailSection: [...defaultWaiverDetailSectionItems],
   actionsByStatus: Workflow.renewalWaiverActionsByStatus,
 };
 
