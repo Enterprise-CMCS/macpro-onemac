@@ -31,7 +31,7 @@ jest.mock("../../utils/PackageApi");
 const testDetail = {
   clockEndTimestamp: 1647286706000,
   componentType: "chipspa",
-  currentStatus: "Pending - RAI",
+  currentStatus: "RAI Issued",
   attachments: [
     {
       s3Key: "1639696180278/15MB.pdf",
