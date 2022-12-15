@@ -51,7 +51,7 @@ it("is enabled if the component has available actions", () => {
   const rowItem = {
     componentId: "anId",
     componentType: "medicaidspa",
-    currentStatus: "Submitted",
+    currentStatus: "Pending - RAI",
   };
   render(<ActionPopup theComponent={rowItem} alertCallback={testCallback} />, {
     wrapper: ContextWrapper,
@@ -64,7 +64,7 @@ it("opens and closes the menu properly", async () => {
   const rowItem = {
     componentId: "anId",
     componentType: "medicaidspa",
-    currentStatus: "Submitted",
+    currentStatus: "Pending - RAI",
   };
   render(
     <>

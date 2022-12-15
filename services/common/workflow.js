@@ -27,15 +27,15 @@ export const ONEMAC_LABEL = {
 export const ONEMAC_STATUS = {
   INACTIVATED: "Inactivated",
   SUBMITTED: "Submitted",
-  PENDING: "Pending",
+  PENDING: "Under Review",
   PENDING_CONCURRANCE: "Pending - Concurrance",
   PENDING_APPROVAL: "Pending - Approval",
-  RAI_ISSUED: "Pending - RAI",
+  RAI_ISSUED: "RAI Issued",
   APPROVED: "Approved",
   DISAPPROVED: "Disapproved",
-  WITHDRAWN: "Withdrawn",
+  WITHDRAWN: "Package Withdrawn",
   WITHDRAWAL_REQUESTED: "Withdrawal Requested",
-  TERMINATED: "Terminated",
+  TERMINATED: "Waiver Terminated",
   UNKNOWN: "-- --",
 };
 
