@@ -121,6 +121,9 @@ export class oneMacPackageDetailsPage {
   verifyTypeContainsTempExtension() {
     cy.xpath(typeHeader).next().contains("Temporary Extension");
   }
+  verifyTypeContains1915bWaiverAmendment() {
+    cy.xpath(typeHeader).next().contains("1915(b) Waiver Amendment");
+  }
   verifyParentWaiverNumberHeaderExists() {
     cy.xpath(parentWaiverNumberHeader).should("be.visible");
   }

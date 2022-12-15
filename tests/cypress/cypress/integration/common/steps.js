@@ -1513,6 +1513,9 @@ And("click 1915b Waiver Renewal check box", () => {
 And("click 1915c Appendix K Amendment check box", () => {
   OneMacPackagePage.click1915cAppendixKAmendmentCheckBox();
 });
+And("click 1915b Waiver Amendment check box", () => {
+  OneMacPackagePage.click1915bWaiverAmendmentCheckBox();
+});
 And("click CHIP SPA check box", () => {
   OneMacPackagePage.clickCHIPSPACheckBox();
 });
@@ -2156,6 +2159,9 @@ And("verify the type is Waiver Renewal", () => {
 });
 And("verify the type is 1915b Temporary Extension", () => {
   OneMacPackageDetailsPage.verifyTypeContainsTempExtension();
+});
+And("verify the type is 1915b Waiver Amendment", () => {
+  OneMacPackageDetailsPage.verifyTypeContains1915bWaiverAmendment();
 });
 And(
   "verify there is a Approved Initial or Renewal Number header in the details section",
