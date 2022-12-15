@@ -2864,12 +2864,10 @@ And(
   }
 );
 And(
-  "verify id number in the child row matches new waiver amendment number 1",
+  "verify id number in the first row matches new waiver amendment number 1",
   () => {
     cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
-      OneMacPackagePage.verifyIDNumberInSecondRowIs(
-        data.newWaiverAmendmentNum1
-      );
+      OneMacPackagePage.verifyIDNumberInFirstRowIs(data.newWaiverAmendmentNum1);
     });
   }
 );

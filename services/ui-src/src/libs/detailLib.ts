@@ -9,9 +9,7 @@ export type AttributeDetail = {
 
 export type OneMACDetail = {
   defaultTitle: null;
-  usesVerticalNav: boolean;
   componentType: string;
-  navItems: DetailNavGroup[];
   actionLabel: string;
   show90thDayInfo: boolean;
   showEffectiveDate: boolean;
@@ -48,59 +46,10 @@ export const proposedEffectiveDateDefault: AttributeDetail = {
   default: "N/A",
 };
 
-export enum DetailViewTab {
-  MAIN = "main",
-  DETAIL = "component-details",
-  ADDITIONAL = "additional-info",
-  EXTENSION = "temp-extension",
-}
-
-export type DetailNavGroup = {
-  label: string;
-  items: DetailNavItem[];
-};
-export type DetailNavItem = {
-  id: DetailViewTab;
-  label: string;
-  url: string;
-};
-
-export const detailSectionNavItem: DetailNavItem = {
-  id: DetailViewTab.DETAIL,
-  label: "Package Details",
-  url: `#${DetailViewTab.DETAIL}`,
-};
-
-export const additionalInfoSectionNavItem: DetailNavItem = {
-  id: DetailViewTab.ADDITIONAL,
-  label: "Additional Information",
-  url: `#${DetailViewTab.ADDITIONAL}`,
-};
-
-export const tempExtensionSectionNavItem: DetailNavItem = {
-  id: DetailViewTab.EXTENSION,
-  label: "Temporary Extension",
-  url: `#${DetailViewTab.EXTENSION}`,
-};
-
-export const defaultPackageOverviewNavItems: DetailNavItem[] = [
-  detailSectionNavItem,
-  additionalInfoSectionNavItem,
-];
-
-export const defaultPackageOverviewLabel: string = "Package Overview";
-
 export const defaultDetail: OneMACDetail = {
   actionLabel: "Package Actions",
   componentType: "none",
   attachmentsHeading: "Attachments",
-  usesVerticalNav: true,
-  navItems: [
-    {
-      label: defaultPackageOverviewLabel,
-      items: defaultPackageOverviewNavItems,
-    },
-  ],
   actionsByStatus: Workflow.defaultActionsByStatus,
   show90thDayInfo: false,
   showEffectiveDate: false,
