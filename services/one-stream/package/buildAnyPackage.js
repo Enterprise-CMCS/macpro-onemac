@@ -107,8 +107,19 @@ export const buildAnyPackage = async (packageId, config) => {
             anEvent.STATE_PLAN.STATUS_DATE
           );
           if (anEvent.STATE_PLAN.STATUS_DATE > lmTimestamp) {
+            const seaToolStatus = anEvent.SPW_STATUS.map((oneStatus) =>
+              anEvent.STATE_PLAN.SPW_STATUS_ID === oneStatus.SPW_STATUS_ID
+                ? oneStatus.SPW_STATUS_DESC
+                : null
+            ).filter(Boolean)[0];
+            console.log(
+              "%s seaToolStatus %d resolves to: ",
+              anEvent.pk,
+              anEvent.STATE_PLAN.SPW_STATUS_ID,
+              seaToolStatus
+            );
             putParams.Item.currentStatus =
-              SEATOOL_TO_ONEMAC_STATUS[anEvent.SPW_STATUS[0].SPW_STATUS_DESC];
+              SEATOOL_TO_ONEMAC_STATUS[seaToolStatus];
             lmTimestamp = anEvent.STATE_PLAN.STATUS_DATE;
           }
         }

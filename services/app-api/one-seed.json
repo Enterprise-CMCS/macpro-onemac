@@ -1971,7 +1971,8 @@
     "STATE_PLAN": {
      "CHANGED_DATE": 1671584977662,
      "ID_NUMBER": "MD-82-0021",
-     "STATUS_DATE": 1671584977662
+     "STATUS_DATE": 1671584977662,
+     "SPW_STATUS_ID": 2
     }
    },
      {
@@ -1980,7 +1981,8 @@
       "STATE_PLAN": {
         "STATUS_DATE": 1664779808945,
         "ID_NUMBER": "MD-77-0003",
-        "CHANGED_DATE": 1664779808945
+        "CHANGED_DATE": 1664779808945,
+        "SPW_STATUS_ID": 4
       },
       "GSI1pk": "SEATool#Medicaid_SPA",
       "pk": "MD-77-0003",
@@ -2295,7 +2297,8 @@
       "STATE_PLAN": {
        "CHANGED_DATE": 1659988588750,
        "ID_NUMBER": "MD-0027.R01.00",
-       "STATUS_DATE": 1659988588750
+       "STATUS_DATE": 1659988588750,
+       "SPW_STATUS_ID": 2
       }
      },
      {
@@ -2330,7 +2333,8 @@
       "STATE_PLAN": {
        "CHANGED_DATE": 1650917395996,
        "ID_NUMBER": "MD-0801.R00.01",
-       "STATUS_DATE": 1650917395996
+       "STATUS_DATE": 1650917395996,
+       "SPW_STATUS_ID": 2
       }
      },
      {
@@ -2360,7 +2364,8 @@
       "STATE_PLAN": {
        "CHANGED_DATE": 1665549125264,
        "ID_NUMBER": "MD-77-0024",
-       "STATUS_DATE": 1665549125264
+       "STATUS_DATE": 1665549125264,
+       "SPW_STATUS_ID": 2
       }
      },
      {
@@ -2395,7 +2400,8 @@
       "STATE_PLAN": {
        "CHANGED_DATE": 1649584977662,
        "ID_NUMBER": "MD-1118.R00.00",
-       "STATUS_DATE": 1649584977662
+       "STATUS_DATE": 1649584977662,
+       "SPW_STATUS_ID": 2
       }
      },
      {
@@ -2430,7 +2436,8 @@
       "STATE_PLAN": {
        "CHANGED_DATE": 1622584977662,
        "ID_NUMBER": "MD-0775.R00.00",
-       "STATUS_DATE": 1622584977662
+       "STATUS_DATE": 1622584977662,
+       "SPW_STATUS_ID": 2
       }
      },
      {
@@ -2465,7 +2472,8 @@
       "STATE_PLAN": {
        "CHANGED_DATE": 1650584977662,
        "ID_NUMBER": "MD-0777.R00.00",
-       "STATUS_DATE": 1650584977662
+       "STATUS_DATE": 1650584977662,
+       "SPW_STATUS_ID": 2
       }
      },
      {
@@ -2500,7 +2508,8 @@
       "STATE_PLAN": {
        "CHANGED_DATE": 1650584977662,
        "ID_NUMBER": "MD-5533.R00.00",
-       "STATUS_DATE": 1650584977662
+       "STATUS_DATE": 1650584977662,
+       "SPW_STATUS_ID": 2
       }
      },{
       "pk": "MD-0003.R13.00",
@@ -2534,7 +2543,8 @@
       "STATE_PLAN": {
        "CHANGED_DATE": 1658708386545,
        "ID_NUMBER": "MD-0003.R13.00",
-       "STATUS_DATE": 1658708386545
+       "STATUS_DATE": 1658708386545,
+       "SPW_STATUS_ID": 2
       }
      },
      {
@@ -2569,7 +2579,8 @@
       "STATE_PLAN": {
        "CHANGED_DATE": 1622272039453,
        "ID_NUMBER": "MD-0148.R00.00",
-       "STATUS_DATE": 1622272039453
+       "STATUS_DATE": 1622272039453,
+       "SPW_STATUS_ID": 2
       }
      },
      {
@@ -2591,7 +2602,8 @@
       "STATE_PLAN": {
        "CHANGED_DATE": 1652577796728,
        "ID_NUMBER": "MD-22-0008",
-       "STATUS_DATE": 1652577796728
+       "STATUS_DATE": 1652577796728,
+       "SPW_STATUS_ID": 2
       }
      },
      {
@@ -2626,7 +2638,8 @@
       "STATE_PLAN": {
        "CHANGED_DATE": 1660388588750,
        "ID_NUMBER": "MD-2027.R01.00",
-       "STATUS_DATE": 1660388588750
+       "STATUS_DATE": 1660388588750,
+       "SPW_STATUS_ID": 2
       }
      },
      {
@@ -2648,7 +2661,8 @@
       "STATE_PLAN": {
        "CHANGED_DATE": 1652825140199,
        "ID_NUMBER": "MD-22-0001",
-       "STATUS_DATE": 1652825140199
+       "STATUS_DATE": 1652825140199,
+       "SPW_STATUS_ID": 2
       }
      },
      {
@@ -2675,7 +2689,8 @@
       "STATE_PLAN": {
        "CHANGED_DATE": 1661388588750,
        "ID_NUMBER": "MD-1029.R01.00",
-       "STATUS_DATE": 1661388588750
+       "STATUS_DATE": 1661388588750,
+       "SPW_STATUS_ID": 2
       }
      },
      {
@@ -2702,7 +2717,8 @@
       "STATE_PLAN": {
        "CHANGED_DATE": 1650584977662,
        "ID_NUMBER": "MD-6777.R00.00",
-       "STATUS_DATE": 1650584977662
+       "STATUS_DATE": 1650584977662,
+       "SPW_STATUS_ID": 2
       }
      },
      {
@@ -2724,7 +2740,8 @@
       "STATE_PLAN": {
        "CHANGED_DATE": 1665696818833,
        "ID_NUMBER": "MD-22-1018",
-       "STATUS_DATE": 1665696818833
+       "STATUS_DATE": 1665696818833,
+       "SPW_STATUS_ID": 2
       }
      },
      {
@@ -2746,7 +2763,8 @@
       "STATE_PLAN": {
        "CHANGED_DATE": 1648825662861,
        "ID_NUMBER": "MD-22-0002",
-       "STATUS_DATE": 1648825662861
+       "STATUS_DATE": 1648825662861,
+       "SPW_STATUS_ID": 2
       }
      },
      {
@@ -2773,7 +2791,8 @@
       "STATE_PLAN": {
        "CHANGED_DATE": 1662388588750,
        "ID_NUMBER": "MD-0027.R01.00",
-       "STATUS_DATE": 1662388588750
+       "STATUS_DATE": 1662388588750,
+       "SPW_STATUS_ID": 2
       }
      },
      {
@@ -2795,12 +2814,67 @@
        {
         "SPW_STATUS_DESC": "Unsubmitted",
         "SPW_STATUS_ID": 2
+       },{
+        "SPW_STATUS_DESC": "Pending",
+        "SPW_STATUS_ID": 1
        }
       ],
       "STATE_PLAN": {
        "CHANGED_DATE": 1651584977662,
        "ID_NUMBER": "MD-3777.R00.00",
-       "STATUS_DATE": 1651584977662
+       "STATUS_DATE": 1651584977662,
+       "SPW_STATUS_ID": 2
+      }
+     },
+     {
+      "pk": "MD-0339.R04.06",
+      "sk": "SEATool#1666753662081",
+      "ACTIONTYPES": [
+       {
+        "ACTION_ID": 76,
+        "ACTION_NAME": "Amend",
+        "PLAN_TYPE_ID": 123
+       }
+      ],
+      "GSI1pk": "SEATool#1915c_waivers",
+      "GSI1sk": "MD-0339.R04.06",
+      "PLAN_TYPES": [
+       {
+        "PLAN_TYPE_ID": 122,
+        "PLAN_TYPE_NAME": "1915(c)"
+       }
+      ],
+      "RAI": [
+       {
+        "ID_NUMBER": "MD-0339.R04.06",
+        "RAI_RECEIVED_DATE": 1664753662081,
+        "RAI_REQUESTED_DATE": 1659988588750,
+        "RAI_WITHDRAWN_DATE": null
+       }
+      ],
+      "SPW_STATUS": [
+        {
+         "SPW_STATUS_DESC": "Pending",
+         "SPW_STATUS_ID": 1
+        },
+        {
+         "SPW_STATUS_DESC": "Pending-Concurrence",
+         "SPW_STATUS_ID": 8
+        },
+        {
+         "SPW_STATUS_DESC": "Pending-Approval",
+         "SPW_STATUS_ID": 11
+        },
+       {
+        "SPW_STATUS_DESC": "Approved",
+        "SPW_STATUS_ID": 2
+       }
+      ],
+      "STATE_PLAN": {
+       "CHANGED_DATE": 1666753662081,
+       "ID_NUMBER": "MD-0339.R04.06",
+       "STATUS_DATE": 1666753662081,
+       "SPW_STATUS_ID": 2
       }
      }
 ]
