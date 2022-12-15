@@ -9,7 +9,7 @@ Feature: Amendment details
         And click on Type
         And uncheck all of the type checkboxes
 
-    Scenario: Screen Enhance: Initial Waiver Details View - Submitted
+    Scenario: Screen Enhance: 1915 b Waiver Amendment Details View - Submitted
         And click 1915b Waiver Amendment check box
         And click on Type
         And click on Status
