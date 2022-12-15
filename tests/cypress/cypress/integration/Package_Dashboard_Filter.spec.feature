@@ -11,7 +11,7 @@ Feature: OY2-13092 Package Dashboard - Filter
         And verify Type Exists
         #        And verify 90th day filter dropdown exists
         And verify status DropDown Filter exists
-        # And verify date submitted filter dropdown exists
+        # And verify Initial Submission Date filter dropdown exists
         And verify reset Exists
 
     Scenario: Waivers Tab - Screen enhancement
@@ -28,7 +28,7 @@ Feature: OY2-13092 Package Dashboard - Filter
         #        And verify 90th day filter dropdown exists
         #        And verify expiration date filter dropdown exists
         And verify status DropDown Filter exists
-        # And verify date submitted filter dropdown exists
+        # And verify Initial Submission Date filter dropdown exists
         And verify reset Exists
 
     Scenario: SPAs tab - demonstrate that all options match column header and all types of Status columns in the filter

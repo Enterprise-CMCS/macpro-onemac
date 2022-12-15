@@ -29,7 +29,7 @@ const typeHeader = "//h3[contains(text(),'Type')]";
 const parentWaiverNumberHeader =
   "//h3[contains(text(),'Approved Initial or Renewal Number')]";
 const stateHeader = "//h3[text()='State']";
-const initialSubmittedDateHeader = "//h3[text()='Date Submitted']";
+const initialSubmittedDateHeader = "//h3[text()='Initial Submission Date']";
 const raiResponsesHeader = "//section//h2[text()='Formal RAI Responses']";
 const packageOverviewNavBtn = "//button[text()='Package Overview']";
 const packageDetailsNavBtn =
