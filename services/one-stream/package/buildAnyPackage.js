@@ -5,16 +5,17 @@ import { dynamoConfig, Workflow } from "cmscommonlib";
 const dynamoDb = new AWS.DynamoDB.DocumentClient(dynamoConfig);
 
 const SEATOOL_TO_ONEMAC_STATUS = {
-  [Workflow.SEATOOL_STATUS.PENDING]: Workflow.ONEMAC_STATUS.IN_REVIEW,
+  [Workflow.SEATOOL_STATUS.PENDING]: Workflow.ONEMAC_STATUS.PENDING,
   [Workflow.SEATOOL_STATUS.PENDING_RAI]: Workflow.ONEMAC_STATUS.RAI_ISSUED,
   [Workflow.SEATOOL_STATUS.APPROVED]: Workflow.ONEMAC_STATUS.APPROVED,
   [Workflow.SEATOOL_STATUS.DISAPPROVED]: Workflow.ONEMAC_STATUS.DISAPPROVED,
   [Workflow.SEATOOL_STATUS.WITHDRAWN]: Workflow.ONEMAC_STATUS.WITHDRAWN,
   [Workflow.SEATOOL_STATUS.TERMINATED]: Workflow.ONEMAC_STATUS.TERMINATED,
   [Workflow.SEATOOL_STATUS.PENDING_CONCURRANCE]:
-    Workflow.ONEMAC_STATUS.IN_REVIEW,
+    Workflow.ONEMAC_STATUS.PENDING_CONCURRANCE,
   [Workflow.SEATOOL_STATUS.UNSUBMITTED]: Workflow.ONEMAC_STATUS.UNSUBMITTED,
-  [Workflow.SEATOOL_STATUS.PENDING_APPROVAL]: Workflow.ONEMAC_STATUS.IN_REVIEW,
+  [Workflow.SEATOOL_STATUS.PENDING_APPROVAL]:
+    Workflow.ONEMAC_STATUS.PENDING_APPROVAL,
   [Workflow.SEATOOL_STATUS.UNKNOWN]: Workflow.ONEMAC_STATUS.SUBMITTED,
 };
 const oneMacTableName = process.env.IS_OFFLINE
@@ -106,8 +107,19 @@ export const buildAnyPackage = async (packageId, config) => {
             anEvent.STATE_PLAN.STATUS_DATE
           );
           if (anEvent.STATE_PLAN.STATUS_DATE > lmTimestamp) {
+            const seaToolStatus = anEvent.SPW_STATUS.map((oneStatus) =>
+              anEvent.STATE_PLAN.SPW_STATUS_ID === oneStatus.SPW_STATUS_ID
+                ? oneStatus.SPW_STATUS_DESC
+                : null
+            ).filter(Boolean)[0];
+            console.log(
+              "%s seaToolStatus %d resolves to: ",
+              anEvent.pk,
+              anEvent.STATE_PLAN.SPW_STATUS_ID,
+              seaToolStatus
+            );
             putParams.Item.currentStatus =
-              SEATOOL_TO_ONEMAC_STATUS[anEvent.SPW_STATUS[0].SPW_STATUS_DESC];
+              SEATOOL_TO_ONEMAC_STATUS[seaToolStatus];
             lmTimestamp = anEvent.STATE_PLAN.STATUS_DATE;
           }
         }
@@ -123,15 +135,16 @@ export const buildAnyPackage = async (packageId, config) => {
 
       // we include ALL rai events in package details
       if (
-        anEvent.componentType === `${config.componentType}rai` ||
-        anEvent.componentType === `waiverrai`
+        (anEvent.componentType === `${config.componentType}rai` ||
+          anEvent.componentType === `waiverrai`) &&
+        anEvent.currentStatus !== Workflow.ONEMAC_STATUS.INACTIVATED
       ) {
         putParams.Item.raiResponses.push({
           submissionTimestamp: anEvent.submissionTimestamp,
           attachments: anEvent.attachments,
           additionalInformation: anEvent.additionalInformation,
         });
-        putParams.Item.currentStatus = Workflow.ONEMAC_STATUS.RAI_SUBMITTED;
+        putParams.Item.currentStatus = Workflow.ONEMAC_STATUS.SUBMITTED;
         return;
       }
 

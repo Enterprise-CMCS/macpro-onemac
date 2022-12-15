@@ -43,20 +43,6 @@ const renderDate = ({ value }) =>
 export const getState = ({ componentId }) =>
   componentId ? componentId.toString().substring(0, 2) : "--";
 
-const initialStatuses = [
-  Workflow.ONEMAC_STATUS.UNSUBMITTED,
-  Workflow.ONEMAC_STATUS.SUBMITTED,
-  Workflow.ONEMAC_STATUS.IN_REVIEW,
-  Workflow.ONEMAC_STATUS.RAI_ISSUED,
-  Workflow.ONEMAC_STATUS.RAI_SUBMITTED,
-  Workflow.ONEMAC_STATUS.APPROVED,
-  Workflow.ONEMAC_STATUS.DISAPPROVED,
-  Workflow.ONEMAC_STATUS.WITHDRAWN,
-  Workflow.ONEMAC_STATUS.TERMINATED,
-  Workflow.ONEMAC_STATUS.PAUSED,
-  Workflow.ONEMAC_STATUS.UNKNOWN,
-];
-
 /**
  * Component containing dashboard
  */
@@ -243,8 +229,6 @@ const PackageList = () => {
   const initialTableState = useMemo(
     () => ({
       sortBy: [{ id: "submissionTimestamp", desc: true }],
-      hiddenColumns: ["expirationTimestamp", "familyNumber"],
-      filters: [{ id: "packageStatus", value: initialStatuses }],
     }),
     []
   );
