@@ -2,8 +2,6 @@ import React, { useState, useCallback, useEffect } from "react";
 import { useHistory, useParams, useLocation } from "react-router-dom";
 import { format, parseISO } from "date-fns";
 
-import { VerticalNav } from "@cmsgov/design-system";
-
 import {
   RESPONSE_CODE,
   ROUTES,
@@ -19,8 +17,7 @@ import { formatDate } from "../utils/date-utils";
 import PageTitleBar from "../components/PageTitleBar";
 import AlertBar from "../components/AlertBar";
 import { getTerritoryFromTransmittalNumber } from "../changeRequest/SubmissionForm";
-import { OneMACDetail, DetailViewTab } from "../libs/detailLib";
-import TemporaryExtensionSection from "./section/TemporaryExtensionSection";
+import { OneMACDetail } from "../libs/detailLib";
 import { DetailSection } from "./section/DetailSection";
 import { AdditionalInfoSection } from "./section/AdditionalInfoSection";
 import { temporaryExtensionTypes } from "./temporary-extension/TemporaryExtensionForm";
@@ -67,7 +64,6 @@ const DetailView: React.FC<{ pageConfig: OneMACDetail }> = ({ pageConfig }) => {
   const [componentType] = useState(pageConfig.componentType);
   const location = useLocation<LocationState>();
   const [alertCode, setAlertCode] = useState(location?.state?.passCode);
-  const detailTab = location.hash.substring(1) || DetailViewTab.DETAIL;
 
   // so we show the spinner during the data load
   const [isLoading, setIsLoading] = useState(true);
@@ -168,30 +164,15 @@ const DetailView: React.FC<{ pageConfig: OneMACDetail }> = ({ pageConfig }) => {
       {detail && (
         <div className="form-container">
           <div className="component-detail-wrapper">
-            {pageConfig.navItems.length > 0 && (
-              <VerticalNav items={pageConfig.navItems} selectedId={detailTab} />
-            )}
             <article className="component-detail">
-              {(detailTab === DetailViewTab.DETAIL ||
-                detailTab === DetailViewTab.MAIN) && (
-                <DetailSection
-                  pageConfig={pageConfig}
-                  detail={detail}
-                  loadDetail={loadDetail}
-                  setAlertCode={setAlertCode}
-                />
-              )}
-              {detailTab === DetailViewTab.ADDITIONAL && (
-                <AdditionalInfoSection detail={detail} />
-              )}
-              {detailTab === DetailViewTab.EXTENSION && (
-                <TemporaryExtensionSection
-                  pageConfig={pageConfig}
-                  detail={detail}
-                  loadDetail={loadDetail}
-                  setAlertCode={setAlertCode}
-                />
-              )}
+              <DetailSection
+                pageConfig={pageConfig}
+                detail={detail}
+                loadDetail={loadDetail}
+                setAlertCode={setAlertCode}
+              />
+
+              <AdditionalInfoSection detail={detail} />
             </article>
           </div>
         </div>

@@ -29,7 +29,7 @@ const typeHeader = "//h3[contains(text(),'Type')]";
 const parentWaiverNumberHeader =
   "//h3[contains(text(),'Approved Initial or Renewal Number')]";
 const stateHeader = "//h3[text()='State']";
-const initialSubmittedDateHeader = "//h3[text()='Date Submitted']";
+const initialSubmittedDateHeader = "//h3[text()='Initial Submission Date']";
 const raiResponsesHeader = "//section//h2[text()='Formal RAI Responses']";
 const packageOverviewNavBtn = "//button[text()='Package Overview']";
 const packageDetailsNavBtn =
@@ -38,7 +38,7 @@ const proposedEffectiveDateHeader =
   "//h3[contains(text(),'Proposed Effective Date')]";
 const ninetieththDayHeader = "//h3[text()='90th Day']";
 const additionalInfoSection =
-  "//section[@id='addl-info-initial']//h2[text()='Additional Information']";
+  "//section[@id='addl-info-base']//h2[text()='Additional Information']";
 const waiverAuthorityHeader = "//h3[text()='Waiver Authority']";
 const supportingDocumentationSection = "//h2[text()='Attachments']";
 const downloadAllBtn = "//button[contains(text(),'Download All')]";
@@ -239,6 +239,7 @@ export class oneMacPackageDetailsPage {
   }
   verifyDownloadAllBtnExists() {
     cy.xpath(downloadAllBtn)
+      .first()
       .scrollIntoView({ easing: "linear" })
       .should("be.visible");
   }

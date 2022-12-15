@@ -427,8 +427,8 @@ And("verify Type is Displayed", () => {
 And("verify state is Displaed", () => {
   OneMacDashboardPage.verifyStateHeaderIsDisplayed();
 });
-And("verify Date Submitted is Displayed", () => {
-  OneMacDashboardPage.verifyDateSubmittedHeaderIsDisplayed();
+And("verify Initial Submission Date is Displayed", () => {
+  OneMacDashboardPage.verifyInitialSubmissionDateHeaderIsDisplayed();
 });
 And("verify Submitted By is Displayed", () => {
   OneMacDashboardPage.verifySubmittedByHeadersDisplayed();
@@ -1531,8 +1531,8 @@ And("click show hide columns button", () => {
 And("verify 90th day exists", () => {
   OneMacPackagePage.verifycheckBox90thDayExists();
 });
-And("verify date submitted exists", () => {
-  OneMacPackagePage.verifycheckBoxDateSubmittedExists();
+And("verify Initial Submission Date exists", () => {
+  OneMacPackagePage.verifycheckBoxInitialSubmissionDateExists();
 });
 And("verify expiration date exists", () => {
   OneMacPackagePage.verifycheckBoxexpirationDateBTNExists();
@@ -1552,8 +1552,8 @@ And("verify type exists", () => {
 And("verify 90th day column exists", () => {
   OneMacPackagePage.verify90thDayColumn();
 });
-And("verify date submitted column exists", () => {
-  OneMacPackagePage.verifydateSubmittedColumnExists();
+And("verify Initial Submission Date column exists", () => {
+  OneMacPackagePage.verifyinitialSubmissionDateColumnExists();
 });
 And("verify expiration date column exists", () => {
   OneMacPackagePage.verifyexpirationDateColumnExists();
@@ -1579,8 +1579,8 @@ And("verify actions column exists", () => {
 And("click 90th day checkbox", () => {
   OneMacPackagePage.clickCheckBox90thDay();
 });
-And("click date submitted checkbox", () => {
-  OneMacPackagePage.clickCheckBoxDateSubmitted();
+And("click Initial Submission Date checkbox", () => {
+  OneMacPackagePage.clickCheckBoxInitialSubmissionDate();
 });
 And("click expiration date checkbox", () => {
   OneMacPackagePage.clickCheckBoxexpirationDate();
@@ -1612,8 +1612,8 @@ And("verify expiration date column does not exist", () => {
 And("verify status column does not exist", () => {
   OneMacPackagePage.verifystatusColumnDoesNotExist();
 });
-And("verify date submitted column does not exist", () => {
-  OneMacPackagePage.verifydateSubmittedColumnDoesNotExist();
+And("verify Initial Submission Date column does not exist", () => {
+  OneMacPackagePage.verifyinitialSubmissionDateColumnDoesNotExist();
 });
 And("verify submitted by column does not exist", () => {
   OneMacPackagePage.verifysubmittedByColumnDoesNotExist();
@@ -1658,8 +1658,8 @@ And("verify 90th day filter dropdown exists", () => {
 And("verify expiration date filter dropdown exists", () => {
   OneMacPackagePage.verifyExpirationDateFilterDropDownExists();
 });
-And("verify date submitted filter dropdown exists", () => {
-  OneMacPackagePage.verifyDateSubmittedFilterDropDownExists();
+And("verify Initial Submission Date filter dropdown exists", () => {
+  OneMacPackagePage.verifyInitialSubmissionDateFilterDropDownExists();
 });
 And("click on 90th day filter dropdown", () => {
   OneMacPackagePage.clickOn90thDayFilterDropDown();
@@ -1691,14 +1691,14 @@ And("verify expiration date date picker exists", () => {
 And("click on expiration date date picker filter", () => {
   OneMacPackagePage.clickOnExpirationDateDatePickerFilter();
 });
-And("click on date submitted filter dropdown", () => {
-  OneMacPackagePage.clickOnDateSubmittedFilterDropDown();
+And("click on Initial Submission Date filter dropdown", () => {
+  OneMacPackagePage.clickOnInitialSubmissionDateFilterDropDown();
 });
-And("verify date submitted date picker filter exists", () => {
-  OneMacPackagePage.verifyDateSubmittedDatePickerFilterExists();
+And("verify Initial Submission Date date picker filter exists", () => {
+  OneMacPackagePage.verifyInitialSubmissionDateDatePickerFilterExists();
 });
-And("click on date submitted date picker filter", () => {
-  OneMacPackagePage.clickOnDateSubmittedDatePickerFilter();
+And("click on Initial Submission Date date picker filter", () => {
+  OneMacPackagePage.clickOnInitialSubmissionDateDatePickerFilter();
 });
 And("click on this quarter date picker button", () => {
   OneMacPackagePage.clickOnThisQuarterDatePickerBtn();
@@ -1728,9 +1728,9 @@ And("verify 90th day column one is not Pending", () => {
     OneMacPackagePage.verify90thDayRowOneIsNotPending();
   }
 });
-And("verify date submitted column one date is this quarter", () => {
+And("verify Initial Submission Date column one date is this quarter", () => {
   if (OneMacPackagePage.checkIfPackageListResultsExist()) {
-    OneMacPackagePage.verifypackageRowOneDateSubmittedIsThisQuarter();
+    OneMacPackagePage.verifypackageRowOneInitialSubmissionDateIsThisQuarter();
   }
 });
 And("verify states selected includes {string}", (state) => {
@@ -1980,8 +1980,8 @@ And("verify 90th day column exists for the child", () => {
 And("verify status column exists for the child", () => {
   OneMacPackagePage.verifystatusColumnExistsForChild();
 });
-And("verify date submitted column exists for the child", () => {
-  OneMacPackagePage.verifyDateSubmittedColumnExistsForChild();
+And("verify Initial Submission Date column exists for the child", () => {
+  OneMacPackagePage.verifyInitialSubmissionDateColumnExistsForChild();
 });
 And("verify submitted by column exists for the child", () => {
   OneMacPackagePage.verifysubmittedByColumnExistsForChild();
@@ -2864,12 +2864,10 @@ And(
   }
 );
 And(
-  "verify id number in the child row matches new waiver amendment number 1",
+  "verify id number in the first row matches new waiver amendment number 1",
   () => {
     cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
-      OneMacPackagePage.verifyIDNumberInSecondRowIs(
-        data.newWaiverAmendmentNum1
-      );
+      OneMacPackagePage.verifyIDNumberInFirstRowIs(data.newWaiverAmendmentNum1);
     });
   }
 );

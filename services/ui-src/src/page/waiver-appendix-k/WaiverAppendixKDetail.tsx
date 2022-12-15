@@ -6,8 +6,6 @@ import {
   proposedEffectiveDateDefault,
   submissionDateDefault,
   territoryDefault,
-  defaultPackageOverviewNavItems,
-  defaultPackageOverviewLabel,
   waiverAuthorityDefault,
 } from "../../libs/detailLib";
 import { waiverAppendixK } from "cmscommonlib";
@@ -23,12 +21,6 @@ export const waiverAppendixKDetail: OneMACDetail = {
   actionLabel: "Package Actions",
   detailHeader: "Appendix K Amendment",
   attachmentsHeading: "Attachments",
-  navItems: [
-    {
-      label: defaultPackageOverviewLabel,
-      items: [...defaultPackageOverviewNavItems],
-    },
-  ],
   detailSection: [
     appendixKWaiverAuthority,
     territoryDefault,
