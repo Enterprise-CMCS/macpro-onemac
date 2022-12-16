@@ -273,12 +273,12 @@ functions:
           cors: true
           authorizer: aws_iam
 
-  validateParentOfWaiverAppendixKRaiResponse:
-    handler: validation/validateParentOfWaiverAppendixKRaiResponse.main
+  validateParentOfAppKRaiResponse:
+    handler: validation/validateParentOfAppKRaiResponse.main
     role: LambdaApiRole
     events:
       - http:
-          path: validateParentOfWaiverAppendixKRaiResponse/{parentId}
+          path: validateParentOfAppKRaiResponse/{parentId}
           method: get
           cors: true
           authorizer: aws_iam

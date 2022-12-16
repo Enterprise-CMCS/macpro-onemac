@@ -6,7 +6,6 @@ import { formatDateOnly, formatDate } from "../../utils/date-utils";
 import { ComponentDetail } from "../DetailView";
 import { OneMACDetail } from "../../libs/detailLib";
 import FileList from "../../components/FileList";
-import { AdditionalInfoSection } from "./AdditionalInfoSection";
 import { actionComponent } from "../../libs/actionLib";
 
 export const DetailSection = ({
@@ -161,9 +160,6 @@ export const DetailSection = ({
               })}
             </Accordion>
           </section>
-        )}
-        {pageConfig.navItems.length <= 0 && (
-          <AdditionalInfoSection detail={detail} />
         )}
       </div>
     </>

@@ -193,7 +193,7 @@ const PackageList = () => {
           Filter: CustomFilterUi.MultiCheckbox,
         },
         {
-          Header: "Date Submitted",
+          Header: "Initial Submission Date",
           accessor: "submissionTimestamp",
           Cell: renderDate,
           disableFilters: false,

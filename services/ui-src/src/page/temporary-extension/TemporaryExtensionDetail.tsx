@@ -30,7 +30,6 @@ export const waiverTemporaryExtensionDetail: OneMACDetail = {
   ...defaultDetail,
   ...waiverTemporaryExtension,
   detailHeader: "Temporary Extension Request",
-  navItems: [],
   actionsByStatus: Workflow.waiverExtensionActionsByStatus,
   show90thDayInfo: false,
   detailSection: [

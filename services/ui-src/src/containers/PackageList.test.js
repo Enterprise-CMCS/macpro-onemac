@@ -103,7 +103,7 @@ it("renders table with spa columns", async () => {
   screen.getByText("SPA ID");
   screen.getByText("Type");
   screen.getByText("State");
-  screen.getByText("Date Submitted");
+  screen.getByText("Initial Submission Date");
   screen.getByText("Submitted By");
   screen.getByText("Actions");
 });
