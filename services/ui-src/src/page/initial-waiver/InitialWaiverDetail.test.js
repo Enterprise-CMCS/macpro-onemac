@@ -85,43 +85,43 @@ describe("Detail View Tests", () => {
     });
   });
 
-  it("allows withdraw of temp extension", async () => {
-    PackageApi.getDetail.mockResolvedValue(waiverDetail);
-    PackageApi.withdraw.mockResolvedValue("WP000");
+  // it("allows withdraw of temp extension", async () => {
+  //   PackageApi.getDetail.mockResolvedValue(waiverDetail);
+  //   PackageApi.withdraw.mockResolvedValue("WP000");
 
-    let history;
-    history = createMemoryHistory();
-    history.push("/detail/initial-waiver/MI.83420#temp-extension");
+  //   let history;
+  //   history = createMemoryHistory();
+  //   history.push("/detail/initial-waiver/MI.83420#temp-extension");
 
-    render(
-      <AppContext.Provider
-        value={{
-          ...stateSubmitterInitialAuthState,
-        }}
-      >
-        <Router history={history}>
-          <Route path="/detail/:componentType/:componentId">
-            <InitialWaiverDetail />
-          </Route>
-        </Router>
-      </AppContext.Provider>
-    );
+  //   render(
+  //     <AppContext.Provider
+  //       value={{
+  //         ...stateSubmitterInitialAuthState,
+  //       }}
+  //     >
+  //       <Router history={history}>
+  //         <Route path="/detail/:componentType/:componentId">
+  //           <InitialWaiverDetail />
+  //         </Route>
+  //       </Router>
+  //     </AppContext.Provider>
+  //   );
 
-    // wait for loading screen to disappear
-    await waitForElementToBeRemoved(() => screen.getByTestId(LOADER_TEST_ID));
+  //   // wait for loading screen to disappear
+  //   await waitForElementToBeRemoved(() => screen.getByTestId(LOADER_TEST_ID));
 
-    userEvent.click(
-      screen.getByRole("button", { name: "Actions for MD.83420.R00.TE01" })
-    );
-    await waitFor(() => screen.getByRole("menuitem", { name: "Withdraw Package" }));
-    userEvent.click(screen.getByRole("menuitem", { name: "Withdraw Package" }));
-    await waitFor(() => screen.getByRole("button", { name: "Yes, withdraw package" }));
-    userEvent.click(screen.getByRole("button", { name: "Yes, withdraw package" }));
+  //   userEvent.click(
+  //     screen.getByRole("button", { name: "Actions for MD.83420.R00.TE01" })
+  //   );
+  //   await waitFor(() => screen.getByRole("menuitem", { name: "Withdraw Package" }));
+  //   userEvent.click(screen.getByRole("menuitem", { name: "Withdraw Package" }));
+  //   await waitFor(() => screen.getByRole("button", { name: "Yes, withdraw package" }));
+  //   userEvent.click(screen.getByRole("button", { name: "Yes, withdraw package" }));
 
-    await waitFor(() =>
-      expect(document.getElementById("alert-bar")).toHaveTextContent(
-        "Your submission package has successfully been withdrawn."
-      )
-    );
-  });
+  //   await waitFor(() =>
+  //     expect(document.getElementById("alert-bar")).toHaveTextContent(
+  //       "Your submission package has successfully been withdrawn."
+  //     )
+  //   );
+  // });
 });
