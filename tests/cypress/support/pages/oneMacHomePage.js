@@ -110,6 +110,14 @@ export class oneMacHomePage {
     cy.visit("/");
   }
 
+  verifyUserIsNotLoggedInOnLoginPage() {
+    cy.wait(2000);
+    cy.get(loginBTN)
+      .should("be.visible")
+      .xpath(welcomeMSG)
+      .should("be.visible");
+  }
+
   clickDevelopmentLogin() {
     cy.get(DevelopmentLogin).click();
   }

@@ -9,9 +9,7 @@ export type AttributeDetail = {
 
 export type OneMACDetail = {
   defaultTitle: null;
-  usesVerticalNav: boolean;
   componentType: string;
-  navItems: DetailNavGroup[];
   actionLabel: string;
   show90thDayInfo: boolean;
   showEffectiveDate: boolean;
@@ -23,7 +21,7 @@ export type OneMACDetail = {
 } & Partial<PackageType>;
 
 export const submissionDateDefault: AttributeDetail = {
-  heading: "Date Submitted",
+  heading: "Initial Submission Date",
   fieldName: "submissionDateNice",
   default: null,
 };
@@ -90,27 +88,27 @@ export const defaultPackageOverviewNavItems: DetailNavItem[] = [
 
 export const defaultPackageOverviewLabel: string = "Package Overview";
 
+export const defaultDetailSectionItems = [
+  typeDefault,
+  territoryDefault,
+  submissionDateDefault,
+  proposedEffectiveDateDefault,
+];
+
+export const defaultWaiverDetailSectionItems = [
+  waiverAuthorityDefault,
+  ...defaultDetailSectionItems,
+];
+
 export const defaultDetail: OneMACDetail = {
   actionLabel: "Package Actions",
   componentType: "none",
   attachmentsHeading: "Attachments",
-  usesVerticalNav: true,
-  navItems: [
-    {
-      label: defaultPackageOverviewLabel,
-      items: defaultPackageOverviewNavItems,
-    },
-  ],
   actionsByStatus: Workflow.defaultActionsByStatus,
   show90thDayInfo: false,
   showEffectiveDate: false,
   detailHeader: "Package",
   defaultTitle: null,
   allowWaiverExtension: false,
-  detailSection: [
-    typeDefault,
-    territoryDefault,
-    submissionDateDefault,
-    proposedEffectiveDateDefault,
-  ],
+  detailSection: [...defaultDetailSectionItems],
 };

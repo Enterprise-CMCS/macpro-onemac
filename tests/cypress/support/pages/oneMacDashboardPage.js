@@ -1,5 +1,3 @@
-import { assert } from "console";
-
 const newSubmissionBTN = "#new-submission-button";
 const successMessage = "#alert_3";
 const successMessage1 = "#alert-bar";
@@ -26,7 +24,7 @@ const exportToEXcelCSVBTN = "#new-submission-button";
 const idNumberHeader = "#transmittalNumberColHeader";
 const typeHeader = "#typeColHeader";
 const stateHeader = "#territoryColHeader";
-const dateSubmittedHeader = "#submittedAtColHeader";
+const initialSubmissionDateHeader = "#submissionTimestampColHeader";
 const submittedByHeader = "#submitterColHeader";
 //Element is Xpath use cy.xpath instead of cy.get
 const packageTab = '//a[@id="packageListLink"]';
@@ -110,8 +108,8 @@ export class oneMacDashboardPage {
   verifyStateHeaderIsDisplayed() {
     cy.get(stateHeader).should("be.visible");
   }
-  verifyDateSubmittedHeaderIsDisplayed() {
-    cy.get(dateSubmittedHeader).should("be.visible");
+  verifyInitialSubmissionDateHeaderIsDisplayed() {
+    cy.get(initialSubmissionDateHeader).should("be.visible");
   }
   verifySubmittedByHeadersDisplayed() {
     cy.get(submittedByHeader).should("be.visible");

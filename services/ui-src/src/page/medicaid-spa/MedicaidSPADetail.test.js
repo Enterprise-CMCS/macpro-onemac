@@ -161,27 +161,4 @@ describe("Detail View Tests", () => {
 
     fireEvent.click(screen.getByText("Respond to RAI"));
   });
-
-  it("shows additional information tab", async () => {
-    let history;
-    history = createMemoryHistory();
-    history.push("/detail/medicaid-spa/MI-12-1133");
-
-    PackageApi.getDetail.mockResolvedValue(testDetail);
-
-    render(<MedicaidSPADetail />, { wrapper: ContextWrapper });
-
-    // wait for loading screen to disappear so package table displays
-    await waitForElementToBeRemoved(() => screen.getByTestId(LOADER_TEST_ID));
-
-    fireEvent.click(
-      screen.getByRole("link", { name: "Additional Information" })
-    );
-
-    await waitFor(() => {
-      expect(
-        screen.getByRole("heading", { name: "Additional Information" })
-      ).toBeInTheDocument();
-    });
-  });
 });
