@@ -21,6 +21,7 @@ beforeEach(() => {
   });
 
   API.post.mockResolvedValue({ test: "thisTest" });
+  API.get.mockResolvedValue({ test: "thisTest" });
 
   //  API.get.mockResolvedValue({ oauth: {} });
 });
@@ -47,7 +48,12 @@ it("exists without crashing", () => {
       console.log("caught test error: ", error);
     });
 
-  const response3 = PackageApi.default.withdraw("foo", "foo", "foo");
+  const response3 = PackageApi.default.withdraw(
+    "foo",
+    "foo",
+    "foo",
+    "medicaidspa"
+  );
   expect(response3)
     .resolves.toBeInstanceOf(Promise)
     .catch((error) => {
@@ -73,6 +79,16 @@ it("exists without crashing", () => {
     .catch((error) => {
       console.log("caught test error: ", error);
     });
+
+  const response7 = PackageApi.default.validateParent(
+    "AK-00-0885",
+    "validateMedicaidSpa"
+  );
+  expect(response7)
+    .resolves.toBeInstanceOf(Promise)
+    .catch((error) => {
+      console.log("caught test error: ", error);
+    });
 });
 
 it("sucessfully submits a form", async () => {
@@ -90,7 +106,7 @@ it("sucessfully submits a form", async () => {
 
   const expectedResponse = { test: "thisTest" };
 
-  expect(PackageApi.default.submitToAPI(testData, testUploads))
+  expect(PackageApi.default.submitToAPI(testData, testUploads, testData.type))
     .resolves.toStrictEqual(expectedResponse)
     .catch((error) => {
       console.log("caught test error: ", error);
