@@ -79,7 +79,6 @@ function myHandler(event) {
       pk,
       sk,
     },
-    ConditionExpression: "attribute_not_exists(pk)", // so update fails if this SEATool change exists
 
     Item: { pk, sk, GSI1pk, GSI1sk, ...value },
     ReturnValues: "ALL_OLD", // ReturnValues for put can only be NONE or ALL_OLD

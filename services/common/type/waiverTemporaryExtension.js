@@ -10,4 +10,16 @@ export const waiverTemporaryExtension = {
   optionalAttachments: ["Other"],
   allowedParentTypes: ["waivernew", "waiverrenewal"],
   allowedParentStatuses: ["Approved"],
+  theAttributes: [
+    "componentId",
+    "submissionTimestamp",
+    "currentStatus",
+    "attachments",
+    "additionalInformation",
+    "submitterName",
+    "submitterEmail",
+    "parentId",
+    "parentType",
+    "temporaryExtensionType",
+  ],
 };

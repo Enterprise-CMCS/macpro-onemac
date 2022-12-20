@@ -4,13 +4,13 @@ import { getUser } from "../getUser";
 import { initialWaiverFormConfig } from "./submitInitialWaiver";
 import { waiverTemporaryExtensionFormConfig } from "./submitWaiverExtension";
 import packageExists from "../utils/packageExists";
+import { newEvent } from "../utils/newEvent";
 import sendEmail from "../libs/email-lib";
-import newComponent from "../utils/newComponent";
 
 jest.mock("../getUser");
 jest.mock("../utils/packageExists");
+jest.mock("../utils/newEvent");
 jest.mock("../libs/email-lib");
-jest.mock("../utils/newComponent");
 
 const testDoneBy = {
   roleList: [
@@ -125,7 +125,7 @@ beforeEach(() => {
   getUser.mockResolvedValue(testDoneBy);
   packageExists.mockResolvedValue(false);
   sendEmail.mockResolvedValue(null);
-  newComponent.mockResolvedValue(null);
+  newEvent.mockResolvedValue({});
 });
 
 it("catches a badly parsed event", async () => {
@@ -168,7 +168,7 @@ it("returns error code for unauthorized user", async () => {
 });
 
 it("returns error code when new submission fails", async () => {
-  newComponent.mockImplementation((testEvent, testConfig) => {
+  newEvent.mockImplementation(() => {
     throw new Error("Submit error");
   });
   const response = await submitAny(testEvent, testConfig);
@@ -190,7 +190,6 @@ it("returns success code even when State email fails", async () => {
   sendEmail.mockImplementationOnce(() => {
     throw new Error("Email error"); //second email is state email
   });
-
   const response = await submitAny(testEvent, testConfig);
   expect(response).toEqual(RESPONSE_CODE.SUCCESSFULLY_SUBMITTED);
 });

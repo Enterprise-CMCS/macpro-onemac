@@ -4,7 +4,9 @@ import {
   RESPONSE_CODE,
   getActiveTerritories,
   getUserRoleObj,
+  Workflow,
 } from "cmscommonlib";
+import { cmsStatusUIMap, stateStatusUIMap } from "./libs/status-lib";
 import { getUser } from "./getUser";
 
 /**
@@ -22,6 +24,9 @@ export const getMyPackages = async (email, group) => {
 
       const userRoleObj = getUserRoleObj(user.roleList);
       const territoryList = getActiveTerritories(user.roleList);
+      const statusMap = userRoleObj.isCMSUser
+        ? cmsStatusUIMap
+        : stateStatusUIMap;
 
       if (!userRoleObj.canAccessDashboard || territoryList === []) {
         throw RESPONSE_CODE.USER_NOT_AUTHORIZED;
@@ -65,7 +70,21 @@ export const getMyPackages = async (email, group) => {
           const promiseItems = [];
           do {
             const results = await dynamoDb.query(params);
-            promiseItems.push(...results.Items);
+            results.Items.map((oneItem) => {
+              if (!statusMap[oneItem.currentStatus])
+                console.log(
+                  "%s status of %s not mapped!",
+                  oneItem.pk,
+                  oneItem.currentStatus
+                );
+              else {
+                oneItem.currentStatus = statusMap[oneItem.currentStatus];
+                if (
+                  oneItem.currentStatus !== Workflow.ONEMAC_STATUS.INACTIVATED
+                )
+                  promiseItems.push(oneItem);
+              }
+            });
             params.ExclusiveStartKey = results.LastEvaluatedKey;
           } while (params.ExclusiveStartKey);
           return promiseItems;
