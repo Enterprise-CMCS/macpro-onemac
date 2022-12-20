@@ -8,6 +8,15 @@ export const waiverRAIResponse = {
   allowMultiplesWithSameId: true,
   requiredAttachments: ["Waiver RAI Response"],
   optionalAttachments: ["Other"],
+  theAttributes: [
+    "componentId",
+    "submissionTimestamp",
+    "currentStatus",
+    "attachments",
+    "additionalInformation",
+    "submitterName",
+    "submitterEmail",
+  ],
   allowedParentTypes: ["waivernew", "waiverrenewal", "waiveramendment"],
   allowedParentStatuses: ["RAI Issued"],
 };

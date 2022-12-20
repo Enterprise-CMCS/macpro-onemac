@@ -16,6 +16,15 @@ export const chipSPARAIResponse = {
     "Tribal Consultation",
     "Other",
   ],
+  theAttributes: [
+    "componentId",
+    "submissionTimestamp",
+    "currentStatus",
+    "attachments",
+    "additionalInformation",
+    "submitterName",
+    "submitterEmail",
+  ],
   allowedParentTypes: ["chipspa"],
   allowedParentStatuses: ["RAI Issued"],
 };

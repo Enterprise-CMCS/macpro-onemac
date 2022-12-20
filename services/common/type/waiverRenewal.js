@@ -24,4 +24,18 @@ export const waiverRenewal = {
   ],
   allowedParentTypes: ["waivernew", "waiverrenewal"],
   allowedParentStatuses: ["Approved"],
+  theAttributes: [
+    "componentId",
+    "submissionTimestamp",
+    "proposedEffectiveDate",
+    "clockEndTimestamp",
+    "currentStatus",
+    "attachments",
+    "additionalInformation",
+    "submitterName",
+    "submitterEmail",
+    "waiverAuthority",
+    "parentId",
+    "parentType",
+  ],
 };

@@ -26,15 +26,30 @@ export const ONEMAC_LABEL = {
 
 export const ONEMAC_STATUS = {
   INACTIVATED: "Inactivated",
-  UNSUBMITTED: "Unsubmitted",
   SUBMITTED: "Submitted",
-  IN_REVIEW: "In Review",
+  PENDING: "Under Review",
+  PENDING_CONCURRANCE: "Pending - Concurrance",
+  PENDING_APPROVAL: "Pending - Approval",
   RAI_ISSUED: "RAI Issued",
+  APPROVED: "Approved",
+  DISAPPROVED: "Disapproved",
+  WITHDRAWN: "Package Withdrawn",
+  WITHDRAWAL_REQUESTED: "Withdrawal Requested",
+  TERMINATED: "Waiver Terminated",
+  UNKNOWN: "-- --",
+};
+
+export const SEATOOL_STATUS = {
+  PENDING: "Pending",
+  PENDING_RAI: "Pending-RAI",
   APPROVED: "Approved",
   DISAPPROVED: "Disapproved",
   WITHDRAWN: "Withdrawn",
   TERMINATED: "Terminated",
-  PAUSED: "Review Paused, Off the Clock",
+  PENDING_CONCURRANCE: "Pending-Concurrence",
+  UNSUBMITTED: "Unsubmitted",
+  PENDING_APPROVAL: "Pending-Approval",
+  UNKNOWN: "unknown",
 };
 
 export const PACKAGE_ACTION = {
@@ -50,17 +65,21 @@ export const PACKAGE_GROUP = {
 };
 
 export const defaultActionsByStatus = {
-  [ONEMAC_STATUS.UNSUBMITTED]: [],
-  [ONEMAC_STATUS.SUBMITTED]: [PACKAGE_ACTION.WITHDRAW],
-  [ONEMAC_STATUS.IN_REVIEW]: [PACKAGE_ACTION.WITHDRAW],
+  [ONEMAC_STATUS.INACTIVATED]: [],
+  [ONEMAC_STATUS.SUBMITTED]: [],
+  [ONEMAC_STATUS.PENDING]: [PACKAGE_ACTION.WITHDRAW],
+  [ONEMAC_STATUS.PENDING_CONCURRANCE]: [PACKAGE_ACTION.WITHDRAW],
+  [ONEMAC_STATUS.PENDING_APPROVAL]: [PACKAGE_ACTION.WITHDRAW],
   [ONEMAC_STATUS.RAI_ISSUED]: [
     PACKAGE_ACTION.WITHDRAW,
     PACKAGE_ACTION.RESPOND_TO_RAI,
   ],
   [ONEMAC_STATUS.APPROVED]: [],
   [ONEMAC_STATUS.DISAPPROVED]: [],
+  [ONEMAC_STATUS.WITHDRAWAL_REQUESTED]: [],
   [ONEMAC_STATUS.WITHDRAWN]: [],
   [ONEMAC_STATUS.TERMINATED]: [],
+  [ONEMAC_STATUS.UNKNOWN]: [],
 };
 
 export const initialWaiverActionsByStatus = {
@@ -81,8 +100,7 @@ export const waiverExtensionActionsByStatus = {
 
 export const raiActionsByStatus = {
   ...defaultActionsByStatus,
-  [ONEMAC_STATUS.SUBMITTED]: [],
-  [ONEMAC_STATUS.IN_REVIEW]: [],
+  [ONEMAC_STATUS.PENDING]: [],
   [ONEMAC_STATUS.RAI_ISSUED]: [],
 };
 
@@ -121,8 +139,7 @@ export const get90thDayText = (currentStatus, clockEndTimestamp) => {
     case ONEMAC_STATUS.WITHDRAWN:
       return NINETY_DAY_STATUS.NA;
     case ONEMAC_STATUS.SUBMITTED:
-    case ONEMAC_STATUS.UNSUBMITTED:
-    case ONEMAC_STATUS.IN_REVIEW:
+    case ONEMAC_STATUS.PENDING:
       return NINETY_DAY_STATUS.PENDING;
     default:
       return clockEndTimestamp;
