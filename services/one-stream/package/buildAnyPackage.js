@@ -152,7 +152,11 @@ export const buildAnyPackage = async (packageId, config) => {
             putParams.Item.GSI2pk = anEvent.parentId;
             putParams.Item.GSI2sk = anEvent.componentType;
           }
-          putParams.Item[attributeName] = anEvent[attributeName];
+
+          // update the attribute if this is the latest event
+          // OR if there is currently no value for the attribute
+          if (timestamp === lmTimestamp || !putParams.Item[attributeName])
+            putParams.Item[attributeName] = anEvent[attributeName];
         }
       });
     });
