@@ -11,6 +11,7 @@ export const waiverRenewalDetail: OneMACDetail = {
   ...defaultDetail,
   ...waiverRenewal,
   show90thDayInfo: false,
+  detailHeader: "Waiver Renewal Package",
   detailSection: [...defaultWaiverDetailSectionItems],
   actionsByStatus: Workflow.renewalWaiverActionsByStatus,
 };
