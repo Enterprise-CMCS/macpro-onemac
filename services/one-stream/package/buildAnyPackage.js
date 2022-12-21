@@ -31,14 +31,6 @@ export const buildAnyPackage = async (packageId, config) => {
       ":pk": packageId,
     },
   };
-  const childrenParams = {
-    TableName: oneMacTableName,
-    IndexName: "GSI2",
-    KeyConditionExpression: "GSI2pk = :pk",
-    ExpressionAttributeValues: {
-      ":pk": packageId,
-    },
-  };
 
   try {
     const result = await dynamoDb.query(queryParams).promise();
@@ -64,6 +56,7 @@ export const buildAnyPackage = async (packageId, config) => {
       },
     };
     let currentPackage;
+    let showPackageOnDashboard = false;
     let lmTimestamp = 0;
 
     result.Items.forEach((anEvent) => {
@@ -73,6 +66,7 @@ export const buildAnyPackage = async (packageId, config) => {
         return;
       }
 
+      // save the old package record for comparison
       if (anEvent.sk === packageSk) {
         if (!currentPackage) {
           if (anEvent?.lastEventTimestamp) delete anEvent.lastEventTimestamp;
@@ -90,50 +84,15 @@ export const buildAnyPackage = async (packageId, config) => {
       const [source, timestring] = anEvent.sk.split("#");
       const timestamp = Number(timestring);
 
-      // since we only report on SEATool status at this time, only the STATUS_DATE
-      // is relevant to OneMAC package reporting
-      if (source === "SEATool") {
-        if (!anEvent.STATE_PLAN?.STATUS_DATE || !anEvent.SPW_STATUS) {
-          console.log(
-            "%s SEATool event has bad status details... ",
-            anEvent.pk,
-            anEvent
-          );
-        } else {
-          console.log(
-            "%s has lmTimestamp %d and status date %d",
-            anEvent.pk,
-            lmTimestamp,
-            anEvent.STATE_PLAN.STATUS_DATE
-          );
-          if (anEvent.STATE_PLAN.STATUS_DATE > lmTimestamp) {
-            const seaToolStatus = anEvent.SPW_STATUS.map((oneStatus) =>
-              anEvent.STATE_PLAN.SPW_STATUS_ID === oneStatus.SPW_STATUS_ID
-                ? oneStatus.SPW_STATUS_DESC
-                : null
-            ).filter(Boolean)[0];
-            console.log(
-              "%s seaToolStatus %d resolves to: ",
-              anEvent.pk,
-              anEvent.STATE_PLAN.SPW_STATUS_ID,
-              seaToolStatus
-            );
-            putParams.Item.currentStatus =
-              SEATOOL_TO_ONEMAC_STATUS[seaToolStatus];
-            lmTimestamp = anEvent.STATE_PLAN.STATUS_DATE;
-          }
-        }
-        return;
+      if (source === "OneMAC") {
+        showPackageOnDashboard = true;
       }
-      // if we get this far, it is a OneMAC package and should be on dashboard
-      putParams.Item.GSI1pk = `OneMAC#${config.whichTab}`;
-      putParams.Item.GSI1sk = packageId;
 
       if (timestamp > lmTimestamp) {
         lmTimestamp = timestamp;
       }
 
-      // we include ALL rai events in package details
+      // include ALL rai events in package details
       if (
         (anEvent.componentType === `${config.componentType}rai` ||
           anEvent.componentType === `waiverrai`) &&
@@ -148,6 +107,44 @@ export const buildAnyPackage = async (packageId, config) => {
         return;
       }
 
+      // SEATool "events" are actually a complete representation of the package state,
+      // so if the SEATool record's CHANGED_DATE is newest, it doesn't matter if the
+      // status date is older...
+      if (source === "SEATool") {
+        if (!anEvent.SPW_STATUS) {
+          console.log(
+            "%s SEATool event has bad status details... ",
+            anEvent.pk,
+            anEvent
+          );
+          return;
+        }
+        console.log(
+          "%s SEATool event has timestamp %d and status %s, lmTimestamp is: %d",
+          anEvent.pk,
+          timestamp,
+          JSON.stringify(anEvent.SPW_STATUS, null, 2),
+          lmTimestamp
+        );
+
+        if (timestamp < lmTimestamp) return;
+
+        const seaToolStatus = anEvent.SPW_STATUS.map((oneStatus) =>
+          anEvent.STATE_PLAN.SPW_STATUS_ID === oneStatus.SPW_STATUS_ID
+            ? oneStatus.SPW_STATUS_DESC
+            : null
+        ).filter(Boolean)[0];
+        console.log(
+          "%s seaToolStatus %d resolves to: ",
+          anEvent.pk,
+          anEvent.STATE_PLAN.SPW_STATUS_ID,
+          seaToolStatus
+        );
+        putParams.Item.currentStatus = SEATOOL_TO_ONEMAC_STATUS[seaToolStatus];
+        return;
+      }
+
+      // assume OneMAC event if got here
       config.theAttributes.forEach((attributeName) => {
         if (anEvent[attributeName]) {
           if (attributeName === "parentId") {
@@ -155,49 +152,41 @@ export const buildAnyPackage = async (packageId, config) => {
             putParams.Item.GSI2pk = anEvent.parentId;
             putParams.Item.GSI2sk = anEvent.componentType;
           }
-          putParams.Item[attributeName] = anEvent[attributeName];
+
+          // update the attribute if this is the latest event
+          // OR if there is currently no value for the attribute
+          if (timestamp === lmTimestamp || !putParams.Item[attributeName])
+            putParams.Item[attributeName] = anEvent[attributeName];
         }
       });
     });
 
-    // if we don't have the package indexes, don't need the package item
-    if (!putParams.Item.GSI1pk) return;
+    // use GSI1 to show package on dashboard
+    if (showPackageOnDashboard) {
+      putParams.Item.GSI1pk = `OneMAC#${config.whichTab}`;
+      putParams.Item.GSI1sk = packageId;
+    } else {
+      console.log("%s is not a OneMAC package: ", packageId, putParams.Item);
+      return; // don't bother creating packages not on dashboard
+    }
 
     putParams.Item.raiResponses.sort(
       (a, b) => b.submissionTimestamp - a.submissionTimestamp
     );
 
-    const children = await dynamoDb.query(childrenParams).promise();
-    console.log("%s children result: ", packageId, children);
-    children?.Items.forEach((aChild) => {
-      if (aChild.componentType === "waiverextension") {
-        if (aChild.lastEventTimestamp > lmTimestamp)
-          lmTimestamp = aChild.lastEventTimestamp;
-
-        putParams.Item.waiverExtensions.push({
-          lastEventTimestamp: aChild.lastEventTimestamp,
-          submissionTimestamp: aChild.submissionTimestamp,
-          componentId: aChild.componentId,
-          currentStatus: aChild.currentStatus,
-        });
-      }
-    });
-
-    console.log("currentPackage: ", currentPackage);
-    console.log("newItem: ", putParams.Item);
-    console.log("evaluates to: ", _.isEqual(currentPackage, putParams.Item));
+    console.log("%s currentPackage: ", packageId, currentPackage);
+    console.log("%s newItem: ", packageId, putParams.Item);
+    console.log(
+      "%s evaluates to: ",
+      packageId,
+      _.isEqual(currentPackage, putParams.Item)
+    );
     if (_.isEqual(currentPackage, putParams.Item)) return;
 
     putParams.Item.lastEventTimestamp = lmTimestamp;
-    // putParams.ConditionExpression = `attribute_not_exists(pk) OR lastEventTimestamp < :newModifiedTimestamp`;
-    // putParams.ExpressionAttributeValues = {
-    //   ":newModifiedTimestamp": putParams.Item.lastEventTimestamp,
-    // };
-    console.log("just before put: ", putParams);
-    const putResult = await dynamoDb.put(putParams).promise();
-
-    console.log("put result: ", putResult);
+    console.log("%s just before put: ", packageId, putParams);
+    await dynamoDb.put(putParams).promise();
   } catch (e) {
-    console.log("buildAnyPackage error: ", e);
+    console.log("%s buildAnyPackage error: ", packageId, e);
   }
 };
