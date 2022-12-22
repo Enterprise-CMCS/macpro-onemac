@@ -36,6 +36,7 @@ provider:
             - dynamodb:UpdateItem
             - dynamodb:DeleteItem
           Resource:
+            - arn:aws:dynamodb:*:*:table/product-change-request-2
             - arn:aws:dynamodb:*:*:table/${self:custom.oneMacTableName}
             - arn:aws:dynamodb:*:*:table/${self:custom.oneMacTableName}/index/*
             - arn:aws:dynamodb:*:*:table/${self:custom.tableName}
@@ -56,10 +57,22 @@ functions:
     handler: ./handlers/resetData.main
     timeout: 180
 
+  resetOneTable:
+    handler: ./handlers/resetOneTable.main
+    timeout: 180
+
   softDeleteChangeRequest:
     handler: ./handlers/softDeleteChangeRequest.main
     timeout: 180
 
   batchUpdateChangeRequestId:
     handler: ./handlers/batchUpdateChangeRequestId.main
+    timeout: 180
+
+  convertChangeRequests:
+    handler: ./handlers/convertChangeRequests.main
+    timeout: 180
+
+  verifyChangeRequests:
+    handler: ./handlers/verifyChangeRequests.main
     timeout: 180

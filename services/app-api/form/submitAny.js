@@ -8,12 +8,15 @@ import {
 } from "cmscommonlib";
 
 import sendEmail from "../libs/email-lib";
+
 import { getUser } from "../getUser";
 import { validateSubmission } from "./validateSubmission";
-import newComponent from "../utils/newComponent";
+import packageExists from "../utils/packageExists";
+import { newEvent } from "../utils/newEvent";
+import { getPackageType } from "../utils/getPackageType";
+
 import { CMSSubmissionNotice } from "../email/CMSSubmissionNotice";
 import { stateSubmissionReceipt } from "../email/stateSubmissionReceipt";
-import packageExists from "../utils/packageExists";
 
 /**
  * Submitting a Form uses the configs from each form type to do the following:
@@ -71,18 +74,33 @@ export const submitAny = async (event, config) => {
     if (!config.idMustExist && isThere === true) {
       throw RESPONSE_CODE.DUPLICATE_ID;
     }
-    //          warningsInCMSNotice.push(errorMsg[1]);
   } catch (error) {
     console.log("Error is: ", error);
     return error;
+  }
+
+  // if a parent ID is included, need to validate parent and grab type
+  if (data.parentId) {
+    try {
+      data.parentType = await getPackageType(data.parentId);
+    } catch (e) {
+      console.log(
+        "%s parent ID %s validation failed: ",
+        data.componentId,
+        data.parentId,
+        e
+      );
+      //      throw RESPONSE_CODE.VALIDATION_ERROR; eh... probably still want to save it
+    }
   }
 
   try {
     // Add the details from this submission action
     const rightNowNormalized = Date.now();
     data.submissionTimestamp = rightNowNormalized;
+    data.eventTimestamp = rightNowNormalized;
     data.currentStatus = Workflow.ONEMAC_STATUS.SUBMITTED;
-    data.currentStatusTimestamp = rightNowNormalized;
+    data.componentType = config.componentType;
 
     // record the current end timestamp (can be start/stopped/changed)
     // 90 days is current CMS review period and it is based on CMS time!!
@@ -93,22 +111,20 @@ export const submitAny = async (event, config) => {
       .plus({ days: 90 })
       .toMillis();
 
-    await newComponent(data, config);
-    console.log("Successfully submitted the following:", data);
+    await newEvent(`submit${config.componentType}`, data);
+    console.log("Successfully submitted: ", data);
   } catch (error) {
-    console.log("Error is: ", error.message);
-    //if an appropriate response code has already been set return that; else return generic submission error
-    if (error.response_code) {
-      return error.response_code;
-    }
-    return RESPONSE_CODE.SUBMISSION_SAVE_FAILURE;
+    console.log("%s Error is: ", data.componentId, error);
+    return error?.response_code
+      ? error.response_code
+      : RESPONSE_CODE.SUBMISSION_SAVE_FAILURE;
   }
 
   try {
     // Now send the CMS email
     await sendEmail(CMSSubmissionNotice(data, config, warningsInCMSNotice));
   } catch (error) {
-    console.log("Error is: ", error);
+    console.log("%s Error is: ", data.componentId, error);
     return RESPONSE_CODE.EMAIL_NOT_SENT;
   }
 
@@ -118,9 +134,10 @@ export const submitAny = async (event, config) => {
     await sendEmail(stateSubmissionReceipt(data, config));
   } catch (error) {
     console.log(
-      "Warning: There was an error sending the user acknowledgement email.",
+      "%s Warning: There was an error sending the user acknowledgement email.",
+      data.componentId,
       error
     );
   }
-  return RESPONSE_CODE.SUCCESSFULLY_SUBMITTED;
+  return config.successResponseCode;
 };

@@ -9,4 +9,16 @@ export const waiverAppendixK = {
   allowMultiplesWithSameId: false,
   requiredAttachments: ["1915(c) Appendix K Amendment Waiver Template"],
   optionalAttachments: ["Other"],
+  theAttributes: [
+    "componentId",
+    "submissionTimestamp",
+    "proposedEffectiveDate",
+    "clockEndTimestamp",
+    "currentStatus",
+    "attachments",
+    "additionalInformation",
+    "submitterName",
+    "submitterEmail",
+    "waiverAuthority",
+  ],
 };

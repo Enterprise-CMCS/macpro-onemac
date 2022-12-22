@@ -18,7 +18,7 @@ export const packageList = [
   {
     componentType: "chipspa",
     componentId: "MI-98-2223",
-    currentStatus: "Submitted",
+    currentStatus: "Under Review",
     submitterName: "Angie Active",
     submissionTimestamp: 1633481183766,
     submitterEmail: "statesubmitteractive@cms.hhs.local",
