@@ -100,6 +100,9 @@ export class oneMacPackageDetailsPage {
   verifyDetailSectionExists() {
     cy.xpath(detailSection).should("be.visible");
   }
+  verifyTitleContains(s) {
+    cy.get("h2").first().contains(s);
+  }
   verifyCHIPSPAIDHeaderExists() {
     cy.xpath(CHIPSPAIDHeader).should("be.visible");
   }
