@@ -23,7 +23,7 @@ const waiverDetail = require("./testWaiverRenewal");
 window.HTMLElement.prototype.scrollIntoView = jest.fn();
 
 describe("Detail View Tests", () => {
-  it("shows Additional Information in side nav for waivers", async () => {
+  it("shows Additional Information section", async () => {
     PackageApi.getDetail.mockResolvedValue(waiverDetail);
 
     let history;
@@ -49,7 +49,7 @@ describe("Detail View Tests", () => {
 
     await waitFor(() => {
       expect(
-        screen.getByRole("link", { name: "Additional Information" })
+        screen.getByText("Additional Information", { selector: "h2" })
       ).toBeInTheDocument();
     });
   });

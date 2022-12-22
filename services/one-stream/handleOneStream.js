@@ -109,7 +109,7 @@ export const main = async (eventBatch) => {
               case "1915c_waivers":
                 console.log(
                   "newEventData?.ACTIONTYPES?.M.ACTION_NAME.S is: ",
-                  newEventData?.ACTIONTYPES?.M.ACTION_NAME.S
+                  newEventData?.ACTIONTYPES?.L[0].M.ACTION_NAME.S
                 );
                 if (newEventData?.ACTIONTYPES?.L[0].M.ACTION_NAME.S === "Amend")
                   packageToBuild.type = Workflow.ONEMAC_TYPE.WAIVER_APP_K;

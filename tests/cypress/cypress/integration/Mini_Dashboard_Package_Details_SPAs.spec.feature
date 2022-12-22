@@ -28,6 +28,9 @@ Feature: OY2-15620 Updated SPA Details View - Card View with Actions
         And verify there is an Initial Submission Date header in the details section
         And verify a date exists for the Initial Submission Date
         And verify there is a Proposed Effective Date header in the details section
+        And verify the supporting documentation section exists
+        And verify the download all button exists
+        And verify the additional information section exists
 
     Scenario: Screen Enhance - Withdrawn SPA
         And click the Withdrawn checkbox
@@ -48,6 +51,9 @@ Feature: OY2-15620 Updated SPA Details View - Card View with Actions
         And verify there is an Initial Submission Date header in the details section
         And verify a date exists for the Initial Submission Date
         And verify there is a Proposed Effective Date header in the details section
+        And verify the supporting documentation section exists
+        And verify the download all button exists
+        And verify the additional information section exists
 
     Scenario: Screen Enhance - Disapproved SPA
         And click Disapproved checkbox
@@ -68,6 +74,9 @@ Feature: OY2-15620 Updated SPA Details View - Card View with Actions
         And verify there is an Initial Submission Date header in the details section
         And verify a date exists for the Initial Submission Date
         And verify there is a Proposed Effective Date header in the details section
+        And verify the supporting documentation section exists
+        And verify the download all button exists
+        And verify the additional information section exists
 
 
     Scenario: Screen Enhance - Under Review SPA
@@ -89,6 +98,9 @@ Feature: OY2-15620 Updated SPA Details View - Card View with Actions
         And verify there is an Initial Submission Date header in the details section
         And verify a date exists for the Initial Submission Date
         And verify there is a Proposed Effective Date header in the details section
+        And verify the supporting documentation section exists
+        And verify the download all button exists
+        And verify the additional information section exists
 
     Scenario: Screen Enhance - Submitted SPA
         And click Submitted checkbox
@@ -109,6 +121,9 @@ Feature: OY2-15620 Updated SPA Details View - Card View with Actions
         And verify there is an Initial Submission Date header in the details section
         And verify a date exists for the Initial Submission Date
         And verify there is a Proposed Effective Date header in the details section
+        And verify the supporting documentation section exists
+        And verify the download all button exists
+        And verify the additional information section exists
 
     Scenario: Screen Enhance - Unsubmitted SPA
         And click Unsubmitted checkbox
@@ -129,6 +144,9 @@ Feature: OY2-15620 Updated SPA Details View - Card View with Actions
         And verify there is an Initial Submission Date header in the details section
         And verify a date exists for the Initial Submission Date
         And verify there is a Proposed Effective Date header in the details section
+        And verify the supporting documentation section exists
+        And verify the download all button exists
+        And verify the additional information section exists
 
     Scenario: Screen Enhance - RAI Issued SPA
         And click RAI Issued checkbox
@@ -151,3 +169,6 @@ Feature: OY2-15620 Updated SPA Details View - Card View with Actions
         And verify there is an Initial Submission Date header in the details section
         And verify a date exists for the Initial Submission Date
         And verify there is a Proposed Effective Date header in the details section
+        And verify the supporting documentation section exists
+        And verify the download all button exists
+        And verify the additional information section exists

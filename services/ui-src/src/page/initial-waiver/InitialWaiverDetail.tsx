@@ -8,21 +8,12 @@ import {
   territoryDefault,
   submissionDateDefault,
   proposedEffectiveDateDefault,
-  defaultPackageOverviewNavItems,
-  defaultPackageOverviewLabel,
-  tempExtensionSectionNavItem,
 } from "../../libs/detailLib";
 import { initialWaiver, Workflow } from "cmscommonlib";
 
 export const initialWaiverDetail: OneMACDetail = {
   ...defaultDetail,
   ...initialWaiver,
-  navItems: [
-    {
-      label: defaultPackageOverviewLabel,
-      items: [...defaultPackageOverviewNavItems, tempExtensionSectionNavItem],
-    },
-  ],
   detailSection: [
     waiverAuthorityDefault,
     typeDefault,
