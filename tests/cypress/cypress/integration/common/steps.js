@@ -2139,6 +2139,9 @@ And("click on Respond to RAI package action", () => {
 And("verify the details section exists", () => {
   OneMacPackageDetailsPage.verifyDetailSectionExists();
 });
+And("verify the title contains {string}", (string) => {
+  OneMacPackageDetailsPage.verifyTitleContains(string);
+});
 And("verify there is a SPA ID header in the details section", () => {
   OneMacPackageDetailsPage.verifyCHIPSPAIDHeaderExists();
 });

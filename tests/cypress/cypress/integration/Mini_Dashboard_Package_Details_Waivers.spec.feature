@@ -93,8 +93,11 @@ Feature: OY2-11585 Waiver Package Details View: Initial Waivers and Waiver Renew
         And verify action card exists
         And verify the status on the card is "Submitted"
         And verify package actions header is visible
-        And verify withdraw package action exists
+        And verify there are no package actions available
         And verify the details section exists
+        And verify the title contains "Waiver Renewal Package"
+        And verify there is a Type header in the details section
+        And verify the type is Waiver Renewal
         And verify there is a State header in the details section
         And verify a state exists for the State
         And verify there is an Initial Submission Date header in the details section
@@ -118,6 +121,9 @@ Feature: OY2-11585 Waiver Package Details View: Initial Waivers and Waiver Renew
         And verify Add Amendment package action exists
         And verify Request a Temporary Extension package action exists
         And verify the details section exists
+        And verify the title contains "Waiver Renewal Package"
+        And verify there is a Type header in the details section
+        And verify the type is Waiver Renewal
         And verify there is a State header in the details section
         And verify a state exists for the State
         And verify there is an Initial Submission Date header in the details section
