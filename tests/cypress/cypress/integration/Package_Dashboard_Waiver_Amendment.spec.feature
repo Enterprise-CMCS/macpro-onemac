@@ -54,7 +54,7 @@ Feature: Create a waiver Amendment
         And verify error message is present on package dashboard New Waiver Page
         And verify the submit button is disabled
         And clear 1915b Waiver Amendment Number field
-@focus 
+
     Scenario: create waiver amendment from package dashboard and search it
         Then click on New Submission
         And Click on Waiver Action
