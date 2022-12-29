@@ -16,7 +16,7 @@ export const medicaidSPARAIFormInfo: OneMACFormConfig = {
   detailsHeader: "Medicaid SPA RAI",
   landingPage: ONEMAC_ROUTES.MEDICAID_SPA_DETAIL,
   confirmSubmit: defaultConfirmSubmitRAI,
-  validateParentAPI: "validateParentOfMedicaidSpaRaiResponse",
+  validateParentAPI: "isParentOfMedicaidSpaRaiResponse",
 };
 
 const MedicaidSPARAIForm: FC = () => {

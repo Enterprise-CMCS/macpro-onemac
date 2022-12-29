@@ -1,8 +1,8 @@
-import { validateParentOfAny } from "./validateParentOfAny";
-import { main } from "./validateParentOfMedicaidSpaRaiResponse";
+import { isParentOfAny } from "./isParentOfAny";
+import { main } from "./isParentOfAppKRaiResponse";
 
-jest.mock("./validateParentOfAny");
-validateParentOfAny.mockResolvedValue(true);
+jest.mock("./isParentOfAny");
+isParentOfAny.mockResolvedValue(true);
 
 const testEvent = {
   this: "is an event object",
@@ -17,12 +17,12 @@ const expectedResponse = {
   statusCode: 200,
 };
 
-it("calls validateParentOfAny", async () => {
+it("calls isParentOfAny", async () => {
   expect(main(testEvent)).resolves.toStrictEqual(expectedResponse);
 });
 
 it("handles exceptions", async () => {
-  validateParentOfAny.mockImplementationOnce(() => {
+  isParentOfAny.mockImplementationOnce(() => {
     throw new Error("an exception");
   });
 

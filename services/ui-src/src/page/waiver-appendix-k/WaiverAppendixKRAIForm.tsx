@@ -14,7 +14,7 @@ export const waiverAppendixKRAIFormInfo: OneMACFormConfig = {
   detailsHeader: "1915(c) Appendix K RAI Response",
   landingPage: ONEMAC_ROUTES.PACKAGE_LIST_WAIVER,
   confirmSubmit: defaultConfirmSubmitRAI,
-  validateParentAPI: "validateParentOfWaiverAppendixKRaiResponse",
+  validateParentAPI: "isParentOfAppKRaiResponse",
 };
 
 const WaiverAppendixKRAIForm: FC = () => {

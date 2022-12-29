@@ -213,72 +213,72 @@ functions:
           cors: true
           authorizer: aws_iam
 
-  validateParentOfWaiverRenewal:
-    handler: validation/validateParentOfWaiverRenewal.main
+  isParentOfWaiverRenewal:
+    handler: validation/isParentOfWaiverRenewal.main
     role: LambdaApiRole
     events:
       - http:
-          path: validateParentOfWaiverRenewal/{parentId}
+          path: isParentOfWaiverRenewal/{parentId}
           method: get
           cors: true
           authorizer: aws_iam
 
-  validateParentOfWaiverAmendment:
-    handler: validation/validateParentOfWaiverAmendment.main
+  isParentOfWaiverAmendment:
+    handler: validation/isParentOfWaiverAmendment.main
     role: LambdaApiRole
     events:
       - http:
-          path: validateParentOfWaiverAmendment/{parentId}
+          path: isParentOfWaiverAmendment/{parentId}
           method: get
           cors: true
           authorizer: aws_iam
   
-  validateParentOfTemporaryExtension:
-    handler: validation/validateParentOfTemporaryExtension.main
+  isParentOfTemporaryExtension:
+    handler: validation/isParentOfTemporaryExtension.main
     role: LambdaApiRole
     events:
       - http:
-          path: validateParentOfTemporaryExtension/{parentId}
+          path: isParentOfTemporaryExtension/{parentId}
           method: get
           cors: true
           authorizer: aws_iam
 
-  validateParentOfMedicaidSpaRaiResponse:
-    handler: validation/validateParentOfMedicaidSpaRaiResponse.main
+  isParentOfMedicaidSpaRaiResponse:
+    handler: validation/isParentOfMedicaidSpaRaiResponse.main
     role: LambdaApiRole
     events:
       - http:
-          path: validateParentOfMedicaidSpaRaiResponse/{parentId}
+          path: isParentOfMedicaidSpaRaiResponse/{parentId}
           method: get
           cors: true
           authorizer: aws_iam
 
-  validateParentOfChipSpaRaiResponse:
-    handler: validation/validateParentOfChipSpaRaiResponse.main
+  isParentOfChipSpaRaiResponse:
+    handler: validation/isParentOfChipSpaRaiResponse.main
     role: LambdaApiRole
     events:
       - http:
-          path: validateParentOfChipSpaRaiResponse/{parentId}
+          path: isParentOfChipSpaRaiResponse/{parentId}
           method: get
           cors: true
           authorizer: aws_iam
 
-  validateParentOfWaiverRaiResponse:
-    handler: validation/validateParentOfWaiverRaiResponse.main
+  isParentOfWaiverRaiResponse:
+    handler: validation/isParentOfWaiverRaiResponse.main
     role: LambdaApiRole
     events:
       - http:
-          path: validateParentOfWaiverRaiResponse/{parentId}
+          path: isParentOfWaiverRaiResponse/{parentId}
           method: get
           cors: true
           authorizer: aws_iam
 
-  validateParentOfAppKRaiResponse:
-    handler: validation/validateParentOfAppKRaiResponse.main
+  isParentOfAppKRaiResponse:
+    handler: validation/isParentOfAppKRaiResponse.main
     role: LambdaApiRole
     events:
       - http:
-          path: validateParentOfAppKRaiResponse/{parentId}
+          path: isParentOfAppKRaiResponse/{parentId}
           method: get
           cors: true
           authorizer: aws_iam

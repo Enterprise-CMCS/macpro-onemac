@@ -1,5 +1,5 @@
 import dynamoDb from "../libs/dynamodb-lib";
-import { validateParentOfAny } from "./validateParentOfAny";
+import { isParentOfAny } from "./isParentOfAny";
 
 jest.mock("../libs/dynamodb-lib");
 
@@ -38,7 +38,7 @@ const queryResults2 = {
 it("returns false if it does not find the parent", async () => {
   dynamoDb.query.mockResolvedValue(queryResults0);
 
-  expect(validateParentOfAny(testEvent, testConfig1))
+  expect(isParentOfAny(testEvent, testConfig1))
     .resolves.toEqual(false)
     .catch((error) => {
       console.log("caught test error: ", error);
@@ -48,7 +48,7 @@ it("returns false if it does not find the parent", async () => {
 it("returns true if any Items return and there are no config specifics", async () => {
   dynamoDb.query.mockResolvedValue(queryResults1);
 
-  expect(validateParentOfAny(testEvent, testConfig1))
+  expect(isParentOfAny(testEvent, testConfig1))
     .resolves.toEqual(true)
     .catch((error) => {
       console.log("caught test error: ", error);
@@ -58,7 +58,7 @@ it("returns true if any Items return and there are no config specifics", async (
 it("returns false if Items do not match config specifics", async () => {
   dynamoDb.query.mockResolvedValue(queryResults1);
 
-  expect(validateParentOfAny(testEvent, testConfig2))
+  expect(isParentOfAny(testEvent, testConfig2))
     .resolves.toEqual(false)
     .catch((error) => {
       console.log("caught test error: ", error);
@@ -68,7 +68,7 @@ it("returns false if Items do not match config specifics", async () => {
 it("returns true if an Item does match config specifics", async () => {
   dynamoDb.query.mockResolvedValue(queryResults2);
 
-  expect(validateParentOfAny(testEvent, testConfig2))
+  expect(isParentOfAny(testEvent, testConfig2))
     .resolves.toEqual(true)
     .catch((error) => {
       console.log("caught test error: ", error);

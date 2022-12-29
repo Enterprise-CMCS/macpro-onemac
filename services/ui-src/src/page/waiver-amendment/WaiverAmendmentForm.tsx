@@ -36,7 +36,7 @@ export const waiverAmendmentFormInfo: OneMACFormConfig = {
   ],
   parentNotFoundMessage:
     "The waiver number entered does not appear to match our records. Please enter an approved initial or renewal waiver number, using a dash after the two character state abbreviation.",
-  validateParentAPI: "validateParentOfWaiverAmendment",
+  validateParentAPI: "isParentOfWaiverAmendment",
 };
 
 const WaiverAmendmentForm: FC = () => {

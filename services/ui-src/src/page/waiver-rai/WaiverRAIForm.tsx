@@ -14,7 +14,7 @@ export const waiverRAIFormInfo: OneMACFormConfig = {
   detailsHeader: "1915(b) Waiver RAI Response",
   landingPage: ONEMAC_ROUTES.PACKAGE_LIST_WAIVER,
   confirmSubmit: defaultConfirmSubmitRAI,
-  validateParentAPI: "validateParentOfWaiverRaiResponse",
+  validateParentAPI: "isParentOfWaiverRaiResponse",
 };
 
 const WaiverRAIForm: FC = () => {

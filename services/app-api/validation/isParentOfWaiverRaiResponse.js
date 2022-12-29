@@ -1,10 +1,10 @@
 import handler from "../libs/handler-lib";
-import { validateParentOfAny } from "./validateParentOfAny";
-import { waiverTemporaryExtension } from "cmscommonlib";
+import { isParentOfAny } from "./isParentOfAny";
+import { waiverRAIResponse } from "cmscommonlib";
 
 export const main = handler(async (event) => {
   try {
-    return validateParentOfAny(event, waiverTemporaryExtension);
+    return isParentOfAny(event, waiverRAIResponse);
   } catch (error) {
     console.log("Exception: ", error);
     throw error;

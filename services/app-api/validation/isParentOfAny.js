@@ -1,6 +1,6 @@
 import dynamoDb from "../libs/dynamodb-lib";
 
-export const validateParentOfAny = async (event, config) => {
+export const isParentOfAny = async (event, config) => {
   const parentId = event.pathParameters.parentId;
   console.log("checking parent id: " + parentId);
 
