@@ -76,3 +76,7 @@ functions:
   verifyChangeRequests:
     handler: ./handlers/verifyChangeRequests.main
     timeout: 180
+
+  createOneMacPackage:
+    handler: ./handlers/createOneMacPackage.main
+    timeout: 180
