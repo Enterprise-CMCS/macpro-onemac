@@ -29,7 +29,7 @@ export const createOneMacPackage = async (item) => {
       GSI1sk: item.componentId,
       eventTimestamp: item.submissionTimestamp,
       componentId: item.componentId,
-      componentType,
+      componentType: item.componentType,
       submissionTimestamp: item.submissionTimestamp,
       attachments: [],
       currentStatus: "Submitted",
