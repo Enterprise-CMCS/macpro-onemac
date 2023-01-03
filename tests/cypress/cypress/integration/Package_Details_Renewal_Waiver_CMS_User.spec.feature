@@ -53,7 +53,7 @@ Feature: Waiver Package Details View: Waiver Renewal for a CMS User
         And verify the additional information section exists
 
     Scenario: Screen Enhance: Waiver Renewal Details View - Terminated
-        And click Terminated checkbox
+        And click Waiver Terminated checkbox
         And click the Waiver Number link in the first row
         And verify the package details page is visible
         And verify action card exists

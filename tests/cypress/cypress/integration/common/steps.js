@@ -1481,7 +1481,7 @@ And("verify Under Review checkbox exists", () => {
   OneMacPackagePage.verifyUnderReviewCheckBoxExists();
 });
 And("verify Approved checkbox exists", () => {
-  OneMacPackagePage.verifyApprovedCheckBoxExists();
+  OneMacPackagePage.verifyApprovedCheckboxExists();
 });
 And("verify Disapproved checkbox exists", () => {
   OneMacPackagePage.verifyDisapprovedCheckboxExists();
@@ -1498,7 +1498,7 @@ And("verify RAI Issued status checkbox exists", () => {
 And("click Under Review checkbox", () => {
   OneMacPackagePage.clickUnderReviewCheckBox();
 });
-And("click Terminated checkbox", () => {
+And("click Waiver Terminated checkbox", () => {
   OneMacPackagePage.clickTerminatedCheckBox();
 });
 And("verify seatool status 1 exists", () => {
