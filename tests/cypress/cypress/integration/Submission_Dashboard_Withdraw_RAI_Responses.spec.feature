@@ -18,7 +18,7 @@ Feature: State should not be able to withdraw RAI Responses in OneMAC
         And Click on Submit Button
         And verify submission Successful message after RAI
         And Verify submission type Waiver RAI
-        And verify the actions button is unavailable
+        And verify the actions button is unavailable in the submission dashboard
 
     Scenario: Can not withdraw SPA RAI Response
         Given I am on Login Page
@@ -42,4 +42,4 @@ Feature: State should not be able to withdraw RAI Responses in OneMAC
         And Click on Submit Button
         And verify submission Successful message after RAI
         And Verify submission type SPA RAI
-        And verify the actions button is unavailable
+        And verify the actions button is unavailable in the submission dashboard

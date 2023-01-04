@@ -1,46 +1,68 @@
-Feature: OY2-11950 State should not be able to withdraw a package in OneMAC in Specific statuses
-
-
-    Scenario: Demonstrate that withdraw a package is not available on Approved status
+Feature: Withdraw package action in package dashboard 
+    Background: Reoccurring steps
         Given I am on Login Page
         When Clicking on Development Login
         When Login with state submitter user
         And click on Packages
-    # And verify that the 3 dots next to Approved status is not clickable
 
-    # Scenario: Demonstrate that withdraw a package is not available on Disapproved status
-    #     Given I am on Login Page
-    #     When Clicking on Development Login
-    #     When Login with state submitter user
-    #     And click on Packages
-    #     And verify that the 3 dots next to Disapproved status is not clickable
-
-    Scenario: Demonstrate that withdraw a package is not available on Withdrawn status
-        Given I am on Login Page
-        When Clicking on Development Login
-        When Login with state submitter user
-        And click on Packages
+    Scenario: Demonstrate that withdraw a package is not available on SPA with Submitted status
         And Click on Filter Button
         And click on Status
         And uncheck all of the status checkboxes
-        And click the Withdrawn checkbox
-        And click on Status
+        And click Submitted checkbox
+        And verify the actions button is disabled in the package dashboard
+
+    Scenario: Demonstrate that withdraw a package is not available on Waiver with Submitted status
+        And click on the Waivers tab
         And Click on Filter Button
-# And verify that the 3 dots next to Withdrawn status is not clickable
+        And click on Status
+        And uncheck all of the status checkboxes
+        And click Submitted checkbox
+        And verify the actions button is disabled in the package dashboard
 
-#These two need data in VAL to be able to pass so commented out for now
-# Scenario: Demonstrate that withdraw a package is not available on Terminated status
-#     Given I am on Login Page
-#     When Clicking on Development Login
-#     When Login with state submitter user
-#     And click on Packages
-#     And click on the Waivers tab
-#     And verify that the 3 dots next to Terminated status is not clickable
+    Scenario: Demonstrate that withdraw a package is not available on SPA with Package Withdrawn status
+        And Click on Filter Button
+        And click on Status
+        And uncheck all of the status checkboxes
+        And click the Package Withdrawn checkbox
+        And verify the actions button is disabled in the package dashboard
 
-# Scenario: Demonstrate that withdraw a package is not available on Unsubmitted status
-#     Given I am on Login Page
-#     When Clicking on Development Login
-#     When Login with state submitter user
-#     And click on Packages
-#     And click on the Waivers tab
-#     And verify that the 3 dots next to Unsubmitted status is not clickable
+    Scenario: Demonstrate that withdraw a package is not available on Waiver with Package Withdrawn status
+        And click on the Waivers tab
+        And Click on Filter Button
+        And click on Status
+        And uncheck all of the status checkboxes
+        And click the Package Withdrawn checkbox
+        And verify the actions button is disabled in the package dashboard
+
+    Scenario: Demonstrate that withdraw a package is not available on SPA with Approved status
+        And Click on Filter Button
+        And click on Status
+        And uncheck all of the status checkboxes
+        And click Approved checkbox
+        And click the actions button in row one
+        And verify withdraw package button is not visible for package in package dashboard
+
+    Scenario: Demonstrate that withdraw a package is not available on Waiver with Approved status
+        And click on the Waivers tab
+        And Click on Filter Button
+        And click on Status
+        And uncheck all of the status checkboxes
+        And click Approved checkbox
+        And click the actions button in row one
+        And verify withdraw package button is not visible for package in package dashboard
+
+    Scenario: Demonstrate that withdraw a package is not available on SPA with Disapproved status
+        And Click on Filter Button
+        And click on Status
+        And uncheck all of the status checkboxes
+        And click Disapproved checkbox
+        And verify the actions button is disabled in the package dashboard
+
+    Scenario: Demonstrate that withdraw a package is not available on Waiver with Disapproved status
+        And click on the Waivers tab
+        And Click on Filter Button
+        And click on Status
+        And uncheck all of the status checkboxes
+        And click Disapproved checkbox
+        And verify the actions button is disabled in the package dashboard
