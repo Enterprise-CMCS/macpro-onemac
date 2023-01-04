@@ -148,5 +148,8 @@ export class oneMacDashboardPage {
   verifyActionsBtnUnvailableOnFirstRow() {
     cy.get(actionsRowOne).not("button");
   }
+  verifyActionsBtnDisabledOnFirstRow() {
+    cy.get(actionsRowOne).find("button").should("be.disabled");
+  }
 }
 export default oneMacDashboardPage;

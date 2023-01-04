@@ -1,4 +1,5 @@
-Feature: OY2-13092 Package Dashboard - Filter
+Feature: Package Dashboard - Filter
+
     Scenario: SPAs Tab - Screen enhancement
         Given I am on Login Page
         When Clicking on Development Login
@@ -8,11 +9,11 @@ Feature: OY2-13092 Package Dashboard - Filter
         And Click on Filter Button
         And verify Filter By Exists
         And verify Close Exists
-        And verify Type Exists
-        #        And verify 90th day filter dropdown exists
-        And verify status DropDown Filter exists
-        # And verify Initial Submission Date filter dropdown exists
         And verify reset Exists
+        And verify state dropdown filter exists
+        And verify Type Exists
+        And verify status DropDown Filter exists
+        And verify Initial Submission Date filter dropdown exists
 
     Scenario: Waivers Tab - Screen enhancement
         Given I am on Login Page
@@ -24,14 +25,13 @@ Feature: OY2-13092 Package Dashboard - Filter
         And Click on Filter Button
         And verify Filter By Exists
         And verify Close Exists
-        And verify Type Exists
-        #        And verify 90th day filter dropdown exists
-        #        And verify expiration date filter dropdown exists
-        And verify status DropDown Filter exists
-        # And verify Initial Submission Date filter dropdown exists
         And verify reset Exists
+        And verify state dropdown filter exists
+        And verify Type Exists
+        And verify status DropDown Filter exists
+        And verify Initial Submission Date filter dropdown exists
 
-    Scenario: SPAs tab - demonstrate that all options match column header and all types of Status columns in the filter
+    Scenario: SPAs tab - verify all types and statuses are available
         Given I am on Login Page
         When Clicking on Development Login
         When Login with state submitter user
@@ -42,10 +42,13 @@ Feature: OY2-13092 Package Dashboard - Filter
         And verify Medicaid SPA Exists
         And click on Status
         And verify Submitted status checkbox exists
-        And verify Withdrawn status checkbox exists
+        And verify Package Withdrawn status checkbox exists
         And verify RAI Issued status checkbox exists
+        And verify Under Review checkbox exists
+        And verify Approved checkbox exists
+        And verify Disapproved checkbox exists
 
-    Scenario: Waivers tab - demonstrate that all type filters for waivers exist
+    Scenario: Waivers tab - verify all types and statuses are available
         Given I am on Login Page
         When Clicking on Development Login
         When Login with state submitter user
@@ -55,6 +58,13 @@ Feature: OY2-13092 Package Dashboard - Filter
         And click on Type
         And verify 1915b Initial Waiver exists
         And verify 1915b Waiver Renewal exists
+        And click on Status
+        And verify Submitted status checkbox exists
+        And verify Package Withdrawn status checkbox exists
+        And verify RAI Issued status checkbox exists
+        And verify Under Review checkbox exists
+        And verify Approved checkbox exists
+        And verify Disapproved checkbox exists
 
     Scenario: SPAs tab - deselect all and verify error message, then select one and verify it exists
         Given I am on Login Page
