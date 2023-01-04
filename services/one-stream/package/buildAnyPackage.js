@@ -1,5 +1,7 @@
 const _ = require("lodash");
 import AWS from "aws-sdk";
+import { DateTime } from "luxon";
+
 import { dynamoConfig, Workflow } from "cmscommonlib";
 
 const dynamoDb = new AWS.DynamoDB.DocumentClient(dynamoConfig);
@@ -141,6 +143,9 @@ export const buildAnyPackage = async (packageId, config) => {
           seaToolStatus
         );
         putParams.Item.currentStatus = SEATOOL_TO_ONEMAC_STATUS[seaToolStatus];
+        putParams.Item.proposedEffectiveDate = DateTime.fromMillis(
+          anEvent.STATE_PLAN.PROPOSED_DATE
+        ).toFormat("yyyy-LL-dd");
         return;
       }
 
