@@ -33,6 +33,8 @@ export const createOneMacPackage = async (item) => {
       eventTimestamp: submissionTimestamp,
       componentId: item.componentId,
       componentType: item.componentType,
+      territory: item.territory,
+      waiverAuthority: item.waiverAuthority,
       submissionTimestamp,
       attachments: [],
       currentStatus: "Submitted",
