@@ -8,32 +8,35 @@ const dynamoDb = new AWS.DynamoDB.DocumentClient(
     : {}
 );
 
+const convertDateToSeaToolTimestamp = (date) => {
+  return new Date(date).getTime();
+};
+
 const validateCreateOneMacPackageEvent = (item) => {
-  if (
-    !item.componentId ||
-    !item.componentType ||
-    !item.submissionTimestamp ||
-    isNaN(item.submissionTimestamp)
-  )
+  if (!item.componentId || !item.componentType || !item.submissionDate)
     return false;
   return true;
 };
 
 export const createOneMacPackage = async (item) => {
+  const submissionTimestamp = convertDateToSeaToolTimestamp(
+    item.submissionDate
+  );
+  const [month, day, year] = item.proposedEffectiveDate.split("/"); // 2023-01-03
   const putParams = {
     TableName: process.env.oneMacTableName,
     Item: {
       pk: item.componentId,
-      sk: `OneMAC#${item.submissionTimestamp}`,
+      sk: `OneMAC#${submissionTimestamp}`,
       GSI1pk: `OneMAC#create${item.componentType}`,
       GSI1sk: item.componentId,
-      eventTimestamp: item.submissionTimestamp,
+      eventTimestamp: submissionTimestamp,
       componentId: item.componentId,
       componentType: item.componentType,
-      submissionTimestamp: item.submissionTimestamp,
+      submissionTimestamp,
       attachments: [],
       currentStatus: "Submitted",
-      proposedEffectiveDate: "none",
+      proposedEffectiveDate: year + "-" + month + "-" + day,
       additionalInformation: item.additionalInformation,
       originallyFrom: `createOneMacPackage Lambda`,
       convertTimestamp: Date.now(),
@@ -49,7 +52,15 @@ export const createOneMacPackage = async (item) => {
 
 export const main = async (event) => {
   if (validateCreateOneMacPackageEvent(event)) {
-    createOneMacPackage(event);
-    return "Created: " + JSON.stringify(event);
+    try {
+      await createOneMacPackage(event);
+      return "Created: " + JSON.stringify(event);
+    } catch (e) {
+      console.log(
+        "%s Create failed: ",
+        event.componentId,
+        JSON.stringify(event)
+      );
+    }
   } else return "Event failed validation: " + JSON.stringify(event);
 };
