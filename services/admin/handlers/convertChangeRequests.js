@@ -74,7 +74,7 @@ export const main = async (event) => {
           if (item.parentType !== "")
             putParams.Item.parentType = item.parentType;
           // default to only processing new
-          if (event.processAll !== "true")
+          if (event?.processAll !== "true")
             putParams.ConditionExpression = "attribute_not_exists(pk)";
 
           console.log(

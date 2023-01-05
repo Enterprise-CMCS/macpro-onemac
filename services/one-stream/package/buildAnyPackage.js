@@ -142,10 +142,17 @@ export const buildAnyPackage = async (packageId, config) => {
           anEvent.STATE_PLAN.SPW_STATUS_ID,
           seaToolStatus
         );
-        putParams.Item.currentStatus = SEATOOL_TO_ONEMAC_STATUS[seaToolStatus];
-        putParams.Item.proposedEffectiveDate = DateTime.fromMillis(
-          anEvent.STATE_PLAN.PROPOSED_DATE
-        ).toFormat("yyyy-LL-dd");
+        seaToolStatus &&
+          (putParams.Item.currentStatus =
+            SEATOOL_TO_ONEMAC_STATUS[seaToolStatus]);
+        if (
+          anEvent.STATE_PLAN.PROPOSED_DATE &&
+          typeof anEvent.STATE_PLAN.PROPOSED_DATE === "number"
+        )
+          putParams.Item.proposedEffectiveDate = DateTime.fromMillis(
+            anEvent.STATE_PLAN.PROPOSED_DATE
+          ).toFormat("yyyy-LL-dd");
+        else putParams.Item.proposedEffectiveDate = "none";
         return;
       }
 
