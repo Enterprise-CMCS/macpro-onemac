@@ -1,5 +1,7 @@
 import AWS from "aws-sdk";
 
+import { Validate } from "cmscommonlib";
+
 const dynamoDb = new AWS.DynamoDB.DocumentClient(
   process.env.IS_OFFLINE
     ? {
@@ -28,11 +30,12 @@ export const main = async (event) => {
           if (componentType === "spa") componentType = "medicaidspa";
           if (componentType === "sparai") componentType = "medicaidsparai";
           if (componentType === "waiver") componentType += item.actionType;
-          if (
-            componentType === "waiverrai" &&
-            item?.parentType === "waiverappk"
-          )
-            componentType = "waiverappkrai";
+          // waiverrais need their parent type
+          if (componentType === "waiverrai") {
+            item.parentType = Validate.getWaiverTypeFromNumber(item.pk);
+            if (item.parentType === "waiverappk")
+              componentType = "waiverappkrai";
+          }
 
           const currentStatus =
             item.state.charAt(0).toUpperCase() + item.state.slice(1);
