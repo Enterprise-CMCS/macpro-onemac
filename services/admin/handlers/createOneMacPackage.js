@@ -8,6 +8,15 @@ const dynamoDb = new AWS.DynamoDB.DocumentClient(
     : {}
 );
 
+const TYPE_MAP = {
+  "Medicaid SPA": "medicaidspa",
+  "CHIP SPA": "chipspa",
+  "1915(b) Amendment": "waiveramendment",
+  "1915(b) Renewal": "waiverrenewal",
+  "1915(b) Initial Waiver": "waivernew",
+  "1915(c)": "waiverappk",
+};
+
 const convertDateToSeaToolTimestamp = (date) => {
   return new Date(date).getTime();
 };
@@ -32,7 +41,7 @@ export const createOneMacPackage = async (item) => {
       GSI1sk: item.componentId,
       eventTimestamp: submissionTimestamp,
       componentId: item.componentId,
-      componentType: item.componentType,
+      componentType: TYPE_MAP[item.componentType],
       territory: item.territory,
       waiverAuthority: item.waiverAuthority,
       submissionTimestamp,
