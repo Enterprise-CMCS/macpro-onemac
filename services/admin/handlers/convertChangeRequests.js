@@ -32,7 +32,9 @@ export const main = async (event) => {
           if (componentType === "waiver") componentType += item.actionType;
           // waiverrais need their parent type
           if (componentType === "waiverrai") {
-            item.parentType = Validate.getWaiverTypeFromNumber(item.pk);
+            item.parentType = Validate.getWaiverTypeFromNumber(
+              item.transmittalNumber
+            );
             if (item.parentType === "waiverappk")
               componentType = "waiverappkrai";
           }
@@ -42,7 +44,7 @@ export const main = async (event) => {
 
           console.log(
             "for %s: %s becomes %s",
-            item.pk,
+            item.transmittalNumber,
             item.type,
             componentType
           );
