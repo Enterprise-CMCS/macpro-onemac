@@ -25,6 +25,8 @@ exports.main = async function (event) {
 
   const packageArray = await csv().fromString(event.csvPackages);
 
+  console.log("PackageArray: ", packageArray);
+
   await Promise.all(packageArray.map(createOneMacPackage));
 
   console.log("\n\n------ END OF RUN REPORT ------");

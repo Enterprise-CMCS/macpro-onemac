@@ -18,7 +18,7 @@ const TYPE_MAP = {
 };
 
 const convertDateToSeaToolTimestamp = (date) => {
-  return new Date(date).getTime();
+  return new Date(date + " 4:00:00 AM").getTime();
 };
 
 const validateCreateOneMacPackageEvent = (item) => {
@@ -31,28 +31,31 @@ export const createOneMacPackage = async (item) => {
   const submissionTimestamp = convertDateToSeaToolTimestamp(
     item.submissionDate
   );
-  const [month, day, year] = item.proposedEffectiveDate.split("/"); // 2023-01-03
+  if (!item.territory)
+    item.territory = item.componentId.toString().substring(0, 2);
   const putParams = {
     TableName: process.env.oneMacTableName,
     Item: {
       pk: item.componentId,
       sk: `OneMAC#${submissionTimestamp}`,
-      GSI1pk: `OneMAC#create${item.componentType}`,
+      GSI1pk: `OneMAC#create${TYPE_MAP[item.componentType]}`,
       GSI1sk: item.componentId,
       eventTimestamp: submissionTimestamp,
       componentId: item.componentId,
       componentType: TYPE_MAP[item.componentType],
       territory: item.territory,
-      waiverAuthority: item.waiverAuthority,
       submissionTimestamp,
       attachments: [],
       currentStatus: "Submitted",
-      proposedEffectiveDate: year + "-" + month + "-" + day,
-      additionalInformation: item.additionalInformation,
       originallyFrom: `createOneMacPackage Lambda`,
       convertTimestamp: Date.now(),
     },
   };
+
+  if (item.waiverAuthority)
+    putParams.Item.waiverAuthority = item.waiverAuthority;
+  if (item.additionalInformation)
+    putParams.Item.additionalInformation = item.additionalInformation;
 
   try {
     await dynamoDb.put(putParams).promise();
@@ -70,7 +73,8 @@ export const main = async (event) => {
       console.log(
         "%s Create failed: ",
         event.componentId,
-        JSON.stringify(event)
+        JSON.stringify(event),
+        e
       );
     }
   } else return "Event failed validation: " + JSON.stringify(event);
