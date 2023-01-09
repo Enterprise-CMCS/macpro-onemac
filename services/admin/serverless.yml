@@ -72,6 +72,8 @@ functions:
   convertChangeRequests:
     handler: ./handlers/convertChangeRequests.main
     timeout: 180
+    events:
+      - schedule: rate(15 minutes)
 
   verifyChangeRequests:
     handler: ./handlers/verifyChangeRequests.main
