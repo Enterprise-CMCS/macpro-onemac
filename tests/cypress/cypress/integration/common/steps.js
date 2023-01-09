@@ -1501,6 +1501,9 @@ And("click Under Review checkbox", () => {
 And("click Waiver Terminated checkbox", () => {
   OneMacPackagePage.clickTerminatedCheckBox();
 });
+And("click the Withdrawal Requested checkbox", () => {
+  OneMacPackagePage.clickWithdrawalRequestedCheckBox();
+});
 And("verify seatool status 1 exists", () => {
   OneMacPackagePage.verifyseaToolStatus1CheckBoxExists();
 });
@@ -2413,6 +2416,12 @@ And("verify the Proposed Effective Date is NA", () => {
 And("verify the Proposed Effective Date is Pending", () => {
   OneMacPackageDetailsPage.verifyproposedEffectiveDateHeaderContainsPending();
 });
+And(
+  "verify the Proposed Effective Date is a date formated like Mon dd yyyy",
+  () => {
+    OneMacPackageDetailsPage.verifyproposedEffectiveDateHeaderContainsDate();
+  }
+);
 And("click the Waiver Number link for the Amendment", () => {
   cy.fixture("submissionDashboardWaiverNumbers.json").then((data) => {
     var number = `${data.newWaiverNumber}.R00.M00`;

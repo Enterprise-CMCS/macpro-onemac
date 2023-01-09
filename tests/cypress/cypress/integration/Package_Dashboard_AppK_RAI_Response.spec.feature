@@ -6,7 +6,14 @@ Feature: RAI Response for Appendix K Amendment - Package View
         When Login with state submitter user
         And click on Packages
         And click on the Waivers tab
-        And search for the Appendix K Amendment in RAI Issued status
+        And Click on Filter Button
+        And click on Type
+        And uncheck all of the type checkboxes
+        And click 1915c Appendix K Amendment check box
+        And click on Type
+        And click on Status
+        And uncheck all of the status checkboxes
+        And click RAI Issued checkbox
 
     Scenario: Respond to RAI from package dashboard
         And click the actions button in row one
