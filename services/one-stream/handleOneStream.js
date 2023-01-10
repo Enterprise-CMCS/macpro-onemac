@@ -87,6 +87,12 @@ export const main = async (eventBatch) => {
             break;
           case "SEATool": {
             const [, topic] = newEventData.GSI1pk.S.split("#");
+            const actionType = newEventData.ACTIONTYPES?.L.map((oneType) =>
+              newEventData.STATE_PLAN.M.ACTION_TYPE.N === oneType.M.ACTION_ID.N
+                ? oneType.M.ACTION_NAME.S
+                : null
+            ).filter(Boolean)[0];
+
             switch (topic) {
               case "Medicaid_SPA":
                 packageToBuild.type = Workflow.ONEMAC_TYPE.MEDICAID_SPA;
@@ -95,23 +101,16 @@ export const main = async (eventBatch) => {
                 packageToBuild.type = Workflow.ONEMAC_TYPE.CHIP_SPA;
                 break;
               case "1915b_waivers":
-                if (newEventData?.ACTIONTYPES?.L[0].M.ACTION_NAME.S === "Renew")
+                if (actionType === "Renew")
                   packageToBuild.type = Workflow.ONEMAC_TYPE.WAIVER_RENEWAL;
-                else if (
-                  newEventData?.ACTIONTYPES?.L[0].M.ACTION_NAME.S === "Amend"
-                )
+                else if (actionType === "Amend")
                   packageToBuild.type = Workflow.ONEMAC_TYPE.WAIVER_AMENDMENT;
-                else if (
-                  newEventData?.ACTIONTYPES?.L[0].M.ACTION_NAME.S === "New"
-                )
+                else if (actionType === "New")
                   packageToBuild.type = Workflow.ONEMAC_TYPE.WAIVER_INITIAL;
                 break;
               case "1915c_waivers":
-                console.log(
-                  "newEventData?.ACTIONTYPES?.M.ACTION_NAME.S is: ",
-                  newEventData?.ACTIONTYPES?.L[0].M.ACTION_NAME.S
-                );
-                if (newEventData?.ACTIONTYPES?.L[0].M.ACTION_NAME.S === "Amend")
+                console.log("actionType is: ", actionType);
+                if (actionType === "Amend")
                   packageToBuild.type = Workflow.ONEMAC_TYPE.WAIVER_APP_K;
                 else console.log("newEventData is: ", newEventData);
                 break;
