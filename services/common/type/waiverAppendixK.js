@@ -20,5 +20,6 @@ export const waiverAppendixK = {
     "submitterName",
     "submitterEmail",
     "waiverAuthority",
+    "title",
   ],
 };
