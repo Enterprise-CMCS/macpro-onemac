@@ -3,7 +3,7 @@ export const waiverRenewal = {
   whichTab: "waiver",
   typeLabel: "1915(b) Waiver Renewal",
   idLabel: "1915(b) Waiver Renewal Number",
-  idRegex: "^[A-Z]{2}[.-][0-9]{4,5}.R(0[1-9]|[1-9][0-9]).00$",
+  idRegex: "^[A-Z]{2}[-][0-9]{4,5}[.]R(0[1-9]|[1-9][0-9])[.]00$",
   idMustExist: false,
   allowMultiplesWithSameId: false,
   requiredAttachments: [],

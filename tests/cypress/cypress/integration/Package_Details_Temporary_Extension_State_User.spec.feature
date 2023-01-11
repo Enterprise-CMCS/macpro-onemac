@@ -8,7 +8,7 @@ Feature: Waiver Package Details View:  Temporary Extension for a State User
         And Click on Filter Button
         And click on Type
         And uncheck all of the type checkboxes
-        And click 1915b Waiver Amendment check box
+        And click Temporary Extension check box
         And click on Type
         And click on Status
         And uncheck all of the status checkboxes
