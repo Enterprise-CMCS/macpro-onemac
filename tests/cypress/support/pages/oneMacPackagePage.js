@@ -98,6 +98,10 @@ const MedicaidSPACheckBox =
 const approveCheckBox = "//span[contains(text(),'Approved')]";
 //Element is Xpath use cy.xpath instead of cy.get
 const underReviewCheckBox = "//span[contains(text(),'Under Review')]";
+//Element is Xpath use cy.xpath instead of cy.get
+const withdrawalRequestedCheckBox =
+  "//span[contains(text(),'Withdrawal Requested')]";
+//Element is Xpath use cy.xpath instead of cy.get
 const terminatedCheckBox = "//span[contains(text(),'Terminated')]";
 //Element is Xpath use cy.xpath instead of cy.get
 const withdrawnCheckBox = "//span[contains(text(),'Package Withdrawn')]";
@@ -451,6 +455,12 @@ export class oneMacPackagePage {
   }
   clickTerminatedCheckBox() {
     cy.xpath(terminatedCheckBox).click();
+  }
+  verifyWithdrawalRequestedCheckBoxCheckBox() {
+    cy.xpath(withdrawalRequestedCheckBox).should("be.visible");
+  }
+  clickWithdrawalRequestedCheckBox() {
+    cy.xpath(withdrawalRequestedCheckBox).click();
   }
   verifyWithdrawnCheckBoxExists() {
     cy.xpath(withdrawnCheckBox).should("be.visible");

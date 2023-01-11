@@ -231,6 +231,11 @@ export class oneMacPackageDetailsPage {
   verifyproposedEffectiveDateHeaderContainsPending() {
     cy.xpath(proposedEffectiveDateHeader).next().contains("Pending");
   }
+  verifyproposedEffectiveDateHeaderContainsDate() {
+    cy.xpath(proposedEffectiveDateHeader)
+      .next()
+      .contains(/^[a-zA-Z]{3}.\d{2}.\d{4}||^[a-zA-Z]{3}.\d{1}.\d{4}/);
+  }
   verifyAmendmentNumberHeaderExists() {
     cy.xpath(amendmentNumberHeader).should("be.visible");
   }
