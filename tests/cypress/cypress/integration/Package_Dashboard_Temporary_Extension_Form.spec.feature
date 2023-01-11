@@ -28,7 +28,14 @@ Feature: Package Dashboard Temporary Extension
 
     Scenario: Verify user can create a temporary extension from the initial waiver package details 
         And click on the Waivers tab
-        And search for approved Initial Waiver Number 1
+        And Click on Filter Button
+        And click on Type
+        And uncheck all of the type checkboxes
+        And click 1915b Initial Waiver check box
+        And click on Type
+        And click on Status
+        And uncheck all of the status checkboxes
+        And click Approved checkbox
         And click the Waiver Number link in the first row
         And verify Request a Temporary Extension package action exists
         And click Request a Temporary Extension package action
@@ -40,24 +47,36 @@ Feature: Package Dashboard Temporary Extension
         And Click on Submit Button
         And verify submission successful message in the alert bar
     
-    #test to backfill
-    # Scenario: Verify user can create a temporary extension from the waiver renewal package details 
-    #     And click on the Waivers tab
-    #     And search for approved Waiver Renewal Number 1
-    #     And click the Waiver Number link in the first row
-    #     And verify Request a Temporary Extension package action exists
-    #     And click Request a Temporary Extension package action
-    #     And select the 1915b Temporary Extension Type button
-    #     And verify the parent ID is prefilled in the form
-    #     And Type Temporary Extension Number 4
-    #     And upload Waiver Extension Request
-    #     And Type Additonal Info Comments in new form
-    #     And Click on Submit Button
-    #     And verify submission successful message in the alert bar
-
-    Scenario: Verify user can create a temporary extension from the package dashboard waiver tab
+    Scenario: Verify user can create a temporary extension from the waiver renewal package details 
         And click on the Waivers tab
-        And search for approved Initial Waiver Number 1
+        And Click on Filter Button
+        And click on Type
+        And uncheck all of the type checkboxes
+        And click 1915b Waiver Renewal check box
+        And click on Type
+        And click on Status
+        And uncheck all of the status checkboxes
+        And click the Waiver Number link in the first row
+        And verify Request a Temporary Extension package action exists
+        And click Request a Temporary Extension package action
+        And select the 1915b Temporary Extension Type button
+        And verify the parent ID is prefilled in the form
+        And Type Temporary Extension Number 4
+        And upload Waiver Extension Request
+        And Type Additonal Info Comments in new form
+        And Click on Submit Button
+        And verify submission successful message in the alert bar
+
+    Scenario: Verify user can create a temporary extension from the package dashboard waiver tab - initial
+        And click on the Waivers tab
+        And Click on Filter Button
+        And click on Type
+        And uncheck all of the type checkboxes
+        And click 1915b Initial Waiver check box
+        And click on Type
+        And click on Status
+        And uncheck all of the status checkboxes
+        And click Approved checkbox
         And click the actions button in row one
         And verify the Request Temporary Extension button is displayed
         And click the Request Temporary Extension button
@@ -69,17 +88,23 @@ Feature: Package Dashboard Temporary Extension
         And Click on Submit Button
         And verify submission successful message in the alert bar
     
-    #test to backfill
-    # Scenario: Verify user can create a temporary extension from the package dashboard waiver tab
-    #     And click on the Waivers tab
-    #     And search for approved Waiver Renewal Number 1
-    #     And click the actions button in row one
-    #     And verify the Request Temporary Extension button is displayed
-    #     And click the Request Temporary Extension button
-    #     And select the 1915b Temporary Extension Type button
-    #     And verify the parent ID is prefilled in the form
-    #     And Type Temporary Extension Number 5
-    #     And upload Waiver Extension Request
-    #     And Type Additonal Info Comments in new form
-    #     And Click on Submit Button
-    #     And verify submission successful message in the alert bar
+    Scenario: Verify user can create a temporary extension from the package dashboard waiver tab - renewal
+        And click on the Waivers tab
+        And Click on Filter Button
+        And click on Type
+        And uncheck all of the type checkboxes
+        And click 1915b Waiver Renewal check box
+        And click on Type
+        And click on Status
+        And uncheck all of the status checkboxes
+        And click Approved checkbox
+        And click the actions button in row one
+        And verify the Request Temporary Extension button is displayed
+        And click the Request Temporary Extension button
+        And select the 1915b Temporary Extension Type button
+        And verify the parent ID is prefilled in the form
+        And Type Temporary Extension Number 5
+        And upload Waiver Extension Request
+        And Type Additonal Info Comments in new form
+        And Click on Submit Button
+        And verify submission successful message in the alert bar
