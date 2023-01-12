@@ -910,18 +910,6 @@ And("search for Unique Valid Waiver Number with 5 Characters", () => {
   });
   cy.wait(1000);
 });
-And("click actions button on the child row", () => {
-  OneMacPackagePage.clickActionsColumnForChild();
-});
-And("verify actions button on the child row is disabled", () => {
-  OneMacPackagePage.verifyChildActionsBtnIsDisabled();
-});
-And("click actions button for Temporary Extension in Child Row", () => {
-  OneMacPackagePage.clickActionsBtnForTempExtensionChild();
-});
-And("verify child row has status {string}", (status) => {
-  OneMacPackagePage.verifyChildRowStatusIs(status);
-});
 And("verify success message for Withdrawal", () => {
   OneMacPackagePage.verifyPackageWithdrawalMessageIsDisplayed();
 });
@@ -1468,6 +1456,15 @@ And("verify 1915b Initial Waiver exists", () => {
 And("verify 1915b Waiver Renewal exists", () => {
   OneMacPackagePage.verifyWaiverRenewal1915bCheckBoxExists();
 });
+And("verify 1915b Waiver Amendment check box exists", () => {
+  OneMacPackagePage.verify1915bWaiverAmendmentCheckBox();
+});
+And("verify 1915c Appendix K Amendment check box exists", () => {
+  OneMacPackagePage.verify1915cAppendixKAmendmentCheckBox();
+});
+And("verify Temporary Extension exists", () => {
+  OneMacPackagePage.verifyTemporaryExtensionCheckBoxExists();
+});
 And("verify CHIP SPA Exists", () => {
   OneMacPackagePage.verifyCHIPSPACheckBoxExists();
 });
@@ -1480,23 +1477,32 @@ And("click on Status", () => {
 And("verify rai response submitted exists", () => {
   OneMacPackagePage.verifyraiResponseSubmittedCheckBoxExists();
 });
-And("verify package in review exists", () => {
-  OneMacPackagePage.verifyInReviewCheckBoxExists();
+And("verify Under Review checkbox exists", () => {
+  OneMacPackagePage.verifyUnderReviewCheckBoxExists();
+});
+And("verify Approved checkbox exists", () => {
+  OneMacPackagePage.verifyApprovedCheckboxExists();
+});
+And("verify Disapproved checkbox exists", () => {
+  OneMacPackagePage.verifyDisapprovedCheckboxExists();
 });
 And("verify Submitted status checkbox exists", () => {
   OneMacPackagePage.verifySubmittedCheckboxExists();
 });
-And("verify Withdrawn status checkbox exists", () => {
+And("verify Package Withdrawn status checkbox exists", () => {
   OneMacPackagePage.verifyWithdrawnCheckBoxExists();
 });
 And("verify RAI Issued status checkbox exists", () => {
   OneMacPackagePage.verifyRaiIssuedCheckboxExists();
 });
-And("click In Review checkbox", () => {
-  OneMacPackagePage.clickInReviewCheckBox();
+And("click Under Review checkbox", () => {
+  OneMacPackagePage.clickUnderReviewCheckBox();
 });
-And("click Terminated checkbox", () => {
+And("click Waiver Terminated checkbox", () => {
   OneMacPackagePage.clickTerminatedCheckBox();
+});
+And("click the Withdrawal Requested checkbox", () => {
+  OneMacPackagePage.clickWithdrawalRequestedCheckBox();
 });
 And("verify seatool status 1 exists", () => {
   OneMacPackagePage.verifyseaToolStatus1CheckBoxExists();
@@ -1515,6 +1521,9 @@ And("click 1915c Appendix K Amendment check box", () => {
 });
 And("click 1915b Waiver Amendment check box", () => {
   OneMacPackagePage.click1915bWaiverAmendmentCheckBox();
+});
+And("click Temporary Extension check box", () => {
+  OneMacPackagePage.clickTemporaryExtensionCheckBox();
 });
 And("click CHIP SPA check box", () => {
   OneMacPackagePage.clickCHIPSPACheckBox();
@@ -1824,6 +1833,15 @@ And("uncheck all of the type checkboxes", () => {
 And("click RAI Issued checkbox", () => {
   OneMacPackagePage.clickRaiIssuedCheckbox();
 });
+And("click Pending - RAI checkbox", () => {
+  OneMacPackagePage.clickPendingRaiCheckbox();
+});
+And("click the Pending - Concurrence checkbox", () => {
+  OneMacPackagePage.clickPendingConcurrenceCheckbox();
+});
+And("click the Pending - Approval checkbox", () => {
+  OneMacPackagePage.clickPendingApprovalCheckbox();
+});
 And("click Package Approved checkbox", () => {
   OneMacPackagePage.clickPackageApprovedCheckbox();
 });
@@ -1848,7 +1866,7 @@ And("click the SPA ID link in the first row", () => {
 And("click the Waiver Number link in the first row", () => {
   OneMacPackagePage.clickWaiverNumberLinkInFirstRow();
 });
-And("click the Withdrawn checkbox", () => {
+And("click the Package Withdrawn checkbox", () => {
   OneMacPackagePage.clickWithdrawnCheckBoxExists();
 });
 And("verify that the value of the column for the 90th day is Pending", () => {
@@ -1859,6 +1877,12 @@ And("click Unsubmitted checkbox", () => {
 });
 And("click Submitted checkbox", () => {
   OneMacPackagePage.clickSubmittedCheckbox();
+});
+And("click Submitted - Intake Needed checkbox", () => {
+  OneMacPackagePage.clickSubmittedIntakeNeededCheckbox();
+});
+And("click the Pending checkbox", () => {
+  OneMacPackagePage.clickPendingCheckbox();
 });
 And("verify the type in row one is some kind of 1915 Waiver", () => {
   OneMacPackagePage.verifypackageRowOneTypeContains1915Waiver();
@@ -2088,6 +2112,18 @@ And("click on the CMS Role Approver role", () => {
 And("verify that Request a Role Change button does not exist", () => {
   OneMacUserManagmentPage.verifyRequestARoleChangeBtnDoesNotExist();
 });
+And(
+  "verify withdraw package button is visible for package in package dashboard",
+  () => {
+    OneMacPackagePage.verifyWithdrawPackageBtnExists();
+  }
+);
+And(
+  "verify withdraw package button is not visible for package in package dashboard",
+  () => {
+    OneMacPackagePage.verifyWithdrawPackageBtnDoesNotExist();
+  }
+);
 And("click withdraw package button", () => {
   OneMacPackagePage.clickWithdrawPackageBtn();
 });
@@ -2154,13 +2190,19 @@ And("verify there is a Type header in the details section", () => {
 And("verify a type containing SPA exists for the Type", () => {
   OneMacPackageDetailsPage.verifyTypeContainsSPA();
 });
+And("verify the type is Medicaid SPA", () => {
+  OneMacPackageDetailsPage.verifyTypeContainsMedicaidSPA();
+});
+And("verify the type is CHIP SPA ", () => {
+  OneMacPackageDetailsPage.verifyTypeContainsCHIPSPA();
+});
 And("verify the type is Initial Waiver", () => {
   OneMacPackageDetailsPage.verifyTypeContainsInitialWaiver();
 });
 And("verify the type is Waiver Renewal", () => {
   OneMacPackageDetailsPage.verifyTypeContainsWaiverRenewal();
 });
-And("verify the type is 1915b Temporary Extension", () => {
+And("verify the type is Temporary Extension", () => {
   OneMacPackageDetailsPage.verifyTypeContainsTempExtension();
 });
 And("verify the type is 1915b Waiver Amendment", () => {
@@ -2371,6 +2413,15 @@ And(
 And("verify the Proposed Effective Date is NA", () => {
   OneMacPackageDetailsPage.verifyproposedEffectiveDateHeaderContainsNA();
 });
+And("verify the Proposed Effective Date is Pending", () => {
+  OneMacPackageDetailsPage.verifyproposedEffectiveDateHeaderContainsPending();
+});
+And(
+  "verify the Proposed Effective Date is a date formated like Mon dd yyyy",
+  () => {
+    OneMacPackageDetailsPage.verifyproposedEffectiveDateHeaderContainsDate();
+  }
+);
 And("click the Waiver Number link for the Amendment", () => {
   cy.fixture("submissionDashboardWaiverNumbers.json").then((data) => {
     var number = `${data.newWaiverNumber}.R00.M00`;
@@ -2533,8 +2584,14 @@ And("reset EUA CMS Read Only User state if needed", () => {
     });
 });
 
-And("verify the actions button is unavailable", () => {
-  OneMacDashboardPage.verifyActionsBtnUnvailableOnFirstRow();
+And(
+  "verify the actions button is unavailable in the submission dashboard",
+  () => {
+    OneMacDashboardPage.verifyActionsBtnUnvailableOnFirstRow();
+  }
+);
+And("verify the actions button is disabled in the package dashboard", () => {
+  OneMacDashboardPage.verifyActionsBtnDisabledOnFirstRow();
 });
 And("verify actions column is unavailable", () => {
   OneMacPackagePage.verifyActionsColumnDoesNotExist();

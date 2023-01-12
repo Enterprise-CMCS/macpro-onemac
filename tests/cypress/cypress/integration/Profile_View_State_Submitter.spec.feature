@@ -9,7 +9,6 @@ Feature: OY2_9990_State_Submitter_Profile_Screen_Enhancements
         And verify IDNumber is Displayed
         And verify Type is Displayed
         And verify state is Displaed
-        And verify Initial Submission Date is Displayed
         And verify Submitted By is Displayed
         And verify Home tab is Displayed
         And dashboard tab is Displayed

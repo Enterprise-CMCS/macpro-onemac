@@ -9,7 +9,6 @@ Feature: OY2_10093_Helpdesk_User
         And verify IDNumber is Displayed
         And verify Type is Displayed
         And verify state is Displaed
-        And verify Initial Submission Date is Displayed
         And verify Submitted By is Displayed
         And Click on User Management Tab
         Then i am on User Management Page

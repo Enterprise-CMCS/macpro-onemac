@@ -72,7 +72,17 @@ functions:
   convertChangeRequests:
     handler: ./handlers/convertChangeRequests.main
     timeout: 180
+    events:
+      - schedule: rate(15 minutes)
 
   verifyChangeRequests:
     handler: ./handlers/verifyChangeRequests.main
+    timeout: 180
+
+  createOneMacPackage:
+    handler: ./handlers/createOneMacPackage.main
+    timeout: 180
+
+  batchCreateOMP:
+    handler: ./handlers/batchCreateOMP.main
     timeout: 180

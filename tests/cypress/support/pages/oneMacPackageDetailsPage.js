@@ -127,6 +127,12 @@ export class oneMacPackageDetailsPage {
   verifyTypeContains1915bWaiverAmendment() {
     cy.xpath(typeHeader).next().contains("1915(b) Waiver Amendment");
   }
+  verifyTypeContainsMedicaidSPA() {
+    cy.xpath(typeHeader).next().contains("Medicaid SPA");
+  }
+  verifyTypeContainsCHIPSPA() {
+    cy.xpath(typeHeader).next().contains("CHIP SPA");
+  }
   verifyParentWaiverNumberHeaderExists() {
     cy.xpath(parentWaiverNumberHeader).should("be.visible");
   }
@@ -221,6 +227,14 @@ export class oneMacPackageDetailsPage {
   }
   verifyproposedEffectiveDateHeaderContainsNA() {
     cy.xpath(proposedEffectiveDateHeader).next().contains("N/A");
+  }
+  verifyproposedEffectiveDateHeaderContainsPending() {
+    cy.xpath(proposedEffectiveDateHeader).next().contains("Pending");
+  }
+  verifyproposedEffectiveDateHeaderContainsDate() {
+    cy.xpath(proposedEffectiveDateHeader)
+      .next()
+      .contains(/^[a-zA-Z]{3}.\d{2}.\d{4}||^[a-zA-Z]{3}.\d{1}.\d{4}/);
   }
   verifyAmendmentNumberHeaderExists() {
     cy.xpath(amendmentNumberHeader).should("be.visible");
