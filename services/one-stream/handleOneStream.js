@@ -52,8 +52,9 @@ export const main = async (eventBatch) => {
           case "SEATool": {
             const [, topic] = newEventData.GSI1pk.S.split("#");
             let actionType;
-            if (newEventData.ACTIONTYPES)
-              actionType = newEventData.ACTIONTYPES?.L.map((oneType) =>
+            console.log("%s ACTIONTYPES: ", inPK, newEventData.ACTIONTYPES);
+            if (!newEventData.ACTIONTYPES.NULL)
+              actionType = newEventData.ACTIONTYPES.L.map((oneType) =>
                 newEventData.STATE_PLAN.M.ACTION_TYPE.N ===
                 oneType.M.ACTION_ID.N
                   ? oneType.M.ACTION_NAME.S
