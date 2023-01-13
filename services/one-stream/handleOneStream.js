@@ -87,11 +87,15 @@ export const main = async (eventBatch) => {
             break;
           case "SEATool": {
             const [, topic] = newEventData.GSI1pk.S.split("#");
-            const actionType = newEventData.ACTIONTYPES?.L.map((oneType) =>
-              newEventData.STATE_PLAN.M.ACTION_TYPE.N === oneType.M.ACTION_ID.N
-                ? oneType.M.ACTION_NAME.S
-                : null
-            ).filter(Boolean)[0];
+            let actionType;
+            if (newEventData.ACTIONTYPES)
+              actionType = newEventData.ACTIONTYPES?.L.map((oneType) =>
+                newEventData.STATE_PLAN.M.ACTION_TYPE.N ===
+                oneType.M.ACTION_ID.N
+                  ? oneType.M.ACTION_NAME.S
+                  : null
+              ).filter(Boolean)[0];
+            console.log("%s actionType resolves to: ", inPK, actionType);
 
             switch (topic) {
               case "Medicaid_SPA":
