@@ -33,6 +33,7 @@ export const buildAnyPackage = async (packageId, config) => {
       ":pk": packageId,
     },
   };
+  console.log("%s the new query params are: ", packageId, queryParams);
 
   try {
     const result = await dynamoDb.query(queryParams).promise();
@@ -201,4 +202,5 @@ export const buildAnyPackage = async (packageId, config) => {
   } catch (e) {
     console.log("%s buildAnyPackage error: ", packageId, e);
   }
+  console.log("%s the end of things", packageId);
 };
