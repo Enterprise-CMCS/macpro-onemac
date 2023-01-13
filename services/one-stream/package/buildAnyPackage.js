@@ -15,7 +15,6 @@ const SEATOOL_TO_ONEMAC_STATUS = {
   [Workflow.SEATOOL_STATUS.TERMINATED]: Workflow.ONEMAC_STATUS.TERMINATED,
   [Workflow.SEATOOL_STATUS.PENDING_CONCURRENCE]:
     Workflow.ONEMAC_STATUS.PENDING_CONCURRENCE,
-  [Workflow.SEATOOL_STATUS.UNSUBMITTED]: Workflow.ONEMAC_STATUS.UNSUBMITTED,
   [Workflow.SEATOOL_STATUS.PENDING_APPROVAL]:
     Workflow.ONEMAC_STATUS.PENDING_APPROVAL,
   [Workflow.SEATOOL_STATUS.UNKNOWN]: Workflow.ONEMAC_STATUS.SUBMITTED,
@@ -144,6 +143,7 @@ export const buildAnyPackage = async (packageId, config) => {
           seaToolStatus
         );
         seaToolStatus &&
+          SEATOOL_TO_ONEMAC_STATUS[seaToolStatus] &&
           (putParams.Item.currentStatus =
             SEATOOL_TO_ONEMAC_STATUS[seaToolStatus]);
         if (
