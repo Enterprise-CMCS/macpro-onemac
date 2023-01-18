@@ -1,11 +1,11 @@
-import { roleLabels, ChangeRequest } from "cmscommonlib";
+import { roleLabels, Workflow } from "cmscommonlib";
 import { format } from "date-fns";
 
 const CSV_HEADER = {
   "submission-table":
     "SPA ID/Waiver Number,Type,State,Date Submitted,Submitted By",
   "package-dashboard":
-    "SPA ID/Waiver Number,Type,State,Date Submitted,Submitted By",
+    "SPA ID/Waiver Number,Type,State,Initial Submission Date,Submitted By",
   "user-table": "Name,Email,State,Status,Role,Last Modified,Modified By",
 };
 
@@ -48,7 +48,7 @@ const rowTransformer = {
   ],
   "package-dashboard": (row) => [
     row.componentId,
-    ChangeRequest.LABEL[row.componentType],
+    Workflow.ONEMAC_LABEL[row.componentType],
     row.componentId ? row.componentId.toString().substring(0, 2) : "--",
     serializeDate(row.submissionTimestamp),
     JSON.stringify(row.submitterName),
