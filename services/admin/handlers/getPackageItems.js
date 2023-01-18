@@ -13,19 +13,19 @@ export const main = async (event) => {
       ":pk": event.packageId,
     },
   };
-  console.log("%s queryParams: ", packageId, queryParams);
+  console.log("%s queryParams: ", event.packageId, queryParams);
 
   try {
     const result = await dynamoDb.query(queryParams).promise();
-    console.log("%s query result: ", packageId, result);
+    console.log("%s query result: ", event.packageId, result);
     if (result?.Items.length <= 0) {
-      console.log("%s did not have Items?", packageId);
+      console.log("%s did not have Items?", event.packageId);
       return;
     }
 
     return result.Items;
   } catch (e) {
-    console.log("%s getPackageItems error: ", packageId, e);
+    console.log("%s getPackageItems error: ", event.packageId, e);
     throw e;
   }
 };
