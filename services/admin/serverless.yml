@@ -86,3 +86,7 @@ functions:
   batchCreateOMP:
     handler: ./handlers/batchCreateOMP.main
     timeout: 180
+
+  getPackageItems:
+    handler: ./handlers/getPackageItems.main
+    timeout: 180
