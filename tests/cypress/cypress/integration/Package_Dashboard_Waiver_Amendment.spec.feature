@@ -68,10 +68,8 @@ Feature: Create a waiver Amendment
         And Click on Submit Button
         And verify submission successful message in the alert bar
         And verify the Waivers tab is selected
-        And search for "MD-5533.R00"
-        And verify id number in the first row matches approved waiver number
-        And click parent row expander
-        And verify id number in the child row matches new waiver amendment number 1
+        And search for "MD-5533.R00.01"
+        And verify id number in the first row matches new waiver amendment number 1
 
     Scenario: Verify user can create an amendment from the package details Mini-Dashboard
         And click on the Waivers tab

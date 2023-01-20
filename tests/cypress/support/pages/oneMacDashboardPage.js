@@ -1,11 +1,9 @@
-import { assert } from "console";
-
 const newSubmissionBTN = "#new-submission-button";
 const successMessage = "#alert_3";
 const successMessage1 = "#alert-bar";
 //Element is Xpath use cy.xpath instead of cy.get
 const successMessageAfterRAIResponse =
-  '//*[contains(text(),"Thanks for your submission. We truly value your feedback. Please consider taking our ")]';
+  '//*[contains(text(),"Your submission has been received.")]';
 
 //Element is Xpath use cy.xpath instead of cy.get
 const IDNUMBER = (id) => `//a[text()="${id}"]`;
@@ -26,7 +24,7 @@ const exportToEXcelCSVBTN = "#new-submission-button";
 const idNumberHeader = "#transmittalNumberColHeader";
 const typeHeader = "#typeColHeader";
 const stateHeader = "#territoryColHeader";
-const dateSubmittedHeader = "#submittedAtColHeader";
+const initialSubmissionDateHeader = "#submissionTimestampColHeader";
 const submittedByHeader = "#submitterColHeader";
 //Element is Xpath use cy.xpath instead of cy.get
 const packageTab = '//a[@id="packageListLink"]';
@@ -53,7 +51,7 @@ export class oneMacDashboardPage {
 
   verifySuccessMessageIsDisplayedAfterRAIResponse() {
     cy.xpath(successMessageAfterRAIResponse).contains(
-      "Thanks for your submission"
+      "Your submission has been received."
     );
   }
 
@@ -110,8 +108,8 @@ export class oneMacDashboardPage {
   verifyStateHeaderIsDisplayed() {
     cy.get(stateHeader).should("be.visible");
   }
-  verifyDateSubmittedHeaderIsDisplayed() {
-    cy.get(dateSubmittedHeader).should("be.visible");
+  verifyInitialSubmissionDateHeaderIsDisplayed() {
+    cy.get(initialSubmissionDateHeader).should("be.visible");
   }
   verifySubmittedByHeadersDisplayed() {
     cy.get(submittedByHeader).should("be.visible");
@@ -149,6 +147,9 @@ export class oneMacDashboardPage {
   }
   verifyActionsBtnUnvailableOnFirstRow() {
     cy.get(actionsRowOne).not("button");
+  }
+  verifyActionsBtnDisabledOnFirstRow() {
+    cy.get(actionsRowOne).find("button").should("be.disabled");
   }
 }
 export default oneMacDashboardPage;

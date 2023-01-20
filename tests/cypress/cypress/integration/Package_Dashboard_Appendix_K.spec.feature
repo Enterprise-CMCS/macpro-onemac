@@ -28,8 +28,8 @@ Feature: Appendix K Waiver Type Selection
         And verify the package details page is visible
         And verify action card exists
         And verify the status on the card is "Submitted"
-        And verify withdraw package action exists
         And verify package actions header is visible
+        And verify there are no package actions available
         And verify the details section exists
         And verify the waiver authority header exists
         And verify there is a State header in the details section

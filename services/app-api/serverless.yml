@@ -103,14 +103,6 @@ functions:
     role: LambdaApiRole
     timeout: 180
 
-  convert:
-    handler: convert.main
-    role: LambdaApiRole
-    timeout: 180
-    warmup:
-      default:
-        enabled: false
-
   submitInitialWaiver:
     handler: form/submitInitialWaiver.main
     role: LambdaApiRole
@@ -247,6 +239,46 @@ functions:
     events:
       - http:
           path: validateParentOfTemporaryExtension/{parentId}
+          method: get
+          cors: true
+          authorizer: aws_iam
+
+  validateParentOfMedicaidSpaRaiResponse:
+    handler: validation/validateParentOfMedicaidSpaRaiResponse.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: validateParentOfMedicaidSpaRaiResponse/{parentId}
+          method: get
+          cors: true
+          authorizer: aws_iam
+
+  validateParentOfChipSpaRaiResponse:
+    handler: validation/validateParentOfChipSpaRaiResponse.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: validateParentOfChipSpaRaiResponse/{parentId}
+          method: get
+          cors: true
+          authorizer: aws_iam
+
+  validateParentOfWaiverRaiResponse:
+    handler: validation/validateParentOfWaiverRaiResponse.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: validateParentOfWaiverRaiResponse/{parentId}
+          method: get
+          cors: true
+          authorizer: aws_iam
+
+  validateParentOfAppKRaiResponse:
+    handler: validation/validateParentOfAppKRaiResponse.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: validateParentOfAppKRaiResponse/{parentId}
           method: get
           cors: true
           authorizer: aws_iam

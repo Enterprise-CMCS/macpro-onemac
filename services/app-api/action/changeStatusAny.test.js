@@ -1,12 +1,12 @@
 import { RESPONSE_CODE } from "cmscommonlib";
 import { changeStatusAny } from "./changeStatusAny";
 import { getUser } from "../getUser";
-import updateComponent from "../utils/updateComponent";
+import { newEvent } from "../utils/newEvent";
 import sendEmail from "../libs/email-lib";
 
 jest.mock("../getUser");
-jest.mock("../utils/updateComponent");
 jest.mock("../libs/email-lib");
+jest.mock("../utils/newEvent");
 
 const testDoneBy = {
   roleList: [
@@ -25,11 +25,6 @@ const testUnauthUser = {
   firstName: "firsty",
   lastName: "lasty",
   fullName: "firsty lastly",
-};
-
-const testUpdatedPackageData = {
-  submissionTimestamp: Date.now(),
-  componentId: "1111",
 };
 
 const eventBody = {
@@ -52,6 +47,7 @@ const testConfig = {
   newStatus: "newStatus",
   successResponseCode: RESPONSE_CODE.PACKAGE_WITHDRAW_SUCCESS,
   emailFunctions: [() => "Test test <test@test.com>"],
+  componentType: "typeo",
 };
 
 beforeEach(() => {
@@ -59,7 +55,7 @@ beforeEach(() => {
 
   getUser.mockResolvedValue(testDoneBy);
 
-  updateComponent.mockResolvedValue(testUpdatedPackageData);
+  newEvent.mockResolvedValue({});
 
   sendEmail.mockResolvedValue(null);
 });
@@ -92,7 +88,7 @@ it("returns validation error code when error occurs getting user", async () => {
 });
 
 it("returns data retrieval error code when error occurs calling update", async () => {
-  updateComponent.mockImplementation(() => {
+  newEvent.mockImplementation(() => {
     throw new Error("Update error");
   });
   const response = await changeStatusAny(testEvent, testConfig);

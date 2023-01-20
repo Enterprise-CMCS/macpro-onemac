@@ -57,9 +57,11 @@ const expirationDateFilterDropdown = "//button[text()='Expiration Date']";
 const expirationDateDatePickerFilter =
   '*[role=combobox][aria-owns^="expirationTimestamp-date-filter"]';
 //Element is Xpath use cy.xpath instead of cy.get
-const dateSubmittedFilterDropdown = "//button[text()='Date Submitted']";
+const initialSubmissionDateFilterDropdown =
+  "//button[text()='Initial Submission Date']";
 //Element is Xpath use cy.xpath(***).last() instead of cy.get
-const dateSubmittedDatePickerFilter = "//span[text()='Select Date Range']";
+const initialSubmissionDateDatePickerFilter =
+  "//span[text()='Select Date Range']";
 //Element is Xpath use cy.xpath instead of cy.get
 const thisQuarterDatePickerBtn = "//button[contains(text(),'This Quarter')]";
 //Element is Xpath use cy.xpath instead of cy.get
@@ -71,7 +73,7 @@ const okDatePickerBtn = "//button[text()='OK']";
 const todayPickerBtn = "//button[text()='Today']";
 //Element is Xpath use cy.xpath instead of cy.get
 const statusDropDownFilter = "//button[text()='Status']";
-const packageRowOneDateSubmitted = "#submissionTimestamp-0";
+const packageRowOneInitialSubmissionDate = "#submissionTimestamp-0";
 const packageRowOne90thDay = "#ninetiethDay-0";
 //Element is Xpath use cy.xpath instead of cy.get
 const resetButton = "//button[contains(text(),'Reset')]";
@@ -82,6 +84,10 @@ const waiverRenewal1915bCheckBox =
   "//label[contains(@for,'checkbox_componentType-1915(b) Waiver Renewal')]";
 const appendixKAmendmentCheckBox =
   "//label[contains(@for,'checkbox_componentType-1915(c) Appendix K Amendment')]";
+const waiverAmendment1915bCheckbox =
+  "//label[contains(@for,'checkbox_componentType-1915(b) Waiver Amendment')]";
+const temporaryExtensionCheckBox =
+  "//label[contains(@for,'checkbox_componentType-Temporary Extension')]";
 //Element is Xpath use cy.xpath instead of cy.get
 const CHIPSPACheckBox =
   "//label[contains(@for,'checkbox_componentType-CHIP SPA')]";
@@ -91,10 +97,14 @@ const MedicaidSPACheckBox =
 //Element is Xpath use cy.xpath instead of cy.get
 const approveCheckBox = "//span[contains(text(),'Approved')]";
 //Element is Xpath use cy.xpath instead of cy.get
-const inReviewCheckBox = "//span[contains(text(),'In Review')]";
+const underReviewCheckBox = "//span[contains(text(),'Under Review')]";
+//Element is Xpath use cy.xpath instead of cy.get
+const withdrawalRequestedCheckBox =
+  "//span[contains(text(),'Withdrawal Requested')]";
+//Element is Xpath use cy.xpath instead of cy.get
 const terminatedCheckBox = "//span[contains(text(),'Terminated')]";
 //Element is Xpath use cy.xpath instead of cy.get
-const withdrawnCheckBox = "//span[contains(text(),'Withdrawn')]";
+const withdrawnCheckBox = "//span[contains(text(),'Package Withdrawn')]";
 //Element is Xpath use cy.xpath instead of cy.get
 const sparaiSubmitted = "//span[contains(text(),'sparai Submitted')]";
 //Element is Xpath use cy.xpath instead of cy.get
@@ -108,7 +118,8 @@ const ShowHideColumnsBTN = "//button[contains(text(),'Show/Hide Columns')]";
 //Element is Xpath use cy.xpath instead of cy.get
 const checkBox90thDay = "//span[contains(text(),'90th Day')]";
 //Element is Xpath use cy.xpath instead of cy.get
-const checkBoxDateSubmitted = "//span[contains(text(),'Date Submitted')]";
+const checkBoxInitialSubmissionDate =
+  "//span[contains(text(),'Initial Submission Date')]";
 //Element is Xpath use cy.xpath instead of cy.get
 const checkBoxexpirationDate = "//span[contains(text(),'Expiration Date')]";
 //Element is Xpath use cy.xpath instead of cy.get
@@ -124,7 +135,7 @@ const typeColumn = "#componentTypeColHeader";
 const stateColumn = "#territoryColHeader";
 const expirationDateColumn = "#expirationTimestampColHeader";
 const statusColumn = "#packageStatusColHeader";
-const dateSubmittedColumn = "#submissionTimestampColHeader";
+const initialSubmissionDateColumn = "#submissionTimestampColHeader";
 const submittedByColumn = "#submitterColHeader";
 const actionsColumn = "#packageActionsColHeader";
 const packageRowOneType = "#componentType-0";
@@ -156,6 +167,10 @@ const waiversTab = "#show-waivers-button";
 const spasTab = "#show-spas-button";
 //Element is Xpath use cy.xpath instead of cy.get
 const raiIssuedCheckbox = "//span[contains(text(),'RAI Issued')]";
+const pendingRaiCheckbox = "//span[contains(text(),'Pending - RAI')]";
+const pendingConcurrenceCheckbox =
+  "//span[contains(text(),'Pending - Concurrence')]";
+const pendingApprovalCheckbox = "//span[contains(text(),'Pending - Approval')]";
 const packageApprovedCheckbox = "//span[contains(text(),'Package Approved')]";
 //Element is Xpath use cy.xpath instead of cy.get
 const approvedCheckbox =
@@ -167,11 +182,15 @@ const disapprovedCheckbox =
 const submittedCheckbox =
   "//label[contains(@for,'checkbox_packageStatus-Submitted')]";
 //Element is Xpath use cy.xpath instead of cy.get
+const submittedIntakeNeededCheckbox =
+  "//label[contains(@for,'checkbox_packageStatus-Submitted - Intake Needed')]";
+const pendingCheckbox =
+  "//label[contains(@for,'checkbox_packageStatus-Pending')]/span[text()='Pending']";
 const unsubmittedCheckbox =
   "//label[contains(@for,'checkbox_packageStatus-Unsubmitted')]";
 const packageRowOneID = "#componentId-0";
 const packageRowTwoID = "#componentId-1";
-const packageRowTwoDateSubmitted = "#submissionTimestamp-1";
+const packageRowTwoInitialSubmissionDate = "#submissionTimestamp-1";
 const packageRowTwo90thDay = "#ninetiethDay-1";
 const packageRowTwoType = "#componentType-1";
 const packageRowTwoState = "#territory-1";
@@ -311,12 +330,12 @@ export class oneMacPackagePage {
     cy.xpath(expirationDateFilterDropdown).wait(1000);
     cy.xpath(expirationDateFilterDropdown).click();
   }
-  verifyDateSubmittedFilterDropDownExists() {
-    cy.xpath(dateSubmittedFilterDropdown).should("be.visible");
+  verifyInitialSubmissionDateFilterDropDownExists() {
+    cy.xpath(initialSubmissionDateFilterDropdown).should("be.visible");
   }
-  clickOnDateSubmittedFilterDropDown() {
-    cy.xpath(dateSubmittedFilterDropdown).wait(1000);
-    cy.xpath(dateSubmittedFilterDropdown).click();
+  clickOnInitialSubmissionDateFilterDropDown() {
+    cy.xpath(initialSubmissionDateFilterDropdown).wait(1000);
+    cy.xpath(initialSubmissionDateFilterDropdown).click();
   }
   verifyNinetiethDayNACheckboxExists() {
     cy.xpath(ninetiethDayNACheckbox).should("exist");
@@ -350,12 +369,12 @@ export class oneMacPackagePage {
     cy.get(expirationDateDatePickerFilter).wait(1000);
     cy.get(expirationDateDatePickerFilter).click();
   }
-  verifyDateSubmittedDatePickerFilterExists() {
-    cy.xpath(dateSubmittedDatePickerFilter).last().should("exist");
+  verifyInitialSubmissionDateDatePickerFilterExists() {
+    cy.xpath(initialSubmissionDateDatePickerFilter).last().should("exist");
   }
-  clickOnDateSubmittedDatePickerFilter() {
-    cy.xpath(dateSubmittedDatePickerFilter).wait(1000);
-    cy.xpath(dateSubmittedDatePickerFilter).last().click();
+  clickOnInitialSubmissionDateDatePickerFilter() {
+    cy.xpath(initialSubmissionDateDatePickerFilter).wait(1000);
+    cy.xpath(initialSubmissionDateDatePickerFilter).last().click();
   }
   clickOnThisQuarterDatePickerBtn() {
     cy.xpath(thisQuarterDatePickerBtn).click();
@@ -378,11 +397,11 @@ export class oneMacPackagePage {
   verify90thDayRowOneIsNotNA() {
     cy.get(packageRowOne90thDay).should("not.have.text", "N/A");
   }
-  verifypackageRowOneDateSubmittedIsThisQuarter() {
-    cy.get(packageRowOneDateSubmitted, { timeout: 15000 })
+  verifypackageRowOneInitialSubmissionDateIsThisQuarter() {
+    cy.get(packageRowOneInitialSubmissionDate, { timeout: 15000 })
       .invoke("text")
       .then((dateText) => {
-        const date = new Date(packageRowOneDateSubmitted);
+        const date = new Date(packageRowOneInitialSubmissionDate);
         const today = new Date();
         let dateQuarter = Math.floor((date.getMonth() + 3) / 3);
         let todaysQuarter = Math.floor((today.getMonth() + 3) / 3);
@@ -425,14 +444,23 @@ export class oneMacPackagePage {
   verifyApproveCheckBoxExists() {
     cy.xpath(approveCheckBox).should("be.visible");
   }
-  verifyInReviewCheckBoxExists() {
-    cy.xpath(inReviewCheckBox).should("be.visible");
+  verifyUnderReviewCheckBoxExists() {
+    cy.xpath(underReviewCheckBox).should("be.visible");
   }
-  clickInReviewCheckBox() {
-    cy.xpath(inReviewCheckBox).click();
+  clickUnderReviewCheckBox() {
+    cy.xpath(underReviewCheckBox).click();
+  }
+  verifyTerminatedCheckBox() {
+    cy.xpath(terminatedCheckBox).should("be.visible");
   }
   clickTerminatedCheckBox() {
     cy.xpath(terminatedCheckBox).click();
+  }
+  verifyWithdrawalRequestedCheckBoxCheckBox() {
+    cy.xpath(withdrawalRequestedCheckBox).should("be.visible");
+  }
+  clickWithdrawalRequestedCheckBox() {
+    cy.xpath(withdrawalRequestedCheckBox).click();
   }
   verifyWithdrawnCheckBoxExists() {
     cy.xpath(withdrawnCheckBox).should("be.visible");
@@ -449,8 +477,23 @@ export class oneMacPackagePage {
   clickWaiverRenewal1915bCheckBox() {
     cy.xpath(waiverRenewal1915bCheckBox).click();
   }
+  verify1915cAppendixKAmendmentCheckBox() {
+    cy.xpath(appendixKAmendmentCheckBox).should("be.visible");
+  }
   click1915cAppendixKAmendmentCheckBox() {
     cy.xpath(appendixKAmendmentCheckBox).click();
+  }
+  verify1915bWaiverAmendmentCheckBox() {
+    cy.xpath(waiverAmendment1915bCheckbox).should("be.visible");
+  }
+  click1915bWaiverAmendmentCheckBox() {
+    cy.xpath(waiverAmendment1915bCheckbox).click();
+  }
+  verifyTemporaryExtensionCheckBoxExists() {
+    cy.xpath(temporaryExtensionCheckBox).should("be.visible");
+  }
+  clickTemporaryExtensionCheckBox() {
+    cy.xpath(temporaryExtensionCheckBox).click();
   }
   clickCHIPSPACheckBox() {
     cy.xpath(CHIPSPACheckBox).click();
@@ -479,11 +522,11 @@ export class oneMacPackagePage {
   clickCheckBox90thDay() {
     cy.xpath(checkBox90thDay).click();
   }
-  verifycheckBoxDateSubmittedExists() {
-    cy.xpath(checkBoxDateSubmitted).should("be.visible");
+  verifycheckBoxInitialSubmissionDateExists() {
+    cy.xpath(checkBoxInitialSubmissionDate).should("be.visible");
   }
-  clickCheckBoxDateSubmitted() {
-    cy.xpath(checkBoxDateSubmitted).click();
+  clickCheckBoxInitialSubmissionDate() {
+    cy.xpath(checkBoxInitialSubmissionDate).click();
   }
   verifycheckBoxexpirationDateBTNExists() {
     cy.xpath(checkBoxexpirationDate).should("be.visible");
@@ -530,8 +573,8 @@ export class oneMacPackagePage {
   verifystatusColumnExists() {
     cy.get(statusColumn).should("be.visible");
   }
-  verifydateSubmittedColumnExists() {
-    cy.get(dateSubmittedColumn).should("be.visible");
+  verifyinitialSubmissionDateColumnExists() {
+    cy.get(initialSubmissionDateColumn).should("be.visible");
   }
   verifysubmittedByColumnExists() {
     cy.get(submittedByColumn).should("be.visible");
@@ -558,8 +601,8 @@ export class oneMacPackagePage {
   verifystatusColumnDoesNotExist() {
     cy.get(statusColumn).should("not.exist");
   }
-  verifydateSubmittedColumnDoesNotExist() {
-    cy.get(dateSubmittedColumn).should("not.exist");
+  verifyinitialSubmissionDateColumnDoesNotExist() {
+    cy.get(initialSubmissionDateColumn).should("not.exist");
   }
   verifysubmittedByColumnDoesNotExist() {
     cy.get(submittedByColumn).should("not.exist");
@@ -677,6 +720,15 @@ export class oneMacPackagePage {
   clickRaiIssuedCheckbox() {
     cy.xpath(raiIssuedCheckbox).click();
   }
+  clickPendingRaiCheckbox() {
+    cy.xpath(pendingRaiCheckbox).click();
+  }
+  clickPendingConcurrenceCheckbox() {
+    cy.xpath(pendingConcurrenceCheckbox).click();
+  }
+  clickPendingApprovalCheckbox() {
+    cy.xpath(pendingApprovalCheckbox).click();
+  }
   clickPackageApprovedCheckbox() {
     cy.xpath(packageApprovedCheckbox).click();
   }
@@ -697,6 +749,12 @@ export class oneMacPackagePage {
   }
   clickSubmittedCheckbox() {
     cy.xpath(submittedCheckbox).click();
+  }
+  clickSubmittedIntakeNeededCheckbox() {
+    cy.xpath(submittedIntakeNeededCheckbox).click();
+  }
+  clickPendingCheckbox() {
+    cy.xpath(pendingCheckbox).click();
   }
   verifyUnsubmittedCheckboxExists() {
     cy.xpath(unsubmittedCheckbox).should("be.visible");
@@ -785,8 +843,8 @@ export class oneMacPackagePage {
   verifystatusColumnExistsForChild() {
     cy.get(packageRowOneType).should("be.visible");
   }
-  verifyDateSubmittedColumnExistsForChild() {
-    cy.get(packageRowTwoDateSubmitted).should("be.visible");
+  verifyInitialSubmissionDateColumnExistsForChild() {
+    cy.get(packageRowTwoInitialSubmissionDate).should("be.visible");
   }
   verifysubmittedByColumnExistsForChild() {
     cy.get(packageRowTwoSubmittedBy).should("be.visible");
@@ -829,6 +887,12 @@ export class oneMacPackagePage {
           return false; //quit after finding the right element
         }
       });
+  }
+  verifyWithdrawPackageBtnExists() {
+    cy.xpath(withdrawPackageBtn).filter(":visible").first().should("exist");
+  }
+  verifyWithdrawPackageBtnDoesNotExist() {
+    cy.xpath(withdrawPackageBtn).should("not.exist");
   }
   clickConfirmWithdrawPackageBtn() {
     cy.xpath(withdrawPackageConfirmBtn).click();

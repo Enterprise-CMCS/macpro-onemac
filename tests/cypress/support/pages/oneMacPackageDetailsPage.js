@@ -27,9 +27,9 @@ const detailSection =
 const CHIPSPAIDHeader = "//h3[contains(text(),'SPA ID')]";
 const typeHeader = "//h3[contains(text(),'Type')]";
 const parentWaiverNumberHeader =
-  "//h3[contains(text(),'Parent Waiver Number')]";
+  "//h3[contains(text(),'Approved Initial or Renewal Number')]";
 const stateHeader = "//h3[text()='State']";
-const initialSubmittedDateHeader = "//h3[text()='Date Submitted']";
+const initialSubmittedDateHeader = "//h3[text()='Initial Submission Date']";
 const raiResponsesHeader = "//section//h2[text()='Formal RAI Responses']";
 const packageOverviewNavBtn = "//button[text()='Package Overview']";
 const packageDetailsNavBtn =
@@ -38,7 +38,7 @@ const proposedEffectiveDateHeader =
   "//h3[contains(text(),'Proposed Effective Date')]";
 const ninetieththDayHeader = "//h3[text()='90th Day']";
 const additionalInfoSection =
-  "//section[@id='addl-info-initial']//h2[text()='Additional Information']";
+  "//section[@id='addl-info-base']//h2[text()='Additional Information']";
 const waiverAuthorityHeader = "//h3[text()='Waiver Authority']";
 const supportingDocumentationSection = "//h2[text()='Attachments']";
 const downloadAllBtn = "//button[contains(text(),'Download All')]";
@@ -100,6 +100,9 @@ export class oneMacPackageDetailsPage {
   verifyDetailSectionExists() {
     cy.xpath(detailSection).should("be.visible");
   }
+  verifyTitleContains(s) {
+    cy.get("h2").first().contains(s);
+  }
   verifyCHIPSPAIDHeaderExists() {
     cy.xpath(CHIPSPAIDHeader).should("be.visible");
   }
@@ -120,6 +123,15 @@ export class oneMacPackageDetailsPage {
   }
   verifyTypeContainsTempExtension() {
     cy.xpath(typeHeader).next().contains("Temporary Extension");
+  }
+  verifyTypeContains1915bWaiverAmendment() {
+    cy.xpath(typeHeader).next().contains("1915(b) Waiver Amendment");
+  }
+  verifyTypeContainsMedicaidSPA() {
+    cy.xpath(typeHeader).next().contains("Medicaid SPA");
+  }
+  verifyTypeContainsCHIPSPA() {
+    cy.xpath(typeHeader).next().contains("CHIP SPA");
   }
   verifyParentWaiverNumberHeaderExists() {
     cy.xpath(parentWaiverNumberHeader).should("be.visible");
@@ -216,6 +228,14 @@ export class oneMacPackageDetailsPage {
   verifyproposedEffectiveDateHeaderContainsNA() {
     cy.xpath(proposedEffectiveDateHeader).next().contains("N/A");
   }
+  verifyproposedEffectiveDateHeaderContainsPending() {
+    cy.xpath(proposedEffectiveDateHeader).next().contains("Pending");
+  }
+  verifyproposedEffectiveDateHeaderContainsDate() {
+    cy.xpath(proposedEffectiveDateHeader)
+      .next()
+      .contains(/^[a-zA-Z]{3}.\d{2}.\d{4}||^[a-zA-Z]{3}.\d{1}.\d{4}/);
+  }
   verifyAmendmentNumberHeaderExists() {
     cy.xpath(amendmentNumberHeader).should("be.visible");
   }
@@ -239,6 +259,7 @@ export class oneMacPackageDetailsPage {
   }
   verifyDownloadAllBtnExists() {
     cy.xpath(downloadAllBtn)
+      .first()
       .scrollIntoView({ easing: "linear" })
       .should("be.visible");
   }

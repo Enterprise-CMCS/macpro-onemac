@@ -23,7 +23,7 @@ const topicPrefix = "aws.ksqldb.seatool.agg.StatePlan_";
 //   DISAPPROVED: "5",
 //   WITHDRAWN: "6",
 //   TERMINATED: "7",
-//   PENDING_CONCURRANCE: "8",
+//   PENDING_CONCURRENCE: "8",
 //   UNSUBMITTED: "9",
 //   PENDING_FINANCE: "10",
 //   PENDING_APPROVAL: "11",
@@ -39,7 +39,7 @@ const topicPrefix = "aws.ksqldb.seatool.agg.StatePlan_";
 //   [SEATOOL_STATUS.DISAPPROVED]: ONEMAC_STATUS.DISAPPROVED,
 //   [SEATOOL_STATUS.WITHDRAWN]: ONEMAC_STATUS.WITHDRAWN,
 //   [SEATOOL_STATUS.TERMINATED]: ONEMAC_STATUS.TERMINATED,
-//   [SEATOOL_STATUS.PENDING_CONCURRANCE]: ONEMAC_STATUS.IN_REVIEW,
+//   [SEATOOL_STATUS.PENDING_CONCURRENCE]: ONEMAC_STATUS.IN_REVIEW,
 //   [SEATOOL_STATUS.UNSUBMITTED]: ONEMAC_STATUS.UNSUBMITTED,
 //   [SEATOOL_STATUS.PENDING_FINANCE]: ONEMAC_STATUS.IN_REVIEW,
 //   [SEATOOL_STATUS.PENDING_APPROVAL]: ONEMAC_STATUS.IN_REVIEW,
@@ -79,7 +79,6 @@ function myHandler(event) {
       pk,
       sk,
     },
-    ConditionExpression: "attribute_not_exists(pk)", // so update fails if this SEATool change exists
 
     Item: { pk, sk, GSI1pk, GSI1sk, ...value },
     ReturnValues: "ALL_OLD", // ReturnValues for put can only be NONE or ALL_OLD

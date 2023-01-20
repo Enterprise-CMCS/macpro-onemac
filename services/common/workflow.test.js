@@ -2,7 +2,7 @@ import { ONEMAC_STATUS, get90thDayText, NINETY_DAY_STATUS } from "./workflow";
 
 describe("get90thDayText", () => {
   it("returns 'Pending' string when status is 'In Review'", () => {
-    const ninetyDay = get90thDayText(ONEMAC_STATUS.IN_REVIEW, null);
+    const ninetyDay = get90thDayText(ONEMAC_STATUS.PENDING, null);
     expect(ninetyDay).toBe(NINETY_DAY_STATUS.PENDING);
   });
 

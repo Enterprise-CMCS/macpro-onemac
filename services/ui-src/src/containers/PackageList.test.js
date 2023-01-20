@@ -3,6 +3,7 @@ import React from "react";
 import {
   render,
   screen,
+  waitFor,
   waitForElementToBeRemoved,
 } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
@@ -103,7 +104,7 @@ it("renders table with spa columns", async () => {
   screen.getByText("SPA ID");
   screen.getByText("Type");
   screen.getByText("State");
-  screen.getByText("Date Submitted");
+  screen.getByText("Initial Submission Date");
   screen.getByText("Submitted By");
   screen.getByText("Actions");
 });
@@ -155,7 +156,7 @@ it("switches to waiver columns if wavier tab selected", async () => {
 //   ${"currentStatus"} | ${Workflow.ONEMAC_STATUS.WITHDRAWN}   | ${"clockEndTimestamp"} | ${null}          | ${"N/A"}
 //   ${"currentStatus"} | ${Workflow.ONEMAC_STATUS.TERMINATED}  | ${"clockEndTimestamp"} | ${null}          | ${"N/A"}
 //   ${"currentStatus"} | ${Workflow.ONEMAC_STATUS.UNSUBMITTED} | ${"clockEndTimestamp"} | ${null}          | ${"Pending"}
-//   ${"currentStatus"} | ${Workflow.ONEMAC_STATUS.IN_REVIEW}   | ${"clockEndTimestamp"} | ${null}          | ${"Pending"}
+//   ${"currentStatus"} | ${Workflow.ONEMAC_STATUS.PENDING}   | ${"clockEndTimestamp"} | ${null}          | ${"Pending"}
 //   ${"currentStatus"} | ${Workflow.ONEMAC_STATUS.SUBMITTED}   | ${"clockEndTimestamp"} | ${1570378876000} | ${"Pending"}
 //   ${"currentStatus"} | ${Workflow.ONEMAC_STATUS.RAI_ISSUED}  | ${"clockEndTimestamp"} | ${null}          | ${"Clock Stopped"}
 // `(
@@ -178,32 +179,32 @@ it("switches to waiver columns if wavier tab selected", async () => {
 //     expect(packageRow.getAllByText(textShown)[0]).toBeInTheDocument();
 //   }
 // );
-/*
-it("provides option to withdraw packages", async () => {
-  PackageApi.getMyPackages.mockResolvedValue(packageList);
-  PackageApi.withdraw.mockResolvedValueOnce("WP000");
 
-  render(<PackageList />, { wrapper: ContextWrapper });
+// it("provides option to withdraw packages", async () => {
+//   PackageApi.getMyPackages.mockResolvedValue(packageList);
+//   PackageApi.withdraw.mockResolvedValueOnce("WP000");
 
-  // wait for loading screen to disappear so package table displays
-  await waitForElementToBeRemoved(() => screen.getByTestId(LOADER_TEST_ID));
+//   render(<PackageList />, { wrapper: ContextWrapper });
 
-  await act(async () => {
-    await userEvent.click(
-      screen.getByRole("button", {
-        name: "Actions for MI-98-2223",
-      })
-    );
-    await userEvent.click(screen.getByRole("menuitem", { name: "Withdraw" }));
-    await userEvent.click(
-      screen.getByRole("button", { name: "Yes, withdraw" })
-    );
-  });
+//   // wait for loading screen to disappear so package table displays
+//   await waitForElementToBeRemoved(() => screen.getByTestId(LOADER_TEST_ID));
 
-  expect(document.getElementById("alert-bar")).toHaveTextContent(
-    "Your submission package has successfully been withdrawn."
-  );
-});
+//   await act(async () => {
+//     await userEvent.click(
+//       screen.getByRole("button", {
+//         name: "Actions for MI-98-2223",
+//       })
+//     );
+//     await userEvent.click(screen.getByRole("menuitem", { name: "Withdraw" }));
+//     await userEvent.click(
+//       screen.getByRole("button", { name: "Yes, withdraw" })
+//     );
+//   });
+
+//   expect(document.getElementById("alert-bar")).toHaveTextContent(
+//     "Your submission package has successfully been withdrawn."
+//   );
+// });
 
 it("handles exceptions in withdraw action", async () => {
   PackageApi.getMyPackages.mockResolvedValue(packageList);
@@ -214,20 +215,21 @@ it("handles exceptions in withdraw action", async () => {
   // wait for loading screen to disappear so package table displays
   await waitForElementToBeRemoved(() => screen.getByTestId(LOADER_TEST_ID));
 
-  await act(async () => {
-    await userEvent.click(
-      screen.getByRole("button", {
-        name: "Actions for MI-98-2223",
-      })
-    );
-    await userEvent.click(screen.getByRole("menuitem", { name: "Withdraw" }));
-    await userEvent.click(
-      screen.getByRole("button", { name: "Yes, withdraw" })
-    );
-  });
-
-  expect(document.getElementById("alert-bar")).toHaveTextContent(
-    "There was an issue submitting your request. Please try again."
+  userEvent.click(
+    screen.getByRole("button", {
+      name: "Actions for MI-98-2223",
+    })
   );
+
+  await screen.findByRole("link", { name: "Withdraw Package" });
+  userEvent.click(screen.getByRole("link", { name: "Withdraw Package" }));
+  // await screen.findByText(/Yes, withdraw package/i);
+  // userEvent.click(
+  //     screen.getByRole("button", { name: "Yes, withdraw package" })
+  //   );
+  // await screen.findByRole("button", { name: "Yes, withdraw package" });
+
+  // expect(document.getElementById("alert-bar")).toHaveTextContent(
+  //   "There was an issue submitting your request. Please try again."
+  // );
 });
-*/

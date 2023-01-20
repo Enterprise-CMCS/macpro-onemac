@@ -6,7 +6,6 @@ import { OneMACDetail, defaultDetail } from "../../libs/detailLib";
 export const medicaidSPADetail: OneMACDetail = {
   ...defaultDetail,
   ...medicaidSPA,
-  usesVerticalNav: true,
   actionsByStatus: Workflow.defaultActionsByStatus,
 };
 
