@@ -167,12 +167,20 @@ export const buildAnyPackage = async (packageId, config) => {
           }
 
           // update the attribute if this is the latest event
-          // OR if there is currently no value for the attribute
-          if (timestamp === lmTimestamp || !putParams.Item[attributeName])
+          if (timestamp === lmTimestamp)
             putParams.Item[attributeName] = anEvent[attributeName];
         }
       });
     });
+
+    //if any attribute was not yet populated from current event; then populate from currentPackage
+    if (currentPackage) {
+      config.theAttributes.forEach((attributeName) => {
+        if (!putParams.Item[attributeName] && currentPackage[attributeName]) {
+          putParams.Item[attributeName] = currentPackage[attributeName];
+        }
+      });
+    }
 
     // use GSI1 to show package on dashboard
     if (showPackageOnDashboard) {
