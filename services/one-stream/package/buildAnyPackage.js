@@ -96,16 +96,17 @@ export const buildAnyPackage = async (packageId, config) => {
 
       // include ALL rai events in package details
       if (
-        (anEvent.componentType === `${config.componentType}rai` ||
-          anEvent.componentType === `waiverrai`) &&
-        anEvent.currentStatus !== Workflow.ONEMAC_STATUS.INACTIVATED
+        anEvent.componentType === `${config.componentType}rai` ||
+        anEvent.componentType === `waiverrai`
       ) {
-        putParams.Item.raiResponses.push({
-          submissionTimestamp: anEvent.submissionTimestamp,
-          attachments: anEvent.attachments,
-          additionalInformation: anEvent.additionalInformation,
-        });
-        putParams.Item.currentStatus = Workflow.ONEMAC_STATUS.SUBMITTED;
+        if (anEvent.currentStatus !== Workflow.ONEMAC_STATUS.INACTIVATED) {
+          putParams.Item.raiResponses.push({
+            submissionTimestamp: anEvent.submissionTimestamp,
+            attachments: anEvent.attachments,
+            additionalInformation: anEvent.additionalInformation,
+          });
+          putParams.Item.currentStatus = Workflow.ONEMAC_STATUS.SUBMITTED;
+        }
         return;
       }
 
