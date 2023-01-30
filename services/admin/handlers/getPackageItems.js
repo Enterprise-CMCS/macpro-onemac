@@ -23,6 +23,17 @@ export const main = async (event) => {
       return;
     }
 
+    if (event.addToTable) {
+      await Promise.all(
+        result.Items.map((item) => {
+          dynamoDb.put({
+            TableName: event.addToTable,
+            Item: { ...item },
+          });
+        })
+      );
+    }
+
     return result.Items;
   } catch (e) {
     console.log("%s getPackageItems error: ", event.packageId, e);
