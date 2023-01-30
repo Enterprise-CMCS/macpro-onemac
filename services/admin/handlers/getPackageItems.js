@@ -24,12 +24,16 @@ export const main = async (event) => {
     }
 
     if (event.addToTable) {
+      console.log("adding %s to %s", event.packageId, event.addToTable);
       await Promise.all(
         result.Items.map((item) => {
-          dynamoDb.put({
-            TableName: event.addToTable,
-            Item: { ...item },
-          });
+          if (item.sk === "Package") return;
+          return dynamoDb
+            .put({
+              TableName: event.addToTable,
+              Item: { ...item },
+            })
+            .promise();
         })
       );
     }
