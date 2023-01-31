@@ -7,6 +7,7 @@ const dynamoDb = new AWS.DynamoDB.DocumentClient(
       }
     : {}
 );
+const oneMacTableName = process.env.oneMacTableName;
 
 function validateEvent(event) {
   //validate required input params
@@ -28,71 +29,102 @@ function validateEvent(event) {
   console.log("event passed validation");
 }
 
-async function updateByPK(event) {
-  const tableName = process.env.oneMacTableName;
-  try {
-    // query just the onemac events for this package
-    const params = {
-      TableName: tableName,
-      KeyConditionExpression: "pk = :pkValue and begins_with(sk, :skValue)",
-      ExpressionAttributeValues: {
-        ":pkValue": event.fromPackageId,
-        ":skValue": "OneMAC#",
-      },
+async function getOneMacEventRecords(fromPackageId) {
+  const params = {
+    TableName: oneMacTableName,
+    KeyConditionExpression: "pk = :pkValue and begins_with(sk, :skValue)",
+    ExpressionAttributeValues: {
+      ":pkValue": fromPackageId,
+      ":skValue": "OneMAC#",
+    },
+  };
+
+  console.log("right  before query", params);
+  const queryResponse = await dynamoDb.query(params).promise();
+  console.log("OneMAC events found for: ", fromPackageId);
+
+  return queryResponse.Items;
+}
+
+function formatPutRequests(toPackageId, addlInfo, records) {
+  const putRequests = records.map((item) => {
+    const auditArray = item.auditArray
+      ? [...item.auditArray, addlInfo]
+      : [addlInfo];
+    const requestItem = {
+      ...item,
+      pk: toPackageId,
+      componentId: toPackageId,
+      GSI1sk: toPackageId,
+      auditArray: auditArray,
     };
-    const data = await dynamoDb.query(params).promise();
-
-    //if more than one onemac event then throw an error
-    if (data.Count !== 1) {
-      throw new Error(
-        "Expected 1 item with pk " +
-          event.fromPackageId +
-          " but found " +
-          data.Count +
-          " items."
-      );
+    if (
+      item.GSI1pk.startsWith("OneMAC#submit") &&
+      !item.GSI1pk.includes("rai")
+    ) {
+      requestItem.additionalInformation =
+        addlInfo + "\n\n" + item.additionalInformation;
     }
-    const item = data.Items[0];
-    console.log("OneMAC event found:", item);
+    return {
+      TableName: oneMacTableName,
+      Item: requestItem,
+    };
+  });
+  console.log("Adding the following records", putRequests);
+  return putRequests;
+}
 
-    if (!event.testRun) {
-      // Delete the old onemac event
-      const deleteParams = {
-        TableName: tableName,
-        Key: { pk: item.pk, sk: item.sk },
-      };
-      await dynamoDb.delete(deleteParams).promise();
-      console.log("Deleted Original OneMAC event");
+function formatDeleteRequests(packageId, records) {
+  const deletes = records.map((item) => {
+    return {
+      Key: {
+        pk: packageId,
+        sk: item.sk,
+      },
+      TableName: oneMacTableName,
+    };
+  });
 
-      // Insert the new event with new id
-      const newItem = {
-        ...item,
-        pk: event.toPackageId,
-        componentId: event.toPackageId,
-        GSI1pk: event.toPackageId,
-        additionalInformation:
-          event.prependAdditionalInfo + "\n\n" + item.additionalInformation,
-      };
-      const putParams = {
-        TableName: tableName,
-        Item: newItem,
-      };
-      await dynamoDb.put(putParams).promise();
-      console.log("Added new event with updated id:", newItem);
+  //also add root package for deletion
+  deletes.push({
+    Key: {
+      pk: packageId,
+      sk: "Package",
+    },
+    TableName: oneMacTableName,
+  });
+  console.log("Marking following records for delete", deletes);
+  return deletes;
+}
 
-      // delete the old package item
-      const deletePackageParams = {
-        TableName: tableName,
-        Key: { pk: item.pk, sk: "Package" },
-      };
-      await dynamoDb.delete(deletePackageParams).promise();
-      console.log("Deleted old package record");
-    } else {
-      console.log("testRun only, package not updated");
+async function updatePackageId(event) {
+  // query just the onemac events for this package
+  const records = await getOneMacEventRecords(event.fromPackageId);
+  console.log("records", records);
+
+  const deleteRequests = formatDeleteRequests(event.fromPackageId, records);
+
+  const putRequests = formatPutRequests(
+    event.toPackageId,
+    event.prependAdditionalInfo,
+    records
+  );
+
+  if (!event.testRun) {
+    try {
+      const deletePromises = deleteRequests.map((deleteParams) => {
+        return dynamoDb.delete(deleteParams).promise();
+      });
+      await Promise.all(deletePromises);
+
+      const putPromises = putRequests.map((putRequest) => {
+        return dynamoDb.put(putRequest).promise();
+      });
+      await Promise.all(putPromises);
+    } catch (err) {
+      console.log("Error updating item:", err);
+      throw err;
     }
-  } catch (err) {
-    console.log("Error updating item:", err);
-    throw err;
   }
 }
 
@@ -110,5 +142,5 @@ exports.main = async function (event) {
 
   validateEvent(event);
 
-  await updateByPK(event);
+  await updatePackageId(event);
 };
