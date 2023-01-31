@@ -159,6 +159,9 @@ And("Click the Submit Button without waiting", () => {
 And("verify the modal pop-up is visible", () => {
   OneMacRespondToRAIPage.verifyModalContainerExists();
 });
+And("verify the modal pop-up is not visible", () => {
+  OneMacRespondToRAIPage.verifyModalContainerDoesNotExists();
+});
 And(
   "verify the title of the modal pop-up is Do you want to submit your official formal RAI response",
   () => {
@@ -201,6 +204,9 @@ And("verify form cancel button exists", () => {
 });
 And("click form cancel button", () => {
   OneMacDefaultForms.clickCancelBtn();
+});
+And("click modal cancel button", () => {
+  OneMacDefaultForms.clickModalCancelBtn();
 });
 And("click Leave Anyway form button", () => {
   OneMacSubmitNewMedicaidSpaPage.clickLeaveAnywayBtn();
@@ -2532,6 +2538,12 @@ And("verify the parent ID is prefilled in the form", () => {
     );
   });
 });
+And("verify the package ID is prefilled in the form", () => {
+  cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
+    OneMacRespondToRAIPage.verifyIDIsPrefilled();
+  });
+});
+
 And("verify the temporary extension exists", () => {
   cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
     OneMacPackageDetailsPage.verifyTempExtensionIDExists(
@@ -2789,10 +2801,13 @@ And("search for the Appendix K Amendment in RAI Issued status", () => {
 And(
   "verify the Appendix K Amendment in RAI Issued status is pre-populated and uneditable",
   () => {
-    cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
-      OneMacRespondToRAIPage.verifyAppKMatchesID(data.appKInRAIStatus);
-    });
-    cy.wait(1000);
+    OneMacRespondToRAIPage.verifyAmendmentIDIsPrefilled();
+  }
+);
+And(
+  "verify the Waiver Amendment in RAI Issued status is pre-populated and uneditable",
+  () => {
+    OneMacRespondToRAIPage.verifyAmendmentIDIsPrefilled();
   }
 );
 And(
