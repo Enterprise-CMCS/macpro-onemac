@@ -15,7 +15,7 @@ function validateEvent(event) {
   if (!event.componentId) {
     missingParams += " componentId ";
   }
-  if (!event.type) {
+  if (!event.componentType) {
     missingParams += " componentType ";
   }
   if (!event.prependAdditionalInfo) {
@@ -63,6 +63,8 @@ exports.main = async function (event) {
   if (!result || !result.Item) {
     throw new Error(pk + " not found with sk: " + sk);
   }
+  const auditArray = [event.prependAdditionalInfo, ...result.Item?.auditArray];
+
   //update the status to inactivated and prepend the additional info
   await dynamoDb
     .put({
@@ -72,6 +74,7 @@ exports.main = async function (event) {
         ...result.Item,
         currentStatus,
         additionalInformation: `${event.prependAdditionalInfo}\n\n${result.Item.additionalInformation}`,
+        auditArray,
       },
     })
     .promise();
