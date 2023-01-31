@@ -49,7 +49,7 @@ async function getOneMacEventRecords(fromPackageId) {
 function formatPutRequests(toPackageId, addlInfo, records) {
   const putRequests = records.map((item) => {
     const auditArray = item.auditArray
-      ? [...item.auditArray, addlInfo]
+      ? [addlInfo, ...item.auditArray]
       : [addlInfo];
     const requestItem = {
       ...item,
