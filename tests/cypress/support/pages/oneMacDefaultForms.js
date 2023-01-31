@@ -2,8 +2,6 @@ const submitBTN = "#form-submission-button";
 const cancelBTN = "#form-cancel-button";
 const submissionFormErrorMsg = "#transmittal-number-status-msg";
 const packageFormErrorMsg = "#componentIdStatusMsg";
-const modalCancelBTN =
-  "//*[@id='react-aria-modal-dialog']//button[text()='Cancel']";
 
 export class oneMacDefaultForms {
   clicksubmitBTN() {
@@ -27,9 +25,6 @@ export class oneMacDefaultForms {
   }
   clickCancelBtn() {
     cy.get(cancelBTN).scrollIntoView().click();
-  }
-  clickModalCancelBtn() {
-    cy.xpath(modalCancelBTN).click();
   }
   verifyBlueErrorSaysUserCanSubmitInSubmissionView() {
     cy.get(submissionFormErrorMsg).contains(

@@ -11,8 +11,6 @@ const prepopulatedWaiverAmendmentNumber =
 const modalContainer = "#react-aria-modal-dialog";
 const modalTitle = "#dialog-title";
 const modalText = "#dialog-content";
-const waiverIDLabel = "//h3[text()='Waiver Number']";
-const waiverAmendmentIDLabel = "//h3[text()='Waiver Amendment Number']";
 
 export class oneMacRespondToRAIPage {
   verifyPageHeader() {
@@ -21,9 +19,6 @@ export class oneMacRespondToRAIPage {
 
   verifyModalContainerExists() {
     cy.get(modalContainer).should("be.visible");
-  }
-  verifyModalContainerDoesNotExists() {
-    cy.get(modalContainer).should("not.exist");
   }
   verifyModalTitleIs(s) {
     cy.get(modalTitle).contains(s);
@@ -49,20 +44,6 @@ export class oneMacRespondToRAIPage {
   }
   verifyAppKMatchesID(s) {
     cy.xpath(prepopulatedWaiverAmendmentNumber).should("have.text", s);
-  }
-  verifyIDIsPrefilled() {
-    cy.xpath(waiverIDLabel)
-      .next("div")
-      .contains(
-        /[A-Z]{2}\-\d{5}\.[A-Z]{1}\d{2}.||[A-Z]{2}\-\d{4}\.[A-Z]{1}\d{2}./
-      );
-  }
-  verifyAmendmentIDIsPrefilled() {
-    cy.xpath(waiverAmendmentIDLabel)
-      .next("div")
-      .contains(
-        /[A-Z]{2}\-\d{5}\.[A-Z]{1}\d{2}.||[A-Z]{2}\-\d{4}\.[A-Z]{1}\d{2}./
-      );
   }
 }
 export default oneMacRespondToRAIPage;

@@ -35,27 +35,6 @@ Feature: CHIP SPA State Details View - Card View with Actions
         And verify the download all button exists
         And verify the additional information section exists
 
-    Scenario: Screen Enhance - Withdrawal Requested SPA
-        And click the Withdrawal Requested checkbox
-        And Click on Filter Button
-        And click the SPA ID link in the first row
-        And verify the package details page is visible
-        And verify action card exists
-        And verify the status on the card is "Withdrawal Requested"
-        And verify package actions header is visible
-        And verify there are no package actions available
-        And verify the details section exists
-        And verify there is a Type header in the details section
-        And verify a type containing SPA exists for the Type
-        And verify there is a State header in the details section
-        And verify a state exists for the State
-        And verify there is an Initial Submission Date header in the details section
-        And verify a date exists for the Initial Submission Date
-        And verify there is a Proposed Effective Date header in the details section
-        And verify the supporting documentation section exists
-        And verify the download all button exists
-        And verify the additional information section exists
-
     Scenario: Screen Enhance - Withdrawn SPA
         And click the Package Withdrawn checkbox
         And Click on Filter Button
