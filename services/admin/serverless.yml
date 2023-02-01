@@ -86,3 +86,7 @@ functions:
   batchCreateOMP:
     handler: ./handlers/batchCreateOMP.main
     timeout: 180
+
+  updatePackageId:
+    handler: ./handlers/updatePackageId.main
+    timeout: 180
