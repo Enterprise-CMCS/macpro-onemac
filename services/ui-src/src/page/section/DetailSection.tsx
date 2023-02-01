@@ -7,6 +7,7 @@ import { ComponentDetail } from "../DetailView";
 import { OneMACDetail } from "../../libs/detailLib";
 import FileList from "../../components/FileList";
 import { actionComponent } from "../../libs/actionLib";
+import { AdditionalInfoSection } from "./AdditionalInfoSection";
 
 export const DetailSection = ({
   pageConfig,
@@ -157,20 +158,10 @@ export const DetailSection = ({
                       uploadList={raiResponse.attachments}
                       zipId={raiResponse.componentType + index}
                     />
-                    {raiResponse.additionalInformation && (
-                      <section
-                        id={"addl-info-rai-" + index}
-                        className="detail-section"
-                      >
-                        <h2>Additional Information</h2>
-                        <Review
-                          className="original-review-component"
-                          headingLevel="2"
-                        >
-                          {raiResponse.additionalInformation}
-                        </Review>
-                      </section>
-                    )}
+                    <AdditionalInfoSection
+                      additionalInfo={raiResponse.additionalInformation}
+                      id={"addl-info-rai-" + index}
+                    />
                   </AccordionItem>
                 );
               })}
