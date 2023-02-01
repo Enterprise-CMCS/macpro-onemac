@@ -15,7 +15,7 @@ Feature: Temporary Extension form
         And Type Valid Waiver Number With 5 Characters
         And verify error message is not present on Request Waiver Temporary Extenstion Page
         And clear Waiver Number Input box on Request Waiver Temporary Extenstion Page
-        And type in invalid Waiver Number
+        And type in invalid Waiver Number on old form
         And verify error message is present on submission dashboard New Waiver Page
         And clear Waiver Number Input box on Request Waiver Temporary Extenstion Page
         And type waiver number with state abbreviation different from user on Request Waiver Temporary Extenstion Page
@@ -34,7 +34,7 @@ Feature: Temporary Extension form
     Scenario: Verify user can not create Temporary Extension with invalid waiver number
         And Click on Request Temporary Extension
         And Type existing waiver number into Approved Initial or Renewal Waiver Number field
-        And type in invalid Waiver Number
+        And type in invalid Waiver Number on old form
         And upload Waiver Extension Request
         And Type "This test has an invalid waiver number" in Summary Box
         And verify the submit button is disabled

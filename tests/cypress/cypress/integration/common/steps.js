@@ -639,8 +639,11 @@ And("type in a correct Waiver Number with 5 characters", () => {
   });
 });
 
-And("type in invalid Waiver Number", () => {
+And("type in invalid Waiver Number on old form", () => {
   OneMacSubmitNewWaiverActionPage.inputWaiverNumberOldForms("MD.123456");
+});
+And("type in invalid Waiver Number", () => {
+  OneMacSubmitNewWaiverActionPage.inputWaiverNumberNewForms("MD.123456");
 });
 
 And(
@@ -743,7 +746,7 @@ And(
 And(
   "type in Waiver Number with 5 characters on new Appendix K Amendment Page",
   () => {
-    OneMacAppendixKAmendmentPage.inputWaiverNumberNewForms(`MD-10330.R00.12`);
+    OneMacAppendixKAmendmentPage.inputWaiverNumberNewForms(`MD-22106.R01.02`);
   }
 );
 
@@ -832,6 +835,14 @@ And("Type Initial Waiver Number in format SS-#####.R00.00", () => {
     );
   });
 });
+And(
+  "Type a valid and unused Initial Waiver Number in format SS-#####.R00.00",
+  () => {
+    OneMacSubmitNewWaiverActionPage.inputWaiverNumberNewForms(
+      "MD-99331.R00.00"
+    );
+  }
+);
 And("Type Initial Waiver Number 2 in format SS-#####.R00.00", () => {
   cy.fixture("packageDashboardWaiverNumbers.json").then((d) => {
     OneMacSubmitNewWaiverActionPage.inputWaiverNumberNewForms(
@@ -2657,6 +2668,9 @@ And("verify the submit button is disabled", () => {
 And("type in valid waiver amendment number in old forms", () => {
   OneMacSubmitNewWaiverActionPage.inputWaiverNumberOldForms("MD-10330.R01.01");
 });
+And("type in valid waiver amendment number", () => {
+  OneMacSubmitNewWaiverActionPage.inputWaiverNumberNewForms("MD-12323.R01.01");
+});
 And("type initial waiver number in old format SS.####.R00.00", () => {
   OneMacSubmitNewWaiverActionPage.inputWaiverNumberNewForms("MD.1055.R00.00");
 });
@@ -2772,8 +2786,11 @@ And(
     });
   }
 );
-And("verify error message contains {string}", (msg) => {
+And("verify error message in old form contains {string}", (msg) => {
   OneMacDefaultForms.verifyErrorMsgContainsInSubmissionView(msg);
+});
+And("verify error message contains {string}", (msg) => {
+  OneMacDefaultForms.verifyErrorMsgContainsInPackageView(msg);
 });
 And("search for Initial Waiver in RAI Issued status", () => {
   cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {

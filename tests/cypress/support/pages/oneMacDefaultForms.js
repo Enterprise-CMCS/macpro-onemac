@@ -44,5 +44,8 @@ export class oneMacDefaultForms {
   verifyErrorMsgContainsInSubmissionView(s) {
     cy.get(submissionFormErrorMsg).contains(s);
   }
+  verifyErrorMsgContainsInPackageView(s) {
+    cy.get(packageFormErrorMsg).contains(s);
+  }
 }
 export default oneMacDefaultForms;
