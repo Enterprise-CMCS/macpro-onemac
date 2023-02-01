@@ -1,4 +1,4 @@
-import { ChangeRequest } from "cmscommonlib";
+import { ChangeRequest, Workflow } from "cmscommonlib";
 import { format } from "date-fns";
 
 import {
@@ -35,7 +35,7 @@ it("provides correct header row for package dashboard", () => {
   expect(outputElements).toContain("SPA ID/Waiver Number");
   expect(outputElements).toContain("Type");
   expect(outputElements).toContain("State");
-  expect(outputElements).toContain("Date Submitted");
+  expect(outputElements).toContain("Initial Submission Date");
   expect(outputElements).toContain("Submitted By");
 });
 
@@ -74,7 +74,7 @@ it("formats package data", () => {
   const output = tableToCSV("package-dashboard", [
     {
       componentId: "ZZ-12-1234",
-      componentType: ChangeRequest.TYPE.SPA,
+      componentType: Workflow.ONEMAC_TYPE.MEDICAID_SPA,
       submissionTimestamp: 1234567898765,
       submitterName: "Me Myself",
     },
