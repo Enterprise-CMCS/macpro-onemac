@@ -110,7 +110,7 @@ export const DetailSection = ({
           )}
         </section>
         <section className="detail-section ds-u-margin-bottom--7">
-          {detail.attachments.length > 0 ? (
+          {detail.attachments?.length > 0 ? (
             <FileList
               heading={pageConfig.attachmentsHeading}
               infoText={downloadInfoText}
@@ -133,7 +133,7 @@ export const DetailSection = ({
             </>
           )}
         </section>
-        {detail.raiResponses.length > 0 && (
+        {detail.raiResponses?.length > 0 && (
           <section className="detail-section">
             <h2>Formal RAI Responses</h2>
             <Accordion>
