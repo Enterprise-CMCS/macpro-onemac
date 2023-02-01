@@ -129,6 +129,16 @@ export const buildAnyPackage = async (packageId, config) => {
           lmTimestamp
         );
 
+        //always use seatool data to overwrite -- this will have to change if edit in onemac is allowed
+        if (
+          anEvent.STATE_PLAN.PROPOSED_DATE &&
+          typeof anEvent.STATE_PLAN.PROPOSED_DATE === "number"
+        )
+          putParams.Item.proposedEffectiveDate = DateTime.fromMillis(
+            anEvent.STATE_PLAN.PROPOSED_DATE
+          ).toFormat("yyyy-LL-dd");
+        else putParams.Item.proposedEffectiveDate = "none";
+
         if (timestamp < lmTimestamp) return;
 
         const seaToolStatus = anEvent.SPW_STATUS.map((oneStatus) =>
@@ -146,14 +156,7 @@ export const buildAnyPackage = async (packageId, config) => {
           SEATOOL_TO_ONEMAC_STATUS[seaToolStatus] &&
           (putParams.Item.currentStatus =
             SEATOOL_TO_ONEMAC_STATUS[seaToolStatus]);
-        if (
-          anEvent.STATE_PLAN.PROPOSED_DATE &&
-          typeof anEvent.STATE_PLAN.PROPOSED_DATE === "number"
-        )
-          putParams.Item.proposedEffectiveDate = DateTime.fromMillis(
-            anEvent.STATE_PLAN.PROPOSED_DATE
-          ).toFormat("yyyy-LL-dd");
-        else putParams.Item.proposedEffectiveDate = "none";
+
         return;
       }
 
@@ -167,12 +170,20 @@ export const buildAnyPackage = async (packageId, config) => {
           }
 
           // update the attribute if this is the latest event
-          // OR if there is currently no value for the attribute
-          if (timestamp === lmTimestamp || !putParams.Item[attributeName])
+          if (timestamp === lmTimestamp)
             putParams.Item[attributeName] = anEvent[attributeName];
         }
       });
     });
+
+    //if any attribute was not yet populated from current event; then populate from currentPackage
+    if (currentPackage) {
+      config.theAttributes.forEach((attributeName) => {
+        if (!putParams.Item[attributeName] && currentPackage[attributeName]) {
+          putParams.Item[attributeName] = currentPackage[attributeName];
+        }
+      });
+    }
 
     // use GSI1 to show package on dashboard
     if (showPackageOnDashboard) {
