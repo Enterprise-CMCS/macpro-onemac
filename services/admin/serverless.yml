@@ -90,3 +90,7 @@ functions:
   getPackageItems:
     handler: ./handlers/getPackageItems.main
     timeout: 180
+
+  updatePackageId:
+    handler: ./handlers/updatePackageId.main
+    timeout: 180
