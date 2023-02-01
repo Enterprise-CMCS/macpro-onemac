@@ -1,19 +1,19 @@
 import { Review } from "@cmsgov/design-system";
 import React, { FC } from "react";
-import { ComponentDetail } from "../DetailView";
 
-export const AdditionalInfoSection: FC<{ detail: ComponentDetail }> = ({
-  detail,
-}) => {
+export const AdditionalInfoSection: FC<{
+  additionalInfo: string;
+  id?: string;
+}> = ({ additionalInfo, id = "addl-info-base" }) => {
   return (
     <>
-      <section id="addl-info-base" className="read-only-submission">
+      <section id={id} className="read-only-submission">
         <h2>Additional Information</h2>
         <Review
           className="original-review-component preserve-spacing"
           headingLevel="2"
         >
-          {detail.additionalInformation || (
+          {additionalInfo || (
             <i>No Additional Information has been submitted.</i>
           )}
         </Review>
