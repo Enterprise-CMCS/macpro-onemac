@@ -111,14 +111,30 @@ export const DetailSection = ({
           )}
         </section>
         <section className="detail-section ds-u-margin-bottom--7">
-          <FileList
-            heading={pageConfig.attachmentsHeading}
-            infoText={downloadInfoText}
-            uploadList={detail.attachments}
-            zipId={detail.componentId}
-          />
+          {detail.attachments?.length > 0 ? (
+            <FileList
+              heading={pageConfig.attachmentsHeading}
+              infoText={downloadInfoText}
+              uploadList={detail.attachments}
+              zipId={detail.componentId}
+            />
+          ) : (
+            <>
+              <h2>{pageConfig.attachmentsHeading}</h2>
+              <Review
+                className="original-review-component preserve-spacing"
+                headingLevel="2"
+              >
+                <i>
+                  At this time, the attachments for this package are unavailable
+                  in this system. Contact your CPOC to verify the initial
+                  submission documents.
+                </i>
+              </Review>
+            </>
+          )}
         </section>
-        {detail.raiResponses.length > 0 && (
+        {detail.raiResponses?.length > 0 && (
           <section className="detail-section">
             <h2>Formal RAI Responses</h2>
             <Accordion>

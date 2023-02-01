@@ -15,7 +15,6 @@ const SEATOOL_TO_ONEMAC_STATUS = {
   [Workflow.SEATOOL_STATUS.TERMINATED]: Workflow.ONEMAC_STATUS.TERMINATED,
   [Workflow.SEATOOL_STATUS.PENDING_CONCURRENCE]:
     Workflow.ONEMAC_STATUS.PENDING_CONCURRENCE,
-  [Workflow.SEATOOL_STATUS.UNSUBMITTED]: Workflow.ONEMAC_STATUS.UNSUBMITTED,
   [Workflow.SEATOOL_STATUS.PENDING_APPROVAL]:
     Workflow.ONEMAC_STATUS.PENDING_APPROVAL,
   [Workflow.SEATOOL_STATUS.UNKNOWN]: Workflow.ONEMAC_STATUS.SUBMITTED,
@@ -33,6 +32,7 @@ export const buildAnyPackage = async (packageId, config) => {
       ":pk": packageId,
     },
   };
+  console.log("%s the new query params are: ", packageId, queryParams);
 
   try {
     const result = await dynamoDb.query(queryParams).promise();
@@ -143,6 +143,7 @@ export const buildAnyPackage = async (packageId, config) => {
           seaToolStatus
         );
         seaToolStatus &&
+          SEATOOL_TO_ONEMAC_STATUS[seaToolStatus] &&
           (putParams.Item.currentStatus =
             SEATOOL_TO_ONEMAC_STATUS[seaToolStatus]);
         if (
@@ -201,4 +202,5 @@ export const buildAnyPackage = async (packageId, config) => {
   } catch (e) {
     console.log("%s buildAnyPackage error: ", packageId, e);
   }
+  console.log("%s the end of things", packageId);
 };
