@@ -15,7 +15,7 @@ Feature: Appendix K Waiver Type Selection
     Scenario: create Appendix K from package dashboard and search it
         And Click on Appendix K Amendment
         And type Appendix K Submission 1 into Amendment Title field
-        And type in Waiver Number with 5 characters on new Appendix K Amendment Page
+        And type in Waiver Number with 5 characters on Appendix K Amendment Page
         And select proposed effective date 3 months from today
         And Add file for 1915c Appendix K Amendment Waiver Template
         And Type Additonal Info Comments in new form

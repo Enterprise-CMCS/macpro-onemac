@@ -38,11 +38,14 @@ export class oneMacAppendixKAmendmentPage {
   verifyErrorMessageIsDisplayed() {
     cy.get(errorMessageForWaiverNumber).should("be.visible");
   }
+  verifyOldErrorMessageIsDisplayed() {
+    cy.get(oldErrorMessageForWaiverNumber).should("be.visible");
+  }
   inputAmendmentTitle(s) {
     cy.get(amendmentTitleField).type(s);
   }
-  inputWaiverNumberNewForms(s) {
-    cy.get(waiverNumberInputBox).type(s);
+  inputWaiverNumberOldForms(s) {
+    cy.get(oldWaiverNumberInputBox).type(s);
   }
 }
 export default oneMacAppendixKAmendmentPage;

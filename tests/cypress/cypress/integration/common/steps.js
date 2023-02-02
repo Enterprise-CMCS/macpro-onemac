@@ -772,26 +772,36 @@ And("clear Waiver Number Input box on Appendix K Amendment Page", () => {
 });
 //find a waiver number that exits with 5 characters
 And(
-  "type in Waiver Number with 5 characters On Appendix K Amendment Page",
+  "type in Waiver Number with 5 characters on old Appendix K Amendment Page",
   () => {
-    OneMacAppendixKAmendmentPage.inputWaiverNumber(`MD-10330.R00.12`);
+    OneMacAppendixKAmendmentPage.inputWaiverNumberOldForms(`MD-10330.R00.12`);
   }
 );
 And(
-  "type in Waiver Number with 5 characters on new Appendix K Amendment Page",
+  "type in Waiver Number with 5 characters on Appendix K Amendment Page",
   () => {
-    OneMacAppendixKAmendmentPage.inputWaiverNumberNewForms(`MD-22106.R01.02`);
+    OneMacAppendixKAmendmentPage.inputWaiverNumber(`MD-22106.R01.02`);
   }
 );
 
-And("type in invalid Waiver Number On Appendix K Amendment Page", () => {
+And("type in invalid Waiver Number on Appendix K Amendment Page", () => {
   OneMacAppendixKAmendmentPage.inputWaiverNumber("MD.123");
 });
 
+And("type in invalid Waiver Number on old Appendix K Amendment Page", () => {
+  OneMacAppendixKAmendmentPage.inputWaiverNumberOldForms("MD.123");
+});
+
 And(
-  "verify that error message for incorrect Waiver Number is Displayed On Appendix K Amendment Page",
+  "verify that error message for incorrect Waiver Number is Displayed on Appendix K Amendment Page",
   () => {
     OneMacAppendixKAmendmentPage.verifyErrorMessageIsDisplayed();
+  }
+);
+And(
+  "verify that error message for incorrect Waiver Number is Displayed on old Appendix K Amendment Page",
+  () => {
+    OneMacAppendixKAmendmentPage.verifyOldErrorMessageIsDisplayed();
   }
 );
 //this is for oy2_4807
