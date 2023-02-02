@@ -13,11 +13,11 @@ Feature: SPA Form Logic
         And verify error message is not present on Submit New CHIP SPA Page
         And Add file for SPA Pages
         And verify the submit button is not disabled
-        And clear SPA ID Input box CHIP SPA page
-        And type in invalid SPA ID on CHIP SPA page
-        And verify that error message for incorrect SPA ID is Displayed on CHIP SPA Page
+        And clear SPA ID Input box in old CHIP SPA page
+        And type in invalid SPA ID on old CHIP SPA page
+        And verify that error message for incorrect SPA ID is Displayed on old CHIP SPA Page
         And verify the submit button is disabled
-        And clear SPA ID Input box CHIP SPA page
+        And clear SPA ID Input box in old CHIP SPA page
         And type in SPA ID 1
         And verify error message is not present on Submit New CHIP SPA Page
         And verify the submit button is not disabled
@@ -30,11 +30,11 @@ Feature: SPA Form Logic
         And Add file for Cover Letter
         And verify error message is not present on Submit New CHIP SPA Page
         And verify the submit button is not disabled
-        And clear SPA ID Input box CHIP SPA page
-        And type in invalid SPA ID on CHIP SPA page
-        And verify that error message for incorrect SPA ID is Displayed on CHIP SPA Page
+        And clear SPA ID Input box in old CHIP SPA page
+        And type in invalid SPA ID on old CHIP SPA page
+        And verify that error message for incorrect SPA ID is Displayed on old CHIP SPA Page
         And verify the submit button is disabled
-        And clear SPA ID Input box CHIP SPA page
+        And clear SPA ID Input box in old CHIP SPA page
         And type in CHIP ID 2
         And verify error message is not present on Submit New CHIP SPA Page
         And verify the submit button is not disabled

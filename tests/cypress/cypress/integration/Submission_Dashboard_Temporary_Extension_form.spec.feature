@@ -20,7 +20,7 @@ Feature: Temporary Extension form
         And clear Waiver Number Input box on Request Waiver Temporary Extenstion Page
         And type waiver number with state abbreviation different from user on Request Waiver Temporary Extenstion Page
         And verify that error message for incorrect Waiver Number is Displayed
-
+@focus 
     Scenario: Screen enhancement - Temp Extension Approved Initial or Renewal Waiver Number field
         And Click on Request Temporary Extension
         And Type "M" into Approved Initial or Renewal Waiver Number field
@@ -28,7 +28,7 @@ Feature: Temporary Extension form
         And verify Approved Initial or Renewal Waiver Number error message text is correct
         And clear Approved Initial or Renewal Waiver Number input box
         And verify Approved Initial or Renewal Waiver Number error message is not displayed
-        And Type existing waiver number 2 into Approved Initial or Renewal Waiver Number field
+        And Type existing waiver number into Approved Initial or Renewal Waiver Number field
         And verify Approved Initial or Renewal Waiver Number error message is not displayed
 
     Scenario: Verify user can not create Temporary Extension with invalid waiver number

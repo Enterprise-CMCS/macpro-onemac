@@ -24,13 +24,15 @@ Feature: Validate Waiver Form is checking ID format without period
         And verify error message is present on package dashboard New Waiver Page
         And verify the submit button is disabled
         And clear Waiver Number Input box in new form
-@focus         
+
     Scenario: Validate Waiver Form Logic for Waiver Amendment
         And click on Waiver Amendment
         And Click on 1915 b 4 FFS Selective Contracting waivers under Waiver Authority
+        And type approved Initial Waiver number into Existing Waiver Number to Amend field
         And type in invalid Waiver Number
+        And select proposed effective date 3 months from today
         And verify error message is present on package dashboard New Waiver Page
-        And verify error message contains 'For amendments, the last two digits start with “01” and ascends'
+        And verify error message contains "For amendments, the last two digits start with"
         And Upload 1915 b 4 file
         And verify the submit button is disabled
         And clear Waiver Number Input box in new form
@@ -44,50 +46,28 @@ Feature: Validate Waiver Form is checking ID format without period
 
 
     Scenario: Validate Waiver Form Logic for Waiver Renewal and All other
-        And Click on Waiver Action under Waiver Type
-        And Click on Request for waiver renewal from Action Type
-        And Click on All other 1915 b Waivers under Waiver Authority
+        And click on Waiver Renewal
+        And Click on 1915 b 4 FFS Selective Contracting waivers under Waiver Authority
         And type in Existing Waiver Number in new form
         And Upload 1915 b 4 file
         And verify error message is present on package dashboard New Waiver Page
         And verify the submit button is disabled
 
-    Scenario: Verify the Waiver Number format on Submit New Waiver Action
-        And Click on Waiver Action under Waiver Type
-        And Click on New Waiver under Action type
-        And Click on 1915 b 4 FFS Selective Contracting waivers under Waiver Authority
-        And type in a correct Waiver Number with 4 characters
-        And Upload 1915 b 4 file
-        And verify error message is not present on New Waiver Page
-        And verify the submit button is not disabled
-        And clear Waiver Number Input box in new form
-        And verify the submit button is disabled
-        And type in a correct Waiver Number with 5 characters
-        And verify error message is not present on New Waiver Page
-        And verify the submit button is not disabled
-        And clear Waiver Number Input box in new form
-        And verify the submit button is disabled
-        And type in invalid Waiver Number
-        And verify error message is present on package dashboard New Waiver Page
-        And verify the submit button is disabled
-        And clear Waiver Number Input box in new form
-        And verify the submit button is disabled
-        And type in a correct Waiver Number with 5 characters
-        And verify error message is not present on New Waiver Page
-        And verify the submit button is not disabled
 
     Scenario: Verify the Waiver Number format on Appendix K Form
         And Click on Appendix K Amendment
-        And type in Waiver Number with 5 characters On Appendix K Amendment Page
+        And type Appendix K Submission 1 into Amendment Title field
+        And type in Waiver Number with 5 characters on new Appendix K Amendment Page
         And Add file for 1915c Appendix K Amendment Waiver Template
-        And verify error message is not present On Appendix K Amendment Page
+        And select proposed effective date 3 months from today
+        And verify error message is not present on Appendix K Amendment Page
         And verify the submit button is not disabled
-        And clear Waiver Number Input box On Appendix K Amendment Page
+        And clear Waiver Number Input box on Appendix K Amendment Page
         And type in invalid Waiver Number On Appendix K Amendment Page
         And verify that error message for incorrect Waiver Number is Displayed On Appendix K Amendment Page
-        And verify error message contains 'For amendments, the last two digits start with “01” and ascends'
+        And verify error message contains 'For amendments, the last two digits start with'
         And verify the submit button is disabled
-        And clear Waiver Number Input box On Appendix K Amendment Page
-        And type in Waiver Number with 5 characters On Appendix K Amendment Page
-        And verify error message is not present On Appendix K Amendment Page
+        And clear Waiver Number Input box on Appendix K Amendment Page
+        And type in Waiver Number with 5 characters on new Appendix K Amendment Page
+        And verify error message is not present on Appendix K Amendment Page
         And verify the submit button is not disabled

@@ -61,7 +61,7 @@ Feature: Package Dashboard Temporary Extension
         And click Request a Temporary Extension package action
         And select the 1915b Temporary Extension Type button
         And verify the parent ID is prefilled in the form
-        And Type Temporary Extension Number 4
+        And Type Temporary Extension Number 5
         And upload Waiver Extension Request
         And Type Additonal Info Comments in new form
         And Click on Submit Button
@@ -82,7 +82,7 @@ Feature: Package Dashboard Temporary Extension
         And click the Request Temporary Extension button
         And select the 1915b Temporary Extension Type button
         And verify the parent ID is prefilled in the form
-        And Type Temporary Extension Number 5
+        And Type Temporary Extension Number 6
         And upload Waiver Extension Request
         And Type Additonal Info Comments in new form
         And Click on Submit Button
@@ -103,7 +103,7 @@ Feature: Package Dashboard Temporary Extension
         And click the Request Temporary Extension button
         And select the 1915b Temporary Extension Type button
         And verify the parent ID is prefilled in the form
-        And Type Temporary Extension Number 5
+        And Type Temporary Extension Number 7
         And upload Waiver Extension Request
         And Type Additonal Info Comments in new form
         And Click on Submit Button

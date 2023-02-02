@@ -67,32 +67,42 @@ And("click on Medicaid SPA", () => {
 });
 And("type in SPA ID 1", () => {
   cy.fixture("submissionDashboardSPAIDs.json").then((d) => {
-    OneMacCHIPSPAPage.inputSpaID(d.attachmentsSPAID1);
+    OneMacCHIPSPAPage.inputOldSpaID(d.attachmentsSPAID1);
   });
 });
 And("type in SPA ID 2", () => {
   cy.fixture("submissionDashboardSPAIDs.json").then((d) => {
-    OneMacCHIPSPAPage.inputSpaID(d.attachmentsSPAID2);
+    OneMacCHIPSPAPage.inputOldSpaID(d.attachmentsSPAID2);
   });
 });
 And("type in SPA ID for RAI 1", () => {
   cy.fixture("submissionDashboardSPAIDs.json").then((d) => {
-    OneMacCHIPSPAPage.inputSpaID(d.SPAIDforRAI1);
+    OneMacCHIPSPAPage.inputOldSpaID(d.SPAIDforRAI1);
   });
 });
 And("type in SPA ID for RAI 2", () => {
   cy.fixture("submissionDashboardSPAIDs.json").then((d) => {
-    OneMacCHIPSPAPage.inputSpaID(d.SPAIDforRAI2);
+    OneMacCHIPSPAPage.inputOldSpaID(d.SPAIDforRAI2);
   });
 });
 And("type in Medicaid SPA ID", () => {
   cy.fixture("packageDashboardSPAIDs.json").then((d) => {
-    OneMacSubmitNewMedicaidSpaPage.inputSpaID(d.newMedicaidSPAID);
+    OneMacSubmitNewMedicaidSpaPage.inputSpaID(d.newMedicaidSPAID1);
+  });
+});
+And("type in Medicaid SPA ID 2", () => {
+  cy.fixture("packageDashboardSPAIDs.json").then((d) => {
+    OneMacSubmitNewMedicaidSpaPage.inputSpaID(d.newMedicaidSPAID2);
   });
 });
 And("type in Chip SPA ID", () => {
   cy.fixture("packageDashboardSPAIDs.json").then((d) => {
-    OneMacSubmitNewMedicaidSpaPage.inputSpaID(d.newChipSPAID);
+    OneMacSubmitNewMedicaidSpaPage.inputSpaID(d.newChipSPAID1);
+  });
+});
+And("type in Chip SPA ID 2", () => {
+  cy.fixture("packageDashboardSPAIDs.json").then((d) => {
+    OneMacSubmitNewMedicaidSpaPage.inputSpaID(d.newChipSPAID2);
   });
 });
 And("Add file for CMS Form 179", () => {
@@ -253,17 +263,17 @@ And("verify CHIP ID EXISTS", () => {
 
 And("type in CHIP ID", () => {
   cy.fixture("submissionDashboardSPAIDs.json").then((d) => {
-    OneMacCHIPSPAPage.inputSpaID(d.spaID1);
+    OneMacCHIPSPAPage.inputOldSpaID(d.spaID1);
   });
 });
 And("type in CHIP ID 2", () => {
   cy.fixture("submissionDashboardSPAIDs.json").then((d) => {
-    OneMacCHIPSPAPage.inputSpaID(d.spaID2);
+    OneMacCHIPSPAPage.inputOldSpaID(d.spaID2);
   });
 });
 And("type in CHIP ID 3", () => {
   cy.fixture("submissionDashboardSPAIDs.json").then((d) => {
-    OneMacCHIPSPAPage.inputSpaID(d.spaID3);
+    OneMacCHIPSPAPage.inputOldSpaID(d.spaID3);
   });
 });
 
@@ -485,11 +495,11 @@ And("verify New Submission BTN is Displayed", () => {
 });
 
 //this is for OY2_3900
-And("verify error message is not present", () => {
+And("verify error message is not present on Medicaid SPA page", () => {
   OneMacSubmitNewMedicaidSpaPage.verifySPAIDErrorMessageIsNotDisplayed();
 });
 
-And("clear SPA ID Input box", () => {
+And("clear SPA ID in Medicaid SPA Input box", () => {
   OneMacSubmitNewMedicaidSpaPage.clearSPAIDInputBox();
 });
 
@@ -497,7 +507,7 @@ And("Return to dashboard Page", () => {
   OneMacSubmitNewMedicaidSpaPage.clickOnDashboardTab();
 });
 
-And("type in invalid SPA ID", () => {
+And("type in invalid SPA ID on Medicaid SPA page", () => {
   OneMacSubmitNewMedicaidSpaPage.typeIncorrectSPAIDAndFormat();
 });
 
@@ -516,6 +526,14 @@ And("clear SPA ID Input box CHIP SPA page", () => {
   OneMacCHIPSPAPage.clearSPAIDInputBox();
 });
 
+And("clear SPA ID Input box in old CHIP SPA page", () => {
+  OneMacCHIPSPAPage.clearOldSPAIDInputBox();
+});
+
+And("type in invalid SPA ID on old CHIP SPA page", () => {
+  OneMacCHIPSPAPage.inputIncorrectSPAIDFormatInOld();
+});
+
 And("type in invalid SPA ID on CHIP SPA page", () => {
   OneMacCHIPSPAPage.inputIncorrectSPAIDFormat();
 });
@@ -523,7 +541,13 @@ And("type in invalid SPA ID on CHIP SPA page", () => {
 And(
   "verify that error message for incorrect SPA ID is Displayed on CHIP SPA Page",
   () => {
-    OneMacSubmitNewWaiverActionPage.verifyOldErrorMessageIsDisplayed();
+    OneMacCHIPSPAPage.verifyErrorMessageIsDisplayed();
+  }
+);
+And(
+  "verify that error message for incorrect SPA ID is Displayed on old CHIP SPA Page",
+  () => {
+    OneMacCHIPSPAPage.verifyOldErrorMessageIsDisplayed();
   }
 );
 
@@ -729,11 +753,21 @@ And(
   }
 );
 
-And("verify error message is not present On Appendix K Amendment Page", () => {
+And(
+  "verify error message is not present on old Appendix K Amendment Page",
+  () => {
+    OneMacAppendixKAmendmentPage.verifyOldErrorMessageIsNotDisplayed();
+  }
+);
+
+And("verify error message is not present on Appendix K Amendment Page", () => {
   OneMacAppendixKAmendmentPage.verifyErrorMessageIsNotDisplayed();
 });
 
-And("clear Waiver Number Input box On Appendix K Amendment Page", () => {
+And("clear Waiver Number Input box on old Appendix K Amendment Page", () => {
+  OneMacAppendixKAmendmentPage.clearOldWaiverNumberInputBox();
+});
+And("clear Waiver Number Input box on Appendix K Amendment Page", () => {
   OneMacAppendixKAmendmentPage.clearWaiverNumberInputBox();
 });
 //find a waiver number that exits with 5 characters
@@ -896,13 +930,13 @@ And("search for Initial Waiver Number 2 with 12 Characters", () => {
 });
 And("search for Medicaid SPA ID", () => {
   cy.fixture("packageDashboardSPAIDs.json").then((data) => {
-    OneMacPackagePage.searchFor(data.newMedicaidSPAID);
+    OneMacPackagePage.searchFor(data.newMedicaidSPAID1);
   });
   cy.wait(1000);
 });
 And("search for CHIP SPA ID", () => {
   cy.fixture("packageDashboardSPAIDs.json").then((data) => {
-    OneMacPackagePage.searchFor(data.newChipSPAID);
+    OneMacPackagePage.searchFor(data.newChipSPAID1);
   });
   cy.wait(1000);
 });
@@ -913,12 +947,12 @@ And("verify id number in the first row matches Initial Waiver Number 1", () => {
 });
 And("verify id number in the first row matches Medicaid SPA ID", () => {
   cy.fixture("packageDashboardSPAIDs.json").then((data) => {
-    OneMacPackagePage.verifyIDNumberInFirstRowIs(data.newMedicaidSPAID);
+    OneMacPackagePage.verifyIDNumberInFirstRowIs(data.newMedicaidSPAID1);
   });
 });
 And("verify id number in the first row matches CHIP SPA ID", () => {
   cy.fixture("packageDashboardSPAIDs.json").then((data) => {
-    OneMacPackagePage.verifyIDNumberInFirstRowIs(data.newChipSPAID);
+    OneMacPackagePage.verifyIDNumberInFirstRowIs(data.newChipSPAID1);
   });
 });
 And("search for Unique Valid Waiver Number with 5 Characters", () => {
@@ -2539,6 +2573,20 @@ And("Type Temporary Extension Number 5", () => {
   cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
     OneMacSubmitNewWaiverActionPage.inputWaiverNumberNewForms(
       data.newTemporaryExtensionNumber5
+    );
+  });
+});
+And("Type Temporary Extension Number 6", () => {
+  cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
+    OneMacSubmitNewWaiverActionPage.inputWaiverNumberNewForms(
+      data.newTemporaryExtensionNumber6
+    );
+  });
+});
+And("Type Temporary Extension Number 7", () => {
+  cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
+    OneMacSubmitNewWaiverActionPage.inputWaiverNumberNewForms(
+      data.newTemporaryExtensionNumber7
     );
   });
 });

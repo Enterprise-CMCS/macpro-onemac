@@ -1,7 +1,7 @@
 const submitBTN = "#form-submission-button";
 const cancelBTN = "#form-cancel-button";
 const submissionFormErrorMsg = "#transmittal-number-status-msg";
-const packageFormErrorMsg = "#componentIdStatusMsg";
+const packageFormPt2ErrorMsg = "#componentIdStatusMsg1";
 const modalCancelBTN =
   "//*[@id='react-aria-modal-dialog']//button[text()='Cancel']";
 
@@ -45,7 +45,7 @@ export class oneMacDefaultForms {
     cy.get(submissionFormErrorMsg).contains(s);
   }
   verifyErrorMsgContainsInPackageView(s) {
-    cy.get(packageFormErrorMsg).contains(s);
+    cy.get(packageFormPt2ErrorMsg).contains(s);
   }
 }
 export default oneMacDefaultForms;

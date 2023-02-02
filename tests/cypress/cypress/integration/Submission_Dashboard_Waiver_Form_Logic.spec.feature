@@ -71,14 +71,14 @@ Feature: OY2_4807_Validate_Waiver_Form_Logic
         And Click on Appendix K Amendment
         And type in Waiver Number with 5 characters On Appendix K Amendment Page
         And Add file for 1915c Appendix K Amendment Waiver Template
-        And verify error message is not present On Appendix K Amendment Page
+        And verify error message is not present on old Appendix K Amendment Page
         And verify the submit button is not disabled
-        And clear Waiver Number Input box On Appendix K Amendment Page
+        And clear Waiver Number Input box on old Appendix K Amendment Page
         And type in invalid Waiver Number On Appendix K Amendment Page
         And verify that error message for incorrect Waiver Number is Displayed On Appendix K Amendment Page
         And verify error message in old form contains 'For amendments, the last two digits start with “01” and ascends'
         And verify the submit button is disabled
-        And clear Waiver Number Input box On Appendix K Amendment Page
+        And clear Waiver Number Input box on old Appendix K Amendment Page
         And type in Waiver Number with 5 characters On Appendix K Amendment Page
-        And verify error message is not present On Appendix K Amendment Page
+        And verify error message is not present on old Appendix K Amendment Page
         And verify the submit button is not disabled

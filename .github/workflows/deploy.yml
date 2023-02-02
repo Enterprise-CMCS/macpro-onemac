@@ -211,7 +211,6 @@ jobs:
             Package_Dashboard_Tabs.spec.feature,
             Package_Dashboard_Waiver_Amendment_RAI_Response.spec.feature,
             Package_Dashboard_Waiver_Form_Logic.spec.feature,
-            Package_Dashboard_Withdraw_Package.spec.feature,
             Profile_View_CMS_Approver.spec.feature,
             Profile_View_CMS_System_Admin.spec.feature,
             Profile_View_CMS_User_Denied.spec.feature,
@@ -243,6 +242,11 @@ jobs:
             Package_Dashboard_Waiver_RAI_Response.spec.feature,
             Package_Dashboard_AppK_RAI_Response.spec.feature,
             Package_Dashboard_Temporary_Extension_Form.spec.feature,
+            Package_Dashboard_No_Action_Packages.spec.feature,
+            Package_Dashboard_RAI_Issued_Actions.spec.feature,
+            Package_Dashboard_Under_Review_Actions.spec.feature,
+            Package_Dashboard_Approved_Actions.spec.feature,
+            
           ]
     steps:
       - name: set branch_name
