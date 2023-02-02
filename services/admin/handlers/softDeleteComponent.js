@@ -50,7 +50,7 @@ exports.main = async function (event) {
 
   // because we are prepending the additionalInformation... we have to use get/put
   const getParams = {
-    TableName: process.env.oneMacTable,
+    TableName: process.env.oneMacTableName,
     Key: {
       pk,
       sk,
@@ -63,12 +63,14 @@ exports.main = async function (event) {
   if (!result || !result.Item) {
     throw new Error(pk + " not found with sk: " + sk);
   }
-  const auditArray = [event.prependAdditionalInfo, ...result.Item?.auditArray];
+  const auditArray = result.Item.auditArray
+    ? [event.prependAdditionalInfo, ...result.Item?.auditArray]
+    : [event.prependAdditionalInfo];
 
   //update the status to inactivated and prepend the additional info
   await dynamoDb
     .put({
-      TableName: process.env.oneMacTable,
+      TableName: process.env.oneMacTableName,
       Key: { pk, sk },
       Item: {
         ...result.Item,

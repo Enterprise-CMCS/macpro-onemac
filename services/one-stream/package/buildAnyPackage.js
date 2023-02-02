@@ -89,6 +89,7 @@ export const buildAnyPackage = async (packageId, config) => {
       if (source === "OneMAC") {
         showPackageOnDashboard = true;
       }
+      if (anEvent?.currentStatus === Workflow.ONEMAC_STATUS.INACTIVATED) return;
 
       if (timestamp > lmTimestamp) {
         lmTimestamp = timestamp;
@@ -99,15 +100,12 @@ export const buildAnyPackage = async (packageId, config) => {
         anEvent.componentType === `${config.componentType}rai` ||
         anEvent.componentType === `waiverrai`
       ) {
-        if (anEvent.currentStatus !== Workflow.ONEMAC_STATUS.INACTIVATED) {
-          putParams.Item.raiResponses.push({
-            submissionTimestamp: anEvent.submissionTimestamp,
-            attachments: anEvent.attachments,
-            additionalInformation: anEvent.additionalInformation,
-          });
-          putParams.Item.currentStatus = Workflow.ONEMAC_STATUS.SUBMITTED;
-        }
-        return;
+        putParams.Item.raiResponses.push({
+          submissionTimestamp: anEvent.submissionTimestamp,
+          attachments: anEvent.attachments,
+          additionalInformation: anEvent.additionalInformation,
+        });
+        putParams.Item.currentStatus = Workflow.ONEMAC_STATUS.SUBMITTED;
       }
 
       // SEATool "events" are actually a complete representation of the package state,
