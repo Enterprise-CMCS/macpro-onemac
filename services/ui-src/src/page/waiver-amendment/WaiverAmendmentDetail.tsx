@@ -10,7 +10,6 @@ import { waiverAmendment } from "cmscommonlib";
 export const waiverAmendmentDetail: OneMACDetail = {
   ...defaultDetail,
   ...waiverAmendment,
-  actionLabel: "Amendment Actions",
   detailHeader: "Waiver Amendment Package",
   detailSection: [...defaultWaiverDetailSectionItems],
 };
