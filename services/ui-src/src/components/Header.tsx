@@ -218,7 +218,7 @@ export function Header() {
     const dashboardLink = (
       <Link
         id="dashboardLink"
-        to={ROUTES.DASHBOARD}
+        to={ONEMAC_ROUTES.PACKAGE_LIST}
         className={getActiveClass(currentRoute, RouteList.DASHBOARD)}
       >
         Dashboard
@@ -241,15 +241,12 @@ export function Header() {
         to={ONEMAC_ROUTES.PACKAGE_LIST}
         className={getActiveClass(currentRoute, ONEMAC_ROUTES.PACKAGE_LIST)}
       >
-        Packages
+        Dashboard
       </Link>
     );
 
     let linksToDisplay = [homeLink];
     if (isAuthenticated) {
-      if (userObj.canAccessDashboard) {
-        linksToDisplay.push(dashboardLink);
-      }
       if (userObj.canAccessDashboard && isLoggedInAsDeveloper) {
         linksToDisplay.push(packageListLink);
       }

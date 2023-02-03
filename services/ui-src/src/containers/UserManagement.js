@@ -3,6 +3,7 @@ import { useLocation, useHistory, Link } from "react-router-dom";
 import {
   RESPONSE_CODE,
   ROUTES,
+  ONEMAC_ROUTES,
   USER_STATUS,
   USER_ROLE,
   getUserRoleObj,
@@ -22,6 +23,7 @@ import pendingCircle from "../images/PendingCircle.svg";
 import { pendingMessage, deniedOrRevokedMessage } from "../libs/userLib";
 import { Button } from "@cmsgov/design-system";
 import { tableListExportToCSV } from "../utils/tableListExportToCSV";
+import { ONEMAC_LABEL } from "cmscommonlib/workflow";
 
 const PENDING_CIRCLE_IMAGE = (
   <img alt="" className="pending-circle" src={pendingCircle} />
@@ -117,7 +119,7 @@ const UserManagement = () => {
       !userProfile.userData ||
       !getUserRoleObj(userProfile.userData.roleList).canAccessUserManagement
     ) {
-      history.push(ROUTES.DASHBOARD);
+      history.push(ONEMAC_ROUTES.PACKAGE_LIST);
     }
 
     if (mounted) updateList();

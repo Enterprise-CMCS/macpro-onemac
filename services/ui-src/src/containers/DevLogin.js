@@ -4,7 +4,7 @@ import { Redirect } from "react-router-dom";
 
 import { Button } from "@cmsgov/design-system";
 
-import { RESPONSE_CODE, ROUTES } from "cmscommonlib";
+import { ONEMAC_ROUTES, RESPONSE_CODE, ROUTES } from "cmscommonlib";
 
 import { useAppContext } from "../libs/contextLib";
 import { useFormFields } from "../libs/hooksLib";
@@ -41,7 +41,7 @@ export default function DevLogin() {
     setAlertCode(RESPONSE_CODE.NONE);
   }
 
-  if (isAuthenticated) return <Redirect to={ROUTES.DASHBOARD} />;
+  if (isAuthenticated) return <Redirect to={ONEMAC_ROUTES.PACKAGE_LIST} />;
 
   return (
     <div>

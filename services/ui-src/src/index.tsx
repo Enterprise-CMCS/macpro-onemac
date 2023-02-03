@@ -15,7 +15,7 @@ import { BrowserRouter } from "react-router-dom";
 import { Amplify } from "aws-amplify";
 import { getApplicationNode } from "./utils";
 import config from "./utils/config";
-import { ROUTES } from "cmscommonlib";
+import { ONEMAC_ROUTES, ROUTES } from "cmscommonlib";
 import "core-js/stable";
 
 let amplifyConfig = {
@@ -27,7 +27,7 @@ let amplifyConfig = {
     userPoolWebClientId: config.cognito.APP_CLIENT_ID,
     oauth: {
       domain: config.cognito.APP_CLIENT_DOMAIN,
-      redirectSignIn: window.location.origin + ROUTES.DASHBOARD,
+      redirectSignIn: window.location.origin + ONEMAC_ROUTES.PACKAGE_LIST,
       redirectSignOut: window.location.origin,
       scope: ["email", "openid", "aws.cognito.signin.user.admin", "profile"],
       responseType: "token",
