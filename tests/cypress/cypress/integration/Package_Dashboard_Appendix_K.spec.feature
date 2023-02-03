@@ -22,7 +22,7 @@ Feature: Appendix K Waiver Type Selection
         And Click on Submit Button
         And verify submission successful message in the alert bar
         And verify the Waivers tab is selected
-        And search for Appendix K number
+        And search for "MD-22106.R01.02"
         And verify id number in the first row matches Appendix K number
         And click the Waiver Number link in the first row
         And verify the package details page is visible
