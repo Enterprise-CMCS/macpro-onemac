@@ -112,13 +112,16 @@ Feature: Waiver Package Details View: Appendix K Amendment for a State User
         And verify package actions header is visible
         And verify there are no package actions available
         And verify the details section exists
-        And verify there is a Type header in the details section
-        And verify the type is Appendix K
+        And verify the waiver authority header exists
+        And verify the waiver authority is 1915c HCBS
         And verify there is a State header in the details section
         And verify a state exists for the State
+        And verify there is an Amendment Title in the details section
+        And verify the Amendment Title is "Appendix K Amendment"
         And verify there is an Initial Submission Date header in the details section
         And verify a date exists for the Initial Submission Date
         And verify there is a Proposed Effective Date header in the details section
+        And verify the Proposed Effective Date is a date formated like Mon dd yyyy
         And verify the supporting documentation section exists
         And verify the download all button exists
         And verify the additional information section exists
@@ -132,13 +135,16 @@ Feature: Waiver Package Details View: Appendix K Amendment for a State User
         And verify package actions header is visible
         And verify there are no package actions available
         And verify the details section exists
-        And verify there is a Type header in the details section
-        And verify the type is Appendix K
+        And verify the waiver authority header exists
+        And verify the waiver authority is 1915c HCBS
         And verify there is a State header in the details section
         And verify a state exists for the State
+        And verify there is an Amendment Title in the details section
+        And verify the Amendment Title is "Appendix K Amendment"
         And verify there is an Initial Submission Date header in the details section
         And verify a date exists for the Initial Submission Date
         And verify there is a Proposed Effective Date header in the details section
+        And verify the Proposed Effective Date is a date formated like Mon dd yyyy
         And verify the supporting documentation section exists
         And verify the download all button exists
         And verify the additional information section exists
@@ -152,13 +158,16 @@ Feature: Waiver Package Details View: Appendix K Amendment for a State User
         And verify package actions header is visible
         And verify there are no package actions available
         And verify the details section exists
-        And verify there is a Type header in the details section
-        And verify the type is Appendix K
+        And verify the waiver authority header exists
+        And verify the waiver authority is 1915c HCBS
         And verify there is a State header in the details section
         And verify a state exists for the State
+        And verify there is an Amendment Title in the details section
+        And verify the Amendment Title is "Appendix K Amendment"
         And verify there is an Initial Submission Date header in the details section
         And verify a date exists for the Initial Submission Date
         And verify there is a Proposed Effective Date header in the details section
+        And verify the Proposed Effective Date is a date formated like Mon dd yyyy
         And verify the supporting documentation section exists
         And verify the download all button exists
         And verify the additional information section exists
