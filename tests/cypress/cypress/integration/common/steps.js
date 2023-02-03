@@ -3055,6 +3055,10 @@ And("verify id number in the first row matches Appendix K number", () => {
   OneMacPackagePage.verifyIDNumberInFirstRowIs("MD-10330.R00.12");
 });
 
+And("verify id number in the first row matches {string}", (s) => {
+  OneMacPackagePage.verifyIDNumberInFirstRowIs(s);
+});
+
 And("verify help text under Existing Waiver Number to Renew field", () => {
   OneMacSubmitNewWaiverActionPage.verifyParentFieldHelpText();
 });
