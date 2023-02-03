@@ -53,11 +53,11 @@ Feature: Validate Waiver Form is checking ID format without period
         And verify error message is present on package dashboard New Waiver Page
         And verify the submit button is disabled
 
-
+@focus 
     Scenario: Verify the Waiver Number format on Appendix K Form
         And Click on Appendix K Amendment
         And type Appendix K Submission 1 into Amendment Title field
-        And type in Waiver Number with 5 characters on Appendix K Amendment Page
+        And type in unused Waiver Number with 5 characters on Appendix K Amendment Page
         And Add file for 1915c Appendix K Amendment Waiver Template
         And select proposed effective date 3 months from today
         And verify error message is not present on Appendix K Amendment Page
@@ -68,6 +68,6 @@ Feature: Validate Waiver Form is checking ID format without period
         And verify error message contains 'For amendments, the last two digits start with'
         And verify the submit button is disabled
         And clear Waiver Number Input box on Appendix K Amendment Page
-        And type in Waiver Number with 5 characters on Appendix K Amendment Page
+        And type in unused Waiver Number with 5 characters on Appendix K Amendment Page
         And verify error message is not present on Appendix K Amendment Page
         And verify the submit button is not disabled

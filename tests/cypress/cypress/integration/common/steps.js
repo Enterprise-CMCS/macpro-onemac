@@ -784,6 +784,13 @@ And(
   }
 );
 
+And(
+  "type in unused Waiver Number with 5 characters on Appendix K Amendment Page",
+  () => {
+    OneMacAppendixKAmendmentPage.inputWaiverNumber(`MD-22106.R01.03`);
+  }
+);
+
 And("type in invalid Waiver Number on Appendix K Amendment Page", () => {
   OneMacAppendixKAmendmentPage.inputWaiverNumber("MD.123");
 });
