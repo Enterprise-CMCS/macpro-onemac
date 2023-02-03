@@ -40,8 +40,8 @@ export const ROUTES = {
 
 export const ONEMAC_ROUTES = {
   PACKAGE_LIST: "/dashboard",
-  PACKAGE_LIST_SPA: "/packagelist?startTab=spa",
-  PACKAGE_LIST_WAIVER: "/packagelist?startTab=waiver",
+  PACKAGE_LIST_SPA: "/dashboard?startTab=spa",
+  PACKAGE_LIST_WAIVER: "/dashboard?startTab=waiver",
   TRIAGE_GROUP: "/choices",
   TRIAGE_SPA: "/choices/spa",
   TRIAGE_WAIVER: "/choices/waiver",
