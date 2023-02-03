@@ -2600,10 +2600,17 @@ And("Type Temporary Extension Number 7", () => {
     );
   });
 });
-And("verify the parent ID is prefilled in the form", () => {
+And("verify the initial waiver parent ID is prefilled in the form", () => {
   cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
     OneMacSubmitNewWaiverActionPage.verifyParentIDIsPrefilled(
       data.approvedInitialWaiverNum1
+    );
+  });
+});
+And("verify the renewal waiver parent ID is prefilled in the form", () => {
+  cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
+    OneMacSubmitNewWaiverActionPage.verifyParentIDIsPrefilled(
+      data.approvedRenewalWaiverNum1
     );
   });
 });
