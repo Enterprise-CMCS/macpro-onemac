@@ -23,7 +23,6 @@ import pendingCircle from "../images/PendingCircle.svg";
 import { pendingMessage, deniedOrRevokedMessage } from "../libs/userLib";
 import { Button } from "@cmsgov/design-system";
 import { tableListExportToCSV } from "../utils/tableListExportToCSV";
-import { ONEMAC_LABEL } from "cmscommonlib/workflow";
 
 const PENDING_CIRCLE_IMAGE = (
   <img alt="" className="pending-circle" src={pendingCircle} />

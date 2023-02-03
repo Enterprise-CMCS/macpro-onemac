@@ -4,7 +4,7 @@ import { Redirect } from "react-router-dom";
 
 import { Button } from "@cmsgov/design-system";
 
-import { ONEMAC_ROUTES, RESPONSE_CODE, ROUTES } from "cmscommonlib";
+import { ONEMAC_ROUTES, RESPONSE_CODE } from "cmscommonlib";
 
 import { useAppContext } from "../libs/contextLib";
 import { useFormFields } from "../libs/hooksLib";

@@ -215,16 +215,6 @@ export function Header() {
       </a>
     );
 
-    const dashboardLink = (
-      <Link
-        id="dashboardLink"
-        to={ONEMAC_ROUTES.PACKAGE_LIST}
-        className={getActiveClass(currentRoute, RouteList.DASHBOARD)}
-      >
-        Dashboard
-      </Link>
-    );
-
     const userManagementLink = (
       <Link
         id="userManagementLink"
