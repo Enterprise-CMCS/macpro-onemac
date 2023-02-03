@@ -247,7 +247,7 @@ export function Header() {
 
     let linksToDisplay = [homeLink];
     if (isAuthenticated) {
-      if (userObj.canAccessDashboard && isLoggedInAsDeveloper) {
+      if (userObj.canAccessDashboard) {
         linksToDisplay.push(packageListLink);
       }
       if (userObj.canAccessUserManagement) {
