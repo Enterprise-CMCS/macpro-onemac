@@ -1,6 +1,6 @@
 const AWS = require("aws-sdk");
 const fs = require("fs");
-const child_process = require("child_process");
+const spawnSync = require("child_process").spawnSync;
 const path = require("path");
 const constants = require("./constants");
 const utils = require("./utils");
@@ -22,7 +22,7 @@ async function listBucketFiles(bucketName) {
     return keys;
   } catch (err) {
     utils.generateSystemMessage(`Error listing files`);
-    console.log(err);
+    console.error(err);
     throw err;
   }
 }
@@ -34,13 +34,10 @@ async function listBucketFiles(bucketName) {
  */
 function updateAVDefinitonsWithFreshclam() {
   try {
-    const executionResult = child_process.spawnSync(
-      constants.PATH_TO_FRESHCLAM,
-      [
-        ` --config-file=${constants.FRESHCLAM_CONFIG}`,
-        `--datadir=${constants.FRESHCLAM_WORK_DIR}`,
-      ]
-    );
+    const executionResult = spawnSync(constants.PATH_TO_FRESHCLAM, [
+      ` --config-file=${constants.FRESHCLAM_CONFIG}`,
+      `--datadir=${constants.FRESHCLAM_WORK_DIR}`,
+    ]);
 
     utils.generateSystemMessage("Update message");
     console.log(executionResult.toString());
@@ -199,7 +196,7 @@ async function uploadAVDefinitions() {
  */
 function scanLocalFile(pathToFile) {
   try {
-    const avResult = child_process.spawnSync(constants.PATH_TO_CLAMAV, [
+    const avResult = spawnSync(constants.PATH_TO_CLAMAV, [
       "--stdout",
       "-v",
       "-a",
