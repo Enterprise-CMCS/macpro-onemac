@@ -106,6 +106,7 @@ export const buildAnyPackage = async (packageId, config) => {
           additionalInformation: anEvent.additionalInformation,
         });
         putParams.Item.currentStatus = Workflow.ONEMAC_STATUS.SUBMITTED;
+        return;
       }
 
       // SEATool "events" are actually a complete representation of the package state,
