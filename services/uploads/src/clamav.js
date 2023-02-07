@@ -34,13 +34,17 @@ async function listBucketFiles(bucketName) {
  */
 export const updateAVDefinitonsWithFreshclam = () => {
   try {
-    const executionResult = child_process.spawnSync(
-      constants.PATH_TO_FRESHCLAM,
-      [
-        ` --config-file=${constants.FRESHCLAM_CONFIG}`,
-        `--datadir=${constants.FRESHCLAM_WORK_DIR}`,
-      ]
+    const executionResult = child_process.execSync(
+      `${constants.PATH_TO_FRESHCLAM} --config-file=${constants.FRESHCLAM_CONFIG} --datadir=${constants.FRESHCLAM_WORK_DIR}`
     );
+
+    // child_process.spawnSync(
+    //   constants.PATH_TO_FRESHCLAM,
+    //   [
+    //     ` --config-file=${constants.FRESHCLAM_CONFIG}`,
+    //     `--datadir=${constants.FRESHCLAM_WORK_DIR}`,
+    //   ]
+    // );
 
     utils.generateSystemMessage("Update message");
     console.log(executionResult.toString());
