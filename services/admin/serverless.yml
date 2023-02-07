@@ -65,6 +65,10 @@ functions:
     handler: ./handlers/softDeleteChangeRequest.main
     timeout: 180
 
+  softDeleteComponent:
+    handler: ./handlers/softDeleteComponent.main
+    timeout: 180
+
   batchUpdateChangeRequestId:
     handler: ./handlers/batchUpdateChangeRequestId.main
     timeout: 180
