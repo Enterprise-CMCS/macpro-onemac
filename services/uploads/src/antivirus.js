@@ -6,7 +6,7 @@ import AWS from "aws-sdk";
 import path from "path";
 import fs from "fs";
 
-import * as clamav from "./clamav";
+import { downloadAVDefinitions, scanLocalFile } from "./clamav";
 import * as utils from "./utils";
 import * as constants from "./constants";
 
@@ -94,14 +94,14 @@ export async function lambdaHandleEvent(event) {
   } else {
     //No need to act on file unless you are able to.
     utils.generateSystemMessage("Download AV Definitions");
-    await clamav.downloadAVDefinitions(
+    await downloadAVDefinitions(
       constants.CLAMAV_BUCKET_NAME,
       constants.PATH_TO_AV_DEFINITIONS
     );
     utils.generateSystemMessage("Download File from S3");
     await downloadFileFromS3(s3ObjectKey, s3ObjectBucket);
     utils.generateSystemMessage("Set virusScanStatus");
-    virusScanStatus = clamav.scanLocalFile(path.basename(s3ObjectKey));
+    virusScanStatus = scanLocalFile(path.basename(s3ObjectKey));
     utils.generateSystemMessage(`virusScanStatus=${virusScanStatus}`);
   }
 
@@ -122,14 +122,14 @@ export async function lambdaHandleEvent(event) {
 }
 
 export async function scanS3Object(s3ObjectKey, s3ObjectBucket) {
-  await clamav.downloadAVDefinitions(
+  await downloadAVDefinitions(
     constants.CLAMAV_BUCKET_NAME,
     constants.PATH_TO_AV_DEFINITIONS
   );
 
   await downloadFileFromS3(s3ObjectKey, s3ObjectBucket);
 
-  const virusScanStatus = clamav.scanLocalFile(path.basename(s3ObjectKey));
+  const virusScanStatus = scanLocalFile(path.basename(s3ObjectKey));
 
   const taggingParams = {
     Bucket: s3ObjectBucket,

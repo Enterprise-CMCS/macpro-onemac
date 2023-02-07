@@ -32,7 +32,7 @@ async function listBucketFiles(bucketName) {
  *
  * It will download the definitions to the current work dir.
  */
-function updateAVDefinitonsWithFreshclam() {
+export const updateAVDefinitonsWithFreshclam = () => {
   try {
     const executionResult = child_process.spawnSync(
       constants.PATH_TO_FRESHCLAM,
@@ -57,13 +57,13 @@ function updateAVDefinitonsWithFreshclam() {
     console.log(err);
     return false;
   }
-}
+};
 
 /**
  * Download the Antivirus definition from S3.
  * The definitions are stored on the local disk, ensure there's enough space.
  */
-async function downloadAVDefinitions() {
+export const downloadAVDefinitions = async () => {
   // list all the files in that bucket
   utils.generateSystemMessage("Downloading Definitions");
   const allFileKeys = await listBucketFiles(constants.CLAMAV_BUCKET_NAME);
@@ -109,12 +109,12 @@ async function downloadAVDefinitions() {
   });
 
   return await Promise.all(downloadPromises);
-}
+};
 
 /**
  * Uploads the AV definitions to the S3 bucket.
  */
-async function uploadAVDefinitions() {
+export const uploadAVDefinitions = async () => {
   // delete all the definitions currently in the bucket.
   // first list them.
   utils.generateSystemMessage("Uploading Definitions");
@@ -184,7 +184,7 @@ async function uploadAVDefinitions() {
   });
 
   return await Promise.all(uploadPromises);
-}
+};
 
 /**
  * Function to scan the given file. This function requires ClamAV and the definitions to be available.
@@ -197,7 +197,7 @@ async function uploadAVDefinitions() {
  *
  * @param pathToFile Path in the filesystem where the file is stored.
  */
-function scanLocalFile(pathToFile) {
+export const scanLocalFile = (pathToFile) => {
   try {
     const avResult = child_process.spawnSync(constants.PATH_TO_CLAMAV, [
       "--stdout",
@@ -229,11 +229,11 @@ function scanLocalFile(pathToFile) {
     console.log(err);
     return constants.STATUS_ERROR_PROCESSING_FILE;
   }
-}
-
-module.exports = {
-  updateAVDefinitonsWithFreshclam: updateAVDefinitonsWithFreshclam,
-  downloadAVDefinitions: downloadAVDefinitions,
-  uploadAVDefinitions: uploadAVDefinitions,
-  scanLocalFile: scanLocalFile,
 };
+
+// module.exports = {
+//   updateAVDefinitonsWithFreshclam: updateAVDefinitonsWithFreshclam,
+//   downloadAVDefinitions: downloadAVDefinitions,
+//   uploadAVDefinitions: uploadAVDefinitions,
+//   scanLocalFile: scanLocalFile,
+// };
