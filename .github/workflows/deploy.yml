@@ -323,24 +323,14 @@ jobs:
         containers: 
           [
             homePage,
-            AppendixKAmendmentPage,
-            CHIPSPAPage,
-         #   dashboardPage,
             faqPage,
             manageProfilePage,
-            MedicaidSpaPage,
+            dashboardPage,
             packagePageSpas,
             packagePageWaivers,
             RequestRoleChangePage,
-            requestTempExtentionPage,
-            RespondToCHIPSPAPage,
-            RespondToMedicaidSpaPage,
-            RespondToWaiverRaiPage,
             spaTypePage,
             submissionType,
-            waiverActionPage,
-            waiverActionTypePage,
-            RespondToMedicaidSpaPage,
             PackageWaiverActionTypePage,
             PackageSubmissionType,
             PackageSpaTypePage,
@@ -348,6 +338,9 @@ jobs:
             PackageMedicaidSpaPage,
             PackageCHIPSPAPage,
             PackageAppendixKPage,
+            PackageWaiverAmendmentPage,
+            PackageInitialWaiverPage,
+            PackageWaiverRenewalPage,
           ]
     steps:
       - name: set branch_name
