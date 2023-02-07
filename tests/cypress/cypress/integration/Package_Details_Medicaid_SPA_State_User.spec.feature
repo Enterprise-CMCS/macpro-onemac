@@ -3,7 +3,6 @@ Feature: Medicaid SPA State Details View - Card View with Actions
         Given I am on Login Page
         When Clicking on Development Login
         When Login with state submitter user
-        And click on Packages
         And Click on Filter Button
         And click on Type
         And uncheck all of the type checkboxes

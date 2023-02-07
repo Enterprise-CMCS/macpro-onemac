@@ -3,7 +3,6 @@ Feature: Package Dashboard Temporary Extension
         Given I am on Login Page
         When Clicking on Development Login
         When Login with state submitter user
-        And click on Packages
 
     Scenario: Verify user can create a temporary extension from new submission button
         Then click on New Submission

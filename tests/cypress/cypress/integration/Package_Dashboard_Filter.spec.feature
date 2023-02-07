@@ -1,10 +1,10 @@
 Feature: Package Dashboard - Filter
-
-    Scenario: SPAs Tab - Screen enhancement
+    Background: Reoccuring Steps
         Given I am on Login Page
         When Clicking on Development Login
         When Login with state submitter user
-        And click on Packages
+
+    Scenario: SPAs Tab - Screen enhancement
         And Verify Filter button exists
         And Click on Filter Button
         And verify Filter By Exists
@@ -16,10 +16,6 @@ Feature: Package Dashboard - Filter
         And verify Initial Submission Date filter dropdown exists
 
     Scenario: Waivers Tab - Screen enhancement
-        Given I am on Login Page
-        When Clicking on Development Login
-        When Login with state submitter user
-        And click on Packages
         And click on the Waivers tab
         And Verify Filter button exists
         And Click on Filter Button
@@ -32,10 +28,6 @@ Feature: Package Dashboard - Filter
         And verify Initial Submission Date filter dropdown exists
 
     Scenario: SPAs tab - verify all types and statuses are available
-        Given I am on Login Page
-        When Clicking on Development Login
-        When Login with state submitter user
-        And click on Packages
         And Click on Filter Button
         And click on Type
         And verify CHIP SPA Exists
@@ -49,10 +41,6 @@ Feature: Package Dashboard - Filter
         And verify Disapproved checkbox exists
 
     Scenario: Waivers tab - verify all types and statuses are available
-        Given I am on Login Page
-        When Clicking on Development Login
-        When Login with state submitter user
-        And click on Packages
         And click on the Waivers tab
         And Click on Filter Button
         And click on Type
@@ -67,10 +55,6 @@ Feature: Package Dashboard - Filter
         And verify Disapproved checkbox exists
 
     Scenario: SPAs tab - deselect all and verify error message, then select one and verify it exists
-        Given I am on Login Page
-        When Clicking on Development Login
-        When Login with state submitter user
-        And click on Packages
         And Click on Filter Button
         And click on Type
         And uncheck all of the type checkboxes
@@ -80,10 +64,6 @@ Feature: Package Dashboard - Filter
         And verify Medicaid SPA Exists in list
 
     Scenario: Waivers tab - deselect all and verify error message, then select one and verify it exists
-        Given I am on Login Page
-        When Clicking on Development Login
-        When Login with state submitter user
-        And click on Packages
         And click on the Waivers tab
         And Click on Filter Button
         And click on Type
@@ -96,10 +76,6 @@ Feature: Package Dashboard - Filter
 
 
     Scenario: SPAs tab - verify one exists, deselct selection then verify error message
-        Given I am on Login Page
-        When Clicking on Development Login
-        When Login with state submitter user
-        And click on Packages
         And Click on Filter Button
         And click on Type
         And click CHIP SPA check box

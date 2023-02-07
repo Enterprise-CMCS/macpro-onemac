@@ -1,10 +1,10 @@
 Feature: Package Dashboard: Medicaid SPA Form
-
-    Scenario: Screen Enhance - Medicaid SPA
+    Background: Reoccuring Steps
         Given I am on Login Page
         When Clicking on Development Login
         When Login with state submitter user
-        And click on Packages
+
+    Scenario: Screen Enhance - Medicaid SPA
         Then click on New Submission
         And Click on State Plan Amendment SPA
         And verify Medicaid SPA is a clickable option
@@ -12,10 +12,6 @@ Feature: Package Dashboard: Medicaid SPA Form
         And verify user is on new Medicaid SPA page
 
     Scenario: Create Medicaid SPA from package dashboard and search it
-        Given I am on Login Page
-        When Clicking on Development Login
-        When Login with state submitter user
-        And click on Packages
         Then click on New Submission
         And Click on State Plan Amendment SPA
         And click on Medicaid SPA
