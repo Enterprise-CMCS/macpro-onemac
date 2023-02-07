@@ -76,48 +76,49 @@ Feature: Waiver Package Details View: Appendix K Amendment for a CMS User
         And verify the download all button exists
         And verify the additional information section exists
 
-    Scenario: Screen Enhance: Appendix K Details View - Approved
-        And click Approved checkbox
-        And click the Waiver Number link in the first row
-        And verify the package details page is visible
-        And verify action card exists
-        And verify the status on the card is "Approved"
-        And verify the package actions section is unavailable
-        And verify the details section exists
-        And verify the waiver authority header exists
-        And verify the waiver authority is 1915c HCBS
-        And verify there is a State header in the details section
-        And verify a state exists for the State
-        And verify there is an Amendment Title in the details section
-        And verify the Amendment Title is "Appendix K Amendment"
-        And verify there is an Initial Submission Date header in the details section
-        And verify a date exists for the Initial Submission Date
-        And verify there is a Proposed Effective Date header in the details section
-        And verify the Proposed Effective Date is a date formated like Mon dd yyyy
-        And verify the supporting documentation section exists
-        And verify the download all button exists
-        And verify the additional information section exists
+    # Need seed data / reset data update
+    # Scenario: Screen Enhance: Appendix K Details View - Approved
+    #     And click Approved checkbox
+    #     And click the Waiver Number link in the first row
+    #     And verify the package details page is visible
+    #     And verify action card exists
+    #     And verify the status on the card is "Approved"
+    #     And verify the package actions section is unavailable
+    #     And verify the details section exists
+    #     And verify the waiver authority header exists
+    #     And verify the waiver authority is 1915c HCBS
+    #     And verify there is a State header in the details section
+    #     And verify a state exists for the State
+    #     And verify there is an Amendment Title in the details section
+    #     And verify the Amendment Title is "Appendix K Amendment"
+    #     And verify there is an Initial Submission Date header in the details section
+    #     And verify a date exists for the Initial Submission Date
+    #     And verify there is a Proposed Effective Date header in the details section
+    #     And verify the Proposed Effective Date is a date formated like Mon dd yyyy
+    #     And verify the supporting documentation section exists
+    #     And verify the download all button exists
+    #     And verify the additional information section exists
 
-    Scenario: Screen Enhance: Appendix K Details View - Disapproved
-        And click Disapproved checkbox
-        And click the Waiver Number link in the first row
-        And verify the package details page is visible
-        And verify action card exists
-        And verify the status on the card is "Disapproved"
-        And verify the package actions section is unavailable
-        And verify the details section exists
-        And verify the waiver authority header exists
-        And verify the waiver authority is 1915c HCBS
-        And verify there is a State header in the details section
-        And verify a state exists for the State
-        And verify there is an Amendment Title in the details section
-        And verify the Amendment Title is "Appendix K Amendment"
-        And verify there is an Initial Submission Date header in the details section
-        And verify a date exists for the Initial Submission Date
-        And verify there is a Proposed Effective Date header in the details section
-        And verify the supporting documentation section exists
-        And verify the download all button exists
-        And verify the additional information section exists
+    # Scenario: Screen Enhance: Appendix K Details View - Disapproved
+    #     And click Disapproved checkbox
+    #     And click the Waiver Number link in the first row
+    #     And verify the package details page is visible
+    #     And verify action card exists
+    #     And verify the status on the card is "Disapproved"
+    #     And verify the package actions section is unavailable
+    #     And verify the details section exists
+    #     And verify the waiver authority header exists
+    #     And verify the waiver authority is 1915c HCBS
+    #     And verify there is a State header in the details section
+    #     And verify a state exists for the State
+    #     And verify there is an Amendment Title in the details section
+    #     And verify the Amendment Title is "Appendix K Amendment"
+    #     And verify there is an Initial Submission Date header in the details section
+    #     And verify a date exists for the Initial Submission Date
+    #     And verify there is a Proposed Effective Date header in the details section
+    #     And verify the supporting documentation section exists
+    #     And verify the download all button exists
+    #     And verify the additional information section exists
 
     Scenario: Screen Enhance: Appendix K Details View - Withdrawn
         And click the Package Withdrawn checkbox
@@ -140,44 +141,45 @@ Feature: Waiver Package Details View: Appendix K Amendment for a CMS User
         And verify the download all button exists
         And verify the additional information section exists
 
-    Scenario: Screen Enhance: Appendix K Details View - Pending - Concurrence
-        And click the Pending - Concurrence checkbox
-        And click the Waiver Number link in the first row
-        And verify the package details page is visible
-        And verify action card exists
-        And verify the status on the card is "Pending - Concurrence"
-        And verify the package actions section is unavailable
-        And verify the details section exists
-        And verify the waiver authority header exists
-        And verify the waiver authority is 1915c HCBS
-        And verify there is a State header in the details section
-        And verify a state exists for the State
-        And verify there is an Amendment Title in the details section
-        And verify the Amendment Title is "Appendix K Amendment"
-        And verify there is an Initial Submission Date header in the details section
-        And verify a date exists for the Initial Submission Date
-        And verify there is a Proposed Effective Date header in the details section
-        And verify the supporting documentation section exists
-        And verify the download all button exists
-        And verify the additional information section exists
+    # Need seed data / reset data update
+    # Scenario: Screen Enhance: Appendix K Details View - Pending - Concurrence
+    #     And click the Pending - Concurrence checkbox
+    #     And click the Waiver Number link in the first row
+    #     And verify the package details page is visible
+    #     And verify action card exists
+    #     And verify the status on the card is "Pending - Concurrence"
+    #     And verify the package actions section is unavailable
+    #     And verify the details section exists
+    #     And verify the waiver authority header exists
+    #     And verify the waiver authority is 1915c HCBS
+    #     And verify there is a State header in the details section
+    #     And verify a state exists for the State
+    #     And verify there is an Amendment Title in the details section
+    #     And verify the Amendment Title is "Appendix K Amendment"
+    #     And verify there is an Initial Submission Date header in the details section
+    #     And verify a date exists for the Initial Submission Date
+    #     And verify there is a Proposed Effective Date header in the details section
+    #     And verify the supporting documentation section exists
+    #     And verify the download all button exists
+    #     And verify the additional information section exists
 
-    Scenario: Screen Enhance: Appendix K Details View - Pending - Approval
-        And click the Pending - Approval checkbox
-        And click the Waiver Number link in the first row
-        And verify the package details page is visible
-        And verify action card exists
-        And verify the status on the card is "Pending - Approval"
-        And verify the package actions section is unavailable
-        And verify the details section exists
-        And verify the waiver authority header exists
-        And verify the waiver authority is 1915c HCBS
-        And verify there is a State header in the details section
-        And verify a state exists for the State
-        And verify there is an Amendment Title in the details section
-        And verify the Amendment Title is "Appendix K Amendment"
-        And verify there is an Initial Submission Date header in the details section
-        And verify a date exists for the Initial Submission Date
-        And verify there is a Proposed Effective Date header in the details section
-        And verify the supporting documentation section exists
-        And verify the download all button exists
-        And verify the additional information section exists
+    # Scenario: Screen Enhance: Appendix K Details View - Pending - Approval
+    #     And click the Pending - Approval checkbox
+    #     And click the Waiver Number link in the first row
+    #     And verify the package details page is visible
+    #     And verify action card exists
+    #     And verify the status on the card is "Pending - Approval"
+    #     And verify the package actions section is unavailable
+    #     And verify the details section exists
+    #     And verify the waiver authority header exists
+    #     And verify the waiver authority is 1915c HCBS
+    #     And verify there is a State header in the details section
+    #     And verify a state exists for the State
+    #     And verify there is an Amendment Title in the details section
+    #     And verify the Amendment Title is "Appendix K Amendment"
+    #     And verify there is an Initial Submission Date header in the details section
+    #     And verify a date exists for the Initial Submission Date
+    #     And verify there is a Proposed Effective Date header in the details section
+    #     And verify the supporting documentation section exists
+    #     And verify the download all button exists
+    #     And verify the additional information section exists

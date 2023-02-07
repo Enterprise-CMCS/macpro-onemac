@@ -148,40 +148,42 @@ Feature: Waiver Package Details View: Initial Waivers
         And verify the download all button exists
         And verify the additional information section exists
 
-    Scenario: Screen Enhance: Initial Waiver Details View - Pending - Concurrence
-        And click the Pending - Concurrence checkbox
-        And click the Waiver Number link in the first row
-        And verify the package details page is visible
-        And verify action card exists
-        And verify the status on the card is "Pending - Concurrence"
-        And verify the package actions section is unavailable
-        And verify the details section exists
-        And verify there is a Type header in the details section
-        And verify the type is Initial Waiver
-        And verify there is a State header in the details section
-        And verify a state exists for the State
-        And verify there is an Initial Submission Date header in the details section
-        And verify a date exists for the Initial Submission Date
-        And verify there is a Proposed Effective Date header in the details section
-        And verify the supporting documentation section exists
-        And verify the download all button exists
-        And verify the additional information section exists
+    # Need seed data / reset data update
+    # Scenario: Screen Enhance: Initial Waiver Details View - Pending - Concurrence
+    #     And click the Pending - Concurrence checkbox
+    #     And click the Waiver Number link in the first row
+    #     And verify the package details page is visible
+    #     And verify action card exists
+    #     And verify the status on the card is "Pending - Concurrence"
+    #     And verify the package actions section is unavailable
+    #     And verify the details section exists
+    #     And verify there is a Type header in the details section
+    #     And verify the type is Initial Waiver
+    #     And verify there is a State header in the details section
+    #     And verify a state exists for the State
+    #     And verify there is an Initial Submission Date header in the details section
+    #     And verify a date exists for the Initial Submission Date
+    #     And verify there is a Proposed Effective Date header in the details section
+    #     And verify the supporting documentation section exists
+    #     And verify the download all button exists
+    #     And verify the additional information section exists
 
-    Scenario: Screen Enhance: Initial Waiver Details View - Pending - Approval
-        And click the Pending - Approval checkbox
-        And click the Waiver Number link in the first row
-        And verify the package details page is visible
-        And verify action card exists
-        And verify the status on the card is "Pending - Approval"
-        And verify the package actions section is unavailable
-        And verify the details section exists
-        And verify there is a Type header in the details section
-        And verify the type is Initial Waiver
-        And verify there is a State header in the details section
-        And verify a state exists for the State
-        And verify there is an Initial Submission Date header in the details section
-        And verify a date exists for the Initial Submission Date
-        And verify there is a Proposed Effective Date header in the details section
-        And verify the supporting documentation section exists
-        And verify the download all button exists
-        And verify the additional information section exists
+    # Need seed data / reset data update
+    # Scenario: Screen Enhance: Initial Waiver Details View - Pending - Approval
+    #     And click the Pending - Approval checkbox
+    #     And click the Waiver Number link in the first row
+    #     And verify the package details page is visible
+    #     And verify action card exists
+    #     And verify the status on the card is "Pending - Approval"
+    #     And verify the package actions section is unavailable
+    #     And verify the details section exists
+    #     And verify there is a Type header in the details section
+    #     And verify the type is Initial Waiver
+    #     And verify there is a State header in the details section
+    #     And verify a state exists for the State
+    #     And verify there is an Initial Submission Date header in the details section
+    #     And verify a date exists for the Initial Submission Date
+    #     And verify there is a Proposed Effective Date header in the details section
+    #     And verify the supporting documentation section exists
+    #     And verify the download all button exists
+    #     And verify the additional information section exists
