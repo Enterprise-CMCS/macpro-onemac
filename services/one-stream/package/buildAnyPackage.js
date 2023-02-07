@@ -87,6 +87,8 @@ export const buildAnyPackage = async (packageId, config) => {
       const timestamp = Number(timestring);
 
       if (source === "OneMAC") {
+        if (anEvent?.currentStatus === Workflow.ONEMAC_STATUS.INACTIVATED)
+          return;
         showPackageOnDashboard = true;
       }
 
@@ -96,9 +98,8 @@ export const buildAnyPackage = async (packageId, config) => {
 
       // include ALL rai events in package details
       if (
-        (anEvent.componentType === `${config.componentType}rai` ||
-          anEvent.componentType === `waiverrai`) &&
-        anEvent.currentStatus !== Workflow.ONEMAC_STATUS.INACTIVATED
+        anEvent.componentType === `${config.componentType}rai` ||
+        anEvent.componentType === `waiverrai`
       ) {
         putParams.Item.raiResponses.push({
           submissionTimestamp: anEvent.submissionTimestamp,
@@ -191,6 +192,22 @@ export const buildAnyPackage = async (packageId, config) => {
       putParams.Item.GSI1sk = packageId;
     } else {
       console.log("%s is not a OneMAC package: ", packageId, putParams.Item);
+      // if there was a package, and should not be now, delete the package item
+      if (currentPackage) {
+        const deleteParams = {
+          TableName: oneMacTableName,
+          Key: {
+            pk: packageId,
+            sk: packageSk,
+          },
+        };
+        await dynamoDb.delete(deleteParams).promise();
+        console.log(
+          "%s had a package, now does not: ",
+          packageId,
+          deleteParams
+        );
+      }
       return; // don't bother creating packages not on dashboard
     }
 
