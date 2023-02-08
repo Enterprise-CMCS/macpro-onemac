@@ -40,17 +40,18 @@ Feature: Withdraw package action in package dashboard
         And click on Status
         And uncheck all of the status checkboxes
         And click Approved checkbox
-        And click the actions button in row one
-        And verify withdraw package button is not visible for package in package dashboard
+        And verify the actions button is disabled in the package dashboard
 
     Scenario: Demonstrate that withdraw a package is not available on Waiver with Approved status
         And click on the Waivers tab
         And Click on Filter Button
+        And click on Type
+        And click 1915b Initial Waiver check box
+        And click 1915b Waiver Renewal check box
         And click on Status
         And uncheck all of the status checkboxes
         And click Approved checkbox
-        And click the actions button in row one
-        And verify withdraw package button is not visible for package in package dashboard
+        And verify the actions button is disabled in the package dashboard
 
     Scenario: Demonstrate that withdraw a package is not available on SPA with Disapproved status
         And Click on Filter Button
