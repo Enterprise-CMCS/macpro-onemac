@@ -79,7 +79,10 @@ export const downloadAVDefinitions = async () => {
   // download each file in the bucket.
   const downloadPromises = definitionFileKeys.map((filenameToDownload) => {
     return new Promise((resolve, reject) => {
-      const destinationFile = path.join("/tmp/", filenameToDownload);
+      const destinationFile = path.join(
+        constants.FRESHCLAM_WORK_DIR,
+        filenameToDownload
+      );
 
       utils.generateSystemMessage(
         `Downloading ${filenameToDownload} from S3 to ${destinationFile}`
@@ -123,9 +126,13 @@ export const uploadAVDefinitions = async () => {
   // first list them.
   utils.generateSystemMessage("Uploading Definitions");
   const s3AllFullKeys = await listBucketFiles(constants.CLAMAV_BUCKET_NAME);
-
+  console.log("Kristinu1: uploadAVDefinitions s3AllFullKeys: ", s3AllFullKeys);
   const s3DefinitionFileFullKeys = s3AllFullKeys.filter((key) =>
     key.startsWith(constants.PATH_TO_AV_DEFINITIONS)
+  );
+  console.log(
+    "Kristinu2: uploadAVDefinitions s3DefinitionFileFullKeys: ",
+    s3DefinitionFileFullKeys
   );
 
   // If there are any s3 Definition files in the s3 bucket, delete them.
@@ -166,7 +173,7 @@ export const uploadAVDefinitions = async () => {
         Body: fs.createReadStream(
           path.join(constants.FRESHCLAM_WORK_DIR, filenameToUpload)
         ),
-        ACL: "public-read",
+        // ACL: "public-read",
       };
 
       S3.putObject(options, function (err, data) {
@@ -208,7 +215,7 @@ export const scanLocalFile = (pathToFile) => {
       "-v",
       "-a",
       "-d",
-      "/tmp/",
+      constants.FRESHCLAM_WORK_DIR,
       pathToFile,
     ]);
 

@@ -4,6 +4,7 @@
 
 import AWS from "aws-sdk";
 import path from "path";
+import crypto from "crypto";
 import fs from "fs";
 
 import { downloadAVDefinitions, scanLocalFile } from "./clamav";
@@ -38,12 +39,12 @@ export async function isS3FileTooBig(s3ObjectKey, s3ObjectBucket) {
 }
 
 function downloadFileFromS3(s3ObjectKey, s3ObjectBucket) {
-  const downloadDir = `/tmp/download`;
-  if (!fs.existsSync(downloadDir)) {
-    fs.mkdirSync(downloadDir);
+  if (!fs.existsSync(constants.TMP_DOWNLOAD_PATH)) {
+    fs.mkdirSync(constants.TMP_DOWNLOAD_PATH);
   }
-  const localPath = `${downloadDir}/${path.basename(s3ObjectKey)}`;
 
+  const tmpFilename = `${crypto.randomUUID()}.tmp`;
+  const localPath = `${constants.TMP_DOWNLOAD_PATH}${tmpFilename}`;
   const writeStream = fs.createWriteStream(localPath);
 
   utils.generateSystemMessage(
@@ -62,7 +63,7 @@ function downloadFileFromS3(s3ObjectKey, s3ObjectBucket) {
         utils.generateSystemMessage(
           `Finished downloading new object ${s3ObjectKey}`
         );
-        resolve();
+        resolve(tmpFilename);
       })
       .on("error", function (err) {
         console.log(err);
@@ -99,9 +100,10 @@ export async function lambdaHandleEvent(event) {
       constants.PATH_TO_AV_DEFINITIONS
     );
     utils.generateSystemMessage("Download File from S3");
-    await downloadFileFromS3(s3ObjectKey, s3ObjectBucket);
+    const fileLoc = await downloadFileFromS3(s3ObjectKey, s3ObjectBucket);
     utils.generateSystemMessage("Set virusScanStatus");
-    virusScanStatus = scanLocalFile(path.basename(s3ObjectKey));
+    console.log("Kristin 1 lambdaHandleEvent file path: ", fileLoc);
+    virusScanStatus = scanLocalFile(fileLoc);
     utils.generateSystemMessage(`virusScanStatus=${virusScanStatus}`);
   }
 
