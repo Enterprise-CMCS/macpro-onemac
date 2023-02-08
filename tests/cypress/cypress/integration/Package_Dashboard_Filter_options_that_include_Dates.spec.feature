@@ -1,19 +1,16 @@
 Feature: OY2-13093 Submission Dashboard - Filter options that include Dates
-    Scenario: SPAs tab - Screen enhancement
+    Background: Reoccuring Steps
         Given I am on Login Page
         When Clicking on Development Login
         When Login with state submitter user
-        And click on Packages
+
+    Scenario: SPAs tab - Screen enhancement
         And Click on Filter Button
         And verify Initial Submission Date filter dropdown exists
         And click on Initial Submission Date filter dropdown
         And verify Initial Submission Date date picker filter exists
 
     Scenario: Waivers tab - Screen enhancement
-        Given I am on Login Page
-        When Clicking on Development Login
-        When Login with state submitter user
-        And click on Packages
         And click on the Waivers tab
         And Click on Filter Button
         And verify Initial Submission Date filter dropdown exists
@@ -21,10 +18,6 @@ Feature: OY2-13093 Submission Dashboard - Filter options that include Dates
         And verify Initial Submission Date date picker filter exists
 
     Scenario: Change Initial Submission Date filter. Verify no results. Then reset filter
-        Given I am on Login Page
-        When Clicking on Development Login
-        When Login with state submitter user
-        And click on Packages
         And click on the Waivers tab
         And Click on Filter Button
         And click on Initial Submission Date filter dropdown
@@ -37,10 +30,6 @@ Feature: OY2-13093 Submission Dashboard - Filter options that include Dates
         And verify package row one exists
 
     Scenario: Filter by Initial Submission Date - Date picker
-        Given I am on Login Page
-        When Clicking on Development Login
-        When Login with state submitter user
-        And click on Packages
         And Click on Filter Button
         And click on Initial Submission Date filter dropdown
         And click on Initial Submission Date date picker filter

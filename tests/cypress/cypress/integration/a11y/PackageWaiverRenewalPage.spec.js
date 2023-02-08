@@ -1,4 +1,4 @@
-describe("Package Dashboard Submit 1915(c) Appendix K Amendment Page 508 test", () => {
+describe("Request Temporary Extension Page 508 test", () => {
   beforeEach(() => {
     cy.visit("/");
     cy.get("#devloginBtn").click();
@@ -10,11 +10,11 @@ describe("Package Dashboard Submit 1915(c) Appendix K Amendment Page 508 test", 
       "//p[contains(text(),'Submit Waivers, Amendments, Renewals, or Temp. Extension')]"
     ).click();
     cy.xpath(
-      "//p[contains(text(),'Create a 1915(c) Appendix K amendment')]"
+      "//p[contains(text(),'Renew an existing 1915(b) waiver')]"
     ).click();
   });
 
-  it("Check a11y on Package Dashboard Submit 1915(c) Appendix K Amendment Page", () => {
+  it("Check a11y on Waiver Renewal Page", () => {
     cy.checkA11yOfPage();
   });
 });

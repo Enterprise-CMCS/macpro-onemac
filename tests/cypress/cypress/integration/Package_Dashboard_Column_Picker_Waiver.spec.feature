@@ -4,7 +4,6 @@ Feature: OY2-13095 Package Dashboard - Column Picker
         Given I am on Login Page
         When Clicking on Development Login
         When Login with state submitter user
-        And click on Packages
         And click on the Waivers tab
         And verify show hide columns button exists
         And verify IDNumber column exists
@@ -27,7 +26,6 @@ Feature: OY2-13095 Package Dashboard - Column Picker
         Given I am on Login Page
         When Clicking on Development Login
         When Login with state submitter user
-        And click on Packages
         And click on the Waivers tab
         And click show hide columns button
         And click Initial Submission Date checkbox

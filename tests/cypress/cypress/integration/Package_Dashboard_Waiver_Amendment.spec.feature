@@ -4,7 +4,6 @@ Feature: Create a waiver Amendment
         Given I am on Login Page
         When Clicking on Development Login
         When Login with state submitter user
-        And click on Packages
 
     Scenario: Screen Enhance - Amendment
         Then click on New Submission
