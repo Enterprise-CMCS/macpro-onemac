@@ -63,7 +63,7 @@ function downloadFileFromS3(s3ObjectKey, s3ObjectBucket) {
         utils.generateSystemMessage(
           `Finished downloading new object ${s3ObjectKey}`
         );
-        resolve(tmpFilename);
+        resolve(localPath);
       })
       .on("error", function (err) {
         console.log(err);
@@ -95,14 +95,10 @@ export async function lambdaHandleEvent(event) {
   } else {
     //No need to act on file unless you are able to.
     utils.generateSystemMessage("Download AV Definitions");
-    await downloadAVDefinitions(
-      constants.CLAMAV_BUCKET_NAME,
-      constants.PATH_TO_AV_DEFINITIONS
-    );
+    await downloadAVDefinitions();
     utils.generateSystemMessage("Download File from S3");
     const fileLoc = await downloadFileFromS3(s3ObjectKey, s3ObjectBucket);
     utils.generateSystemMessage("Set virusScanStatus");
-    console.log("Kristin 1 lambdaHandleEvent file path: ", fileLoc);
     virusScanStatus = scanLocalFile(fileLoc);
     utils.generateSystemMessage(`virusScanStatus=${virusScanStatus}`);
   }
@@ -124,10 +120,7 @@ export async function lambdaHandleEvent(event) {
 }
 
 export async function scanS3Object(s3ObjectKey, s3ObjectBucket) {
-  await downloadAVDefinitions(
-    constants.CLAMAV_BUCKET_NAME,
-    constants.PATH_TO_AV_DEFINITIONS
-  );
+  await downloadAVDefinitions();
 
   await downloadFileFromS3(s3ObjectKey, s3ObjectBucket);
 
@@ -144,8 +137,7 @@ export async function scanS3Object(s3ObjectKey, s3ObjectBucket) {
     utils.generateSystemMessage("Tagging Successful");
     s3.putObjectTagging(taggingParams, function (err, data) {
       if (err) console.log(err, err.stack);
-      // an error occurred
-      else console.log(data); // successful response
+      else console.log(data);
     });
   } catch (err) {
     console.log(err);

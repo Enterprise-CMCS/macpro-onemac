@@ -38,14 +38,6 @@ export const updateAVDefinitonsWithFreshclam = () => {
       `${constants.PATH_TO_FRESHCLAM} --config-file=${constants.FRESHCLAM_CONFIG} --datadir=${constants.FRESHCLAM_WORK_DIR}`
     );
 
-    // child_process.spawnSync(
-    //   constants.PATH_TO_FRESHCLAM,
-    //   [
-    //     ` --config-file=${constants.FRESHCLAM_CONFIG}`,
-    //     `--datadir=${constants.FRESHCLAM_WORK_DIR}`,
-    //   ]
-    // );
-
     utils.generateSystemMessage("Update message");
     console.log(executionResult.toString());
 
@@ -126,13 +118,8 @@ export const uploadAVDefinitions = async () => {
   // first list them.
   utils.generateSystemMessage("Uploading Definitions");
   const s3AllFullKeys = await listBucketFiles(constants.CLAMAV_BUCKET_NAME);
-  console.log("Kristinu1: uploadAVDefinitions s3AllFullKeys: ", s3AllFullKeys);
   const s3DefinitionFileFullKeys = s3AllFullKeys.filter((key) =>
     key.startsWith(constants.PATH_TO_AV_DEFINITIONS)
-  );
-  console.log(
-    "Kristinu2: uploadAVDefinitions s3DefinitionFileFullKeys: ",
-    s3DefinitionFileFullKeys
   );
 
   // If there are any s3 Definition files in the s3 bucket, delete them.
@@ -210,18 +197,13 @@ export const uploadAVDefinitions = async () => {
  */
 export const scanLocalFile = (pathToFile) => {
   try {
-    console.log(
-      "Kristin1: %s and pathToFile: ",
-      constants.FRESHCLAM_WORK_DIR,
-      pathToFile
-    );
     const avResult = child_process.spawnSync(constants.PATH_TO_CLAMAV, [
       "--stdout",
       "-v",
       "-a",
       "-d",
       constants.FRESHCLAM_WORK_DIR,
-      `${constants.TMP_DOWNLOAD_PATH}${pathToFile}`,
+      pathToFile,
     ]);
 
     // status 1 means that the file is infected.
