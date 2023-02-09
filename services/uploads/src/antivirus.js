@@ -75,6 +75,7 @@ function downloadFileFromS3(s3ObjectKey, s3ObjectBucket) {
 
 export async function lambdaHandleEvent(event) {
   utils.generateSystemMessage("Start Antivirus Lambda function");
+  console.log("Kristin1: the event from s3: ", event);
 
   const s3ObjectKey = utils.extractKeyFromS3Event(event);
   const s3ObjectBucket = utils.extractBucketFromS3Event(event);

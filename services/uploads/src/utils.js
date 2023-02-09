@@ -71,36 +71,6 @@ export function extractBucketFromS3Event(s3Event) {
 }
 
 /**
- * Extract the key from an Api Gateway event.
- * @param  Invoked from 3rd party, Inbound Api event.
- * @return {string} decoded key.
- */
-export function extractKeyFromApiEvent(s3Event) {
-  const key = s3Event.s3Key;
-
-  if (!key) {
-    throw new Error("Unable to retrieve key information from the api event");
-  }
-
-  return key.replace(/\+/g, " ");
-}
-
-/**
- * Extract the bucket from an Api Gateway event.
- * @param  Invoked from 3rd party, Inbound Api event.
- * @return {string} Bucket
- */
-export function extractBucketFromApiEvent(s3Event) {
-  const bucketName = s3Event.s3Bucket;
-
-  if (!bucketName) {
-    throw new Error("Unable to retrieve bucket information from the api event");
-  }
-
-  return bucketName;
-}
-
-/**
  * Generates & logs a system message (simple --- the message here ---)
  * @param systemMessage Inbound message to log and generate.
  * @return {string} Formatted message.
