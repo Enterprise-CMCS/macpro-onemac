@@ -11,7 +11,7 @@ export function generateTagSet(virusScanStatus) {
   return {
     TagSet: [
       {
-        Key: constants.VIRUS_STATUS_STATUS_KEY,
+        Key: constants.VIRUS_SCAN_STATUS_KEY,
         Value: virusScanStatus,
       },
       {

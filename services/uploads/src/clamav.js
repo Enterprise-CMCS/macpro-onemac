@@ -210,13 +210,18 @@ export const uploadAVDefinitions = async () => {
  */
 export const scanLocalFile = (pathToFile) => {
   try {
+    console.log(
+      "Kristin1: %s and pathToFile: ",
+      constants.FRESHCLAM_WORK_DIR,
+      pathToFile
+    );
     const avResult = child_process.spawnSync(constants.PATH_TO_CLAMAV, [
       "--stdout",
       "-v",
       "-a",
       "-d",
       constants.FRESHCLAM_WORK_DIR,
-      pathToFile,
+      `${constants.TMP_DOWNLOAD_PATH}${pathToFile}`,
     ]);
 
     // status 1 means that the file is infected.
@@ -241,10 +246,3 @@ export const scanLocalFile = (pathToFile) => {
     return constants.STATUS_ERROR_PROCESSING_FILE;
   }
 };
-
-// module.exports = {
-//   updateAVDefinitonsWithFreshclam: updateAVDefinitonsWithFreshclam,
-//   downloadAVDefinitions: downloadAVDefinitions,
-//   uploadAVDefinitions: uploadAVDefinitions,
-//   scanLocalFile: scanLocalFile,
-// };
