@@ -3,7 +3,6 @@
  */
 
 import AWS from "aws-sdk";
-import path from "path";
 import crypto from "crypto";
 import fs from "fs";
 
@@ -14,28 +13,21 @@ import * as constants from "./constants";
 const s3 = new AWS.S3();
 
 /**
- * Retrieve the file size of S3 object without downloading.
- * @param {string} key    Key of S3 object
- * @param {string} bucket Bucket of S3 Object
- * @return {int} Length of S3 object in bytes.
- */
-export async function sizeOf(key, bucket) {
-  console.log("key: " + key);
-  console.log("bucket: " + bucket);
-
-  const res = await s3.headObject({ Key: key, Bucket: bucket }).promise();
-  return res.ContentLength;
-}
-
-/**
  * Check if S3 object is larger then the MAX_FILE_SIZE set.
- * @param {string} s3ObjectKey       Key of S3 Object
- * @param {string} s3ObjectBucket   Bucket of S3 object
+ * @param {string} key       Key of S3 Object
+ * @param {string} bucket   Bucket of S3 object
  * @return {Promise<boolean>} True if S3 object is larger then MAX_FILE_SIZE
  */
-export async function isS3FileTooBig(s3ObjectKey, s3ObjectBucket) {
-  const fileSize = await sizeOf(s3ObjectKey, s3ObjectBucket);
-  return fileSize > constants.MAX_FILE_SIZE;
+export async function isS3FileTooBig(key, bucket) {
+  try {
+    const res = await s3.headObject({ Key: key, Bucket: bucket }).promise();
+    return res.ContentLength > constants.MAX_FILE_SIZE;
+  } catch (e) {
+    utils.generateSystemMessage(
+      `Error finding size of S3 Object: s3://${bucket}/${key}`
+    );
+    return false;
+  }
 }
 
 function downloadFileFromS3(s3ObjectKey, s3ObjectBucket) {
@@ -43,8 +35,7 @@ function downloadFileFromS3(s3ObjectKey, s3ObjectBucket) {
     fs.mkdirSync(constants.TMP_DOWNLOAD_PATH);
   }
 
-  const tmpFilename = `${crypto.randomUUID()}.tmp`;
-  const localPath = `${constants.TMP_DOWNLOAD_PATH}${tmpFilename}`;
+  const localPath = `${constants.TMP_DOWNLOAD_PATH}${crypto.randomUUID()}.tmp`;
   const writeStream = fs.createWriteStream(localPath);
 
   utils.generateSystemMessage(
@@ -73,13 +64,7 @@ function downloadFileFromS3(s3ObjectKey, s3ObjectBucket) {
   });
 }
 
-export async function lambdaHandleEvent(event) {
-  utils.generateSystemMessage("Start Antivirus Lambda function");
-  console.log("Kristin1: the event from s3: ", event);
-
-  const s3ObjectKey = utils.extractKeyFromS3Event(event);
-  const s3ObjectBucket = utils.extractBucketFromS3Event(event);
-
+const scanAndTagS3Object = async (s3ObjectKey, s3ObjectBucket) => {
   utils.generateSystemMessage(
     `S3 Bucket and Key\n ${s3ObjectBucket}\n${s3ObjectKey}`
   );
@@ -118,30 +103,35 @@ export async function lambdaHandleEvent(event) {
     console.log(err);
   }
   return virusScanStatus;
-}
+};
 
-export async function scanS3Object(s3ObjectKey, s3ObjectBucket) {
-  await downloadAVDefinitions();
+export async function lambdaHandleEvent(event) {
+  utils.generateSystemMessage(
+    `Start avScan with event ${JSON.stringify(event, null, 2)}`
+  );
 
-  await downloadFileFromS3(s3ObjectKey, s3ObjectBucket);
-
-  const virusScanStatus = scanLocalFile(path.basename(s3ObjectKey));
-
-  const taggingParams = {
-    Bucket: s3ObjectBucket,
-    Key: s3ObjectKey,
-    Tagging: utils.generateTagSet(virusScanStatus),
-  };
-
-  try {
-    await s3.putObjectTagging(taggingParams).promise();
-    utils.generateSystemMessage("Tagging Successful");
-    s3.putObjectTagging(taggingParams, function (err, data) {
-      if (err) console.log(err, err.stack);
-      else console.log(data);
-    });
-  } catch (err) {
-    console.log(err);
+  let s3ObjectKey, s3ObjectBucket;
+  // can run the scanner directly on an s3 Object from console
+  if (event.s3ObjectKey && event.s3ObjectBucket) {
+    s3ObjectKey = event.s3ObjectKey;
+    s3ObjectBucket = event.s3ObjectBucket;
+  } else if (
+    event.Records &&
+    Array.isArray(event.Records) &&
+    event.Records[0]?.eventSource === "aws:s3"
+  ) {
+    s3ObjectKey = utils.extractKeyFromS3Event(event);
+    s3ObjectBucket = utils.extractBucketFromS3Event(event);
+  } else {
+    utils.generateSystemMessage(
+      `Event missing s3ObjectKey or s3ObjectBucket: ${JSON.stringify(
+        event,
+        null,
+        2
+      )}`
+    );
+    return constants.STATUS_ERROR_PROCESSING_FILE;
   }
-  return virusScanStatus;
+
+  return await scanAndTagS3Object(s3ObjectKey, s3ObjectBucket);
 }
