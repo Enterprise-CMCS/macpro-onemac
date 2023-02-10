@@ -287,7 +287,7 @@ resources:
                 - Effect: "Allow"
                   Action:
                     - s3:ListBucket
-                  Resource: !Sub arn:aws:s3:::${self:service}-${self:custom.stage}-attachments-${AWS::AccountId}
+                  Resource: !Sub ${ClamDefsBucket.Arn}
                 - Effect: "Allow"
                   Action:
                     - s3:GetObject

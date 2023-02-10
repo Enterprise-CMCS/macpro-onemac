@@ -25,6 +25,7 @@ export const PATH_TO_FRESHCLAM = "/opt/bin/freshclam";
 export const PATH_TO_CLAMAV = "/opt/bin/clamscan";
 export const FRESHCLAM_CONFIG = "/opt/bin/freshclam.conf";
 export const FRESHCLAM_WORK_DIR = "/tmp/";
+export const TMP_DOWNLOAD_PATH = "/tmp/download/";
 
 // Constants for tagging file after a virus scan.
 export const STATUS_CLEAN_FILE = process.env.STATUS_CLEAN_FILE || "CLEAN";
@@ -38,4 +39,3 @@ export const VIRUS_SCAN_STATUS_KEY =
 export const VIRUS_SCAN_TIMESTAMP_KEY =
   process.env.VIRUS_SCAN_TIMESTAMP_KEY || "virusScanTimestamp";
 export const MAX_FILE_SIZE = process.env.MAX_FILE_SIZE || "314572800";
-
