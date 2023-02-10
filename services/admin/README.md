@@ -17,6 +17,10 @@ Update a given change request transmittalNumber based on its current transmittal
 Update a set of change requests given a csv format input. Each id will be updated based on its current transmittalNumber, type, and submittedAt timestamp and prepend a message to the additionalInfo. See batchUpdateChangeRequestId.json for sample event data.
 NOTE: Convert excel to csv and paste the file into aws lambda test event json. Then use the format json button in the console to properly format newlines.
 
+#### softDeleteComponent
+
+Sets the given component to Inactivated, which will cause the package builder to ignore it.
+
 ### resetOneTable
 
 Deletes all items from the one table EXCEPT if there is an '@' character in the pk. Basically all but the user items are deleted.

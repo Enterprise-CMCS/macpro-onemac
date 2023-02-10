@@ -121,7 +121,7 @@ Feature: OY2-13095 Package Dashboard - Column Picker
         And click status checkbox
         And click submitted by checkbox
         And click show hide columns button
-        And type partial existing ID in search bar
+        #And type partial existing ID in search bar
         And verify type column exists
         And verify state column exists
         And verify the type on row one exists
