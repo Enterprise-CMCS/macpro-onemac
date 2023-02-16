@@ -1,6 +1,6 @@
 const AWS = require("aws-sdk");
 const fs = require("fs");
-const spawnSync = require("child_process").spawnSync;
+const child_process = require("child_process");
 const path = require("path");
 const constants = require("./constants");
 const utils = require("./utils");
@@ -22,7 +22,7 @@ async function listBucketFiles(bucketName) {
     return keys;
   } catch (err) {
     utils.generateSystemMessage(`Error listing files`);
-    console.log(err);
+    console.error(err);
     throw err;
   }
 }
@@ -32,12 +32,11 @@ async function listBucketFiles(bucketName) {
  *
  * It will download the definitions to the current work dir.
  */
-function updateAVDefinitonsWithFreshclam() {
+export const updateAVDefinitonsWithFreshclam = () => {
   try {
-    const executionResult = spawnSync(constants.PATH_TO_FRESHCLAM, [
-      ` --config-file=${constants.FRESHCLAM_CONFIG}`,
-      `--datadir=${constants.FRESHCLAM_WORK_DIR}`,
-    ]);
+    const executionResult = child_process.execSync(
+      `${constants.PATH_TO_FRESHCLAM} --config-file=${constants.FRESHCLAM_CONFIG} --datadir=${constants.FRESHCLAM_WORK_DIR}`
+    );
 
     utils.generateSystemMessage("Update message");
     console.log(executionResult.toString());
@@ -54,13 +53,13 @@ function updateAVDefinitonsWithFreshclam() {
     console.log(err);
     return false;
   }
-}
+};
 
 /**
  * Download the Antivirus definition from S3.
  * The definitions are stored on the local disk, ensure there's enough space.
  */
-async function downloadAVDefinitions() {
+export const downloadAVDefinitions = async () => {
   // list all the files in that bucket
   utils.generateSystemMessage("Downloading Definitions");
   const allFileKeys = await listBucketFiles(constants.CLAMAV_BUCKET_NAME);
@@ -72,7 +71,10 @@ async function downloadAVDefinitions() {
   // download each file in the bucket.
   const downloadPromises = definitionFileKeys.map((filenameToDownload) => {
     return new Promise((resolve, reject) => {
-      const destinationFile = path.join("/tmp/", filenameToDownload);
+      const destinationFile = path.join(
+        constants.FRESHCLAM_WORK_DIR,
+        filenameToDownload
+      );
 
       utils.generateSystemMessage(
         `Downloading ${filenameToDownload} from S3 to ${destinationFile}`
@@ -106,17 +108,16 @@ async function downloadAVDefinitions() {
   });
 
   return await Promise.all(downloadPromises);
-}
+};
 
 /**
  * Uploads the AV definitions to the S3 bucket.
  */
-async function uploadAVDefinitions() {
+export const uploadAVDefinitions = async () => {
   // delete all the definitions currently in the bucket.
   // first list them.
   utils.generateSystemMessage("Uploading Definitions");
   const s3AllFullKeys = await listBucketFiles(constants.CLAMAV_BUCKET_NAME);
-
   const s3DefinitionFileFullKeys = s3AllFullKeys.filter((key) =>
     key.startsWith(constants.PATH_TO_AV_DEFINITIONS)
   );
@@ -159,7 +160,7 @@ async function uploadAVDefinitions() {
         Body: fs.createReadStream(
           path.join(constants.FRESHCLAM_WORK_DIR, filenameToUpload)
         ),
-        ACL: "public-read",
+        // ACL: "public-read",
       };
 
       S3.putObject(options, function (err, data) {
@@ -181,7 +182,7 @@ async function uploadAVDefinitions() {
   });
 
   return await Promise.all(uploadPromises);
-}
+};
 
 /**
  * Function to scan the given file. This function requires ClamAV and the definitions to be available.
@@ -194,35 +195,36 @@ async function uploadAVDefinitions() {
  *
  * @param pathToFile Path in the filesystem where the file is stored.
  */
-function scanLocalFile(pathToFile) {
+export const scanLocalFile = (pathToFile) => {
   try {
-    const avResult = spawnSync(constants.PATH_TO_CLAMAV, [
+    const avResult = child_process.spawnSync(constants.PATH_TO_CLAMAV, [
       "--stdout",
       "-v",
       "-a",
-      `-d ${pathToFile}`,
+      "-d",
+      constants.FRESHCLAM_WORK_DIR,
+      pathToFile,
     ]);
 
+    // status 1 means that the file is infected.
+    if (avResult.status === 1) {
+      utils.generateSystemMessage("SUCCESSFUL SCAN, FILE INFECTED");
+      return constants.STATUS_INFECTED_FILE;
+    } else if (avResult.status !== 0) {
+      utils.generateSystemMessage("-- SCAN FAILED WITH ERROR --");
+      console.error("stderror", avResult.stderr.toString());
+      console.error("stdout", avResult.stdout.toString());
+      console.error("err", avResult.error);
+      return constants.STATUS_ERROR_PROCESSING_FILE;
+    }
+
     utils.generateSystemMessage("SUCCESSFUL SCAN, FILE CLEAN");
-    console.log(avResult.toString());
+    console.log(avResult.stdout.toString());
 
     return constants.STATUS_CLEAN_FILE;
   } catch (err) {
-    // Error status 1 means that the file is infected.
-    if (err.status === 1) {
-      utils.generateSystemMessage("SUCCESSFUL SCAN, FILE INFECTED");
-      return constants.STATUS_INFECTED_FILE;
-    } else {
-      utils.generateSystemMessage("-- SCAN FAILED --");
-      console.log(err);
-      return constants.STATUS_ERROR_PROCESSING_FILE;
-    }
+    utils.generateSystemMessage("-- SCAN FAILED --");
+    console.log(err);
+    return constants.STATUS_ERROR_PROCESSING_FILE;
   }
-}
-
-module.exports = {
-  updateAVDefinitonsWithFreshclam: updateAVDefinitonsWithFreshclam,
-  downloadAVDefinitions: downloadAVDefinitions,
-  uploadAVDefinitions: uploadAVDefinitions,
-  scanLocalFile: scanLocalFile,
 };

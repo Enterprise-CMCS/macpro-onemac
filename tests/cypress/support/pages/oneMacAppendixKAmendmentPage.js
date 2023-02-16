@@ -1,8 +1,9 @@
-const waiverNumberInputBox = "#transmittal-number";
-const errorMessageForWaiverNumber = "#transmittal-number-status-msg";
+const waiverNumberInputBox = "#componentId";
+const oldWaiverNumberInputBox = "#transmittal-number";
+const errorMessageForWaiverNumber = "#componentIdStatusMsg0";
+const oldErrorMessageForWaiverNumber = "#transmittal-number-status-msg";
 const firstUploadFileBtn = "#uploader-input-0";
 const amendmentTitleField = "#title";
-const newWaiverNumberInputBox = "#componentId";
 
 export class oneMacAppendixKAmendmentPage {
   inputWaiverNumber(s) {
@@ -14,29 +15,37 @@ export class oneMacAppendixKAmendmentPage {
     cy.get(firstUploadFileBtn).attachFile(filePath);
   }
 
-  verifyErrorMessageIsNotDisplayed() {
-    if (cy.get("body").find(errorMessageForWaiverNumber).length == 0) {
-      cy.get(errorMessageForWaiverNumber).should("not.exist");
+  verifyOldErrorMessageIsNotDisplayed() {
+    if (cy.get("body").find(oldErrorMessageForWaiverNumber).length == 0) {
+      cy.get(oldErrorMessageForWaiverNumber).should("not.exist");
     } else {
-      cy.get(errorMessageForWaiverNumber).should(
+      cy.get(oldErrorMessageForWaiverNumber).should(
         "have.class",
         "ds-u-color--primary"
       );
     }
   }
+  verifyErrorMessageIsNotDisplayed() {
+    cy.get(errorMessageForWaiverNumber).should("not.exist");
+  }
 
   clearWaiverNumberInputBox() {
     cy.get(waiverNumberInputBox).clear();
   }
-
+  clearOldWaiverNumberInputBox() {
+    cy.get(oldWaiverNumberInputBox).clear();
+  }
   verifyErrorMessageIsDisplayed() {
     cy.get(errorMessageForWaiverNumber).should("be.visible");
+  }
+  verifyOldErrorMessageIsDisplayed() {
+    cy.get(oldErrorMessageForWaiverNumber).should("be.visible");
   }
   inputAmendmentTitle(s) {
     cy.get(amendmentTitleField).type(s);
   }
-  inputWaiverNumberNewForms(s) {
-    cy.get(newWaiverNumberInputBox).type(s);
+  inputWaiverNumberOldForms(s) {
+    cy.get(oldWaiverNumberInputBox).type(s);
   }
 }
 export default oneMacAppendixKAmendmentPage;

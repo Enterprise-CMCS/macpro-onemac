@@ -77,19 +77,21 @@ export class oneMacPackageDetailsPage {
     cy.xpath(packageActionsList).should("not.exist");
   }
   verifyRespondtoRAIActionExists() {
-    cy.xpath(respondToRAIAction).should("be.visible");
+    cy.xpath(respondToRAIAction).scrollIntoView().should("be.visible");
   }
   verifyWithdrawPackageActionExists() {
-    cy.xpath(withdrawPackageAction).should("be.visible");
+    cy.xpath(withdrawPackageAction).scrollIntoView().should("be.visible");
   }
   verifyRequestTempExtensionPackageActionExists() {
-    cy.xpath(requestTempExtensionPackageAction).should("be.visible");
+    cy.xpath(requestTempExtensionPackageAction)
+      .scrollIntoView()
+      .should("be.visible");
   }
   clickRequestTempExtensionPackageAction() {
     cy.xpath(requestTempExtensionPackageAction).click();
   }
   verifyAddAmendmentActionExists() {
-    cy.xpath(addAmendmentPackageAction).should("be.visible");
+    cy.xpath(addAmendmentPackageAction).scrollIntoView().should("be.visible");
   }
   clickAddAmendmentPackageAction() {
     cy.xpath(addAmendmentPackageAction).click();

@@ -1,7 +1,7 @@
 const SpaIDInput = "#componentId";
 const additionalInformationCommentBox = "//textarea[@name='summary']";
 const additionalInfoCommentBox = "//textarea[@name='additionalInformation']";
-const SPAIDErrorMessage = "#componentIdStatusMsg";
+const SPAIDErrorMessage = "#componentIdStatusMsg0";
 const warningText = "//p[@class='submission-message']";
 //Element is Xpath use cy.xpath instead of cy.get
 const stayOnPageBtn = "//button[contains(text(),'Stay on Page')]";

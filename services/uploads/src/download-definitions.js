@@ -4,6 +4,7 @@
 
 import * as clamav from "./clamav";
 import * as utils from "./utils";
+const constants = require("./constants");
 
 /**
  * This function will do the following
@@ -19,7 +20,7 @@ import * as utils from "./utils";
 export async function lambdaHandleEvent() {
   utils.generateSystemMessage(`AV definition update start time: ${new Date()}`);
 
-  await utils.cleanupFolder("/tmp/");
+  await utils.cleanupFolder(constants.FRESHCLAM_WORK_DIR);
 
   if (await clamav.updateAVDefinitonsWithFreshclam()) {
     utils.generateSystemMessage("Folder content after freshclam ");
