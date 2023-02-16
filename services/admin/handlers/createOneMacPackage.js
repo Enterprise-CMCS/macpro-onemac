@@ -18,7 +18,7 @@ const TYPE_MAP = {
 };
 
 const convertDateToSeaToolTimestamp = (date) => {
-  return new Date(date + " 4:00:00 AM").getTime();
+  return new Date(date + " 7:00:00 AM").getTime();
 };
 
 const validateCreateOneMacPackageEvent = (item) => {
