@@ -20,8 +20,6 @@ Running the start command will open [http://localhost:3000](http://localhost:300
 
 We have a suite of [OneMAC test users](https://qmacbis.atlassian.net/wiki/spaces/MACPRO/pages/2446852097/oneMAC+Test+Users) for the DEV environment that you can use for all feature branches and the `develop` branch, including when running the application locally. If you are unable to access the Confluence page, see a teammate for help!
 
-The password for all test users is `Passw0rd!`
-
 > **NOTE:** These users are not available for use in the `master` or `production` branch environments.
 
 ### Dynamic developer emails
@@ -41,4 +39,4 @@ git log --pretty=format:'%ae' | grep -v github.com | sort -u
 
 ## Building the application
 
-Building is done by the CI system, but if you need to generate a build you can do so by running `npm run build` from this directory, which outputs a new buildf to the `public` subdirectory.
+Building is done by the CI system, but if you need to generate a build you can do so by running `npm run build` from this directory, which outputs a new build to the `public` subdirectory.
