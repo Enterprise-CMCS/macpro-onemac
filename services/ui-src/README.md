@@ -18,7 +18,7 @@ Running the start command will open [http://localhost:3000](http://localhost:300
 
 ### Static test users
 
-We have a suite of [OneMAC test users](https://qmacbis.atlassian.net/wiki/spaces/MACPRO/pages/2446852097/oneMAC+Test+Users) for the DEV environment that you can use for all feature branches and the `develop` branch, including when running the application locally. If you are unable to access the Confluence page, see a teammate for help!
+We have a suite of [OneMAC test users](https://qmacbis.atlassian.net/wiki/spaces/MACPRO/pages/2446852097/oneMAC+Test+Users) for the DEV and VAL environments. These will work on `master`, `develop`, and feature branches, even when running the application locally. If you are unable to access the Confluence page, see a teammate for help!
 
 > **NOTE:** These users are not available for use in the `master` or `production` branch environments.
 
@@ -34,7 +34,7 @@ git log --pretty=format:'%ae' | grep -v github.com | sort -u
 
 - Feature branches: static test users, dynamic developer emails
 - [develop](https://github.com/CMSgov/onemac/tree/develop) branch: OKTA authentication, static test users, dynamic developer emails
-- [master](https://github.com/CMSgov/onemac/tree/master) branch: OKTA authentication
+- [master](https://github.com/CMSgov/onemac/tree/master) branch: OKTA authentication, static test users, dynamic developer emails
 - [production](https://github.com/CMSgov/onemac/tree/production) branch: OKTA authentication
 
 ## Building the application
