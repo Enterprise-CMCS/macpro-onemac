@@ -379,7 +379,7 @@ resources:
         LogGroupName:
           Ref: "KafkaConnectWorkerLogGroup"
         FilterName: ConnectorEventReceivedCount
-        FilterPattern: "Received event:"
+        FilterPattern: "Received event"
         MetricTransformations:
           - MetricValue: "1"
             MetricNamespace: ${self:service}-${self:custom.stage}/Connector/Monitor
