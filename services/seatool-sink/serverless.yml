@@ -393,6 +393,7 @@ resources:
         MetricName: ConnectorEventReceivedCount
         AlarmActions:
           - Ref ConnectorMonitorTopic
+        ComparisonOperator: LessThanThreshold
         Statistic: Sum
         Period: 86400
         EvaluationPeriods: 1
