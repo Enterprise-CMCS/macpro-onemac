@@ -369,3 +369,32 @@ resources:
                   Action:
                     - lambda:InvokeFunction
                   Resource: '*'
+    ConnectorMonitorTopic:
+      Type: AWS::SNS::Topic
+      Properties:
+        DisplayName: SNS Topic for Monitoring Kafka Connector Events
+    ConnectorEventReceivedCount:
+      Type: AWS::Logs::MetricFilter
+      Properties:
+        LogGroupName:
+          Ref: "KafkaConnectWorkerLogGroup"
+        FilterName: ConnectorEventReceivedCount
+        FilterPattern: "Received event:"
+        MetricTransformations:
+          - MetricValue: "1"
+            MetricNamespace: ${self:service}-${self:custom.stage}/Connector/Monitor
+            MetricName: "ConnectorEventReceivedCount"
+            Unit: Count
+    ConnectorLogsMonitorAlarm:
+      Type: AWS::CloudWatch::Alarm
+      Properties:
+        AlarmName: ${self:service}-${sls:stage}-ConnectorLogsMonitorAlarm
+        AlarmDescription: "Notify ConnectorMonitorTopic when ConnectorEventReceivedCount is < 1 over 24 hours"
+        MetricName: ConnectorEventReceivedCount
+        AlarmActions:
+          - Ref ConnectorMonitorTopic
+        Statistic: Sum
+        Period: 86400
+        EvaluationPeriods: 1
+        Threshold: 1
+        Namespace: ${self:service}-${self:stage}/Connector/Monitor
