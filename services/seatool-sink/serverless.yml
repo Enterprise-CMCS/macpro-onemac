@@ -385,6 +385,12 @@ resources:
             MetricNamespace: ${self:service}-${self:custom.stage}/Connector/Monitor
             MetricName: "ConnectorEventReceivedCount"
             Unit: Count
+    ConnectorMonitorAlarmPeriod:
+      Type: AWS::SSM::Parameter
+      Properties:
+        Type: String
+        Name: !Sub /configuration/${self:custom.stage}/connectorAlarmPeriod"
+        Value: "86400"
     ConnectorLogsMonitorAlarm:
       Type: AWS::CloudWatch::Alarm
       Properties:
@@ -392,10 +398,11 @@ resources:
         AlarmDescription: "Notify ConnectorMonitorTopic when ConnectorEventReceivedCount is < 1 over 24 hours"
         MetricName: ConnectorEventReceivedCount
         AlarmActions:
-          - Ref ConnectorMonitorTopic
+          - Ref: ConnectorMonitorTopic
         ComparisonOperator: LessThanThreshold
         Statistic: Sum
-        Period: 86400
+        Period:
+          - Ref: ConnectorMonitorAlarmPeriod
         EvaluationPeriods: 1
         Threshold: 1
         Namespace: ${self:service}-${self:custom.stage}/Connector/Monitor
