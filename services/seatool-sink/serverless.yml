@@ -388,7 +388,7 @@ resources:
     ConnectorLogsMonitorAlarm:
       Type: AWS::CloudWatch::Alarm
       Properties:
-        AlarmName: ${self:service}-${sls:stage}-ConnectorLogsMonitorAlarm
+        AlarmName: ${self:service}-${self:custom.stage}-ConnectorLogsMonitorAlarm
         AlarmDescription: "Notify ConnectorMonitorTopic when ConnectorEventReceivedCount is < 1 over 24 hours"
         MetricName: ConnectorEventReceivedCount
         AlarmActions:
@@ -397,4 +397,4 @@ resources:
         Period: 86400
         EvaluationPeriods: 1
         Threshold: 1
-        Namespace: ${self:service}-${self:stage}/Connector/Monitor
+        Namespace: ${self:service}-${self:custom.stage}/Connector/Monitor
