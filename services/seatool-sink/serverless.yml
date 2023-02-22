@@ -401,7 +401,7 @@ resources:
         AlarmActions:
           - Ref: ConnectorMonitorTopic
         ComparisonOperator: LessThanThreshold
-        Statistic: Sum
+        Statistic: SampleCount
         Period: !GetAtt ConnectorMonitorAlarmPeriod.Value
         EvaluationPeriods: 1
         Threshold: 1
