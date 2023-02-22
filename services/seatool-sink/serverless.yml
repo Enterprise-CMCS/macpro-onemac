@@ -389,7 +389,8 @@ resources:
       Type: AWS::SSM::Parameter
       Properties:
         Type: String
-        Name: !Sub /configuration/${self:custom.stage}/connectorAlarmPeriod"
+        Description: The period of evaluation in seconds for the connector monitor alarm
+        Name: !Sub /configuration/connectorAlarmPeriod"
         Value: "86400"
     ConnectorLogsMonitorAlarm:
       Type: AWS::CloudWatch::Alarm
