@@ -390,7 +390,7 @@ resources:
       Properties:
         Type: String
         Description: The period of evaluation in seconds for the connector monitor alarm
-        Name: !Sub /configuration/connectorAlarmPeriod"
+        Name: connectorAlarmPeriod
         Value: "86400"
     ConnectorLogsMonitorAlarm:
       Type: AWS::CloudWatch::Alarm
