@@ -402,7 +402,7 @@ resources:
           - Ref: ConnectorMonitorTopic
         ComparisonOperator: LessThanThreshold
         Statistic: Sum
-        Period: 86400
+        Period: !GetAtt ConnectorMonitorAlarmPeriod.Value
         EvaluationPeriods: 1
         Threshold: 1
         Namespace: ${self:service}-${self:custom.stage}/Connector/Monitor
