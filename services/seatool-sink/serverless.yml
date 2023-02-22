@@ -377,11 +377,12 @@ resources:
       Type: AWS::Logs::MetricFilter
       Properties:
         LogGroupName:
-          Ref: "KafkaConnectWorkerLogGroup"
+          Ref: KafkaConnectWorkerLogGroup
         FilterName: ConnectorEventReceivedCount
         FilterPattern: "Received event"
         MetricTransformations:
-          - MetricValue: "1"
+          - MetricValue: 1
+            DefaultValue: 0
             MetricNamespace: ${self:service}-${self:custom.stage}/Connector/Monitor
             MetricName: "ConnectorEventReceivedCount"
             Unit: Count
