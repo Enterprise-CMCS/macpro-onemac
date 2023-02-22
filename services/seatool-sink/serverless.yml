@@ -388,9 +388,9 @@ resources:
     ConnectorMonitorAlarmPeriod:
       Type: AWS::SSM::Parameter
       Properties:
-        Type: String
-        Description: The period of evaluation in seconds for the connector monitor alarm
         Name: connectorAlarmPeriod
+        Description: The period of evaluation in seconds for the connector monitor alarm
+        Type: String
         Value: "86400"
     ConnectorLogsMonitorAlarm:
       Type: AWS::CloudWatch::Alarm
@@ -402,8 +402,7 @@ resources:
           - Ref: ConnectorMonitorTopic
         ComparisonOperator: LessThanThreshold
         Statistic: Sum
-        Period:
-          - Ref: ConnectorMonitorAlarmPeriod
+        Period: 86400
         EvaluationPeriods: 1
         Threshold: 1
         Namespace: ${self:service}-${self:custom.stage}/Connector/Monitor
