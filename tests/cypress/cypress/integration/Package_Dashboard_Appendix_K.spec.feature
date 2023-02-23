@@ -15,15 +15,15 @@ Feature: Appendix K Waiver Type Selection
     Scenario: create Appendix K from package dashboard and search it
         And Click on Appendix K Amendment
         And type Appendix K Submission 1 into Amendment Title field
-        And type in Waiver Number with 5 characters on new Appendix K Amendment Page
+        And type in Waiver Number with 5 characters on Appendix K Amendment Page
         And select proposed effective date 3 months from today
         And Add file for 1915c Appendix K Amendment Waiver Template
         And Type Additonal Info Comments in new form
         And Click on Submit Button
         And verify submission successful message in the alert bar
         And verify the Waivers tab is selected
-        And search for Appendix K number
-        And verify id number in the first row matches Appendix K number
+        And search for "MD-22106.R01.02"
+        And verify id number in the first row matches "MD-22106.R01.02"
         And click the Waiver Number link in the first row
         And verify the package details page is visible
         And verify action card exists

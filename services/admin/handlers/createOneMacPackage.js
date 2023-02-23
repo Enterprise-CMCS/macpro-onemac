@@ -18,7 +18,7 @@ const TYPE_MAP = {
 };
 
 const convertDateToSeaToolTimestamp = (date) => {
-  return new Date(date + " 4:00:00 AM").getTime();
+  return new Date(date + " 7:00:00 AM").getTime();
 };
 
 const validateCreateOneMacPackageEvent = (item) => {
@@ -31,17 +31,18 @@ export const createOneMacPackage = async (item) => {
   const submissionTimestamp = convertDateToSeaToolTimestamp(
     item.submissionDate
   );
+  const theID = item.componentId.toUpperCase();
   if (!item.territory)
     item.territory = item.componentId.toString().substring(0, 2);
   const putParams = {
     TableName: process.env.oneMacTableName,
     Item: {
-      pk: item.componentId,
+      pk: theID,
       sk: `OneMAC#${submissionTimestamp}`,
       GSI1pk: `OneMAC#create${TYPE_MAP[item.componentType]}`,
-      GSI1sk: item.componentId,
+      GSI1sk: theID,
       eventTimestamp: submissionTimestamp,
-      componentId: item.componentId,
+      componentId: theID,
       componentType: TYPE_MAP[item.componentType],
       territory: item.territory,
       submissionTimestamp,
@@ -60,7 +61,7 @@ export const createOneMacPackage = async (item) => {
   try {
     await dynamoDb.put(putParams).promise();
   } catch (e) {
-    console.log("%s error received: ", item.componentId, e);
+    console.log("%s error received: ", theID, e);
   }
 };
 

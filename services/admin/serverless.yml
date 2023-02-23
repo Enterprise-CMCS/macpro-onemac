@@ -36,7 +36,7 @@ provider:
             - dynamodb:UpdateItem
             - dynamodb:DeleteItem
           Resource:
-            - arn:aws:dynamodb:*:*:table/product-change-request-2
+            - arn:aws:dynamodb:*:*:table/onemac-develop-one
             - arn:aws:dynamodb:*:*:table/${self:custom.oneMacTableName}
             - arn:aws:dynamodb:*:*:table/${self:custom.oneMacTableName}/index/*
             - arn:aws:dynamodb:*:*:table/${self:custom.tableName}
@@ -65,6 +65,10 @@ functions:
     handler: ./handlers/softDeleteChangeRequest.main
     timeout: 180
 
+  softDeleteComponent:
+    handler: ./handlers/softDeleteComponent.main
+    timeout: 180
+
   batchUpdateChangeRequestId:
     handler: ./handlers/batchUpdateChangeRequestId.main
     timeout: 180
@@ -85,4 +89,12 @@ functions:
 
   batchCreateOMP:
     handler: ./handlers/batchCreateOMP.main
+    timeout: 180
+
+  getPackageItems:
+    handler: ./handlers/getPackageItems.main
+    timeout: 180
+
+  updatePackageId:
+    handler: ./handlers/updatePackageId.main
     timeout: 180

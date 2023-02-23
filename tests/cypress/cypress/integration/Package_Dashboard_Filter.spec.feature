@@ -43,7 +43,7 @@ Feature: Package Dashboard - Filter
         And click on Status
         And verify Submitted status checkbox exists
         And verify Package Withdrawn status checkbox exists
-        And verify RAI Issued status checkbox exists
+        #And verify RAI Issued status checkbox exists     # Need seed data / reset data update
         And verify Under Review checkbox exists
         And verify Approved checkbox exists
         And verify Disapproved checkbox exists

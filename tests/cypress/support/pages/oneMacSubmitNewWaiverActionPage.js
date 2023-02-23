@@ -11,7 +11,7 @@ const addFile1915b4 =
 const fileUpload1915b4 = "#uploader-input-0";
 const commentsInputBox = "#field_2";
 const additionalInfoTextarea = "#additional-information";
-const existingWaiverNumber = "MD-10330.R01.00";
+const existingWaiverNumber = "MD-22005.R00.00";
 const whatIsMyWaiverIDLink = "//a[@href='/FAQ#waiver-id-format']";
 const proposedEffectiveDate = "#proposed-effective-date";
 const parentIDInputBox = "#parent-componentId";
@@ -22,7 +22,7 @@ const parentIDHelpText = "#parent-fieldHint0";
 
 export class oneMacSubmitNewWaiverActionPage {
   inputWaiverNumberNewForms(s) {
-    cy.get(newWaiverNumberInputBox).type(s);
+    cy.get(newWaiverNumberInputBox).type(s, { delay: 500 });
   }
   inputWaiverNumberOldForms(s) {
     cy.get(oldWaiverNumberInputBox).type(s);
