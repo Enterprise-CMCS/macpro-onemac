@@ -52,7 +52,7 @@ const resetIds = [
   "MD-22106.R01.02",
 ];
 
-const snapshotIds = [
+/* const snapshotIds = [
   "MD-22-2300-VM",
   "MD-22-2301-VM",
   "MD-22-2302-VM",
@@ -104,6 +104,7 @@ const snapshotIds = [
   "MD-22101.R01.01",
   "MD-22103.R01.01",
 ];
+*/
 
 /**
  * Reset test Data
