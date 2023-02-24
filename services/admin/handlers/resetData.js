@@ -52,7 +52,7 @@ const resetIds = [
   "MD-22106.R01.02",
 ];
 
-/* const snapshotIds = [
+const snapshotIds = [
   "MD-22-2300-VM",
   "MD-22-2301-VM",
   "MD-22-2302-VM",
@@ -104,7 +104,6 @@ const resetIds = [
   "MD-22101.R01.01",
   "MD-22103.R01.01",
 ];
-*/
 
 /**
  * Reset test Data
@@ -137,6 +136,37 @@ export const main = async (event) => {
               sk: item.sk,
             },
           });
+        }
+      } catch (e) {
+        console.log("query error: ", e.message);
+      }
+    })
+  );
+
+  await Promise.all(
+    snapshotIds.map(async (id) => {
+      console.log("Checking for id: ", id);
+      const qParams = {
+        TableName: process.env.oneMacTableName,
+        KeyConditionExpression: "pk = :inPk",
+        ExpressionAttributeValues: {
+          ":inPk": id,
+        },
+        ProjectionExpression: "pk,sk",
+      };
+      try {
+        const results = await dynamoDb.query(qParams).promise();
+        console.log("Found these results in One Table: ", results);
+        for (const item of results.Items) {
+          const [, eventTimestamp] = item.sk.split("#");
+          if (eventTimestamp > 1676384054014)
+            promiseItems.push({
+              TableName: process.env.oneMacTableName,
+              Key: {
+                pk: item.pk,
+                sk: item.sk,
+              },
+            });
         }
       } catch (e) {
         console.log("query error: ", e.message);
