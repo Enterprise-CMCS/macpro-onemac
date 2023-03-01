@@ -2273,6 +2273,9 @@ And("verify the type is Waiver Renewal", () => {
 And("verify the type is Temporary Extension", () => {
   OneMacPackageDetailsPage.verifyTypeContainsTempExtension();
 });
+And("verify the type is 1915b Temporary Extension", () => {
+  OneMacPackageDetailsPage.verifyTypeContainsTempExtension();
+});
 And("verify the type is 1915b Waiver Amendment", () => {
   OneMacPackageDetailsPage.verifyTypeContains1915bWaiverAmendment();
 });
