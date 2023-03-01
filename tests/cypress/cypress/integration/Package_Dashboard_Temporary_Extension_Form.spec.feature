@@ -88,7 +88,7 @@ Feature: Package Dashboard Temporary Extension
         And Type Additonal Info Comments in new form
         And Click on Submit Button
         And verify submission successful message in the alert bar
-@focus     
+
     Scenario: Verify user can create a temporary extension from the package dashboard waiver tab - renewal
         And click on the Waivers tab
         And Click on Filter Button

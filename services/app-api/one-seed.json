@@ -3239,7 +3239,7 @@
         "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1672290671438/textnotes.txt"
       }
     ],
-    "proposedEffectiveDate": "none",
+    "proposedEffectiveDate": "2023-02-03",
     "GSI1sk": "MD-22-2200-VM",
     "additionalInformation": "test",
     "submissionTimestamp": 1672290673531,
@@ -3272,7 +3272,7 @@
         "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1672290671438/textnotes.txt"
       }
     ],
-    "proposedEffectiveDate": "none",
+    "proposedEffectiveDate": "2023-02-03",
     "GSI1sk": "MD-22-2200-VM",
     "additionalInformation": "test",
     "submissionTimestamp": 1672290673531,
@@ -3311,7 +3311,7 @@
       "BUDGET_NEUTRALITY_ESTABLISHED_FLAG": false,
       "FISCAL_QUARTER": null,
       "STATUS_MEMO": null,
-      "PROPOSED_DATE": null,
+      "PROPOSED_DATE": 1675382400000,
       "ALERT_MILESTONE1_DAYS": null,
       "ALERT_90_DAYS_DATE": 1680048000000,
       "PRIORITY_CODE_ID": null,
@@ -45045,5 +45045,248 @@
     "Approved_Effective_Date": 1680220800000,
     "Companion_Letter_Received_Date": null,
     "Review_Position_ID": null
+  },
+  {
+    "clockEndTimestamp": 1680108898763,
+    "componentType": "waivernew",
+    "eventTimestamp": 1672336498763,
+    "currentStatus": "Submitted",
+    "originallyFrom": "cms-spa-form-master-change-requests",
+    "attachments": [
+      {
+        "s3Key": "1672336497128/picture.jpg",
+        "filename": "picture.jpg",
+        "title": "1915(b)(4) FFS Selective Contracting (Streamlined) waiver application pre-print (Initial, Renewal, Amendment)",
+        "contentType": "image/jpeg",
+        "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A30413432-e223-4a6d-bfe1-7ed87236ff55/1672336497128/picture.jpg"
+      }
+    ],
+    "proposedEffectiveDate": "2023-02-03",
+    "GSI1sk": "MD-0909.R00.00",
+    "additionalInformation": "test",
+    "submissionTimestamp": 1672336498763,
+    "waiverAuthority": "1915(b)",
+    "GSI1pk": "OneMAC#submitwaiverrenewal",
+    "convertTimestamp": 1674854066999,
+    "submitterEmail": "mdstateonemac@gmail.com",
+    "sk": "OneMAC#1672336498763",
+    "componentId": "MD-0909.R00.00",
+    "pk": "MD-0909.R00.00",
+    "submitterName": "MDSTATE SUBMITTERNK"
+  },
+  {
+    "clockEndTimestamp": 1680108898763,
+    "componentType": "waivernew",
+    "currentStatus": "Under Review",
+    "waiverExtensions": [],
+    "attachments": [
+      {
+        "s3Key": "1672336497128/picture.jpg",
+        "filename": "picture.jpg",
+        "title": "1915(b)(4) FFS Selective Contracting (Streamlined) waiver application pre-print (Initial, Renewal, Amendment)",
+        "contentType": "image/jpeg",
+        "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A30413432-e223-4a6d-bfe1-7ed87236ff55/1672336497128/picture.jpg"
+      }
+    ],
+    "proposedEffectiveDate": "2023-02-03",
+    "GSI1sk": "MD-0909.R00.00",
+    "additionalInformation": "test",
+    "submissionTimestamp": 1672336498763,
+    "waiverAuthority": "1915(b)",
+    "GSI1pk": "OneMAC#waiver",
+    "submitterEmail": "mdstateonemac@gmail.com",
+    "sk": "Package",
+    "componentId": "MD-0909.R00.00",
+    "raiResponses": [],
+    "lastEventTimestamp": 1673565420973,
+    "pk": "MD-0909.R00.00",
+    "submitterName": "MDSTATE SUBMITTERNK"
+  },
+  {
+    "PRIORITY_COMPLEXITY": null,
+    "STATES": [
+      {
+        "REGION_ID": "3",
+        "STATE_NAME": "Maryland",
+        "PRIORITY_FLAG": false,
+        "STATE_CODE": "MD"
+      }
+    ],
+    "STATE_PLAN": {
+      "LEAD_ANALYST_ID": null,
+      "TEMPLATE_ISSUES": null,
+      "BLOCKING_SPAS_MEMO": null,
+      "CALL_HELD_REASON_ID": null,
+      "FRT_DATE": null,
+      "CURRENT_WAIVER_EXPIRES_DATE": null,
+      "END_DATE": null,
+      "CALL_HELD": null,
+      "TEMPLATE_ISSUES_RESOLVED": null,
+      "ALERT_MILESTONE2_DAYS": null,
+      "SUMMARY_MEMO": null,
+      "SPW_STATUS_ID": 1,
+      "BUDGET_NEUTRALITY_ESTABLISHED_FLAG": false,
+      "FISCAL_QUARTER": null,
+      "STATUS_MEMO": null,
+      "PROPOSED_DATE": 1675382400000,
+      "ALERT_MILESTONE1_DAYS": null,
+      "ALERT_90_DAYS_DATE": 1680048000000,
+      "PRIORITY_CODE_ID": null,
+      "BUDGET_IMPACT": null,
+      "RO_ANALYST_ID": null,
+      "GAP3": null,
+      "UUID": null,
+      "GAP2": null,
+      "ATTACHED_SPA": null,
+      "BUDGET_NEUTRALITY_STATUS_MEMO": null,
+      "START_CLOCK_DATE": 1672272000000,
+      "BACKUP_FM_ANALYST_ID": null,
+      "SUBMISSION_DATE": 1672272000000,
+      "STATUS_DATE": 1673481600000,
+      "COMPANION_LETTER_RECEIVED_DATE": null,
+      "GAP3_NA": null,
+      "REMARKS_MEMO": null,
+      "TYPE_ID": null,
+      "TE_END_DATE": null,
+      "GAP": null,
+      "DAYS_EXTENSION_NUMBER": null,
+      "OCD_REVIEW_ID": 2,
+      "ACTUAL_EFFECTIVE_DATE": null,
+      "FISCAL_YEAR": null,
+      "PLAN_TYPE": 122,
+      "GAP_NA": null,
+      "SUBMISSION_TYPE": null,
+      "REGION_ID": "3",
+      "BACKUP_PROGRAM_ANALYST_ID": null,
+      "DATE_SENT_PSCCAS": null,
+      "ID_NUMBER": "MD-0909.R00.00",
+      "APPROVAL_STATUS_TYPE": null,
+      "COMPANION_LETTER_REQUESTED_DATE": null,
+      "TITLE_NAME": null,
+      "ALERT_MILESTONE4_DAYS": null,
+      "CO_SUBMISSION_DATE": null,
+      "CHANGED_DATE": 1673565420973,
+      "UPL_ACCEPTED": null,
+      "GAP2_NA": null,
+      "OCD_REVIEW_COMMENTS_MEMO": null,
+      "MMDL_IMPORT": null,
+      "TEMPLATE_ISSUES_MEMO": null,
+      "GUIDANCE_DOCS_SUBMITTED": null,
+      "APPROVED_EFFECTIVE_DATE": null,
+      "INITIAL_SUBMISSION_COMPLETE": null,
+      "ADDED_COST": null,
+      "MISSING_INFORMATION": null,
+      "PRIORITY_COMPLEXITY_ID": null,
+      "ACTION_TYPE": null,
+      "PENDING_CONCURRENCE_DATE": null,
+      "PUBLICHEALTH_STATEEMERGENCY": null,
+      "COMPONENT_ID": null,
+      "BUDGET_IMPACT_VALUE": null,
+      "ALERT_MILESTONE3_DAYS": null,
+      "CODE_AFTER_INIT_ASSESS_ID": null,
+      "STATE_CODE": "MD",
+      "DATE_OF_CODING_CHANGE": null,
+      "APPROVAL_DOCS_RECEIVED": null,
+      "PRIORITY_COMMENTS_MEMO": null,
+      "ORGANIZATION_CHANGE": null,
+      "SPW_IMPORT": false,
+      "REVIEW_POSITION_ID": null,
+      "SPA_TYPE_ID": null,
+      "ELIMINATED_COST": null,
+      "CURRENT_WAIVER_TE": null
+    },
+    "STATE_PLAN_SERVICETYPES": null,
+    "REVIEW_POSITION": null,
+    "GSI1sk": "MD-0909.R00.00",
+    "FM_ANALYST": null,
+    "LEAD_ANALYST": null,
+    "SP_APD": null,
+    "OCD_REVIEW": [
+      {
+        "OCD_REVIEW_DESCRIPTION": "No",
+        "OCD_REVIEW_ID": 2
+      }
+    ],
+    "PROGRAM_ANALYST": null,
+    "CALLHELDREASONS": null,
+    "SPA_TYPE": null,
+    "SPW_STATUS": [
+      {
+        "SPW_STATUS_ID": 1,
+        "SPW_STATUS_DESC": "Pending"
+      }
+    ],
+    "ACTIONTYPES": null,
+    "SP_TYPE": null,
+    "SP_APD_SUB_TYPE": null,
+    "STATE_PLAN_SERVICE_SUBTYPES": null,
+    "RAI": null,
+    "sk": "SEATool#1673565420973",
+    "ACTION_OFFICERS": null,
+    "SP1115": null,
+    "COMPONENTS_SP": null,
+    "PLAN_TYPES": [
+      {
+        "PLAN_TYPE_ID": 122,
+        "PLAN_TYPE_NAME": "1915(b)"
+      }
+    ],
+    "PRIORITY_CODES": null,
+    "SP_IMPACT_FUNDING": null,
+    "GSI1pk": "SEATool#1915b_waivers",
+    "CODEAFTERINITACCESS": null,
+    "STOP_RESUME_DATES": null,
+    "COMPONENTS": null,
+    "REGION": [
+      {
+        "REGION_ID": "3",
+        "REGION_NAME": "Philadelphia",
+        "ALERTS_INBOX_ADDRESS": "SPA_Waivers_Philadelphia_R03@cms.hhs.gov"
+      }
+    ],
+    "SP_EARLY_ALERTS": {
+      "ALERTFIELD": [
+        {
+          "EA_LABEL": "Meets expedited criteria",
+          "EA_TYPE_ID": 1,
+          "EA_DROP_DOWN_VALUES": null,
+          "ACTIVE": true,
+          "EA_FIELD_ID": 25,
+          "PRIORITY_VALUE": "true",
+          "PRIORITY_OPERATOR": null,
+          "PRIORITY_CODE_ID": 3,
+          "IS_APD": null
+        },
+        {
+          "EA_LABEL": "Customary action",
+          "EA_TYPE_ID": 1,
+          "EA_DROP_DOWN_VALUES": null,
+          "ACTIVE": true,
+          "EA_FIELD_ID": 26,
+          "PRIORITY_VALUE": "true",
+          "PRIORITY_OPERATOR": null,
+          "PRIORITY_CODE_ID": 2,
+          "IS_APD": null
+        }
+      ],
+      "EARLYALERT": [
+        {
+          "YES_NO_VAL": null,
+          "ID_NUMBER": "MD-0909.R00.00",
+          "EA_FIELD_ID": 25,
+          "EMAIL_SENT": null,
+          "TEXT_DD_VAL": null
+        },
+        {
+          "YES_NO_VAL": null,
+          "ID_NUMBER": "MD-0909.R00.00",
+          "EA_FIELD_ID": 26,
+          "EMAIL_SENT": null,
+          "TEXT_DD_VAL": null
+        }
+      ]
+    },
+    "pk": "MD-0909.R00.00",
+    "RO_ANALYST": null
   }
 ]
