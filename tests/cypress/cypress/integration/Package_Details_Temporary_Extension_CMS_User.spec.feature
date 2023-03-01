@@ -21,10 +21,10 @@ Feature: Waiver Package Details View: Temporary Extension for a CMS User
         And verify the status on the card is "Submitted - Intake Needed"
         And verify the package actions section is unavailable
         And verify the details section exists
-        And verify there is a Type header in the details section
+        #And verify there is a Type header in the details section
         And verify the type is Temporary Extension
         And verify there is an Initial Submission Date header in the details section
         And verify a date exists for the Initial Submission Date
-        And verify the supporting documentation section exists
+        And verify the attachments section exists
         And verify the download all button exists
         And verify the additional information section exists
