@@ -84,8 +84,19 @@ export class oneMacSubmitNewWaiverActionPage {
     const filePath = "/files/15MB.pdf";
     cy.get(fileUpload1915b4).attachFile(filePath);
   }
-  verifyParentIDIsPrefilled(s) {
-    cy.xpath(parentIDLabel).next("div").contains(s);
+  verifyParentInitialIDIsPrefilled(s) {
+    cy.xpath(parentIDLabel)
+      .next("div")
+      .contains(
+        /[A-Z]{2}\-\d{4}\.[A-Z]{1}0{2}.0{2}|[A-Z]{2}\-\d{5}\.[A-Z]{1}0{2}.0{2}/
+      );
+  }
+  verifyParentRenewalIDIsPrefilled(s) {
+    cy.xpath(parentIDLabel)
+      .next("div")
+      .contains(
+        /[A-Z]{2}\-\d{4}\.[A-Z]{1}([0]{1}[1-9]|[1-9][0-9]).0{2}|[A-Z]{2}\-\d{5}\.[A-Z]{1}([0]{1}[1-9]|[1-9][0-9]).0{2}/
+      );
   }
 
   inputComments(s) {
