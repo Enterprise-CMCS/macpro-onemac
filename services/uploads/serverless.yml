@@ -11,8 +11,6 @@ frameworkVersion: "3"
 
 plugins:
   - serverless-bundle
-  - serverless-s3-local
-  - serverless-offline
   - serverless-plugin-scripts
   - serverless-s3-bucket-helper
 provider:
@@ -74,11 +72,6 @@ custom:
       deploy:finalize: |
         rm lambda_layer.zip
         serverless invoke --stage ${self:custom.stage} --function avDownloadDefinitions -t Event
-  # S3 offline configuration
-  s3:
-    host: localhost
-    directory: /tmp
-    cors: resources/local-cors-policy.xml
 
 layers:
   clamDefs:
