@@ -10,7 +10,7 @@ const lastModifiedHeader = "#lastModifiedColHeader";
 const modifiedByHeader = "#doneByNameColHeader";
 //Element is Xpath use cy.xpath instead of cy.get
 const homeTab = '//a[contains(text(),"Home")]';
-const dashboardTab = "#dashboardLink";
+const dashboardTab = "#packageListLink";
 //Element is Xpath use cy.xpath instead of cy.get
 const FAQTab = '//a[contains(text(),"FAQ")]';
 const actionsHeader = "#personnelActionsColHeader";

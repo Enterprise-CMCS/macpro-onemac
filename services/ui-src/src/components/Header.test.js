@@ -37,7 +37,7 @@ describe("left side navigation", () => {
     }
   );
 
-  it.each(["Dashboard", "Packages", "User Management"])(
+  it.each(["Dashboard", "User Management"])(
     "does not render a link to %s when not authenticated",
     (name) => {
       const history = createMemoryHistory();

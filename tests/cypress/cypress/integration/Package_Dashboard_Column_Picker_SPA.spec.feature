@@ -3,18 +3,15 @@ Feature: OY2-13095 Package Dashboard - Column Picker
         Given I am on Login Page
         When Clicking on Development Login
         When Login with state submitter user
-        And click on Packages
         And verify show hide columns button exists
         And verify SPA ID column exists
         And verify type column exists
         And verify state column exists
-#        And verify 90th day column exists
         And verify status column exists
         And verify Initial Submission Date column exists
         And verify submitted by column exists
         And verify actions column exists
         And click show hide columns button
-#        And verify 90th day exists
         And  verify Initial Submission Date exists
         And verify state exists
         And verify status exists
@@ -26,9 +23,7 @@ Feature: OY2-13095 Package Dashboard - Column Picker
         Given I am on Login Page
         When Clicking on Development Login
         When Login with state submitter user
-        And click on Packages
         And click show hide columns button
-#        And click 90th day checkbox
         And click Initial Submission Date checkbox
         And click state checkbox
         And click status checkbox
@@ -39,8 +34,6 @@ Feature: OY2-13095 Package Dashboard - Column Picker
         And verify actions column exists
         And verify type column does not exist
         And verify state column does not exist
-#        And verify 90th day column does not exist
-#        And verify expiration date column does not exist
         And verify status column does not exist
         And verify Initial Submission Date column does not exist
         And verify submitted by column does not exist
@@ -49,7 +42,6 @@ Feature: OY2-13095 Package Dashboard - Column Picker
         Given I am on Login Page
         When Clicking on Development Login
         When Login with state submitter user
-        And click on Packages
         And verify state column exists
         And click show hide columns button
         And click state checkbox
@@ -64,7 +56,6 @@ Feature: OY2-13095 Package Dashboard - Column Picker
         Given I am on Login Page
         When Clicking on Development Login
         When Login with state submitter user
-        And click on Packages
         And verify type column exists
         And click show hide columns button
         And click type checkbox
@@ -79,7 +70,6 @@ Feature: OY2-13095 Package Dashboard - Column Picker
         Given I am on Login Page
         When Clicking on Development Login
         When Login with state submitter user
-        And click on Packages
         And Click on Filter Button
         And click on Type
         And click CHIP SPA check box
@@ -98,7 +88,6 @@ Feature: OY2-13095 Package Dashboard - Column Picker
         Given I am on Login Page
         When Clicking on Development Login
         When Login with state submitter user
-        And click on Packages
         And type in search bar expiration status “pending”
         And verify Error message displayed should be No Results Found
         And verify IDNumber column exists
@@ -114,9 +103,7 @@ Feature: OY2-13095 Package Dashboard - Column Picker
         Given I am on Login Page
         When Clicking on Development Login
         When Login with state submitter user
-        And click on Packages
         And click show hide columns button
-#        And click 90th day checkbox
         And click Initial Submission Date checkbox
         And click status checkbox
         And click submitted by checkbox
@@ -139,7 +126,6 @@ Feature: OY2-13095 Package Dashboard - Column Picker
         When Clicking on Development Login
         When Login with cms System Admin
         Then i am on Dashboard Page
-        And click on Packages
         And Verify State Column Exists
         And Verify State Column is sortable
   

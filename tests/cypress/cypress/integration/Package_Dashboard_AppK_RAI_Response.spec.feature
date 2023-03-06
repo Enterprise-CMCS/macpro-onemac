@@ -4,7 +4,6 @@ Feature: RAI Response for Appendix K Amendment - Package View
         Given I am on Login Page
         When Clicking on Development Login
         When Login with state submitter user
-        And click on Packages
         And click on the Waivers tab
         And Click on Filter Button
         And click on Type

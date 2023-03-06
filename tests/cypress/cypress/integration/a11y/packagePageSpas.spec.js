@@ -5,7 +5,6 @@ describe("Package Page SPA's 508 test", () => {
     cy.get("#email").type("statesubmitter@nightwatch.test");
     cy.get("#password").type("Passw0rd!");
     cy.get("#loginDevUserBtn").click();
-    cy.xpath('//a[@id="packageListLink"]').click();
   });
 
   it("Check a11y on Package Page SPA's", () => {

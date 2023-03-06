@@ -3,7 +3,6 @@ Feature: Withdraw package action in package dashboard
         Given I am on Login Page
         When Clicking on Development Login
         When Login with state submitter user
-        And click on Packages
 
     Scenario: Demonstrate that withdraw a package is not available on SPA with Submitted status
         And Click on Filter Button
