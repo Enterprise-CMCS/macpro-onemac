@@ -27,7 +27,7 @@ Feature: CHIP SPA CMS Details View - Card View with Actions
         And verify there is an Initial Submission Date header in the details section
         And verify a date exists for the Initial Submission Date
         And verify there is a Proposed Effective Date header in the details section
-        And verify the supporting documentation section exists
+        And verify the attachments section exists
         And verify the download all button exists
         And verify the additional information section exists
 
@@ -47,7 +47,7 @@ Feature: CHIP SPA CMS Details View - Card View with Actions
         And verify there is an Initial Submission Date header in the details section
         And verify a date exists for the Initial Submission Date
         And verify there is a Proposed Effective Date header in the details section
-        And verify the supporting documentation section exists
+        And verify the attachments section exists
         And verify the download all button exists
         And verify the additional information section exists
 
@@ -67,7 +67,7 @@ Feature: CHIP SPA CMS Details View - Card View with Actions
         And verify there is an Initial Submission Date header in the details section
         And verify a date exists for the Initial Submission Date
         And verify there is a Proposed Effective Date header in the details section
-        And verify the supporting documentation section exists
+        And verify the attachments section exists
         And verify the download all button exists
         And verify the additional information section exists
 
@@ -87,7 +87,7 @@ Feature: CHIP SPA CMS Details View - Card View with Actions
         And verify there is an Initial Submission Date header in the details section
         And verify a date exists for the Initial Submission Date
         And verify there is a Proposed Effective Date header in the details section
-        And verify the supporting documentation section exists
+        And verify the attachments section exists
         And verify the download all button exists
         And verify the additional information section exists
         
@@ -109,7 +109,7 @@ Feature: CHIP SPA CMS Details View - Card View with Actions
     #     And verify there is an Initial Submission Date header in the details section
     #     And verify a date exists for the Initial Submission Date
     #     And verify there is a Proposed Effective Date header in the details section
-    #     And verify the supporting documentation section exists
+    #     And verify the attachments section exists
     #     And verify the download all button exists
     #     And verify the additional information section exists
 
@@ -131,7 +131,7 @@ Feature: CHIP SPA CMS Details View - Card View with Actions
         And verify a date exists for the Initial Submission Date
         And verify there is a Proposed Effective Date header in the details section
         And verify the Proposed Effective Date is a date formated like Mon dd yyyy
-        And verify the supporting documentation section exists
+        And verify the attachments section exists
         And verify the download all button exists
         And verify the additional information section exists
 
@@ -152,7 +152,7 @@ Feature: CHIP SPA CMS Details View - Card View with Actions
         And verify there is an Initial Submission Date header in the details section
         And verify a date exists for the Initial Submission Date
         And verify there is a Proposed Effective Date header in the details section
-        And verify the supporting documentation section exists
+        And verify the attachments section exists
         And verify the download all button exists
         And verify the additional information section exists
 
@@ -173,6 +173,6 @@ Feature: CHIP SPA CMS Details View - Card View with Actions
         And verify there is an Initial Submission Date header in the details section
         And verify a date exists for the Initial Submission Date
         And verify there is a Proposed Effective Date header in the details section
-        And verify the supporting documentation section exists
+        And verify the attachments section exists
         And verify the download all button exists
         And verify the additional information section exists
