@@ -3,7 +3,6 @@ Feature: Medicaid SPA CMS Details View - Card View with Actions
         Given I am on Login Page
         When Clicking on Development Login
         When Login as EUA CMS Read Only User
-        And click on Packages
         And Click on Filter Button
         And click on Type
         And uncheck all of the type checkboxes

@@ -5,7 +5,6 @@ describe("Package Dashboard Waiver Type Page 508 test", () => {
     cy.get("#email").type("statesubmitter@nightwatch.test");
     cy.get("#password").type("Passw0rd!");
     cy.get("#loginDevUserBtn").click();
-    cy.xpath('//a[@id="packageListLink"]').click();
     cy.xpath("//a[@id='new-submission-button']").click();
     cy.xpath(
       "//p[contains(text(),'Submit Waivers, Amendments, Renewals, or Temp. Extension')]"

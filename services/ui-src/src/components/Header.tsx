@@ -215,16 +215,6 @@ export function Header() {
       </a>
     );
 
-    const dashboardLink = (
-      <Link
-        id="dashboardLink"
-        to={ROUTES.DASHBOARD}
-        className={getActiveClass(currentRoute, RouteList.DASHBOARD)}
-      >
-        Dashboard
-      </Link>
-    );
-
     const userManagementLink = (
       <Link
         id="userManagementLink"
@@ -241,16 +231,13 @@ export function Header() {
         to={ONEMAC_ROUTES.PACKAGE_LIST}
         className={getActiveClass(currentRoute, ONEMAC_ROUTES.PACKAGE_LIST)}
       >
-        Packages
+        Dashboard
       </Link>
     );
 
     let linksToDisplay = [homeLink];
     if (isAuthenticated) {
       if (userObj.canAccessDashboard) {
-        linksToDisplay.push(dashboardLink);
-      }
-      if (userObj.canAccessDashboard && isLoggedInAsDeveloper) {
         linksToDisplay.push(packageListLink);
       }
       if (userObj.canAccessUserManagement) {

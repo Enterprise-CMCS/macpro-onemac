@@ -4,7 +4,6 @@ Feature: OY2-11149 Submission Dashboard - Search bar
         Given I am on Login Page
         When Clicking on Development Login
         When Login with state submitter user
-        And click on Packages
         And type in search bar not existing ID in search bar
         And verify Error message displayed should be No Results Found
         And verify Error message details is displayed
@@ -13,7 +12,6 @@ Feature: OY2-11149 Submission Dashboard - Search bar
         Given I am on Login Page
         When Clicking on Development Login
         When Login with state submitter user
-        And click on Packages
         And type in search bar expiration status “pending”
         And verify Error message displayed should be No Results Found
         And verify Error message details is displayed
@@ -22,7 +20,6 @@ Feature: OY2-11149 Submission Dashboard - Search bar
         Given I am on Login Page
         When Clicking on Development Login
         When Login with state submitter user
-        And click on Packages
         And Click on Filter Button
         And click on Type
         And click CHIP SPA check box
@@ -37,7 +34,6 @@ Feature: OY2-11149 Submission Dashboard - Search bar
         Given I am on Login Page
         When Clicking on Development Login
         When Login with state submitter user
-        And click on Packages
         Then click on New Submission
         And Click on Waiver Action
         And click on Initial Waiver
@@ -48,7 +44,7 @@ Feature: OY2-11149 Submission Dashboard - Search bar
         And Type Additonal Info Comments in new form
         And Click on Submit Button
         And verify submission successful message in the alert bar
-        And click on Packages
+
         And search for Initial Waiver Number 2 with 12 Characters
         And clear search bar
         And type in submitters name
@@ -58,7 +54,6 @@ Feature: OY2-11149 Submission Dashboard - Search bar
         Given I am on Login Page
         When Clicking on Development Login
         When Login with state submitter user
-        And click on Packages
         And search existing user with all upper case
         And verify user exists with id number searched
 
@@ -67,7 +62,6 @@ Feature: OY2-11149 Submission Dashboard - Search bar
         Given I am on Login Page
         When Clicking on Development Login
         When Login with state submitter user
-        And click on Packages
         And search existing user with dash
         And verify user exists with id number searched
 
@@ -75,7 +69,6 @@ Feature: OY2-11149 Submission Dashboard - Search bar
         Given I am on Login Page
         When Clicking on Development Login
         When Login with cms Help Desk User
-        And click on Packages
         And verify search bar exists
         And verify search by package id or submitter name is displayed ontop of search bar
 
@@ -83,7 +76,6 @@ Feature: OY2-11149 Submission Dashboard - Search bar
         Given I am on Login Page
         When Clicking on Development Login
         When Login with cms System Admin
-        And click on Packages
         And verify search bar exists
         And verify search by package id or submitter name is displayed ontop of search bar
 
@@ -91,7 +83,6 @@ Feature: OY2-11149 Submission Dashboard - Search bar
         Given I am on Login Page
         When Clicking on Development Login
         When Login with state submitter user
-        And click on Packages
         And verify search bar exists
         And verify search by package id or submitter name is displayed ontop of search bar
         And search existing user with all upper case

@@ -4,7 +4,6 @@ Feature: Package Dashboard: CHIP SPA Form
         Given I am on Login Page
         When Clicking on Development Login
         When Login with state submitter user
-        And click on Packages
         Then click on New Submission
         And Click on State Plan Amendment SPA
         And verify CHIP SPA is a clickable option
@@ -15,7 +14,6 @@ Feature: Package Dashboard: CHIP SPA Form
         Given I am on Login Page
         When Clicking on Development Login
         When Login with state submitter user
-        And click on Packages
         Then click on New Submission
         And Click on State Plan Amendment SPA
         And click on CHIP SPA
