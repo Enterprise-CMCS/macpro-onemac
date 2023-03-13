@@ -127,6 +127,14 @@ export const oneMACFAQContent: FAQContent[] = [
                 "OneMACCMSRoleApproverGuide.pdf",
                 "OneMAC CMS Role Approver Guide",
               ],
+              [
+                "OneMAC Package View State Demo.mp4",
+                "OneMAC Package View State Demo",
+              ],
+              [
+                "OneMAC Package View CMS Demo.mp4",
+                "OneMAC Package View CMS Demo",
+              ],
             ].map(([filename, label]) => (
               <li key={filename}>
                 <a
