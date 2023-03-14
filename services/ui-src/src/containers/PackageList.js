@@ -229,6 +229,8 @@ const PackageList = () => {
   const initialTableState = useMemo(
     () => ({
       sortBy: [{ id: "submissionTimestamp", desc: true }],
+      // TODO: Dynamically load hiddenColumns from storage
+      hiddenColumns: [],
     }),
     []
   );

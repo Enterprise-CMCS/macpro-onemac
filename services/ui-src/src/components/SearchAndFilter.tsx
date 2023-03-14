@@ -123,7 +123,10 @@ export const ColumnPicker: FC<ColumnPickerProps<any>> = ({
                     label={Header}
                     name={`columnPicker-${Header}`}
                     value={Header as string}
-                    onChange={() => toggleHidden()}
+                    onChange={() => {
+                      toggleHidden();
+                      // TODO: Edit record in storage to reflect show/hide state
+                    }}
                     checked={isVisible}
                     type="checkbox"
                     size="small"
