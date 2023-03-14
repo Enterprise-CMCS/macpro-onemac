@@ -53,3 +53,7 @@ dynamodb-admin
 You will find the GUI by accessing http://localhost:8001 in your browser.
 
 > **NOTE:** For more information on this package, visit https://github.com/aaronshaf/dynamodb-admin
+
+### Data models
+
+To view our data models documentation, visit [this Confluence page](https://qmacbis.atlassian.net/wiki/spaces/DAD/pages/3123544096/Data+Models+OneMAC)!
