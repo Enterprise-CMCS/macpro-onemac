@@ -1,9 +1,10 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, useEffect } from "react";
 import {
   HeaderGroup,
   TableInstance,
   TableOptions,
   UseFiltersInstanceProps,
+  UseFiltersState,
   UseGlobalFiltersInstanceProps,
   UseSortByColumnProps,
   UseSortByInstanceProps,
@@ -26,6 +27,7 @@ import {
   SearchAndFilter,
   SearchFilterProps,
   customFilterTypes,
+  LOCAL_STORAGE_TABLE_FILTERS,
 } from "./SearchAndFilter";
 export { CustomFilterTypes, CustomFilterUi } from "./SearchAndFilter";
 
@@ -33,7 +35,6 @@ export type TableProps<V extends {}> = {
   className?: string;
   searchBarTitle?: ReactNode;
   withSearchBar?: boolean;
-  TEMP_onReset?: () => void;
 } & Pick<SearchFilterProps<V>, "pageContentRef"> &
   TableOptions<V>;
 
@@ -47,7 +48,6 @@ export default function PortalTable<V extends {} = {}>({
   pageContentRef,
   searchBarTitle,
   withSearchBar,
-  TEMP_onReset = noop,
   ...props
 }: TableProps<V>) {
   const {
@@ -58,6 +58,7 @@ export default function PortalTable<V extends {} = {}>({
     preFilteredRows,
     preGlobalFilteredRows,
     rows,
+    state,
     setAllFilters,
     setGlobalFilter,
     prepareRow,
@@ -77,9 +78,16 @@ export default function PortalTable<V extends {} = {}>({
     useFilters,
     useSortBy
   ) as TableInstance<V> &
+    UseFiltersState<V> &
     UseFiltersInstanceProps<V> &
     UseGlobalFiltersInstanceProps<V> &
     UseSortByInstanceProps<V>;
+
+  // When filters change, update object in localStorage
+  useEffect(() => {
+    const filters = (state as UseFiltersState<any>).filters;
+    localStorage.setItem(LOCAL_STORAGE_TABLE_FILTERS, JSON.stringify(filters));
+  }, [(state as UseFiltersState<any>).filters]);
 
   return (
     <>
@@ -92,7 +100,6 @@ export default function PortalTable<V extends {} = {}>({
           pageContentRef={pageContentRef}
           searchBarTitle={searchBarTitle}
           setAllFilters={setAllFilters}
-          TEMP_onReset={TEMP_onReset}
         />
       )}
       <div className="table-wrapper">

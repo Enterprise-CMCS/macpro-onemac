@@ -44,7 +44,8 @@ import { PackageRowValue } from "../domain-types";
 import { animated, useTransition, easings, useSpring } from "@react-spring/web";
 
 const { afterToday } = DateRangePicker;
-export const LOCAL_STORAGE_COLUMN_VISIBILITY = "columnSavedState";
+export const LOCAL_STORAGE_COLUMN_VISIBILITY = "onemac-columnHiddenSavedState";
+export const LOCAL_STORAGE_TABLE_FILTERS = "onemac-tableFiltersSavedState";
 
 export interface ColumnPickerProps<V extends {}> {
   columnsInternal: ColumnInstance<V>[];
@@ -69,24 +70,25 @@ const updateVisibilitySavedState = (id: string, setHidden: boolean) => {
       LOCAL_STORAGE_COLUMN_VISIBILITY,
       JSON.stringify(value)
     );
-  } else {
-    const savedAsArray = JSON.parse(saved) as Array<string>;
-    if (setHidden) {
-      // Save as hidden col
-      savedAsArray.push(id);
-    } else {
-      const indexOfId = savedAsArray.indexOf(id);
-      // Remove from saved hidden cols
-      if (indexOfId > -1) {
-        savedAsArray.splice(indexOfId, 1);
-      }
-    }
-    // Update item in storage
-    localStorage.setItem(
-      LOCAL_STORAGE_COLUMN_VISIBILITY,
-      JSON.stringify(savedAsArray)
-    );
+    return;
   }
+
+  const savedAsArray = JSON.parse(saved) as Array<string>;
+  // Save as hidden col
+  if (setHidden) {
+    savedAsArray.push(id);
+  } else {
+    const indexOfId = savedAsArray.indexOf(id);
+    // Remove from saved hidden cols
+    if (indexOfId > -1) {
+      savedAsArray.splice(indexOfId, 1);
+    }
+  }
+  // Update item in storage
+  localStorage.setItem(
+    LOCAL_STORAGE_COLUMN_VISIBILITY,
+    JSON.stringify(savedAsArray)
+  );
 };
 
 export const ColumnPicker: FC<ColumnPickerProps<any>> = ({
@@ -399,14 +401,12 @@ type FilterPaneProps<V extends {}> = {
     UseFiltersColumnProps<V>)[];
   pageContentRef: RefObject<HTMLElement>;
   setAllFilters: (filters: any[]) => void;
-  TEMP_onReset: () => void;
 };
 
 function FilterPane<V extends {}>({
   columnsInternal,
   pageContentRef,
   setAllFilters,
-  TEMP_onReset,
 }: FilterPaneProps<V>) {
   const [showFilters, toggleShowFilters] = useToggle(false);
   const onResetFilters = useCallback(() => {
@@ -422,8 +422,7 @@ function FilterPane<V extends {}>({
         }
       })
     );
-    TEMP_onReset();
-  }, [columnsInternal, setAllFilters, TEMP_onReset]);
+  }, [columnsInternal, setAllFilters]);
 
   //Mount transition animation
 
@@ -500,7 +499,6 @@ function FilterPane<V extends {}>({
 export type SearchFilterProps<V extends {}> = {
   onSearch: (keyword: string) => void;
   searchBarTitle: ReactNode;
-  TEMP_onReset: () => void;
 } & FilterPaneProps<V>;
 
 export function SearchAndFilter<V extends {} = {}>({
@@ -509,7 +507,6 @@ export function SearchAndFilter<V extends {} = {}>({
   pageContentRef,
   searchBarTitle,
   setAllFilters,
-  TEMP_onReset,
 }: SearchFilterProps<V>) {
   const [searchTerm, setSearchTerm] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
@@ -567,7 +564,6 @@ export function SearchAndFilter<V extends {} = {}>({
             columnsInternal={columnsInternal}
             pageContentRef={pageContentRef}
             setAllFilters={setAllFilters}
-            TEMP_onReset={TEMP_onReset}
           />
         </div>
       </div>

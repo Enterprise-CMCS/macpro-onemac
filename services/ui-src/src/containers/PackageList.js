@@ -34,7 +34,10 @@ import ActionPopup from "../components/ActionPopup";
 import { useAppContext } from "../libs/contextLib";
 import { pendingMessage, deniedOrRevokedMessage } from "../libs/userLib";
 import { tableListExportToCSV } from "../utils/tableListExportToCSV";
-import { LOCAL_STORAGE_COLUMN_VISIBILITY } from "../components/SearchAndFilter";
+import {
+  LOCAL_STORAGE_COLUMN_VISIBILITY,
+  LOCAL_STORAGE_TABLE_FILTERS,
+} from "../components/SearchAndFilter";
 
 const renderDate = ({ value }) =>
   typeof value === "number" && value > 0
@@ -231,11 +234,15 @@ const PackageList = () => {
   const savedHiddenColumns = localStorage?.getItem(
     LOCAL_STORAGE_COLUMN_VISIBILITY
   );
+  // Retrieve saved table filters
+  const savedTableFilters = localStorage?.getItem(LOCAL_STORAGE_TABLE_FILTERS);
   const initialTableState = useMemo(
     () => ({
       sortBy: [{ id: "submissionTimestamp", desc: true }],
-      // Set default hidden cols
+      // Set saved hidden cols
       hiddenColumns: savedHiddenColumns ? JSON.parse(savedHiddenColumns) : [],
+      // Set saved filters
+      filters: savedTableFilters ? JSON.parse(savedTableFilters) : [],
     }),
     []
   );
@@ -298,8 +305,6 @@ const PackageList = () => {
     return rightSideContent;
   }
 
-  const TEMP_onReset = useCallback(() => setPackageList((d) => [...d]), []);
-
   function renderPackageList() {
     if (userRole !== USER_ROLE.CMS_ROLE_APPROVER) {
       if (userStatus === USER_STATUS.PENDING) {
@@ -332,7 +337,6 @@ const PackageList = () => {
             pageContentRef={dashboardRef}
             searchBarTitle="Search by Package ID or Submitter Name"
             withSearchBar
-            TEMP_onReset={TEMP_onReset}
           />
         ) : (
           <EmptyList message="You have no packages yet." />
