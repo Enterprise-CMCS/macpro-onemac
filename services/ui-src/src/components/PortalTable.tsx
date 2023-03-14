@@ -21,7 +21,7 @@ import {
   faSortDown,
   faSortUp,
 } from "@fortawesome/free-solid-svg-icons";
-import { constant, noop } from "lodash";
+import { constant } from "lodash";
 
 import {
   SearchAndFilter,
