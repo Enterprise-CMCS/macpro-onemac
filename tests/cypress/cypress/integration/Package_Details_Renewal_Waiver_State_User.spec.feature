@@ -3,7 +3,6 @@ Feature: Waiver Package Details View: Waiver Renewals for a State User
         Given I am on Login Page
         When Clicking on Development Login
         When Login with state submitter user
-        And click on Packages
         And click on the Waivers tab
         And Click on Filter Button
         And click on Type
@@ -29,7 +28,7 @@ Feature: Waiver Package Details View: Waiver Renewals for a State User
         And verify there is an Initial Submission Date header in the details section
         And verify a date exists for the Initial Submission Date
         And verify there is a Proposed Effective Date header in the details section
-        And verify the supporting documentation section exists
+        And verify the attachments section exists
         And verify the download all button exists
         And verify the additional information section exists
 
@@ -49,7 +48,7 @@ Feature: Waiver Package Details View: Waiver Renewals for a State User
         And verify there is an Initial Submission Date header in the details section
         And verify a date exists for the Initial Submission Date
         And verify there is a Proposed Effective Date header in the details section
-        And verify the supporting documentation section exists
+        And verify the attachments section exists
         And verify the download all button exists
         And verify the additional information section exists
 
@@ -68,7 +67,7 @@ Feature: Waiver Package Details View: Waiver Renewals for a State User
         And verify there is an Initial Submission Date header in the details section
         And verify a date exists for the Initial Submission Date
         And verify there is a Proposed Effective Date header in the details section
-        And verify the supporting documentation section exists
+        And verify the attachments section exists
         And verify the download all button exists
         And verify the additional information section exists
 
@@ -89,7 +88,7 @@ Feature: Waiver Package Details View: Waiver Renewals for a State User
         And verify there is an Initial Submission Date header in the details section
         And verify a date exists for the Initial Submission Date
         And verify there is a Proposed Effective Date header in the details section
-        And verify the supporting documentation section exists
+        And verify the attachments section exists
         And verify the download all button exists
         And verify the additional information section exists
 
@@ -111,7 +110,7 @@ Feature: Waiver Package Details View: Waiver Renewals for a State User
         And verify a date exists for the Initial Submission Date
         And verify there is a Proposed Effective Date header in the details section
         And verify the Proposed Effective Date is a date formated like Mon dd yyyy
-        And verify the supporting documentation section exists
+        And verify the attachments section exists
         And verify the download all button exists
         And verify the additional information section exists
 
@@ -131,7 +130,7 @@ Feature: Waiver Package Details View: Waiver Renewals for a State User
         And verify there is an Initial Submission Date header in the details section
         And verify a date exists for the Initial Submission Date
         And verify there is a Proposed Effective Date header in the details section
-        And verify the supporting documentation section exists
+        And verify the attachments section exists
         And verify the download all button exists
         And verify the additional information section exists
 
@@ -152,7 +151,7 @@ Feature: Waiver Package Details View: Waiver Renewals for a State User
     #     And verify there is an Initial Submission Date header in the details section
     #     And verify a date exists for the Initial Submission Date
     #     And verify there is a Proposed Effective Date header in the details section
-    #     And verify the supporting documentation section exists
+    #     And verify the attachments section exists
     #     And verify the download all button exists
     #     And verify the additional information section exists
 
@@ -172,6 +171,6 @@ Feature: Waiver Package Details View: Waiver Renewals for a State User
         And verify there is an Initial Submission Date header in the details section
         And verify a date exists for the Initial Submission Date
         And verify there is a Proposed Effective Date header in the details section
-        And verify the supporting documentation section exists
+        And verify the attachments section exists
         And verify the download all button exists
         And verify the additional information section exists

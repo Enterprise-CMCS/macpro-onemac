@@ -40,7 +40,7 @@ const ninetieththDayHeader = "//h3[text()='90th Day']";
 const additionalInfoSection =
   "//section[@id='addl-info-base']//h2[text()='Additional Information']";
 const waiverAuthorityHeader = "//h3[text()='Waiver Authority']";
-const supportingDocumentationSection = "//h2[text()='Attachments']";
+const attachmentsSection = "//h2[text()='Attachments']";
 const downloadAllBtn = "//button[contains(text(),'Download All')]";
 const amendmentTitleHeader = "//h3[text()='Amendment Title']";
 const amendmentNumberHeader = "//h3[text()='Amendment Number']";
@@ -125,6 +125,9 @@ export class oneMacPackageDetailsPage {
   }
   verifyTypeContainsTempExtension() {
     cy.xpath(typeHeader).next().contains("Temporary Extension");
+  }
+  verifyTypeContains1915bTempExtension() {
+    cy.xpath(typeHeader).next().contains("1915(b) Temporary Extension");
   }
   verifyTypeContains1915bWaiverAmendment() {
     cy.xpath(typeHeader).next().contains("1915(b) Waiver Amendment");
@@ -256,8 +259,8 @@ export class oneMacPackageDetailsPage {
   verifyWaiverAuthorityHeaderis1915cHCBS() {
     cy.xpath(waiverAuthorityHeader).next().contains("1915(c) HCBS");
   }
-  verifySupportingDocumentationSectionExists() {
-    cy.xpath(supportingDocumentationSection).should("be.visible");
+  verifyAttachmentsSectionExists() {
+    cy.xpath(attachmentsSection).should("be.visible");
   }
   verifyDownloadAllBtnExists() {
     cy.xpath(downloadAllBtn)

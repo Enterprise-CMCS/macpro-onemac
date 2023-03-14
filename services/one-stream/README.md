@@ -1,3 +1,8 @@
+This service works as the target for a dynamoDB table stream for the one table. Its purpose is to take any INSERT or MODIFY dynamo events and rebuild the Package record to reflect the new state of the package given the new data.
+
+For more detailed information see:
+https://qmacbis.atlassian.net/wiki/spaces/DAD/pages/3124264969/Streaming+Management+Topics+OneMAC
+
 # Running Locally
 
 To run the one-stream service locally in order to process update events handled by the dynamodb table stream there are a few things that need to be considered.

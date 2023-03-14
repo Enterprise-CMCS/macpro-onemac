@@ -4,7 +4,6 @@ Feature: Update Waiver Form: Initial Waiver
         Given I am on Login Page
         When Clicking on Development Login
         When Login with state submitter user
-        And click on Packages
         Then click on New Submission
         And Click on Waiver Action
 

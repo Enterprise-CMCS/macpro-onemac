@@ -1,18 +1,15 @@
 Feature: OY2-14464 Package Dashboard - Separate Tab for Waivers and SPAs
-    Scenario: SPAs Tab - Screen enhancement
+    Background: Reoccuring Steps
         Given I am on Login Page
         When Clicking on Development Login
         When Login with state submitter user
-        And click on Packages
+
+    Scenario: SPAs Tab - Screen enhancement
         And verify the SPAs tab exists
         And verify the SPAs tab is selected
         And verify SPA ID column exists
 
     Scenario: Waivers Tab - Screen enhancement
-        Given I am on Login Page
-        When Clicking on Development Login
-        When Login with state submitter user
-        And click on Packages
         And verify search bar exists
         And verify the Waivers tab exists
         And verify the Waivers tab is clickable
@@ -21,28 +18,15 @@ Feature: OY2-14464 Package Dashboard - Separate Tab for Waivers and SPAs
         And verify Waiver Number column exists
 
     Scenario: Verify the SPAs tab is the default
-        Given I am on Login Page
-        When Clicking on Development Login
-        When Login with state submitter user
-        And click on Packages
         And click on the Waivers tab
         And refresh the page
         And verify the SPAs tab is selected
 
-#Feature: OY2-11676 Package Dashboard: New Waiver tab layout
     Scenario: screen enhancement
-        Given I am on Login Page
-        When Clicking on Development Login
-        When Login with state submitter user
-        And click on Packages
         And click on the Waivers tab
         And verify the Waivers tab is selected
 
     Scenario: verify initial waiver waiver number pattern
-        Given I am on Login Page
-        When Clicking on Development Login
-        When Login with state submitter user
-        And click on Packages
         And click on the Waivers tab
         And Click on Filter Button
         And click on Type
@@ -53,10 +37,6 @@ Feature: OY2-14464 Package Dashboard - Separate Tab for Waivers and SPAs
         And verify the waiver number format in row one is SS.#### or SS.#####
 
     Scenario: verify waiver renewal waiver number pattern
-        Given I am on Login Page
-        When Clicking on Development Login
-        When Login with state submitter user
-        And click on Packages
         And click on the Waivers tab
         And Click on Filter Button
         And click on Type

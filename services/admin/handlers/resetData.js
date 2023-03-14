@@ -52,6 +52,59 @@ const resetIds = [
   "MD-22106.R01.02",
 ];
 
+const snapshotIds = [
+  "MD-22-2300-VM",
+  "MD-22-2301-VM",
+  "MD-22-2302-VM",
+  "MD-22-2303-VM",
+  "MD-22-4441-VM",
+  "MD-22-2305-VM",
+  "MD-22-2306-VM",
+  "MD-22-2307-VM",
+  "MD-23-3333-VM",
+  "MD-22-2201-VM",
+  "MD-22-2202-VM",
+  "MD-22-2203-VM",
+  "MD-22-2204-VM",
+  "MD-23-3331-VM",
+  "MD-22-2206-VM",
+  "MD-22-2207-VM",
+  "MD-12958.R00.02",
+  "MD-22002.R00.00",
+  "MD-22007.R00.00",
+  "MD-22003.R00.00",
+  "MD-22004.R00.00",
+  "MD-22005.R00.00",
+  "MD-22006.R00.00",
+  "MD-2200.R00.00",
+  "MD-22008.R00.00",
+  "MD-22001.R01.00",
+  "MD-22002.R01.00",
+  "MD-22007.R01.00",
+  "MD-22003.R01.00",
+  "MD-22005.R01.00",
+  "MD-22006.R01.00",
+  "MD-22004.R01.00",
+  "MD-22008.R01.00",
+  "MD-12958.R01.00",
+  "MD-22001.R00.01",
+  "MD-22006.R00.01",
+  "MD-22005.R00.01",
+  "MD-22001.R01.01",
+  "MD-22003.R01.01",
+  "MD-22005.R01.02",
+  "MD-22007.R00.01",
+  "MD-22008.R01.01",
+  "MD-22100.R01.01",
+  "MD-22100.R00.01",
+  "MD-22103.R00.01",
+  "MD-22101.R00.01",
+  "MD-22102.R01.01",
+  "MD-22102.R00.01",
+  "MD-22101.R01.01",
+  "MD-22103.R01.01",
+];
+
 /**
  * Reset test Data
  */
@@ -83,6 +136,37 @@ export const main = async (event) => {
               sk: item.sk,
             },
           });
+        }
+      } catch (e) {
+        console.log("query error: ", e.message);
+      }
+    })
+  );
+
+  await Promise.all(
+    snapshotIds.map(async (id) => {
+      console.log("Checking for id: ", id);
+      const qParams = {
+        TableName: process.env.oneMacTableName,
+        KeyConditionExpression: "pk = :inPk",
+        ExpressionAttributeValues: {
+          ":inPk": id,
+        },
+        ProjectionExpression: "pk,sk",
+      };
+      try {
+        const results = await dynamoDb.query(qParams).promise();
+        console.log("Found these results in One Table: ", results);
+        for (const item of results.Items) {
+          const [, eventTimestamp] = item.sk.split("#");
+          if (eventTimestamp > 1676384054014)
+            promiseItems.push({
+              TableName: process.env.oneMacTableName,
+              Key: {
+                pk: item.pk,
+                sk: item.sk,
+              },
+            });
         }
       } catch (e) {
         console.log("query error: ", e.message);

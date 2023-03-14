@@ -8,7 +8,6 @@ describe("Warning Message on Package Details Page", () => {
   });
 
   it("Check if warning message displays properly", () => {
-    cy.get("#packageListLink").click();
     cy.get("#componentId-0 > a").scrollIntoView().click({ force: true });
     cy.get(".choice-container > .choice-info")
       .first()

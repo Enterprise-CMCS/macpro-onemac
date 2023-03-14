@@ -176,7 +176,7 @@ const ROUTE_LIST: RouteSpec[] = [
       path: ROUTES.USER_MANAGEMENT,
       accessKey: "canAccessUserManagement",
       redirectAccessKey: "canAccessDashboard",
-      redirectTo: ROUTES.DASHBOARD,
+      redirectTo: ONEMAC_ROUTES.PACKAGE_LIST,
       component: UserManagement,
     },
     {

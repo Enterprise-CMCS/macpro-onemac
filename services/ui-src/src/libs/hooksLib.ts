@@ -1,6 +1,12 @@
 import { ChangeEvent, useState, useCallback } from "react";
 import { useHistory, useLocation } from "react-router-dom";
-import { RESPONSE_CODE, USER_ROLE, ROUTES, getUserRoleObj } from "cmscommonlib";
+import {
+  RESPONSE_CODE,
+  USER_ROLE,
+  ROUTES,
+  getUserRoleObj,
+  ONEMAC_ROUTES,
+} from "cmscommonlib";
 
 import UserDataApi from "../utils/UserDataApi";
 import { useAppContext } from "./contextLib";
@@ -67,7 +73,7 @@ export function useSignupCallback(
 
         const roleObj = getUserRoleObj(userType);
         const destination = roleObj.canAccessDashboard
-          ? ROUTES.DASHBOARD
+          ? ONEMAC_ROUTES.PACKAGE_LIST
           : ROUTES.USER_MANAGEMENT;
 
         let messageState;
