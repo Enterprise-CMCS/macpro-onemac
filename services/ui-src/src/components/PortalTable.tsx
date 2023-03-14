@@ -83,11 +83,11 @@ export default function PortalTable<V extends {} = {}>({
     UseGlobalFiltersInstanceProps<V> &
     UseSortByInstanceProps<V>;
 
+  const filters = (state as UseFiltersState<any>).filters;
   // When filters change, update object in localStorage
   useEffect(() => {
-    const filters = (state as UseFiltersState<any>).filters;
     localStorage.setItem(LOCAL_STORAGE_TABLE_FILTERS, JSON.stringify(filters));
-  }, [(state as UseFiltersState<any>).filters]);
+  }, [filters]);
 
   return (
     <>

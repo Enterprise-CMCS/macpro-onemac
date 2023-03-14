@@ -229,23 +229,23 @@ const PackageList = () => {
       userRoleObj.canAccessForms,
     ]
   );
-
-  // Retrieve hidden column saved state
-  const savedHiddenColumns = localStorage?.getItem(
-    LOCAL_STORAGE_COLUMN_VISIBILITY
-  );
-  // Retrieve saved table filters
-  const savedTableFilters = localStorage?.getItem(LOCAL_STORAGE_TABLE_FILTERS);
-  const initialTableState = useMemo(
-    () => ({
+  const initialTableState = useMemo(() => {
+    // Retrieve hidden column saved state
+    const savedHiddenColumns = localStorage?.getItem(
+      LOCAL_STORAGE_COLUMN_VISIBILITY
+    );
+    // Retrieve saved table filters
+    const savedTableFilters = localStorage?.getItem(
+      LOCAL_STORAGE_TABLE_FILTERS
+    );
+    return {
       sortBy: [{ id: "submissionTimestamp", desc: true }],
       // Set saved hidden cols
       hiddenColumns: savedHiddenColumns ? JSON.parse(savedHiddenColumns) : [],
       // Set saved filters
       filters: savedTableFilters ? JSON.parse(savedTableFilters) : [],
-    }),
-    []
-  );
+    };
+  }, []);
 
   const csvExportPackages = (
     <Button
