@@ -731,7 +731,7 @@ export const oneMACFAQContent: FAQContent[] = [
         ),
       },
       {
-        anchorText: "waiver-extension-id-format",
+        anchorText: "waiver-extension-status",
         question:
           "Why does the status of my Temporary Extension Request continue to show as 'Submitted'?",
         answerJSX: (

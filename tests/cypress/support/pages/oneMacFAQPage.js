@@ -91,8 +91,6 @@ const stateAdminGuideLink =
   "//div[@id='onboarding-materials']//a[text() = 'OneMAC State Administrator Guide']";
 const cmsUserGuideLink =
   "//div[@id='onboarding-materials']//a[text() = 'OneMAC CMS User Guide']";
-const cmsRoleApproverGuideLink =
-  "//div[@id='onboarding-materials']//a[text() = 'OneMAC CMS Role Approver Guide']";
 
 export class oneMacFAQPage {
   verifyGeneralSectionExists() {
@@ -306,9 +304,6 @@ export class oneMacFAQPage {
   verifyCmsUserGuideLinkExists() {
     cy.xpath(cmsUserGuideLink).should("be.visible");
   }
-  verifyCmsRoleApproverGuideLinkExists() {
-    cy.xpath(cmsRoleApproverGuideLink).should("be.visible");
-  }
   verifyWelcomeToOneMacLinkIsValid() {
     cy.xpath(welcomeToOneMacLink)
       .invoke("attr", "href")
@@ -346,13 +341,6 @@ export class oneMacFAQPage {
   }
   verifyCmsUserGuideLinkIsValid() {
     cy.xpath(cmsUserGuideLink)
-      .invoke("attr", "href")
-      .then((href) => {
-        cy.request(href).its("status").should("eq", 200);
-      });
-  }
-  verifyCmsRoleApproverGuideLinkIsValid() {
-    cy.xpath(cmsRoleApproverGuideLink)
       .invoke("attr", "href")
       .then((href) => {
         cy.request(href).its("status").should("eq", 200);
