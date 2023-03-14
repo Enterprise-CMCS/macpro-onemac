@@ -34,6 +34,7 @@ import ActionPopup from "../components/ActionPopup";
 import { useAppContext } from "../libs/contextLib";
 import { pendingMessage, deniedOrRevokedMessage } from "../libs/userLib";
 import { tableListExportToCSV } from "../utils/tableListExportToCSV";
+import { LOCAL_STORAGE_COLUMN_VISIBILITY } from "../components/SearchAndFilter";
 
 const renderDate = ({ value }) =>
   typeof value === "number" && value > 0
@@ -226,11 +227,15 @@ const PackageList = () => {
     ]
   );
 
+  // Retrieve hidden column saved state
+  const savedHiddenColumns = localStorage?.getItem(
+    LOCAL_STORAGE_COLUMN_VISIBILITY
+  );
   const initialTableState = useMemo(
     () => ({
       sortBy: [{ id: "submissionTimestamp", desc: true }],
-      // TODO: Dynamically load hiddenColumns from storage
-      hiddenColumns: [],
+      // Set default hidden cols
+      hiddenColumns: savedHiddenColumns ? JSON.parse(savedHiddenColumns) : [],
     }),
     []
   );

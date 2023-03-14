@@ -44,6 +44,7 @@ import { PackageRowValue } from "../domain-types";
 import { animated, useTransition, easings, useSpring } from "@react-spring/web";
 
 const { afterToday } = DateRangePicker;
+export const LOCAL_STORAGE_COLUMN_VISIBILITY = "columnSavedState";
 
 export interface ColumnPickerProps<V extends {}> {
   columnsInternal: ColumnInstance<V>[];
@@ -51,6 +52,41 @@ export interface ColumnPickerProps<V extends {}> {
 
 const orderColumns = (a: { Header: string }, b: { Header: string }) => {
   return a.Header.localeCompare(b.Header);
+};
+
+/** Takes a column ID and boolean to appropriately store the IDs of columns
+ * hidden by the user in localStorage. This value is later read as saved column
+ * filtering state. */
+const updateVisibilitySavedState = (id: string, setHidden: boolean) => {
+  // Get array of hidden columns or undefined
+  const saved = localStorage?.getItem(LOCAL_STORAGE_COLUMN_VISIBILITY);
+  if (saved === null) {
+    // No initial state found
+    // Ensuring our initial state is correct
+    const value = setHidden ? [id] : [];
+    // Set up our initial state
+    localStorage.setItem(
+      LOCAL_STORAGE_COLUMN_VISIBILITY,
+      JSON.stringify(value)
+    );
+  } else {
+    const savedAsArray = JSON.parse(saved) as Array<string>;
+    if (setHidden) {
+      // Save as hidden col
+      savedAsArray.push(id);
+    } else {
+      const indexOfId = savedAsArray.indexOf(id);
+      // Remove from saved hidden cols
+      if (indexOfId > -1) {
+        savedAsArray.splice(indexOfId, 1);
+      }
+    }
+    // Update item in storage
+    localStorage.setItem(
+      LOCAL_STORAGE_COLUMN_VISIBILITY,
+      JSON.stringify(savedAsArray)
+    );
+  }
 };
 
 export const ColumnPicker: FC<ColumnPickerProps<any>> = ({
@@ -125,7 +161,7 @@ export const ColumnPicker: FC<ColumnPickerProps<any>> = ({
                     value={Header as string}
                     onChange={() => {
                       toggleHidden();
-                      // TODO: Edit record in storage to reflect show/hide state
+                      updateVisibilitySavedState(id, isVisible);
                     }}
                     checked={isVisible}
                     type="checkbox"
