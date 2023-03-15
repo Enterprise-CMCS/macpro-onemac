@@ -60,13 +60,13 @@ const orderColumns = (a: { Header: string }, b: { Header: string }) => {
  * filtering state. */
 const updateVisibilitySavedState = (id: string, setHidden: boolean) => {
   // Get array of hidden columns or undefined
-  const saved = localStorage?.getItem(LOCAL_STORAGE_COLUMN_VISIBILITY);
+  const saved = sessionStorage?.getItem(LOCAL_STORAGE_COLUMN_VISIBILITY);
   if (saved === null) {
     // No initial state found
     // Ensuring our initial state is correct
     const value = setHidden ? [id] : [];
     // Set up our initial state
-    localStorage.setItem(
+    sessionStorage.setItem(
       LOCAL_STORAGE_COLUMN_VISIBILITY,
       JSON.stringify(value)
     );
@@ -75,16 +75,27 @@ const updateVisibilitySavedState = (id: string, setHidden: boolean) => {
 
   const savedAsArray = JSON.parse(saved) as Array<string>;
   // Save as hidden col
-  if (setHidden) {
-    savedAsArray.push(id);
-  } else {
+  if (!setHidden) {
     const indexOfId = savedAsArray.indexOf(id);
     // Remove from saved hidden cols
     if (indexOfId > -1) {
       savedAsArray.splice(indexOfId, 1);
     }
+  } else {
+    savedAsArray.push(id);
   }
-  // Update item in storage
+  /* The reason we use sessionStorage _and_ stash something in localStorage is
+   * to avoid two or more tabs from mucking up the localStorage item. With this
+   * logic, we store everything in the tab's sessionStorage, and the most recently
+   * altered sessionStorage item (that is the tab that most recently changed their
+   * hidden columns) will overwrite the localStorage item which all pages load
+   * the default column show/hide state from. */
+  // Update item in session
+  sessionStorage.setItem(
+    LOCAL_STORAGE_COLUMN_VISIBILITY,
+    JSON.stringify(savedAsArray)
+  );
+  // Set localStorage state to load from
   localStorage.setItem(
     LOCAL_STORAGE_COLUMN_VISIBILITY,
     JSON.stringify(savedAsArray)

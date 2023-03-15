@@ -84,8 +84,14 @@ export default function PortalTable<V extends {} = {}>({
     UseSortByInstanceProps<V>;
 
   const filters = (state as UseFiltersState<any>).filters;
+
   // When filters change, update object in localStorage
   useEffect(() => {
+    /* Unlike our hidden column logic, this can write directly to localStorage
+     * since no tab/session needs to alter the state; only overwrite it. Tabs
+     * can still apply filters independently, but the most recent filter configuration
+     * (i.e. the tab that most recently applied filters) will be the one saved to
+     * localStorage to load from. */
     localStorage.setItem(LOCAL_STORAGE_TABLE_FILTERS, JSON.stringify(filters));
   }, [filters]);
 
