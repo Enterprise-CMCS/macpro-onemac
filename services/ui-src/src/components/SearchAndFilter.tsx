@@ -42,13 +42,16 @@ import { useToggle } from "../libs/hooksLib";
 import { PackageRowValue } from "../domain-types";
 
 import { animated, useTransition, easings, useSpring } from "@react-spring/web";
+import {
+  LOCAL_STORAGE_COLUMN_VISIBILITY_SPA,
+  LOCAL_STORAGE_COLUMN_VISIBILITY_WAIVER,
+} from "../utils/StorageKeys";
 
 const { afterToday } = DateRangePicker;
-export const LOCAL_STORAGE_COLUMN_VISIBILITY = "onemac-columnHiddenSavedState";
-export const LOCAL_STORAGE_TABLE_FILTERS = "onemac-tableFiltersSavedState";
 
 export interface ColumnPickerProps<V extends {}> {
   columnsInternal: ColumnInstance<V>[];
+  internalName: string;
 }
 
 const orderColumns = (a: { Header: string }, b: { Header: string }) => {
@@ -58,18 +61,23 @@ const orderColumns = (a: { Header: string }, b: { Header: string }) => {
 /** Takes a column ID and boolean to appropriately store the IDs of columns
  * hidden by the user in localStorage. This value is later read as saved column
  * filtering state. */
-const updateVisibilitySavedState = (id: string, setHidden: boolean) => {
+const updateVisibilitySavedState = (
+  id: string,
+  setHidden: boolean,
+  internalName: string
+) => {
+  const key =
+    internalName === "spa"
+      ? LOCAL_STORAGE_COLUMN_VISIBILITY_SPA
+      : LOCAL_STORAGE_COLUMN_VISIBILITY_WAIVER;
   // Get array of hidden columns or undefined
-  const saved = sessionStorage?.getItem(LOCAL_STORAGE_COLUMN_VISIBILITY);
+  const saved = sessionStorage?.getItem(key);
   if (saved === null) {
     // No initial state found
     // Ensuring our initial state is correct
     const value = setHidden ? [id] : [];
     // Set up our initial state
-    sessionStorage.setItem(
-      LOCAL_STORAGE_COLUMN_VISIBILITY,
-      JSON.stringify(value)
-    );
+    sessionStorage.setItem(key, JSON.stringify(value));
     return;
   }
 
@@ -91,19 +99,14 @@ const updateVisibilitySavedState = (id: string, setHidden: boolean) => {
    * hidden columns) will overwrite the localStorage item which all pages load
    * the default column show/hide state from. */
   // Update item in session
-  sessionStorage.setItem(
-    LOCAL_STORAGE_COLUMN_VISIBILITY,
-    JSON.stringify(savedAsArray)
-  );
+  sessionStorage.setItem(key, JSON.stringify(savedAsArray));
   // Set localStorage state to load from
-  localStorage.setItem(
-    LOCAL_STORAGE_COLUMN_VISIBILITY,
-    JSON.stringify(savedAsArray)
-  );
+  localStorage.setItem(key, JSON.stringify(savedAsArray));
 };
 
 export const ColumnPicker: FC<ColumnPickerProps<any>> = ({
   columnsInternal,
+  internalName,
 }) => {
   const [
     showColumnPickerDropdown,
@@ -174,7 +177,7 @@ export const ColumnPicker: FC<ColumnPickerProps<any>> = ({
                     value={Header as string}
                     onChange={() => {
                       toggleHidden();
-                      updateVisibilitySavedState(id, isVisible);
+                      updateVisibilitySavedState(id, isVisible, internalName);
                     }}
                     checked={isVisible}
                     type="checkbox"
@@ -508,11 +511,13 @@ function FilterPane<V extends {}>({
 }
 
 export type SearchFilterProps<V extends {}> = {
+  internalName: string;
   onSearch: (keyword: string) => void;
   searchBarTitle: ReactNode;
 } & FilterPaneProps<V>;
 
 export function SearchAndFilter<V extends {} = {}>({
+  internalName,
   columnsInternal,
   onSearch,
   pageContentRef,
@@ -569,7 +574,10 @@ export function SearchAndFilter<V extends {} = {}>({
         </div>
       </div>
       <div className="picker-filter-wrapper">
-        <ColumnPicker columnsInternal={columnsInternal} />
+        <ColumnPicker
+          columnsInternal={columnsInternal}
+          internalName={internalName}
+        />
         <div className="filter-buttons">
           <FilterPane
             columnsInternal={columnsInternal}

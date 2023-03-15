@@ -35,9 +35,11 @@ import { useAppContext } from "../libs/contextLib";
 import { pendingMessage, deniedOrRevokedMessage } from "../libs/userLib";
 import { tableListExportToCSV } from "../utils/tableListExportToCSV";
 import {
-  LOCAL_STORAGE_COLUMN_VISIBILITY,
-  LOCAL_STORAGE_TABLE_FILTERS,
-} from "../components/SearchAndFilter";
+  LOCAL_STORAGE_COLUMN_VISIBILITY_SPA,
+  LOCAL_STORAGE_COLUMN_VISIBILITY_WAIVER,
+  LOCAL_STORAGE_TABLE_FILTERS_SPA,
+  LOCAL_STORAGE_TABLE_FILTERS_WAIVER,
+} from "../utils/StorageKeys";
 
 const renderDate = ({ value }) =>
   typeof value === "number" && value > 0
@@ -232,11 +234,15 @@ const PackageList = () => {
   const initialTableState = useMemo(() => {
     // Retrieve hidden column saved state
     const localHiddenColumns = localStorage?.getItem(
-      LOCAL_STORAGE_COLUMN_VISIBILITY
+      tab === "spa"
+        ? LOCAL_STORAGE_COLUMN_VISIBILITY_SPA
+        : LOCAL_STORAGE_COLUMN_VISIBILITY_WAIVER
     );
     // Retrieve saved table filters
     const localTableFilters = localStorage?.getItem(
-      LOCAL_STORAGE_TABLE_FILTERS
+      tab === "spa"
+        ? LOCAL_STORAGE_TABLE_FILTERS_SPA
+        : LOCAL_STORAGE_TABLE_FILTERS_WAIVER
     );
     return {
       sortBy: [{ id: "submissionTimestamp", desc: true }],
@@ -306,20 +312,6 @@ const PackageList = () => {
   }
 
   function PackageListContent() {
-    // Retrieve hidden column saved state
-    const localHiddenColumns = localStorage?.getItem(
-      LOCAL_STORAGE_COLUMN_VISIBILITY
-    );
-    // Retrieve saved table filters
-    const localTableFilters = localStorage?.getItem(
-      LOCAL_STORAGE_TABLE_FILTERS
-    );
-    const [hiddenColumnsSave] = useState(
-      localHiddenColumns ? JSON.parse(localHiddenColumns) : []
-    );
-    const [tableFiltersSave] = useState(
-      localTableFilters ? JSON.parse(localTableFilters) : []
-    );
     if (userRole !== USER_ROLE.CMS_ROLE_APPROVER) {
       if (userStatus === USER_STATUS.PENDING) {
         return <EmptyList message={pendingMessage[userRole]} />;
@@ -344,6 +336,7 @@ const PackageList = () => {
       <LoadingScreen isLoading={isLoading}>
         {packageListExists ? (
           <PortalTable
+            internalName={tab}
             className={tableClassName}
             columns={columns}
             data={packageList}

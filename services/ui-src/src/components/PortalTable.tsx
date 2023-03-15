@@ -27,11 +27,15 @@ import {
   SearchAndFilter,
   SearchFilterProps,
   customFilterTypes,
-  LOCAL_STORAGE_TABLE_FILTERS,
 } from "./SearchAndFilter";
+import {
+  LOCAL_STORAGE_TABLE_FILTERS_SPA,
+  LOCAL_STORAGE_TABLE_FILTERS_WAIVER,
+} from "../utils/StorageKeys";
 export { CustomFilterTypes, CustomFilterUi } from "./SearchAndFilter";
 
 export type TableProps<V extends {}> = {
+  internalName: "spa" | "waiver";
   className?: string;
   searchBarTitle?: ReactNode;
   withSearchBar?: boolean;
@@ -45,6 +49,7 @@ const defaultColumn = {
 };
 
 export default function PortalTable<V extends {} = {}>({
+  internalName,
   pageContentRef,
   searchBarTitle,
   withSearchBar,
@@ -87,18 +92,23 @@ export default function PortalTable<V extends {} = {}>({
 
   // When filters change, update object in localStorage
   useEffect(() => {
+    const key =
+      internalName === "spa"
+        ? LOCAL_STORAGE_TABLE_FILTERS_SPA
+        : LOCAL_STORAGE_TABLE_FILTERS_WAIVER;
     /* Unlike our hidden column logic, this can write directly to localStorage
      * since no tab/session needs to alter the state; only overwrite it. Tabs
      * can still apply filters independently, but the most recent filter configuration
      * (i.e. the tab that most recently applied filters) will be the one saved to
      * localStorage to load from. */
-    localStorage.setItem(LOCAL_STORAGE_TABLE_FILTERS, JSON.stringify(filters));
+    localStorage.setItem(key, JSON.stringify(filters));
   }, [filters]);
 
   return (
     <>
       {withSearchBar && (
         <SearchAndFilter
+          internalName={internalName}
           allRows={preGlobalFilteredRows}
           // @ts-ignore FIXME remove when react-table types are improved
           columnsInternal={columns}
