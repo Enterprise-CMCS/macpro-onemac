@@ -102,7 +102,7 @@ export default function PortalTable<V extends {} = {}>({
      * (i.e. the tab that most recently applied filters) will be the one saved to
      * localStorage to load from. */
     localStorage.setItem(key, JSON.stringify(filters));
-  }, [filters]);
+  }, [filters, internalName]);
 
   return (
     <>
