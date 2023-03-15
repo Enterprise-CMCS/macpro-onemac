@@ -1997,9 +1997,6 @@ And("verify OneMAC State Administrator Guide link exists", () => {
 And("verify OneMAC CMS User Guide link exists", () => {
   OneMacFAQPage.verifyCmsUserGuideLinkExists();
 });
-And("verify OneMAC CMS Role Approver Guide link exists", () => {
-  OneMacFAQPage.verifyCmsRoleApproverGuideLinkExists();
-});
 And("verify IDM Instructions for OneMAC Users is valid", () => {
   OneMacFAQPage.verifyIdmInstructionsLinkIsValid();
 });
@@ -2014,9 +2011,6 @@ And("verify OneMAC State Administrator Guide is valid", () => {
 });
 And("verify OneMAC CMS User Guide is valid", () => {
   OneMacFAQPage.verifyCmsUserGuideLinkIsValid();
-});
-And("verify OneMAC CMS Role Approver Guide is valid", () => {
-  OneMacFAQPage.verifyCmsRoleApproverGuideLinkIsValid();
 });
 And("click on Respond to Medicaid SPA RAI", () => {
   OneMacSubmissionTypePage.clickRespondToMedicaidSPARAI();
