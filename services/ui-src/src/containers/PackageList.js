@@ -69,19 +69,6 @@ const PackageList = () => {
   const [alertCode, setAlertCode] = useState(location?.state?.passCode);
   const userRoleObj = getUserRoleObj(userData?.roleList);
 
-  // Retrieve hidden column saved state
-  const localHiddenColumns = localStorage?.getItem(
-    LOCAL_STORAGE_COLUMN_VISIBILITY
-  );
-  // Retrieve saved table filters
-  const localTableFilters = localStorage?.getItem(LOCAL_STORAGE_TABLE_FILTERS);
-  const [hiddenColumnsSave] = useState(
-    localHiddenColumns ? JSON.parse(localHiddenColumns) : []
-  );
-  const [tableFiltersSave] = useState(
-    localTableFilters ? JSON.parse(localTableFilters) : []
-  );
-
   const loadPackageList = useCallback(
     async (ctrlr) => {
       setIsLoading(true);
@@ -243,14 +230,22 @@ const PackageList = () => {
     ]
   );
   const initialTableState = useMemo(() => {
+    // Retrieve hidden column saved state
+    const localHiddenColumns = localStorage?.getItem(
+      LOCAL_STORAGE_COLUMN_VISIBILITY
+    );
+    // Retrieve saved table filters
+    const localTableFilters = localStorage?.getItem(
+      LOCAL_STORAGE_TABLE_FILTERS
+    );
     return {
       sortBy: [{ id: "submissionTimestamp", desc: true }],
       // Set saved hidden cols
-      hiddenColumns: hiddenColumnsSave,
+      hiddenColumns: localHiddenColumns ? JSON.parse(localHiddenColumns) : [],
       // Set saved filters
-      filters: tableFiltersSave,
+      filters: localTableFilters ? JSON.parse(localTableFilters) : [],
     };
-  }, []);
+  }, [tab]);
 
   const csvExportPackages = (
     <Button
@@ -310,7 +305,21 @@ const PackageList = () => {
     return rightSideContent;
   }
 
-  function renderPackageList() {
+  function PackageListContent() {
+    // Retrieve hidden column saved state
+    const localHiddenColumns = localStorage?.getItem(
+      LOCAL_STORAGE_COLUMN_VISIBILITY
+    );
+    // Retrieve saved table filters
+    const localTableFilters = localStorage?.getItem(
+      LOCAL_STORAGE_TABLE_FILTERS
+    );
+    const [hiddenColumnsSave] = useState(
+      localHiddenColumns ? JSON.parse(localHiddenColumns) : []
+    );
+    const [tableFiltersSave] = useState(
+      localTableFilters ? JSON.parse(localTableFilters) : []
+    );
     if (userRole !== USER_ROLE.CMS_ROLE_APPROVER) {
       if (userStatus === USER_STATUS.PENDING) {
         return <EmptyList message={pendingMessage[userRole]} />;
@@ -388,7 +397,7 @@ const PackageList = () => {
                 Waivers
               </Button>
             </div>
-            {renderPackageList()}
+            {PackageListContent()}
           </div>
         </div>
       </div>
