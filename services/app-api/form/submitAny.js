@@ -4,7 +4,6 @@ import {
   getUserRoleObj,
   getActiveTerritories,
   RESPONSE_CODE,
-  Workflow,
 } from "cmscommonlib";
 
 import sendEmail from "../libs/email-lib";
@@ -99,7 +98,7 @@ export const submitAny = async (event, config) => {
     const rightNowNormalized = Date.now();
     data.submissionTimestamp = rightNowNormalized;
     data.eventTimestamp = rightNowNormalized;
-    data.currentStatus = Workflow.ONEMAC_STATUS.SUBMITTED;
+    data.currentStatus = config.newStatus;
     data.componentType = config.componentType;
 
     // record the current end timestamp (can be start/stopped/changed)
