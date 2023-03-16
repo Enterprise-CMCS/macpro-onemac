@@ -27,7 +27,7 @@ export const main = handler(async () => {
           sk: item.sk,
         },
         UpdateExpression:
-          "SET currentStatus = :newTEStatus, list_append(:newMessage, if_not_exists(auditArray,:emptyList))",
+          "SET currentStatus = :newTEStatus, auditArray = list_append(:newMessage, if_not_exists(auditArray,:emptyList))",
         ExpressionAttributeValues: {
           ":newTEStatus": `TE Requested`,
           ":emptyList": [],
