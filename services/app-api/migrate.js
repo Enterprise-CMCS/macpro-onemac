@@ -10,9 +10,9 @@ export const main = handler(async () => {
   const oneparams = {
     TableName: process.env.oneMacTableName,
     IndexName: "GSI1",
-    KeyConditionExpression: "GSI1pk = :userpk",
+    KeyConditionExpression: "GSI1pk = :tepk",
     ExpressionAttributeValues: {
-      ":userpk": "USER",
+      ":tepk": "OneMAC#submitwaiverextension",
     },
   };
   const onePromiseItems = [];
@@ -26,10 +26,14 @@ export const main = handler(async () => {
           pk: item.pk,
           sk: item.sk,
         },
-        UpdateExpression: "SET GSI2pk = :gsi2pk, GSI2sk = :gsi2sk",
+        UpdateExpression:
+          "SET currentStatus = :newTEStatus, list_append(:newMessage, if_not_exists(auditArray,:emptyList))",
         ExpressionAttributeValues: {
-          ":gsi2pk": `${item.role}#${item.territory}`,
-          ":gsi2sk": item.status,
+          ":newTEStatus": `TE Requested`,
+          ":emptyList": [],
+          ":newMessage": [
+            `UPDATED ${Date.now()}: currentStatus changed from "Submitted" to "TE Requested"`,
+          ],
         },
       };
       onePromiseItems.push(updateParam);
