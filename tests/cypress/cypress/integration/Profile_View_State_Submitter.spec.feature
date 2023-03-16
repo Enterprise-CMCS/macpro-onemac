@@ -4,12 +4,11 @@ Feature: OY2_9990_State_Submitter_Profile_Screen_Enhancements
         When Clicking on Development Login
         When Login with state submitter user
         Then i am on Dashboard Page
-        And verify Submission List is Displayed
         And verify New Submission BTN is Displayed
-        And verify IDNumber is Displayed
-        And verify Type is Displayed
-        And verify state is Displaed
-        And verify Submitted By is Displayed
+        And verify IDNumber column exists
+        And verify type column exists
+        And verify state column exists
+        And verify submitted by column exists
         And verify Home tab is Displayed
         And dashboard tab is Displayed
         And FAQ tab is Displayed

@@ -1,32 +1,30 @@
-## Running Locally
+# MacPRO API
 
 ### Pre-requisites
 
 1. Install the latest Java JDK distribution
 2. Install the latest Node distribution
-3. Install NPM globaly
-4. Install serverless globally
+3. Run `npm install -g serverless` to install serverless globally
+4. Run `npm install` from the root directory of this repository
+5. Access to CMS CloudTamer for AWS credentials
+
+### Setup & Run the API
+
+Install the API's dependencies by running the following command in this subdirectory:
+
+```
+npm install
+```
 
 Install the Serverless Dynamo DB offline package by running the following command:
 
 ```
-npm install
 sls dynamodb install
 ```
 
-Install the serverless plugin to handle the WAF association without the race condition
+> **NOTE:** This command will require you have set up your AWS credentials, which you can access these via CloudTamer. See a teammate for help if you cannot find them.
 
-```
-npm install serverless-associate-waf --save-dev
-```
-
-Install the quick-start s3 bucket helper serverless plugin (in project root)
-
-```
-npm install serverless-s3-bucket-helper --save-dev
-```
-
-Run the software locally by running the following command:
+Run the OneMAC API locally by running the following command:
 
 ```
 sls offline start --httpPort 3001
@@ -38,12 +36,24 @@ Then change the URL for the API in the UI to the following. You can reference th
  http://localhost:3001/dev
 ```
 
-### GUI for dynamodb local
+### Setup GUI for Local DynamoDB
 
-#### https://github.com/aaronshaf/dynamodb-admin
+To get started using the Admin GUI for DynamoDB, install the package globally:
 
+```
 npm install -g dynamodb-admin
+```
 
+Then, run the package:
+
+```
 dynamodb-admin
+```
 
-http://localhost:8001
+You will find the GUI by accessing http://localhost:8001 in your browser.
+
+> **NOTE:** For more information on this package, visit https://github.com/aaronshaf/dynamodb-admin
+
+### Data models
+
+To view our data models documentation, visit [this Confluence page](https://qmacbis.atlassian.net/wiki/spaces/DAD/pages/3123544096/Data+Models+OneMAC)!

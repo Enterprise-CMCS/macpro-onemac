@@ -369,3 +369,44 @@ resources:
                   Action:
                     - lambda:InvokeFunction
                   Resource: '*'
+    SeaToolEventLogGroup:
+      Type: AWS::Logs::LogGroup
+      Properties:
+        LogGroupName: ${self:service}-${self:custom.stage}-seaToolEvent
+    ConnectorMonitorTopic:
+      Type: AWS::SNS::Topic
+      Properties:
+        DisplayName: SNS Topic for Monitoring Kafka Connector Events
+    ConnectorEventReceivedCount:
+      Type: AWS::Logs::MetricFilter
+      Properties:
+        LogGroupName: !Ref SeaToolEventLogGroup
+        FilterName: ConnectorEventReceivedCount
+        FilterPattern: "Received event"
+        MetricTransformations:
+          - MetricValue: "1"
+            DefaultValue: 0
+            MetricNamespace: ${self:service}-${self:custom.stage}/Connector/Monitor
+            MetricName: "ConnectorEventReceivedCount"
+            Unit: Count
+    ConnectorMonitorAlarmPeriod:
+      Type: AWS::SSM::Parameter
+      Properties:
+        Type: String
+        Description: The period of evaluation in seconds for the connector monitor alarm
+        Name: !Sub /configuration/${self:custom.stage}/connectorAlarmPeriod
+        Value: "86400"
+    ConnectorLogsMonitorAlarm:
+      Type: AWS::CloudWatch::Alarm
+      Properties:
+        AlarmName: ${self:service}-${self:custom.stage}-ConnectorLogsMonitorAlarm
+        AlarmDescription: "Notify ConnectorMonitorTopic when ConnectorEventReceivedCount is < 1 over 24 hours"
+        MetricName: ConnectorEventReceivedCount
+        AlarmActions:
+          - Ref: ConnectorMonitorTopic
+        ComparisonOperator: LessThanThreshold
+        Statistic: SampleCount
+        Period: !GetAtt ConnectorMonitorAlarmPeriod.Value
+        EvaluationPeriods: 1
+        Threshold: 1
+        Namespace: ${self:service}-${self:custom.stage}/Connector/Monitor

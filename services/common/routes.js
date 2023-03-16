@@ -8,7 +8,7 @@ import { ONEMAC_TYPE } from "./workflow.js";
 export const ROUTES = {
   CHIP_SPA: "/chipspa",
   CHIP_SPA_RAI: "/chipsparai",
-  DASHBOARD: "/dashboard",
+  DASHBOARD: "/submissions",
   DETAIL: "/detail",
   USER_MANAGEMENT: "/usermanagement",
   FAQ: "/FAQ",
@@ -39,9 +39,9 @@ export const ROUTES = {
 };
 
 export const ONEMAC_ROUTES = {
-  PACKAGE_LIST: "/packagelist",
-  PACKAGE_LIST_SPA: "/packagelist?startTab=spa",
-  PACKAGE_LIST_WAIVER: "/packagelist?startTab=waiver",
+  PACKAGE_LIST: "/dashboard",
+  PACKAGE_LIST_SPA: "/dashboard?startTab=spa",
+  PACKAGE_LIST_WAIVER: "/dashboard?startTab=waiver",
   TRIAGE_GROUP: "/choices",
   TRIAGE_SPA: "/choices/spa",
   TRIAGE_WAIVER: "/choices/waiver",

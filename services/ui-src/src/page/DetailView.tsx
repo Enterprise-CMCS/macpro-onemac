@@ -4,7 +4,6 @@ import { format, parseISO } from "date-fns";
 
 import {
   RESPONSE_CODE,
-  ROUTES,
   ONEMAC_ROUTES,
   Workflow,
   territoryMap,
@@ -131,7 +130,7 @@ const DetailView: React.FC<{ pageConfig: OneMACDetail }> = ({ pageConfig }) => {
       } catch (e) {
         console.log("error in getDetail call?? ", e);
         history.push({
-          pathname: ROUTES.DASHBOARD,
+          pathname: ONEMAC_ROUTES.PACKAGE_LIST,
           state: {
             passCode: RESPONSE_CODE.SYSTEM_ERROR,
           },

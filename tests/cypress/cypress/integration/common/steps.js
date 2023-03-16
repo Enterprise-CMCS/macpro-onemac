@@ -1997,9 +1997,6 @@ And("verify OneMAC State Administrator Guide link exists", () => {
 And("verify OneMAC CMS User Guide link exists", () => {
   OneMacFAQPage.verifyCmsUserGuideLinkExists();
 });
-And("verify OneMAC CMS Role Approver Guide link exists", () => {
-  OneMacFAQPage.verifyCmsRoleApproverGuideLinkExists();
-});
 And("verify IDM Instructions for OneMAC Users is valid", () => {
   OneMacFAQPage.verifyIdmInstructionsLinkIsValid();
 });
@@ -2014,9 +2011,6 @@ And("verify OneMAC State Administrator Guide is valid", () => {
 });
 And("verify OneMAC CMS User Guide is valid", () => {
   OneMacFAQPage.verifyCmsUserGuideLinkIsValid();
-});
-And("verify OneMAC CMS Role Approver Guide is valid", () => {
-  OneMacFAQPage.verifyCmsRoleApproverGuideLinkIsValid();
 });
 And("click on Respond to Medicaid SPA RAI", () => {
   OneMacSubmissionTypePage.clickRespondToMedicaidSPARAI();
@@ -2273,6 +2267,9 @@ And("verify the type is Waiver Renewal", () => {
 And("verify the type is Temporary Extension", () => {
   OneMacPackageDetailsPage.verifyTypeContainsTempExtension();
 });
+And("verify the type is 1915b Temporary Extension", () => {
+  OneMacPackageDetailsPage.verifyTypeContainsTempExtension();
+});
 And("verify the type is 1915b Waiver Amendment", () => {
   OneMacPackageDetailsPage.verifyTypeContains1915bWaiverAmendment();
 });
@@ -2518,8 +2515,8 @@ And("verify the waiver authority header exists", () => {
 And("verify the waiver authority is 1915c HCBS", () => {
   OneMacPackageDetailsPage.verifyWaiverAuthorityHeaderis1915cHCBS();
 });
-And("verify the supporting documentation section exists", () => {
-  OneMacPackageDetailsPage.verifySupportingDocumentationSectionExists();
+And("verify the attachments section exists", () => {
+  OneMacPackageDetailsPage.verifyAttachmentsSectionExists();
 });
 And("verify the download all button exists", () => {
   OneMacPackageDetailsPage.verifyDownloadAllBtnExists();
@@ -2608,23 +2605,13 @@ And("Type Temporary Extension Number 7", () => {
   });
 });
 And("verify the initial waiver parent ID is prefilled in the form", () => {
-  cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
-    OneMacSubmitNewWaiverActionPage.verifyParentIDIsPrefilled(
-      data.approvedInitialWaiverNum1
-    );
-  });
+  OneMacSubmitNewWaiverActionPage.verifyParentInitialIDIsPrefilled();
 });
 And("verify the renewal waiver parent ID is prefilled in the form", () => {
-  cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
-    OneMacSubmitNewWaiverActionPage.verifyParentIDIsPrefilled(
-      data.approvedRenewalWaiverNum1
-    );
-  });
+  OneMacSubmitNewWaiverActionPage.verifyParentRenewalIDIsPrefilled();
 });
 And("verify the package ID is prefilled in the form", () => {
-  cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
-    OneMacRespondToRAIPage.verifyIDIsPrefilled();
-  });
+  OneMacRespondToRAIPage.verifyIDIsPrefilled();
 });
 
 And("verify the temporary extension exists", () => {
