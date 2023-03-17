@@ -302,36 +302,36 @@ describe("search and filter features", () => {
     });
 
     it("supports territory filters", async () => {
-      // const myRef = {};
-      // render(
-      //   <div id="myContainer">
-      //     <PortalTable
-      //       columns={[
-      //         { Header: "Foo", accessor: "foo" },
-      //         {
-      //           Header: "Bar",
-      //           accessor: "bar",
-      //           disableFilters: false,
-      //           filter: CustomFilterTypes.MultiCheckbox,
-      //           Filter: CustomFilterUi.MultiCheckbox,
-      //         },
-      //         {
-      //           Header: "Baz",
-      //           accessor: "baz",
-      //           disableFilters: false,
-      //           filter: "includesValue",
-      //           Filter: CustomFilterUi.TerritorySelect,
-      //         },
-      //       ]}
-      //       data={[
-      //         { foo: 1, bar: "two", baz: "MD" },
-      //         { foo: 3, bar: "four", baz: "VA" },
-      //       ]}
-      //       withSearchBar
-      //       pageContentRef={myRef}
-      //     />
-      //   </div>
-      // );
+      const myRef = {};
+      render(
+        <div id="myContainer">
+          <PortalTable
+            columns={[
+              { Header: "Foo", accessor: "foo" },
+              {
+                Header: "Bar",
+                accessor: "bar",
+                disableFilters: false,
+                filter: CustomFilterTypes.MultiCheckbox,
+                Filter: CustomFilterUi.MultiCheckbox,
+              },
+              {
+                Header: "Baz",
+                accessor: "baz",
+                disableFilters: false,
+                filter: "includesValue",
+                Filter: CustomFilterUi.TerritorySelect,
+              },
+            ]}
+            data={[
+              { foo: 1, bar: "two", baz: "MD" },
+              { foo: 3, bar: "four", baz: "VA" },
+            ]}
+            withSearchBar
+            pageContentRef={myRef}
+          />
+        </div>
+      );
       // myRef.current = document.getElementById("myContainer");
       // fireEvent.click(screen.getByRole("button", { name: /filter/i }));
       // const filterPane = screen.getByRole("search", { name: /filter/i });

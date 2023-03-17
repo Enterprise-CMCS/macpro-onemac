@@ -1,7 +1,7 @@
 import React from "react";
 import { createMemoryHistory } from "history";
 import { MemoryRouter, Router } from "react-router-dom";
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import selectEvent from "react-select-event";
 
 import groupData from "cmscommonlib/groupDivision.json";
@@ -135,7 +135,8 @@ describe("submission and navigation", () => {
     // // TODO: adjust this when groups and divisions are no longer hardcoded
     // const group = groupData[1],
     //   division = group.divisions[3];
-    // await selectEvent.select(screen.getByLabelText(/group/i), group.name);
+    // await waitFor(() => screen.getByLabelText(/group/i));
+    //await selectEvent.select(screen.getByLabelText(/group/i), group.name);
     // await selectEvent.select(screen.getByLabelText(/division/i), division.name);
     // expect(screen.getByRole("form")).toHaveFormValues({
     //   group: `${group.id}`,
