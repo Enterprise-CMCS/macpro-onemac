@@ -15,6 +15,19 @@ const testList = [
 
 describe("MultiSelectDropDown", () => {
   it("renders without crashing", () => {
-    render(<MultiSelectDropDown options={testList} />);
+    render(
+      <MultiSelectDropDown
+        ariaLabel="testaria"
+        cancelFn={() => {}}
+        errorMessage="test error"
+        loading="false"
+        onlyOne="false"
+        placeholder="placeholder"
+        required="false"
+        submitFn={() => {}}
+        title="testTitle"
+        options={testList}
+      />
+    );
   });
 });
