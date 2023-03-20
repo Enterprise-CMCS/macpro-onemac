@@ -28,6 +28,7 @@ import {
   SearchFilterProps,
   customFilterTypes,
 } from "./SearchAndFilter";
+
 import {
   LOCAL_STORAGE_TABLE_FILTERS_SPA,
   LOCAL_STORAGE_TABLE_FILTERS_WAIVER,
