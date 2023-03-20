@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, useEffect } from "react";
 import {
   HeaderGroup,
   TableInstance,
@@ -34,6 +34,7 @@ export type TableProps<V extends {}> = {
   searchBarTitle?: ReactNode;
   withSearchBar?: boolean;
   TEMP_onReset?: () => void;
+  onVisibleDataChange: (rows: Row<V>[]) => void;
 } & Pick<SearchFilterProps<V>, "pageContentRef"> &
   TableOptions<V>;
 
@@ -48,6 +49,7 @@ export default function PortalTable<V extends {} = {}>({
   searchBarTitle,
   withSearchBar,
   TEMP_onReset = noop,
+  onVisibleDataChange,
   ...props
 }: TableProps<V>) {
   const {
@@ -80,6 +82,12 @@ export default function PortalTable<V extends {} = {}>({
     UseFiltersInstanceProps<V> &
     UseGlobalFiltersInstanceProps<V> &
     UseSortByInstanceProps<V>;
+
+  useEffect(() => {
+    if (onVisibleDataChange) {
+      onVisibleDataChange(rows);
+    }
+  }, [rows, onVisibleDataChange]);
 
   return (
     <>
