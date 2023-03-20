@@ -33,7 +33,6 @@ import PackageAPI from "../utils/PackageApi";
 import ActionPopup from "../components/ActionPopup";
 import { useAppContext } from "../libs/contextLib";
 import { pendingMessage, deniedOrRevokedMessage } from "../libs/userLib";
-import { tableListExportToCSV } from "../utils/tableListExportToCSV";
 import {
   LOCAL_STORAGE_COLUMN_VISIBILITY_SPA,
   LOCAL_STORAGE_COLUMN_VISIBILITY_WAIVER,
