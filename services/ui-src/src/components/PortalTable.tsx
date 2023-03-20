@@ -39,6 +39,7 @@ export type TableProps<V extends {}> = {
   className?: string;
   searchBarTitle?: ReactNode;
   withSearchBar?: boolean;
+  onVisibleDataChange: (rows: Row<V>[]) => void;
 } & Pick<SearchFilterProps<V>, "pageContentRef"> &
   TableOptions<V>;
 
@@ -53,6 +54,7 @@ export default function PortalTable<V extends {} = {}>({
   pageContentRef,
   searchBarTitle,
   withSearchBar,
+  onVisibleDataChange,
   ...props
 }: TableProps<V>) {
   const {
@@ -103,6 +105,12 @@ export default function PortalTable<V extends {} = {}>({
      * localStorage to load from. */
     localStorage.setItem(key, JSON.stringify(filters));
   }, [filters, internalName]);
+
+  useEffect(() => {
+    if (onVisibleDataChange) {
+      onVisibleDataChange(rows);
+    }
+  }, [rows, onVisibleDataChange]);
 
   return (
     <>

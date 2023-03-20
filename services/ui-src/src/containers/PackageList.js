@@ -40,6 +40,7 @@ import {
   LOCAL_STORAGE_TABLE_FILTERS_SPA,
   LOCAL_STORAGE_TABLE_FILTERS_WAIVER,
 } from "../utils/StorageKeys";
+import { portalTableExportToCSV } from "../utils/portalTableExportToCSV";
 
 const renderDate = ({ value }) =>
   typeof value === "number" && value > 0
@@ -55,6 +56,7 @@ export const getState = ({ componentId }) =>
 const PackageList = () => {
   const dashboardRef = useRef();
   const [packageList, setPackageList] = useState([]);
+  const [visibleRows, setVisibleRows] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const {
     userStatus,
@@ -162,6 +164,10 @@ const PackageList = () => {
     [tellPackageListAboutAction]
   );
 
+  const exportTransformMap = {
+    submissionTimestamp: renderDate,
+  };
+
   const columns = useMemo(
     () =>
       [
@@ -259,7 +265,7 @@ const PackageList = () => {
       className="new-submission-button"
       onClick={(e) => {
         e.preventDefault();
-        tableListExportToCSV("package-dashboard", packageList, `${tab}List`);
+        portalTableExportToCSV(visibleRows, exportTransformMap, `${tab}List`);
       }}
       inversed
     >
@@ -344,6 +350,7 @@ const PackageList = () => {
             pageContentRef={dashboardRef}
             searchBarTitle="Search by Package ID or Submitter Name"
             withSearchBar
+            onVisibleDataChange={setVisibleRows}
           />
         ) : (
           <EmptyList message="You have no packages yet." />

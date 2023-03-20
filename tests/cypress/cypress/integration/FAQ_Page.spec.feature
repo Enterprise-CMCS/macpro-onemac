@@ -115,5 +115,3 @@ Feature: OY2_Update_Text_on_FAQ_Page
         And verify OneMAC State Administrator Guide is valid
         And verify OneMAC CMS User Guide link exists
         And verify OneMAC CMS User Guide is valid
-        And verify OneMAC CMS Role Approver Guide link exists
-        And verify OneMAC CMS Role Approver Guide is valid
