@@ -2,9 +2,10 @@ import dynamoDb from "../libs/dynamodb-lib";
 
 export const validateParentOfAny = async (event, config) => {
   const parentId = event.pathParameters.parentId;
+  let parentParams, result;
   console.log("checking parent id: " + parentId);
 
-  const parentParams = {
+  parentParams = {
     TableName: process.env.oneMacTableName,
     KeyConditionExpression: "pk = :pk AND sk = :package",
     ExpressionAttributeValues: {
@@ -13,10 +14,25 @@ export const validateParentOfAny = async (event, config) => {
     },
     ProjectionExpression: "componentType, currentStatus",
   };
-  const result = await dynamoDb.query(parentParams);
+  result = await dynamoDb.query(parentParams);
 
-  // no matches, no parent found
-  if (!result?.Items) return false;
+  // no matches, check SEA Tool
+  if (!result?.Items) {
+    parentParams = {
+      TableName: process.env.oneMacTableName,
+      KeyConditionExpression: "pk = :pk AND begins_with(sk, :seatool)",
+      ExpressionAttributeValues: {
+        ":pk": parentId,
+        ":seatool": "SEATool",
+      },
+    };
+    result = await dynamoDb.query(parentParams);
+
+    // no matches, no parent found
+    if (!result?.Items) {
+      return false;
+    }
+  }
 
   console.log("Items found are: ", result.Items);
 
