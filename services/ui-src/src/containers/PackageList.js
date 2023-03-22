@@ -241,18 +241,20 @@ const PackageList = () => {
       tab === "spa"
         ? LOCAL_STORAGE_COLUMN_VISIBILITY_SPA
         : LOCAL_STORAGE_COLUMN_VISIBILITY_WAIVER;
+    const filtersSaveKey =
+      tab === "spa"
+        ? LOCAL_STORAGE_TABLE_FILTERS_SPA
+        : LOCAL_STORAGE_TABLE_FILTERS_WAIVER;
     // Retrieve hidden column saved state (session)
     let localHiddenColumns = sessionStorage?.getItem(hiddenColsSaveKey);
+    let localTableFilters = sessionStorage?.getItem(filtersSaveKey);
     if (localHiddenColumns === null) {
       // If tab/session doesn't have its own, use the source of truth for all tabs
       localHiddenColumns = localStorage?.getItem(hiddenColsSaveKey);
     }
-    // Retrieve saved table filters
-    const localTableFilters = localStorage?.getItem(
-      tab === "spa"
-        ? LOCAL_STORAGE_TABLE_FILTERS_SPA
-        : LOCAL_STORAGE_TABLE_FILTERS_WAIVER
-    );
+    if (localTableFilters === null) {
+      localTableFilters = localStorage?.getItem(filtersSaveKey);
+    }
     return {
       sortBy: [{ id: "submissionTimestamp", desc: true }],
       // Set saved hidden cols

@@ -99,11 +99,11 @@ export default function PortalTable<V extends {} = {}>({
       internalName === "spa"
         ? LOCAL_STORAGE_TABLE_FILTERS_SPA
         : LOCAL_STORAGE_TABLE_FILTERS_WAIVER;
-    /* Unlike our hidden column logic, this can write directly to localStorage
-     * since no tab/session needs to alter the state; only overwrite it. Tabs
-     * can still apply filters independently, but the most recent filter configuration
-     * (i.e. the tab that most recently applied filters) will be the one saved to
-     * localStorage to load from. */
+    /* We write to both session AND local stores so that on reload, the browser
+    can see whether a single tab already has set its own filters. If so, it'll
+    load them, if not, it'll load from the most recently saved filters in the
+    local store! */
+    sessionStorage.setItem(key, JSON.stringify(filters));
     localStorage.setItem(key, JSON.stringify(filters));
   }, [filters, internalName]);
 
