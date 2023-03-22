@@ -8,8 +8,12 @@ export const LOCAL_STORAGE_TABLE_FILTERS_WAIVER =
   "onemac-WAIVER-tableFiltersSavedState";
 
 export const clearTableStateStorageKeys = () => {
+  // Remove all from localStorage
   localStorage.removeItem(LOCAL_STORAGE_TABLE_FILTERS_SPA);
   localStorage.removeItem(LOCAL_STORAGE_TABLE_FILTERS_WAIVER);
   localStorage.removeItem(LOCAL_STORAGE_COLUMN_VISIBILITY_SPA);
   localStorage.removeItem(LOCAL_STORAGE_COLUMN_VISIBILITY_WAIVER);
+  // Remove session on logout, too, only for cols
+  sessionStorage.removeItem(LOCAL_STORAGE_COLUMN_VISIBILITY_SPA);
+  sessionStorage.removeItem(LOCAL_STORAGE_COLUMN_VISIBILITY_WAIVER);
 };

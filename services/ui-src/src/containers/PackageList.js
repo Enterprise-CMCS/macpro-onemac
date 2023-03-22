@@ -237,12 +237,16 @@ const PackageList = () => {
     ]
   );
   const initialTableState = useMemo(() => {
-    // Retrieve hidden column saved state
-    const localHiddenColumns = localStorage?.getItem(
+    const hiddenColsSaveKey =
       tab === "spa"
         ? LOCAL_STORAGE_COLUMN_VISIBILITY_SPA
-        : LOCAL_STORAGE_COLUMN_VISIBILITY_WAIVER
-    );
+        : LOCAL_STORAGE_COLUMN_VISIBILITY_WAIVER;
+    // Retrieve hidden column saved state (session)
+    let localHiddenColumns = sessionStorage?.getItem(hiddenColsSaveKey);
+    if (localHiddenColumns === null) {
+      // If tab/session doesn't have its own, use the source of truth for all tabs
+      localHiddenColumns = localStorage?.getItem(hiddenColsSaveKey);
+    }
     // Retrieve saved table filters
     const localTableFilters = localStorage?.getItem(
       tab === "spa"
