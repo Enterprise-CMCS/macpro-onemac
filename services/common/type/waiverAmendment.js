@@ -22,7 +22,12 @@ export const waiverAmendment = {
     },
     { label: "All other 1915(b) Waivers", value: "1915(b)" },
   ],
-  allowedParentTypes: ["waivernew", "waiverrenewal"],
+  allowedParentTypes: [
+    "waivernew",
+    "waiverrenewal",
+    "1915(b)New",
+    "1915(b)Renew",
+  ],
   allowedParentStatuses: ["Approved"],
   theAttributes: [
     "componentId",
