@@ -1952,6 +1952,9 @@ And("click Submitted checkbox", () => {
 And("click Submitted - Intake Needed checkbox", () => {
   OneMacPackagePage.clickSubmittedIntakeNeededCheckbox();
 });
+And("click -- -- checkbox", () => {
+  OneMacPackagePage.clickDoubleDashCheckbox();
+});
 And("click the Pending checkbox", () => {
   OneMacPackagePage.clickPendingCheckbox();
 });

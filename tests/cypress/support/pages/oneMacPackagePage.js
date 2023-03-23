@@ -185,6 +185,8 @@ const submittedCheckbox =
 //Element is Xpath use cy.xpath instead of cy.get
 const submittedIntakeNeededCheckbox =
   "//label[contains(@for,'checkbox_packageStatus-Submitted - Intake Needed')]";
+const doubleDashCheckbox =
+  "//label[contains(@for,'checkbox_packageStatus--- --')]";
 const pendingCheckbox =
   "//label[contains(@for,'checkbox_packageStatus-Pending')]/span[text()='Pending']";
 const unsubmittedCheckbox =
@@ -755,6 +757,9 @@ export class oneMacPackagePage {
   }
   clickSubmittedIntakeNeededCheckbox() {
     cy.xpath(submittedIntakeNeededCheckbox).click();
+  }
+  clickDoubleDashCheckbox() {
+    cy.xpath(doubleDashCheckbox).click();
   }
   clickPendingCheckbox() {
     cy.xpath(pendingCheckbox).click();
