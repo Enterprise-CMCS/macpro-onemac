@@ -1,12 +1,13 @@
 import Joi from "joi";
 
-import { RESPONSE_CODE } from "cmscommonlib";
+import { RESPONSE_CODE, Workflow } from "cmscommonlib";
 
 export const defaultFormConfig = {
   CMSToAddresses: [process.env.reviewerEmail, process.env.testingEmail].filter(
     Boolean
   ),
   CMSCcAddresses: [],
+  newStatus: Workflow.ONEMAC_STATUS.SUBMITTED,
   successResponseCode: RESPONSE_CODE.SUCCESSFULLY_SUBMITTED,
 };
 

@@ -35,6 +35,7 @@ export const ONEMAC_STATUS = {
   DISAPPROVED: "Disapproved",
   WITHDRAWN: "Package Withdrawn",
   WITHDRAWAL_REQUESTED: "Withdrawal Requested",
+  TE_REQUESTED: "TE Requested",
   TERMINATED: "Waiver Terminated",
   UNKNOWN: "-- --",
 };
