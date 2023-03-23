@@ -13,7 +13,9 @@ export const clearTableStateStorageKeys = () => {
   localStorage.removeItem(LOCAL_STORAGE_TABLE_FILTERS_WAIVER);
   localStorage.removeItem(LOCAL_STORAGE_COLUMN_VISIBILITY_SPA);
   localStorage.removeItem(LOCAL_STORAGE_COLUMN_VISIBILITY_WAIVER);
-  // Remove session on logout, too, only for cols
+  // Remove session on logout, too
+  sessionStorage.removeItem(LOCAL_STORAGE_TABLE_FILTERS_SPA);
+  sessionStorage.removeItem(LOCAL_STORAGE_TABLE_FILTERS_WAIVER);
   sessionStorage.removeItem(LOCAL_STORAGE_COLUMN_VISIBILITY_SPA);
   sessionStorage.removeItem(LOCAL_STORAGE_COLUMN_VISIBILITY_WAIVER);
 };
