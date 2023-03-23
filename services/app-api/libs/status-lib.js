@@ -25,7 +25,7 @@ export const cmsStatusUIMap = {
   [Workflow.ONEMAC_STATUS.APPROVED]: "Approved",
   [Workflow.ONEMAC_STATUS.DISAPPROVED]: "Disapproved",
   [Workflow.ONEMAC_STATUS.WITHDRAWAL_REQUESTED]: "Submitted - Intake Needed",
-  [Workflow.ONEMAC_STATUS.TE_REQUESTED]: "-- --",
+  [Workflow.ONEMAC_STATUS.TE_REQUESTED]: "Requested",
   [Workflow.ONEMAC_STATUS.WITHDRAWN]: "Package Withdrawn",
   [Workflow.ONEMAC_STATUS.TERMINATED]: "Waiver Terminated",
   [Workflow.ONEMAC_STATUS.UNKNOWN]: "-- --",

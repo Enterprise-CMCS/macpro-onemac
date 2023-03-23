@@ -14,7 +14,7 @@ Feature: Waiver Package Details View: Temporary Extension for a CMS User
         And click the Waiver Number link in the first row
         And verify the package details page is visible
         And verify action card exists
-        And verify the status on the card is "-- --"
+        And verify the status on the card is "Requested"
         And verify the package actions section is unavailable
         And verify the details section exists
         #And verify there is a Type header in the details section

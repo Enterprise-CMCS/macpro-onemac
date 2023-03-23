@@ -186,7 +186,7 @@ const submittedCheckbox =
 const submittedIntakeNeededCheckbox =
   "//label[contains(@for,'checkbox_packageStatus-Submitted - Intake Needed')]";
 const doubleDashCheckbox =
-  "//label[contains(@for,'checkbox_packageStatus--- --')]";
+  "//label[contains(@for,'checkbox_packageStatus-Requested')]";
 const pendingCheckbox =
   "//label[contains(@for,'checkbox_packageStatus-Pending')]/span[text()='Pending']";
 const unsubmittedCheckbox =
