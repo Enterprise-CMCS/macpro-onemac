@@ -45288,5 +45288,2688 @@
     },
     "pk": "MD-0909.R00.00",
     "RO_ANALYST": null
-  }
+  },
+  {
+    "pk": "MD-0645.R00.00",
+    "sk": "SEATool#1657824888790",
+    "ACTIONTYPES": [
+     {
+      "ACTION_ID": 77,
+      "ACTION_NAME": "New",
+      "PLAN_TYPE_ID": 123
+     }
+    ],
+    "ACTION_OFFICERS": null,
+    "CALLHELDREASONS": null,
+    "CODEAFTERINITACCESS": null,
+    "COMPONENTS": [
+     {
+      "ALERTS_INBOX_ADDRESS": null,
+      "COMPONENT_ID": 72,
+      "COMPONENT_NAME": "DEHPG"
+     }
+    ],
+    "COMPONENTS_SP": null,
+    "FM_ANALYST": null,
+    "GSI1pk": "SEATool#1915c_waivers",
+    "GSI1sk": "MD-0645.R00.00",
+    "LEAD_ANALYST": null,
+    "OCD_REVIEW": null,
+    "PLAN_TYPES": [
+     {
+      "PLAN_TYPE_ID": 123,
+      "PLAN_TYPE_NAME": "1915(c)"
+     }
+    ],
+    "PRIORITY_CODES": null,
+    "PRIORITY_COMPLEXITY": null,
+    "PROGRAM_ANALYST": null,
+    "RAI": null,
+    "REGION": [
+     {
+      "ALERTS_INBOX_ADDRESS": "SPA_Waivers_Philadelphia_R03@cms.hhs.gov",
+      "REGION_ID": "3",
+      "REGION_NAME": "Philadelphia"
+     }
+    ],
+    "REVIEW_POSITION": null,
+    "RO_ANALYST": null,
+    "SP1115": null,
+    "SPA_TYPE": null,
+    "SPW_STATUS": [
+     {
+      "SPW_STATUS_DESC": "Approved",
+      "SPW_STATUS_ID": 4
+     }
+    ],
+    "SP_APD": null,
+    "SP_APD_SUB_TYPE": null,
+    "SP_EARLY_ALERTS": null,
+    "SP_IMPACT_FUNDING": null,
+    "SP_TYPE": null,
+    "STATES": [
+     {
+      "PRIORITY_FLAG": false,
+      "REGION_ID": "3",
+      "STATE_CODE": "MD",
+      "STATE_NAME": "Maryland"
+     }
+    ],
+    "STATE_PLAN": {
+     "ACTION_TYPE": 77,
+     "ACTUAL_EFFECTIVE_DATE": null,
+     "ADDED_COST": null,
+     "ALERT_90_DAYS_DATE": 1216252800000,
+     "ALERT_MILESTONE1_DAYS": null,
+     "ALERT_MILESTONE2_DAYS": null,
+     "ALERT_MILESTONE3_DAYS": null,
+     "ALERT_MILESTONE4_DAYS": null,
+     "APPROVAL_DOCS_RECEIVED": null,
+     "APPROVAL_STATUS_TYPE": null,
+     "APPROVED_EFFECTIVE_DATE": 1214870400000,
+     "ATTACHED_SPA": null,
+     "BACKUP_FM_ANALYST_ID": null,
+     "BACKUP_PROGRAM_ANALYST_ID": null,
+     "BLOCKING_SPAS_MEMO": null,
+     "BUDGET_IMPACT": null,
+     "BUDGET_IMPACT_VALUE": null,
+     "BUDGET_NEUTRALITY_ESTABLISHED_FLAG": false,
+     "BUDGET_NEUTRALITY_STATUS_MEMO": null,
+     "CALL_HELD": null,
+     "CALL_HELD_REASON_ID": null,
+     "CHANGED_DATE": 1657824888790,
+     "CODE_AFTER_INIT_ASSESS_ID": null,
+     "COMPANION_LETTER_RECEIVED_DATE": null,
+     "COMPANION_LETTER_REQUESTED_DATE": null,
+     "COMPONENT_ID": 72,
+     "CO_SUBMISSION_DATE": null,
+     "CURRENT_WAIVER_EXPIRES_DATE": null,
+     "CURRENT_WAIVER_TE": null,
+     "DATE_OF_CODING_CHANGE": null,
+     "DATE_SENT_PSCCAS": null,
+     "DAYS_EXTENSION_NUMBER": null,
+     "ELIMINATED_COST": null,
+     "END_DATE": null,
+     "FISCAL_QUARTER": null,
+     "FISCAL_YEAR": null,
+     "FRT_DATE": null,
+     "GAP": null,
+     "GAP2": null,
+     "GAP2_NA": false,
+     "GAP3": null,
+     "GAP3_NA": false,
+     "GAP_NA": false,
+     "GUIDANCE_DOCS_SUBMITTED": null,
+     "ID_NUMBER": "MD-0645.R00.00",
+     "INITIAL_SUBMISSION_COMPLETE": null,
+     "LEAD_ANALYST_ID": null,
+     "MISSING_INFORMATION": null,
+     "MMDL_IMPORT": null,
+     "OCD_REVIEW_COMMENTS_MEMO": null,
+     "OCD_REVIEW_ID": null,
+     "ORGANIZATION_CHANGE": null,
+     "PENDING_CONCURRENCE_DATE": null,
+     "PLAN_TYPE": 123,
+     "PRIORITY_CODE_ID": null,
+     "PRIORITY_COMMENTS_MEMO": null,
+     "PRIORITY_COMPLEXITY_ID": null,
+     "PROPOSED_DATE": 1214870400000,
+     "PUBLICHEALTH_STATEEMERGENCY": null,
+     "REGION_ID": "3",
+     "REMARKS_MEMO": null,
+     "REVIEW_POSITION_ID": null,
+     "RO_ANALYST_ID": 3514,
+     "SPA_TYPE_ID": null,
+     "SPW_IMPORT": true,
+     "SPW_STATUS_ID": 4,
+     "START_CLOCK_DATE": 1208476800000,
+     "STATE_CODE": "MD",
+     "STATUS_DATE": 1213142400000,
+     "STATUS_MEMO": "XX_SEA_VAL_XX This is some text",
+     "SUBMISSION_DATE": 1208476800000,
+     "SUBMISSION_TYPE": null,
+     "SUMMARY_MEMO": "XX_SEA_VAL_XX This is some text",
+     "TEMPLATE_ISSUES": null,
+     "TEMPLATE_ISSUES_MEMO": null,
+     "TEMPLATE_ISSUES_RESOLVED": null,
+     "TE_END_DATE": null,
+     "TITLE_NAME": "XX_SEA_VAL_XX Medical Day Care Services Waiv",
+     "TYPE_ID": null,
+     "UPL_ACCEPTED": null,
+     "UUID": "81E160CE-7602-42DE-A3BF-2D3437CDFF34"
+    },
+    "STATE_PLAN_SERVICETYPES": null,
+    "STATE_PLAN_SERVICE_SUBTYPES": null,
+    "STOP_RESUME_DATES": null
+   },
+   {
+    "pk": "MD-9996",
+    "sk": "SEATool#1657824888790",
+    "ACTIONTYPES": [
+     {
+      "ACTION_ID": 77,
+      "ACTION_NAME": "New",
+      "PLAN_TYPE_ID": 123
+     }
+    ],
+    "ACTION_OFFICERS": null,
+    "CALLHELDREASONS": [
+     {
+      "CALL_HELD_REASON_ID": 4,
+      "REASON_DESCRIPTION": "Intake issue (test)"
+     }
+    ],
+    "CODEAFTERINITACCESS": null,
+    "COMPONENTS": [
+     {
+      "ALERTS_INBOX_ADDRESS": null,
+      "COMPONENT_ID": 74,
+      "COMPONENT_NAME": "FMG"
+     }
+    ],
+    "COMPONENTS_SP": null,
+    "FM_ANALYST": null,
+    "GSI1pk": "SEATool#1915c_waivers",
+    "GSI1sk": "MD-9996",
+    "LEAD_ANALYST": null,
+    "OCD_REVIEW": [
+     {
+      "OCD_REVIEW_DESCRIPTION": "No",
+      "OCD_REVIEW_ID": 2
+     }
+    ],
+    "PLAN_TYPES": [
+     {
+      "PLAN_TYPE_ID": 123,
+      "PLAN_TYPE_NAME": "1915(c)"
+     }
+    ],
+    "PRIORITY_CODES": [
+     {
+      "PRIORITY_CODE": "P3",
+      "PRIORITY_CODE_DESCRIPTION": "Routine action test",
+      "PRIORITY_CODE_ID": 3
+     }
+    ],
+    "PRIORITY_COMPLEXITY": null,
+    "PROGRAM_ANALYST": null,
+    "RAI": null,
+    "REGION": [
+     {
+      "ALERTS_INBOX_ADDRESS": "SPA_Waivers_Philadelphia_R03@cms.hhs.gov",
+      "REGION_ID": "3",
+      "REGION_NAME": "Philadelphia"
+     }
+    ],
+    "REVIEW_POSITION": null,
+    "RO_ANALYST": null,
+    "SP1115": null,
+    "SPA_TYPE": [
+     {
+      "PLAN_TYPE_ID": 123,
+      "SPA_TYPE_ID": 33,
+      "SPA_TYPE_NAME": "Hlth Care Ref (HCR) Do Not Use"
+     }
+    ],
+    "SPW_STATUS": [
+     {
+      "SPW_STATUS_DESC": "Pending",
+      "SPW_STATUS_ID": 1
+     }
+    ],
+    "SP_APD": null,
+    "SP_APD_SUB_TYPE": null,
+    "SP_EARLY_ALERTS": {
+     "ALERTFIELD": [
+      {
+       "ACTIVE": true,
+       "EA_DROP_DOWN_VALUES": null,
+       "EA_FIELD_ID": 11,
+       "EA_LABEL": "Reduced Eligibility",
+       "EA_TYPE_ID": 1,
+       "IS_APD": false,
+       "PRIORITY_CODE_ID": 1,
+       "PRIORITY_OPERATOR": null,
+       "PRIORITY_VALUE": "true"
+      },
+      {
+       "ACTIVE": null,
+       "EA_DROP_DOWN_VALUES": null,
+       "EA_FIELD_ID": 15,
+       "EA_LABEL": "Reduced Payment",
+       "EA_TYPE_ID": 1,
+       "IS_APD": null,
+       "PRIORITY_CODE_ID": 1,
+       "PRIORITY_OPERATOR": null,
+       "PRIORITY_VALUE": "true"
+      },
+      {
+       "ACTIVE": null,
+       "EA_DROP_DOWN_VALUES": null,
+       "EA_FIELD_ID": 22,
+       "EA_LABEL": "Eliminates Optional Benefit",
+       "EA_TYPE_ID": 1,
+       "IS_APD": null,
+       "PRIORITY_CODE_ID": 1,
+       "PRIORITY_OPERATOR": null,
+       "PRIORITY_VALUE": "false"
+      },
+      {
+       "ACTIVE": null,
+       "EA_DROP_DOWN_VALUES": null,
+       "EA_FIELD_ID": 23,
+       "EA_LABEL": "Sufficiency Analysis Required",
+       "EA_TYPE_ID": 1,
+       "IS_APD": null,
+       "PRIORITY_CODE_ID": 1,
+       "PRIORITY_OPERATOR": null,
+       "PRIORITY_VALUE": "true"
+      }
+     ],
+     "EARLYALERT": [
+      {
+       "EA_FIELD_ID": 11,
+       "EMAIL_SENT": null,
+       "ID_NUMBER": "MD-9996",
+       "TEXT_DD_VAL": null,
+       "YES_NO_VAL": null
+      },
+      {
+       "EA_FIELD_ID": 15,
+       "EMAIL_SENT": null,
+       "ID_NUMBER": "MD-9996",
+       "TEXT_DD_VAL": null,
+       "YES_NO_VAL": null
+      },
+      {
+       "EA_FIELD_ID": 22,
+       "EMAIL_SENT": null,
+       "ID_NUMBER": "MD-9996",
+       "TEXT_DD_VAL": null,
+       "YES_NO_VAL": null
+      },
+      {
+       "EA_FIELD_ID": 23,
+       "EMAIL_SENT": null,
+       "ID_NUMBER": "MD-9996",
+       "TEXT_DD_VAL": null,
+       "YES_NO_VAL": null
+      }
+     ]
+    },
+    "SP_IMPACT_FUNDING": null,
+    "SP_TYPE": [
+     {
+      "PLAN_TYPE_ID": 123,
+      "TYPE_CLASS": 33,
+      "TYPE_ID": 268,
+      "TYPE_NAME": "1915(i)-2402(d) ACA Do Not Use"
+     }
+    ],
+    "STATES": [
+     {
+      "PRIORITY_FLAG": false,
+      "REGION_ID": "3",
+      "STATE_CODE": "MD",
+      "STATE_NAME": "Maryland"
+     }
+    ],
+    "STATE_PLAN": {
+     "ACTION_TYPE": 77,
+     "ACTUAL_EFFECTIVE_DATE": null,
+     "ADDED_COST": null,
+     "ALERT_90_DAYS_DATE": 1513814400000,
+     "ALERT_MILESTONE1_DAYS": null,
+     "ALERT_MILESTONE2_DAYS": null,
+     "ALERT_MILESTONE3_DAYS": null,
+     "ALERT_MILESTONE4_DAYS": null,
+     "APPROVAL_DOCS_RECEIVED": false,
+     "APPROVAL_STATUS_TYPE": null,
+     "APPROVED_EFFECTIVE_DATE": null,
+     "ATTACHED_SPA": null,
+     "BACKUP_FM_ANALYST_ID": null,
+     "BACKUP_PROGRAM_ANALYST_ID": null,
+     "BLOCKING_SPAS_MEMO": "Letters  1 2 3  @ * +",
+     "BUDGET_IMPACT": null,
+     "BUDGET_IMPACT_VALUE": null,
+     "BUDGET_NEUTRALITY_ESTABLISHED_FLAG": false,
+     "BUDGET_NEUTRALITY_STATUS_MEMO": null,
+     "CALL_HELD": false,
+     "CALL_HELD_REASON_ID": 4,
+     "CHANGED_DATE": 1657824888790,
+     "CODE_AFTER_INIT_ASSESS_ID": null,
+     "COMPANION_LETTER_RECEIVED_DATE": null,
+     "COMPANION_LETTER_REQUESTED_DATE": null,
+     "COMPONENT_ID": 74,
+     "CO_SUBMISSION_DATE": null,
+     "CURRENT_WAIVER_EXPIRES_DATE": null,
+     "CURRENT_WAIVER_TE": null,
+     "DATE_OF_CODING_CHANGE": null,
+     "DATE_SENT_PSCCAS": null,
+     "DAYS_EXTENSION_NUMBER": null,
+     "ELIMINATED_COST": null,
+     "END_DATE": null,
+     "FISCAL_QUARTER": null,
+     "FISCAL_YEAR": null,
+     "FRT_DATE": null,
+     "GAP": null,
+     "GAP2": null,
+     "GAP2_NA": false,
+     "GAP3": null,
+     "GAP3_NA": false,
+     "GAP_NA": false,
+     "GUIDANCE_DOCS_SUBMITTED": null,
+     "ID_NUMBER": "MD-9996",
+     "INITIAL_SUBMISSION_COMPLETE": null,
+     "LEAD_ANALYST_ID": 3307,
+     "MISSING_INFORMATION": null,
+     "MMDL_IMPORT": null,
+     "OCD_REVIEW_COMMENTS_MEMO": null,
+     "OCD_REVIEW_ID": 2,
+     "ORGANIZATION_CHANGE": null,
+     "PENDING_CONCURRENCE_DATE": null,
+     "PLAN_TYPE": 123,
+     "PRIORITY_CODE_ID": 3,
+     "PRIORITY_COMMENTS_MEMO": null,
+     "PRIORITY_COMPLEXITY_ID": null,
+     "PROPOSED_DATE": null,
+     "PUBLICHEALTH_STATEEMERGENCY": null,
+     "REGION_ID": "3",
+     "REMARKS_MEMO": null,
+     "REVIEW_POSITION_ID": null,
+     "RO_ANALYST_ID": 3416,
+     "SPA_TYPE_ID": 33,
+     "SPW_IMPORT": false,
+     "SPW_STATUS_ID": 1,
+     "START_CLOCK_DATE": 1506038400000,
+     "STATE_CODE": "MD",
+     "STATUS_DATE": 1506038400000,
+     "STATUS_MEMO": "Checking",
+     "SUBMISSION_DATE": 1506038400000,
+     "SUBMISSION_TYPE": null,
+     "SUMMARY_MEMO": "Look at Timer group.",
+     "TEMPLATE_ISSUES": null,
+     "TEMPLATE_ISSUES_MEMO": null,
+     "TEMPLATE_ISSUES_RESOLVED": null,
+     "TE_END_DATE": null,
+     "TITLE_NAME": "Checking New Milestone Dates",
+     "TYPE_ID": 268,
+     "UPL_ACCEPTED": null,
+     "UUID": "FCDA4F14-C922-4DD4-AD88-E28590C8F59E"
+    },
+    "STATE_PLAN_SERVICETYPES": [
+     {
+      "ID_NUMBER": "MD-9996",
+      "SERVICE_TYPE_ID": 33
+     }
+    ],
+    "STATE_PLAN_SERVICE_SUBTYPES": [
+     {
+      "ID_NUMBER": "MD-9996",
+      "SERVICE_SUBTYPE_ID": 268
+     }
+    ],
+    "STOP_RESUME_DATES": null
+   },
+   {
+    "pk": "MD-40198.R02",
+    "sk": "SEATool#1657824888790",
+    "ACTIONTYPES": [
+     {
+      "ACTION_ID": 78,
+      "ACTION_NAME": "Renew",
+      "PLAN_TYPE_ID": 123
+     }
+    ],
+    "ACTION_OFFICERS": null,
+    "CALLHELDREASONS": null,
+    "CODEAFTERINITACCESS": null,
+    "COMPONENTS": [
+     {
+      "ALERTS_INBOX_ADDRESS": null,
+      "COMPONENT_ID": 72,
+      "COMPONENT_NAME": "DEHPG"
+     }
+    ],
+    "COMPONENTS_SP": null,
+    "FM_ANALYST": null,
+    "GSI1pk": "SEATool#1915c_waivers",
+    "GSI1sk": "MD-40198.R02",
+    "LEAD_ANALYST": null,
+    "OCD_REVIEW": null,
+    "PLAN_TYPES": [
+     {
+      "PLAN_TYPE_ID": 123,
+      "PLAN_TYPE_NAME": "1915(c)"
+     }
+    ],
+    "PRIORITY_CODES": null,
+    "PRIORITY_COMPLEXITY": null,
+    "PROGRAM_ANALYST": null,
+    "RAI": null,
+    "REGION": [
+     {
+      "ALERTS_INBOX_ADDRESS": "SPA_Waivers_Philadelphia_R03@cms.hhs.gov",
+      "REGION_ID": "3",
+      "REGION_NAME": "Philadelphia"
+     }
+    ],
+    "REVIEW_POSITION": null,
+    "RO_ANALYST": null,
+    "SP1115": null,
+    "SPA_TYPE": null,
+    "SPW_STATUS": [
+     {
+      "SPW_STATUS_DESC": "Approved",
+      "SPW_STATUS_ID": 4
+     }
+    ],
+    "SP_APD": null,
+    "SP_APD_SUB_TYPE": null,
+    "SP_EARLY_ALERTS": null,
+    "SP_IMPACT_FUNDING": null,
+    "SP_TYPE": null,
+    "STATES": [
+     {
+      "PRIORITY_FLAG": false,
+      "REGION_ID": "3",
+      "STATE_CODE": "MD",
+      "STATE_NAME": "Maryland"
+     }
+    ],
+    "STATE_PLAN": {
+     "ACTION_TYPE": 78,
+     "ACTUAL_EFFECTIVE_DATE": null,
+     "ADDED_COST": null,
+     "ALERT_90_DAYS_DATE": 1309305600000,
+     "ALERT_MILESTONE1_DAYS": null,
+     "ALERT_MILESTONE2_DAYS": null,
+     "ALERT_MILESTONE3_DAYS": null,
+     "ALERT_MILESTONE4_DAYS": null,
+     "APPROVAL_DOCS_RECEIVED": null,
+     "APPROVAL_STATUS_TYPE": null,
+     "APPROVED_EFFECTIVE_DATE": 1309478400000,
+     "ATTACHED_SPA": null,
+     "BACKUP_FM_ANALYST_ID": null,
+     "BACKUP_PROGRAM_ANALYST_ID": null,
+     "BLOCKING_SPAS_MEMO": null,
+     "BUDGET_IMPACT": null,
+     "BUDGET_IMPACT_VALUE": null,
+     "BUDGET_NEUTRALITY_ESTABLISHED_FLAG": false,
+     "BUDGET_NEUTRALITY_STATUS_MEMO": null,
+     "CALL_HELD": null,
+     "CALL_HELD_REASON_ID": null,
+     "CHANGED_DATE": 1657824888790,
+     "CODE_AFTER_INIT_ASSESS_ID": null,
+     "COMPANION_LETTER_RECEIVED_DATE": null,
+     "COMPANION_LETTER_REQUESTED_DATE": null,
+     "COMPONENT_ID": 72,
+     "CO_SUBMISSION_DATE": null,
+     "CURRENT_WAIVER_EXPIRES_DATE": null,
+     "CURRENT_WAIVER_TE": null,
+     "DATE_OF_CODING_CHANGE": null,
+     "DATE_SENT_PSCCAS": null,
+     "DAYS_EXTENSION_NUMBER": null,
+     "ELIMINATED_COST": null,
+     "END_DATE": null,
+     "FISCAL_QUARTER": null,
+     "FISCAL_YEAR": null,
+     "FRT_DATE": null,
+     "GAP": null,
+     "GAP2": null,
+     "GAP2_NA": false,
+     "GAP3": null,
+     "GAP3_NA": false,
+     "GAP_NA": false,
+     "GUIDANCE_DOCS_SUBMITTED": null,
+     "ID_NUMBER": "MD-40198.R02",
+     "INITIAL_SUBMISSION_COMPLETE": null,
+     "LEAD_ANALYST_ID": null,
+     "MISSING_INFORMATION": null,
+     "MMDL_IMPORT": null,
+     "OCD_REVIEW_COMMENTS_MEMO": null,
+     "OCD_REVIEW_ID": null,
+     "ORGANIZATION_CHANGE": null,
+     "PENDING_CONCURRENCE_DATE": null,
+     "PLAN_TYPE": 123,
+     "PRIORITY_CODE_ID": null,
+     "PRIORITY_COMMENTS_MEMO": null,
+     "PRIORITY_COMPLEXITY_ID": null,
+     "PROPOSED_DATE": 1309478400000,
+     "PUBLICHEALTH_STATEEMERGENCY": null,
+     "REGION_ID": "3",
+     "REMARKS_MEMO": null,
+     "REVIEW_POSITION_ID": null,
+     "RO_ANALYST_ID": 3560,
+     "SPA_TYPE_ID": null,
+     "SPW_IMPORT": true,
+     "SPW_STATUS_ID": 4,
+     "START_CLOCK_DATE": 1301529600000,
+     "STATE_CODE": "MD",
+     "STATUS_DATE": 1308700800000,
+     "STATUS_MEMO": "XX_SEA_VAL_XX This is some text",
+     "SUBMISSION_DATE": 1301529600000,
+     "SUBMISSION_TYPE": null,
+     "SUMMARY_MEMO": null,
+     "TEMPLATE_ISSUES": null,
+     "TEMPLATE_ISSUES_MEMO": null,
+     "TEMPLATE_ISSUES_RESOLVED": null,
+     "TE_END_DATE": null,
+     "TITLE_NAME": "XX_SEA_VAL_XX Traumatic Brain Injury Renewal",
+     "TYPE_ID": null,
+     "UPL_ACCEPTED": null,
+     "UUID": "4A8BE0B6-E765-4DF8-A6F2-E4F1F6767A74"
+    },
+    "STATE_PLAN_SERVICETYPES": null,
+    "STATE_PLAN_SERVICE_SUBTYPES": null,
+    "STOP_RESUME_DATES": null
+   },
+   {
+    "pk": "MD-0645.R01",
+    "sk": "SEATool#1657824888790",
+    "ACTIONTYPES": [
+     {
+      "ACTION_ID": 78,
+      "ACTION_NAME": "Renew",
+      "PLAN_TYPE_ID": 123
+     }
+    ],
+    "ACTION_OFFICERS": null,
+    "CALLHELDREASONS": null,
+    "CODEAFTERINITACCESS": null,
+    "COMPONENTS": [
+     {
+      "ALERTS_INBOX_ADDRESS": null,
+      "COMPONENT_ID": 72,
+      "COMPONENT_NAME": "DEHPG"
+     }
+    ],
+    "COMPONENTS_SP": null,
+    "FM_ANALYST": null,
+    "GSI1pk": "SEATool#1915c_waivers",
+    "GSI1sk": "MD-0645.R01",
+    "LEAD_ANALYST": null,
+    "OCD_REVIEW": null,
+    "PLAN_TYPES": [
+     {
+      "PLAN_TYPE_ID": 123,
+      "PLAN_TYPE_NAME": "1915(c)"
+     }
+    ],
+    "PRIORITY_CODES": null,
+    "PRIORITY_COMPLEXITY": null,
+    "PROGRAM_ANALYST": null,
+    "RAI": null,
+    "REGION": [
+     {
+      "ALERTS_INBOX_ADDRESS": "SPA_Waivers_Philadelphia_R03@cms.hhs.gov",
+      "REGION_ID": "3",
+      "REGION_NAME": "Philadelphia"
+     }
+    ],
+    "REVIEW_POSITION": null,
+    "RO_ANALYST": null,
+    "SP1115": null,
+    "SPA_TYPE": null,
+    "SPW_STATUS": [
+     {
+      "SPW_STATUS_DESC": "Pending",
+      "SPW_STATUS_ID": 4
+     }
+    ],
+    "SP_APD": null,
+    "SP_APD_SUB_TYPE": null,
+    "SP_EARLY_ALERTS": null,
+    "SP_IMPACT_FUNDING": null,
+    "SP_TYPE": null,
+    "STATES": [
+     {
+      "PRIORITY_FLAG": false,
+      "REGION_ID": "3",
+      "STATE_CODE": "MD",
+      "STATE_NAME": "Maryland"
+     }
+    ],
+    "STATE_PLAN": {
+     "ACTION_TYPE": 78,
+     "ACTUAL_EFFECTIVE_DATE": null,
+     "ADDED_COST": null,
+     "ALERT_90_DAYS_DATE": 1309305600000,
+     "ALERT_MILESTONE1_DAYS": null,
+     "ALERT_MILESTONE2_DAYS": null,
+     "ALERT_MILESTONE3_DAYS": null,
+     "ALERT_MILESTONE4_DAYS": null,
+     "APPROVAL_DOCS_RECEIVED": null,
+     "APPROVAL_STATUS_TYPE": null,
+     "APPROVED_EFFECTIVE_DATE": 1309478400000,
+     "ATTACHED_SPA": null,
+     "BACKUP_FM_ANALYST_ID": null,
+     "BACKUP_PROGRAM_ANALYST_ID": null,
+     "BLOCKING_SPAS_MEMO": null,
+     "BUDGET_IMPACT": null,
+     "BUDGET_IMPACT_VALUE": null,
+     "BUDGET_NEUTRALITY_ESTABLISHED_FLAG": false,
+     "BUDGET_NEUTRALITY_STATUS_MEMO": null,
+     "CALL_HELD": null,
+     "CALL_HELD_REASON_ID": null,
+     "CHANGED_DATE": 1657824888790,
+     "CODE_AFTER_INIT_ASSESS_ID": null,
+     "COMPANION_LETTER_RECEIVED_DATE": null,
+     "COMPANION_LETTER_REQUESTED_DATE": null,
+     "COMPONENT_ID": 72,
+     "CO_SUBMISSION_DATE": null,
+     "CURRENT_WAIVER_EXPIRES_DATE": null,
+     "CURRENT_WAIVER_TE": null,
+     "DATE_OF_CODING_CHANGE": null,
+     "DATE_SENT_PSCCAS": null,
+     "DAYS_EXTENSION_NUMBER": null,
+     "ELIMINATED_COST": null,
+     "END_DATE": null,
+     "FISCAL_QUARTER": null,
+     "FISCAL_YEAR": null,
+     "FRT_DATE": null,
+     "GAP": null,
+     "GAP2": null,
+     "GAP2_NA": false,
+     "GAP3": null,
+     "GAP3_NA": false,
+     "GAP_NA": false,
+     "GUIDANCE_DOCS_SUBMITTED": null,
+     "ID_NUMBER": "MD-0645.R01",
+     "INITIAL_SUBMISSION_COMPLETE": null,
+     "LEAD_ANALYST_ID": null,
+     "MISSING_INFORMATION": null,
+     "MMDL_IMPORT": null,
+     "OCD_REVIEW_COMMENTS_MEMO": null,
+     "OCD_REVIEW_ID": null,
+     "ORGANIZATION_CHANGE": null,
+     "PENDING_CONCURRENCE_DATE": null,
+     "PLAN_TYPE": 123,
+     "PRIORITY_CODE_ID": null,
+     "PRIORITY_COMMENTS_MEMO": null,
+     "PRIORITY_COMPLEXITY_ID": null,
+     "PROPOSED_DATE": 1309478400000,
+     "PUBLICHEALTH_STATEEMERGENCY": null,
+     "REGION_ID": "3",
+     "REMARKS_MEMO": null,
+     "REVIEW_POSITION_ID": null,
+     "RO_ANALYST_ID": 3560,
+     "SPA_TYPE_ID": null,
+     "SPW_IMPORT": true,
+     "SPW_STATUS_ID": 4,
+     "START_CLOCK_DATE": 1301529600000,
+     "STATE_CODE": "MD",
+     "STATUS_DATE": 1308700800000,
+     "STATUS_MEMO": "XX_SEA_VAL_XX This is some text",
+     "SUBMISSION_DATE": 1301529600000,
+     "SUBMISSION_TYPE": null,
+     "SUMMARY_MEMO": null,
+     "TEMPLATE_ISSUES": null,
+     "TEMPLATE_ISSUES_MEMO": null,
+     "TEMPLATE_ISSUES_RESOLVED": null,
+     "TE_END_DATE": null,
+     "TITLE_NAME": "XX_SEA_VAL_XX Medical Day Care Waiver Renewa",
+     "TYPE_ID": null,
+     "UPL_ACCEPTED": null,
+     "UUID": "86D32C32-F6EB-4FF2-BFCD-CD210834792F"
+    },
+    "STATE_PLAN_SERVICETYPES": null,
+    "STATE_PLAN_SERVICE_SUBTYPES": null,
+    "STOP_RESUME_DATES": null
+   },
+   {
+    "pk": "MD-0265.R04.02",
+    "sk": "SEATool#1657824888790",
+    "ACTIONTYPES": [
+     {
+      "ACTION_ID": 76,
+      "ACTION_NAME": "Amend",
+      "PLAN_TYPE_ID": 123
+     }
+    ],
+    "ACTION_OFFICERS": null,
+    "CALLHELDREASONS": null,
+    "CODEAFTERINITACCESS": null,
+    "COMPONENTS": [
+     {
+      "ALERTS_INBOX_ADDRESS": null,
+      "COMPONENT_ID": 72,
+      "COMPONENT_NAME": "DEHPG"
+     }
+    ],
+    "COMPONENTS_SP": null,
+    "FM_ANALYST": null,
+    "GSI1pk": "SEATool#1915c_waivers",
+    "GSI1sk": "MD-0265.R04.02",
+    "LEAD_ANALYST": null,
+    "OCD_REVIEW": [
+     {
+      "OCD_REVIEW_DESCRIPTION": "Yes",
+      "OCD_REVIEW_ID": 1
+     }
+    ],
+    "PLAN_TYPES": [
+     {
+      "PLAN_TYPE_ID": 123,
+      "PLAN_TYPE_NAME": "1915(c)"
+     }
+    ],
+    "PRIORITY_CODES": [
+     {
+      "PRIORITY_CODE": "P3",
+      "PRIORITY_CODE_DESCRIPTION": "Routine action test",
+      "PRIORITY_CODE_ID": 3
+     }
+    ],
+    "PRIORITY_COMPLEXITY": null,
+    "PROGRAM_ANALYST": null,
+    "RAI": null,
+    "REGION": [
+     {
+      "ALERTS_INBOX_ADDRESS": "SPA_Waivers_Philadelphia_R03@cms.hhs.gov",
+      "REGION_ID": "3",
+      "REGION_NAME": "Philadelphia"
+     }
+    ],
+    "REVIEW_POSITION": null,
+    "RO_ANALYST": null,
+    "SP1115": null,
+    "SPA_TYPE": [
+     {
+      "PLAN_TYPE_ID": 123,
+      "SPA_TYPE_ID": 5,
+      "SPA_TYPE_NAME": "1915(c) Waivers Do Not Use"
+     }
+    ],
+    "SPW_STATUS": [
+     {
+      "SPW_STATUS_DESC": "Approved",
+      "SPW_STATUS_ID": 4
+     }
+    ],
+    "SP_APD": null,
+    "SP_APD_SUB_TYPE": null,
+    "SP_EARLY_ALERTS": {
+     "ALERTFIELD": [
+      {
+       "ACTIVE": true,
+       "EA_DROP_DOWN_VALUES": null,
+       "EA_FIELD_ID": 11,
+       "EA_LABEL": "Reduced Eligibility",
+       "EA_TYPE_ID": 1,
+       "IS_APD": false,
+       "PRIORITY_CODE_ID": 1,
+       "PRIORITY_OPERATOR": null,
+       "PRIORITY_VALUE": "true"
+      },
+      {
+       "ACTIVE": null,
+       "EA_DROP_DOWN_VALUES": null,
+       "EA_FIELD_ID": 12,
+       "EA_LABEL": "Increased Eligibility",
+       "EA_TYPE_ID": 1,
+       "IS_APD": null,
+       "PRIORITY_CODE_ID": 1,
+       "PRIORITY_OPERATOR": null,
+       "PRIORITY_VALUE": "true"
+      },
+      {
+       "ACTIVE": null,
+       "EA_DROP_DOWN_VALUES": null,
+       "EA_FIELD_ID": 13,
+       "EA_LABEL": "Reduced Benefits/Coverage",
+       "EA_TYPE_ID": 1,
+       "IS_APD": null,
+       "PRIORITY_CODE_ID": 1,
+       "PRIORITY_OPERATOR": null,
+       "PRIORITY_VALUE": "true"
+      },
+      {
+       "ACTIVE": null,
+       "EA_DROP_DOWN_VALUES": null,
+       "EA_FIELD_ID": 14,
+       "EA_LABEL": "Increased Benefits/Coverage",
+       "EA_TYPE_ID": 1,
+       "IS_APD": null,
+       "PRIORITY_CODE_ID": 1,
+       "PRIORITY_OPERATOR": null,
+       "PRIORITY_VALUE": "true"
+      },
+      {
+       "ACTIVE": null,
+       "EA_DROP_DOWN_VALUES": null,
+       "EA_FIELD_ID": 15,
+       "EA_LABEL": "Reduced Payment",
+       "EA_TYPE_ID": 1,
+       "IS_APD": null,
+       "PRIORITY_CODE_ID": 1,
+       "PRIORITY_OPERATOR": null,
+       "PRIORITY_VALUE": "true"
+      },
+      {
+       "ACTIVE": null,
+       "EA_DROP_DOWN_VALUES": null,
+       "EA_FIELD_ID": 16,
+       "EA_LABEL": "Increased Payment",
+       "EA_TYPE_ID": 1,
+       "IS_APD": null,
+       "PRIORITY_CODE_ID": 1,
+       "PRIORITY_OPERATOR": null,
+       "PRIORITY_VALUE": "true"
+      }
+     ],
+     "EARLYALERT": [
+      {
+       "EA_FIELD_ID": 11,
+       "EMAIL_SENT": null,
+       "ID_NUMBER": "MD-0265.R04.02",
+       "TEXT_DD_VAL": null,
+       "YES_NO_VAL": false
+      },
+      {
+       "EA_FIELD_ID": 12,
+       "EMAIL_SENT": null,
+       "ID_NUMBER": "MD-0265.R04.02",
+       "TEXT_DD_VAL": null,
+       "YES_NO_VAL": false
+      },
+      {
+       "EA_FIELD_ID": 13,
+       "EMAIL_SENT": null,
+       "ID_NUMBER": "MD-0265.R04.02",
+       "TEXT_DD_VAL": null,
+       "YES_NO_VAL": false
+      },
+      {
+       "EA_FIELD_ID": 14,
+       "EMAIL_SENT": null,
+       "ID_NUMBER": "MD-0265.R04.02",
+       "TEXT_DD_VAL": null,
+       "YES_NO_VAL": false
+      },
+      {
+       "EA_FIELD_ID": 15,
+       "EMAIL_SENT": null,
+       "ID_NUMBER": "MD-0265.R04.02",
+       "TEXT_DD_VAL": null,
+       "YES_NO_VAL": false
+      },
+      {
+       "EA_FIELD_ID": 16,
+       "EMAIL_SENT": null,
+       "ID_NUMBER": "MD-0265.R04.02",
+       "TEXT_DD_VAL": null,
+       "YES_NO_VAL": false
+      }
+     ]
+    },
+    "SP_IMPACT_FUNDING": null,
+    "SP_TYPE": [
+     {
+      "PLAN_TYPE_ID": 123,
+      "TYPE_CLASS": 5,
+      "TYPE_ID": 25,
+      "TYPE_NAME": "Aged & Disabled Do Not Use"
+     }
+    ],
+    "STATES": [
+     {
+      "PRIORITY_FLAG": false,
+      "REGION_ID": "3",
+      "STATE_CODE": "MD",
+      "STATE_NAME": "Maryland"
+     }
+    ],
+    "STATE_PLAN": {
+     "ACTION_TYPE": 76,
+     "ACTUAL_EFFECTIVE_DATE": null,
+     "ADDED_COST": null,
+     "ALERT_90_DAYS_DATE": 1379548800000,
+     "ALERT_MILESTONE1_DAYS": null,
+     "ALERT_MILESTONE2_DAYS": null,
+     "ALERT_MILESTONE3_DAYS": null,
+     "ALERT_MILESTONE4_DAYS": null,
+     "APPROVAL_DOCS_RECEIVED": null,
+     "APPROVAL_STATUS_TYPE": null,
+     "APPROVED_EFFECTIVE_DATE": null,
+     "ATTACHED_SPA": null,
+     "BACKUP_FM_ANALYST_ID": null,
+     "BACKUP_PROGRAM_ANALYST_ID": null,
+     "BLOCKING_SPAS_MEMO": null,
+     "BUDGET_IMPACT": null,
+     "BUDGET_IMPACT_VALUE": null,
+     "BUDGET_NEUTRALITY_ESTABLISHED_FLAG": false,
+     "BUDGET_NEUTRALITY_STATUS_MEMO": null,
+     "CALL_HELD": null,
+     "CALL_HELD_REASON_ID": null,
+     "CHANGED_DATE": 1657824888790,
+     "CODE_AFTER_INIT_ASSESS_ID": null,
+     "COMPANION_LETTER_RECEIVED_DATE": null,
+     "COMPANION_LETTER_REQUESTED_DATE": null,
+     "COMPONENT_ID": 72,
+     "CO_SUBMISSION_DATE": 1371772800000,
+     "CURRENT_WAIVER_EXPIRES_DATE": null,
+     "CURRENT_WAIVER_TE": null,
+     "DATE_OF_CODING_CHANGE": null,
+     "DATE_SENT_PSCCAS": null,
+     "DAYS_EXTENSION_NUMBER": null,
+     "ELIMINATED_COST": null,
+     "END_DATE": null,
+     "FISCAL_QUARTER": null,
+     "FISCAL_YEAR": null,
+     "FRT_DATE": null,
+     "GAP": null,
+     "GAP2": null,
+     "GAP2_NA": false,
+     "GAP3": null,
+     "GAP3_NA": false,
+     "GAP_NA": false,
+     "GUIDANCE_DOCS_SUBMITTED": null,
+     "ID_NUMBER": "MD-0265.R04.02",
+     "INITIAL_SUBMISSION_COMPLETE": null,
+     "LEAD_ANALYST_ID": 3767,
+     "MISSING_INFORMATION": null,
+     "MMDL_IMPORT": false,
+     "OCD_REVIEW_COMMENTS_MEMO": null,
+     "OCD_REVIEW_ID": 1,
+     "ORGANIZATION_CHANGE": null,
+     "PENDING_CONCURRENCE_DATE": null,
+     "PLAN_TYPE": 123,
+     "PRIORITY_CODE_ID": 3,
+     "PRIORITY_COMMENTS_MEMO": "XX_SEA_VAL_XX Routine SPA/increased eligibil",
+     "PRIORITY_COMPLEXITY_ID": null,
+     "PROPOSED_DATE": 1341100800000,
+     "PUBLICHEALTH_STATEEMERGENCY": null,
+     "REGION_ID": "3",
+     "REMARKS_MEMO": null,
+     "REVIEW_POSITION_ID": null,
+     "RO_ANALYST_ID": 3862,
+     "SPA_TYPE_ID": 5,
+     "SPW_IMPORT": false,
+     "SPW_STATUS_ID": 4,
+     "START_CLOCK_DATE": 1371772800000,
+     "STATE_CODE": "MD",
+     "STATUS_DATE": 1378389947360,
+     "STATUS_MEMO": "XX_SEA_VAL_XX This is some text",
+     "SUBMISSION_DATE": 1371772800000,
+     "SUBMISSION_TYPE": null,
+     "SUMMARY_MEMO": "XX_SEA_VAL_XX This is some text",
+     "TEMPLATE_ISSUES": null,
+     "TEMPLATE_ISSUES_MEMO": null,
+     "TEMPLATE_ISSUES_RESOLVED": null,
+     "TE_END_DATE": null,
+     "TITLE_NAME": "XX_SEA_VAL_XX Waiver for Older Adults",
+     "TYPE_ID": 25,
+     "UPL_ACCEPTED": null,
+     "UUID": "2BC60EB0-AC75-4D40-A9F6-9459D31A5FC6"
+    },
+    "STATE_PLAN_SERVICETYPES": [
+     {
+      "ID_NUMBER": "MD-0265.R04.02",
+      "SERVICE_TYPE_ID": 5
+     }
+    ],
+    "STATE_PLAN_SERVICE_SUBTYPES": [
+     {
+      "ID_NUMBER": "MD-0265.R04.02",
+      "SERVICE_SUBTYPE_ID": 25
+     }
+    ],
+    "STOP_RESUME_DATES": null
+   },
+   {
+    "pk": "MD-40198.R02.01",
+    "sk": "SEATool#1657824888790",
+    "ACTIONTYPES": [
+     {
+      "ACTION_ID": 76,
+      "ACTION_NAME": "Amend",
+      "PLAN_TYPE_ID": 123
+     }
+    ],
+    "ACTION_OFFICERS": null,
+    "CALLHELDREASONS": [
+     {
+      "CALL_HELD_REASON_ID": 1,
+      "REASON_DESCRIPTION": "State declined"
+     }
+    ],
+    "CODEAFTERINITACCESS": null,
+    "COMPONENTS": [
+     {
+      "ALERTS_INBOX_ADDRESS": null,
+      "COMPONENT_ID": 72,
+      "COMPONENT_NAME": "DEHPG"
+     }
+    ],
+    "COMPONENTS_SP": null,
+    "FM_ANALYST": null,
+    "GSI1pk": "SEATool#1915c_waivers",
+    "GSI1sk": "MD-40198.R02.01",
+    "LEAD_ANALYST": null,
+    "OCD_REVIEW": [
+     {
+      "OCD_REVIEW_DESCRIPTION": "No",
+      "OCD_REVIEW_ID": 2
+     }
+    ],
+    "PLAN_TYPES": [
+     {
+      "PLAN_TYPE_ID": 123,
+      "PLAN_TYPE_NAME": "1915(c)"
+     }
+    ],
+    "PRIORITY_CODES": [
+     {
+      "PRIORITY_CODE": "P3",
+      "PRIORITY_CODE_DESCRIPTION": "Routine action test",
+      "PRIORITY_CODE_ID": 3
+     }
+    ],
+    "PRIORITY_COMPLEXITY": null,
+    "PROGRAM_ANALYST": null,
+    "RAI": null,
+    "REGION": [
+     {
+      "ALERTS_INBOX_ADDRESS": "SPA_Waivers_Philadelphia_R03@cms.hhs.gov",
+      "REGION_ID": "3",
+      "REGION_NAME": "Philadelphia"
+     }
+    ],
+    "REVIEW_POSITION": null,
+    "RO_ANALYST": null,
+    "SP1115": null,
+    "SPA_TYPE": [
+     {
+      "PLAN_TYPE_ID": 123,
+      "SPA_TYPE_ID": 5,
+      "SPA_TYPE_NAME": "1915(c) Waivers Do Not Use"
+     }
+    ],
+    "SPW_STATUS": [
+     {
+      "SPW_STATUS_DESC": "Withdrawn",
+      "SPW_STATUS_ID": 6
+     }
+    ],
+    "SP_APD": null,
+    "SP_APD_SUB_TYPE": null,
+    "SP_EARLY_ALERTS": {
+     "ALERTFIELD": [
+      {
+       "ACTIVE": true,
+       "EA_DROP_DOWN_VALUES": null,
+       "EA_FIELD_ID": 11,
+       "EA_LABEL": "Reduced Eligibility",
+       "EA_TYPE_ID": 1,
+       "IS_APD": false,
+       "PRIORITY_CODE_ID": 1,
+       "PRIORITY_OPERATOR": null,
+       "PRIORITY_VALUE": "true"
+      },
+      {
+       "ACTIVE": null,
+       "EA_DROP_DOWN_VALUES": null,
+       "EA_FIELD_ID": 12,
+       "EA_LABEL": "Increased Eligibility",
+       "EA_TYPE_ID": 1,
+       "IS_APD": null,
+       "PRIORITY_CODE_ID": 1,
+       "PRIORITY_OPERATOR": null,
+       "PRIORITY_VALUE": "true"
+      },
+      {
+       "ACTIVE": null,
+       "EA_DROP_DOWN_VALUES": null,
+       "EA_FIELD_ID": 13,
+       "EA_LABEL": "Reduced Benefits/Coverage",
+       "EA_TYPE_ID": 1,
+       "IS_APD": null,
+       "PRIORITY_CODE_ID": 1,
+       "PRIORITY_OPERATOR": null,
+       "PRIORITY_VALUE": "true"
+      },
+      {
+       "ACTIVE": null,
+       "EA_DROP_DOWN_VALUES": null,
+       "EA_FIELD_ID": 14,
+       "EA_LABEL": "Increased Benefits/Coverage",
+       "EA_TYPE_ID": 1,
+       "IS_APD": null,
+       "PRIORITY_CODE_ID": 1,
+       "PRIORITY_OPERATOR": null,
+       "PRIORITY_VALUE": "true"
+      },
+      {
+       "ACTIVE": null,
+       "EA_DROP_DOWN_VALUES": null,
+       "EA_FIELD_ID": 15,
+       "EA_LABEL": "Reduced Payment",
+       "EA_TYPE_ID": 1,
+       "IS_APD": null,
+       "PRIORITY_CODE_ID": 1,
+       "PRIORITY_OPERATOR": null,
+       "PRIORITY_VALUE": "true"
+      },
+      {
+       "ACTIVE": null,
+       "EA_DROP_DOWN_VALUES": null,
+       "EA_FIELD_ID": 16,
+       "EA_LABEL": "Increased Payment",
+       "EA_TYPE_ID": 1,
+       "IS_APD": null,
+       "PRIORITY_CODE_ID": 1,
+       "PRIORITY_OPERATOR": null,
+       "PRIORITY_VALUE": "true"
+      }
+     ],
+     "EARLYALERT": [
+      {
+       "EA_FIELD_ID": 11,
+       "EMAIL_SENT": null,
+       "ID_NUMBER": "MD-40198.R02.01",
+       "TEXT_DD_VAL": null,
+       "YES_NO_VAL": false
+      },
+      {
+       "EA_FIELD_ID": 12,
+       "EMAIL_SENT": null,
+       "ID_NUMBER": "MD-40198.R02.01",
+       "TEXT_DD_VAL": null,
+       "YES_NO_VAL": false
+      },
+      {
+       "EA_FIELD_ID": 13,
+       "EMAIL_SENT": null,
+       "ID_NUMBER": "MD-40198.R02.01",
+       "TEXT_DD_VAL": null,
+       "YES_NO_VAL": false
+      },
+      {
+       "EA_FIELD_ID": 14,
+       "EMAIL_SENT": null,
+       "ID_NUMBER": "MD-40198.R02.01",
+       "TEXT_DD_VAL": null,
+       "YES_NO_VAL": false
+      },
+      {
+       "EA_FIELD_ID": 15,
+       "EMAIL_SENT": null,
+       "ID_NUMBER": "MD-40198.R02.01",
+       "TEXT_DD_VAL": null,
+       "YES_NO_VAL": false
+      },
+      {
+       "EA_FIELD_ID": 16,
+       "EMAIL_SENT": null,
+       "ID_NUMBER": "MD-40198.R02.01",
+       "TEXT_DD_VAL": null,
+       "YES_NO_VAL": false
+      }
+     ]
+    },
+    "SP_IMPACT_FUNDING": null,
+    "SP_TYPE": [
+     {
+      "PLAN_TYPE_ID": 123,
+      "TYPE_CLASS": 5,
+      "TYPE_ID": 35,
+      "TYPE_NAME": "Traum Brain Injury (TBI) Do Not Use"
+     }
+    ],
+    "STATES": [
+     {
+      "PRIORITY_FLAG": false,
+      "REGION_ID": "3",
+      "STATE_CODE": "MD",
+      "STATE_NAME": "Maryland"
+     }
+    ],
+    "STATE_PLAN": {
+     "ACTION_TYPE": 76,
+     "ACTUAL_EFFECTIVE_DATE": null,
+     "ADDED_COST": null,
+     "ALERT_90_DAYS_DATE": 1379376000000,
+     "ALERT_MILESTONE1_DAYS": null,
+     "ALERT_MILESTONE2_DAYS": null,
+     "ALERT_MILESTONE3_DAYS": null,
+     "ALERT_MILESTONE4_DAYS": null,
+     "APPROVAL_DOCS_RECEIVED": false,
+     "APPROVAL_STATUS_TYPE": null,
+     "APPROVED_EFFECTIVE_DATE": null,
+     "ATTACHED_SPA": null,
+     "BACKUP_FM_ANALYST_ID": null,
+     "BACKUP_PROGRAM_ANALYST_ID": null,
+     "BLOCKING_SPAS_MEMO": "Optional entry.",
+     "BUDGET_IMPACT": null,
+     "BUDGET_IMPACT_VALUE": null,
+     "BUDGET_NEUTRALITY_ESTABLISHED_FLAG": false,
+     "BUDGET_NEUTRALITY_STATUS_MEMO": null,
+     "CALL_HELD": false,
+     "CALL_HELD_REASON_ID": 1,
+     "CHANGED_DATE": 1657824888790,
+     "CODE_AFTER_INIT_ASSESS_ID": null,
+     "COMPANION_LETTER_RECEIVED_DATE": null,
+     "COMPANION_LETTER_REQUESTED_DATE": null,
+     "COMPONENT_ID": 72,
+     "CO_SUBMISSION_DATE": 1371600000000,
+     "CURRENT_WAIVER_EXPIRES_DATE": null,
+     "CURRENT_WAIVER_TE": null,
+     "DATE_OF_CODING_CHANGE": null,
+     "DATE_SENT_PSCCAS": null,
+     "DAYS_EXTENSION_NUMBER": null,
+     "ELIMINATED_COST": null,
+     "END_DATE": null,
+     "FISCAL_QUARTER": null,
+     "FISCAL_YEAR": null,
+     "FRT_DATE": null,
+     "GAP": null,
+     "GAP2": null,
+     "GAP2_NA": false,
+     "GAP3": null,
+     "GAP3_NA": false,
+     "GAP_NA": false,
+     "GUIDANCE_DOCS_SUBMITTED": null,
+     "ID_NUMBER": "MD-40198.R02.01",
+     "INITIAL_SUBMISSION_COMPLETE": null,
+     "LEAD_ANALYST_ID": 3767,
+     "MISSING_INFORMATION": null,
+     "MMDL_IMPORT": false,
+     "OCD_REVIEW_COMMENTS_MEMO": null,
+     "OCD_REVIEW_ID": 2,
+     "ORGANIZATION_CHANGE": null,
+     "PENDING_CONCURRENCE_DATE": null,
+     "PLAN_TYPE": 123,
+     "PRIORITY_CODE_ID": 3,
+     "PRIORITY_COMMENTS_MEMO": null,
+     "PRIORITY_COMPLEXITY_ID": null,
+     "PROPOSED_DATE": 1372636800000,
+     "PUBLICHEALTH_STATEEMERGENCY": null,
+     "REGION_ID": "3",
+     "REMARKS_MEMO": null,
+     "REVIEW_POSITION_ID": null,
+     "RO_ANALYST_ID": 3862,
+     "SPA_TYPE_ID": 5,
+     "SPW_IMPORT": false,
+     "SPW_STATUS_ID": 6,
+     "START_CLOCK_DATE": 1371600000000,
+     "STATE_CODE": "MD",
+     "STATUS_DATE": 1506556800000,
+     "STATUS_MEMO": "XX_SEA_VAL_XX This is some text",
+     "SUBMISSION_DATE": 1371600000000,
+     "SUBMISSION_TYPE": null,
+     "SUMMARY_MEMO": "Different from text in status memo",
+     "TEMPLATE_ISSUES": null,
+     "TEMPLATE_ISSUES_MEMO": null,
+     "TEMPLATE_ISSUES_RESOLVED": null,
+     "TE_END_DATE": null,
+     "TITLE_NAME": "XX_SEA_VAL_XX Traumatic Brain InJury",
+     "TYPE_ID": 35,
+     "UPL_ACCEPTED": null,
+     "UUID": "47A3FDC3-6A53-4145-92D9-99376017C3DB"
+    },
+    "STATE_PLAN_SERVICETYPES": [
+     {
+      "ID_NUMBER": "MD-40198.R02.01",
+      "SERVICE_TYPE_ID": 5
+     }
+    ],
+    "STATE_PLAN_SERVICE_SUBTYPES": [
+     {
+      "ID_NUMBER": "MD-40198.R02.01",
+      "SERVICE_SUBTYPE_ID": 35
+     }
+    ],
+    "STOP_RESUME_DATES": null
+   },
+   {
+    "pk": "MD-01.000",
+    "sk": "SEATool#1657824888790",
+    "ACTIONTYPES": [
+     {
+      "ACTION_ID": 74,
+      "ACTION_NAME": "New",
+      "PLAN_TYPE_ID": 122
+     }
+    ],
+    "ACTION_OFFICERS": null,
+    "CALLHELDREASONS": null,
+    "CODEAFTERINITACCESS": null,
+    "COMPONENTS": [
+     {
+      "ALERTS_INBOX_ADDRESS": null,
+      "COMPONENT_ID": 72,
+      "COMPONENT_NAME": "DEHPG"
+     }
+    ],
+    "COMPONENTS_SP": null,
+    "FM_ANALYST": null,
+    "GSI1pk": "SEATool#1915b_waivers",
+    "GSI1sk": "MD-01.000",
+    "LEAD_ANALYST": null,
+    "OCD_REVIEW": null,
+    "PLAN_TYPES": [
+     {
+      "PLAN_TYPE_ID": 122,
+      "PLAN_TYPE_NAME": "1915(b)"
+     }
+    ],
+    "PRIORITY_CODES": null,
+    "PRIORITY_COMPLEXITY": null,
+    "PROGRAM_ANALYST": null,
+    "RAI": null,
+    "REGION": [
+     {
+      "ALERTS_INBOX_ADDRESS": "SPA_Waivers_Philadelphia_R03@cms.hhs.gov",
+      "REGION_ID": "3",
+      "REGION_NAME": "Philadelphia"
+     }
+    ],
+    "REVIEW_POSITION": null,
+    "RO_ANALYST": null,
+    "SP1115": null,
+    "SPA_TYPE": null,
+    "SPW_STATUS": [
+     {
+      "SPW_STATUS_DESC": "Approved",
+      "SPW_STATUS_ID": 4
+     }
+    ],
+    "SP_APD": null,
+    "SP_APD_SUB_TYPE": null,
+    "SP_EARLY_ALERTS": null,
+    "SP_IMPACT_FUNDING": null,
+    "SP_TYPE": null,
+    "STATES": [
+     {
+      "PRIORITY_FLAG": false,
+      "REGION_ID": "3",
+      "STATE_CODE": "MD",
+      "STATE_NAME": "Maryland"
+     }
+    ],
+    "STATE_PLAN": {
+     "ACTION_TYPE": 74,
+     "ACTUAL_EFFECTIVE_DATE": null,
+     "ADDED_COST": null,
+     "ALERT_90_DAYS_DATE": 1262131200000,
+     "ALERT_MILESTONE1_DAYS": null,
+     "ALERT_MILESTONE2_DAYS": null,
+     "ALERT_MILESTONE3_DAYS": null,
+     "ALERT_MILESTONE4_DAYS": null,
+     "APPROVAL_DOCS_RECEIVED": null,
+     "APPROVAL_STATUS_TYPE": null,
+     "APPROVED_EFFECTIVE_DATE": 1257033600000,
+     "ATTACHED_SPA": null,
+     "BACKUP_FM_ANALYST_ID": null,
+     "BACKUP_PROGRAM_ANALYST_ID": null,
+     "BLOCKING_SPAS_MEMO": null,
+     "BUDGET_IMPACT": null,
+     "BUDGET_IMPACT_VALUE": null,
+     "BUDGET_NEUTRALITY_ESTABLISHED_FLAG": false,
+     "BUDGET_NEUTRALITY_STATUS_MEMO": null,
+     "CALL_HELD": null,
+     "CALL_HELD_REASON_ID": null,
+     "CHANGED_DATE": 1657824888790,
+     "CODE_AFTER_INIT_ASSESS_ID": null,
+     "COMPANION_LETTER_RECEIVED_DATE": null,
+     "COMPANION_LETTER_REQUESTED_DATE": null,
+     "COMPONENT_ID": 72,
+     "CO_SUBMISSION_DATE": null,
+     "CURRENT_WAIVER_EXPIRES_DATE": null,
+     "CURRENT_WAIVER_TE": null,
+     "DATE_OF_CODING_CHANGE": null,
+     "DATE_SENT_PSCCAS": null,
+     "DAYS_EXTENSION_NUMBER": null,
+     "ELIMINATED_COST": null,
+     "END_DATE": null,
+     "FISCAL_QUARTER": null,
+     "FISCAL_YEAR": null,
+     "FRT_DATE": null,
+     "GAP": null,
+     "GAP2": null,
+     "GAP2_NA": false,
+     "GAP3": null,
+     "GAP3_NA": false,
+     "GAP_NA": false,
+     "GUIDANCE_DOCS_SUBMITTED": null,
+     "ID_NUMBER": "MD-01.000",
+     "INITIAL_SUBMISSION_COMPLETE": null,
+     "LEAD_ANALYST_ID": null,
+     "MISSING_INFORMATION": null,
+     "MMDL_IMPORT": null,
+     "OCD_REVIEW_COMMENTS_MEMO": null,
+     "OCD_REVIEW_ID": null,
+     "ORGANIZATION_CHANGE": null,
+     "PENDING_CONCURRENCE_DATE": null,
+     "PLAN_TYPE": 122,
+     "PRIORITY_CODE_ID": null,
+     "PRIORITY_COMMENTS_MEMO": null,
+     "PRIORITY_COMPLEXITY_ID": null,
+     "PROPOSED_DATE": 1257033600000,
+     "PUBLICHEALTH_STATEEMERGENCY": null,
+     "REGION_ID": "3",
+     "REMARKS_MEMO": null,
+     "REVIEW_POSITION_ID": null,
+     "RO_ANALYST_ID": 3514,
+     "SPA_TYPE_ID": null,
+     "SPW_IMPORT": true,
+     "SPW_STATUS_ID": 4,
+     "START_CLOCK_DATE": 1254355200000,
+     "STATE_CODE": "MD",
+     "STATUS_DATE": 1256083200000,
+     "STATUS_MEMO": "XX_SEA_VAL_XX This is some text",
+     "SUBMISSION_DATE": 1245888000000,
+     "SUBMISSION_TYPE": null,
+     "SUMMARY_MEMO": "XX_SEA_VAL_XX This is some text",
+     "TEMPLATE_ISSUES": null,
+     "TEMPLATE_ISSUES_MEMO": null,
+     "TEMPLATE_ISSUES_RESOLVED": null,
+     "TE_END_DATE": null,
+     "TITLE_NAME": "XX_SEA_VAL_XX Living at Home Case Management",
+     "TYPE_ID": null,
+     "UPL_ACCEPTED": null,
+     "UUID": "F910ED46-DDEE-46B0-AD82-F39F7EB3DFBD"
+    },
+    "STATE_PLAN_SERVICETYPES": null,
+    "STATE_PLAN_SERVICE_SUBTYPES": null,
+    "STOP_RESUME_DATES": null
+   },
+   {
+    "pk": "MD.20230",
+    "sk": "SEATool#1657824888790",
+    "ACTIONTYPES": [
+     {
+      "ACTION_ID": 75,
+      "ACTION_NAME": "Renew",
+      "PLAN_TYPE_ID": 122
+     }
+    ],
+    "ACTION_OFFICERS": null,
+    "CALLHELDREASONS": null,
+    "CODEAFTERINITACCESS": null,
+    "COMPONENTS": null,
+    "COMPONENTS_SP": null,
+    "FM_ANALYST": null,
+    "GSI1pk": "SEATool#1915b_waivers",
+    "GSI1sk": "MD.20230",
+    "LEAD_ANALYST": null,
+    "OCD_REVIEW": [
+     {
+      "OCD_REVIEW_DESCRIPTION": "Yes",
+      "OCD_REVIEW_ID": 1
+     }
+    ],
+    "PLAN_TYPES": [
+     {
+      "PLAN_TYPE_ID": 122,
+      "PLAN_TYPE_NAME": "1915(b)"
+     }
+    ],
+    "PRIORITY_CODES": null,
+    "PRIORITY_COMPLEXITY": null,
+    "PROGRAM_ANALYST": null,
+    "RAI": [
+     {
+      "ID_NUMBER": "MD.20230",
+      "RAI_RECEIVED_DATE": 1637539200000,
+      "RAI_REQUESTED_DATE": 1637280000000,
+      "RAI_WITHDRAWN_DATE": null
+     }
+    ],
+    "REGION": [
+     {
+      "ALERTS_INBOX_ADDRESS": "SPA_Waivers_Philadelphia_R03@cms.hhs.gov",
+      "REGION_ID": "3",
+      "REGION_NAME": "Philadelphia"
+     }
+    ],
+    "REVIEW_POSITION": null,
+    "RO_ANALYST": null,
+    "SP1115": null,
+    "SPA_TYPE": [
+     {
+      "PLAN_TYPE_ID": 122,
+      "SPA_TYPE_ID": 4,
+      "SPA_TYPE_NAME": "1915(b) Waivers Do Not Use"
+     }
+    ],
+    "SPW_STATUS": [
+     {
+      "SPW_STATUS_DESC": "Approved",
+      "SPW_STATUS_ID": 4
+     }
+    ],
+    "SP_APD": null,
+    "SP_APD_SUB_TYPE": null,
+    "SP_EARLY_ALERTS": null,
+    "SP_IMPACT_FUNDING": null,
+    "SP_TYPE": [
+     {
+      "PLAN_TYPE_ID": 122,
+      "TYPE_CLASS": 4,
+      "TYPE_ID": 21,
+      "TYPE_NAME": "1915 (b) (1) Do Not Use"
+     }
+    ],
+    "STATES": [
+     {
+      "PRIORITY_FLAG": false,
+      "REGION_ID": "3",
+      "STATE_CODE": "MD",
+      "STATE_NAME": "Maryland"
+     }
+    ],
+    "STATE_PLAN": {
+     "ACTION_TYPE": 75,
+     "ACTUAL_EFFECTIVE_DATE": null,
+     "ADDED_COST": null,
+     "ALERT_90_DAYS_DATE": 1645315200000,
+     "ALERT_MILESTONE1_DAYS": null,
+     "ALERT_MILESTONE2_DAYS": null,
+     "ALERT_MILESTONE3_DAYS": null,
+     "ALERT_MILESTONE4_DAYS": null,
+     "APPROVAL_DOCS_RECEIVED": false,
+     "APPROVAL_STATUS_TYPE": null,
+     "APPROVED_EFFECTIVE_DATE": null,
+     "ATTACHED_SPA": null,
+     "BACKUP_FM_ANALYST_ID": null,
+     "BACKUP_PROGRAM_ANALYST_ID": null,
+     "BLOCKING_SPAS_MEMO": null,
+     "BUDGET_IMPACT": null,
+     "BUDGET_IMPACT_VALUE": null,
+     "BUDGET_NEUTRALITY_ESTABLISHED_FLAG": false,
+     "BUDGET_NEUTRALITY_STATUS_MEMO": null,
+     "CALL_HELD": null,
+     "CALL_HELD_REASON_ID": null,
+     "CHANGED_DATE": 1657824888790,
+     "CODE_AFTER_INIT_ASSESS_ID": null,
+     "COMPANION_LETTER_RECEIVED_DATE": null,
+     "COMPANION_LETTER_REQUESTED_DATE": null,
+     "COMPONENT_ID": null,
+     "CO_SUBMISSION_DATE": 1638144000000,
+     "CURRENT_WAIVER_EXPIRES_DATE": null,
+     "CURRENT_WAIVER_TE": null,
+     "DATE_OF_CODING_CHANGE": null,
+     "DATE_SENT_PSCCAS": null,
+     "DAYS_EXTENSION_NUMBER": null,
+     "ELIMINATED_COST": null,
+     "END_DATE": null,
+     "FISCAL_QUARTER": null,
+     "FISCAL_YEAR": null,
+     "FRT_DATE": null,
+     "GAP": null,
+     "GAP2": null,
+     "GAP2_NA": null,
+     "GAP3": null,
+     "GAP3_NA": null,
+     "GAP_NA": null,
+     "GUIDANCE_DOCS_SUBMITTED": null,
+     "ID_NUMBER": "MD.20230",
+     "INITIAL_SUBMISSION_COMPLETE": null,
+     "LEAD_ANALYST_ID": null,
+     "MISSING_INFORMATION": null,
+     "MMDL_IMPORT": false,
+     "OCD_REVIEW_COMMENTS_MEMO": "test ",
+     "OCD_REVIEW_ID": 1,
+     "ORGANIZATION_CHANGE": null,
+     "PENDING_CONCURRENCE_DATE": null,
+     "PLAN_TYPE": 122,
+     "PRIORITY_CODE_ID": null,
+     "PRIORITY_COMMENTS_MEMO": null,
+     "PRIORITY_COMPLEXITY_ID": null,
+     "PROPOSED_DATE": null,
+     "PUBLICHEALTH_STATEEMERGENCY": false,
+     "REGION_ID": "3",
+     "REMARKS_MEMO": null,
+     "REVIEW_POSITION_ID": null,
+     "RO_ANALYST_ID": null,
+     "SPA_TYPE_ID": 4,
+     "SPW_IMPORT": null,
+     "SPW_STATUS_ID": 4,
+     "START_CLOCK_DATE": 1637539200000,
+     "STATE_CODE": "MD",
+     "STATUS_DATE": 1637581983093,
+     "STATUS_MEMO": null,
+     "SUBMISSION_DATE": 1635120000000,
+     "SUBMISSION_TYPE": null,
+     "SUMMARY_MEMO": "This is just a test",
+     "TEMPLATE_ISSUES": null,
+     "TEMPLATE_ISSUES_MEMO": null,
+     "TEMPLATE_ISSUES_RESOLVED": null,
+     "TE_END_DATE": null,
+     "TITLE_NAME": "test pendinf off the clock",
+     "TYPE_ID": 21,
+     "UPL_ACCEPTED": null,
+     "UUID": "71D0425E-27DD-4559-BDFB-A9F9B066CFC2"
+    },
+    "STATE_PLAN_SERVICETYPES": [
+     {
+      "ID_NUMBER": "MD.20230",
+      "SERVICE_TYPE_ID": 4
+     }
+    ],
+    "STATE_PLAN_SERVICE_SUBTYPES": [
+     {
+      "ID_NUMBER": "MD.20230",
+      "SERVICE_SUBTYPE_ID": 21
+     }
+    ],
+    "STOP_RESUME_DATES": null
+   },
+   {
+    "pk": "MD.2233",
+    "sk": "SEATool#1657824888790",
+    "ACTIONTYPES": [
+     {
+      "ACTION_ID": 75,
+      "ACTION_NAME": "Renew",
+      "PLAN_TYPE_ID": 122
+     }
+    ],
+    "ACTION_OFFICERS": [
+     {
+      "EMAIL": null,
+      "FIRST_NAME": "Anne",
+      "INITIALS": null,
+      "LAST_NAME": "aaa",
+      "OFFICER_ID": 3428,
+      "POSITION_ID": null,
+      "TELEPHONE": null
+     }
+    ],
+    "CALLHELDREASONS": [
+     {
+      "CALL_HELD_REASON_ID": 1,
+      "REASON_DESCRIPTION": "State declined"
+     }
+    ],
+    "CODEAFTERINITACCESS": null,
+    "COMPONENTS": [
+     {
+      "ALERTS_INBOX_ADDRESS": null,
+      "COMPONENT_ID": 73,
+      "COMPONENT_NAME": "CAHPG"
+     }
+    ],
+    "COMPONENTS_SP": null,
+    "FM_ANALYST": null,
+    "GSI1pk": "SEATool#1915b_waivers",
+    "GSI1sk": "MD.2233",
+    "LEAD_ANALYST": null,
+    "OCD_REVIEW": [
+     {
+      "OCD_REVIEW_DESCRIPTION": "No",
+      "OCD_REVIEW_ID": 2
+     }
+    ],
+    "PLAN_TYPES": [
+     {
+      "PLAN_TYPE_ID": 122,
+      "PLAN_TYPE_NAME": "1915(b)"
+     }
+    ],
+    "PRIORITY_CODES": [
+     {
+      "PRIORITY_CODE": "P3",
+      "PRIORITY_CODE_DESCRIPTION": "Routine action test",
+      "PRIORITY_CODE_ID": 3
+     }
+    ],
+    "PRIORITY_COMPLEXITY": null,
+    "PROGRAM_ANALYST": null,
+    "RAI": [
+     {
+      "ID_NUMBER": "MD.2233",
+      "RAI_RECEIVED_DATE": 1638230400000,
+      "RAI_REQUESTED_DATE": 1633651200000,
+      "RAI_WITHDRAWN_DATE": null
+     }
+    ],
+    "REGION": [
+     {
+      "ALERTS_INBOX_ADDRESS": "SPA_Waivers_Philadelphia_R03@cms.hhs.gov",
+      "REGION_ID": "3",
+      "REGION_NAME": "Philadelphia"
+     }
+    ],
+    "REVIEW_POSITION": null,
+    "RO_ANALYST": null,
+    "SP1115": null,
+    "SPA_TYPE": [
+     {
+      "PLAN_TYPE_ID": 122,
+      "SPA_TYPE_ID": 4,
+      "SPA_TYPE_NAME": "1915(b) Waivers Do Not Use"
+     }
+    ],
+    "SPW_STATUS": [
+     {
+      "SPW_STATUS_DESC": "Pending",
+      "SPW_STATUS_ID": 1
+     }
+    ],
+    "SP_APD": null,
+    "SP_APD_SUB_TYPE": null,
+    "SP_EARLY_ALERTS": null,
+    "SP_IMPACT_FUNDING": null,
+    "SP_TYPE": [
+     {
+      "PLAN_TYPE_ID": 122,
+      "TYPE_CLASS": 4,
+      "TYPE_ID": 21,
+      "TYPE_NAME": "1915 (b) (1) Do Not Use"
+     }
+    ],
+    "STATES": [
+     {
+      "PRIORITY_FLAG": false,
+      "REGION_ID": "3",
+      "STATE_CODE": "MD",
+      "STATE_NAME": "Maryland"
+     }
+    ],
+    "STATE_PLAN": {
+     "ACTION_TYPE": 75,
+     "ACTUAL_EFFECTIVE_DATE": null,
+     "ADDED_COST": null,
+     "ALERT_90_DAYS_DATE": 1646006400000,
+     "ALERT_MILESTONE1_DAYS": null,
+     "ALERT_MILESTONE2_DAYS": null,
+     "ALERT_MILESTONE3_DAYS": null,
+     "ALERT_MILESTONE4_DAYS": null,
+     "APPROVAL_DOCS_RECEIVED": false,
+     "APPROVAL_STATUS_TYPE": null,
+     "APPROVED_EFFECTIVE_DATE": null,
+     "ATTACHED_SPA": null,
+     "BACKUP_FM_ANALYST_ID": null,
+     "BACKUP_PROGRAM_ANALYST_ID": null,
+     "BLOCKING_SPAS_MEMO": null,
+     "BUDGET_IMPACT": null,
+     "BUDGET_IMPACT_VALUE": null,
+     "BUDGET_NEUTRALITY_ESTABLISHED_FLAG": false,
+     "BUDGET_NEUTRALITY_STATUS_MEMO": null,
+     "CALL_HELD": false,
+     "CALL_HELD_REASON_ID": 1,
+     "CHANGED_DATE": 1657824888790,
+     "CODE_AFTER_INIT_ASSESS_ID": null,
+     "COMPANION_LETTER_RECEIVED_DATE": null,
+     "COMPANION_LETTER_REQUESTED_DATE": null,
+     "COMPONENT_ID": 73,
+     "CO_SUBMISSION_DATE": null,
+     "CURRENT_WAIVER_EXPIRES_DATE": null,
+     "CURRENT_WAIVER_TE": null,
+     "DATE_OF_CODING_CHANGE": null,
+     "DATE_SENT_PSCCAS": null,
+     "DAYS_EXTENSION_NUMBER": null,
+     "ELIMINATED_COST": null,
+     "END_DATE": null,
+     "FISCAL_QUARTER": null,
+     "FISCAL_YEAR": null,
+     "FRT_DATE": null,
+     "GAP": null,
+     "GAP2": null,
+     "GAP2_NA": null,
+     "GAP3": null,
+     "GAP3_NA": null,
+     "GAP_NA": null,
+     "GUIDANCE_DOCS_SUBMITTED": null,
+     "ID_NUMBER": "MD.2233",
+     "INITIAL_SUBMISSION_COMPLETE": null,
+     "LEAD_ANALYST_ID": null,
+     "MISSING_INFORMATION": null,
+     "MMDL_IMPORT": false,
+     "OCD_REVIEW_COMMENTS_MEMO": null,
+     "OCD_REVIEW_ID": 2,
+     "ORGANIZATION_CHANGE": null,
+     "PENDING_CONCURRENCE_DATE": null,
+     "PLAN_TYPE": 122,
+     "PRIORITY_CODE_ID": 3,
+     "PRIORITY_COMMENTS_MEMO": "dddd",
+     "PRIORITY_COMPLEXITY_ID": null,
+     "PROPOSED_DATE": 1637798400000,
+     "PUBLICHEALTH_STATEEMERGENCY": false,
+     "REGION_ID": "3",
+     "REMARKS_MEMO": "wwww",
+     "REVIEW_POSITION_ID": null,
+     "RO_ANALYST_ID": null,
+     "SPA_TYPE_ID": 4,
+     "SPW_IMPORT": null,
+     "SPW_STATUS_ID": 1,
+     "START_CLOCK_DATE": 1638230400000,
+     "STATE_CODE": "MD",
+     "STATUS_DATE": 1637539200000,
+     "STATUS_MEMO": null,
+     "SUBMISSION_DATE": 1637366400000,
+     "SUBMISSION_TYPE": null,
+     "SUMMARY_MEMO": "rfdd",
+     "TEMPLATE_ISSUES": null,
+     "TEMPLATE_ISSUES_MEMO": null,
+     "TEMPLATE_ISSUES_RESOLVED": null,
+     "TE_END_DATE": null,
+     "TITLE_NAME": "555",
+     "TYPE_ID": 21,
+     "UPL_ACCEPTED": null,
+     "UUID": "BF60ED38-3E6E-4D1C-BC0F-0227FF7BF3D0"
+    },
+    "STATE_PLAN_SERVICETYPES": [
+     {
+      "ID_NUMBER": "MD.2233",
+      "SERVICE_TYPE_ID": 4
+     }
+    ],
+    "STATE_PLAN_SERVICE_SUBTYPES": [
+     {
+      "ID_NUMBER": "MD.2233",
+      "SERVICE_SUBTYPE_ID": 21
+     }
+    ],
+    "STOP_RESUME_DATES": null
+   },
+   {
+    "pk": "MD-9995",
+    "sk": "SEATool#1657824888790",
+    "ACTIONTYPES": [
+     {
+      "ACTION_ID": 74,
+      "ACTION_NAME": "New",
+      "PLAN_TYPE_ID": 122
+     }
+    ],
+    "ACTION_OFFICERS": null,
+    "CALLHELDREASONS": null,
+    "CODEAFTERINITACCESS": null,
+    "COMPONENTS": null,
+    "COMPONENTS_SP": null,
+    "FM_ANALYST": null,
+    "GSI1pk": "SEATool#1915b_waivers",
+    "GSI1sk": "MD-9995",
+    "LEAD_ANALYST": null,
+    "OCD_REVIEW": [
+     {
+      "OCD_REVIEW_DESCRIPTION": "No",
+      "OCD_REVIEW_ID": 2
+     }
+    ],
+    "PLAN_TYPES": [
+     {
+      "PLAN_TYPE_ID": 122,
+      "PLAN_TYPE_NAME": "1915(b)"
+     }
+    ],
+    "PRIORITY_CODES": [
+     {
+      "PRIORITY_CODE": "P3",
+      "PRIORITY_CODE_DESCRIPTION": "Routine action test",
+      "PRIORITY_CODE_ID": 3
+     }
+    ],
+    "PRIORITY_COMPLEXITY": null,
+    "PROGRAM_ANALYST": null,
+    "RAI": null,
+    "REGION": [
+     {
+      "ALERTS_INBOX_ADDRESS": "SPA_Waivers_Philadelphia_R03@cms.hhs.gov",
+      "REGION_ID": "3",
+      "REGION_NAME": "Philadelphia"
+     }
+    ],
+    "REVIEW_POSITION": null,
+    "RO_ANALYST": null,
+    "SP1115": null,
+    "SPA_TYPE": [
+     {
+      "PLAN_TYPE_ID": 122,
+      "SPA_TYPE_ID": 32,
+      "SPA_TYPE_NAME": "MSTAT Do Not Use"
+     }
+    ],
+    "SPW_STATUS": [
+     {
+      "SPW_STATUS_DESC": "Pending",
+      "SPW_STATUS_ID": 1
+     }
+    ],
+    "SP_APD": null,
+    "SP_APD_SUB_TYPE": null,
+    "SP_EARLY_ALERTS": {
+     "ALERTFIELD": [
+      {
+       "ACTIVE": true,
+       "EA_DROP_DOWN_VALUES": null,
+       "EA_FIELD_ID": 11,
+       "EA_LABEL": "Reduced Eligibility",
+       "EA_TYPE_ID": 1,
+       "IS_APD": false,
+       "PRIORITY_CODE_ID": 1,
+       "PRIORITY_OPERATOR": null,
+       "PRIORITY_VALUE": "true"
+      },
+      {
+       "ACTIVE": null,
+       "EA_DROP_DOWN_VALUES": null,
+       "EA_FIELD_ID": 15,
+       "EA_LABEL": "Reduced Payment",
+       "EA_TYPE_ID": 1,
+       "IS_APD": null,
+       "PRIORITY_CODE_ID": 1,
+       "PRIORITY_OPERATOR": null,
+       "PRIORITY_VALUE": "true"
+      },
+      {
+       "ACTIVE": null,
+       "EA_DROP_DOWN_VALUES": null,
+       "EA_FIELD_ID": 22,
+       "EA_LABEL": "Eliminates Optional Benefit",
+       "EA_TYPE_ID": 1,
+       "IS_APD": null,
+       "PRIORITY_CODE_ID": 1,
+       "PRIORITY_OPERATOR": null,
+       "PRIORITY_VALUE": "false"
+      },
+      {
+       "ACTIVE": null,
+       "EA_DROP_DOWN_VALUES": null,
+       "EA_FIELD_ID": 23,
+       "EA_LABEL": "Sufficiency Analysis Required",
+       "EA_TYPE_ID": 1,
+       "IS_APD": null,
+       "PRIORITY_CODE_ID": 1,
+       "PRIORITY_OPERATOR": null,
+       "PRIORITY_VALUE": "true"
+      }
+     ],
+     "EARLYALERT": [
+      {
+       "EA_FIELD_ID": 11,
+       "EMAIL_SENT": null,
+       "ID_NUMBER": "MD-9995",
+       "TEXT_DD_VAL": null,
+       "YES_NO_VAL": null
+      },
+      {
+       "EA_FIELD_ID": 15,
+       "EMAIL_SENT": null,
+       "ID_NUMBER": "MD-9995",
+       "TEXT_DD_VAL": null,
+       "YES_NO_VAL": null
+      },
+      {
+       "EA_FIELD_ID": 22,
+       "EMAIL_SENT": null,
+       "ID_NUMBER": "MD-9995",
+       "TEXT_DD_VAL": null,
+       "YES_NO_VAL": null
+      },
+      {
+       "EA_FIELD_ID": 23,
+       "EMAIL_SENT": null,
+       "ID_NUMBER": "MD-9995",
+       "TEXT_DD_VAL": null,
+       "YES_NO_VAL": null
+      }
+     ]
+    },
+    "SP_IMPACT_FUNDING": null,
+    "SP_TYPE": null,
+    "STATES": [
+     {
+      "PRIORITY_FLAG": false,
+      "REGION_ID": "3",
+      "STATE_CODE": "MD",
+      "STATE_NAME": "Maryland"
+     }
+    ],
+    "STATE_PLAN": {
+     "ACTION_TYPE": 74,
+     "ACTUAL_EFFECTIVE_DATE": null,
+     "ADDED_COST": null,
+     "ALERT_90_DAYS_DATE": 1459382400000,
+     "ALERT_MILESTONE1_DAYS": null,
+     "ALERT_MILESTONE2_DAYS": null,
+     "ALERT_MILESTONE3_DAYS": null,
+     "ALERT_MILESTONE4_DAYS": null,
+     "APPROVAL_DOCS_RECEIVED": false,
+     "APPROVAL_STATUS_TYPE": null,
+     "APPROVED_EFFECTIVE_DATE": null,
+     "ATTACHED_SPA": null,
+     "BACKUP_FM_ANALYST_ID": null,
+     "BACKUP_PROGRAM_ANALYST_ID": null,
+     "BLOCKING_SPAS_MEMO": "nothing new",
+     "BUDGET_IMPACT": null,
+     "BUDGET_IMPACT_VALUE": null,
+     "BUDGET_NEUTRALITY_ESTABLISHED_FLAG": false,
+     "BUDGET_NEUTRALITY_STATUS_MEMO": null,
+     "CALL_HELD": true,
+     "CALL_HELD_REASON_ID": null,
+     "CHANGED_DATE": 1657824888790,
+     "CODE_AFTER_INIT_ASSESS_ID": null,
+     "COMPANION_LETTER_RECEIVED_DATE": null,
+     "COMPANION_LETTER_REQUESTED_DATE": null,
+     "COMPONENT_ID": null,
+     "CO_SUBMISSION_DATE": null,
+     "CURRENT_WAIVER_EXPIRES_DATE": null,
+     "CURRENT_WAIVER_TE": null,
+     "DATE_OF_CODING_CHANGE": null,
+     "DATE_SENT_PSCCAS": null,
+     "DAYS_EXTENSION_NUMBER": null,
+     "ELIMINATED_COST": null,
+     "END_DATE": null,
+     "FISCAL_QUARTER": null,
+     "FISCAL_YEAR": null,
+     "FRT_DATE": null,
+     "GAP": null,
+     "GAP2": null,
+     "GAP2_NA": false,
+     "GAP3": null,
+     "GAP3_NA": false,
+     "GAP_NA": false,
+     "GUIDANCE_DOCS_SUBMITTED": null,
+     "ID_NUMBER": "MD-9995",
+     "INITIAL_SUBMISSION_COMPLETE": null,
+     "LEAD_ANALYST_ID": null,
+     "MISSING_INFORMATION": null,
+     "MMDL_IMPORT": null,
+     "OCD_REVIEW_COMMENTS_MEMO": null,
+     "OCD_REVIEW_ID": 2,
+     "ORGANIZATION_CHANGE": null,
+     "PENDING_CONCURRENCE_DATE": null,
+     "PLAN_TYPE": 122,
+     "PRIORITY_CODE_ID": 3,
+     "PRIORITY_COMMENTS_MEMO": null,
+     "PRIORITY_COMPLEXITY_ID": null,
+     "PROPOSED_DATE": null,
+     "PUBLICHEALTH_STATEEMERGENCY": null,
+     "REGION_ID": "3",
+     "REMARKS_MEMO": null,
+     "REVIEW_POSITION_ID": null,
+     "RO_ANALYST_ID": null,
+     "SPA_TYPE_ID": 32,
+     "SPW_IMPORT": false,
+     "SPW_STATUS_ID": 1,
+     "START_CLOCK_DATE": 1451606400000,
+     "STATE_CODE": "MD",
+     "STATUS_DATE": 1504224000000,
+     "STATUS_MEMO": "nothing",
+     "SUBMISSION_DATE": 1451606400000,
+     "SUBMISSION_TYPE": null,
+     "SUMMARY_MEMO": "for 6205",
+     "TEMPLATE_ISSUES": null,
+     "TEMPLATE_ISSUES_MEMO": null,
+     "TEMPLATE_ISSUES_RESOLVED": null,
+     "TE_END_DATE": null,
+     "TITLE_NAME": "More testing",
+     "TYPE_ID": null,
+     "UPL_ACCEPTED": null,
+     "UUID": "BBEED89F-38CD-4B64-8B97-23375C170116"
+    },
+    "STATE_PLAN_SERVICETYPES": [
+     {
+      "ID_NUMBER": "MD-9995",
+      "SERVICE_TYPE_ID": 32
+     }
+    ],
+    "STATE_PLAN_SERVICE_SUBTYPES": null,
+    "STOP_RESUME_DATES": null
+   },
+   {
+    "pk": "MD-21-0999-SID",
+    "sk": "SEATool#1657824888790",
+    "ACTIONTYPES": [
+     {
+      "ACTION_ID": 73,
+      "ACTION_NAME": "Amend",
+      "PLAN_TYPE_ID": 122
+     }
+    ],
+    "ACTION_OFFICERS": null,
+    "CALLHELDREASONS": null,
+    "CODEAFTERINITACCESS": null,
+    "COMPONENTS": null,
+    "COMPONENTS_SP": null,
+    "FM_ANALYST": null,
+    "GSI1pk": "SEATool#1915b_waivers",
+    "GSI1sk": "MD-21-0999-SID",
+    "LEAD_ANALYST": null,
+    "OCD_REVIEW": [
+     {
+      "OCD_REVIEW_DESCRIPTION": "No",
+      "OCD_REVIEW_ID": 2
+     }
+    ],
+    "PLAN_TYPES": [
+     {
+      "PLAN_TYPE_ID": 122,
+      "PLAN_TYPE_NAME": "1915(b)"
+     }
+    ],
+    "PRIORITY_CODES": null,
+    "PRIORITY_COMPLEXITY": null,
+    "PROGRAM_ANALYST": null,
+    "RAI": null,
+    "REGION": [
+     {
+      "ALERTS_INBOX_ADDRESS": "SPA_Waivers_Philadelphia_R03@cms.hhs.gov",
+      "REGION_ID": "3",
+      "REGION_NAME": "Philadelphia"
+     }
+    ],
+    "REVIEW_POSITION": null,
+    "RO_ANALYST": null,
+    "SP1115": null,
+    "SPA_TYPE": [
+     {
+      "PLAN_TYPE_ID": 122,
+      "SPA_TYPE_ID": 4,
+      "SPA_TYPE_NAME": "1915(b) Waivers Do Not Use"
+     }
+    ],
+    "SPW_STATUS": [
+     {
+      "SPW_STATUS_DESC": "Pending",
+      "SPW_STATUS_ID": 1
+     }
+    ],
+    "SP_APD": null,
+    "SP_APD_SUB_TYPE": null,
+    "SP_EARLY_ALERTS": {
+     "ALERTFIELD": [
+      {
+       "ACTIVE": true,
+       "EA_DROP_DOWN_VALUES": null,
+       "EA_FIELD_ID": 11,
+       "EA_LABEL": "Reduced Eligibility",
+       "EA_TYPE_ID": 1,
+       "IS_APD": false,
+       "PRIORITY_CODE_ID": 1,
+       "PRIORITY_OPERATOR": null,
+       "PRIORITY_VALUE": "true"
+      },
+      {
+       "ACTIVE": true,
+       "EA_DROP_DOWN_VALUES": null,
+       "EA_FIELD_ID": 24,
+       "EA_LABEL": "Meets expedited criteria",
+       "EA_TYPE_ID": 1,
+       "IS_APD": null,
+       "PRIORITY_CODE_ID": 3,
+       "PRIORITY_OPERATOR": null,
+       "PRIORITY_VALUE": "true"
+      },
+      {
+       "ACTIVE": true,
+       "EA_DROP_DOWN_VALUES": "1",
+       "EA_FIELD_ID": 25,
+       "EA_LABEL": "Customary action",
+       "EA_TYPE_ID": 1,
+       "IS_APD": null,
+       "PRIORITY_CODE_ID": 2,
+       "PRIORITY_OPERATOR": null,
+       "PRIORITY_VALUE": "true"
+      }
+     ],
+     "EARLYALERT": [
+      {
+       "EA_FIELD_ID": 11,
+       "EMAIL_SENT": null,
+       "ID_NUMBER": "MD-21-0999-sid",
+       "TEXT_DD_VAL": null,
+       "YES_NO_VAL": null
+      },
+      {
+       "EA_FIELD_ID": 24,
+       "EMAIL_SENT": null,
+       "ID_NUMBER": "MD-21-0999-sid",
+       "TEXT_DD_VAL": null,
+       "YES_NO_VAL": null
+      },
+      {
+       "EA_FIELD_ID": 25,
+       "EMAIL_SENT": null,
+       "ID_NUMBER": "MD-21-0999-sid",
+       "TEXT_DD_VAL": null,
+       "YES_NO_VAL": null
+      }
+     ]
+    },
+    "SP_IMPACT_FUNDING": null,
+    "SP_TYPE": [
+     {
+      "PLAN_TYPE_ID": 122,
+      "TYPE_CLASS": 4,
+      "TYPE_ID": 22,
+      "TYPE_NAME": "1915 (b) (2) Do Not Use"
+     }
+    ],
+    "STATES": [
+     {
+      "PRIORITY_FLAG": false,
+      "REGION_ID": "3",
+      "STATE_CODE": "MD",
+      "STATE_NAME": "Maryland"
+     }
+    ],
+    "STATE_PLAN": {
+     "ACTION_TYPE": 73,
+     "ACTUAL_EFFECTIVE_DATE": null,
+     "ADDED_COST": null,
+     "ALERT_90_DAYS_DATE": 1638144000000,
+     "ALERT_MILESTONE1_DAYS": null,
+     "ALERT_MILESTONE2_DAYS": null,
+     "ALERT_MILESTONE3_DAYS": null,
+     "ALERT_MILESTONE4_DAYS": null,
+     "APPROVAL_DOCS_RECEIVED": false,
+     "APPROVAL_STATUS_TYPE": null,
+     "APPROVED_EFFECTIVE_DATE": null,
+     "ATTACHED_SPA": null,
+     "BACKUP_FM_ANALYST_ID": null,
+     "BACKUP_PROGRAM_ANALYST_ID": null,
+     "BLOCKING_SPAS_MEMO": null,
+     "BUDGET_IMPACT": null,
+     "BUDGET_IMPACT_VALUE": null,
+     "BUDGET_NEUTRALITY_ESTABLISHED_FLAG": false,
+     "BUDGET_NEUTRALITY_STATUS_MEMO": null,
+     "CALL_HELD": null,
+     "CALL_HELD_REASON_ID": null,
+     "CHANGED_DATE": 1657824888790,
+     "CODE_AFTER_INIT_ASSESS_ID": null,
+     "COMPANION_LETTER_RECEIVED_DATE": null,
+     "COMPANION_LETTER_REQUESTED_DATE": null,
+     "COMPONENT_ID": null,
+     "CO_SUBMISSION_DATE": null,
+     "CURRENT_WAIVER_EXPIRES_DATE": null,
+     "CURRENT_WAIVER_TE": null,
+     "DATE_OF_CODING_CHANGE": null,
+     "DATE_SENT_PSCCAS": null,
+     "DAYS_EXTENSION_NUMBER": null,
+     "ELIMINATED_COST": null,
+     "END_DATE": null,
+     "FISCAL_QUARTER": null,
+     "FISCAL_YEAR": null,
+     "FRT_DATE": null,
+     "GAP": null,
+     "GAP2": null,
+     "GAP2_NA": null,
+     "GAP3": null,
+     "GAP3_NA": null,
+     "GAP_NA": null,
+     "GUIDANCE_DOCS_SUBMITTED": null,
+     "ID_NUMBER": "MD-21-0999-sid",
+     "INITIAL_SUBMISSION_COMPLETE": null,
+     "LEAD_ANALYST_ID": null,
+     "MISSING_INFORMATION": "test",
+     "MMDL_IMPORT": null,
+     "OCD_REVIEW_COMMENTS_MEMO": null,
+     "OCD_REVIEW_ID": 2,
+     "ORGANIZATION_CHANGE": null,
+     "PENDING_CONCURRENCE_DATE": null,
+     "PLAN_TYPE": 122,
+     "PRIORITY_CODE_ID": null,
+     "PRIORITY_COMMENTS_MEMO": null,
+     "PRIORITY_COMPLEXITY_ID": null,
+     "PROPOSED_DATE": null,
+     "PUBLICHEALTH_STATEEMERGENCY": null,
+     "REGION_ID": "3",
+     "REMARKS_MEMO": null,
+     "REVIEW_POSITION_ID": null,
+     "RO_ANALYST_ID": null,
+     "SPA_TYPE_ID": 4,
+     "SPW_IMPORT": false,
+     "SPW_STATUS_ID": 1,
+     "START_CLOCK_DATE": 1630368000000,
+     "STATE_CODE": "MD",
+     "STATUS_DATE": 1629936000000,
+     "STATUS_MEMO": null,
+     "SUBMISSION_DATE": 1630368000000,
+     "SUBMISSION_TYPE": null,
+     "SUMMARY_MEMO": "test demo",
+     "TEMPLATE_ISSUES": null,
+     "TEMPLATE_ISSUES_MEMO": null,
+     "TEMPLATE_ISSUES_RESOLVED": null,
+     "TE_END_DATE": null,
+     "TITLE_NAME": "1915b wavier for MD State",
+     "TYPE_ID": 22,
+     "UPL_ACCEPTED": null,
+     "UUID": "F9136BFB-89F9-4A2B-9C31-1186A2EBF1F3"
+    },
+    "STATE_PLAN_SERVICETYPES": [
+     {
+      "ID_NUMBER": "MD-21-0999-sid",
+      "SERVICE_TYPE_ID": 4
+     }
+    ],
+    "STATE_PLAN_SERVICE_SUBTYPES": [
+     {
+      "ID_NUMBER": "MD-21-0999-sid",
+      "SERVICE_SUBTYPE_ID": 22
+     }
+    ],
+    "STOP_RESUME_DATES": null
+   },
+   {
+    "pk": "MD-02.R00.M04",
+    "sk": "SEATool#1657824888790",
+    "ACTIONTYPES": [
+     {
+      "ACTION_ID": 73,
+      "ACTION_NAME": "Amend",
+      "PLAN_TYPE_ID": 122
+     }
+    ],
+    "ACTION_OFFICERS": [
+     {
+      "EMAIL": "Robin.Preston@example.com",
+      "FIRST_NAME": "Robin",
+      "INITIALS": null,
+      "LAST_NAME": "Preston",
+      "OFFICER_ID": 3572,
+      "POSITION_ID": 530,
+      "TELEPHONE": "410-786-3420"
+     },
+     {
+      "EMAIL": "sylvia.robinson-tibbs@example.com",
+      "FIRST_NAME": "Sylvia",
+      "INITIALS": null,
+      "LAST_NAME": "Robinson-Tibbs",
+      "OFFICER_ID": 3829,
+      "POSITION_ID": 538,
+      "TELEPHONE": "(410) 786-6232"
+     }
+    ],
+    "CALLHELDREASONS": null,
+    "CODEAFTERINITACCESS": null,
+    "COMPONENTS": [
+     {
+      "ALERTS_INBOX_ADDRESS": null,
+      "COMPONENT_ID": 72,
+      "COMPONENT_NAME": "DEHPG"
+     }
+    ],
+    "COMPONENTS_SP": null,
+    "FM_ANALYST": null,
+    "GSI1pk": "SEATool#1915b_waivers",
+    "GSI1sk": "MD-02.R00.M04",
+    "LEAD_ANALYST": null,
+    "OCD_REVIEW": [
+     {
+      "OCD_REVIEW_DESCRIPTION": "Yes",
+      "OCD_REVIEW_ID": 1
+     }
+    ],
+    "PLAN_TYPES": [
+     {
+      "PLAN_TYPE_ID": 122,
+      "PLAN_TYPE_NAME": "1915(b)"
+     }
+    ],
+    "PRIORITY_CODES": [
+     {
+      "PRIORITY_CODE": "P3",
+      "PRIORITY_CODE_DESCRIPTION": "Routine action test",
+      "PRIORITY_CODE_ID": 3
+     }
+    ],
+    "PRIORITY_COMPLEXITY": null,
+    "PROGRAM_ANALYST": null,
+    "RAI": [
+     {
+      "ID_NUMBER": "MD-02.R00.M04",
+      "RAI_RECEIVED_DATE": 1411603200000,
+      "RAI_REQUESTED_DATE": 1387497600000,
+      "RAI_WITHDRAWN_DATE": null
+     }
+    ],
+    "REGION": [
+     {
+      "ALERTS_INBOX_ADDRESS": "SPA_Waivers_Philadelphia_R03@cms.hhs.gov",
+      "REGION_ID": "3",
+      "REGION_NAME": "Philadelphia"
+     }
+    ],
+    "REVIEW_POSITION": null,
+    "RO_ANALYST": null,
+    "SP1115": null,
+    "SPA_TYPE": [
+     {
+      "PLAN_TYPE_ID": 122,
+      "SPA_TYPE_ID": 4,
+      "SPA_TYPE_NAME": "1915(b) Waivers Do Not Use"
+     }
+    ],
+    "SPW_STATUS": [
+     {
+      "SPW_STATUS_DESC": "Approved",
+      "SPW_STATUS_ID": 4
+     }
+    ],
+    "SP_APD": null,
+    "SP_APD_SUB_TYPE": null,
+    "SP_EARLY_ALERTS": {
+     "ALERTFIELD": [
+      {
+       "ACTIVE": true,
+       "EA_DROP_DOWN_VALUES": null,
+       "EA_FIELD_ID": 11,
+       "EA_LABEL": "Reduced Eligibility",
+       "EA_TYPE_ID": 1,
+       "IS_APD": false,
+       "PRIORITY_CODE_ID": 1,
+       "PRIORITY_OPERATOR": null,
+       "PRIORITY_VALUE": "true"
+      },
+      {
+       "ACTIVE": null,
+       "EA_DROP_DOWN_VALUES": null,
+       "EA_FIELD_ID": 12,
+       "EA_LABEL": "Increased Eligibility",
+       "EA_TYPE_ID": 1,
+       "IS_APD": null,
+       "PRIORITY_CODE_ID": 1,
+       "PRIORITY_OPERATOR": null,
+       "PRIORITY_VALUE": "true"
+      },
+      {
+       "ACTIVE": null,
+       "EA_DROP_DOWN_VALUES": null,
+       "EA_FIELD_ID": 13,
+       "EA_LABEL": "Reduced Benefits/Coverage",
+       "EA_TYPE_ID": 1,
+       "IS_APD": null,
+       "PRIORITY_CODE_ID": 1,
+       "PRIORITY_OPERATOR": null,
+       "PRIORITY_VALUE": "true"
+      },
+      {
+       "ACTIVE": null,
+       "EA_DROP_DOWN_VALUES": null,
+       "EA_FIELD_ID": 14,
+       "EA_LABEL": "Increased Benefits/Coverage",
+       "EA_TYPE_ID": 1,
+       "IS_APD": null,
+       "PRIORITY_CODE_ID": 1,
+       "PRIORITY_OPERATOR": null,
+       "PRIORITY_VALUE": "true"
+      },
+      {
+       "ACTIVE": null,
+       "EA_DROP_DOWN_VALUES": null,
+       "EA_FIELD_ID": 15,
+       "EA_LABEL": "Reduced Payment",
+       "EA_TYPE_ID": 1,
+       "IS_APD": null,
+       "PRIORITY_CODE_ID": 1,
+       "PRIORITY_OPERATOR": null,
+       "PRIORITY_VALUE": "true"
+      },
+      {
+       "ACTIVE": null,
+       "EA_DROP_DOWN_VALUES": null,
+       "EA_FIELD_ID": 16,
+       "EA_LABEL": "Increased Payment",
+       "EA_TYPE_ID": 1,
+       "IS_APD": null,
+       "PRIORITY_CODE_ID": 1,
+       "PRIORITY_OPERATOR": null,
+       "PRIORITY_VALUE": "true"
+      }
+     ],
+     "EARLYALERT": [
+      {
+       "EA_FIELD_ID": 11,
+       "EMAIL_SENT": null,
+       "ID_NUMBER": "MD-02.R00.M04",
+       "TEXT_DD_VAL": null,
+       "YES_NO_VAL": false
+      },
+      {
+       "EA_FIELD_ID": 12,
+       "EMAIL_SENT": null,
+       "ID_NUMBER": "MD-02.R00.M04",
+       "TEXT_DD_VAL": null,
+       "YES_NO_VAL": false
+      },
+      {
+       "EA_FIELD_ID": 13,
+       "EMAIL_SENT": null,
+       "ID_NUMBER": "MD-02.R00.M04",
+       "TEXT_DD_VAL": null,
+       "YES_NO_VAL": false
+      },
+      {
+       "EA_FIELD_ID": 14,
+       "EMAIL_SENT": null,
+       "ID_NUMBER": "MD-02.R00.M04",
+       "TEXT_DD_VAL": null,
+       "YES_NO_VAL": false
+      },
+      {
+       "EA_FIELD_ID": 15,
+       "EMAIL_SENT": null,
+       "ID_NUMBER": "MD-02.R00.M04",
+       "TEXT_DD_VAL": null,
+       "YES_NO_VAL": false
+      },
+      {
+       "EA_FIELD_ID": 16,
+       "EMAIL_SENT": null,
+       "ID_NUMBER": "MD-02.R00.M04",
+       "TEXT_DD_VAL": null,
+       "YES_NO_VAL": false
+      }
+     ]
+    },
+    "SP_IMPACT_FUNDING": null,
+    "SP_TYPE": [
+     {
+      "PLAN_TYPE_ID": 122,
+      "TYPE_CLASS": 4,
+      "TYPE_ID": 24,
+      "TYPE_NAME": "1915 (b) (4) Do Not Use"
+     }
+    ],
+    "STATES": [
+     {
+      "PRIORITY_FLAG": false,
+      "REGION_ID": "3",
+      "STATE_CODE": "MD",
+      "STATE_NAME": "Maryland"
+     }
+    ],
+    "STATE_PLAN": {
+     "ACTION_TYPE": 73,
+     "ACTUAL_EFFECTIVE_DATE": 1415577600000,
+     "ADDED_COST": null,
+     "ALERT_90_DAYS_DATE": 1419379200000,
+     "ALERT_MILESTONE1_DAYS": 30,
+     "ALERT_MILESTONE2_DAYS": 50,
+     "ALERT_MILESTONE3_DAYS": 60,
+     "ALERT_MILESTONE4_DAYS": 70,
+     "APPROVAL_DOCS_RECEIVED": null,
+     "APPROVAL_STATUS_TYPE": null,
+     "APPROVED_EFFECTIVE_DATE": null,
+     "ATTACHED_SPA": null,
+     "BACKUP_FM_ANALYST_ID": null,
+     "BACKUP_PROGRAM_ANALYST_ID": null,
+     "BLOCKING_SPAS_MEMO": null,
+     "BUDGET_IMPACT": null,
+     "BUDGET_IMPACT_VALUE": null,
+     "BUDGET_NEUTRALITY_ESTABLISHED_FLAG": false,
+     "BUDGET_NEUTRALITY_STATUS_MEMO": null,
+     "CALL_HELD": null,
+     "CALL_HELD_REASON_ID": null,
+     "CHANGED_DATE": 1657824888790,
+     "CODE_AFTER_INIT_ASSESS_ID": null,
+     "COMPANION_LETTER_RECEIVED_DATE": null,
+     "COMPANION_LETTER_REQUESTED_DATE": null,
+     "COMPONENT_ID": 72,
+     "CO_SUBMISSION_DATE": 1381276800000,
+     "CURRENT_WAIVER_EXPIRES_DATE": null,
+     "CURRENT_WAIVER_TE": null,
+     "DATE_OF_CODING_CHANGE": null,
+     "DATE_SENT_PSCCAS": null,
+     "DAYS_EXTENSION_NUMBER": null,
+     "ELIMINATED_COST": null,
+     "END_DATE": null,
+     "FISCAL_QUARTER": null,
+     "FISCAL_YEAR": null,
+     "FRT_DATE": null,
+     "GAP": null,
+     "GAP2": null,
+     "GAP2_NA": false,
+     "GAP3": null,
+     "GAP3_NA": false,
+     "GAP_NA": false,
+     "GUIDANCE_DOCS_SUBMITTED": null,
+     "ID_NUMBER": "MD-02.R00.M04",
+     "INITIAL_SUBMISSION_COMPLETE": null,
+     "LEAD_ANALYST_ID": 3926,
+     "MISSING_INFORMATION": null,
+     "MMDL_IMPORT": null,
+     "OCD_REVIEW_COMMENTS_MEMO": null,
+     "OCD_REVIEW_ID": 1,
+     "ORGANIZATION_CHANGE": null,
+     "PENDING_CONCURRENCE_DATE": null,
+     "PLAN_TYPE": 122,
+     "PRIORITY_CODE_ID": 3,
+     "PRIORITY_COMMENTS_MEMO": "XX_SEA_VAL_XX Amending to add the Living At ",
+     "PRIORITY_COMPLEXITY_ID": null,
+     "PROPOSED_DATE": 1388534400000,
+     "PUBLICHEALTH_STATEEMERGENCY": null,
+     "REGION_ID": "3",
+     "REMARKS_MEMO": null,
+     "REVIEW_POSITION_ID": null,
+     "RO_ANALYST_ID": 3679,
+     "SPA_TYPE_ID": 4,
+     "SPW_IMPORT": false,
+     "SPW_STATUS_ID": 4,
+     "START_CLOCK_DATE": 1411603200000,
+     "STATE_CODE": "MD",
+     "STATUS_DATE": 1415287771937,
+     "STATUS_MEMO": "XX_SEA_VAL_XX This is some text",
+     "SUBMISSION_DATE": 1381190400000,
+     "SUBMISSION_TYPE": null,
+     "SUMMARY_MEMO": "XX_SEA_VAL_XX This is some text",
+     "TEMPLATE_ISSUES": null,
+     "TEMPLATE_ISSUES_MEMO": null,
+     "TEMPLATE_ISSUES_RESOLVED": null,
+     "TE_END_DATE": null,
+     "TITLE_NAME": "XX_SEA_VAL_XX Maryland 1915(b)(4) amendment/",
+     "TYPE_ID": 24,
+     "UPL_ACCEPTED": null,
+     "UUID": "E52B0A55-8F2E-45A3-ADDF-748A61479C30"
+    },
+    "STATE_PLAN_SERVICETYPES": [
+     {
+      "ID_NUMBER": "MD-02.R00.M04",
+      "SERVICE_TYPE_ID": 4
+     }
+    ],
+    "STATE_PLAN_SERVICE_SUBTYPES": [
+     {
+      "ID_NUMBER": "MD-02.R00.M04",
+      "SERVICE_SUBTYPE_ID": 24
+     }
+    ],
+    "STOP_RESUME_DATES": null
+   }
 ]
