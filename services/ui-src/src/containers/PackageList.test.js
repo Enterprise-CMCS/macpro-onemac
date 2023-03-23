@@ -3,7 +3,6 @@ import React from "react";
 import {
   render,
   screen,
-  waitFor,
   waitForElementToBeRemoved,
 } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
@@ -16,7 +15,7 @@ import {
   helpDeskActiveInitialAuthState,
 } from "../libs/testDataAppContext";
 import { packageList } from "../libs/testDataPackages";
-import { tableListExportToCSV } from "../utils/tableListExportToCSV";
+import { portalTableExportToCSV } from "../utils/portalTableExportToCSV";
 
 import PackageApi from "../utils/PackageApi";
 import PackageList, { getState } from "./PackageList";
@@ -26,8 +25,8 @@ import { LOADER_TEST_ID } from "../components/LoadingScreen";
 jest.mock("../utils/PackageApi");
 window.HTMLElement.prototype.scrollIntoView = jest.fn();
 
-jest.mock("../utils/tableListExportToCSV");
-tableListExportToCSV.mockImplementation(() => null);
+jest.mock("../utils/portalTableExportToCSV");
+portalTableExportToCSV.mockImplementation(() => null);
 
 const ContextWrapper = ({ children }) => {
   return (
@@ -81,7 +80,7 @@ it("helpdesk user renders with an Export button", async () => {
 
   const exportButton = await screen.findByText("Export to Excel(CSV)");
   userEvent.click(exportButton);
-  expect(tableListExportToCSV).toBeCalled();
+  expect(portalTableExportToCSV).toBeCalled();
 });
 
 it("passes a retrieval error up", async () => {

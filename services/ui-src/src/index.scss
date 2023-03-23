@@ -2704,3 +2704,14 @@ aside#faq-contact-info-box {
     padding: 2px;
   }
 }
+
+.video {
+  button {
+    @extend .ds-c-button;
+    @extend .ds-c-button--transparent;
+    @extend .ds-u-text-decoration--none;
+    @extend .ds-u-padding--0;
+    @extend .ds-u-justify-content--center;
+    width: 100%;
+  }
+}

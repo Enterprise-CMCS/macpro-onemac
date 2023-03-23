@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PageTitleBar from "../components/PageTitleBar";
 import { helpDeskContact } from "../libs/helpDeskContact";
-import { oneMACFAQContent } from "../libs/faqContent";
+import { oneMACFAQContent } from "../libs/faq/faqContent";
 
 import { Accordion, AccordionItem } from "@cmsgov/design-system";
 
