@@ -1521,6 +1521,9 @@ And("click on Type", () => {
 And("verify 1915b Initial Waiver exists", () => {
   OneMacPackagePage.verifyInitialWaiver1915bCheckBoxExists();
 });
+And("verify 1915b Intial Waiver exists in list", () => {
+  OneMacPackagePage.verifyInitialWaiverInListExists();
+});
 And("verify 1915b Waiver Renewal exists", () => {
   OneMacPackagePage.verifyWaiverRenewal1915bCheckBoxExists();
 });

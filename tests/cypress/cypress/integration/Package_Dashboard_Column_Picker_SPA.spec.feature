@@ -1,4 +1,4 @@
-Feature: OY2-13095 Package Dashboard - Column Picker
+Feature: Package Dashboard - SPA Tab Column Picker
     Scenario: SPAs Tab - Screen enhancement
         Given I am on Login Page
         When Clicking on Development Login
@@ -12,7 +12,7 @@ Feature: OY2-13095 Package Dashboard - Column Picker
         And verify submitted by column exists
         And verify actions column exists
         And click show hide columns button
-        And  verify Initial Submission Date exists
+        And verify Initial Submission Date exists
         And verify state exists
         And verify status exists
         And verify submitted by exists
@@ -37,6 +37,8 @@ Feature: OY2-13095 Package Dashboard - Column Picker
         And verify status column does not exist
         And verify Initial Submission Date column does not exist
         And verify submitted by column does not exist
+        Then Click on My Account
+        And click the logout button
 
     Scenario: Verify state exists, click state from drop down, verify it no longer exists, click it again, verify it exists again.
         Given I am on Login Page
@@ -51,6 +53,8 @@ Feature: OY2-13095 Package Dashboard - Column Picker
         And click state checkbox
         And click show hide columns button
         And verify state column exists
+        Then Click on My Account
+        And click the logout button
     
      Scenario: Verify type exists, click type from drop down, verify it no longer exists, click it again, verify it exists again.
         Given I am on Login Page
@@ -65,6 +69,8 @@ Feature: OY2-13095 Package Dashboard - Column Picker
         And click type checkbox
         And click show hide columns button
         And verify type column exists
+        Then Click on My Account
+        And click the logout button
 
         Scenario: Filter for medicaid spa only, remove all check from drop down and keep TYPE, verify type state medicaid spa
         Given I am on Login Page
@@ -83,6 +89,8 @@ Feature: OY2-13095 Package Dashboard - Column Picker
         And click show hide columns button
         And verify the type on row one exists
         And verify the type on row one is Medicaid SPA
+        Then Click on My Account
+        And click the logout button
 
     Scenario: Search with no results and verify error message is correct, verify columns are existing per selection on filter
         Given I am on Login Page
@@ -98,6 +106,8 @@ Feature: OY2-13095 Package Dashboard - Column Picker
         And verify Initial Submission Date column exists
         And verify submitted by column exists
         And verify actions column exists
+        Then Click on My Account
+        And click the logout button
 
     Scenario: Uncheck all but type and state, search with results, then remove State and verify that the type column still exists and search criteria is still valid
         Given I am on Login Page
@@ -119,8 +129,10 @@ Feature: OY2-13095 Package Dashboard - Column Picker
         And verify state column does not exist
         And verify type column exists
         And verify the type on row one exists
+        Then Click on My Account
+        And click the logout button
 
-#Feature: OY2-11469 Display State column for the CMS System Admin
+
     Scenario: Verify State Column Exists and is sortable for CMS System Admins
         Given I am on Login Page
         When Clicking on Development Login
@@ -128,4 +140,6 @@ Feature: OY2-13095 Package Dashboard - Column Picker
         Then i am on Dashboard Page
         And Verify State Column Exists
         And Verify State Column is sortable
+        Then Click on My Account
+        And click the logout button
   

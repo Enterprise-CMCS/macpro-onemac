@@ -3,6 +3,7 @@ import { useIdleTimer, IIdleTimer } from "react-idle-timer";
 import jwt_decode from "jwt-decode";
 import { logout } from "../libs/logoutLib";
 import { useAppContext } from "../libs/contextLib";
+import { clearTableStateStorageKeys } from "../utils/StorageKeys";
 
 const IdleTimerWrapper = () => {
   const STORAGE_KEY: string = "accessToken";
@@ -40,6 +41,7 @@ const IdleTimerWrapper = () => {
   };
 
   const onIdle = () => {
+    clearTableStateStorageKeys();
     logout();
   };
 
