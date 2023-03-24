@@ -33,7 +33,13 @@ import PackageAPI from "../utils/PackageApi";
 import ActionPopup from "../components/ActionPopup";
 import { useAppContext } from "../libs/contextLib";
 import { pendingMessage, deniedOrRevokedMessage } from "../libs/userLib";
-import { tableListExportToCSV } from "../utils/tableListExportToCSV";
+import {
+  LOCAL_STORAGE_COLUMN_VISIBILITY_SPA,
+  LOCAL_STORAGE_COLUMN_VISIBILITY_WAIVER,
+  LOCAL_STORAGE_TABLE_FILTERS_SPA,
+  LOCAL_STORAGE_TABLE_FILTERS_WAIVER,
+} from "../utils/StorageKeys";
+import { portalTableExportToCSV } from "../utils/portalTableExportToCSV";
 
 const renderDate = ({ value }) =>
   typeof value === "number" && value > 0
@@ -49,6 +55,7 @@ export const getState = ({ componentId }) =>
 const PackageList = () => {
   const dashboardRef = useRef();
   const [packageList, setPackageList] = useState([]);
+  const [visibleRows, setVisibleRows] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const {
     userStatus,
@@ -156,6 +163,10 @@ const PackageList = () => {
     [tellPackageListAboutAction]
   );
 
+  const exportTransformMap = {
+    submissionTimestamp: renderDate,
+  };
+
   const columns = useMemo(
     () =>
       [
@@ -225,13 +236,33 @@ const PackageList = () => {
       userRoleObj.canAccessForms,
     ]
   );
-
-  const initialTableState = useMemo(
-    () => ({
+  const initialTableState = useMemo(() => {
+    const hiddenColsSaveKey =
+      tab === "spa"
+        ? LOCAL_STORAGE_COLUMN_VISIBILITY_SPA
+        : LOCAL_STORAGE_COLUMN_VISIBILITY_WAIVER;
+    const filtersSaveKey =
+      tab === "spa"
+        ? LOCAL_STORAGE_TABLE_FILTERS_SPA
+        : LOCAL_STORAGE_TABLE_FILTERS_WAIVER;
+    // Retrieve hidden column saved state (session)
+    let localHiddenColumns = sessionStorage?.getItem(hiddenColsSaveKey);
+    let localTableFilters = sessionStorage?.getItem(filtersSaveKey);
+    if (localHiddenColumns === null) {
+      // If tab/session doesn't have its own, use the source of truth for all tabs
+      localHiddenColumns = localStorage?.getItem(hiddenColsSaveKey);
+    }
+    if (localTableFilters === null) {
+      localTableFilters = localStorage?.getItem(filtersSaveKey);
+    }
+    return {
       sortBy: [{ id: "submissionTimestamp", desc: true }],
-    }),
-    []
-  );
+      // Set saved hidden cols
+      hiddenColumns: localHiddenColumns ? JSON.parse(localHiddenColumns) : [],
+      // Set saved filters
+      filters: localTableFilters ? JSON.parse(localTableFilters) : [],
+    };
+  }, [tab]);
 
   const csvExportPackages = (
     <Button
@@ -239,7 +270,7 @@ const PackageList = () => {
       className="new-submission-button"
       onClick={(e) => {
         e.preventDefault();
-        tableListExportToCSV("package-dashboard", packageList, `${tab}List`);
+        portalTableExportToCSV(visibleRows, exportTransformMap, `${tab}List`);
       }}
       inversed
     >
@@ -291,9 +322,7 @@ const PackageList = () => {
     return rightSideContent;
   }
 
-  const TEMP_onReset = useCallback(() => setPackageList((d) => [...d]), []);
-
-  function renderPackageList() {
+  function PackageListContent() {
     if (userRole !== USER_ROLE.CMS_ROLE_APPROVER) {
       if (userStatus === USER_STATUS.PENDING) {
         return <EmptyList message={pendingMessage[userRole]} />;
@@ -318,6 +347,7 @@ const PackageList = () => {
       <LoadingScreen isLoading={isLoading}>
         {packageListExists ? (
           <PortalTable
+            internalName={tab}
             className={tableClassName}
             columns={columns}
             data={packageList}
@@ -325,7 +355,7 @@ const PackageList = () => {
             pageContentRef={dashboardRef}
             searchBarTitle="Search by Package ID or Submitter Name"
             withSearchBar
-            TEMP_onReset={TEMP_onReset}
+            onVisibleDataChange={setVisibleRows}
           />
         ) : (
           <EmptyList message="You have no packages yet." />
@@ -372,7 +402,7 @@ const PackageList = () => {
                 Waivers
               </Button>
             </div>
-            {renderPackageList()}
+            {PackageListContent()}
           </div>
         </div>
       </div>
