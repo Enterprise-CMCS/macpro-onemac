@@ -113,6 +113,7 @@ const raiResponseSubmitted = "//span[contains(text(),'RAIResponse Submitted')]";
 const seaToolStatus1 = "//span[contains(text(),'SEATool Status: 1')]";
 //Element is Xpath use cy.xpath instead of cy.get
 const medicaidSPAInList = "//tbody/tr[1]/td[3]/span[1]";
+const initialWaiverInList = "//tbody/tr[1]/td[3]/span[1]";
 //Element is Xpath use cy.xpath instead of cy.get
 const ShowHideColumnsBTN = "//button[contains(text(),'Show/Hide Columns')]";
 //Element is Xpath use cy.xpath instead of cy.get
@@ -184,6 +185,8 @@ const submittedCheckbox =
 //Element is Xpath use cy.xpath instead of cy.get
 const submittedIntakeNeededCheckbox =
   "//label[contains(@for,'checkbox_packageStatus-Submitted - Intake Needed')]";
+const doubleDashCheckbox =
+  "//label[contains(@for,'checkbox_packageStatus-Requested')]";
 const pendingCheckbox =
   "//label[contains(@for,'checkbox_packageStatus-Pending')]/span[text()='Pending']";
 const unsubmittedCheckbox =
@@ -507,7 +510,10 @@ export class oneMacPackagePage {
     cy.xpath(seaToolStatus1).should("be.visible");
   }
   verifyMedicaidSPAInListExists() {
-    cy.xpath(medicaidSPAInList).should("be.visible");
+    cy.xpath(medicaidSPAInList).contains("Medicaid");
+  }
+  verifyInitialWaiverInListExists() {
+    cy.xpath(initialWaiverInList).contains("Initial Waiver");
   }
   verifyShowHideColumnsBTNExists() {
     cy.xpath(ShowHideColumnsBTN).should("be.visible");
@@ -751,6 +757,9 @@ export class oneMacPackagePage {
   }
   clickSubmittedIntakeNeededCheckbox() {
     cy.xpath(submittedIntakeNeededCheckbox).click();
+  }
+  clickDoubleDashCheckbox() {
+    cy.xpath(doubleDashCheckbox).click();
   }
   clickPendingCheckbox() {
     cy.xpath(pendingCheckbox).click();

@@ -9,15 +9,12 @@ Feature: Waiver Package Details View: Temporary Extension for a CMS User
         And uncheck all of the type checkboxes
         And click Temporary Extension check box
         And click on Type
-        And click on Status
-        And uncheck all of the status checkboxes
 
-    Scenario: Screen Enhance: Temporary Extension Details View - Submitted - Intake Needed
-        And click Submitted - Intake Needed checkbox
+    Scenario: Screen Enhance: Temporary Extension Details View - double dash
         And click the Waiver Number link in the first row
         And verify the package details page is visible
         And verify action card exists
-        And verify the status on the card is "Submitted - Intake Needed"
+        And verify the status on the card is "Requested"
         And verify the package actions section is unavailable
         And verify the details section exists
         #And verify there is a Type header in the details section

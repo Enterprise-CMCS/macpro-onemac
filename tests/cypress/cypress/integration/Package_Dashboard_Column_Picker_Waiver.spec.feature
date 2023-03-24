@@ -1,4 +1,4 @@
-Feature: OY2-13095 Package Dashboard - Column Picker
+Feature: Package Dashboard - Waiver Tab Column Picker
     
         Scenario: Waivers Tab - Screen enhancement
         Given I am on Login Page
@@ -21,6 +21,8 @@ Feature: OY2-13095 Package Dashboard - Column Picker
         And verify submitted by exists
         And verify type exists
         And click show hide columns button
+        Then Click on My Account
+        And click the logout button
 
     Scenario: Waivers Tab - Uncheck all and verify Waiver Number and actions exists
         Given I am on Login Page
@@ -41,3 +43,20 @@ Feature: OY2-13095 Package Dashboard - Column Picker
         And verify status column does not exist
         And verify Initial Submission Date column does not exist
         And verify submitted by column does not exist
+        Then Click on My Account
+        And click the logout button
+
+    Scenario: Waivers Tab - verify tabs reset after login
+        Given I am on Login Page
+        When Clicking on Development Login
+        When Login with state submitter user
+        And click on the Waivers tab
+        And verify show hide columns button exists
+        And verify IDNumber column exists
+        And verify type column exists
+        And verify state column exists
+        And verify Waiver Number column exists
+        And verify status column exists
+        And verify Initial Submission Date column exists
+        And verify submitted by column exists
+        And verify actions column exists

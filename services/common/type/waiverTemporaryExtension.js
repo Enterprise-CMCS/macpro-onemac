@@ -8,7 +8,14 @@ export const waiverTemporaryExtension = {
   allowMultiplesWithSameId: false,
   requiredAttachments: ["Waiver Extension Request"],
   optionalAttachments: ["Other"],
-  allowedParentTypes: ["waivernew", "waiverrenewal"],
+  allowedParentTypes: [
+    "waivernew",
+    "waiverrenewal",
+    "1915(b)New",
+    "1915(b)Renew",
+    "1915(c)New",
+    "1915(c)Renew",
+  ],
   allowedParentStatuses: ["Approved"],
   theAttributes: [
     "componentId",
