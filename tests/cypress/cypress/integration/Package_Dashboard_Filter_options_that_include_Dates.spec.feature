@@ -23,7 +23,6 @@ Feature: OY2-13093 Submission Dashboard - Filter options that include Dates
         And click on Initial Submission Date filter dropdown
         And click on Initial Submission Date date picker filter
         And click on quarter to date date picker button
-        And click on OK date picker button
         And click on Initial Submission Date filter dropdown
         And click on reset button
         And Click on Filter Button
@@ -34,6 +33,5 @@ Feature: OY2-13093 Submission Dashboard - Filter options that include Dates
         And click on Initial Submission Date filter dropdown
         And click on Initial Submission Date date picker filter
         And click on quarter to date date picker button
-        And click on OK date picker button
         And Click on Filter Button
         And verify Initial Submission Date column one date is this quarter

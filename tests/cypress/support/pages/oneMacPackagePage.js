@@ -61,7 +61,7 @@ const initialSubmissionDateFilterDropdown =
   "//button[text()='Initial Submission Date']";
 //Element is Xpath use cy.xpath(***).last() instead of cy.get
 const initialSubmissionDateDatePickerFilter =
-  "//span[text()='Select Date Range']";
+  "#submissionTimestamp-date-filter";
 //Element is Xpath use cy.xpath instead of cy.get
 const thisQuarterDatePickerBtn = "//button[contains(text(),'This Quarter')]";
 //Element is Xpath use cy.xpath instead of cy.get
@@ -372,11 +372,11 @@ export class oneMacPackagePage {
     cy.get(expirationDateDatePickerFilter).click();
   }
   verifyInitialSubmissionDateDatePickerFilterExists() {
-    cy.xpath(initialSubmissionDateDatePickerFilter).last().should("exist");
+    cy.get(initialSubmissionDateDatePickerFilter).should("exist");
   }
   clickOnInitialSubmissionDateDatePickerFilter() {
-    cy.xpath(initialSubmissionDateDatePickerFilter).wait(1000);
-    cy.xpath(initialSubmissionDateDatePickerFilter).last().click();
+    cy.get(initialSubmissionDateDatePickerFilter).wait(1000);
+    cy.get(initialSubmissionDateDatePickerFilter).click();
   }
   clickOnThisQuarterDatePickerBtn() {
     cy.xpath(thisQuarterDatePickerBtn).click();
