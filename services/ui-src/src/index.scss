@@ -235,7 +235,7 @@ p.field-hint {
 
 .new-submission-button {
   background-color: transparent;
-
+  white-space: nowrap;
   &:hover {
     text-decoration: none;
   }
@@ -1521,6 +1521,15 @@ article.form-container {
   }
 }
 
+.page-title-bar {
+  .header-wrapper {
+    @media only screen and (max-width: $width-sm) {
+      justify-content: center !important;
+      gap: 1rem;
+    }
+  }
+}
+
 .footer-top-container {
   @extend .ds-u-padding-top--0;
   @extend .ds-u-lg-padding-top--2;
@@ -2325,6 +2334,7 @@ aside#faq-contact-info-box {
 .picker-button {
   display: flex;
   gap: 4px;
+  white-space: nowrap;
 }
 
 .dropdown-column-picker-box {
@@ -2363,7 +2373,6 @@ aside#faq-contact-info-box {
   > .search-bar {
     @media only screen and (max-width: $width-md) {
       width: 100%;
-      max-width: 100%;
     }
     > label {
       @extend .ds-u-margin-top--0;
@@ -2373,6 +2382,7 @@ aside#faq-contact-info-box {
       @extend .ds-u-display--flex;
       @extend .ds-u-align-items--center;
       min-width: 300px;
+      max-width: 100% !important;
 
       &:focus-within {
         box-shadow: 0 0 0 3px #fff, 0 0 4px 6px #bd13b8;
@@ -2427,6 +2437,7 @@ aside#faq-contact-info-box {
     align-items: center;
     padding-top: 24px;
     gap: 16px;
+    flex-wrap: wrap;
   }
 }
 
@@ -2563,7 +2574,7 @@ aside#faq-contact-info-box {
 }
 
 .tab-bar {
-  margin-left: 1em;
+  margin-left: 1rem;
   @extend .ds-u-margin-bottom--4;
   @extend .ds-u-display--flex;
   @extend .ds-u-align-items--start;
