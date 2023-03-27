@@ -25,6 +25,11 @@ export const submissionDateDefault: AttributeDetail = {
   fieldName: "submissionDateNice",
   default: null,
 };
+export const latestRaiResponseDateDefault: AttributeDetail = {
+  heading: "Formal RAI Received",
+  fieldName: "latestRaiResponseDateNice",
+  default: "N/A",
+};
 export const waiverAuthorityDefault: AttributeDetail = {
   heading: "Waiver Authority",
   fieldName: "waiverAuthorityNice",
@@ -97,7 +102,11 @@ export const defaultDetailSectionItems = [
 
 export const defaultWaiverDetailSectionItems = [
   waiverAuthorityDefault,
-  ...defaultDetailSectionItems,
+  typeDefault,
+  territoryDefault,
+  submissionDateDefault,
+  latestRaiResponseDateDefault,
+  proposedEffectiveDateDefault,
 ];
 
 export const defaultDetail: OneMACDetail = {
@@ -111,4 +120,9 @@ export const defaultDetail: OneMACDetail = {
   defaultTitle: null,
   allowWaiverExtension: false,
   detailSection: [...defaultDetailSectionItems],
+};
+
+export const defaultWaiverDetail: OneMACDetail = {
+  ...defaultDetail,
+  detailSection: [...defaultWaiverDetailSectionItems],
 };

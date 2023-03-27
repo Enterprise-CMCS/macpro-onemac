@@ -1,17 +1,12 @@
 import React, { FC } from "react";
 import DetailView from "../DetailView";
-import {
-  OneMACDetail,
-  defaultDetail,
-  defaultWaiverDetailSectionItems,
-} from "../../libs/detailLib";
+import { OneMACDetail, defaultWaiverDetail } from "../../libs/detailLib";
 import { waiverAmendment } from "cmscommonlib";
 
 export const waiverAmendmentDetail: OneMACDetail = {
-  ...defaultDetail,
+  ...defaultWaiverDetail,
   ...waiverAmendment,
   detailHeader: "Waiver Amendment Package",
-  detailSection: [...defaultWaiverDetailSectionItems],
 };
 
 const WaiverAmendmentDetail: FC = () => {
