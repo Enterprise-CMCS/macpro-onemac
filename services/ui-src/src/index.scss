@@ -2,7 +2,6 @@ $font-path: "~@cmsgov/design-system/dist/fonts";
 $image-path: "~@cmsgov/design-system/dist/images";
 $input-border-radius: 3px;
 $color-primary-alt-lightest: #f0fafe;
-
 @import "@cmsgov/design-system/dist/scss/index";
 @import "~bootstrap/dist/css/bootstrap.min.css";
 
@@ -987,8 +986,7 @@ article.form-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  @extend .ds-u-padding-top--7;
-  @extend .ds-u-padding-bottom--7;
+  padding-top: 1.5rem;
   background-color: $color-white;
   @extend .ds-u-align-items--center;
 }
@@ -1020,7 +1018,7 @@ article.form-container {
 
   @media only screen and (max-width: 1199px) {
     td .type-badge {
-      white-space: normal;
+      white-space: nowrap;
     }
     th,
     td {
@@ -2344,11 +2342,11 @@ aside#faq-contact-info-box {
 }
 
 .search-and-filter {
-  margin-left: 7.2rem;
-  margin-right: 7.2rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  justify-content: center;
   @extend .ds-u-margin-bottom--4;
   @extend .ds-u-display--flex;
-  @extend .ds-u-justify-content--between;
   @extend .ds-u-align-items--center;
   @include max-width-ultra-wide;
   width: -webkit-fill-available;
@@ -2356,6 +2354,8 @@ aside#faq-contact-info-box {
   flex-wrap: inherit;
 
   > .search-bar {
+    width: 100%;
+    max-width: 100%;
     > label {
       @extend .ds-u-margin-top--0;
     }
@@ -2554,8 +2554,7 @@ aside#faq-contact-info-box {
 }
 
 .tab-bar {
-  margin-left: 7.2rem;
-  margin-right: 7.2rem;
+  margin-left: 1em;
   @extend .ds-u-margin-bottom--4;
   @extend .ds-u-display--flex;
   @extend .ds-u-align-items--start;
@@ -2714,4 +2713,20 @@ aside#faq-contact-info-box {
     @extend .ds-u-justify-content--center;
     width: 100%;
   }
+}
+
+// Breakpoints per this figma:
+// https://www.figma.com/file/DUtQSZ61dCDDKd4fAsz4TG/CMS-DS-2.5-Updates?node-id=135-506&t=h2dxfQq0k5sIZaxn-0
+@media (min-width: 544px) {
+}
+@media (min-width: 768px) {
+  .search-and-filter {
+    justify-content: space-between;
+  }
+  .search-bar {
+  }
+}
+@media (min-width: 1024px) {
+}
+@media (min-width: 1280px) {
 }
