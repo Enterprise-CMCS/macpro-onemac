@@ -203,6 +203,7 @@ p.field-hint {
     @extend .ds-u-flex-direction--row;
     @extend .ds-u-align-items--center;
     flex-direction: row;
+    white-space: nowrap;
   }
 
   &.title-bar-dark-theme {
@@ -1503,6 +1504,7 @@ article.form-container {
     @extend .ds-u-display--flex;
     @extend .ds-u-align-items--center;
     @extend .ds-u-justify-content--between;
+    flex-wrap: wrap;
     width: 100%;
   }
 
@@ -2344,7 +2346,7 @@ aside#faq-contact-info-box {
 .search-and-filter {
   margin-left: 1rem;
   margin-right: 1rem;
-  justify-content: center;
+  justify-content: space-between;
   @extend .ds-u-margin-bottom--4;
   @extend .ds-u-display--flex;
   @extend .ds-u-align-items--center;
@@ -2353,9 +2355,16 @@ aside#faq-contact-info-box {
   width: -moz-available;
   flex-wrap: inherit;
 
+  @media only screen and (max-width: $width-md) {
+    align-items: center;
+    justify-content: center;
+  }
+
   > .search-bar {
-    width: 100%;
-    max-width: 100%;
+    @media only screen and (max-width: $width-md) {
+      width: 100%;
+      max-width: 100%;
+    }
     > label {
       @extend .ds-u-margin-top--0;
     }
@@ -2713,20 +2722,4 @@ aside#faq-contact-info-box {
     @extend .ds-u-justify-content--center;
     width: 100%;
   }
-}
-
-// Breakpoints per this figma:
-// https://www.figma.com/file/DUtQSZ61dCDDKd4fAsz4TG/CMS-DS-2.5-Updates?node-id=135-506&t=h2dxfQq0k5sIZaxn-0
-@media (min-width: 544px) {
-}
-@media (min-width: 768px) {
-  .search-and-filter {
-    justify-content: space-between;
-  }
-  .search-bar {
-  }
-}
-@media (min-width: 1024px) {
-}
-@media (min-width: 1280px) {
 }
