@@ -241,9 +241,9 @@ const PackageList = () => {
       renderId,
       getType,
       renderType,
-      userRole.isCMSUser,
-      renderName,
+      userRoleObj.isCMSUser,
       userRoleObj.canAccessForms,
+      renderName,
       renderActions,
     ]
   );
