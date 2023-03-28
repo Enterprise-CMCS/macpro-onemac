@@ -99,6 +99,7 @@ export const defaultDetailSectionItems = [
   typeDefault,
   territoryDefault,
   submissionDateDefault,
+  latestRaiResponseDateDefault,
   proposedEffectiveDateDefault,
 ];
 

@@ -211,7 +211,7 @@ const PackageList = () => {
           filter: CustomFilterTypes.DateRange,
           Filter: CustomFilterUi.DateRangeInPast,
         },
-        userRoleObj.isCMSUser && tab === Workflow.PACKAGE_GROUP.WAIVER
+        userRoleObj.isCMSUser
           ? {
               Header: "Formal RAI Received",
               accessor: "latestRaiResponseTimestamp",
