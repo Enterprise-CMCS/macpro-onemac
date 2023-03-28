@@ -1001,16 +1001,19 @@ article.form-container {
 
 .table-wrapper {
   overflow: auto;
-  @media only screen and (max-width: 1023px) {
-    display: block;
-    max-height: 320px;
-  }
-
-  @media only screen and (min-width: 1024px) {
-    display: flex;
-    flex-wrap: wrap;
-    min-width: min(calc(100vw - 14.4rem), 1024px);
-  }
+  width: 100%;
+  max-width: 1024px;
+  margin-left: 1rem;
+  //@media only screen and (max-width: 1023px) {
+  //  display: block;
+  //  max-height: 320px;
+  //}
+  //
+  //@media only screen and (min-width: 1024px) {
+  //  display: flex;
+  //  flex-wrap: wrap;
+  //  min-width: min(calc(100vw - 14.4rem), 1024px);
+  //}
 }
 
 .submissions-table,
@@ -2579,7 +2582,7 @@ aside#faq-contact-info-box {
   @extend .ds-u-display--flex;
   @extend .ds-u-align-items--start;
   @include max-width-ultra-wide;
-  width: 100%;
+  width: 100vw;
 }
 .tab-button {
   border-radius: 0;
