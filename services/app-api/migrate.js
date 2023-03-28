@@ -51,17 +51,7 @@ const migrateTE = async () => {
   console.log("migrateTE complete");
 };
 
-const migrateRaiTimestamp = async () => {
-  // Setup query params to get all package waivers and spas
-  const params = {
-    TableName: process.env.oneMacTableName,
-    IndexName: "GSI1",
-    KeyConditionExpression: "GSI1pk IN (:pk1, :pk2)",
-    ExpressionAttributeValues: {
-      ":pk1": "OneMAC#waiver",
-      ":pk2": "OneMAC#spa",
-    },
-  };
+const migrateRaiTimestampPackage = async (params) => {
   const promiseItems = [];
 
   do {
@@ -76,7 +66,8 @@ const migrateRaiTimestamp = async () => {
             latestRaiResponseTimestamp = currentRaiResponse.submissionTimestamp;
           }
           return latestRaiResponseTimestamp;
-        }
+        },
+        0
       );
 
       const updateParam = {
@@ -106,12 +97,46 @@ const migrateRaiTimestamp = async () => {
       await dynamoDb.update(anUpdate);
     })
   );
+};
 
-  console.log("migrateRaiTimestamp complete");
+const migrateRaiTimestampSpa = async () => {
+  // Setup query params to get all package spas
+  const params = {
+    TableName: process.env.oneMacTableName,
+    IndexName: "GSI1",
+    KeyConditionExpression: "GSI1pk = :pk1",
+    ExpressionAttributeValues: {
+      ":pk1": "OneMAC#spa",
+    },
+  };
+  migrateRaiTimestampPackage(params);
+
+  console.log("migrateRaiTimestampSpa complete");
+};
+
+const migrateRaiTimestampWaiver = async () => {
+  // Setup query params to get all package waivers
+  const params = {
+    TableName: process.env.oneMacTableName,
+    IndexName: "GSI1",
+    KeyConditionExpression: "GSI1pk = :pk1",
+    ExpressionAttributeValues: {
+      ":pk1": "OneMAC#waiver",
+    },
+  };
+
+  migrateRaiTimestampPackage(params);
+
+  console.log("migrateRaiTimestampWaiver complete");
+};
+
+const migrateRaiTimestamps = async () => {
+  await migrateRaiTimestampSpa();
+  await migrateRaiTimestampWaiver();
 };
 
 export const main = handler(async () => {
   await migrateTE();
-  await migrateRaiTimestamp();
+  await migrateRaiTimestamps();
   return "Done";
 });
