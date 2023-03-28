@@ -985,7 +985,7 @@ article.form-container {
 
 .dashboard-container {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   justify-content: center;
   padding-top: 1.5rem;
   background-color: $color-white;
@@ -1497,7 +1497,7 @@ article.form-container {
     @extend .ds-u-display--flex;
     @extend .ds-u-align-items--center;
     @extend .ds-u-justify-content--between;
-    flex-wrap: wrap;
+    gap: 1rem;
     width: 100%;
   }
 
@@ -1518,6 +1518,7 @@ article.form-container {
   .header-wrapper {
     @media only screen and (max-width: $width-sm) {
       justify-content: center !important;
+      flex-direction: column;
       gap: 1rem;
     }
   }
@@ -2356,7 +2357,7 @@ aside#faq-contact-info-box {
   @include max-width-ultra-wide;
   width: -webkit-fill-available;
   width: -moz-available;
-  flex-wrap: inherit;
+  flex-wrap: wrap;
 
   @media only screen and (max-width: $width-md) {
     align-items: center;
