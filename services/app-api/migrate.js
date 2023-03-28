@@ -5,7 +5,7 @@ import dynamoDb from "./libs/dynamodb-lib";
  * Perform data migrations
  */
 
-const migrateTE = handler(async () => {
+const migrateTE = async () => {
   // Scan it all... but really only need v0s
   const oneparams = {
     TableName: process.env.oneMacTableName,
@@ -49,9 +49,9 @@ const migrateTE = handler(async () => {
   );
 
   console.log("migrateTE complete");
-});
+};
 
-const migrateRaiTimestamp = handler(async () => {
+const migrateRaiTimestamp = async () => {
   // Setup query params to get all package waivers and spas
   const params = {
     TableName: process.env.oneMacTableName,
@@ -108,7 +108,7 @@ const migrateRaiTimestamp = handler(async () => {
   );
 
   console.log("migrateRaiTimestamp complete");
-});
+};
 
 export const main = handler(async () => {
   await migrateTE();
