@@ -1000,10 +1000,14 @@ article.form-container {
 }
 
 .table-wrapper {
-  overflow: auto;
+  overflow: scroll;
   width: 100%;
   max-width: 1024px;
   margin-left: 1rem;
+
+  @media only screen and (min-width: 1024px) {
+    overflow: visible;
+  }
 }
 
 .submissions-table,
