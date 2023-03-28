@@ -77,7 +77,6 @@ const PackageList = () => {
       setIsLoading(true);
       try {
         const data = await PackageAPI.getMyPackages(userProfile.email, tab);
-
         if (typeof data === "string") throw new Error(data);
         if (!ctrlr?.signal.aborted) setPackageList(data);
       } catch (error) {
@@ -214,7 +213,7 @@ const PackageList = () => {
         userRoleObj.isCMSUser && tab === Workflow.PACKAGE_GROUP.WAIVER
           ? {
               Header: "Formal RAI Received",
-              accessor: "latestRaiResponseDate",
+              accessor: "latestRaiResponseTimestamp",
               Cell: renderDate,
               disableFilters: false,
               filter: CustomFilterTypes.DateRange,

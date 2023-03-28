@@ -6,13 +6,13 @@ import dynamoDb from "./libs/dynamodb-lib";
  */
 
 export const main = handler(async () => {
-  // Scan it all... but really only need v0s
+  // Setup query params to get all package waivers
   const oneparams = {
     TableName: process.env.oneMacTableName,
     IndexName: "GSI1",
-    KeyConditionExpression: "GSI1pk = :tepk",
+    KeyConditionExpression: "GSI1pk = :pk",
     ExpressionAttributeValues: {
-      ":tepk": "OneMAC#submitwaiverextension",
+      ":pk": "OneMAC#waiver",
     },
   };
   const onePromiseItems = [];
@@ -20,6 +20,19 @@ export const main = handler(async () => {
   do {
     const results = await dynamoDb.query(oneparams);
     for (const item of results.Items) {
+      //get latest rai response date
+      const latestRaiResponseTimestamp = item.raiResponses?.reduce(
+        (latestRaiResponseTimestamp, currentRaiResponse) => {
+          if (
+            currentRaiResponse.submissionTimestamp > latestRaiResponseTimestamp
+          ) {
+            latestRaiResponseTimestamp = currentRaiResponse.submissionTimestamp;
+          }
+          return latestRaiResponseTimestamp;
+        },
+        0
+      );
+
       const updateParam = {
         TableName: process.env.oneMacTableName,
         Key: {
@@ -27,12 +40,12 @@ export const main = handler(async () => {
           sk: item.sk,
         },
         UpdateExpression:
-          "SET currentStatus = :newTEStatus, auditArray = list_append(:newMessage, if_not_exists(auditArray,:emptyList))",
+          "SET latestRaiResponseTimestamp = :latestRaiResponseTimestamp, auditArray = list_append(:newMessage, if_not_exists(auditArray,:emptyList))",
         ExpressionAttributeValues: {
-          ":newTEStatus": `TE Requested`,
+          ":latestRaiResponseTimestamp": latestRaiResponseTimestamp,
           ":emptyList": [],
           ":newMessage": [
-            `UPDATED ${Date.now()}: currentStatus changed from "Submitted" to "TE Requested"`,
+            `UPDATED ${Date.now()}: added latestRaiResponseTimestamp ${latestRaiResponseTimestamp}}`,
           ],
         },
       };

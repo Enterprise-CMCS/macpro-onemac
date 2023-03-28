@@ -1,10 +1,11 @@
-import { Workflow } from "cmscommonlib";
+import { UserRole, Workflow } from "cmscommonlib";
 import { PackageType } from "./formLib";
 
 export type AttributeDetail = {
   heading: string;
   fieldName: string;
   default?: string | null;
+  rolePrivilege?: keyof UserRole;
 };
 
 export type OneMACDetail = {
@@ -28,7 +29,8 @@ export const submissionDateDefault: AttributeDetail = {
 export const latestRaiResponseDateDefault: AttributeDetail = {
   heading: "Formal RAI Received",
   fieldName: "latestRaiResponseDateNice",
-  default: "N/A",
+  default: "-- --",
+  rolePrivilege: "isCMSUser",
 };
 export const waiverAuthorityDefault: AttributeDetail = {
   heading: "Waiver Authority",

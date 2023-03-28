@@ -107,7 +107,7 @@ export const buildAnyPackage = async (packageId, config) => {
           additionalInformation: anEvent.additionalInformation,
         });
         putParams.Item.currentStatus = Workflow.ONEMAC_STATUS.SUBMITTED;
-        putParams.Item.latestRaiResponseDate = Math.max(
+        putParams.Item.latestRaiResponseTimestamp = Math.max(
           ...putParams.Item.raiResponses.map((o) => o.submissionTimestamp)
         );
         return;

@@ -113,9 +113,9 @@ const DetailView: React.FC<{ pageConfig: OneMACDetail }> = ({ pageConfig }) => {
             fetchedDetail.submissionTimestamp
           );
         }
-        if (fetchedDetail.latestRaiResponseDate) {
+        if (fetchedDetail.latestRaiResponseTimestamp) {
           fetchedDetail.latestRaiResponseDateNice = formatDate(
-            fetchedDetail.latestRaiResponseDate
+            fetchedDetail.latestRaiResponseTimestamp
           );
         }
         if (fetchedDetail.proposedEffectiveDate) {
