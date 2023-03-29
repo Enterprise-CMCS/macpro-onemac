@@ -1,10 +1,11 @@
-import { Workflow } from "cmscommonlib";
+import { UserRole, Workflow } from "cmscommonlib";
 import { PackageType } from "./formLib";
 
 export type AttributeDetail = {
   heading: string;
   fieldName: string;
   default?: string | null;
+  rolePrivilege?: keyof UserRole;
 };
 
 export type OneMACDetail = {
@@ -24,6 +25,12 @@ export const submissionDateDefault: AttributeDetail = {
   heading: "Initial Submission Date",
   fieldName: "submissionDateNice",
   default: null,
+};
+export const latestRaiResponseDateDefault: AttributeDetail = {
+  heading: "Formal RAI Received",
+  fieldName: "latestRaiResponseDateNice",
+  default: "-- --",
+  rolePrivilege: "isCMSUser",
 };
 export const waiverAuthorityDefault: AttributeDetail = {
   heading: "Waiver Authority",
@@ -92,12 +99,17 @@ export const defaultDetailSectionItems = [
   typeDefault,
   territoryDefault,
   submissionDateDefault,
+  latestRaiResponseDateDefault,
   proposedEffectiveDateDefault,
 ];
 
 export const defaultWaiverDetailSectionItems = [
   waiverAuthorityDefault,
-  ...defaultDetailSectionItems,
+  typeDefault,
+  territoryDefault,
+  submissionDateDefault,
+  latestRaiResponseDateDefault,
+  proposedEffectiveDateDefault,
 ];
 
 export const defaultDetail: OneMACDetail = {
@@ -111,4 +123,9 @@ export const defaultDetail: OneMACDetail = {
   defaultTitle: null,
   allowWaiverExtension: false,
   detailSection: [...defaultDetailSectionItems],
+};
+
+export const defaultWaiverDetail: OneMACDetail = {
+  ...defaultDetail,
+  detailSection: [...defaultWaiverDetailSectionItems],
 };
