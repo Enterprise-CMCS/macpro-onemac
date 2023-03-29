@@ -77,7 +77,6 @@ const PackageList = () => {
       setIsLoading(true);
       try {
         const data = await PackageAPI.getMyPackages(userProfile.email, tab);
-
         if (typeof data === "string") throw new Error(data);
         if (!ctrlr?.signal.aborted) setPackageList(data);
       } catch (error) {
@@ -165,6 +164,7 @@ const PackageList = () => {
 
   const exportTransformMap = {
     submissionTimestamp: renderDate,
+    latestRaiResponseTimestamp: renderDate,
   };
 
   const columns = useMemo(
@@ -204,13 +204,23 @@ const PackageList = () => {
           Filter: CustomFilterUi.MultiCheckbox,
         },
         {
-          Header: "Initial Submission Date",
+          Header: "Initial Submission",
           accessor: "submissionTimestamp",
           Cell: renderDate,
           disableFilters: false,
           filter: CustomFilterTypes.DateRange,
           Filter: CustomFilterUi.DateRangeInPast,
         },
+        userRoleObj.isCMSUser
+          ? {
+              Header: "Formal RAI Received",
+              accessor: "latestRaiResponseTimestamp",
+              Cell: renderDate,
+              disableFilters: false,
+              filter: CustomFilterTypes.DateRange,
+              Filter: CustomFilterUi.DateRangeInPast,
+            }
+          : null,
         {
           Header: "Submitted By",
           accessor: "submitterName",
@@ -227,13 +237,14 @@ const PackageList = () => {
         },
       ].filter(Boolean),
     [
-      getType,
-      renderActions,
-      renderId,
-      renderType,
-      renderName,
       tab,
+      renderId,
+      getType,
+      renderType,
+      userRoleObj.isCMSUser,
       userRoleObj.canAccessForms,
+      renderName,
+      renderActions,
     ]
   );
   const initialTableState = useMemo(() => {
