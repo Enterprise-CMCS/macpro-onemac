@@ -12,7 +12,6 @@ Feature: Package Dashboard - SPA Tab Column Picker for CMS User
         And verify Initial Submission Date column exists
         And verify Formal RAI Received column exists
         And verify submitted by column exists
-        And verify actions column exists
         And click show hide columns button
         And verify Formal RAI Received checkbox exists
         And verify Initial Submission Date exists
@@ -22,7 +21,7 @@ Feature: Package Dashboard - SPA Tab Column Picker for CMS User
         And verify type exists
         And click show hide columns button
 
-    Scenario: SPAs Tab - Uncheck all and verify SPA ID and actions exists
+    Scenario: SPAs Tab - Uncheck all and verify SPA ID exists
         Given I am on Login Page
         When Clicking on Development Login
         When Login with cms System Admin
@@ -35,7 +34,6 @@ Feature: Package Dashboard - SPA Tab Column Picker for CMS User
         And click type checkbox
         And click show hide columns button
         And verify SPA ID column exists
-        And verify actions column exists
         And verify type column does not exist
         And verify state column does not exist
         And verify status column does not exist
@@ -110,7 +108,6 @@ Feature: Package Dashboard - SPA Tab Column Picker for CMS User
         And verify status column exists
         And verify Initial Submission Date column exists
         And verify submitted by column exists
-        And verify actions column exists
         Then Click on My Account
         And click the logout button
 

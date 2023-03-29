@@ -14,7 +14,6 @@ Feature: Package Dashboard - Waiver Tab Column Picker for CMS User
         And verify Initial Submission Date column exists
         And verify Formal RAI Received column exists
         And verify submitted by column exists
-        And verify actions column exists
         And click show hide columns button
         And verify Formal RAI Received checkbox exists
         And verify state exists
@@ -26,7 +25,7 @@ Feature: Package Dashboard - Waiver Tab Column Picker for CMS User
         Then Click on My Account
         And click the logout button
 
-    Scenario: Waivers Tab - Uncheck all and verify Waiver Number and actions exists
+    Scenario: Waivers Tab - Uncheck all and verify Waiver Number exists
         Given I am on Login Page
         When Clicking on Development Login
         When Login with cms System Admin
@@ -40,7 +39,6 @@ Feature: Package Dashboard - Waiver Tab Column Picker for CMS User
         And click type checkbox
         And click show hide columns button
         And verify Waiver Number column exists
-        And verify actions column exists
         And verify type column does not exist
         And verify state column does not exist
         And verify status column does not exist
@@ -64,4 +62,3 @@ Feature: Package Dashboard - Waiver Tab Column Picker for CMS User
         And verify Initial Submission Date column exists
         And verify Formal RAI Received column exists
         And verify submitted by column exists
-        And verify actions column exists
