@@ -43,6 +43,7 @@ import WaiverAppendixKDetail from "./page/waiver-appendix-k/WaiverAppendixKDetai
 import TemporaryExtensionForm from "./page/temporary-extension/TemporaryExtensionForm";
 import TemporaryExtensionDetail from "./page/temporary-extension/TemporaryExtensionDetail";
 import MedicaidSpaForm from "./page/medicaid-spa/MedicaidSpaForm";
+import MedicaidSpaWithdraw from "./page/medicaid-spa/MedicaidSpaWithdraw";
 import MedicaidSPADetail from "./page/medicaid-spa/MedicaidSPADetail";
 import ChipSpaForm from "./page/chip-spa/ChipSpaForm";
 import CHIPSPADetail from "./page/chip-spa/CHIPSPADetail";
@@ -217,6 +218,10 @@ const ROUTE_LIST: RouteSpec[] = [
     { path: ONEMAC_ROUTES.CHIP_SPA, component: ChipSpaForm },
     { path: ONEMAC_ROUTES.MEDICAID_SPA_RAI, component: MedicaidSPARAIForm },
     { path: ONEMAC_ROUTES.CHIP_SPA_RAI, component: CHIPSPARAIForm },
+    {
+      path: ONEMAC_ROUTES.MEDICAID_SPA_WITHDRAW,
+      component: MedicaidSpaWithdraw,
+    },
     { path: ONEMAC_ROUTES.WAIVER_RAI, component: WaiverRAIForm },
     { path: ONEMAC_ROUTES.INITIAL_WAIVER, component: InitialWaiverForm },
     { path: ONEMAC_ROUTES.WAIVER_RENEWAL, component: WaiverRenewalForm },

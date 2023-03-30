@@ -48,6 +48,7 @@ export const ONEMAC_ROUTES = {
   MEDICAID_SPA: "/medicaid-spa",
   MEDICAID_SPA_DETAIL: "/detail/medicaid-spa",
   MEDICAID_SPA_RAI: "/medicaid-spa-rai",
+  MEDICAID_SPA_WITHDRAW: "/medicaid-spa-withdraw",
   CHIP_SPA: "/chip-spa",
   CHIP_SPA_DETAIL: "/detail/chip-spa",
   CHIP_SPA_RAI: "/chip-spa-rai",

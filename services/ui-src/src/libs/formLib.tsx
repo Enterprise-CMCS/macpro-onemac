@@ -44,6 +44,14 @@ export const defaultOneMACFormConfig = {
   proposedEffectiveDate: false,
 };
 
+export const defaultWithdrawConfig = {
+  idFormat: "",
+  idFieldHint: [],
+  idFAQLink: "",
+  landingPage: ONEMAC_ROUTES.PACKAGE_LIST,
+  proposedEffectiveDate: false,
+};
+
 export const defaultWaiverAuthority = [
   { label: "-- select a waiver authority --", value: "" },
 ];
