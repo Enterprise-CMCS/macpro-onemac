@@ -219,7 +219,6 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
     };
     checkId();
   }, [
-    activeTerritories,
     oneMacFormData.parentId,
     formConfig?.parentLabel,
     formConfig?.validateParentAPI,
