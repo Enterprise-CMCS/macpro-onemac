@@ -200,7 +200,6 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
           ) {
             parentStatusMessages.push(stateAccessMessage);
           }
-
           const isParentIdValid = await PackageApi.validateParent(
             oneMacFormData.parentId,
             formConfig.validateParentAPI
@@ -224,6 +223,7 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
     oneMacFormData.parentId,
     formConfig?.parentLabel,
     formConfig?.validateParentAPI,
+    activeTerritories,
     formConfig?.parentNotFoundMessage,
   ]);
 
