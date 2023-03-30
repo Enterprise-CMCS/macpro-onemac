@@ -5,14 +5,14 @@ import dynamoDb from "./libs/dynamodb-lib";
  * Perform data migrations
  */
 
-export const main = handler(async () => {
+const migrateTE = async () => {
   // Scan it all... but really only need v0s
   const oneparams = {
     TableName: process.env.oneMacTableName,
     IndexName: "GSI1",
-    KeyConditionExpression: "GSI1pk = :userpk",
+    KeyConditionExpression: "GSI1pk = :tepk",
     ExpressionAttributeValues: {
-      ":userpk": "USER",
+      ":tepk": "OneMAC#submitwaiverextension",
     },
   };
   const onePromiseItems = [];
@@ -26,10 +26,14 @@ export const main = handler(async () => {
           pk: item.pk,
           sk: item.sk,
         },
-        UpdateExpression: "SET GSI2pk = :gsi2pk, GSI2sk = :gsi2sk",
+        UpdateExpression:
+          "SET currentStatus = :newTEStatus, auditArray = list_append(:newMessage, if_not_exists(auditArray,:emptyList))",
         ExpressionAttributeValues: {
-          ":gsi2pk": `${item.role}#${item.territory}`,
-          ":gsi2sk": item.status,
+          ":newTEStatus": `TE Requested`,
+          ":emptyList": [],
+          ":newMessage": [
+            `UPDATED ${Date.now()}: currentStatus changed from "Submitted" to "TE Requested"`,
+          ],
         },
       };
       onePromiseItems.push(updateParam);
@@ -44,5 +48,95 @@ export const main = handler(async () => {
     })
   );
 
+  console.log("migrateTE complete");
+};
+
+const migrateRaiTimestampPackage = async (params) => {
+  const promiseItems = [];
+
+  do {
+    const results = await dynamoDb.query(params);
+    for (const item of results.Items) {
+      //get latest rai response date
+      const latestRaiResponseTimestamp = item.raiResponses?.reduce(
+        (latestRaiResponseTimestamp, currentRaiResponse) => {
+          if (
+            currentRaiResponse.submissionTimestamp > latestRaiResponseTimestamp
+          ) {
+            latestRaiResponseTimestamp = currentRaiResponse.submissionTimestamp;
+          }
+          return latestRaiResponseTimestamp;
+        },
+        0
+      );
+
+      const updateParam = {
+        TableName: process.env.oneMacTableName,
+        Key: {
+          pk: item.pk,
+          sk: item.sk,
+        },
+        UpdateExpression:
+          "SET latestRaiResponseTimestamp = :latestRaiResponseTimestamp, auditArray = list_append(:newMessage, if_not_exists(auditArray,:emptyList))",
+        ExpressionAttributeValues: {
+          ":latestRaiResponseTimestamp": latestRaiResponseTimestamp,
+          ":emptyList": [],
+          ":newMessage": [
+            `UPDATED ${Date.now()}: added latestRaiResponseTimestamp ${latestRaiResponseTimestamp}}`,
+          ],
+        },
+      };
+      promiseItems.push(updateParam);
+    }
+    params.ExclusiveStartKey = results.LastEvaluatedKey;
+  } while (params.ExclusiveStartKey);
+
+  await Promise.all(
+    promiseItems.map(async (anUpdate) => {
+      console.log("updating: ", anUpdate);
+      await dynamoDb.update(anUpdate);
+    })
+  );
+};
+
+const migrateRaiTimestampSpa = async () => {
+  // Setup query params to get all package spas
+  const params = {
+    TableName: process.env.oneMacTableName,
+    IndexName: "GSI1",
+    KeyConditionExpression: "GSI1pk = :pk1",
+    ExpressionAttributeValues: {
+      ":pk1": "OneMAC#spa",
+    },
+  };
+  migrateRaiTimestampPackage(params);
+
+  console.log("migrateRaiTimestampSpa complete");
+};
+
+const migrateRaiTimestampWaiver = async () => {
+  // Setup query params to get all package waivers
+  const params = {
+    TableName: process.env.oneMacTableName,
+    IndexName: "GSI1",
+    KeyConditionExpression: "GSI1pk = :pk1",
+    ExpressionAttributeValues: {
+      ":pk1": "OneMAC#waiver",
+    },
+  };
+
+  migrateRaiTimestampPackage(params);
+
+  console.log("migrateRaiTimestampWaiver complete");
+};
+
+const migrateRaiTimestamps = async () => {
+  await migrateRaiTimestampSpa();
+  await migrateRaiTimestampWaiver();
+};
+
+export const main = handler(async () => {
+  await migrateTE();
+  await migrateRaiTimestamps();
   return "Done";
 });

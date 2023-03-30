@@ -42,19 +42,71 @@ import { useToggle } from "../libs/hooksLib";
 import { PackageRowValue } from "../domain-types";
 
 import { animated, useTransition, easings, useSpring } from "@react-spring/web";
+import {
+  LOCAL_STORAGE_COLUMN_VISIBILITY_SPA,
+  LOCAL_STORAGE_COLUMN_VISIBILITY_WAIVER,
+} from "../utils/StorageKeys";
 
 const { afterToday } = DateRangePicker;
 
 export interface ColumnPickerProps<V extends {}> {
   columnsInternal: ColumnInstance<V>[];
+  internalName: string;
 }
 
 const orderColumns = (a: { Header: string }, b: { Header: string }) => {
   return a.Header.localeCompare(b.Header);
 };
 
+/** Takes a column ID and boolean to appropriately store the IDs of columns
+ * hidden by the user in localStorage. This value is later read as saved column
+ * filtering state. */
+const updateVisibilitySavedState = (
+  id: string,
+  setHidden: boolean,
+  internalName: string
+) => {
+  const key =
+    internalName === "spa"
+      ? LOCAL_STORAGE_COLUMN_VISIBILITY_SPA
+      : LOCAL_STORAGE_COLUMN_VISIBILITY_WAIVER;
+  // Get array of hidden columns or undefined
+  const saved = sessionStorage?.getItem(key);
+  if (saved === null) {
+    // No initial state found
+    // Ensuring our initial state is correct
+    const value = setHidden ? [id] : [];
+    // Set up our initial state
+    sessionStorage.setItem(key, JSON.stringify(value));
+    return;
+  }
+
+  const savedAsArray = JSON.parse(saved) as Array<string>;
+  // Save as hidden col
+  if (!setHidden) {
+    const indexOfId = savedAsArray.indexOf(id);
+    // Remove from saved hidden cols
+    if (indexOfId > -1) {
+      savedAsArray.splice(indexOfId, 1);
+    }
+  } else {
+    savedAsArray.push(id);
+  }
+  /* The reason we use sessionStorage _and_ stash something in localStorage is
+   * to avoid two or more tabs from mucking up the localStorage item. With this
+   * logic, we store everything in the tab's sessionStorage, and the most recently
+   * altered sessionStorage item (that is the tab that most recently changed their
+   * hidden columns) will overwrite the localStorage item which all pages load
+   * the default column show/hide state from. */
+  // Update item in session
+  sessionStorage.setItem(key, JSON.stringify(savedAsArray));
+  // Set localStorage state to load from
+  localStorage.setItem(key, JSON.stringify(savedAsArray));
+};
+
 export const ColumnPicker: FC<ColumnPickerProps<any>> = ({
   columnsInternal,
+  internalName,
 }) => {
   const [
     showColumnPickerDropdown,
@@ -123,7 +175,10 @@ export const ColumnPicker: FC<ColumnPickerProps<any>> = ({
                     label={Header}
                     name={`columnPicker-${Header}`}
                     value={Header as string}
-                    onChange={() => toggleHidden()}
+                    onChange={() => {
+                      toggleHidden();
+                      updateVisibilitySavedState(id, isVisible, internalName);
+                    }}
                     checked={isVisible}
                     type="checkbox"
                     size="small"
@@ -360,14 +415,12 @@ type FilterPaneProps<V extends {}> = {
     UseFiltersColumnProps<V>)[];
   pageContentRef: RefObject<HTMLElement>;
   setAllFilters: (filters: any[]) => void;
-  TEMP_onReset: () => void;
 };
 
 function FilterPane<V extends {}>({
   columnsInternal,
   pageContentRef,
   setAllFilters,
-  TEMP_onReset,
 }: FilterPaneProps<V>) {
   const [showFilters, toggleShowFilters] = useToggle(false);
   const onResetFilters = useCallback(() => {
@@ -383,8 +436,7 @@ function FilterPane<V extends {}>({
         }
       })
     );
-    TEMP_onReset();
-  }, [columnsInternal, setAllFilters, TEMP_onReset]);
+  }, [columnsInternal, setAllFilters]);
 
   //Mount transition animation
 
@@ -459,18 +511,18 @@ function FilterPane<V extends {}>({
 }
 
 export type SearchFilterProps<V extends {}> = {
+  internalName: string;
   onSearch: (keyword: string) => void;
   searchBarTitle: ReactNode;
-  TEMP_onReset: () => void;
 } & FilterPaneProps<V>;
 
 export function SearchAndFilter<V extends {} = {}>({
+  internalName,
   columnsInternal,
   onSearch,
   pageContentRef,
   searchBarTitle,
   setAllFilters,
-  TEMP_onReset,
 }: SearchFilterProps<V>) {
   const [searchTerm, setSearchTerm] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
@@ -522,13 +574,15 @@ export function SearchAndFilter<V extends {} = {}>({
         </div>
       </div>
       <div className="picker-filter-wrapper">
-        <ColumnPicker columnsInternal={columnsInternal} />
+        <ColumnPicker
+          columnsInternal={columnsInternal}
+          internalName={internalName}
+        />
         <div className="filter-buttons">
           <FilterPane
             columnsInternal={columnsInternal}
             pageContentRef={pageContentRef}
             setAllFilters={setAllFilters}
-            TEMP_onReset={TEMP_onReset}
           />
         </div>
       </div>

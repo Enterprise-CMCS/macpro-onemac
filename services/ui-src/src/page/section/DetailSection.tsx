@@ -103,7 +103,8 @@ export const DetailSection = ({
           <h2>{pageConfig.detailHeader} Details</h2>
           {pageConfig.detailSection?.map(
             (item, index) =>
-              (detail[item.fieldName] || item.default) && (
+              (detail[item.fieldName] || item.default) &&
+              (item.rolePrivilege ? userRoleObj[item.rolePrivilege] : true) && (
                 <Review key={index} heading={item.heading}>
                   {detail[item.fieldName] ?? item.default}
                 </Review>

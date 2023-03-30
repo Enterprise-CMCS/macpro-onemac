@@ -1521,6 +1521,9 @@ And("click on Type", () => {
 And("verify 1915b Initial Waiver exists", () => {
   OneMacPackagePage.verifyInitialWaiver1915bCheckBoxExists();
 });
+And("verify 1915b Intial Waiver exists in list", () => {
+  OneMacPackagePage.verifyInitialWaiverInListExists();
+});
 And("verify 1915b Waiver Renewal exists", () => {
   OneMacPackagePage.verifyWaiverRenewal1915bCheckBoxExists();
 });
@@ -1629,6 +1632,12 @@ And("verify submitted by exists", () => {
 And("verify type exists", () => {
   OneMacPackagePage.verifycheckBoxTypeExists();
 });
+And("verify Formal RAI Received checkbox exists", () => {
+  OneMacPackagePage.verifyFormalRAIReceivedCheckboxExists();
+});
+And("verify Formal RAI Received checkbox does not exist", () => {
+  OneMacPackagePage.verifyFormalRAIReceivedCheckboxDoesNotExist();
+});
 And("verify 90th day column exists", () => {
   OneMacPackagePage.verify90thDayColumn();
 });
@@ -1656,6 +1665,12 @@ And("verify IDNumber column exists", () => {
 And("verify actions column exists", () => {
   OneMacPackagePage.verifyactionsColumnExists();
 });
+And("verify Formal RAI Received column exists", () => {
+  OneMacPackagePage.verifyFormalRAIReceivedColumnExists();
+});
+And("verify Formal RAI Received column does not exist", () => {
+  OneMacPackagePage.verifyFormalRAIReceivedColumnDoesNotExist();
+});
 And("click 90th day checkbox", () => {
   OneMacPackagePage.clickCheckBox90thDay();
 });
@@ -1676,6 +1691,9 @@ And("click submitted by checkbox", () => {
 });
 And("click type checkbox", () => {
   OneMacPackagePage.clickCheckBoxType();
+});
+And("click Formal RAI Received checkbox", () => {
+  OneMacPackagePage.clickFormalRAIReceivedCheckbox();
 });
 And("verify type column does not exist", () => {
   OneMacPackagePage.verifytypeColumnDoesNotExist();
@@ -1780,6 +1798,18 @@ And("verify Initial Submission Date date picker filter exists", () => {
 And("click on Initial Submission Date date picker filter", () => {
   OneMacPackagePage.clickOnInitialSubmissionDateDatePickerFilter();
 });
+And("click on Formal RAI Received filter dropdown", () => {
+  OneMacPackagePage.clickOnInitialSubmissionDateFilterDropDown();
+});
+And("verify Formal RAI Received date picker filter exists", () => {
+  OneMacPackagePage.verifyFormalRAIReceivedDatePickerFilterExists();
+});
+And("verify Formal RAI Received date picker filter does not exist", () => {
+  OneMacPackagePage.verifyFormalRAIReceivedDatePickerFilterDoesNotExist();
+});
+And("click on Formal RAI Received date picker filter", () => {
+  OneMacPackagePage.clickOnFormalRAIReceivedDatePickerFilter();
+});
 And("click on this quarter date picker button", () => {
   OneMacPackagePage.clickOnThisQuarterDatePickerBtn();
 });
@@ -1813,6 +1843,11 @@ And("verify Initial Submission Date column one date is this quarter", () => {
     OneMacPackagePage.verifypackageRowOneInitialSubmissionDateIsThisQuarter();
   }
 });
+And("verify Formal RAI Received column one date is this quarter", () => {
+  if (OneMacPackagePage.checkIfPackageListResultsExist()) {
+    OneMacPackagePage.verifypackageRowOneInitialSubmissionDateIsThisQuarter();
+  }
+});
 And("verify states selected includes {string}", (state) => {
   OneMacPackagePage.verifyStatesSelectedIncludes(state);
 });
@@ -1821,6 +1856,12 @@ And("verify state dropdown filter exists", () => {
 });
 And("click on state dropdown filter", () => {
   OneMacPackagePage.clickStateDropdownFilter();
+});
+And("verify Formal RAI Received dropdown filter exists", () => {
+  OneMacPackagePage.verifyFormalRAIReceivedDateFilterDropdownExists();
+});
+And("click on Formal RAI Received dropdown filter", () => {
+  OneMacPackagePage.clickOnFormalRAIReceivedDateFilterDropdownDropDown();
 });
 And("verify state filter select exists", () => {
   OneMacPackagePage.verifyStateFilterSelectExists();
@@ -1949,6 +1990,9 @@ And("click Submitted checkbox", () => {
 And("click Submitted - Intake Needed checkbox", () => {
   OneMacPackagePage.clickSubmittedIntakeNeededCheckbox();
 });
+And("click Requested checkbox", () => {
+  OneMacPackagePage.clickDoubleDashCheckbox();
+});
 And("click the Pending checkbox", () => {
   OneMacPackagePage.clickPendingCheckbox();
 });
@@ -2033,55 +2077,6 @@ And("search for Appendix K number", () => {
   OneMacPackagePage.searchFor("MD-10330.R00.12");
   cy.wait(1000);
 });
-And("verify parent row expander exists", () => {
-  OneMacPackagePage.verifyFirstParentRowExpanderExists();
-});
-And("verify parent row expander is disabled", () => {
-  OneMacPackagePage.verifyFirstParentRowExpanderIsDisabled();
-});
-And("wait for parent row expander to be enabled", () => {
-  OneMacPackagePage.verifyFirstParentRowExpanderIsNotDisabled();
-});
-And("verify the next row is not a child", () => {
-  OneMacPackagePage.verifyTheNextRowIsNotAChild();
-});
-And("click parent row expander", () => {
-  OneMacPackagePage.clickFirstParentRowExpander();
-});
-And("verify the next row is a child", () => {
-  OneMacPackagePage.verifyTheNextRowIsAChild();
-});
-And("verify all children start with {string}", (part) => {
-  OneMacPackagePage.verifyAllChildrenStartWith(part);
-});
-And("verify Waiver Number column exists for the child", () => {
-  OneMacPackagePage.verifyWaiverNumberColumnExistsForChild();
-});
-And("verify type column exists for the child", () => {
-  OneMacPackagePage.verifytypeColumnExistsForChild();
-});
-And("verify state column exists for the child", () => {
-  OneMacPackagePage.verifystateColumnExistsForChild();
-});
-And("verify 90th day column exists for the child", () => {
-  OneMacPackagePage.verify90thDayColumnExistsForChild();
-});
-And("verify status column exists for the child", () => {
-  OneMacPackagePage.verifystatusColumnExistsForChild();
-});
-And("verify Initial Submission Date column exists for the child", () => {
-  OneMacPackagePage.verifyInitialSubmissionDateColumnExistsForChild();
-});
-And("verify submitted by column exists for the child", () => {
-  OneMacPackagePage.verifysubmittedByColumnExistsForChild();
-});
-And("verify actions column exists for the child", () => {
-  OneMacPackagePage.verifyactionsColumnExistsForChild();
-});
-And("verify expiration date column exists for the child", () => {
-  OneMacPackagePage.verifyexpirationDateColumnExistsForChild();
-});
-
 And("verify that Request a Role Change button exists", () => {
   OneMacUserManagmentPage.verifyRequestARoleChangeBtnExists();
 });
