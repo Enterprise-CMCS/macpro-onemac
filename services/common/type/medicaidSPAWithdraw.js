@@ -1,0 +1,25 @@
+export const medicaidSPAWithdraw = {
+  componentType: "medicaidspawithdraw",
+  typeLabel: "Medicaid SPA Withdraw Request",
+  idLabel: "SPA ID",
+  idMustExist: true,
+  allowMultiplesWithSameId: true,
+  requiredAttachments: [],
+  optionalAttachments: ["Upload Supporting Documentation"],
+  theAttributes: [
+    "componentId",
+    "submissionTimestamp",
+    "currentStatus",
+    "attachments",
+    "additionalInformation",
+    "submitterName",
+    "submitterEmail",
+  ],
+  allowedParentTypes: ["medicaidspa"],
+  allowedParentStatuses: [
+    "Pending",
+    "Pending - Concurrence",
+    "Pending - Approval",
+    "RAI Issued",
+  ],
+};

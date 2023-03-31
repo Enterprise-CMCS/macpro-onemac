@@ -1,43 +1,31 @@
-import React, { useCallback } from "react";
-import { Link, useLocation } from "react-router-dom";
+import React from "react";
+import { Link } from "react-router-dom";
 
-import PackageAPI from "../../utils/PackageApi";
-import { useAppContext } from "../../libs/contextLib";
+import { ONEMAC_ROUTES, Workflow } from "cmscommonlib";
 
-export default function Withdraw({ theComponent, alertCallback }) {
-  const landOn = useLocation();
-  const { userProfile, confirmAction } = useAppContext() ?? {};
+const WithdrawLink = {
+  [Workflow.ONEMAC_TYPE.MEDICAID_SPA]: ONEMAC_ROUTES.MEDICAID_SPA_WITHDRAW,
+  [Workflow.ONEMAC_TYPE.CHIP_SPA]: ONEMAC_ROUTES.CHIP_SPA_WITHDRAW,
+  [Workflow.ONEMAC_TYPE.WAIVER_INITIAL]: ONEMAC_ROUTES.WAIVER_INITIAL_WITHDRAW,
+  [Workflow.ONEMAC_TYPE.WAIVER_RENEWAL]: ONEMAC_ROUTES.WAIVER_RENEWAL_WITHDRAW,
+  [Workflow.ONEMAC_TYPE.WAIVER_AMENDMENT]:
+    ONEMAC_ROUTES.WAIVER_AMENDMENT_WITHDRAW,
+  [Workflow.ONEMAC_TYPE.WAIVER_APP_K]: ONEMAC_ROUTES.WAIVER_APP_K_WITHDRAW,
+};
 
-  const onPopupActionWithdraw = useCallback(async () => {
-    try {
-      const resp = await PackageAPI.withdraw(
-        userProfile.userData.fullName,
-        userProfile.email,
-        theComponent.componentId,
-        theComponent.componentType
-      );
-      alertCallback(resp);
-    } catch (e) {
-      console.log("Error while updating package.", e);
-      alertCallback(e.message);
-    }
-  }, [userProfile.email, userProfile.userData, theComponent, alertCallback]);
-
+export default function Withdraw({ theComponent }) {
   return (
     <Link
       key={`popup-action-${theComponent.componentId}`}
-      to={landOn.pathname}
-      onClick={() => {
-        confirmAction &&
-          confirmAction(
-            "Withdraw Package?",
-            "Yes, withdraw package",
-            "Cancel",
-            `You are about to withdraw ${theComponent.componentId}. Once complete, you will not be able to resubmit this package. CMS will be notified.`,
-            onPopupActionWithdraw
-          );
+      to={{
+        pathname: WithdrawLink[theComponent.componentType],
+        state: {
+          componentId: theComponent.componentId,
+          parentId: theComponent.componentId,
+          parentType: theComponent.componentType,
+        },
       }}
-      id={"withdraw-action-" + theComponent.componentId}
+      id={"withdraw-request-action-" + theComponent.componentId}
     >
       Withdraw Package
     </Link>
