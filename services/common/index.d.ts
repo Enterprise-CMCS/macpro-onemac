@@ -170,5 +170,6 @@ export { waiverAppendixKRAIResponse } from "./type/waiverAppendixKRAIResponse.js
 export { waiverRAIResponse } from "./type/waiverRAIResponse.js";
 export { medicaidSPA } from "./type/medicaidSPA.js";
 export { medicaidSPARAIResponse } from "./type/medicaidSPARAIResponse.js";
+export { medicaidSPAWithdraw } from "./type/medicaidSPAWithdraw.js";
 export { chipSPA } from "./type/chipSPA.js";
 export { chipSPARAIResponse } from "./type/chipSPARAIResponse.js";

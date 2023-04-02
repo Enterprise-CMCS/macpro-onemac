@@ -348,7 +348,7 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
           confirmAction &&
             confirmAction(
               formConfig.confirmSubmit.confirmSubmitHeading,
-              "Yes, Submit",
+              formConfig.confirmSubmit.confirmSubmitYesButton ?? "Yes, Submit",
               "Cancel",
               formConfig.confirmSubmit.confirmSubmitMessage ?? "",
               doSubmit
@@ -364,29 +364,37 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
   return (
     <LoadingOverlay isLoading={isSubmitting}>
       <PageTitleBar
-        heading={formConfig.pageTitle}
+        heading={formConfig.pageTitle ?? oneMacFormData.componentId ?? ""}
         enableBackNav
         backNavConfirmationMessage={leavePageConfirmMessage}
       />
       <AlertBar alertCode={alertCode} closeCallback={closedAlert} />
       <div className="onemac-form">
         <form noValidate onSubmit={handleSubmit}>
-          <h2>{formConfig.detailsHeader} Details</h2>
-          <p>
-            <span className="required-mark">*</span>
-            indicates required field.
-          </p>
-          <p id="form-intro">
-            Once you submit this form, a confirmation email is sent to you and
-            to CMS. CMS will use this content to review your package, and you
-            will not be able to edit this form. If CMS needs any additional
-            information, they will follow up by email.
-            <b>
-              {" "}
-              If you leave this page, you will lose your progress on this form.
-            </b>
-            {formConfig.addlIntroJSX ?? ""}
-          </p>
+          <h2>
+            {formConfig.detailsHeaderFull ??
+              formConfig.detailsHeader + " Details"}
+          </h2>
+          {formConfig.introJSX ?? (
+            <>
+              <p>
+                <span className="required-mark">*</span>
+                indicates required field.
+              </p>
+              <p id="form-intro">
+                Once you submit this form, a confirmation email is sent to you
+                and to CMS. CMS will use this content to review your package,
+                and you will not be able to edit this form. If CMS needs any
+                additional information, they will follow up by email.
+                <b>
+                  {" "}
+                  If you leave this page, you will lose your progress on this
+                  form.
+                </b>
+                {formConfig.addlIntroJSX ?? ""}
+              </p>
+            </>
+          )}
           {formConfig.titleLabel && (
             <TextField
               name="title"
@@ -440,7 +448,7 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
           )}
           <ComponentId
             idLabel={formConfig.idLabel}
-            idFieldHint={formConfig.idFieldHint}
+            idFieldHint={formConfig.idFieldHint ?? [{ text: "" }]}
             idFAQLink={formConfig.idFAQLink}
             statusMessages={componentIdStatusMessages}
             disabled={!!presetComponentId}
@@ -466,7 +474,7 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
               />
             </>
           )}
-          <h3>Attachments</h3>
+          <h3>{formConfig?.attachmentsTitle ?? "Attachments"}</h3>
           <FileUploader
             ref={uploader}
             requiredUploads={formConfig.requiredAttachments}
@@ -478,7 +486,10 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
             label="Additional Information"
             labelId="additional-information-label"
             id="additional-information"
-            hint="Add anything else that you would like to share with CMS."
+            hint={
+              formConfig.addlInfoText ??
+              "Add anything else that you would like to share with CMS."
+            }
             disabled={isSubmitting}
             fieldClassName="summary-field"
             multiline

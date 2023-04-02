@@ -7,13 +7,17 @@ import {
 import React from "react";
 
 export type OneMACFormConfig = {
-  idFormat: string;
-  idFieldHint: FieldHint[];
+  idFormat?: string;
+  idFieldHint?: FieldHint[];
   idAdditionalErrorMessage?: string[];
-  idFAQLink: string;
-  pageTitle: string;
+  idFAQLink?: string;
+  pageTitle?: string;
+  introJSX?: JSX.Element;
   addlIntroJSX?: JSX.Element;
   detailsHeader?: string;
+  detailsHeaderFull?: string;
+  attachmentsTitle?: string;
+  addlInfoText?: string;
   landingPage: string;
   confirmSubmit?: ConfirmSubmitType;
   proposedEffectiveDate?: boolean;
@@ -34,6 +38,7 @@ type ParentPackageType = {
 type ConfirmSubmitType = {
   confirmSubmitHeading: string;
   confirmSubmitMessage: JSX.Element | string;
+  confirmSubmitYesButton?: string;
 };
 
 export const defaultOneMACFormConfig = {
@@ -45,9 +50,9 @@ export const defaultOneMACFormConfig = {
 };
 
 export const defaultWithdrawConfig = {
-  idFormat: "",
-  idFieldHint: [],
-  idFAQLink: "",
+  attachmentsTitle: "Upload Supporting Documentation",
+  addlInfoText:
+    "Explain your need for withdrawal or upload supporting documentation.",
   landingPage: ONEMAC_ROUTES.PACKAGE_LIST,
   proposedEffectiveDate: false,
 };
@@ -68,6 +73,20 @@ export const defaultConfirmSubmitMessageRAI = (
 export const defaultConfirmSubmitRAI = {
   confirmSubmitHeading: defaultConfirmSubmitHeadingRAI,
   confirmSubmitMessage: defaultConfirmSubmitMessageRAI,
+};
+
+export const defaultConfirmSubmitHeadingWithdraw = "Withdraw Package?";
+export const defaultConfirmSubmitMessageWithdraw = (
+  <p>
+    You are about to withdraw NM-23-1234. Once complete, you will not be able to
+    resubmit this package. CMS will be notified.
+  </p>
+);
+
+export const defaultConfirmSubmitWithdraw = {
+  confirmSubmitHeading: defaultConfirmSubmitHeadingWithdraw,
+  confirmSubmitMessage: defaultConfirmSubmitMessageWithdraw,
+  confirmSubmitYesButton: "Yes, Withdraw",
 };
 
 export type PackageType = {
