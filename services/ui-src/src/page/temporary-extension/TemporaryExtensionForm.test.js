@@ -10,7 +10,6 @@ import TemporaryExtensionForm from "./TemporaryExtensionForm";
 import PackageApi from "../../utils/PackageApi";
 import { AppContext } from "../../libs/contextLib";
 import { ONEMAC_TYPE } from "cmscommonlib/workflow";
-import PackageApi from "../../utils/PackageApi";
 
 jest.mock("../../utils/PackageApi");
 jest.mock("../../utils/PackageApi");

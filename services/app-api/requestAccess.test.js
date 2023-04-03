@@ -9,6 +9,7 @@ import { getUser } from "./getUser";
 import { changeUserStatus } from "./utils/changeUserStatus";
 import { getMyApprovers } from "./getMyApprovers";
 import sendEmail from "./libs/email-lib";
+import { getCMSDateFormat } from "./utils/date-utils";
 
 const testDoneBy = {
   roleList: [{ role: "statesubmitter", status: "active", territory: "MD" }],
@@ -18,11 +19,13 @@ const testDoneBy = {
   fullName: "firsty lastly",
 };
 
+jest.mock("./utils/date-utils");
 jest.mock("./getUser");
 jest.mock("./utils/changeUserStatus");
 jest.mock("./getMyApprovers");
 jest.mock("./libs/email-lib");
 
+getCMSDateFormat.mockImplementation(() => "real now");
 getUser.mockImplementation(() => {
   return testDoneBy;
 });

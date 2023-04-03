@@ -8,17 +8,11 @@ import {
 import handler from "./libs/handler-lib";
 import sendEmail from "./libs/email-lib";
 
-import { DateTime } from "luxon";
+import { getCMSDateFormat } from "./utils/date-utils";
 
 import { getUser } from "./getUser";
 import { changeUserStatus } from "./utils/changeUserStatus";
 import { getMyApprovers } from "./getMyApprovers";
-
-function getCMSDateFormat(theTimestamp) {
-  const theDate = DateTime.fromMillis(theTimestamp).setZone("America/New_York");
-
-  return theDate.toFormat("DDDD '@' t ZZZZ");
-}
 
 export const accessPendingNotice = (fullName, role, email) => {
   return {

@@ -9,7 +9,6 @@ import { ONEMAC_ROUTES } from "cmscommonlib";
 import WaiverAmendmentForm from "./WaiverAmendmentForm";
 import PackageApi from "../../utils/PackageApi";
 import { AppContext } from "../../libs/contextLib";
-import PackageApi from "../../utils/PackageApi";
 
 jest.mock("../../utils/PackageApi");
 jest.mock("../../utils/PackageApi");
