@@ -8,6 +8,7 @@ import { OneMACDetail } from "../../libs/detailLib";
 import FileList from "../../components/FileList";
 import { actionComponent } from "../../libs/actionLib";
 import { AdditionalInfoSection } from "./AdditionalInfoSection";
+import { DetailCard } from "../../components/DetailCard";
 
 export const DetailSection = ({
   pageConfig,
@@ -47,9 +48,8 @@ export const DetailSection = ({
           <h2>{detail.title ?? pageConfig.defaultTitle}</h2>
         </section>
       )}
-      <section>
-        <div className="detail-card-top"></div>
-        <div className="detail-card">
+      <section className="detail-card-section">
+        <DetailCard>
           <section>
             <Review heading="Status">
               <div className="detail-card-status">{detail.currentStatus}</div>
@@ -68,6 +68,8 @@ export const DetailSection = ({
               </Review>
             )}
           </section>
+        </DetailCard>
+        <DetailCard>
           {userRoleObj.canAccessForms ? (
             <section className="package-actions">
               <Review heading={pageConfig.actionLabel}>
@@ -96,7 +98,7 @@ export const DetailSection = ({
               <div className="column-spacer">&nbsp;</div>
             </section>
           )}
-        </div>
+        </DetailCard>
       </section>
       <div className="read-only-submission">
         <section className="detail-section">

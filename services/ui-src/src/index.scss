@@ -2637,6 +2637,17 @@ aside#faq-contact-info-box {
   }
 }
 
+.detail-card-section {
+  display: flex;
+  justify-content: space-between;
+}
+
+.detail-card-container {
+  display: flex;
+  flex-direction: column;
+  width: 45%;
+}
+
 .detail-card-top {
   @include gradient-top-border;
 }
@@ -2664,7 +2675,6 @@ aside#faq-contact-info-box {
 
 .package-actions {
   @extend .ds-u-flex-direction--column;
-  width: 50%;
 }
 .action-list {
   list-style-type: none;
