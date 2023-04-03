@@ -294,7 +294,7 @@ functions:
           authorizer: aws_iam
 
   withdrawMedicaidSPA:
-    handler: action/withdrawMedicaidSPA.main
+    handler: form/withdrawMedicaidSPA.main
     role: LambdaApiRole
     events:
       - http:
