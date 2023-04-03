@@ -39,12 +39,8 @@ provider:
             - arn:aws:dynamodb:*:*:table/onemac-develop-one
             - arn:aws:dynamodb:*:*:table/${self:custom.oneMacTableName}
             - arn:aws:dynamodb:*:*:table/${self:custom.oneMacTableName}/index/*
-            - arn:aws:dynamodb:*:*:table/${self:custom.tableName}
-            - arn:aws:dynamodb:*:*:table/${self:custom.tableName}/index/*
   environment:
     NODE_OPTIONS: '--enable-source-maps'
-    tableName: ${self:custom.tableName}
-    spaIdTableName: ${self:custom.spaIdTableName}
     oneMacTableName: ${self:custom.oneMacTableName}
 
 functions:

@@ -7,12 +7,12 @@ import { stateSubmitterInitialAuthState } from "../../libs/testDataAppContext";
 
 import { ONEMAC_ROUTES } from "cmscommonlib";
 import TemporaryExtensionForm from "./TemporaryExtensionForm";
-import ChangeRequestDataApi from "../../utils/ChangeRequestDataApi";
+import PackageApi from "../../utils/PackageApi";
 import { AppContext } from "../../libs/contextLib";
 import { ONEMAC_TYPE } from "cmscommonlib/workflow";
 import PackageApi from "../../utils/PackageApi";
 
-jest.mock("../../utils/ChangeRequestDataApi");
+jest.mock("../../utils/PackageApi");
 jest.mock("../../utils/PackageApi");
 
 window.HTMLElement.prototype.scrollIntoView = jest.fn();
@@ -69,7 +69,7 @@ describe("Temporary Extension Form", () => {
       "Temporary Extension Request Number"
     );
 
-    ChangeRequestDataApi.packageExists.mockResolvedValue(false);
+    PackageApi.packageExists.mockResolvedValue(false);
 
     userEvent.type(transmittalNumberEl, testID);
     await waitFor(() => expect(transmittalNumberEl.value).toBe(testID));

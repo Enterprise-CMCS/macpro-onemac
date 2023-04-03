@@ -5,7 +5,6 @@ import {
   accessPendingNotice,
   adminNotice,
 } from "./requestAccess";
-import { getCMSDateFormatNow } from "./changeRequest/email-util";
 import { getUser } from "./getUser";
 import { changeUserStatus } from "./utils/changeUserStatus";
 import { getMyApprovers } from "./getMyApprovers";
@@ -19,13 +18,11 @@ const testDoneBy = {
   fullName: "firsty lastly",
 };
 
-jest.mock("./changeRequest/email-util");
 jest.mock("./getUser");
 jest.mock("./utils/changeUserStatus");
 jest.mock("./getMyApprovers");
 jest.mock("./libs/email-lib");
 
-getCMSDateFormatNow.mockImplementation(() => "real now");
 getUser.mockImplementation(() => {
   return testDoneBy;
 });

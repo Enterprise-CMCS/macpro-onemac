@@ -35,22 +35,6 @@ Resources:
                 Resource: "arn:aws:logs:*:*:*"
               - Effect: "Allow"
                 Action:
-                  - dynamodb:DescribeTable
-                  - dynamodb:Query
-                  - dynamodb:Scan
-                  - dynamodb:GetItem
-                  - dynamodb:PutItem
-                  - dynamodb:UpdateItem
-                  - dynamodb:DeleteItem
-                Resource:
-                  - arn:aws:dynamodb:*:*:table/${self:custom.tableName}
-              - Effect: Allow
-                Action:
-                  - dynamodb:Query
-                Resource:
-                  - arn:aws:dynamodb:*:*:table/${self:custom.tableName}/index/*
-              - Effect: "Allow"
-                Action:
                   - s3:GetObject
                   - s3:GetObjectTagging
                   - s3:ListBucket

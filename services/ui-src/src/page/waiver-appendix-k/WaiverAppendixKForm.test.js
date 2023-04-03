@@ -7,10 +7,10 @@ import { stateSubmitterInitialAuthState } from "../../libs/testDataAppContext";
 
 import { ONEMAC_ROUTES } from "cmscommonlib";
 import WaiverAppendixKForm from "./WaiverAppendixKForm";
-import ChangeRequestDataApi from "../../utils/ChangeRequestDataApi";
+import PackageApi from "../../utils/PackageApi";
 import { AppContext } from "../../libs/contextLib";
 
-jest.mock("../../utils/ChangeRequestDataApi");
+jest.mock("../../utils/PackageApi");
 jest.mock("../../utils/PackageApi");
 
 window.HTMLElement.prototype.scrollIntoView = jest.fn();
@@ -67,7 +67,7 @@ describe("Waiver Appendix K Amendment Form", () => {
       "Waiver Amendment Number"
     );
 
-    ChangeRequestDataApi.packageExists.mockResolvedValue(false);
+    PackageApi.packageExists.mockResolvedValue(false);
 
     userEvent.type(transmittalNumberEl, testID);
     await waitFor(() => expect(transmittalNumberEl.value).toBe(testID));
