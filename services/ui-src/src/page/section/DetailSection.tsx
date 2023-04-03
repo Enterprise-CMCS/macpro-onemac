@@ -190,7 +190,6 @@ export const DetailSection = ({
                     {withdrawalRequest.attachments?.length > 0 ? (
                       <FileList
                         heading={"Withdrawal Request Documentation"}
-                        infoText={downloadInfoText}
                         uploadList={withdrawalRequest.attachments}
                         zipId={withdrawalRequest.componentType + index}
                       />

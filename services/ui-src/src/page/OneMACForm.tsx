@@ -276,13 +276,19 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
         !componentIdStatusMessages.some((m) => m.statusLevel === "error")
     );
 
+    const isSupportInfoReady: boolean = Boolean(
+      formConfig.componentType.includes("withdraw")
+        ? areUploadsReady || oneMacFormData.additionalInformation
+        : areUploadsReady
+    );
+
     setIsSubmissionReady(
       isTitleReady &&
         isWaiverAuthorityReady &&
         isTemporaryExtensionTypeReady &&
         isParentIdReady &&
         isIdReady &&
-        areUploadsReady &&
+        isSupportInfoReady &&
         isProposedEffecitveDateReady
     );
   }, [
@@ -363,7 +369,13 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
         }
       }
     },
-    [isSubmissionReady, formConfig.confirmSubmit, confirmAction, doSubmit]
+    [
+      isSubmissionReady,
+      formConfig.confirmSubmit,
+      confirmAction,
+      doSubmit,
+      oneMacFormData.componentId,
+    ]
   );
 
   return (
@@ -490,6 +502,7 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
             requiredUploads={formConfig.requiredAttachments}
             optionalUploads={formConfig.optionalAttachments}
             readyCallback={setAreUploadsReady}
+            withdrawIntro={formConfig.componentType.includes("withdraw")}
           ></FileUploader>
           <TextField
             name="additionalInformation"

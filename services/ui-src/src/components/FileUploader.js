@@ -57,6 +57,7 @@ export default class FileUploader extends Component {
       ])
     ),
     showRequiredFieldErrors: PropTypes.bool,
+    withdrawIntro: PropTypes.bool,
   };
 
   /**
@@ -320,25 +321,41 @@ export default class FileUploader extends Component {
 
     return (
       <div>
-        <p className="req-message">
-          Maximum file size of {config.MAX_ATTACHMENT_SIZE_MB} MB. You can add
-          multiple files per attachment type
-          {singleFileControls.length > 0 && (
-            <>, except for the {formatList(singleFileControls)}</>
-          )}
-          . Read the description for each of the attachment types on the FAQ
-          Page.
-        </p>
-        {this.props.requiredUploads?.length > 0 ? (
-          <p className="req-message">
-            <span className="required-mark">*</span> indicates required
-            attachment.
-          </p>
+        {this.props.withdrawIntro ? (
+          <>
+            <p className="req-message">
+              Upload your supporting documentation for withdrawal or explain
+              your need for withdrawal in the <i>Additional Information</i> box.
+            </p>
+            <p>
+              Maximum file size of {config.MAX_ATTACHMENT_SIZE_MB} MB.{" "}
+              <b>You can add multiple files</b>. We accept the following file
+              types: <b>.pdf, .docx, .jpg, .png</b>.
+            </p>
+          </>
         ) : (
-          <p className="req-message">
-            <span className="required-mark">*</span> At least one attachment is
-            required.
-          </p>
+          <>
+            <p className="req-message">
+              Maximum file size of {config.MAX_ATTACHMENT_SIZE_MB} MB. You can
+              add multiple files per attachment type
+              {singleFileControls.length > 0 && (
+                <>, except for the {formatList(singleFileControls)}</>
+              )}
+              . Read the description for each of the attachment types on the FAQ
+              Page.
+            </p>
+            {this.props.requiredUploads?.length > 0 ? (
+              <p className="req-message">
+                <span className="required-mark">*</span> indicates required
+                attachment.
+              </p>
+            ) : (
+              <p className="req-message">
+                <span className="required-mark">*</span> At least one attachment
+                is required.
+              </p>
+            )}
+          </>
         )}
         <div className="ds-u-color--error">
           {this.props.showRequiredFieldErrors &&
