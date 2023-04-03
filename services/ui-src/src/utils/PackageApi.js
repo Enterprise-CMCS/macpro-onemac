@@ -5,29 +5,23 @@ import handleApiError from "../libs/apiErrorHandler";
 const SUBMIT_API_CALL = {
   [Workflow.ONEMAC_TYPE.CHIP_SPA]: "submitCHIPSPA",
   [Workflow.ONEMAC_TYPE.CHIP_SPA_RAI]: "submitCHIPSPARAIResponse",
+  [Workflow.ONEMAC_TYPE.CHIP_SPA_WITHDRAW]: "withdrawCHIPSPA",
   [Workflow.ONEMAC_TYPE.MEDICAID_SPA]: "submitMedicaidSPA",
   [Workflow.ONEMAC_TYPE.MEDICAID_SPA_RAI]: "submitMedicaidSPARAIResponse",
+  [Workflow.ONEMAC_TYPE.MEDICAID_SPA_WITHDRAW]: "withdrawMedicaidSPA",
   [Workflow.ONEMAC_TYPE.WAIVER_INITIAL]: "submitInitialWaiver",
+  [Workflow.ONEMAC_TYPE.WAIVER_INITIAL_WITHDRAW]: "withdrawInitialWaiver",
   [Workflow.ONEMAC_TYPE.WAIVER_RENEWAL]: "submitWaiverRenewal",
+  [Workflow.ONEMAC_TYPE.WAIVER_RENEWAL_WITHDRAW]: "withdrawWaiverRenewal",
+  [Workflow.ONEMAC_TYPE.WAIVER_APP_K_WITHDRAW]: "withdrawWaiverAppendixK",
   [Workflow.ONEMAC_TYPE.WAIVER_APP_K]: "submitWaiverAppendixK",
   [Workflow.ONEMAC_TYPE.WAIVER_APP_K_RAI]: "submitWaiverAppendixKRAIResponse",
   [Workflow.ONEMAC_TYPE.WAIVER_EXTENSION]: "submitWaiverExtension",
   [Workflow.ONEMAC_TYPE.WAIVER_AMENDMENT]: "submitWaiverAmendment",
+  [Workflow.ONEMAC_TYPE.WAIVER_AMENDMENT_WITHDRAW]: "withdrawWaiverAmendment",
   [Workflow.ONEMAC_TYPE.WAIVER_RAI]: "submitWaiverRAIResponse",
 };
 
-const WITHDRAW_API_CALL = {
-  [Workflow.ONEMAC_TYPE.CHIP_SPA]: "withdrawCHIPSPA",
-  [Workflow.ONEMAC_TYPE.CHIP_SPA_RAI]: "withdrawCHIPSPARAIResponse",
-  [Workflow.ONEMAC_TYPE.MEDICAID_SPA]: "withdrawMedicaidSPA",
-  [Workflow.ONEMAC_TYPE.MEDICAID_SPA_RAI]: "withdrawSPARAIResponse",
-  [Workflow.ONEMAC_TYPE.WAIVER_INITIAL]: "withdrawInitialWaiver",
-  [Workflow.ONEMAC_TYPE.WAIVER_RENEWAL]: "withdrawWaiverRenewal",
-  [Workflow.ONEMAC_TYPE.WAIVER_APP_K]: "withdrawWaiverAppendixK",
-  [Workflow.ONEMAC_TYPE.WAIVER_EXTENSION]: "withdrawWaiverTemporaryExtension",
-  [Workflow.ONEMAC_TYPE.WAIVER_AMENDMENT]: "withdrawWaiverAmendment",
-  [Workflow.ONEMAC_TYPE.WAIVER_RAI]: "withdrawWaiverRAIResponse",
-};
 /**
  * Singleton class to perform operations with the change request backend.
  */
@@ -185,36 +179,6 @@ class PackageApi {
         error,
         "FETCH_ERROR",
         `There was an error fetching the topic item detail for ${id}.`
-      );
-    }
-  }
-
-  /**
-   * Set a component's status to Withdrawn
-   * @param {string} componentId the component to be withdrawn
-   * @return {Promise<string>} the response code
-   */
-  async withdraw(changedByName, changedByEmail, componentId, componentType) {
-    try {
-      console.log("posting to: ", WITHDRAW_API_CALL[componentType]);
-
-      return await API.post(
-        "oneMacAPI",
-        `/${WITHDRAW_API_CALL[componentType]}`,
-        {
-          body: {
-            componentId,
-            componentType,
-            changedByEmail,
-            changedByName,
-          },
-        }
-      );
-    } catch (err) {
-      handleApiError(
-        err,
-        "SY000",
-        `There was an error withdrawing package ${componentId}.`
       );
     }
   }
