@@ -2655,6 +2655,8 @@ aside#faq-contact-info-box {
 .detail-card {
   @extend .ds-u-display--flex;
   @extend .ds-u-padding--4;
+  height: -moz-available; /* Mozilla Firefox will use this. */
+  height: -webkit-fill-available; /* WebKit-based browsers will use this. */
   justify-content: space-between;
   background: $color-white;
   border: 1px solid $color-gray-lighter;
