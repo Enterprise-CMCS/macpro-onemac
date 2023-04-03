@@ -44,10 +44,6 @@ provider:
     oneMacTableName: ${self:custom.oneMacTableName}
 
 functions:
-
-  updateChangeRequestId:
-    handler: ./handlers/updateChangeRequestId.main
-    timeout: 180
      
   resetData:
     handler: ./handlers/resetData.main
@@ -57,16 +53,8 @@ functions:
     handler: ./handlers/resetOneTable.main
     timeout: 180
 
-  softDeleteChangeRequest:
-    handler: ./handlers/softDeleteChangeRequest.main
-    timeout: 180
-
   softDeleteComponent:
     handler: ./handlers/softDeleteComponent.main
-    timeout: 180
-
-  batchUpdateChangeRequestId:
-    handler: ./handlers/batchUpdateChangeRequestId.main
     timeout: 180
 
   convertChangeRequests:
@@ -74,10 +62,6 @@ functions:
     timeout: 180
     events:
       - schedule: rate(15 minutes)
-
-  verifyChangeRequests:
-    handler: ./handlers/verifyChangeRequests.main
-    timeout: 180
 
   createOneMacPackage:
     handler: ./handlers/createOneMacPackage.main

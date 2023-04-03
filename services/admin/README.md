@@ -8,15 +8,6 @@ The purpose of this set of services is to serve as a mechanism to standardize ad
 
 Run this lambda to delete the components used in the automated testing. Right now, the IDs are hard-coded into the function and the delete is run on the change-request and one tables. Plan is to move the list of IDs into the test area of the repo for QE control.
 
-#### updateChangeRequestId
-
-Update a given change request transmittalNumber based on its current transmittalNumber, type, and submittedAt timestamp and prepend a message onto the additionalInfo
-
-#### batchUpdateChangeRequestId
-
-Update a set of change requests given a csv format input. Each id will be updated based on its current transmittalNumber, type, and submittedAt timestamp and prepend a message to the additionalInfo. See batchUpdateChangeRequestId.json for sample event data.
-NOTE: Convert excel to csv and paste the file into aws lambda test event json. Then use the format json button in the console to properly format newlines.
-
 #### softDeleteComponent
 
 Sets the given component to Inactivated, which will cause the package builder to ignore it.
@@ -31,10 +22,6 @@ Scans the change requests table specified and adds the submit events to the one 
 
 NOTE! Must add parentType for any raw data waiverrai submissions (10 of them currently)
 and pay attention to appkrais, because they are just waiverrai in change request table.
-
-### verifyChangeRequests
-
-Scans the change request table and verifies each submission has a package in the one table.
 
 ### Setup
 
