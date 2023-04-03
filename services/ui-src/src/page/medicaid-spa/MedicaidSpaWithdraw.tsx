@@ -5,7 +5,7 @@ import {
   OneMACFormConfig,
   defaultConfirmSubmitWithdraw,
 } from "../../libs/formLib";
-import { ONEMAC_ROUTES, medicaidSPAWithdraw } from "cmscommonlib";
+import { Workflow, ONEMAC_ROUTES, medicaidSPAWithdraw } from "cmscommonlib";
 
 export const medicaidSpaWithdrawInfo: OneMACFormConfig = {
   ...defaultWithdrawConfig,
@@ -22,6 +22,7 @@ export const medicaidSpaWithdrawInfo: OneMACFormConfig = {
   ),
   landingPage: ONEMAC_ROUTES.PACKAGE_LIST_SPA,
   confirmSubmit: defaultConfirmSubmitWithdraw,
+  parentTypeNice: Workflow.ONEMAC_LABEL[Workflow.ONEMAC_TYPE.MEDICAID_SPA],
 };
 
 const MedicaidSpaWithdraw: FC = () => {

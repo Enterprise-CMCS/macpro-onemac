@@ -9,7 +9,7 @@ import React, {
 import { useHistory, useLocation } from "react-router-dom";
 import { Input } from "rsuite";
 
-import { TextField, Button, Dropdown } from "@cmsgov/design-system";
+import { TextField, Button, Dropdown, Review } from "@cmsgov/design-system";
 
 import { RESPONSE_CODE, ROUTES } from "cmscommonlib";
 
@@ -345,12 +345,17 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
 
       if (isSubmissionReady && !limitSubmit.current) {
         if (formConfig.confirmSubmit) {
+          const confirmMessage: JSX.Element | string = formConfig.confirmSubmit
+            .buildMessage
+            ? formConfig.confirmSubmit.buildMessage(oneMacFormData.componentId)
+            : formConfig.confirmSubmit.confirmSubmitMessage;
+
           confirmAction &&
             confirmAction(
               formConfig.confirmSubmit.confirmSubmitHeading,
               formConfig.confirmSubmit.confirmSubmitYesButton ?? "Yes, Submit",
               "Cancel",
-              formConfig.confirmSubmit.confirmSubmitMessage ?? "",
+              confirmMessage,
               doSubmit
             );
         } else {
@@ -473,6 +478,11 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
                 type="date"
               />
             </>
+          )}
+          {formConfig?.parentTypeNice && (
+            <Review key="0" heading="Type">
+              {formConfig?.parentTypeNice}
+            </Review>
           )}
           <h3>{formConfig?.attachmentsTitle ?? "Attachments"}</h3>
           <FileUploader

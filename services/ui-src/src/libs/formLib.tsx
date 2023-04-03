@@ -16,6 +16,7 @@ export type OneMACFormConfig = {
   addlIntroJSX?: JSX.Element;
   detailsHeader?: string;
   detailsHeaderFull?: string;
+  parentTypeNice?: string;
   attachmentsTitle?: string;
   addlInfoText?: string;
   landingPage: string;
@@ -38,6 +39,7 @@ type ParentPackageType = {
 type ConfirmSubmitType = {
   confirmSubmitHeading: string;
   confirmSubmitMessage: JSX.Element | string;
+  buildMessage?: (toConfirm: string) => JSX.Element;
   confirmSubmitYesButton?: string;
 };
 
@@ -76,16 +78,17 @@ export const defaultConfirmSubmitRAI = {
 };
 
 export const defaultConfirmSubmitHeadingWithdraw = "Withdraw Package?";
-export const defaultConfirmSubmitMessageWithdraw = (
+export const defaultConfirmSubmitMessageWithdraw = (toConfirm: string) => (
   <p>
-    You are about to withdraw NM-23-1234. Once complete, you will not be able to
-    resubmit this package. CMS will be notified.
+    You are about to withdraw {toConfirm}. Once complete, you will not be able
+    to resubmit this package. CMS will be notified.
   </p>
 );
 
 export const defaultConfirmSubmitWithdraw = {
   confirmSubmitHeading: defaultConfirmSubmitHeadingWithdraw,
-  confirmSubmitMessage: defaultConfirmSubmitMessageWithdraw,
+  confirmSubmitMessage: defaultConfirmSubmitMessageWithdraw("this package"),
+  buildMessage: defaultConfirmSubmitMessageWithdraw,
   confirmSubmitYesButton: "Yes, Withdraw",
 };
 
@@ -117,6 +120,8 @@ export type Message = {
 
 export type OneMacFormData = {
   territory: string;
+  componentType?: string;
+  typeNice?: string;
   additionalInformation: string;
   componentId: string;
   waiverAuthority?: string;
