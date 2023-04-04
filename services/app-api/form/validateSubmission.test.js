@@ -1,6 +1,7 @@
 import { validateSubmission } from "./validateSubmission";
 
 const testConfig = {
+  componentType: "onetype",
   idRegex: "^[A-Z]{5}",
   requiredAttachments: ["required"],
   optionalAttachments: ["optional"],

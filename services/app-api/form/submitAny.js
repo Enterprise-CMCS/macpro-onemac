@@ -36,7 +36,7 @@ export const submitAny = async (event, config) => {
     console.log("event couldn't parse: ", error);
     throw error;
   }
-
+  console.log("config is: ", config);
   // errors here are application level: returned as codes to front end for handling
   try {
     // returns undefined if no errors found, or the first error found.
@@ -122,7 +122,7 @@ export const submitAny = async (event, config) => {
   try {
     // Now send the CMS email
     if (config?.buildCMSNotice)
-      await sendEmail(config.buildCMSNotice(data, config, warningsInCMSNotice));
+      await sendEmail(config.buildCMSNotice(data, config, doneBy));
     else
       await sendEmail(CMSSubmissionNotice(data, config, warningsInCMSNotice));
   } catch (error) {

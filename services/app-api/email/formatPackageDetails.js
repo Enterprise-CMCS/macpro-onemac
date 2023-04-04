@@ -46,7 +46,7 @@ export const formatPackageDetails = (data, config) => {
     detailText += `
         <p>
           <b>Summary</b>:
-          <br>${data.additionalInformation.replace("\n", "<br/>")}
+          <br>${data.additionalInformation.replace(/\n/g, "<br/>")}
         </p>
       `;
   }
