@@ -133,11 +133,10 @@ export const submitAny = async (event, config) => {
   //An error sending the user email is not a failure.
   try {
     // send the submission "reciept" to the State Submitter
-    if (config?.buildStateReceipt)
-      await sendEmail(
-        async () => await config.buildStateReceipt(data, config, doneBy)
-      );
-    else await sendEmail(stateSubmissionReceipt(data, config));
+    if (config?.buildStateReceipt) {
+      const stateEmail = await config.buildStateReceipt(data, config, doneBy);
+      await sendEmail(stateEmail);
+    } else await sendEmail(stateSubmissionReceipt(data, config));
   } catch (error) {
     console.log(
       "%s Warning: There was an error sending the user acknowledgement email.",
