@@ -134,7 +134,9 @@ export const submitAny = async (event, config) => {
   try {
     // send the submission "reciept" to the State Submitter
     if (config?.buildStateReceipt)
-      await sendEmail(config.buildStateReceipt(data, config, doneBy));
+      await sendEmail(
+        async () => await config.buildStateReceipt(data, config, doneBy)
+      );
     else await sendEmail(stateSubmissionReceipt(data, config));
   } catch (error) {
     console.log(
