@@ -51,14 +51,6 @@ export const defaultOneMACFormConfig = {
   proposedEffectiveDate: false,
 };
 
-export const defaultWithdrawConfig = {
-  attachmentsTitle: "Upload Supporting Documentation",
-  addlInfoText:
-    "Explain your need for withdrawal or upload supporting documentation.",
-  landingPage: ONEMAC_ROUTES.PACKAGE_LIST,
-  proposedEffectiveDate: false,
-};
-
 export const defaultWaiverAuthority = [
   { label: "-- select a waiver authority --", value: "" },
 ];
@@ -149,3 +141,21 @@ export const buildMustNotExistMessage = (formConfig: OneMACFormConfig) => ({
   statusLevel: "error",
   statusMessage: `According to our records, this ${formConfig.idLabel} already exists. Please check the ${formConfig.idLabel} and try entering it again.`,
 });
+
+export const defaultWithdrawConfig = {
+  introJSX: (
+    <p id="form-intro">
+      Complete this form to withdraw a package. Once complete, you will not be
+      able to resubmit this package. CMS will be notified and will use this
+      content to review your request, and you will not be able to edit this
+      form. If CMS needs any additional information, they will follow up by
+      email.
+    </p>
+  ),
+  confirmSubmit: defaultConfirmSubmitWithdraw,
+  attachmentsTitle: "Upload Supporting Documentation",
+  addlInfoText:
+    "Explain your need for withdrawal or upload supporting documentation.",
+  landingPage: ONEMAC_ROUTES.PACKAGE_LIST,
+  proposedEffectiveDate: false,
+};

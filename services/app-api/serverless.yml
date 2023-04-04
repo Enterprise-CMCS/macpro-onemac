@@ -323,16 +323,6 @@ functions:
           cors: true
           authorizer: aws_iam
 
-  withdrawWaiverTemporaryExtension:
-    handler: action/withdrawWaiverTemporaryExtension.main
-    role: LambdaApiRole
-    events:
-      - http:
-          path: withdrawWaiverTemporaryExtension
-          method: post
-          cors: true
-          authorizer: aws_iam
-
   withdrawWaiverRenewal:
     handler: action/withdrawWaiverRenewal.main
     role: LambdaApiRole

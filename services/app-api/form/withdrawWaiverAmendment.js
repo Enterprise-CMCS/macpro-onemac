@@ -1,13 +1,13 @@
-import { medicaidSPAWithdraw } from "cmscommonlib";
+import { waiverAmendmentWithdraw } from "cmscommonlib";
 import handler from "../libs/handler-lib";
 import { submitAny } from "./submitAny";
 import { defaultWithdrawConfig } from "./defaultFormConfig";
 
-export const withdrawMedicaidSPAFormConfig = {
+export const withdrawWaiverAmendmentFormConfig = {
   ...defaultWithdrawConfig,
-  ...medicaidSPAWithdraw,
+  ...waiverAmendmentWithdraw,
 };
 
 export const main = handler(async (event) =>
-  submitAny(event, withdrawMedicaidSPAFormConfig)
+  submitAny(event, withdrawWaiverAmendmentFormConfig)
 );

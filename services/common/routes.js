@@ -68,6 +68,7 @@ export const ONEMAC_ROUTES = {
   WAIVER_APP_K_WITHDRAW: "/waiver-app-k-withdraw",
   WAIVER_RAI: "/waiver-rai",
   APPENDIX_K_AMENDMENT: "/appendix-k-amendment",
+  APPENDIX_K_AMENDMENT_WITHDRAW: "/appendix-k-amendment-withdraw",
   TEMPORARY_EXTENSION: "/temporary-extension",
   TEMPORARY_EXTENSION_DETAIL: "/detail/temporary-extension",
   FORMS_DESCRIBE: "/forms-describe",

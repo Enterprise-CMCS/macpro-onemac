@@ -36,7 +36,7 @@ export const submitAny = async (event, config) => {
     console.log("event couldn't parse: ", error);
     throw error;
   }
-  console.log("config is: ", config);
+
   // errors here are application level: returned as codes to front end for handling
   try {
     // returns undefined if no errors found, or the first error found.
