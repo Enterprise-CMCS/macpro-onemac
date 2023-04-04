@@ -23,6 +23,7 @@ export const medicaidSpaWithdrawInfo: OneMACFormConfig = {
   landingPage: ONEMAC_ROUTES.PACKAGE_LIST_SPA,
   confirmSubmit: defaultConfirmSubmitWithdraw,
   parentTypeNice: Workflow.ONEMAC_LABEL[Workflow.ONEMAC_TYPE.MEDICAID_SPA],
+  validateParentAPI: "validateParentOfMedicaidSpaWithdraw",
 };
 
 const MedicaidSpaWithdraw: FC = () => {

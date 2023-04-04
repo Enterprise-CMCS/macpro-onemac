@@ -253,6 +253,16 @@ functions:
           cors: true
           authorizer: aws_iam
 
+  validateParentOfMedicaidSpaWithdraw:
+    handler: validation/validateParentOfMedicaidSpaWithdraw.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: validateParentOfMedicaidSpaWithdraw/{parentId}
+          method: get
+          cors: true
+          authorizer: aws_iam
+
   validateParentOfChipSpaRaiResponse:
     handler: validation/validateParentOfChipSpaRaiResponse.main
     role: LambdaApiRole
