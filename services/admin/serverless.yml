@@ -14,8 +14,6 @@ plugins:
 custom:
   stage: ${opt:stage, self:provider.stage}
   iamPermissionsBoundaryPolicy: ${ssm:/configuration/${self:custom.stage}/iam/permissionsBoundaryPolicy, ssm:/configuration/default/iam/permissionsBoundaryPolicy, ""}
-  tableName: cms-spa-form-${self:custom.stage}-change-requests
-  spaIdTableName: cms-spa-form-${self:custom.stage}-spa-ids
   oneMacTableName: onemac-${self:custom.stage}-one
 provider:
   name: aws
@@ -56,12 +54,6 @@ functions:
   softDeleteComponent:
     handler: ./handlers/softDeleteComponent.main
     timeout: 180
-
-  convertChangeRequests:
-    handler: ./handlers/convertChangeRequests.main
-    timeout: 180
-    events:
-      - schedule: rate(15 minutes)
 
   createOneMacPackage:
     handler: ./handlers/createOneMacPackage.main

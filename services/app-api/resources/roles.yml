@@ -65,14 +65,6 @@ Resources:
                 Action:
                   - dynamodb:GetItem
                   - dynamodb:Query
-                  - dynamodb:PutItem
-                  - dynamodb:UpdateItem
-                  - dynamodb:DeleteItem
-                Resource: !GetAtt SpaIdTable.Arn
-              - Effect: "Allow"
-                Action:
-                  - dynamodb:GetItem
-                  - dynamodb:Query
                   - dynamodb:Scan
                   - dynamodb:PutItem
                   - dynamodb:UpdateItem

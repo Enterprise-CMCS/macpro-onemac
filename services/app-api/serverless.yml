@@ -18,8 +18,6 @@ plugins:
   - serverless-s3-bucket-helper
 custom:
   stage: ${opt:stage, self:provider.stage}
-  tableName: cms-spa-form-${self:custom.stage}-change-requests
-  spaIdTableName: cms-spa-form-${self:custom.stage}-spa-id
   oneMacTableName: onemac-${self:custom.stage}-one
   iamPath: ${ssm:/configuration/${self:custom.stage}/iam/path, ssm:/configuration/default/iam/path, "/"}
   iamPermissionsBoundaryPolicy: ${ssm:/configuration/${self:custom.stage}/iam/permissionsBoundaryPolicy, ssm:/configuration/default/iam/permissionsBoundaryPolicy, ""}
