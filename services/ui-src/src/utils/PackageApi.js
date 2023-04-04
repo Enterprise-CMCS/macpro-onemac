@@ -52,13 +52,7 @@ class PackageApi {
       );
     }
 
-    if (
-      !data ||
-      !uploadsList ||
-      !componentType ||
-      uploadsList.length === 0 ||
-      !data.submitterEmail
-    ) {
+    if (!data || !componentType || !data.submitterEmail) {
       console.log(
         "Unable to submit data due to missing fields, invalid format of fields,  or uploads.",
         data,
