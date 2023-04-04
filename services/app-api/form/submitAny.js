@@ -27,7 +27,7 @@ import { stateSubmissionReceipt } from "../email/stateSubmissionReceipt";
  */
 
 export const submitAny = async (event, config) => {
-  let data;
+  let data, doneBy;
   const warningsInCMSNotice = [];
 
   try {
@@ -45,7 +45,7 @@ export const submitAny = async (event, config) => {
     }
 
     // get the rest of the details about the current user
-    const doneBy = await getUser(data.submitterEmail);
+    doneBy = await getUser(data.submitterEmail);
 
     if (JSON.stringify(doneBy) === "{}") {
       throw RESPONSE_CODE.USER_NOT_FOUND;
