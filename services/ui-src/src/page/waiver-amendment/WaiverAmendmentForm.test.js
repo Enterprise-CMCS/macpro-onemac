@@ -11,7 +11,6 @@ import PackageApi from "../../utils/PackageApi";
 import { AppContext } from "../../libs/contextLib";
 
 jest.mock("../../utils/PackageApi");
-jest.mock("../../utils/PackageApi");
 
 window.HTMLElement.prototype.scrollIntoView = jest.fn();
 window.scrollTo = jest.fn();

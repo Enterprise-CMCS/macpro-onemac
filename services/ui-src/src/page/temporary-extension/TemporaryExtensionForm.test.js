@@ -12,7 +12,6 @@ import { AppContext } from "../../libs/contextLib";
 import { ONEMAC_TYPE } from "cmscommonlib/workflow";
 
 jest.mock("../../utils/PackageApi");
-jest.mock("../../utils/PackageApi");
 
 window.HTMLElement.prototype.scrollIntoView = jest.fn();
 window.scrollTo = jest.fn();
