@@ -14,6 +14,9 @@ Feature: Package Dashboard - Filter
         And verify Type Exists
         And verify status DropDown Filter exists
         And verify Initial Submission Date filter dropdown exists
+        And click on Initial Submission Date filter dropdown
+        And verify Initial Submission Date date picker filter exists
+        And verify Formal RAI Received date picker filter does not exist
         Then Click on My Account
         And click the logout button
 
@@ -28,6 +31,9 @@ Feature: Package Dashboard - Filter
         And verify Type Exists
         And verify status DropDown Filter exists
         And verify Initial Submission Date filter dropdown exists
+        And click on Initial Submission Date filter dropdown
+        And verify Initial Submission Date date picker filter exists
+        And verify Formal RAI Received date picker filter does not exist
         Then Click on My Account
         And click the logout button
 

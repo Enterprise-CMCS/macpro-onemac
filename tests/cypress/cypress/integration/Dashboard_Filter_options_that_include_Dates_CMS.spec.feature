@@ -4,21 +4,6 @@ Feature: Package Dashboard - Filter by Formal RAI Received
         When Clicking on Development Login
         When Login with cms System Admin
 
-    Scenario: SPAs tab - Screen enhancement
-        And Click on Filter Button
-        And verify Initial Submission Date filter dropdown exists
-        And click on Initial Submission Date filter dropdown
-        And verify Initial Submission Date date picker filter exists
-        And verify Formal RAI Received dropdown filter exists
-
-    Scenario: Waivers tab - Screen enhancement
-        And click on the Waivers tab
-        And Click on Filter Button
-        And verify Initial Submission Date filter dropdown exists
-        And click on Initial Submission Date filter dropdown
-        And verify Initial Submission Date date picker filter exists
-        And verify Formal RAI Received dropdown filter exists
-
     Scenario: Change Initial Submission Date filter. Verify no results. Then reset filter
         And click on the Waivers tab
         And Click on Filter Button

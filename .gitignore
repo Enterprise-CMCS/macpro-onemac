@@ -20,4 +20,3 @@ tests/cypress/node_modules
 node_modules
 tests/cypress/videos
 tests/cypress/screenshots
-tests/cypress/fixtures/*
