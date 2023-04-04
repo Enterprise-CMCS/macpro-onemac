@@ -1,4 +1,4 @@
-import AWS from "aws-sdk";
+// import AWS from "aws-sdk";
 
 // import { ATTACHMENTS_BUCKET } from "./constants";
 // import dynamoDb from "../libs/dynamodb-lib";
