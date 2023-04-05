@@ -4,7 +4,7 @@ import * as s3Uploader from "../utils/s3Uploader";
 import config from "../utils/config";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
-import { formatList } from "../utils";
+import { Link } from "@material-ui/core";
 
 /** adjust to approximately 80 MB **/
 const MAX_FILE_SIZE_BYTES = 1024 * 1024 * config.MAX_ATTACHMENT_SIZE_MB;
@@ -35,7 +35,7 @@ const MAX_FILE_SIZE_BYTES = 1024 * 1024 * config.MAX_ATTACHMENT_SIZE_MB;
 
 export const MISSING_REQUIRED_MESSAGE = "Required attachments missing";
 const SIZE_TOO_LARGE_MESSAGE = `An attachment cannot be larger than ${config.MAX_ATTACHMENT_SIZE_MB}MB`;
-
+const fileTypes = ".pdf, .docx, .jpg, .png";
 export default class FileUploader extends Component {
   static propTypes = {
     requiredUploads: PropTypes.arrayOf(
@@ -270,7 +270,7 @@ export default class FileUploader extends Component {
                 id={"uploader-input-" + index}
                 data-testid={"uploader-input-" + index}
                 name={"uploader-input-" + index}
-                accept=".bmp,.csv,.doc,.docx,.gif,.jpg,.jpeg,.odp,.ods,.odt,.png,.pdf,.ppt,.pptx,.rtf,.tif,.tiff,.txt,.xls,.xlsx"
+                accept={fileTypes} //".bmp,.csv,.doc,.docx,.gif,.jpg,.jpeg,.odp,.ods,.odt,.png,.pdf,.ppt,.pptx,.rtf,.tif,.tiff,.txt,.xls,.xlsx"
                 multiple={uploader.allowMultiple}
                 disabled={isDisabled}
                 style={{
@@ -321,13 +321,13 @@ export default class FileUploader extends Component {
     return (
       <div>
         <p className="req-message">
-          Maximum file size of {config.MAX_ATTACHMENT_SIZE_MB} MB. You can add
-          multiple files per attachment type
-          {singleFileControls.length > 0 && (
-            <>, except for the {formatList(singleFileControls)}</>
-          )}
-          . Read the description for each of the attachment types on the FAQ
-          Page.
+          Maximum file size of {config.MAX_ATTACHMENT_SIZE_MB} MB per
+          attachment. <b>You can add multiple files per attachment type.</b>{" "}
+          Read the description for each attachment on the{" "}
+          <Link target="new" href="/FAQ">
+            FAQ Page
+          </Link>
+          . We accept the following file types: <b>{fileTypes}</b>.
         </p>
         {this.props.requiredUploads?.length > 0 ? (
           <p className="req-message">
