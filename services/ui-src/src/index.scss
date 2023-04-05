@@ -600,7 +600,7 @@ input[type="file"] {
       @extend .ds-u-margin-bottom--1;
     }
     h3 {
-      @extend .ds-u-padding-top--5;
+      @extend .ds-u-padding-top--2;
       @extend .ds-u-font-weight--bold;
     }
     .ds-c-review {
@@ -638,6 +638,7 @@ input[type="file"] {
     span {
       display: block;
       @extend .ds-u-margin-bottom--1;
+      width: 685px;
     }
 
     span:first-child {

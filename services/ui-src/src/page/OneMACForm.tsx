@@ -497,12 +497,19 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
             </Review>
           )}
           <h3>{formConfig?.attachmentsTitle ?? "Attachments"}</h3>
+          {formConfig.attachmentIntroJSX}
           <FileUploader
             ref={uploader}
             requiredUploads={formConfig.requiredAttachments}
             optionalUploads={formConfig.optionalAttachments}
             readyCallback={setAreUploadsReady}
-            withdrawIntro={formConfig.componentType.includes("withdraw")}
+            whichIntro={
+              formConfig.componentType.includes("withdraw")
+                ? formConfig.componentType.includes("chip")
+                  ? "withdrawchip"
+                  : "submitform"
+                : "defaultwithdraw"
+            }
           ></FileUploader>
           <TextField
             name="additionalInformation"

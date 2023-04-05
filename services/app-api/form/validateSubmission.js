@@ -49,7 +49,8 @@ export const validateSubmission = (data, config) => {
   const theSchema = getCommonSchema(
     config.idRegex,
     possibleAttachmentTitles,
-    config.componentType.includes("withdraw")
+    config.componentType.includes("withdraw") &&
+      !config.componentType.includes("chip")
   ).append(config.appendToSchema);
 
   try {

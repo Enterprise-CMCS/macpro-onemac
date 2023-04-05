@@ -8,7 +8,7 @@ export const initialWaiverWithdrawInfo: OneMACFormConfig = {
   ...initialWaiverWithdraw,
   detailsHeaderFull: "Withdraw Waiver",
   landingPage: ONEMAC_ROUTES.PACKAGE_LIST_WAIVER,
-  parentTypeNice: Workflow.ONEMAC_LABEL[Workflow.ONEMAC_TYPE.INITIAL_WAIVER],
+  parentTypeNice: Workflow.ONEMAC_LABEL[Workflow.ONEMAC_TYPE.WAIVER_INITIAL],
   validateParentAPI: "validateParentOfWaiverWithdraw",
 };
 

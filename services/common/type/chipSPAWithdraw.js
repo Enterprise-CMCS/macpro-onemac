@@ -6,8 +6,8 @@ export const chipSPAWithdraw = {
     "(^[A-Z]{2}-[0-9]{2}-[0-9]{4}-[a-zA-Z0-9]{1,4}$)|(^[A-Z]{2}-[0-9]{2}-[0-9]{4}$)",
   idMustExist: true,
   allowMultiplesWithSameId: true,
-  requiredAttachments: [],
-  optionalAttachments: ["Upload Supporting Documentation"],
+  requiredAttachments: ["Official Withdrawal Letter"],
+  optionalAttachments: [],
   theAttributes: [
     "componentId",
     "submissionTimestamp",
