@@ -18,7 +18,7 @@ export const waiverAmendmentWithdraw = {
   ],
   allowedParentTypes: ["waiveramendment"],
   allowedParentStatuses: [
-    "Pending",
+    "Under Review",
     "Pending - Concurrence",
     "Pending - Approval",
     "RAI Issued",

@@ -277,7 +277,8 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
     );
 
     const isSupportInfoReady: boolean = Boolean(
-      formConfig.componentType.includes("withdraw")
+      formConfig.componentType.includes("withdraw") &&
+        !formConfig.componentType.includes("chip")
         ? areUploadsReady || oneMacFormData.additionalInformation
         : areUploadsReady
     );
@@ -503,13 +504,6 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
             requiredUploads={formConfig.requiredAttachments}
             optionalUploads={formConfig.optionalAttachments}
             readyCallback={setAreUploadsReady}
-            whichIntro={
-              formConfig.componentType.includes("withdraw")
-                ? formConfig.componentType.includes("chip")
-                  ? "withdrawchip"
-                  : "submitform"
-                : "defaultwithdraw"
-            }
           ></FileUploader>
           <TextField
             name="additionalInformation"

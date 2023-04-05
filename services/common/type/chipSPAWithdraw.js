@@ -19,7 +19,7 @@ export const chipSPAWithdraw = {
   ],
   allowedParentTypes: ["chipspa"],
   allowedParentStatuses: [
-    "Pending",
+    "Under Review",
     "Pending - Concurrence",
     "Pending - Approval",
     "RAI Issued",

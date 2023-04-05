@@ -19,7 +19,7 @@ export const medicaidSPAWithdraw = {
   ],
   allowedParentTypes: ["medicaidspa"],
   allowedParentStatuses: [
-    "Pending",
+    "Under Review",
     "Pending - Concurrence",
     "Pending - Approval",
     "RAI Issued",
