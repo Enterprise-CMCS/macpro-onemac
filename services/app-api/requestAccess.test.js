@@ -5,11 +5,11 @@ import {
   accessPendingNotice,
   adminNotice,
 } from "./requestAccess";
-import { getCMSDateFormatNow } from "./changeRequest/email-util";
 import { getUser } from "./getUser";
 import { changeUserStatus } from "./utils/changeUserStatus";
 import { getMyApprovers } from "./getMyApprovers";
 import sendEmail from "./libs/email-lib";
+import { getCMSDateFormat } from "./utils/date-utils";
 
 const testDoneBy = {
   roleList: [{ role: "statesubmitter", status: "active", territory: "MD" }],
@@ -19,13 +19,13 @@ const testDoneBy = {
   fullName: "firsty lastly",
 };
 
-jest.mock("./changeRequest/email-util");
+jest.mock("./utils/date-utils");
 jest.mock("./getUser");
 jest.mock("./utils/changeUserStatus");
 jest.mock("./getMyApprovers");
 jest.mock("./libs/email-lib");
 
-getCMSDateFormatNow.mockImplementation(() => "real now");
+getCMSDateFormat.mockImplementation(() => "real now");
 getUser.mockImplementation(() => {
   return testDoneBy;
 });

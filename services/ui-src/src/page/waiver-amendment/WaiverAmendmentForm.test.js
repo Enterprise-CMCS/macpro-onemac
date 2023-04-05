@@ -7,11 +7,9 @@ import { stateSubmitterInitialAuthState } from "../../libs/testDataAppContext";
 
 import { ONEMAC_ROUTES } from "cmscommonlib";
 import WaiverAmendmentForm from "./WaiverAmendmentForm";
-import ChangeRequestDataApi from "../../utils/ChangeRequestDataApi";
-import { AppContext } from "../../libs/contextLib";
 import PackageApi from "../../utils/PackageApi";
+import { AppContext } from "../../libs/contextLib";
 
-jest.mock("../../utils/ChangeRequestDataApi");
 jest.mock("../../utils/PackageApi");
 
 window.HTMLElement.prototype.scrollIntoView = jest.fn();
@@ -68,7 +66,7 @@ describe("1915(b) Waiver Amendment Form", () => {
       "1915(b) Waiver Amendment Number"
     );
 
-    ChangeRequestDataApi.packageExists.mockResolvedValue(false);
+    PackageApi.packageExists.mockResolvedValue(false);
 
     userEvent.type(transmittalNumberEl, testID);
     await waitFor(() => expect(transmittalNumberEl.value).toBe(testID));
@@ -93,7 +91,7 @@ describe("1915(b) Waiver Amendment Form", () => {
 
     const idNumberEl = screen.getByLabelText("1915(b) Waiver Amendment Number");
 
-    ChangeRequestDataApi.packageExists.mockResolvedValue(false);
+    PackageApi.packageExists.mockResolvedValue(false);
 
     userEvent.type(idNumberEl, testID);
     await waitFor(() => expect(idNumberEl.value).toBe(testID));

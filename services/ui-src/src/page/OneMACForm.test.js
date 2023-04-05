@@ -12,11 +12,11 @@ import { stateSubmitterInitialAuthState } from "../libs/testDataAppContext";
 
 import { ROUTES, ONEMAC_ROUTES, initialWaiver } from "cmscommonlib";
 import OneMACForm from "./OneMACForm";
-import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
+import PackageApi from "../utils/PackageApi";
 import { AppContext } from "../libs/contextLib";
 import { initialWaiverFormInfo } from "./initial-waiver/InitialWaiverForm";
 
-jest.mock("../utils/ChangeRequestDataApi");
+jest.mock("../utils/PackageApi");
 
 window.HTMLElement.prototype.scrollIntoView = jest.fn();
 window.scrollTo = jest.fn();
@@ -98,7 +98,7 @@ describe("OneMAC Form", () => {
 
     const transmittalNumberEl = screen.getByLabelText("Initial Waiver Number");
 
-    ChangeRequestDataApi.packageExists.mockResolvedValue(false);
+    PackageApi.packageExists.mockResolvedValue(false);
 
     userEvent.type(transmittalNumberEl, testID);
     await waitFor(() => expect(transmittalNumberEl.value).toBe(testID));
@@ -136,7 +136,7 @@ describe("OneMAC Form", () => {
     await screen.findByText("All other 1915(b) Waivers");
 
     // Find the package
-    ChangeRequestDataApi.packageExists.mockResolvedValue(true);
+    PackageApi.packageExists.mockResolvedValue(true);
     userEvent.type(transmittalNumberEl, testValues.transmittalNumber);
     await screen.findByText(
       `According to our records, this Initial Waiver Number already exists. Please check the Initial Waiver Number and try entering it again.`
@@ -163,7 +163,7 @@ describe("Component Id Section", () => {
 
   it("populates the component id as a display only value when passed in as a state variable", async () => {
     const testComponentId = "MI-1122.R00.00";
-    ChangeRequestDataApi.packageExists.mockResolvedValue(false);
+    PackageApi.packageExists.mockResolvedValue(false);
 
     history.push({
       pathname: ROUTES.INITIAL_WAIVER,
@@ -212,7 +212,7 @@ describe("Component Id Section", () => {
     const invalidFormatId = "MI-12";
     const validFormatId = "MI-11122.R00.00";
 
-    ChangeRequestDataApi.packageExists.mockResolvedValue(false);
+    PackageApi.packageExists.mockResolvedValue(false);
 
     render(
       <AppContext.Provider
@@ -243,7 +243,7 @@ describe("Component Id Section", () => {
     const existErrorMessage = `According to our records, this Initial Waiver Number already exists. Please check the Initial Waiver Number and try entering it again.`;
 
     // id will exist
-    ChangeRequestDataApi.packageExists.mockResolvedValue(true);
+    PackageApi.packageExists.mockResolvedValue(true);
 
     render(
       <AppContext.Provider
@@ -307,7 +307,7 @@ describe("cancelling the form submission", () => {
     await screen.findByText("All other 1915(b) Waivers");
 
     // Don't find the package
-    ChangeRequestDataApi.packageExists.mockResolvedValue(false);
+    PackageApi.packageExists.mockResolvedValue(false);
     userEvent.type(transmittalNumberEl, testValues.transmittalNumber);
     await expect(transmittalNumberEl.value).toBe(testValues.transmittalNumber);
 
@@ -360,7 +360,7 @@ describe("cancelling the form submission", () => {
     await screen.findByText("All other 1915(b) Waivers");
 
     // Don't find the package
-    ChangeRequestDataApi.packageExists.mockResolvedValue(false);
+    PackageApi.packageExists.mockResolvedValue(false);
     userEvent.type(transmittalNumberEl, testValues.transmittalNumber);
     await expect(transmittalNumberEl.value).toBe(testValues.transmittalNumber);
 
