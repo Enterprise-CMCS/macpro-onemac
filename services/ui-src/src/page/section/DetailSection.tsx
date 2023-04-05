@@ -101,7 +101,13 @@ export const DetailSection = ({
               </section>
             ) : (
               <section className="package-actions">
-                <div className="column-spacer">&nbsp;</div>
+                <div className="column-spacer">
+                  <Review heading={pageConfig.actionLabel}>
+                    <p>
+                      No actions are currently available for this submission.
+                    </p>
+                  </Review>
+                </div>
               </section>
             )}
           </div>
