@@ -9,7 +9,6 @@ export type AttributeDetail = {
 };
 
 export type OneMACDetail = {
-  defaultTitle: null;
   componentType: string;
   actionLabel: string;
   show90thDayInfo: boolean;

@@ -42,11 +42,6 @@ export const DetailSection = ({
 
   return (
     <>
-      {(detail.title || pageConfig.defaultTitle) && (
-        <section className="detail-title">
-          <h2>{detail.title ?? pageConfig.defaultTitle}</h2>
-        </section>
-      )}
       <section>
         <div className="detail-card-top"></div>
         <div className="detail-card">
