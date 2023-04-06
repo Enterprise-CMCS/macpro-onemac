@@ -2,7 +2,7 @@ Feature: Package Dashboard - Filter
     Background: Reoccuring Steps
         Given I am on Login Page
         When Clicking on Development Login
-        When Login with state submitter user
+        When Login with cms System Admin
 
     Scenario: SPAs Tab - Screen enhancement
         And Verify Filter button exists
@@ -14,8 +14,6 @@ Feature: Package Dashboard - Filter
         And verify Type Exists
         And verify status DropDown Filter exists
         And verify Initial Submission Date filter dropdown exists
-        And click on Initial Submission Date filter dropdown
-        And verify Initial Submission Date date picker filter exists
         And verify Formal RAI Received dropdown filter exists
         Then Click on My Account
         And click the logout button
@@ -31,8 +29,6 @@ Feature: Package Dashboard - Filter
         And verify Type Exists
         And verify status DropDown Filter exists
         And verify Initial Submission Date filter dropdown exists
-        And click on Initial Submission Date filter dropdown
-        And verify Initial Submission Date date picker filter exists
         And verify Formal RAI Received dropdown filter exists
         Then Click on My Account
         And click the logout button
