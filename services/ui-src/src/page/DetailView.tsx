@@ -175,10 +175,6 @@ const DetailView: React.FC<{ pageConfig: OneMACDetail }> = ({ pageConfig }) => {
                 loadDetail={loadDetail}
                 setAlertCode={setAlertCode}
               />
-
-              <AdditionalInfoSection
-                additionalInfo={detail.additionalInformation}
-              />
             </article>
           </div>
         </div>

@@ -150,6 +150,9 @@ export const DetailSection = ({
             </>
           )}
         </section>
+
+        <AdditionalInfoSection additionalInfo={detail.additionalInformation} />
+
         {detail.raiResponses?.length > 0 && (
           <section className="detail-section">
             <h2>Formal RAI Responses</h2>
