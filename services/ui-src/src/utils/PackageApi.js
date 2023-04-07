@@ -33,6 +33,28 @@ const WITHDRAW_API_CALL = {
  */
 class PackageApi {
   /**
+   * Check to see if an id exists in the back end
+   * @param {string} id the ID to check
+   * @return {Boolean} true if the ID exists in the back end
+   */
+  async packageExists(id) {
+    if (!id) {
+      console.log("ID was not specified for packageExists API call");
+      throw new Error("ID was not specified for packageExists API call");
+    }
+
+    try {
+      return await API.get("oneMacAPI", `/package-exists/${id}`);
+    } catch (error) {
+      handleApiError(
+        error,
+        "SUBMISSION_FETCH_ERROR",
+        `There was an error fetching package with ID ${id}.`
+      );
+    }
+  }
+
+  /**
    * Submit a change request to be saved by the backend.
    * @param {Object} data the change request data
    * @param {Array} uploadsList an array with the information on the already uploaded files
