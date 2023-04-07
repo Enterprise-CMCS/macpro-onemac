@@ -17,7 +17,6 @@ import PageTitleBar from "../components/PageTitleBar";
 import AlertBar from "../components/AlertBar";
 import { OneMACDetail } from "../libs/detailLib";
 import { DetailSection } from "./section/DetailSection";
-import { AdditionalInfoSection } from "./section/AdditionalInfoSection";
 import { temporaryExtensionTypes } from "./temporary-extension/TemporaryExtensionForm";
 import { getTerritoryFromComponentId } from "./OneMACForm";
 
