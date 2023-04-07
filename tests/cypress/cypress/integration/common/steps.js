@@ -1643,11 +1643,20 @@ And("click RAI Issued checkbox", () => {
 And("click Pending - RAI checkbox", () => {
   OneMacPackagePage.clickPendingRaiCheckbox();
 });
+And("verify Pending - RAI status checkbox exists", () => {
+  OneMacPackagePage.verifyPendingRaiCheckboxExists();
+});
 And("click the Pending - Concurrence checkbox", () => {
   OneMacPackagePage.clickPendingConcurrenceCheckbox();
 });
+And("verify the Pending - Concurrence status checkbox exists", () => {
+  OneMacPackagePage.verifyPendingConcurrenceCheckboxExists();
+});
 And("click the Pending - Approval checkbox", () => {
   OneMacPackagePage.clickPendingApprovalCheckbox();
+});
+And("verify the Pending - Approval status checkbox exists", () => {
+  OneMacPackagePage.verifyPendingApprovalCheckboxExists();
 });
 And("click Package Approved checkbox", () => {
   OneMacPackagePage.clickPackageApprovedCheckbox();
@@ -1687,6 +1696,9 @@ And("click Submitted checkbox", () => {
 });
 And("click Submitted - Intake Needed checkbox", () => {
   OneMacPackagePage.clickSubmittedIntakeNeededCheckbox();
+});
+And("verify Submitted - Intake Needed status checkbox exists", () => {
+  OneMacPackagePage.verifySubmittedIntakeNeededCheckboxExists();
 });
 And("click Requested checkbox", () => {
   OneMacPackagePage.clickDoubleDashCheckbox();

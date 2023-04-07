@@ -39,12 +39,13 @@ Feature: Package Dashboard - Filter
         And verify CHIP SPA Exists
         And verify Medicaid SPA Exists
         And click on Status
-        And verify Submitted status checkbox exists
+        And verify Submitted - Intake Needed status checkbox exists
         And verify Package Withdrawn status checkbox exists
-        And verify RAI Issued status checkbox exists
-        And verify Under Review checkbox exists
+        And verify Pending - RAI status checkbox exists
         And verify Approved checkbox exists
         And verify Disapproved checkbox exists
+        And verify the Pending - Approval status checkbox exists
+        And verify the Pending - Concurrence status checkbox exists
         Then Click on My Account
         And click the logout button
 
@@ -58,12 +59,13 @@ Feature: Package Dashboard - Filter
         And verify 1915c Appendix K Amendment check box exists
         And verify Temporary Extension exists
         And click on Status
-        And verify Submitted status checkbox exists
+        And verify Submitted - Intake Needed status checkbox exists
         And verify Package Withdrawn status checkbox exists
-        And verify RAI Issued status checkbox exists
-        And verify Under Review checkbox exists
+        And verify Pending - RAI status checkbox exists
         And verify Approved checkbox exists
         And verify Disapproved checkbox exists
+        And verify the Pending - Approval status checkbox exists
+        And verify the Pending - Concurrence status checkbox exists
         Then Click on My Account
         And click the logout button
 
