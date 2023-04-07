@@ -1,18 +1,13 @@
 import React, { FC } from "react";
 import DetailView from "../DetailView";
-import {
-  OneMACDetail,
-  defaultDetail,
-  defaultWaiverDetailSectionItems,
-} from "../../libs/detailLib";
+import { OneMACDetail, defaultWaiverDetail } from "../../libs/detailLib";
 import { waiverRenewal, Workflow } from "cmscommonlib";
 
 export const waiverRenewalDetail: OneMACDetail = {
-  ...defaultDetail,
+  ...defaultWaiverDetail,
   ...waiverRenewal,
   show90thDayInfo: false,
   detailHeader: "Waiver Renewal Package",
-  detailSection: [...defaultWaiverDetailSectionItems],
   actionsByStatus: Workflow.renewalWaiverActionsByStatus,
 };
 

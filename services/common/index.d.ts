@@ -3,8 +3,6 @@ export { ROUTES, ONEMAC_ROUTES, TYPE_TO_DETAIL_ROUTE } from "./routes.js";
 
 export const approvedBlueWarningMessage: string;
 
-export { waiverAdditionalErrorMessage } from "./changeRequest.js";
-
 export enum USER_STATUS {
   ACTIVE = "active",
   PENDING = "pending",
@@ -33,6 +31,7 @@ export class UserRole {
   canAccessUserManagement: boolean;
   canDownloadCsv: boolean;
   canAccessAdminTools: boolean;
+  isCMSUser: boolean;
 }
 
 export type RoleEntry = {
@@ -72,59 +71,6 @@ export type IdValidation = {
   existenceRegex?: string | RegExp;
   validateParentId?: boolean;
 };
-
-export namespace ChangeRequest {
-  type TransmittalNumberInfo = {
-    idLabel: string;
-    idRegex: string;
-    idAdditionalErrorMessage?: string;
-    idFormat: string;
-    idFieldHint: FieldHint[];
-    idFAQLink: string;
-    faqIdLabel?: string;
-    idExistValidations: {
-      existenceRegex?: RegExp;
-      existenceAppend?: string;
-      idMustExist?: boolean;
-      errorLevel: string;
-      showMessage?: string;
-    }[];
-  };
-
-  type WaiverFormInfo = {
-    actionType: { optionsList: SelectOption[] };
-    waiverAuthority: { optionsList: SelectOption[] };
-    parentNumber: TransmittalNumberInfo;
-    newTransmittalNumber: TransmittalNumberInfo;
-    amendmentTransmittalNumber: TransmittalNumberInfo;
-    renewalTransmittalNumber: TransmittalNumberInfo;
-    proposedEffectiveDate: { fieldName: string };
-  };
-
-  export enum PACKAGE_ACTION {
-    RESPOND_TO_RAI = "Respond to RAI",
-    WITHDRAW = "Withdraw Package",
-    REQUEST_TEMPORARY_EXTENSION = "Request a Temporary Extension",
-    ADD_AMENDMENT = "Add Amendment",
-  }
-
-  export type FormInfo = {
-    pageTitle: string;
-    subheaderMessage?: { __html: string };
-    detailsHeader?: string;
-    transmittalNumber: TransmittalNumberInfo;
-    requiredUploads: unknown;
-    optionalUploads: unknown;
-    raiLink: string;
-    overrideType?: string;
-    overrideActionType?: string;
-    overrideSuccessLanding?: ROUTES;
-  } & Partial<WaiverFormInfo>;
-
-  export const CONFIG: Record<string, FormInfo>;
-  export const TYPE: Record<string, string>;
-  export const LABEL: Record<string, string>;
-}
 
 export namespace Workflow {
   export enum PACKAGE_ACTION {

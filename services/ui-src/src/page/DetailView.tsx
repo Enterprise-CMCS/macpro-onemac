@@ -15,11 +15,11 @@ import PackageApi from "../utils/PackageApi";
 import { formatDate } from "../utils/date-utils";
 import PageTitleBar from "../components/PageTitleBar";
 import AlertBar from "../components/AlertBar";
-import { getTerritoryFromTransmittalNumber } from "../changeRequest/SubmissionForm";
 import { OneMACDetail } from "../libs/detailLib";
 import { DetailSection } from "./section/DetailSection";
 import { AdditionalInfoSection } from "./section/AdditionalInfoSection";
 import { temporaryExtensionTypes } from "./temporary-extension/TemporaryExtensionForm";
+import { getTerritoryFromComponentId } from "./OneMACForm";
 
 const AUTHORITY_LABELS = {
   "1915(b)": "All other 1915(b) Waivers",
@@ -90,7 +90,7 @@ const DetailView: React.FC<{ pageConfig: OneMACDetail }> = ({ pageConfig }) => {
           componentTimestamp
         )) as ComponentDetail;
         if (!fetchedDetail.territory)
-          fetchedDetail.territory = getTerritoryFromTransmittalNumber(
+          fetchedDetail.territory = getTerritoryFromComponentId(
             fetchedDetail.componentId
           );
         fetchedDetail.territoryNice = territoryMap[fetchedDetail.territory];
@@ -111,6 +111,11 @@ const DetailView: React.FC<{ pageConfig: OneMACDetail }> = ({ pageConfig }) => {
         if (fetchedDetail.submissionTimestamp) {
           fetchedDetail.submissionDateNice = formatDate(
             fetchedDetail.submissionTimestamp
+          );
+        }
+        if (fetchedDetail.latestRaiResponseTimestamp) {
+          fetchedDetail.latestRaiResponseDateNice = formatDate(
+            fetchedDetail.latestRaiResponseTimestamp
           );
         }
         if (fetchedDetail.proposedEffectiveDate) {

@@ -65,26 +65,6 @@ And("Click on State Plan Amendment SPA", () => {
 And("click on Medicaid SPA", () => {
   OneMacSubmissionTypePage.clickMedicaidSPA();
 });
-And("type in SPA ID 1", () => {
-  cy.fixture("submissionDashboardSPAIDs.json").then((d) => {
-    OneMacCHIPSPAPage.inputOldSpaID(d.attachmentsSPAID1);
-  });
-});
-And("type in SPA ID 2", () => {
-  cy.fixture("submissionDashboardSPAIDs.json").then((d) => {
-    OneMacCHIPSPAPage.inputOldSpaID(d.attachmentsSPAID2);
-  });
-});
-And("type in SPA ID for RAI 1", () => {
-  cy.fixture("submissionDashboardSPAIDs.json").then((d) => {
-    OneMacCHIPSPAPage.inputOldSpaID(d.SPAIDforRAI1);
-  });
-});
-And("type in SPA ID for RAI 2", () => {
-  cy.fixture("submissionDashboardSPAIDs.json").then((d) => {
-    OneMacCHIPSPAPage.inputOldSpaID(d.SPAIDforRAI2);
-  });
-});
 And("type in Medicaid SPA ID", () => {
   cy.fixture("packageDashboardSPAIDs.json").then((d) => {
     OneMacSubmitNewMedicaidSpaPage.inputSpaID(d.newMedicaidSPAID1);
@@ -230,65 +210,6 @@ And("verify submission Successful message", () => {
 And("verify submission successful message in the alert bar", () => {
   OneMacDashboardPage.verifySuccessMessage1IsDisplayed();
 });
-And("verify SPA ID 1 EXISTS", () => {
-  cy.fixture("submissionDashboardSPAIDs.json").then((d) => {
-    OneMacDashboardPage.verifyIDNumber(d.attachmentsSPAID1);
-  });
-});
-And("verify SPA ID 2 EXISTS", () => {
-  cy.fixture("submissionDashboardSPAIDs.json").then((d) => {
-    OneMacDashboardPage.verifyIDNumber(d.attachmentsSPAID2);
-  });
-});
-And("Click on the SPA ID 2 Link", () => {
-  cy.fixture("submissionDashboardSPAIDs.json").then((d) => {
-    OneMacDashboardPage.clickIDNumberLink(d.attachmentsSPAID2);
-  });
-});
-And("verify SPA ID for RAI 1 EXISTS", () => {
-  cy.fixture("submissionDashboardSPAIDs.json").then((d) => {
-    OneMacDashboardPage.verifyIDNumber(d.SPAIDforRAI1);
-  });
-});
-And("verify SPA ID for RAI 2 EXISTS", () => {
-  cy.fixture("submissionDashboardSPAIDs.json").then((d) => {
-    OneMacDashboardPage.verifyIDNumber(d.SPAIDforRAI2);
-  });
-});
-And("verify CHIP ID EXISTS", () => {
-  cy.fixture("submissionDashboardSPAIDs.json").then((d) => {
-    OneMacDashboardPage.verifyIDNumber(d.spaID1);
-  });
-});
-
-And("type in CHIP ID", () => {
-  cy.fixture("submissionDashboardSPAIDs.json").then((d) => {
-    OneMacCHIPSPAPage.inputOldSpaID(d.spaID1);
-  });
-});
-And("type in CHIP ID 2", () => {
-  cy.fixture("submissionDashboardSPAIDs.json").then((d) => {
-    OneMacCHIPSPAPage.inputOldSpaID(d.spaID2);
-  });
-});
-And("type in CHIP ID 3", () => {
-  cy.fixture("submissionDashboardSPAIDs.json").then((d) => {
-    OneMacCHIPSPAPage.inputOldSpaID(d.spaID3);
-  });
-});
-
-And("click on CHIP Respond to RAI", () => {
-  cy.fixture("submissionDashboardSPAIDs.json").then((d) => {
-    OneMacDashboardPage.clickOnrespondToRAI(d.spaID1);
-  });
-});
-
-And("Verify CHIP RAI ID number matches CHIP SPA ID number", () => {
-  cy.fixture("submissionDashboardSPAIDs.json").then((d) => {
-    OneMacDashboardPage.verifySPARAIIDNumberMatchesCHIPSPAIDNumber(d.spaID1);
-  });
-});
-
 And("verify submission date", () => {
   OneMacDashboardPage.verifyDate();
 });
@@ -296,35 +217,8 @@ And("Verify submission type", () => {
   OneMacDashboardPage.verifyType("Medicaid SPA");
 });
 
-And("Verify submission type for SPA ID 2", () => {
-  cy.fixture("submissionDashboardSPAIDs.json").then((d) => {
-    OneMacDashboardPage.verifyTypeForID(d.attachmentsSPAID2, "Medicaid SPA");
-  });
-});
-And("Verify submission type for RAI 1 parent SPA", () => {
-  cy.fixture("submissionDashboardSPAIDs.json").then((d) => {
-    OneMacDashboardPage.verifyTypeForID(d.SPAIDforRAI1, "Medicaid SPA");
-  });
-});
-
 And("Verify submission Waiver type", () => {
   OneMacDashboardPage.verifyType("Waiver");
-});
-
-And("Verify submission CHIP type", () => {
-  cy.fixture("submissionDashboardSPAIDs.json").then((d) => {
-    OneMacDashboardPage.verifyTypeForID(d.spaID1, "CHIP SPA");
-  });
-});
-And("click on spa Respond to RAI 2", () => {
-  cy.fixture("submissionDashboardSPAIDs.json").then((d) => {
-    OneMacDashboardPage.clickOnrespondToRAI(d.SPAIDforRAI2);
-  });
-});
-And("click on spa Respond to RAI 1", () => {
-  cy.fixture("submissionDashboardSPAIDs.json").then((d) => {
-    OneMacDashboardPage.clickOnrespondToRAI(d.SPAIDforRAI1);
-  });
 });
 And("Add file for RAI Response", () => {
   medicaidSPARAIResponsePage.uploadRAIResponseAddFile();
@@ -335,23 +229,6 @@ And("Add Additional Comments", () => {
 And("verify submission Successful message after RAI", () => {
   OneMacDashboardPage.verifySuccessMessageIsDisplayedAfterRAIResponse();
 });
-And("Verify submission type SPA RAI", () => {
-  cy.fixture("submissionDashboardSPAIDs.json").then((d) => {
-    OneMacDashboardPage.verifyTypeForID(d.SPAIDforRAI2, "SPA RAI");
-  });
-});
-
-And("Verify submission type Waiver RAI", () => {
-  cy.fixture("submissionDashboardWaiverNumbers.json").then((d) => {
-    OneMacDashboardPage.verifyTypeForID(d.newWaiverNumber3, "Waiver RAI");
-  });
-});
-And("Verify submission type of SPA ID for RAI 2", () => {
-  cy.fixture("submissionDashboardSPAIDs.json").then((d) => {
-    OneMacDashboardPage.verifyIDNumber(d.SPAIDforRAI2, "Medicaid SPA");
-  });
-});
-
 //this is for the oy2 8616
 When("Login with cms role approver", () => {
   OneMacDevLoginPage.loginAsCMSRoleApprover();
@@ -526,14 +403,6 @@ And("clear SPA ID Input box CHIP SPA page", () => {
   OneMacCHIPSPAPage.clearSPAIDInputBox();
 });
 
-And("clear SPA ID Input box in old CHIP SPA page", () => {
-  OneMacCHIPSPAPage.clearOldSPAIDInputBox();
-});
-
-And("type in invalid SPA ID on old CHIP SPA page", () => {
-  OneMacCHIPSPAPage.inputIncorrectSPAIDFormatInOld();
-});
-
 And("type in invalid SPA ID on CHIP SPA page", () => {
   OneMacCHIPSPAPage.inputIncorrectSPAIDFormat();
 });
@@ -542,12 +411,6 @@ And(
   "verify that error message for incorrect SPA ID is Displayed on CHIP SPA Page",
   () => {
     OneMacCHIPSPAPage.verifyErrorMessageIsDisplayed();
-  }
-);
-And(
-  "verify that error message for incorrect SPA ID is Displayed on old CHIP SPA Page",
-  () => {
-    OneMacCHIPSPAPage.verifyOldErrorMessageIsDisplayed();
   }
 );
 
@@ -603,26 +466,8 @@ And(
   }
 );
 
-And("verify Waiver Number EXISTS", () => {
-  cy.fixture("raiWaiverNumber5.txt").then((num) => {
-    OneMacDashboardPage.verifyIDNumber(num);
-  });
-});
-
-And("click on Waiver Respond to RAI", () => {
-  cy.fixture("submissionDashboardWaiverNumbers.json").then((d) => {
-    OneMacDashboardPage.clickOnrespondToRAI(d.newWaiverNumber3);
-  });
-});
-
 And("Add file for Waiver RAI Response", () => {
   medicaidSPARAIResponsePage.uploadRAIResponseAddFile();
-});
-
-And("Verify Waiver RAI ID number matches Waiver number", () => {
-  cy.fixture("raiWaiverNumber5.txt").then((num) => {
-    OneMacDashboardPage.verifySPARAIIDNumberMatchesMedicalSPAIDNumber(num);
-  });
 });
 
 And("Click on Waiver Action under Waiver Type", () => {
@@ -631,14 +476,6 @@ And("Click on Waiver Action under Waiver Type", () => {
 
 And("Click on New Waiver under Action type", () => {
   OneMacSubmitNewWaiverActionPage.selectNewWaiverUnderActionType();
-});
-
-And("type in a correct Waiver Number with 4 characters", () => {
-  cy.fixture("submissionDashboardWaiverNumbers.json").then((d) => {
-    OneMacSubmitNewWaiverActionPage.inputWaiverNumberOldForms(
-      d.formatWaiverTestNumber1
-    );
-  });
 });
 
 And("verify error message is not present on New Waiver Page", () => {
@@ -651,31 +488,9 @@ And("verify parent error message is not present on New Waiver Page", () => {
 And("clear Waiver Number Input box in new form", () => {
   OneMacSubmitNewWaiverActionPage.clearWaiverNumberInputBoxNewForms();
 });
-And("clear Waiver Number Input box in old form", () => {
-  OneMacSubmitNewWaiverActionPage.clearWaiverNumberInputBoxOldForms();
-});
-
-And("type in a correct Waiver Number with 5 characters", () => {
-  cy.fixture("submissionDashboardWaiverNumbers.json").then((d) => {
-    OneMacSubmitNewWaiverActionPage.inputWaiverNumberOldForms(
-      d.formatWaiverTestNumber2
-    );
-  });
-});
-
-And("type in invalid Waiver Number on old form", () => {
-  OneMacSubmitNewWaiverActionPage.inputWaiverNumberOldForms("MD.123456");
-});
 And("type in invalid Waiver Number", () => {
-  OneMacSubmitNewWaiverActionPage.inputWaiverNumberNewForms("MD.123456");
+  OneMacSubmitNewWaiverActionPage.inputWaiverNumber("MD.123456");
 });
-
-And(
-  "verify error message is present on submission dashboard New Waiver Page",
-  () => {
-    OneMacSubmitNewWaiverActionPage.verifyOldErrorMessageIsDisplayed();
-  }
-);
 
 And("Click on Request Temporary Extension", () => {
   OneMacSubmissionTypePage.clickRequestTemporaryExtension();
@@ -686,17 +501,6 @@ And("Click the Request Extension button", () => {
 And("Click on Request Temporary Extension in Package dashboard", () => {
   OneMacSubmissionTypePage.clickRequestTemporaryExtensionPkgView();
 });
-
-And(
-  "Type waiver number with 4 characters on Request Waiver Temporary Extenstion Page",
-  () => {
-    cy.fixture("raiWaiverNumber4.txt", (num) => {
-      OneMacRequestWaiverTemporaryExtension.inputWaiverNumber(
-        `${num}.R00.TE01`
-      );
-    });
-  }
-);
 
 And(
   "type waiver number with state abbreviation different from user on Request Waiver Temporary Extenstion Page",
@@ -744,39 +548,12 @@ And("Click on Appendix K Amendment", () => {
   OneMacSubmissionTypePage.clickAppendixKAmendment();
 });
 
-And(
-  "type in Waiver Number with 4 characters On Appendix K Amendment Page",
-  () => {
-    cy.fixture("raiWaiverNumber4.txt", (num) => {
-      OneMacRequestWaiverTemporaryExtension.inputWaiverNumber(`${num}.R00.12`);
-    });
-  }
-);
-
-And(
-  "verify error message is not present on old Appendix K Amendment Page",
-  () => {
-    OneMacAppendixKAmendmentPage.verifyOldErrorMessageIsNotDisplayed();
-  }
-);
-
 And("verify error message is not present on Appendix K Amendment Page", () => {
   OneMacAppendixKAmendmentPage.verifyErrorMessageIsNotDisplayed();
-});
-
-And("clear Waiver Number Input box on old Appendix K Amendment Page", () => {
-  OneMacAppendixKAmendmentPage.clearOldWaiverNumberInputBox();
 });
 And("clear Waiver Number Input box on Appendix K Amendment Page", () => {
   OneMacAppendixKAmendmentPage.clearWaiverNumberInputBox();
 });
-//find a waiver number that exits with 5 characters
-And(
-  "type in Waiver Number with 5 characters on old Appendix K Amendment Page",
-  () => {
-    OneMacAppendixKAmendmentPage.inputWaiverNumberOldForms(`MD-10330.R00.12`);
-  }
-);
 And(
   "type in Waiver Number with 5 characters on Appendix K Amendment Page",
   () => {
@@ -795,22 +572,13 @@ And("type in invalid Waiver Number on Appendix K Amendment Page", () => {
   OneMacAppendixKAmendmentPage.inputWaiverNumber("MD.123");
 });
 
-And("type in invalid Waiver Number on old Appendix K Amendment Page", () => {
-  OneMacAppendixKAmendmentPage.inputWaiverNumberOldForms("MD.123");
-});
-
 And(
   "verify that error message for incorrect Waiver Number is Displayed on Appendix K Amendment Page",
   () => {
     OneMacAppendixKAmendmentPage.verifyErrorMessageIsDisplayed();
   }
 );
-And(
-  "verify that error message for incorrect Waiver Number is Displayed on old Appendix K Amendment Page",
-  () => {
-    OneMacAppendixKAmendmentPage.verifyOldErrorMessageIsDisplayed();
-  }
-);
+
 //this is for oy2_4807
 And(
   "Click on 1915 b 4 FFS Selective Contracting waivers under Waiver Authority",
@@ -834,12 +602,6 @@ And("type {string} in additional info textarea", (Comments) => {
   OneMacSubmitNewWaiverActionPage.inputAdditionalInfoText(Comments);
 });
 
-And("verify ID Number Exists", () => {
-  cy.fixture("submissionDashboardWaiverNumbers.json").then((d) => {
-    OneMacDashboardPage.verifyIDNumberIsDisplayed(d.newWaiverNumber1);
-  });
-});
-
 And("Click on All other 1915 b Waivers under Waiver Authority", () => {
   OneMacSubmitNewWaiverActionPage.selectAllOther1915bWaiversUnderWaiverAuthority();
 });
@@ -855,33 +617,9 @@ And("Click on Request for waiver renewal from Action Type", () => {
 And("type in Existing Waiver Number in new form", () => {
   OneMacSubmitNewWaiverActionPage.inputExistingWaiverNumberNewForms();
 });
-And("type in Existing Waiver Number in old form", () => {
-  OneMacSubmitNewWaiverActionPage.inputExistingWaiverNumberOldForms();
-});
-And("Type new Waiver Number 1 in format SS-#####.R00.00", () => {
-  cy.fixture("submissionDashboardWaiverNumbers.json").then((d) => {
-    OneMacSubmitNewWaiverActionPage.inputWaiverNumberOldForms(
-      d.newWaiverNumber1
-    );
-  });
-});
-And("Type new Waiver Number 2 in format SS-#####.R00.00", () => {
-  cy.fixture("submissionDashboardWaiverNumbers.json").then((d) => {
-    OneMacSubmitNewWaiverActionPage.inputWaiverNumberOldForms(
-      d.newWaiverNumber2
-    );
-  });
-});
-And("Type new Waiver Number for RAI in format SS-#####.R00.00", () => {
-  cy.fixture("submissionDashboardWaiverNumbers.json").then((d) => {
-    OneMacSubmitNewWaiverActionPage.inputWaiverNumberOldForms(
-      d.newWaiverNumber3
-    );
-  });
-});
 And("Type Initial Waiver Number in format SS-#####.R00.00", () => {
   cy.fixture("packageDashboardWaiverNumbers.json").then((d) => {
-    OneMacSubmitNewWaiverActionPage.inputWaiverNumberNewForms(
+    OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
       d.newInitialWaiverNumber1
     );
   });
@@ -889,42 +627,14 @@ And("Type Initial Waiver Number in format SS-#####.R00.00", () => {
 And(
   "Type a valid and unused Initial Waiver Number in format SS-#####.R00.00",
   () => {
-    OneMacSubmitNewWaiverActionPage.inputWaiverNumberNewForms(
-      "MD-99331.R00.00"
-    );
+    OneMacSubmitNewWaiverActionPage.inputWaiverNumber("MD-99331.R00.00");
   }
 );
 And("Type Initial Waiver Number 2 in format SS-#####.R00.00", () => {
   cy.fixture("packageDashboardWaiverNumbers.json").then((d) => {
-    OneMacSubmitNewWaiverActionPage.inputWaiverNumberNewForms(
+    OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
       d.newInitialWaiverNumber2
     );
-  });
-});
-And("Type existing Unique Valid Waiver Number With 5 Characters", () => {
-  cy.fixture("submissionDashboardWaiverNumbers.json").then((data) => {
-    OneMacSubmitNewWaiverActionPage.inputWaiverNumberOldForms(
-      data.newWaiverNumber1
-    );
-  });
-});
-And("Type TE number based on existing waiver number 2", () => {
-  cy.fixture("submissionDashboardWaiverNumbers.json").then((data) => {
-    OneMacSubmitNewWaiverActionPage.inputWaiverNumberOldForms(
-      data.newTempExtNumber
-    );
-  });
-});
-And("Type Unique Valid Waiver Amendment Number With 5 Characters", () => {
-  cy.fixture("submissionDashboardWaiverNumbers.json").then((data) => {
-    var number = `${data.newWaiverNumber}.R00.M00`;
-    var f = "./fixtures/submissionDashboardWaiverNumbers.json";
-    OneMacSubmitNewWaiverActionPage.inputWaiverNumberOldForms(number);
-    cy.readFile(f).then((d) => {
-      d.waiverAmendmentNumber = number;
-      // write the merged object
-      cy.writeFile(f, d);
-    });
   });
 });
 And("search for Initial Waiver Number 1 with 12 Characters", () => {
@@ -972,20 +682,8 @@ And("verify id number in the first row matches CHIP SPA ID", () => {
     OneMacPackagePage.verifyIDNumberInFirstRowIs(data.newChipSPAID1);
   });
 });
-And("search for Unique Valid Waiver Number with 5 Characters", () => {
-  cy.fixture("submissionDashboardWaiverNumbers.json").then((data) => {
-    OneMacPackagePage.searchFor(data.newWaiverNumber);
-  });
-  cy.wait(1000);
-});
 And("verify success message for Withdrawal", () => {
   OneMacPackagePage.verifyPackageWithdrawalMessageIsDisplayed();
-});
-
-And("Type Valid Waiver Number With 5 Characters", () => {
-  cy.fixture("sharedWaiverNumber5.txt").then((num) => {
-    OneMacSubmitNewWaiverActionPage.inputWaiverNumberOldForms(`${num}.TE01`);
-  });
 });
 
 And("click on Packages", () => {
@@ -1521,6 +1219,9 @@ And("click on Type", () => {
 And("verify 1915b Initial Waiver exists", () => {
   OneMacPackagePage.verifyInitialWaiver1915bCheckBoxExists();
 });
+And("verify 1915b Intial Waiver exists in list", () => {
+  OneMacPackagePage.verifyInitialWaiverInListExists();
+});
 And("verify 1915b Waiver Renewal exists", () => {
   OneMacPackagePage.verifyWaiverRenewal1915bCheckBoxExists();
 });
@@ -1629,6 +1330,12 @@ And("verify submitted by exists", () => {
 And("verify type exists", () => {
   OneMacPackagePage.verifycheckBoxTypeExists();
 });
+And("verify Formal RAI Received checkbox exists", () => {
+  OneMacPackagePage.verifyFormalRAIReceivedCheckboxExists();
+});
+And("verify Formal RAI Received checkbox does not exist", () => {
+  OneMacPackagePage.verifyFormalRAIReceivedCheckboxDoesNotExist();
+});
 And("verify 90th day column exists", () => {
   OneMacPackagePage.verify90thDayColumn();
 });
@@ -1656,6 +1363,12 @@ And("verify IDNumber column exists", () => {
 And("verify actions column exists", () => {
   OneMacPackagePage.verifyactionsColumnExists();
 });
+And("verify Formal RAI Received column exists", () => {
+  OneMacPackagePage.verifyFormalRAIReceivedColumnExists();
+});
+And("verify Formal RAI Received column does not exist", () => {
+  OneMacPackagePage.verifyFormalRAIReceivedColumnDoesNotExist();
+});
 And("click 90th day checkbox", () => {
   OneMacPackagePage.clickCheckBox90thDay();
 });
@@ -1676,6 +1389,9 @@ And("click submitted by checkbox", () => {
 });
 And("click type checkbox", () => {
   OneMacPackagePage.clickCheckBoxType();
+});
+And("click Formal RAI Received checkbox", () => {
+  OneMacPackagePage.clickFormalRAIReceivedCheckbox();
 });
 And("verify type column does not exist", () => {
   OneMacPackagePage.verifytypeColumnDoesNotExist();
@@ -1780,6 +1496,18 @@ And("verify Initial Submission Date date picker filter exists", () => {
 And("click on Initial Submission Date date picker filter", () => {
   OneMacPackagePage.clickOnInitialSubmissionDateDatePickerFilter();
 });
+And("click on Formal RAI Received filter dropdown", () => {
+  OneMacPackagePage.clickOnInitialSubmissionDateFilterDropDown();
+});
+And("verify Formal RAI Received date picker filter exists", () => {
+  OneMacPackagePage.verifyFormalRAIReceivedDatePickerFilterExists();
+});
+And("verify Formal RAI Received date picker filter does not exist", () => {
+  OneMacPackagePage.verifyFormalRAIReceivedDatePickerFilterDoesNotExist();
+});
+And("click on Formal RAI Received date picker filter", () => {
+  OneMacPackagePage.clickOnFormalRAIReceivedDatePickerFilter();
+});
 And("click on this quarter date picker button", () => {
   OneMacPackagePage.clickOnThisQuarterDatePickerBtn();
 });
@@ -1813,6 +1541,11 @@ And("verify Initial Submission Date column one date is this quarter", () => {
     OneMacPackagePage.verifypackageRowOneInitialSubmissionDateIsThisQuarter();
   }
 });
+And("verify Formal RAI Received column one date is this quarter", () => {
+  if (OneMacPackagePage.checkIfPackageListResultsExist()) {
+    OneMacPackagePage.verifypackageRowOneInitialSubmissionDateIsThisQuarter();
+  }
+});
 And("verify states selected includes {string}", (state) => {
   OneMacPackagePage.verifyStatesSelectedIncludes(state);
 });
@@ -1821,6 +1554,12 @@ And("verify state dropdown filter exists", () => {
 });
 And("click on state dropdown filter", () => {
   OneMacPackagePage.clickStateDropdownFilter();
+});
+And("verify Formal RAI Received dropdown filter exists", () => {
+  OneMacPackagePage.verifyFormalRAIReceivedDateFilterDropdownExists();
+});
+And("click on Formal RAI Received dropdown filter", () => {
+  OneMacPackagePage.clickOnFormalRAIReceivedDateFilterDropdownDropDown();
 });
 And("verify state filter select exists", () => {
   OneMacPackagePage.verifyStateFilterSelectExists();
@@ -1904,11 +1643,20 @@ And("click RAI Issued checkbox", () => {
 And("click Pending - RAI checkbox", () => {
   OneMacPackagePage.clickPendingRaiCheckbox();
 });
+And("verify Pending - RAI status checkbox exists", () => {
+  OneMacPackagePage.verifyPendingRaiCheckboxExists();
+});
 And("click the Pending - Concurrence checkbox", () => {
   OneMacPackagePage.clickPendingConcurrenceCheckbox();
 });
+And("verify the Pending - Concurrence status checkbox exists", () => {
+  OneMacPackagePage.verifyPendingConcurrenceCheckboxExists();
+});
 And("click the Pending - Approval checkbox", () => {
   OneMacPackagePage.clickPendingApprovalCheckbox();
+});
+And("verify the Pending - Approval status checkbox exists", () => {
+  OneMacPackagePage.verifyPendingApprovalCheckboxExists();
 });
 And("click Package Approved checkbox", () => {
   OneMacPackagePage.clickPackageApprovedCheckbox();
@@ -1948,6 +1696,12 @@ And("click Submitted checkbox", () => {
 });
 And("click Submitted - Intake Needed checkbox", () => {
   OneMacPackagePage.clickSubmittedIntakeNeededCheckbox();
+});
+And("verify Submitted - Intake Needed status checkbox exists", () => {
+  OneMacPackagePage.verifySubmittedIntakeNeededCheckboxExists();
+});
+And("click Requested checkbox", () => {
+  OneMacPackagePage.clickDoubleDashCheckbox();
 });
 And("click the Pending checkbox", () => {
   OneMacPackagePage.clickPendingCheckbox();
@@ -2033,55 +1787,6 @@ And("search for Appendix K number", () => {
   OneMacPackagePage.searchFor("MD-10330.R00.12");
   cy.wait(1000);
 });
-And("verify parent row expander exists", () => {
-  OneMacPackagePage.verifyFirstParentRowExpanderExists();
-});
-And("verify parent row expander is disabled", () => {
-  OneMacPackagePage.verifyFirstParentRowExpanderIsDisabled();
-});
-And("wait for parent row expander to be enabled", () => {
-  OneMacPackagePage.verifyFirstParentRowExpanderIsNotDisabled();
-});
-And("verify the next row is not a child", () => {
-  OneMacPackagePage.verifyTheNextRowIsNotAChild();
-});
-And("click parent row expander", () => {
-  OneMacPackagePage.clickFirstParentRowExpander();
-});
-And("verify the next row is a child", () => {
-  OneMacPackagePage.verifyTheNextRowIsAChild();
-});
-And("verify all children start with {string}", (part) => {
-  OneMacPackagePage.verifyAllChildrenStartWith(part);
-});
-And("verify Waiver Number column exists for the child", () => {
-  OneMacPackagePage.verifyWaiverNumberColumnExistsForChild();
-});
-And("verify type column exists for the child", () => {
-  OneMacPackagePage.verifytypeColumnExistsForChild();
-});
-And("verify state column exists for the child", () => {
-  OneMacPackagePage.verifystateColumnExistsForChild();
-});
-And("verify 90th day column exists for the child", () => {
-  OneMacPackagePage.verify90thDayColumnExistsForChild();
-});
-And("verify status column exists for the child", () => {
-  OneMacPackagePage.verifystatusColumnExistsForChild();
-});
-And("verify Initial Submission Date column exists for the child", () => {
-  OneMacPackagePage.verifyInitialSubmissionDateColumnExistsForChild();
-});
-And("verify submitted by column exists for the child", () => {
-  OneMacPackagePage.verifysubmittedByColumnExistsForChild();
-});
-And("verify actions column exists for the child", () => {
-  OneMacPackagePage.verifyactionsColumnExistsForChild();
-});
-And("verify expiration date column exists for the child", () => {
-  OneMacPackagePage.verifyexpirationDateColumnExistsForChild();
-});
-
 And("verify that Request a Role Change button exists", () => {
   OneMacUserManagmentPage.verifyRequestARoleChangeBtnExists();
 });
@@ -2487,21 +2192,8 @@ And(
     OneMacPackageDetailsPage.verifyproposedEffectiveDateHeaderContainsDate();
   }
 );
-And("click the Waiver Number link for the Amendment", () => {
-  cy.fixture("submissionDashboardWaiverNumbers.json").then((data) => {
-    var number = `${data.newWaiverNumber}.R00.M00`;
-    OneMacPackagePage.clickLinkForWaiver(number);
-  });
-  cy.wait(1000);
-});
 And("verify the Amendment Number header exists", () => {
   OneMacPackageDetailsPage.verifyAmendmentNumberHeaderExists();
-});
-And("verify the amendment number matches", () => {
-  cy.fixture("submissionDashboardWaiverNumbers.json").then((data) => {
-    var number = `${data.newWaiverNumber}.R00.M00`;
-    OneMacPackageDetailsPage.verifyAmendmentNumbermatches(number);
-  });
 });
 And("verify the amendment title header exists", () => {
   OneMacPackageDetailsPage.verifyAmendmentTitleHeaderExists();
@@ -2550,7 +2242,7 @@ And("select proposed effective date 3 months from today", () => {
 });
 And("Type Temporary Extension Number 1 With 5 Characters", () => {
   cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
-    OneMacSubmitNewWaiverActionPage.inputWaiverNumberNewForms(
+    OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
       data.newTemporaryExtensionNumber1
     );
   });
@@ -2564,42 +2256,42 @@ And("click on the link for temporary extension number 1", () => {
 });
 And("Type Temporary Extension Number 2 With 5 Characters", () => {
   cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
-    OneMacSubmitNewWaiverActionPage.inputWaiverNumberNewForms(
+    OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
       data.newTemporaryExtensionNumber2
     );
   });
 });
 And("Type Temporary Extension Number 3 With 5 Characters", () => {
   cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
-    OneMacSubmitNewWaiverActionPage.inputWaiverNumberNewForms(
+    OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
       data.newTemporaryExtensionNumber3
     );
   });
 });
 And("Type Temporary Extension Number 4", () => {
   cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
-    OneMacSubmitNewWaiverActionPage.inputWaiverNumberNewForms(
+    OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
       data.newTemporaryExtensionNumber4
     );
   });
 });
 And("Type Temporary Extension Number 5", () => {
   cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
-    OneMacSubmitNewWaiverActionPage.inputWaiverNumberNewForms(
+    OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
       data.newTemporaryExtensionNumber5
     );
   });
 });
 And("Type Temporary Extension Number 6", () => {
   cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
-    OneMacSubmitNewWaiverActionPage.inputWaiverNumberNewForms(
+    OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
       data.newTemporaryExtensionNumber6
     );
   });
 });
 And("Type Temporary Extension Number 7", () => {
   cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
-    OneMacSubmitNewWaiverActionPage.inputWaiverNumberNewForms(
+    OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
       data.newTemporaryExtensionNumber7
     );
   });
@@ -2723,18 +2415,14 @@ And("verify the submit button is not disabled", () => {
 And("verify the submit button is disabled", () => {
   OneMacDefaultForms.verifySubmitBtnIsDisabled();
 });
-
-And("type in valid waiver amendment number in old forms", () => {
-  OneMacSubmitNewWaiverActionPage.inputWaiverNumberOldForms("MD-10330.R01.01");
-});
 And("type in valid waiver amendment number", () => {
-  OneMacSubmitNewWaiverActionPage.inputWaiverNumberNewForms("MD-12323.R01.01");
+  OneMacSubmitNewWaiverActionPage.inputWaiverNumber("MD-12323.R01.01");
 });
 And("type initial waiver number in old format SS.####.R00.00", () => {
-  OneMacSubmitNewWaiverActionPage.inputWaiverNumberNewForms("MD.1055.R00.00");
+  OneMacSubmitNewWaiverActionPage.inputWaiverNumber("MD.1055.R00.00");
 });
 And("type initial waiver number in old format SS.#####.R00.00", () => {
-  OneMacSubmitNewWaiverActionPage.inputWaiverNumberNewForms("MD.10555.R00.00");
+  OneMacSubmitNewWaiverActionPage.inputWaiverNumber("MD.10555.R00.00");
 });
 And(
   "verify error message is present on package dashboard New Waiver Page",
@@ -2784,14 +2472,8 @@ And(
     OneMacFAQPage.verifyAttachmentsFor1915cRequestTempExtBody();
   }
 );
-And(
-  "Verify blue eerror message says user can submit in submission view",
-  () => {
-    OneMacDefaultForms.verifyBlueErrorSaysUserCanSubmitInSubmissionView();
-  }
-);
 And("Verify blue eerror message says user can submit in package view", () => {
-  OneMacDefaultForms.verifyBlueErrorSaysUserCanSubmitInPkgView();
+  OneMacDefaultForms.verifyBlueErrorSaysUserCanSubmit();
 });
 And(
   "Type {string} into Approved Initial or Renewal Waiver Number field",
@@ -2799,16 +2481,6 @@ And(
     OneMacRequestWaiverTemporaryExtension.inputApprovedBaseOrRenewalWaiverNumber(
       n
     );
-  }
-);
-And(
-  "Type existing waiver number into Approved Initial or Renewal Waiver Number field",
-  () => {
-    cy.fixture("submissionDashboardWaiverNumbers.json").then((d) => {
-      OneMacRequestWaiverTemporaryExtension.inputApprovedBaseOrRenewalWaiverNumber(
-        d.existingWaiverNum
-      );
-    });
   }
 );
 And(
@@ -2835,21 +2507,8 @@ And("clear Approved Initial or Renewal Waiver Number input box", () => {
 And("wait for {string} miliseconds", (s) => {
   cy.wait(parseInt(s));
 });
-And(
-  "Type new Waiver Number 2 into Approved Initial or Renewal Waiver Number field",
-  () => {
-    cy.fixture("submissionDashboardWaiverNumbers.json").then((d) => {
-      OneMacRequestWaiverTemporaryExtension.inputApprovedBaseOrRenewalWaiverNumber(
-        d.newWaiverNumber2
-      );
-    });
-  }
-);
-And("verify error message in old form contains {string}", (msg) => {
-  OneMacDefaultForms.verifyErrorMsgContainsInSubmissionView(msg);
-});
 And("verify error message contains {string}", (msg) => {
-  OneMacDefaultForms.verifyErrorMsgContainsInPackageView(msg);
+  OneMacDefaultForms.verifyErrorMsgContains(msg);
 });
 And("search for Initial Waiver in RAI Issued status", () => {
   cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
@@ -2890,9 +2549,7 @@ And(
   "type new waiver renewal number 1 in 1915b Waiver Renewal Number field",
   () => {
     cy.fixture("packageDashboardWaiverNumbers.json").then((d) => {
-      OneMacSubmitNewWaiverActionPage.inputWaiverNumberNewForms(
-        d.newWaiverRenewalNum1
-      );
+      OneMacSubmitNewWaiverActionPage.inputWaiverNumber(d.newWaiverRenewalNum1);
     });
   }
 );
@@ -2900,7 +2557,7 @@ And(
   "type new waiver amendment number 1 in 1915b Waiver Amendment Number field",
   () => {
     cy.fixture("packageDashboardWaiverNumbers.json").then((d) => {
-      OneMacSubmitNewWaiverActionPage.inputWaiverNumberNewForms(
+      OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
         d.newWaiverAmendmentNum1
       );
     });
@@ -2910,7 +2567,7 @@ And(
   "type new waiver amendment number 2 in 1915b Waiver Amendment Number field",
   () => {
     cy.fixture("packageDashboardWaiverNumbers.json").then((d) => {
-      OneMacSubmitNewWaiverActionPage.inputWaiverNumberNewForms(
+      OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
         d.newWaiverAmendmentNum2
       );
     });
@@ -2920,7 +2577,7 @@ And(
   "type new waiver amendment number 3 in 1915b Waiver Amendment Number field",
   () => {
     cy.fixture("packageDashboardWaiverNumbers.json").then((d) => {
-      OneMacSubmitNewWaiverActionPage.inputWaiverNumberNewForms(
+      OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
         d.newWaiverAmendmentNum3
       );
     });
@@ -2930,7 +2587,7 @@ And(
   "type new waiver amendment number 4 in 1915b Waiver Amendment Number field",
   () => {
     cy.fixture("packageDashboardWaiverNumbers.json").then((d) => {
-      OneMacSubmitNewWaiverActionPage.inputWaiverNumberNewForms(
+      OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
         d.newWaiverAmendmentNum4
       );
     });
@@ -2940,9 +2597,7 @@ And(
   "type new waiver renewal number 2 in 1915b Waiver Renewal Number field",
   () => {
     cy.fixture("packageDashboardWaiverNumbers.json").then((d) => {
-      OneMacSubmitNewWaiverActionPage.inputWaiverNumberNewForms(
-        d.newWaiverRenewalNum2
-      );
+      OneMacSubmitNewWaiverActionPage.inputWaiverNumber(d.newWaiverRenewalNum2);
     });
   }
 );
@@ -3007,10 +2662,10 @@ And("search for new waiver renewal number 2", () => {
   cy.wait(1000);
 });
 And("type bad format into 1915b Waiver Renewal Number field", () => {
-  OneMacSubmitNewWaiverActionPage.inputWaiverNumberNewForms("MD");
+  OneMacSubmitNewWaiverActionPage.inputWaiverNumber("MD");
 });
 And("type bad format into 1915b Waiver Amendment Number field", () => {
-  OneMacSubmitNewWaiverActionPage.inputWaiverNumberNewForms("MD");
+  OneMacSubmitNewWaiverActionPage.inputWaiverNumber("MD");
 });
 And(
   "verify id number in the first row matches new waiver renewal number 1",

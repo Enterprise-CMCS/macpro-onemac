@@ -33,6 +33,12 @@ import PackageAPI from "../utils/PackageApi";
 import ActionPopup from "../components/ActionPopup";
 import { useAppContext } from "../libs/contextLib";
 import { pendingMessage, deniedOrRevokedMessage } from "../libs/userLib";
+import {
+  LOCAL_STORAGE_COLUMN_VISIBILITY_SPA,
+  LOCAL_STORAGE_COLUMN_VISIBILITY_WAIVER,
+  LOCAL_STORAGE_TABLE_FILTERS_SPA,
+  LOCAL_STORAGE_TABLE_FILTERS_WAIVER,
+} from "../utils/StorageKeys";
 import { portalTableExportToCSV } from "../utils/portalTableExportToCSV";
 
 const renderDate = ({ value }) =>
@@ -71,7 +77,6 @@ const PackageList = () => {
       setIsLoading(true);
       try {
         const data = await PackageAPI.getMyPackages(userProfile.email, tab);
-
         if (typeof data === "string") throw new Error(data);
         if (!ctrlr?.signal.aborted) setPackageList(data);
       } catch (error) {
@@ -159,6 +164,7 @@ const PackageList = () => {
 
   const exportTransformMap = {
     submissionTimestamp: renderDate,
+    latestRaiResponseTimestamp: renderDate,
   };
 
   const columns = useMemo(
@@ -198,13 +204,23 @@ const PackageList = () => {
           Filter: CustomFilterUi.MultiCheckbox,
         },
         {
-          Header: "Initial Submission Date",
+          Header: "Initial Submission",
           accessor: "submissionTimestamp",
           Cell: renderDate,
           disableFilters: false,
           filter: CustomFilterTypes.DateRange,
           Filter: CustomFilterUi.DateRangeInPast,
         },
+        userRoleObj.isCMSUser
+          ? {
+              Header: "Formal RAI Received",
+              accessor: "latestRaiResponseTimestamp",
+              Cell: renderDate,
+              disableFilters: false,
+              filter: CustomFilterTypes.DateRange,
+              Filter: CustomFilterUi.DateRangeInPast,
+            }
+          : null,
         {
           Header: "Submitted By",
           accessor: "submitterName",
@@ -221,22 +237,43 @@ const PackageList = () => {
         },
       ].filter(Boolean),
     [
-      getType,
-      renderActions,
-      renderId,
-      renderType,
-      renderName,
       tab,
+      renderId,
+      getType,
+      renderType,
+      userRoleObj.isCMSUser,
       userRoleObj.canAccessForms,
+      renderName,
+      renderActions,
     ]
   );
-
-  const initialTableState = useMemo(
-    () => ({
+  const initialTableState = useMemo(() => {
+    const hiddenColsSaveKey =
+      tab === "spa"
+        ? LOCAL_STORAGE_COLUMN_VISIBILITY_SPA
+        : LOCAL_STORAGE_COLUMN_VISIBILITY_WAIVER;
+    const filtersSaveKey =
+      tab === "spa"
+        ? LOCAL_STORAGE_TABLE_FILTERS_SPA
+        : LOCAL_STORAGE_TABLE_FILTERS_WAIVER;
+    // Retrieve hidden column saved state (session)
+    let localHiddenColumns = sessionStorage?.getItem(hiddenColsSaveKey);
+    let localTableFilters = sessionStorage?.getItem(filtersSaveKey);
+    if (localHiddenColumns === null) {
+      // If tab/session doesn't have its own, use the source of truth for all tabs
+      localHiddenColumns = localStorage?.getItem(hiddenColsSaveKey);
+    }
+    if (localTableFilters === null) {
+      localTableFilters = localStorage?.getItem(filtersSaveKey);
+    }
+    return {
       sortBy: [{ id: "submissionTimestamp", desc: true }],
-    }),
-    []
-  );
+      // Set saved hidden cols
+      hiddenColumns: localHiddenColumns ? JSON.parse(localHiddenColumns) : [],
+      // Set saved filters
+      filters: localTableFilters ? JSON.parse(localTableFilters) : [],
+    };
+  }, [tab]);
 
   const csvExportPackages = (
     <Button
@@ -296,9 +333,7 @@ const PackageList = () => {
     return rightSideContent;
   }
 
-  const TEMP_onReset = useCallback(() => setPackageList((d) => [...d]), []);
-
-  function renderPackageList() {
+  function PackageListContent() {
     if (userRole !== USER_ROLE.CMS_ROLE_APPROVER) {
       if (userStatus === USER_STATUS.PENDING) {
         return <EmptyList message={pendingMessage[userRole]} />;
@@ -323,6 +358,7 @@ const PackageList = () => {
       <LoadingScreen isLoading={isLoading}>
         {packageListExists ? (
           <PortalTable
+            internalName={tab}
             className={tableClassName}
             columns={columns}
             data={packageList}
@@ -330,7 +366,6 @@ const PackageList = () => {
             pageContentRef={dashboardRef}
             searchBarTitle="Search by Package ID or Submitter Name"
             withSearchBar
-            TEMP_onReset={TEMP_onReset}
             onVisibleDataChange={setVisibleRows}
           />
         ) : (
@@ -378,7 +413,7 @@ const PackageList = () => {
                 Waivers
               </Button>
             </div>
-            {renderPackageList()}
+            {PackageListContent()}
           </div>
         </div>
       </div>

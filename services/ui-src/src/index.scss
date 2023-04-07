@@ -2,7 +2,6 @@ $font-path: "~@cmsgov/design-system/dist/fonts";
 $image-path: "~@cmsgov/design-system/dist/images";
 $input-border-radius: 3px;
 $color-primary-alt-lightest: #f0fafe;
-
 @import "@cmsgov/design-system/dist/scss/index";
 @import "~bootstrap/dist/css/bootstrap.min.css";
 
@@ -204,6 +203,7 @@ p.field-hint {
     @extend .ds-u-flex-direction--row;
     @extend .ds-u-align-items--center;
     flex-direction: row;
+    white-space: nowrap;
   }
 
   &.title-bar-dark-theme {
@@ -235,7 +235,7 @@ p.field-hint {
 
 .new-submission-button {
   background-color: transparent;
-
+  white-space: nowrap;
   &:hover {
     text-decoration: none;
   }
@@ -985,10 +985,9 @@ article.form-container {
 
 .dashboard-container {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   justify-content: center;
-  @extend .ds-u-padding-top--7;
-  @extend .ds-u-padding-bottom--7;
+  padding-top: 1.5rem;
   background-color: $color-white;
   @extend .ds-u-align-items--center;
 }
@@ -1001,16 +1000,13 @@ article.form-container {
 }
 
 .table-wrapper {
-  overflow: auto;
-  @media only screen and (max-width: 1023px) {
-    display: block;
-    max-height: 320px;
-  }
+  overflow: scroll;
+  width: 100%;
+  max-width: 1024px;
+  margin-left: 1rem;
 
   @media only screen and (min-width: 1024px) {
-    display: flex;
-    flex-wrap: wrap;
-    min-width: min(calc(100vw - 14.4rem), 1024px);
+    overflow: visible;
   }
 }
 
@@ -1020,7 +1016,7 @@ article.form-container {
 
   @media only screen and (max-width: 1199px) {
     td .type-badge {
-      white-space: normal;
+      white-space: nowrap;
     }
     th,
     td {
@@ -1505,6 +1501,7 @@ article.form-container {
     @extend .ds-u-display--flex;
     @extend .ds-u-align-items--center;
     @extend .ds-u-justify-content--between;
+    gap: 1rem;
     width: 100%;
   }
 
@@ -1517,6 +1514,16 @@ article.form-container {
       > * {
         margin-top: 40px;
       }
+    }
+  }
+}
+
+.page-title-bar {
+  .header-wrapper {
+    @media only screen and (max-width: $width-sm) {
+      justify-content: center !important;
+      flex-direction: column;
+      gap: 1rem;
     }
   }
 }
@@ -2325,6 +2332,7 @@ aside#faq-contact-info-box {
 .picker-button {
   display: flex;
   gap: 4px;
+  white-space: nowrap;
 }
 
 .dropdown-column-picker-box {
@@ -2344,18 +2352,26 @@ aside#faq-contact-info-box {
 }
 
 .search-and-filter {
-  margin-left: 7.2rem;
-  margin-right: 7.2rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  justify-content: space-between;
   @extend .ds-u-margin-bottom--4;
   @extend .ds-u-display--flex;
-  @extend .ds-u-justify-content--between;
   @extend .ds-u-align-items--center;
   @include max-width-ultra-wide;
   width: -webkit-fill-available;
   width: -moz-available;
-  flex-wrap: inherit;
+  flex-wrap: wrap;
+
+  @media only screen and (max-width: $width-md) {
+    align-items: center;
+    justify-content: center;
+  }
 
   > .search-bar {
+    @media only screen and (max-width: $width-md) {
+      width: 100%;
+    }
     > label {
       @extend .ds-u-margin-top--0;
     }
@@ -2364,6 +2380,7 @@ aside#faq-contact-info-box {
       @extend .ds-u-display--flex;
       @extend .ds-u-align-items--center;
       min-width: 300px;
+      max-width: 100% !important;
 
       &:focus-within {
         box-shadow: 0 0 0 3px #fff, 0 0 4px 6px #bd13b8;
@@ -2418,6 +2435,7 @@ aside#faq-contact-info-box {
     align-items: center;
     padding-top: 24px;
     gap: 16px;
+    flex-wrap: wrap;
   }
 }
 
@@ -2554,13 +2572,12 @@ aside#faq-contact-info-box {
 }
 
 .tab-bar {
-  margin-left: 7.2rem;
-  margin-right: 7.2rem;
+  margin-left: 1rem;
   @extend .ds-u-margin-bottom--4;
   @extend .ds-u-display--flex;
   @extend .ds-u-align-items--start;
   @include max-width-ultra-wide;
-  width: 100%;
+  width: 100vw;
 }
 .tab-button {
   border-radius: 0;
@@ -2620,6 +2637,27 @@ aside#faq-contact-info-box {
   }
 }
 
+.detail-card-section {
+  display: flex;
+  justify-content: space-between;
+
+  @media only screen and (max-width: $width-sm) {
+    justify-content: start;
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+
+.detail-card-container {
+  display: flex;
+  flex-direction: column;
+  width: 45%;
+
+  @media only screen and (max-width: $width-sm) {
+    width: 100%;
+  }
+}
+
 .detail-card-top {
   @include gradient-top-border;
 }
@@ -2627,6 +2665,8 @@ aside#faq-contact-info-box {
 .detail-card {
   @extend .ds-u-display--flex;
   @extend .ds-u-padding--4;
+  height: -moz-available; /* Mozilla Firefox will use this. */
+  height: -webkit-fill-available; /* WebKit-based browsers will use this. */
   justify-content: space-between;
   background: $color-white;
   border: 1px solid $color-gray-lighter;
@@ -2647,7 +2687,6 @@ aside#faq-contact-info-box {
 
 .package-actions {
   @extend .ds-u-flex-direction--column;
-  width: 50%;
 }
 .action-list {
   list-style-type: none;

@@ -28,7 +28,6 @@ import config from "../utils/config";
 
 import LoadingOverlay from "../components/LoadingOverlay";
 import FileUploader from "../components/FileUploader";
-import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
 import PackageApi from "../utils/PackageApi";
 import PageTitleBar from "../components/PageTitleBar";
 import AlertBar from "../components/AlertBar";
@@ -43,7 +42,7 @@ const leavePageConfirmMessage = "Changes you made will not be saved.";
  * @param componentId the component id
  * @returns two character state/territory
  */
-function getTerritoryFromComponentId(componentId: string): string {
+export function getTerritoryFromComponentId(componentId: string): string {
   return componentId?.toString().substring(0, 2) ?? "";
 }
 
@@ -191,6 +190,16 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
       try {
         const parentStatusMessages: Message[] = [];
         if (!!oneMacFormData.parentId) {
+          if (
+            (oneMacFormData.parentId.length >= 2 && !activeTerritories) ||
+            (activeTerritories &&
+              !activeTerritories.includes(
+                getTerritoryFromComponentId(oneMacFormData.parentId)
+              ))
+          ) {
+            parentStatusMessages.push(stateAccessMessage);
+          }
+
           const isParentIdValid = await PackageApi.validateParent(
             oneMacFormData.parentId,
             formConfig.validateParentAPI
@@ -213,6 +222,7 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
     oneMacFormData.parentId,
     formConfig?.parentLabel,
     formConfig?.validateParentAPI,
+    activeTerritories,
     formConfig?.parentNotFoundMessage,
   ]);
 
@@ -223,7 +233,7 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
       );
       if (validationMessages.length === 0 && oneMacFormData.componentId) {
         try {
-          const isADup = await ChangeRequestDataApi.packageExists(
+          const isADup = await PackageApi.packageExists(
             oneMacFormData.componentId
           );
           if (isADup === false && formConfig.idMustExist) {

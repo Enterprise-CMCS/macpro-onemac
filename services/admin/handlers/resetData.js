@@ -103,6 +103,18 @@ const snapshotIds = [
   "MD-22102.R00.01",
   "MD-22101.R01.01",
   "MD-22103.R01.01",
+  "MD-0645.R00.00",
+  "MD-9996",
+  "MD-40198.R02",
+  "MD-0645.R01",
+  "MD-0265.R04.02",
+  "MD-40198.R02.01",
+  "MD-01.000",
+  "MD-9995",
+  "MD.20230",
+  "MD.2233",
+  "MD-02.R00.M04",
+  "MD-21-0999-SID",
 ];
 
 /**
@@ -173,32 +185,6 @@ export const main = async (event) => {
       }
     })
   );
-
-  // scan changeRequest table
-  const scanparams = {
-    TableName: process.env.tableName,
-    ExclusiveStartKey: null,
-  };
-  try {
-    do {
-      const newresults = await dynamoDb.scan(scanparams).promise();
-      console.log("a page of scans");
-      for (const item of newresults.Items) {
-        if (!resetIds.includes(item.transmittalNumber)) continue;
-        console.log("Found an entry with id: ", item.transmittalNumber);
-        promiseItems.push({
-          TableName: process.env.tableName,
-          Key: {
-            userId: item.userId,
-            id: item.id,
-          },
-        });
-      }
-      scanparams.ExclusiveStartKey = newresults.LastEvaluatedKey;
-    } while (scanparams.ExclusiveStartKey);
-  } catch (e) {
-    console.log("scan error: ", e.message);
-  }
 
   await Promise.all(
     promiseItems.map(async (deleteParams) => {

@@ -107,6 +107,7 @@ export const buildAnyPackage = async (packageId, config) => {
           additionalInformation: anEvent.additionalInformation,
         });
         putParams.Item.currentStatus = Workflow.ONEMAC_STATUS.SUBMITTED;
+
         return;
       }
 
@@ -214,6 +215,9 @@ export const buildAnyPackage = async (packageId, config) => {
     putParams.Item.raiResponses.sort(
       (a, b) => b.submissionTimestamp - a.submissionTimestamp
     );
+
+    putParams.Item.latestRaiResponseTimestamp =
+      putParams.Item.raiResponses[0]?.submissionTimestamp;
 
     console.log("%s currentPackage: ", packageId, currentPackage);
     console.log("%s newItem: ", packageId, putParams.Item);

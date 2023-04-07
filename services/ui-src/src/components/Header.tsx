@@ -25,6 +25,7 @@ import { ONEMAC_ROUTES, ROUTES as RouteList } from "cmscommonlib";
 import HamburgerMenu from "../components/HamburgerMenu.js";
 
 import { animated, useSpring } from "@react-spring/web";
+import { clearTableStateStorageKeys } from "../utils/StorageKeys";
 
 /**
  * Hook that alerts clicks outside of the passed ref
@@ -158,6 +159,7 @@ const AccountButtons: React.FC<{
             id="logoutLink"
             onClick={() => {
               setShowMenu(false);
+              clearTableStateStorageKeys();
               logout();
             }}
           >
