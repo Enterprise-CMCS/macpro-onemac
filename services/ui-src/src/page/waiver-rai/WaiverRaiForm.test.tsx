@@ -10,7 +10,7 @@ import { AppContext } from "../../libs/contextLib";
 import WaiverRAIForm from "./WaiverRAIForm";
 import { FormLocationState } from "../../domain-types";
 
-jest.mock("../../utils/ChangeRequestDataApi");
+jest.mock("../../utils/PackageApi");
 
 window.HTMLElement.prototype.scrollIntoView = jest.fn();
 window.scrollTo = jest.fn();

@@ -31,20 +31,12 @@ export class oneMacDefaultForms {
   clickModalCancelBtn() {
     cy.xpath(modalCancelBTN).click();
   }
-  verifyBlueErrorSaysUserCanSubmitInSubmissionView() {
-    cy.get(submissionFormErrorMsg).contains(
-      "You will still be able to submit but your submission ID does not appear to match our records."
-    );
-  }
-  verifyBlueErrorSaysUserCanSubmitInPkgView() {
+  verifyBlueErrorSaysUserCanSubmit() {
     cy.get(packageFormErrorMsg).contains(
       "You will still be able to submit but your submission ID does not appear to match our records."
     );
   }
-  verifyErrorMsgContainsInSubmissionView(s) {
-    cy.get(submissionFormErrorMsg).contains(s);
-  }
-  verifyErrorMsgContainsInPackageView(s) {
+  verifyErrorMsgContains(s) {
     cy.get(packageFormPt2ErrorMsg).contains(s);
   }
 }
