@@ -16,7 +16,7 @@ Feature: CHIP SPA State Details View - Card View with Actions
         And Click on Filter Button
         And click the SPA ID link in the first row
         And verify the package details page is visible
-        And verify action card exists
+        And verify 2 action cards exist
         And verify the status on the card is "Approved"
         And verify there is not a 90th day date on the card
         And verify package actions header is visible
@@ -40,7 +40,7 @@ Feature: CHIP SPA State Details View - Card View with Actions
     #     And Click on Filter Button
     #     And click the SPA ID link in the first row
     #     And verify the package details page is visible
-    #     And verify action card exists
+    #     And verify 2 action cards exist
     #     And verify the status on the card is "Withdrawal Requested"
     #     And verify package actions header is visible
     #     And verify there are no package actions available
@@ -61,7 +61,7 @@ Feature: CHIP SPA State Details View - Card View with Actions
         And Click on Filter Button
         And click the SPA ID link in the first row
         And verify the package details page is visible
-        And verify action card exists
+        And verify 2 action cards exist
         And verify the status on the card is "Withdrawn"
         And verify package actions header is visible
         And verify there are no package actions available
@@ -82,7 +82,7 @@ Feature: CHIP SPA State Details View - Card View with Actions
         And Click on Filter Button
         And click the SPA ID link in the first row
         And verify the package details page is visible
-        And verify action card exists
+        And verify 2 action cards exist
         And verify the status on the card is "Disapproved"
         And verify package actions header is visible
         And verify there are no package actions available
@@ -104,7 +104,7 @@ Feature: CHIP SPA State Details View - Card View with Actions
         And Click on Filter Button
         And click the SPA ID link in the first row
         And verify the package details page is visible
-        And verify action card exists
+        And verify 2 action cards exist
         And verify the status on the card is "Under Review"
         And verify package actions header is visible
         And verify withdraw package action exists
@@ -125,7 +125,7 @@ Feature: CHIP SPA State Details View - Card View with Actions
         And Click on Filter Button
         And click the SPA ID link in the first row
         And verify the package details page is visible
-        And verify action card exists
+        And verify 2 action cards exist
         And verify the status on the card is "Submitted"
         And verify package actions header is visible
         And verify there are no package actions available
@@ -147,7 +147,7 @@ Feature: CHIP SPA State Details View - Card View with Actions
     #     And Click on Filter Button
     #     And click the SPA ID link in the first row
     #     And verify the package details page is visible
-    #     And verify action card exists
+    #     And verify 2 action cards exist
     #     And verify the status on the card is "RAI Issued"
     #     And verify package actions header is visible
     #     And verify withdraw package action exists
