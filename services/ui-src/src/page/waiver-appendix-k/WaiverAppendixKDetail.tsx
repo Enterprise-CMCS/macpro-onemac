@@ -18,7 +18,7 @@ const appendixKWaiverAuthority = {
 export const waiverAppendixKDetail: OneMACDetail = {
   ...defaultDetail,
   ...waiverAppendixK,
-  detailHeader: "Appendix K Amendment",
+  detailHeader: "Appendix K Amendment Package",
   attachmentsHeading: "Attachments",
   detailSection: [
     appendixKWaiverAuthority,
