@@ -41,6 +41,16 @@ import {
 } from "../utils/StorageKeys";
 import { portalTableExportToCSV } from "../utils/portalTableExportToCSV";
 
+const defaultStateHiddenCols = ["territory"];
+const defaultCMSHiddenCols = ["submitter"];
+
+const DEFAULT_COLUMNS = {
+  [USER_ROLE.STATE_SUBMITTER]: defaultStateHiddenCols,
+  [USER_ROLE.STATE_SYSTEM_ADMIN]: defaultStateHiddenCols,
+  [USER_ROLE.CMS_REVIEWER]: defaultCMSHiddenCols,
+  [USER_ROLE.CMS_ROLE_APPROVER]: defaultCMSHiddenCols,
+  [USER_ROLE.SYSTEM_ADMIN]: defaultCMSHiddenCols,
+};
 const renderDate = ({ value }) =>
   typeof value === "number" && value > 0
     ? format(value, "MMM d, yyyy")
@@ -183,7 +193,6 @@ const PackageList = () => {
           accessor: getState,
           id: "territory",
           disableFilters: false,
-          isVisible: userRoleObj.isCMSUser,
           filter: "includesValue",
           Filter: CustomFilterUi.TerritorySelect,
         },
@@ -227,7 +236,6 @@ const PackageList = () => {
           accessor: "submitterName",
           disableGlobalFilter: false,
           id: "submitter",
-          isVisible: !userRoleObj.isCMSUser,
           Cell: renderName,
         },
         userRoleObj.canAccessForms && {
@@ -271,7 +279,9 @@ const PackageList = () => {
     return {
       sortBy: [{ id: "submissionTimestamp", desc: true }],
       // Set saved hidden cols
-      hiddenColumns: localHiddenColumns ? JSON.parse(localHiddenColumns) : [],
+      hiddenColumns: localHiddenColumns
+        ? JSON.parse(localHiddenColumns)
+        : DEFAULT_COLUMNS[userRole],
       // Set saved filters
       filters: localTableFilters ? JSON.parse(localTableFilters) : [],
     };
