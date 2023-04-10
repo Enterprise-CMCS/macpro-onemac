@@ -51,6 +51,7 @@ const DEFAULT_COLUMNS = {
   [USER_ROLE.CMS_ROLE_APPROVER]: defaultCMSHiddenCols,
   [USER_ROLE.SYSTEM_ADMIN]: defaultCMSHiddenCols,
 };
+
 const renderDate = ({ value }) =>
   typeof value === "number" && value > 0
     ? format(value, "MMM d, yyyy")
@@ -285,7 +286,7 @@ const PackageList = () => {
       // Set saved filters
       filters: localTableFilters ? JSON.parse(localTableFilters) : [],
     };
-  }, [tab]);
+  }, [tab, userRole]);
 
   const csvExportPackages = (
     <Button
