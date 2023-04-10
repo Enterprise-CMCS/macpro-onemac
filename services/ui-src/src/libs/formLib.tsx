@@ -95,7 +95,7 @@ export const defaultConfirmSubmitWithdraw = {
   confirmSubmitHeading: defaultConfirmSubmitHeadingWithdraw,
   confirmSubmitMessage: defaultConfirmSubmitMessageWithdraw("this package"),
   buildMessage: defaultConfirmSubmitMessageWithdraw,
-  confirmSubmitYesButton: "Yes, Withdraw",
+  confirmSubmitYesButton: "Yes, withdraw package",
 };
 
 export type PackageType = {

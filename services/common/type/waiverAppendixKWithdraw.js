@@ -6,7 +6,7 @@ export const waiverAppendixKWithdraw = {
   idMustExist: true,
   allowMultiplesWithSameId: true,
   requiredAttachments: [],
-  optionalAttachments: ["Upload Supporting Documentation"],
+  optionalAttachments: ["Supporting Documentation"],
   theAttributes: [
     "componentId",
     "submissionTimestamp",
