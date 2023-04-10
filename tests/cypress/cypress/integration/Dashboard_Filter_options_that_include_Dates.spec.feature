@@ -4,21 +4,6 @@ Feature: Package Dashboard - Filter options that include Dates
         When Clicking on Development Login
         When Login with state submitter user
 
-    Scenario: SPAs tab - Screen enhancement
-        And Click on Filter Button
-        And verify Initial Submission Date filter dropdown exists
-        And click on Initial Submission Date filter dropdown
-        And verify Initial Submission Date date picker filter exists
-        And verify Formal RAI Received date picker filter does not exist
-
-    Scenario: Waivers tab - Screen enhancement
-        And click on the Waivers tab
-        And Click on Filter Button
-        And verify Initial Submission Date filter dropdown exists
-        And click on Initial Submission Date filter dropdown
-        And verify Initial Submission Date date picker filter exists
-        And verify Formal RAI Received date picker filter does not exist
-
     Scenario: Change Initial Submission Date filter. Verify no results. Then reset filter
         And click on the Waivers tab
         And Click on Filter Button

@@ -7,6 +7,7 @@ export const initialWaiverDetail: OneMACDetail = {
   ...defaultWaiverDetail,
   ...initialWaiver,
   actionsByStatus: Workflow.initialWaiverActionsByStatus,
+  detailHeader: "Initial Waiver Package",
 };
 
 const InitialWaiverDetail: FC = () => {

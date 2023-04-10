@@ -8,7 +8,7 @@ import dynamoDb from "../libs/dynamodb-lib";
 export default async function packageExists(id) {
   //assume the territory is the first two chars
 
-  let params = {
+  const params = {
     TableName: process.env.oneMacTableName,
     KeyConditionExpression: "pk = :pk",
     ExpressionAttributeValues: {
@@ -19,33 +19,6 @@ export default async function packageExists(id) {
   let result;
   try {
     result = await dynamoDb.query(params);
-
-    if (result.Count <= 0) {
-      params = {
-        TableName: process.env.spaIdTableName,
-        KeyConditionExpression: "id = :pk",
-        ExpressionAttributeValues: {
-          ":pk": id,
-        },
-      };
-      result = await dynamoDb.query(params);
-    }
-
-    if (result.Count <= 0) {
-      params = {
-        TableName: process.env.tableName,
-        ExclusiveStartKey: null,
-        ScanIndexForward: false,
-        FilterExpression: "transmittalNumber = :packageid",
-        ExpressionAttributeValues: {
-          ":packageid": id,
-        },
-      };
-      do {
-        result = await dynamoDb.scan(params);
-        params.ExclusiveStartKey = result.LastEvaluatedKey;
-      } while (params.ExclusiveStartKey && result.Count <= 0);
-    }
   } catch (error) {
     console.log(`packageExists ${params.TableName} got an error: `, error);
   }

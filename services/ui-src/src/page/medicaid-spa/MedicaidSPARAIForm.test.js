@@ -9,7 +9,7 @@ import { ONEMAC_ROUTES } from "cmscommonlib";
 import MedicaidSPARAIForm from "./MedicaidSPARAIForm";
 import { AppContext } from "../../libs/contextLib";
 
-jest.mock("../../utils/ChangeRequestDataApi");
+jest.mock("../../utils/PackageApi");
 
 window.HTMLElement.prototype.scrollIntoView = jest.fn();
 window.scrollTo = jest.fn();

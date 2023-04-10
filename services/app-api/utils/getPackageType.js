@@ -9,8 +9,8 @@ export const getPackageType = async (packageId) => {
     },
   };
 
-  const result = dynamoDb.get(getParams);
+  const result = await dynamoDb.get(getParams);
   if (!result || !result.Item || !result.Item.componentType)
-    throw Error("%s did not get result for package!", packageId);
+    throw Error(`${packageId} did not get result for package!`);
   return result.Item.componentType;
 };

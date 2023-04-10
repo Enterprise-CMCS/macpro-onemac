@@ -18,8 +18,6 @@ plugins:
   - serverless-s3-bucket-helper
 custom:
   stage: ${opt:stage, self:provider.stage}
-  tableName: cms-spa-form-${self:custom.stage}-change-requests
-  spaIdTableName: cms-spa-form-${self:custom.stage}-spa-ids
   oneMacTableName: onemac-${self:custom.stage}-one
   iamPath: ${ssm:/configuration/${self:custom.stage}/iam/path, ssm:/configuration/default/iam/path, "/"}
   iamPermissionsBoundaryPolicy: ${ssm:/configuration/${self:custom.stage}/iam/permissionsBoundaryPolicy, ssm:/configuration/default/iam/permissionsBoundaryPolicy, ""}
@@ -57,10 +55,6 @@ custom:
     seed:
       domain:
         sources:
-          - table: ${self:custom.tableName}
-            sources: [./change-requests-seed.json]
-          - table: ${self:custom.spaIdTableName}
-            sources: [./spa-ids-seed.json]
           - table: ${self:custom.oneMacTableName}
             sources: [./one-seed.json]
   serverless-offline:
@@ -82,8 +76,6 @@ provider:
     restApi: true
   environment:
     NODE_OPTIONS: "--enable-source-maps"
-    tableName: ${self:custom.tableName}
-    spaIdTableName: ${self:custom.spaIdTableName}
     oneMacTableName: ${self:custom.oneMacTableName}
     emailSource: ${self:custom.emailSource}
     userAccessEmailSource: ${self:custom.userAccessEmailSource}
@@ -383,42 +375,12 @@ functions:
           cors: true
           authorizer: aws_iam
 
-  submit:
-    handler: submit.main
-    role: LambdaApiRole
-    events:
-      - http:
-          path: submit
-          method: post
-          cors: true
-          authorizer: aws_iam
-
-  get:
-    handler: get.main
-    role: LambdaApiRole
-    events:
-      - http:
-          path: get/{id}/{userId}
-          method: get
-          cors: true
-          authorizer: aws_iam
-
   getDetail:
     handler: getDetail.main
     role: LambdaApiRole
     events:
       - http:
           path: getDetail/{id}
-          method: get
-          cors: true
-          authorizer: aws_iam
-
-  getAllByAuthorizedTerritories:
-    handler: getAllByAuthorizedTerritories.main
-    role: LambdaApiRole
-    events:
-      - http:
-          path: getAllByAuthorizedTerritories
           method: get
           cors: true
           authorizer: aws_iam
