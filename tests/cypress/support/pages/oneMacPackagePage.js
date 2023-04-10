@@ -779,11 +779,20 @@ export class oneMacPackagePage {
   clickPendingRaiCheckbox() {
     cy.xpath(pendingRaiCheckbox).click();
   }
+  verifyPendingRaiCheckboxExists() {
+    cy.xpath(pendingRaiCheckbox).should("be.visible");
+  }
   clickPendingConcurrenceCheckbox() {
     cy.xpath(pendingConcurrenceCheckbox).click();
   }
+  verifyPendingConcurrenceCheckboxExists() {
+    cy.xpath(pendingConcurrenceCheckbox).should("be.visible");
+  }
   clickPendingApprovalCheckbox() {
     cy.xpath(pendingApprovalCheckbox).click();
+  }
+  verifyPendingApprovalCheckboxExists() {
+    cy.xpath(pendingApprovalCheckbox).should("be.visible");
   }
   clickPackageApprovedCheckbox() {
     cy.xpath(packageApprovedCheckbox).click();
@@ -808,6 +817,9 @@ export class oneMacPackagePage {
   }
   clickSubmittedIntakeNeededCheckbox() {
     cy.xpath(submittedIntakeNeededCheckbox).click();
+  }
+  verifySubmittedIntakeNeededCheckboxExists() {
+    cy.xpath(submittedIntakeNeededCheckbox).should("be.visible");
   }
   clickDoubleDashCheckbox() {
     cy.xpath(doubleDashCheckbox).click();

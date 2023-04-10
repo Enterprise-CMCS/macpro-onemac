@@ -6,6 +6,8 @@ An official submission system for email-based state plan amendments (SPAs) and s
 
 ## Architecture
 
+Architecture documentation can be found at: https://qmacbis.atlassian.net/wiki/spaces/DAD/pages/3098771457/OneMAC+Architecture+Documentation
+
 ![Architecture Diagram](./.images/architecture.svg?raw=true)
 
 ### Application Configuration

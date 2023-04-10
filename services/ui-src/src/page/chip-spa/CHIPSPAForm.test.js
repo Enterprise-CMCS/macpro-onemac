@@ -7,10 +7,10 @@ import { stateSubmitterInitialAuthState } from "../../libs/testDataAppContext";
 
 import { ONEMAC_ROUTES } from "cmscommonlib";
 import ChipSpaForm from "./ChipSpaForm";
-import ChangeRequestDataApi from "../../utils/ChangeRequestDataApi";
+import PackageApi from "../../utils/PackageApi";
 import { AppContext } from "../../libs/contextLib";
 
-jest.mock("../../utils/ChangeRequestDataApi");
+jest.mock("../../utils/PackageApi");
 
 window.HTMLElement.prototype.scrollIntoView = jest.fn();
 window.scrollTo = jest.fn();
@@ -64,7 +64,7 @@ describe("Medicaid SPA Form", () => {
 
     const transmittalNumberEl = screen.getByLabelText("SPA ID");
 
-    ChangeRequestDataApi.packageExists.mockResolvedValue(false);
+    PackageApi.packageExists.mockResolvedValue(false);
 
     userEvent.type(transmittalNumberEl, testID);
     await waitFor(() => expect(transmittalNumberEl.value).toBe(testID));

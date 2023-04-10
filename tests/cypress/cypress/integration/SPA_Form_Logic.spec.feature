@@ -23,7 +23,7 @@ Feature: SPA Form Logic
         And type in Medicaid SPA ID 2
         And verify error message is not present on Medicaid SPA page
         And verify the submit button is not disabled
-@focus 
+
     Scenario: Verify the SPA ID format check on CHIP SPA
         And click on CHIP SPA
         And type in Chip SPA ID 2
