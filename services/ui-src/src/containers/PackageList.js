@@ -183,6 +183,7 @@ const PackageList = () => {
           accessor: getState,
           id: "territory",
           disableFilters: false,
+          isVisible: userRoleObj.isCMSUser,
           filter: "includesValue",
           Filter: CustomFilterUi.TerritorySelect,
         },
@@ -226,6 +227,7 @@ const PackageList = () => {
           accessor: "submitterName",
           disableGlobalFilter: false,
           id: "submitter",
+          isVisible: !userRoleObj.isCMSUser,
           Cell: renderName,
         },
         userRoleObj.canAccessForms && {
