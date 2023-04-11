@@ -206,7 +206,7 @@ it("switches to waiver columns if wavier tab selected", async () => {
 
 it("handles exceptions in withdraw action", async () => {
   PackageApi.getMyPackages.mockResolvedValue(packageList);
-  PackageApi.withdraw.mockResolvedValueOnce("UR040");
+  PackageApi.submitToAPI.mockResolvedValueOnce("UR040");
 
   render(<PackageList />, { wrapper: ContextWrapper });
 

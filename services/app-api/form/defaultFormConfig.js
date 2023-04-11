@@ -1,6 +1,8 @@
 import Joi from "joi";
 
 import { RESPONSE_CODE, Workflow } from "cmscommonlib";
+import { CMSWithdrawalNotice } from "../email/CMSWithdrawalNotice";
+import { stateWithdrawalReceipt } from "../email/stateWithdrawalReceipt";
 
 export const defaultFormConfig = {
   CMSToAddresses: [process.env.reviewerEmail, process.env.testingEmail].filter(
@@ -19,3 +21,13 @@ export const defaultTitleSchema = Joi.string().required();
 export const defaultWaiverAuthoritySchema = Joi.string().required();
 export const defaultParentId = Joi.string().required();
 export const defaultParentType = Joi.string().required();
+
+export const defaultWithdrawConfig = {
+  ...defaultFormConfig,
+  buildCMSNotice: CMSWithdrawalNotice,
+  buildStateReceipt: stateWithdrawalReceipt,
+  appendToSchema: {
+    parentId: defaultParentId,
+    parentType: defaultParentType,
+  },
+};

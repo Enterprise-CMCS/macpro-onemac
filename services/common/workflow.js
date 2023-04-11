@@ -1,16 +1,22 @@
 export const ONEMAC_TYPE = {
   CHIP_SPA: "chipspa",
   CHIP_SPA_RAI: "chipsparai",
+  CHIP_SPA_WITHDRAW: "chipspawithdraw",
   MEDICAID_SPA: "medicaidspa",
   MEDICAID_SPA_RAI: "medicaidsparai",
+  MEDICAID_SPA_WITHDRAW: "medicaidspawithdraw",
   WAIVER: "waiver",
   WAIVER_INITIAL: "waivernew",
+  WAIVER_INITIAL_WITHDRAW: "waivernewwithdraw",
   WAIVER_AMENDMENT: "waiveramendment",
+  WAIVER_AMENDMENT_WITHDRAW: "waiveramendmentwithdraw",
   WAIVER_RENEWAL: "waiverrenewal",
+  WAIVER_RENEWAL_WITHDRAW: "waiverrenewalwithdraw",
   WAIVER_RAI: "waiverrai",
   WAIVER_EXTENSION: "waiverextension",
   WAIVER_APP_K: "waiverappk",
   WAIVER_APP_K_RAI: "waiverappkrai",
+  WAIVER_APP_K_WITHDRAW: "waiverappkwithdraw",
 };
 
 export const ONEMAC_LABEL = {
