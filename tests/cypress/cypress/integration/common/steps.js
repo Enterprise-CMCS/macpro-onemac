@@ -1900,7 +1900,7 @@ And("click yes, withdraw package button", () => {
 And("verify the package details page is visible", () => {
   OneMacPackageDetailsPage.verifyPackageDetailsPageIsVisible();
 });
-And("verify action card exists", () => {
+And("verify 2 action cards exist", () => {
   OneMacPackageDetailsPage.verifyActionCardExists();
 });
 And("verify the status on the card is {string}", (status) => {
@@ -1942,7 +1942,7 @@ And("click on Respond to RAI package action", () => {
 And("verify the details section exists", () => {
   OneMacPackageDetailsPage.verifyDetailSectionExists();
 });
-And("verify the title contains {string}", (string) => {
+And("verify the package details title contains {string}", (string) => {
   OneMacPackageDetailsPage.verifyTitleContains(string);
 });
 And("verify there is a SPA ID header in the details section", () => {
@@ -2000,11 +2000,14 @@ And("verify there is a State header in the details section", () => {
 And("verify a state exists for the State", () => {
   OneMacPackageDetailsPage.verifyStateExists();
 });
-And("verify there is an Amendment Title in the details section", () => {
-  OneMacPackageDetailsPage.verifyStateHeaderExists();
+And("verify there is an Amendment Title header in the details section", () => {
+  OneMacPackageDetailsPage.verifyAmendmentTitleHeaderExists();
 });
-And("verify the Amendment Title is {string}", () => {
-  OneMacPackageDetailsPage.verifyStateExists();
+And("verify there is an Amendment Title under the header", () => {
+  OneMacPackageDetailsPage.verifyAmendmentTitleExists();
+});
+And("verify the Amendment Title is {string}", (s) => {
+  OneMacPackageDetailsPage.verifyAmendmentTitleIs(s);
 });
 And(
   "verify there is an Initial Submission Date header in the details section",
@@ -2194,12 +2197,6 @@ And(
 );
 And("verify the Amendment Number header exists", () => {
   OneMacPackageDetailsPage.verifyAmendmentNumberHeaderExists();
-});
-And("verify the amendment title header exists", () => {
-  OneMacPackageDetailsPage.verifyAmendmentTitleHeaderExists();
-});
-And("verify the amendment title is NA", () => {
-  OneMacPackageDetailsPage.verifyAmendmentTitleHeaderContainsNA();
 });
 And("verify the waiver authority header exists", () => {
   OneMacPackageDetailsPage.verifyWaiverAuthorityHeaderExists();
