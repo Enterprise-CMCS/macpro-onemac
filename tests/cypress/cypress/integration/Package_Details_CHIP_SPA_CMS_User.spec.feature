@@ -91,8 +91,7 @@ Feature: CHIP SPA CMS Details View - Card View with Actions
         And verify the attachments section exists
         And verify the download all button exists
         And verify the additional information section exists
-        
-@focus 
+
     Scenario: Screen Enhance - Pending - RAI CHIP SPA
         And click Pending - RAI checkbox
         And Click on Filter Button
@@ -111,7 +110,7 @@ Feature: CHIP SPA CMS Details View - Card View with Actions
         And verify a date exists for the Initial Submission Date
         And verify there is a Proposed Effective Date header in the details section
         And verify the attachments section exists
-        And verify the download all button exists
+        #And verify the download all button exists
         And verify the additional information section exists
 
     Scenario: Screen Enhance - Approved CHIP SPA

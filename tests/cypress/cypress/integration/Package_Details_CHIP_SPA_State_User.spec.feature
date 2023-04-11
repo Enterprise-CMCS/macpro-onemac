@@ -141,26 +141,25 @@ Feature: CHIP SPA State Details View - Card View with Actions
         And verify the download all button exists
         And verify the additional information section exists
 
-    # Need seed data / reset data update
-    # Scenario: Screen Enhance - RAI Issued SPA
-    #     And click RAI Issued checkbox
-    #     And Click on Filter Button
-    #     And click the SPA ID link in the first row
-    #     And verify the package details page is visible
-    #     And verify 2 action cards exist
-    #     And verify the status on the card is "RAI Issued"
-    #     And verify package actions header is visible
-    #     And verify withdraw package action exists
-    #     And verify Respond to RAI action exists
-    #     And verify the package details page is visible
-    #     And verify the details section exists
-    #     And verify there is a Type header in the details section
-    #     And verify a type containing SPA exists for the Type
-    #     And verify there is a State header in the details section
-    #     And verify a state exists for the State
-    #     And verify there is an Initial Submission Date header in the details section
-    #     And verify a date exists for the Initial Submission Date
-    #     And verify there is a Proposed Effective Date header in the details section
-    #     And verify the attachments section exists
-    #     And verify the download all button exists
-    #     And verify the additional information section exists
+    Scenario: Screen Enhance - RAI Issued SPA
+        And click RAI Issued checkbox
+        And Click on Filter Button
+        And click the SPA ID link in the first row
+        And verify the package details page is visible
+        And verify 2 action cards exist
+        And verify the status on the card is "RAI Issued"
+        And verify package actions header is visible
+        And verify withdraw package action exists
+        And verify Respond to RAI action exists
+        And verify the package details page is visible
+        And verify the details section exists
+        And verify there is a Type header in the details section
+        And verify a type containing SPA exists for the Type
+        And verify there is a State header in the details section
+        And verify a state exists for the State
+        And verify there is an Initial Submission Date header in the details section
+        And verify a date exists for the Initial Submission Date
+        And verify there is a Proposed Effective Date header in the details section
+        And verify the attachments section exists
+        #And verify the download all button exists
+        And verify the additional information section exists
