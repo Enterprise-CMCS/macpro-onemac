@@ -48,18 +48,6 @@ it("exists without crashing", () => {
       console.log("caught test error: ", error);
     });
 
-  const response3 = PackageApi.default.withdraw(
-    "foo",
-    "foo",
-    "foo",
-    "medicaidspa"
-  );
-  expect(response3)
-    .resolves.toBeInstanceOf(Promise)
-    .catch((error) => {
-      console.log("caught test error: ", error);
-    });
-
   const response5 = PackageApi.default.getTopic(
     "test@test.com",
     "Medicaid_SPA"

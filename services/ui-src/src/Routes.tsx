@@ -27,22 +27,28 @@ import UserManagement from "./containers/UserManagement";
 import UserPage from "./containers/UserPage";
 import { useAppContext } from "./libs/contextLib";
 import InitialWaiverForm from "./page/initial-waiver/InitialWaiverForm";
+import InitialWaiverWithdraw from "./page/initial-waiver/InitialWaiverWithdraw";
 import InitialWaiverDetail from "./page/initial-waiver/InitialWaiverDetail";
 import WaiverRenewalForm from "./page/waiver-renewal/WaiverRenewalForm";
+import WaiverRenewalWithdraw from "./page/waiver-renewal/WaiverRenewalWithdraw";
 import WaiverRenewalDetail from "./page/waiver-renewal/WaiverRenewalDetail";
 import WaiverAmendmentDetail from "./page/waiver-amendment/WaiverAmendmentDetail";
 import WaiverAppendixKDetail from "./page/waiver-appendix-k/WaiverAppendixKDetail";
 import TemporaryExtensionForm from "./page/temporary-extension/TemporaryExtensionForm";
 import TemporaryExtensionDetail from "./page/temporary-extension/TemporaryExtensionDetail";
 import MedicaidSpaForm from "./page/medicaid-spa/MedicaidSpaForm";
+import MedicaidSpaWithdraw from "./page/medicaid-spa/MedicaidSpaWithdraw";
 import MedicaidSPADetail from "./page/medicaid-spa/MedicaidSPADetail";
 import ChipSpaForm from "./page/chip-spa/ChipSpaForm";
+import ChipSpaWithdraw from "./page/chip-spa/ChipSpaWithdraw";
 import CHIPSPADetail from "./page/chip-spa/CHIPSPADetail";
 import MedicaidSPARAIForm from "./page/medicaid-spa/MedicaidSPARAIForm";
 import CHIPSPARAIForm from "./page/chip-spa/CHIPSPARAIForm";
 import WaiverRAIForm from "./page/waiver-rai/WaiverRAIForm";
 import WaiverAmendmentForm from "./page/waiver-amendment/WaiverAmendmentForm";
+import WaiverAmendmentWithdraw from "./page/waiver-amendment/WaiverAmendmentWithdraw";
 import WaiverAppendixKForm from "./page/waiver-appendix-k/WaiverAppendixKForm";
+import WaiverAppendixKWithdraw from "./page/waiver-appendix-k/WaiverAppendixKWithdraw";
 import WaiverAppendixKRAIForm from "./page/waiver-appendix-k/WaiverAppendixKRAIForm";
 import DescribeForms from "./page/DescribeForms";
 import EventList from "./page/event/EventList";
@@ -187,13 +193,34 @@ const ROUTE_LIST: RouteSpec[] = [
     { path: ONEMAC_ROUTES.CHIP_SPA, component: ChipSpaForm },
     { path: ONEMAC_ROUTES.MEDICAID_SPA_RAI, component: MedicaidSPARAIForm },
     { path: ONEMAC_ROUTES.CHIP_SPA_RAI, component: CHIPSPARAIForm },
+    { path: ONEMAC_ROUTES.CHIP_SPA_WITHDRAW, component: ChipSpaWithdraw },
+    {
+      path: ONEMAC_ROUTES.MEDICAID_SPA_WITHDRAW,
+      component: MedicaidSpaWithdraw,
+    },
     { path: ONEMAC_ROUTES.WAIVER_RAI, component: WaiverRAIForm },
     { path: ONEMAC_ROUTES.INITIAL_WAIVER, component: InitialWaiverForm },
+    {
+      path: ONEMAC_ROUTES.INITIAL_WAIVER_WITHDRAW,
+      component: InitialWaiverWithdraw,
+    },
     { path: ONEMAC_ROUTES.WAIVER_RENEWAL, component: WaiverRenewalForm },
+    {
+      path: ONEMAC_ROUTES.WAIVER_RENEWAL_WITHDRAW,
+      component: WaiverRenewalWithdraw,
+    },
     { path: ONEMAC_ROUTES.WAIVER_AMENDMENT, component: WaiverAmendmentForm },
+    {
+      path: ONEMAC_ROUTES.WAIVER_AMENDMENT_WITHDRAW,
+      component: WaiverAmendmentWithdraw,
+    },
     {
       path: ONEMAC_ROUTES.APPENDIX_K_AMENDMENT,
       component: WaiverAppendixKForm,
+    },
+    {
+      path: ONEMAC_ROUTES.APPENDIX_K_AMENDMENT_WITHDRAW,
+      component: WaiverAppendixKWithdraw,
     },
     {
       path: ONEMAC_ROUTES.WAIVER_APP_K_RAI,

@@ -40,9 +40,10 @@ const configList: OneMACFormConfig[] | any = [
 const describeFieldHint = (formConfig: OneMACFormConfig) => {
   return (
     <>
-      {formConfig.idFieldHint.map((oneHint, index) => (
-        <p key={index}>{oneHint.text}</p>
-      ))}
+      {formConfig.idFieldHint &&
+        formConfig.idFieldHint.map((oneHint, index) => (
+          <p key={index}>{oneHint.text}</p>
+        ))}
     </>
   );
 };

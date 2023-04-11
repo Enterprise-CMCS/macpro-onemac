@@ -2,7 +2,7 @@ import Joi from "joi";
 
 import { territoryCodeList } from "cmscommonlib";
 
-const getCommonSchema = (idRegex, possibleAttachmentTitles) => {
+const getCommonSchema = (idRegex, possibleAttachmentTitles, isWithdrawForm) => {
   const MIME_TYPE_PATTERN =
     /(application|audio|font|image|message|model|multipart|text|video)\/.+/;
 
@@ -20,10 +20,17 @@ const getCommonSchema = (idRegex, possibleAttachmentTitles) => {
       .required(),
     componentId: Joi.string().regex(new RegExp(idRegex)).required(),
     transmittalNumberWarningMessage: Joi.string().allow(""),
-    attachments: Joi.array().items(attachmentSchema).min(1).required(),
+    attachments: isWithdrawForm
+      ? Joi.when("additionalInformation", {
+          is: null,
+          then: Joi.array().items(attachmentSchema).min(1).required(),
+        })
+      : Joi.array().items(attachmentSchema).min(1).required(),
     submitterName: Joi.string().required(),
     submitterEmail: Joi.string().required(),
   });
+
+  // basicSchema.attachments = (isWithdrawForm ? Joi.when('additionalInformation', {is: null, then: Joi.array().items(attachmentSchema).min(1).required()}) : Joi.array().items(attachmentSchema).min(1).required()),
 
   return basicSchema;
 };
@@ -41,7 +48,9 @@ export const validateSubmission = (data, config) => {
   // start with the Schema for all form submissions
   const theSchema = getCommonSchema(
     config.idRegex,
-    possibleAttachmentTitles
+    possibleAttachmentTitles,
+    config.componentType.includes("withdraw") &&
+      !config.componentType.includes("chip")
   ).append(config.appendToSchema);
 
   try {

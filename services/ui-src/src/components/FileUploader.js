@@ -4,7 +4,6 @@ import * as s3Uploader from "../utils/s3Uploader";
 import config from "../utils/config";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
-import { formatList } from "../utils";
 
 /** adjust to approximately 80 MB **/
 const MAX_FILE_SIZE_BYTES = 1024 * 1024 * config.MAX_ATTACHMENT_SIZE_MB;
@@ -57,6 +56,7 @@ export default class FileUploader extends Component {
       ])
     ),
     showRequiredFieldErrors: PropTypes.bool,
+    withdrawIntro: PropTypes.bool,
   };
 
   /**
@@ -319,27 +319,7 @@ export default class FileUploader extends Component {
     let allControls = reqControls.concat(optControls);
 
     return (
-      <div>
-        <p className="req-message">
-          Maximum file size of {config.MAX_ATTACHMENT_SIZE_MB} MB. You can add
-          multiple files per attachment type
-          {singleFileControls.length > 0 && (
-            <>, except for the {formatList(singleFileControls)}</>
-          )}
-          . Read the description for each of the attachment types on the FAQ
-          Page.
-        </p>
-        {this.props.requiredUploads?.length > 0 ? (
-          <p className="req-message">
-            <span className="required-mark">*</span> indicates required
-            attachment.
-          </p>
-        ) : (
-          <p className="req-message">
-            <span className="required-mark">*</span> At least one attachment is
-            required.
-          </p>
-        )}
+      <>
         <div className="ds-u-color--error">
           {this.props.showRequiredFieldErrors &&
             this.state.errorMessages.map((message, index) => (
@@ -353,7 +333,7 @@ export default class FileUploader extends Component {
             </table>
           </div>
         </div>
-      </div>
+      </>
     );
   }
 }

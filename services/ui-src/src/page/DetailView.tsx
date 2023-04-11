@@ -50,6 +50,7 @@ export type ComponentDetail = {
   territoryNice: string;
   raiResponses: any[];
   waiverExtensions: any[];
+  withdrawalRequests: any[];
   temporaryExtensionType: string;
 } & Record<string, any>;
 

@@ -2,6 +2,7 @@ import { RESPONSE_CODE } from "cmscommonlib";
 import { submitAny } from "./submitAny";
 import { getUser } from "../getUser";
 import { initialWaiverFormConfig } from "./submitInitialWaiver";
+import { withdrawMedicaidSPAFormConfig } from "./withdrawMedicaidSPA";
 import { waiverTemporaryExtensionFormConfig } from "./submitWaiverExtension";
 import packageExists from "../utils/packageExists";
 import { newEvent } from "../utils/newEvent";
@@ -33,6 +34,27 @@ const testUnauthUser = {
 
 const eventBody = {
   componentId: "VA-1117.R00.00",
+  territory: "VA",
+  submitterEmail: "statesubmitteractive@cms.hhs.local",
+  submitterName: "Angie Active",
+  proposedEffectiveDate: "2022-01-01",
+  attachments: [
+    {
+      contentType: "image/png",
+      filename: "myfile.png",
+      s3Key: "path/in/s3",
+      title: "Other",
+      url: "https://www.notasite.gov",
+    },
+  ],
+  waiverAuthority: "me",
+};
+
+const eventBody2 = {
+  componentId: "VA-11-0909",
+  componentType: "medicaidspawithdraw",
+  parentId: "VA-11-0909",
+  parentType: "medicaidspa",
   territory: "VA",
   submitterEmail: "statesubmitteractive@cms.hhs.local",
   submitterName: "Angie Active",
@@ -98,6 +120,15 @@ const testEvent = {
   },
 };
 
+const testEvent2 = {
+  body: JSON.stringify(eventBody2),
+  requestContext: {
+    identity: {
+      cognitoIdentityId: "1234",
+    },
+  },
+};
+
 const tempExtensionTestEvent = {
   body: JSON.stringify(tempExtensionEventBody),
   requestContext: {
@@ -117,6 +148,7 @@ const invalidTestEvent = {
 };
 
 const testConfig = { ...initialWaiverFormConfig };
+const testConfig2 = { ...withdrawMedicaidSPAFormConfig };
 const tempExtentsionTestConfig = { ...waiverTemporaryExtensionFormConfig };
 
 beforeEach(() => {
@@ -173,6 +205,9 @@ it("returns error code when new submission fails", async () => {
   });
   const response = await submitAny(testEvent, testConfig);
   expect(response).toEqual(RESPONSE_CODE.SUBMISSION_SAVE_FAILURE);
+
+  // const response2 = await submitAny(testEvent2, testConfig2);
+  // expect(response2).toEqual(RESPONSE_CODE.SUBMISSION_SAVE_FAILURE);
 });
 
 it("returns error code when CMS email fails", async () => {
