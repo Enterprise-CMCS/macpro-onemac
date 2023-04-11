@@ -34,7 +34,7 @@ const MAX_FILE_SIZE_BYTES = 1024 * 1024 * config.MAX_ATTACHMENT_SIZE_MB;
 
 export const MISSING_REQUIRED_MESSAGE = "Required attachments missing";
 const SIZE_TOO_LARGE_MESSAGE = `An attachment cannot be larger than ${config.MAX_ATTACHMENT_SIZE_MB}MB`;
-const fileTypes = ".pdf, .docx, .jpg, .png";
+
 export default class FileUploader extends Component {
   static propTypes = {
     requiredUploads: PropTypes.arrayOf(
@@ -270,7 +270,7 @@ export default class FileUploader extends Component {
                 id={"uploader-input-" + index}
                 data-testid={"uploader-input-" + index}
                 name={"uploader-input-" + index}
-                accept={fileTypes} //".bmp,.csv,.doc,.docx,.gif,.jpg,.jpeg,.odp,.ods,.odt,.png,.pdf,.ppt,.pptx,.rtf,.tif,.tiff,.txt,.xls,.xlsx"
+                accept={config.ATTACHMENT_FILE_TYPES}
                 multiple={uploader.allowMultiple}
                 disabled={isDisabled}
                 style={{

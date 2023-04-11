@@ -1,7 +1,11 @@
 import React, { FC } from "react";
 import OneMACForm from "../OneMACForm";
 import config from "../../utils/config";
-import { defaultWithdrawConfig, OneMACFormConfig } from "../../libs/formLib";
+import {
+  defaultAttachmentFileSizeJSX,
+  defaultWithdrawConfig,
+  OneMACFormConfig,
+} from "../../libs/formLib";
 import { Workflow, ONEMAC_ROUTES, chipSPAWithdraw } from "cmscommonlib";
 
 export const chipSpaWithdrawInfo: OneMACFormConfig = {
@@ -13,11 +17,7 @@ export const chipSpaWithdrawInfo: OneMACFormConfig = {
       <p className="req-message">
         Upload your supporting documentation for withdrawal.
       </p>
-      <p>
-        Maximum file size of {config.MAX_ATTACHMENT_SIZE_MB} MB.{" "}
-        <b>You can add multiple files</b>. We accept the following file types:{" "}
-        <b>.pdf, .docx, .jpg, .png</b>.
-      </p>
+      {defaultAttachmentFileSizeJSX}
       <p className="req-message">
         <span className="required-mark">*</span> indicates required attachment.
       </p>

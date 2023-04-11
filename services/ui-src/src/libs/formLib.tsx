@@ -6,6 +6,7 @@ import {
   ONEMAC_ROUTES,
 } from "cmscommonlib";
 import config from "../utils/config";
+import { Link } from "@material-ui/core";
 
 export type OneMACFormConfig = {
   idFormat?: string;
@@ -45,6 +46,18 @@ type ConfirmSubmitType = {
   confirmSubmitYesButton?: string;
 };
 
+export const defaultAttachmentFileSizeJSX = (
+  <p className="req-message">
+    Maximum file size of {config.MAX_ATTACHMENT_SIZE_MB} MB per attachment.{" "}
+    <b>You can add multiple files per attachment type.</b>&nbsp; Read the
+    description for each attachment on the&nbsp;
+    <Link target="new" href="/FAQ">
+      FAQ Page
+    </Link>
+    . We accept the following file types: <b>{config.ATTACHMENT_FILE_TYPES}</b>.
+  </p>
+);
+
 export const defaultOneMACFormConfig = {
   idFormat: "",
   idFieldHint: [],
@@ -53,11 +66,7 @@ export const defaultOneMACFormConfig = {
   proposedEffectiveDate: false,
   attachmentIntroJSX: (
     <>
-      <p className="req-message">
-        Maximum file size of {config.MAX_ATTACHMENT_SIZE_MB} MB. You can add
-        multiple files per attachment type. Read the description for each of the
-        attachment types on the FAQ Page.
-      </p>
+      {defaultAttachmentFileSizeJSX}
       <p className="req-message">
         <span className="required-mark">*</span> indicates required attachment.
       </p>
@@ -174,11 +183,7 @@ export const defaultWithdrawConfig = {
         Upload your supporting documentation for withdrawal or explain your need
         for withdrawal in the <i>Additional Information</i> box.
       </p>
-      <p>
-        Maximum file size of {config.MAX_ATTACHMENT_SIZE_MB} MB.{" "}
-        <b>You can add multiple files</b>. We accept the following file types:{" "}
-        <b>.pdf, .docx, .jpg, .png</b>.
-      </p>
+      {defaultAttachmentFileSizeJSX}
     </>
   ),
   addlInfoText:
@@ -189,11 +194,7 @@ export const defaultWithdrawConfig = {
 
 export const defaultWaiverAttachJSX = (
   <>
-    <p className="req-message">
-      Maximum file size of {config.MAX_ATTACHMENT_SIZE_MB} MB. You can add
-      multiple files per attachment type. Read the description for each of the
-      attachment types on the FAQ Page.
-    </p>
+    {defaultAttachmentFileSizeJSX}
     <p className="req-message">
       <span className="required-mark">*</span> At least one attachment is
       required.
