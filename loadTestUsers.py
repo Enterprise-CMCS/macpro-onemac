@@ -52,7 +52,7 @@ UPPER_CASE_USER = [
 
 devs = [
     {
-        "email": "k.grue.cmsroleapprover@gmail.com",
+        "email": "k.grue.cmsapprover@gmail.com",
         "cms_roles": "notaonemacrole,anothernononemacrole",
         "ismemberof": "cn=CARTS_Group_Val,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CARTS_Group_Val_Admin,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP_ADMIN,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=EUA_USER,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_D,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_V,ou=Groups,dc=cms,dc=hhs,dc=gov",
         "firstName": "KristinCMS",

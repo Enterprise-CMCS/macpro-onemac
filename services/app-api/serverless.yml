@@ -18,8 +18,6 @@ plugins:
   - serverless-s3-bucket-helper
 custom:
   stage: ${opt:stage, self:provider.stage}
-  tableName: cms-spa-form-${self:custom.stage}-change-requests
-  spaIdTableName: cms-spa-form-${self:custom.stage}-spa-ids
   oneMacTableName: onemac-${self:custom.stage}-one
   iamPath: ${ssm:/configuration/${self:custom.stage}/iam/path, ssm:/configuration/default/iam/path, "/"}
   iamPermissionsBoundaryPolicy: ${ssm:/configuration/${self:custom.stage}/iam/permissionsBoundaryPolicy, ssm:/configuration/default/iam/permissionsBoundaryPolicy, ""}
@@ -57,10 +55,6 @@ custom:
     seed:
       domain:
         sources:
-          - table: ${self:custom.tableName}
-            sources: [./change-requests-seed.json]
-          - table: ${self:custom.spaIdTableName}
-            sources: [./spa-ids-seed.json]
           - table: ${self:custom.oneMacTableName}
             sources: [./one-seed.json]
   serverless-offline:
@@ -82,8 +76,6 @@ provider:
     restApi: true
   environment:
     NODE_OPTIONS: "--enable-source-maps"
-    tableName: ${self:custom.tableName}
-    spaIdTableName: ${self:custom.spaIdTableName}
     oneMacTableName: ${self:custom.oneMacTableName}
     emailSource: ${self:custom.emailSource}
     userAccessEmailSource: ${self:custom.userAccessEmailSource}
@@ -253,12 +245,32 @@ functions:
           cors: true
           authorizer: aws_iam
 
+  validateParentOfMedicaidSpaWithdraw:
+    handler: validation/validateParentOfMedicaidSpaWithdraw.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: validateParentOfMedicaidSpaWithdraw/{parentId}
+          method: get
+          cors: true
+          authorizer: aws_iam
+
   validateParentOfChipSpaRaiResponse:
     handler: validation/validateParentOfChipSpaRaiResponse.main
     role: LambdaApiRole
     events:
       - http:
           path: validateParentOfChipSpaRaiResponse/{parentId}
+          method: get
+          cors: true
+          authorizer: aws_iam
+
+  validateParentOfChipSpaWithdraw:
+    handler: validation/validateParentOfChipSpaWithdraw.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: validateParentOfChipWithdraw/{parentId}
           method: get
           cors: true
           authorizer: aws_iam
@@ -273,6 +285,16 @@ functions:
           cors: true
           authorizer: aws_iam
 
+  validateParentOfWaiverWithdraw:
+    handler: validation/validateParentOfWaiverWithdraw.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: validateParentOfWaiverWithdraw/{parentId}
+          method: get
+          cors: true
+          authorizer: aws_iam
+
   validateParentOfAppKRaiResponse:
     handler: validation/validateParentOfAppKRaiResponse.main
     role: LambdaApiRole
@@ -283,8 +305,18 @@ functions:
           cors: true
           authorizer: aws_iam
 
+  validateParentOfAppKWithdraw:
+    handler: validation/validateParentOfAppKWithdraw.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: validateParentOfAppKWithdraw/{parentId}
+          method: get
+          cors: true
+          authorizer: aws_iam
+
   withdrawInitialWaiver:
-    handler: action/withdrawInitialWaiver.main
+    handler: form/withdrawInitialWaiver.main
     role: LambdaApiRole
     events:
       - http:
@@ -294,7 +326,7 @@ functions:
           authorizer: aws_iam
 
   withdrawMedicaidSPA:
-    handler: action/withdrawMedicaidSPA.main
+    handler: form/withdrawMedicaidSPA.main
     role: LambdaApiRole
     events:
       - http:
@@ -304,7 +336,7 @@ functions:
           authorizer: aws_iam
 
   withdrawCHIPSPA:
-    handler: action/withdrawCHIPSPA.main
+    handler: form/withdrawCHIPSPA.main
     role: LambdaApiRole
     events:
       - http:
@@ -313,18 +345,8 @@ functions:
           cors: true
           authorizer: aws_iam
 
-  withdrawWaiverTemporaryExtension:
-    handler: action/withdrawWaiverTemporaryExtension.main
-    role: LambdaApiRole
-    events:
-      - http:
-          path: withdrawWaiverTemporaryExtension
-          method: post
-          cors: true
-          authorizer: aws_iam
-
   withdrawWaiverRenewal:
-    handler: action/withdrawWaiverRenewal.main
+    handler: form/withdrawWaiverRenewal.main
     role: LambdaApiRole
     events:
       - http:
@@ -334,7 +356,7 @@ functions:
           authorizer: aws_iam
 
   withdrawWaiverAmendment:
-    handler: action/withdrawWaiverAmendment.main
+    handler: form/withdrawWaiverAmendment.main
     role: LambdaApiRole
     events:
       - http:
@@ -344,32 +366,12 @@ functions:
           authorizer: aws_iam
   
   withdrawWaiverAppendixK:
-    handler: action/withdrawWaiverAppendixK.main
+    handler: form/withdrawWaiverAppendixK.main
     role: LambdaApiRole
     events:
       - http:
           path: withdrawWaiverAppendixK
           method: post
-          cors: true
-          authorizer: aws_iam
-
-  submit:
-    handler: submit.main
-    role: LambdaApiRole
-    events:
-      - http:
-          path: submit
-          method: post
-          cors: true
-          authorizer: aws_iam
-
-  get:
-    handler: get.main
-    role: LambdaApiRole
-    events:
-      - http:
-          path: get/{id}/{userId}
-          method: get
           cors: true
           authorizer: aws_iam
 
@@ -379,16 +381,6 @@ functions:
     events:
       - http:
           path: getDetail/{id}
-          method: get
-          cors: true
-          authorizer: aws_iam
-
-  getAllByAuthorizedTerritories:
-    handler: getAllByAuthorizedTerritories.main
-    role: LambdaApiRole
-    events:
-      - http:
-          path: getAllByAuthorizedTerritories
           method: get
           cors: true
           authorizer: aws_iam

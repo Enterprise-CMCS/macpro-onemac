@@ -9,7 +9,7 @@ import React, {
 import { useHistory, useLocation } from "react-router-dom";
 import { Input } from "rsuite";
 
-import { TextField, Button, Dropdown } from "@cmsgov/design-system";
+import { TextField, Button, Dropdown, Review } from "@cmsgov/design-system";
 
 import { RESPONSE_CODE, ROUTES } from "cmscommonlib";
 
@@ -28,7 +28,6 @@ import config from "../utils/config";
 
 import LoadingOverlay from "../components/LoadingOverlay";
 import FileUploader from "../components/FileUploader";
-import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
 import PackageApi from "../utils/PackageApi";
 import PageTitleBar from "../components/PageTitleBar";
 import AlertBar from "../components/AlertBar";
@@ -43,7 +42,7 @@ const leavePageConfirmMessage = "Changes you made will not be saved.";
  * @param componentId the component id
  * @returns two character state/territory
  */
-function getTerritoryFromComponentId(componentId: string): string {
+export function getTerritoryFromComponentId(componentId: string): string {
   return componentId?.toString().substring(0, 2) ?? "";
 }
 
@@ -234,7 +233,7 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
       );
       if (validationMessages.length === 0 && oneMacFormData.componentId) {
         try {
-          const isADup = await ChangeRequestDataApi.packageExists(
+          const isADup = await PackageApi.packageExists(
             oneMacFormData.componentId
           );
           if (isADup === false && formConfig.idMustExist) {
@@ -276,13 +275,20 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
         !componentIdStatusMessages.some((m) => m.statusLevel === "error")
     );
 
+    const isSupportInfoReady: boolean = Boolean(
+      formConfig.componentType.includes("withdraw") &&
+        !formConfig.componentType.includes("chip")
+        ? areUploadsReady || oneMacFormData.additionalInformation
+        : areUploadsReady
+    );
+
     setIsSubmissionReady(
       isTitleReady &&
         isWaiverAuthorityReady &&
         isTemporaryExtensionTypeReady &&
         isParentIdReady &&
         isIdReady &&
-        areUploadsReady &&
+        isSupportInfoReady &&
         isProposedEffecitveDateReady
     );
   }, [
@@ -345,12 +351,17 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
 
       if (isSubmissionReady && !limitSubmit.current) {
         if (formConfig.confirmSubmit) {
+          const confirmMessage: JSX.Element | string = formConfig.confirmSubmit
+            .buildMessage
+            ? formConfig.confirmSubmit.buildMessage(oneMacFormData.componentId)
+            : formConfig.confirmSubmit.confirmSubmitMessage;
+
           confirmAction &&
             confirmAction(
               formConfig.confirmSubmit.confirmSubmitHeading,
-              "Yes, Submit",
+              formConfig.confirmSubmit.confirmSubmitYesButton ?? "Yes, Submit",
               "Cancel",
-              formConfig.confirmSubmit.confirmSubmitMessage ?? "",
+              confirmMessage,
               doSubmit
             );
         } else {
@@ -358,35 +369,49 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
         }
       }
     },
-    [isSubmissionReady, formConfig.confirmSubmit, confirmAction, doSubmit]
+    [
+      isSubmissionReady,
+      formConfig.confirmSubmit,
+      confirmAction,
+      doSubmit,
+      oneMacFormData.componentId,
+    ]
   );
 
   return (
     <LoadingOverlay isLoading={isSubmitting}>
       <PageTitleBar
-        heading={formConfig.pageTitle}
+        heading={formConfig.pageTitle ?? oneMacFormData.componentId ?? ""}
         enableBackNav
         backNavConfirmationMessage={leavePageConfirmMessage}
       />
       <AlertBar alertCode={alertCode} closeCallback={closedAlert} />
       <div className="onemac-form">
         <form noValidate onSubmit={handleSubmit}>
-          <h2>{formConfig.detailsHeader} Details</h2>
-          <p>
-            <span className="required-mark">*</span>
-            indicates required field.
-          </p>
-          <p id="form-intro">
-            Once you submit this form, a confirmation email is sent to you and
-            to CMS. CMS will use this content to review your package, and you
-            will not be able to edit this form. If CMS needs any additional
-            information, they will follow up by email.
-            <b>
-              {" "}
-              If you leave this page, you will lose your progress on this form.
-            </b>
-            {formConfig.addlIntroJSX ?? ""}
-          </p>
+          <h2>
+            {formConfig.detailsHeaderFull ??
+              formConfig.detailsHeader + " Details"}
+          </h2>
+          {formConfig.introJSX ?? (
+            <>
+              <p>
+                <span className="required-mark">*</span>
+                indicates required field.
+              </p>
+              <p id="form-intro">
+                Once you submit this form, a confirmation email is sent to you
+                and to CMS. CMS will use this content to review your package,
+                and you will not be able to edit this form. If CMS needs any
+                additional information, they will follow up by email.
+                <b>
+                  {" "}
+                  If you leave this page, you will lose your progress on this
+                  form.
+                </b>
+                {formConfig.addlIntroJSX ?? ""}
+              </p>
+            </>
+          )}
           {formConfig.titleLabel && (
             <TextField
               name="title"
@@ -440,7 +465,7 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
           )}
           <ComponentId
             idLabel={formConfig.idLabel}
-            idFieldHint={formConfig.idFieldHint}
+            idFieldHint={formConfig.idFieldHint ?? [{ text: "" }]}
             idFAQLink={formConfig.idFAQLink}
             statusMessages={componentIdStatusMessages}
             disabled={!!presetComponentId}
@@ -466,7 +491,13 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
               />
             </>
           )}
-          <h3>Attachments</h3>
+          {formConfig?.parentTypeNice && (
+            <Review key="0" heading="Type">
+              {formConfig?.parentTypeNice}
+            </Review>
+          )}
+          <h3>{formConfig?.attachmentsTitle ?? "Attachments"}</h3>
+          {formConfig.attachmentIntroJSX}
           <FileUploader
             ref={uploader}
             requiredUploads={formConfig.requiredAttachments}
@@ -478,7 +509,10 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
             label="Additional Information"
             labelId="additional-information-label"
             id="additional-information"
-            hint="Add anything else that you would like to share with CMS."
+            hint={
+              formConfig.addlInfoText ??
+              "Add anything else that you would like to share with CMS."
+            }
             disabled={isSubmitting}
             fieldClassName="summary-field"
             multiline

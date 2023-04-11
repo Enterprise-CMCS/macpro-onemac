@@ -1,6 +1,10 @@
 import React, { FC } from "react";
 import OneMACForm from "../OneMACForm";
-import { defaultOneMACFormConfig, OneMACFormConfig } from "../../libs/formLib";
+import {
+  defaultOneMACFormConfig,
+  OneMACFormConfig,
+  defaultWaiverAttachJSX,
+} from "../../libs/formLib";
 import { ROUTES, ONEMAC_ROUTES, initialWaiver } from "cmscommonlib";
 
 const initialWaiverIdFormat: string = "SS-####.R00.00 or SS-#####.R00.00";
@@ -19,6 +23,7 @@ export const initialWaiverFormInfo: OneMACFormConfig = {
     },
   ],
   proposedEffectiveDate: true,
+  attachmentIntroJSX: defaultWaiverAttachJSX,
   landingPage: ONEMAC_ROUTES.PACKAGE_LIST_WAIVER,
 };
 

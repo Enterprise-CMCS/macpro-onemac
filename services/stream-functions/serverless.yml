@@ -39,8 +39,6 @@ custom:
     configureConnectors:
       enabled: false
   tableStreamArn: ${cf:app-api-${self:custom.stage}.OneMacTableStreamArn}
-  spaIdTableName: ${cf:app-api-${self:custom.stage}.SpaIdTableName}
-  spaIdTableArn: ${cf:app-api-${self:custom.stage}.SpaIdTableArn}
   oneMacTableName: ${cf:app-api-${self:custom.stage}.OneMacTableName}
   oneMacTableArn: ${cf:app-api-${self:custom.stage}.OneMacTableArn}
   bootstrapBrokerStringTls: ${ssm:/configuration/${self:custom.stage}/bigmac/bootstrapBrokerStringTls, ssm:/configuration/default/bigmac/bootstrapBrokerStringTls}
@@ -96,7 +94,6 @@ functions:
     handler: handlers/sinkMskToDynamo.handler
     role: LamdaSinkMskToDynamoRole
     environment:
-      spaIdTableName: ${self:custom.spaIdTableName}
       oneMacTableName: ${self:custom.oneMacTableName}
     maximumRetryAttempts: 2
     memorySize: 1024

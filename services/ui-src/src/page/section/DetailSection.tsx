@@ -42,60 +42,70 @@ export const DetailSection = ({
 
   return (
     <>
-      {(detail.title || pageConfig.defaultTitle) && (
-        <section className="detail-title">
-          <h2>{detail.title ?? pageConfig.defaultTitle}</h2>
-        </section>
-      )}
-      <section>
-        <div className="detail-card-top"></div>
-        <div className="detail-card">
-          <section>
-            <Review heading="Status">
-              <div className="detail-card-status">{detail.currentStatus}</div>
-            </Review>
+      <section className="detail-card-section">
+        <div className="detail-card-container">
+          <div className="detail-card-top"></div>
+          <div className="detail-card">
+            <section>
+              <Review heading="Status">
+                <div className="detail-card-status">{detail.currentStatus}</div>
+              </Review>
 
-            {pageConfig.show90thDayInfo && ninetyDayText !== "N/A" && (
-              <Review heading="90th Day">
-                {Number(ninetyDayText)
-                  ? formatDateOnly(new Date(ninetyDayText))
-                  : ninetyDayText ?? "N/A"}
-              </Review>
-            )}
-            {pageConfig.showEffectiveDate && detail.effectiveDateTimestamp && (
-              <Review heading="Effective Date">
-                {formatDateOnly(detail.effectiveDateTimestamp)}
-              </Review>
-            )}
-          </section>
-          {userRoleObj.canAccessForms ? (
-            <section className="package-actions">
-              <Review heading={pageConfig.actionLabel}>
-                <ul className="action-list">
-                  {pageConfig.actionsByStatus[detail.currentStatus]?.length >
-                  0 ? (
-                    pageConfig.actionsByStatus[detail.currentStatus]?.map(
-                      (actionName, i) => (
-                        <li key={i}>
-                          {actionComponent[actionName](detail, updateData)}
-                        </li>
+              {pageConfig.show90thDayInfo && ninetyDayText !== "N/A" && (
+                <Review heading="90th Day">
+                  {Number(ninetyDayText)
+                    ? formatDateOnly(new Date(ninetyDayText))
+                    : ninetyDayText ?? "N/A"}
+                </Review>
+              )}
+              {pageConfig.showEffectiveDate &&
+                detail.effectiveDateTimestamp && (
+                  <Review heading="Effective Date">
+                    {formatDateOnly(detail.effectiveDateTimestamp)}
+                  </Review>
+                )}
+            </section>
+          </div>
+        </div>
+        <div className="detail-card-container">
+          <div className="detail-card-top"></div>
+          <div className="detail-card">
+            {userRoleObj.canAccessForms ? (
+              <section className="package-actions">
+                <Review heading={pageConfig.actionLabel}>
+                  <ul className="action-list">
+                    {pageConfig.actionsByStatus[detail.currentStatus]?.length >
+                    0 ? (
+                      pageConfig.actionsByStatus[detail.currentStatus]?.map(
+                        (actionName, i) => (
+                          <li key={i}>
+                            {actionComponent[actionName](detail, updateData)}
+                          </li>
+                        )
                       )
-                    )
-                  ) : (
-                    <li>
-                      <p>
-                        No actions are currently available for this submission.
-                      </p>
-                    </li>
-                  )}
-                </ul>
-              </Review>
-            </section>
-          ) : (
-            <section className="package-actions">
-              <div className="column-spacer">&nbsp;</div>
-            </section>
-          )}
+                    ) : (
+                      <li>
+                        <p>
+                          No actions are currently available for this
+                          submission.
+                        </p>
+                      </li>
+                    )}
+                  </ul>
+                </Review>
+              </section>
+            ) : (
+              <section className="package-actions">
+                <div className="column-spacer">
+                  <Review heading={pageConfig.actionLabel}>
+                    <p>
+                      No actions are currently available for this submission.
+                    </p>
+                  </Review>
+                </div>
+              </section>
+            )}
+          </div>
         </div>
       </section>
       <div className="read-only-submission">
@@ -162,6 +172,51 @@ export const DetailSection = ({
                     <AdditionalInfoSection
                       additionalInfo={raiResponse.additionalInformation}
                       id={"addl-info-rai-" + index}
+                    />
+                  </AccordionItem>
+                );
+              })}
+            </Accordion>
+          </section>
+        )}
+        {detail.withdrawalRequests?.length > 0 && (
+          <section className="detail-section">
+            <h2>Withdrawal Request</h2>
+            <Accordion>
+              {detail.withdrawalRequests?.map((withdrawalRequest, index) => {
+                return (
+                  <AccordionItem
+                    buttonClassName="accordion-button"
+                    contentClassName="accordion-content"
+                    heading={
+                      "Submitted on " +
+                      formatDate(withdrawalRequest.submissionTimestamp)
+                    }
+                    headingLevel="6"
+                    id={withdrawalRequest.componentType + index + "_caret"}
+                    key={withdrawalRequest.componentType + index}
+                    defaultOpen={index === 0}
+                  >
+                    {withdrawalRequest.attachments?.length > 0 ? (
+                      <FileList
+                        heading={"Withdrawal Request Documentation"}
+                        uploadList={withdrawalRequest.attachments}
+                        zipId={withdrawalRequest.componentType + index}
+                      />
+                    ) : (
+                      <>
+                        <h2>Withdrawal Request Documentation</h2>
+                        <Review
+                          className="original-review-component preserve-spacing"
+                          headingLevel="2"
+                        >
+                          <i>No attachments have been submitted.</i>
+                        </Review>
+                      </>
+                    )}
+                    <AdditionalInfoSection
+                      additionalInfo={withdrawalRequest.additionalInformation}
+                      id={"addl-info-withdraw-" + index}
                     />
                   </AccordionItem>
                 );

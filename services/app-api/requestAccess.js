@@ -8,10 +8,11 @@ import {
 import handler from "./libs/handler-lib";
 import sendEmail from "./libs/email-lib";
 
+import { getCMSDateFormat } from "./utils/date-utils";
+
 import { getUser } from "./getUser";
 import { changeUserStatus } from "./utils/changeUserStatus";
 import { getMyApprovers } from "./getMyApprovers";
-import { getCMSDateFormatNow } from "./changeRequest/email-util";
 
 export const accessPendingNotice = (fullName, role, email) => {
   return {
@@ -20,7 +21,7 @@ export const accessPendingNotice = (fullName, role, email) => {
     Subject: "Your OneMAC Role Access is Pending Review",
     HTML: `<p>Hello,</p><p>We received your request as a ${
       roleLabels[role]
-    } on ${getCMSDateFormatNow(
+    } on ${getCMSDateFormat(
       Date.now()
     )}. Your request is pending review and you will receive a confirmation receipt when your status is reviewed.</p><p>Thank you!</p>`,
   };

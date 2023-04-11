@@ -1,7 +1,5 @@
 const newWaiverNumberInputBox = "#componentId";
-const oldWaiverNumberInputBox = "#transmittal-number";
 const actionTypeDropDown = "#action-type";
-const oldErrMsgForWaiverNumber = "#transmittal-number-status-msg";
 const newErrMsgForWaiverNumber = "#componentIdStatusMsg0";
 const errorMsgPart2 = "#componentIdStatusMsg1";
 const waiverAuthority = "#waiver-authority";
@@ -21,18 +19,11 @@ const parentIDLabel =
 const parentIDHelpText = "#parent-fieldHint0";
 
 export class oneMacSubmitNewWaiverActionPage {
-  inputWaiverNumberNewForms(s) {
+  inputWaiverNumber(s) {
     cy.get(newWaiverNumberInputBox).type(s, { delay: 500 });
   }
-  inputWaiverNumberOldForms(s) {
-    cy.get(oldWaiverNumberInputBox).type(s);
-  }
-
   inputExistingWaiverNumberNewForms() {
     cy.get(newWaiverNumberInputBox).type(existingWaiverNumber);
-  }
-  inputExistingWaiverNumberOldForms() {
-    cy.get(oldWaiverNumberInputBox).type(existingWaiverNumber);
   }
 
   selectNewWaiverUnderActionType() {
@@ -65,18 +56,12 @@ export class oneMacSubmitNewWaiverActionPage {
   clearWaiverNumberInputBoxNewForms() {
     cy.get(newWaiverNumberInputBox).clear();
   }
-  clearWaiverNumberInputBoxOldForms() {
-    cy.get(oldWaiverNumberInputBox).clear();
-  }
 
   verifyErrorMessageIsDisplayed() {
     cy.get(newErrMsgForWaiverNumber).should("be.visible");
   }
   verifyParentErrorMessageIsDisplayed() {
     cy.get(parentErrMsgForWaiverNumber).should("be.visible");
-  }
-  verifyOldErrorMessageIsDisplayed() {
-    cy.get(oldErrMsgForWaiverNumber).should("be.visible");
   }
 
   upload1915B4File() {

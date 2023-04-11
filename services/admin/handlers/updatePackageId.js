@@ -138,7 +138,7 @@ async function updatePackageId(event) {
  * @returns {string} Confirmation message
  */
 exports.main = async function (event) {
-  console.log("updateChangeRequestId.main", event);
+  console.log("updatePackageId.main", event);
 
   validateEvent(event);
 
