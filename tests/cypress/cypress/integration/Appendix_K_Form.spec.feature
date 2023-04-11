@@ -25,7 +25,7 @@ Feature: Appendix K Waiver Type Selection
         And verify id number in the first row matches "MD-22106.R01.02"
         And click the Waiver Number link in the first row
         And verify the package details page is visible
-        And verify action card exists
+        And verify 2 action cards exist
         And verify the status on the card is "Submitted"
         And verify package actions header is visible
         And verify there are no package actions available
@@ -33,7 +33,7 @@ Feature: Appendix K Waiver Type Selection
         And verify the waiver authority header exists
         And verify there is a State header in the details section
         And verify a state exists for the State
-        And verify there is an Amendment Title in the details section
+        And verify there is an Amendment Title header in the details section
         And verify the Amendment Title is "Appendix K Submission 1"
         And verify there is an Initial Submission Date header in the details section
         And verify a date exists for the Initial Submission Date

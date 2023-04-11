@@ -16,7 +16,7 @@ Feature: Waiver Package Details View: 1915 b Waiver Amendment for a State User
         And click Submitted checkbox
         And click the Waiver Number link in the first row
         And verify the package details page is visible
-        And verify action card exists
+        And verify 2 action cards exist
         And verify the status on the card is "Submitted"
         And verify package actions header is visible
         And verify there are no package actions available
@@ -36,7 +36,7 @@ Feature: Waiver Package Details View: 1915 b Waiver Amendment for a State User
         And click Under Review checkbox
         And click the Waiver Number link in the first row
         And verify the package details page is visible
-        And verify action card exists
+        And verify 2 action cards exist
         And verify the status on the card is "Under Review"
         And verify package actions header is visible
         And verify withdraw package action exists
@@ -56,7 +56,7 @@ Feature: Waiver Package Details View: 1915 b Waiver Amendment for a State User
         And click RAI Issued checkbox
         And click the Waiver Number link in the first row
         And verify the package details page is visible
-        And verify action card exists
+        And verify 2 action cards exist
         And verify the status on the card is "RAI Issued"
         And verify package actions header is visible
         And verify withdraw package action exists
@@ -77,7 +77,7 @@ Feature: Waiver Package Details View: 1915 b Waiver Amendment for a State User
         And click Approved checkbox
         And click the Waiver Number link in the first row
         And verify the package details page is visible
-        And verify action card exists
+        And verify 2 action cards exist
         And verify the status on the card is "Approved"
         And verify package actions header is visible
         And verify there are no package actions available
@@ -98,7 +98,7 @@ Feature: Waiver Package Details View: 1915 b Waiver Amendment for a State User
         And click Disapproved checkbox
         And click the Waiver Number link in the first row
         And verify the package details page is visible
-        And verify action card exists
+        And verify 2 action cards exist
         And verify the status on the card is "Disapproved"
         And verify package actions header is visible
         And verify there are no package actions available
@@ -119,7 +119,7 @@ Feature: Waiver Package Details View: 1915 b Waiver Amendment for a State User
     #     And click the Withdrawal Requested checkbox
     #     And click the Waiver Number link in the first row
     #     And verify the package details page is visible
-    #     And verify action card exists
+    #     And verify 2 action cards exist
     #     And verify the status on the card is "Withdrawal Requested"
     #     And verify package actions header is visible
     #     And verify there are no package actions available
@@ -140,7 +140,7 @@ Feature: Waiver Package Details View: 1915 b Waiver Amendment for a State User
     #     And click the Package Withdrawn checkbox
     #     And click the Waiver Number link in the first row
     #     And verify the package details page is visible
-    #     And verify action card exists
+    #     And verify 2 action cards exist
     #     And verify the status on the card is "Package Withdrawn"
     #     And verify package actions header is visible
     #     And verify there are no package actions available
