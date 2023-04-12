@@ -376,7 +376,7 @@ jobs:
         uses: cypress-io/github-action@v2.11.7
         with:
           working-directory: tests/cypress
-          spec: cypress/integration/${{ matrix.containers }}
+          spec: cypress/e2e/${{ matrix.containers }}
           browser: chrome
           headless: true
           config: baseUrl=${{ env.APPLICATION_ENDPOINT }}
@@ -480,7 +480,7 @@ jobs:
         uses: cypress-io/github-action@v2.11.7
         with:
           working-directory: tests/cypress
-          spec: cypress/integration/a11y/${{ matrix.containers }}.spec.js
+          spec: cypress/e2e/a11y/${{ matrix.containers }}.spec.js
           browser: chrome
           headless: true
           config: baseUrl=${{ env.APPLICATION_ENDPOINT }}
