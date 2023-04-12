@@ -111,26 +111,32 @@ export const main = async (eventBatch) => {
         switch (packageToBuild.type) {
           case Workflow.ONEMAC_TYPE.CHIP_SPA:
           case Workflow.ONEMAC_TYPE.CHIP_SPA_RAI:
+          case Workflow.ONEMAC_TYPE.CHIP_SPA_WITHDRAW:
             await buildChipSpa(packageToBuild.id);
             break;
           case Workflow.ONEMAC_TYPE.MEDICAID_SPA:
           case Workflow.ONEMAC_TYPE.MEDICAID_SPA_RAI:
+          case Workflow.ONEMAC_TYPE.MEDICAID_SPA_WITHDRAW:
             await buildMedicaidSpa(packageToBuild.id);
             break;
           case Workflow.ONEMAC_TYPE.WAIVER_INITIAL:
+          case Workflow.ONEMAC_TYPE.WAIVER_INITIAL_WITHDRAW:
             await buildInitialWaiver(packageToBuild.id);
             break;
           case Workflow.ONEMAC_TYPE.WAIVER_RENEWAL:
+          case Workflow.ONEMAC_TYPE.WAIVER_RENEWAL_WITHDRAW:
             await buildWaiverRenewal(packageToBuild.id);
             break;
           case Workflow.ONEMAC_TYPE.WAIVER_APP_K:
           case Workflow.ONEMAC_TYPE.WAIVER_APP_K_RAI:
+          case Workflow.ONEMAC_TYPE.WAIVER_APP_K_WITHDRAW:
             await buildWaiverAppendixK(packageToBuild.id);
             break;
           case Workflow.ONEMAC_TYPE.WAIVER_EXTENSION:
             await buildWaiverExtension(packageToBuild.id);
             break;
           case Workflow.ONEMAC_TYPE.WAIVER_AMENDMENT:
+          case Workflow.ONEMAC_TYPE.WAIVER_AMENDMENT_WITHDRAW:
             await buildWaiverAmendment(packageToBuild.id);
             break;
           default:

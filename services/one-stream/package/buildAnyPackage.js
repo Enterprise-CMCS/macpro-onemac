@@ -51,6 +51,7 @@ export const buildAnyPackage = async (packageId, config) => {
         componentType: config.componentType,
         raiResponses: [],
         waiverExtensions: [],
+        withdrawalRequests: [],
         currentStatus: "-- --", // include for ophans
         submissionTimestamp: 0,
         submitterName: "-- --",
@@ -107,6 +108,19 @@ export const buildAnyPackage = async (packageId, config) => {
           additionalInformation: anEvent.additionalInformation,
         });
         putParams.Item.currentStatus = Workflow.ONEMAC_STATUS.SUBMITTED;
+
+        return;
+      }
+
+      // include ALL withdraw request events in package details
+      if (anEvent.componentType === `${config.componentType}withdraw`) {
+        putParams.Item.withdrawalRequests.push({
+          submissionTimestamp: anEvent.submissionTimestamp,
+          attachments: anEvent.attachments,
+          additionalInformation: anEvent.additionalInformation,
+        });
+        putParams.Item.currentStatus =
+          Workflow.ONEMAC_STATUS.WITHDRAWAL_REQUESTED;
 
         return;
       }

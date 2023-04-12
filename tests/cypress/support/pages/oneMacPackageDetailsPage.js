@@ -59,7 +59,7 @@ export class oneMacPackageDetailsPage {
     cy.xpath(detailsPage).should("be.visible");
   }
   verifyActionCardExists() {
-    cy.xpath(actionCard).should("be.visible");
+    cy.xpath(actionCard).should("have.length", 2);
   }
   verifyStatusIs(status) {
     cy.xpath(statusHeader).next().contains(status);
@@ -250,9 +250,13 @@ export class oneMacPackageDetailsPage {
   verifyAmendmentTitleHeaderExists() {
     cy.xpath(amendmentTitleHeader).should("be.visible");
   }
-  verifyAmendmentTitleHeaderContainsNA() {
-    cy.xpath(amendmentTitleHeader).next().contains("N/A");
+  verifyAmendmentTitleExists() {
+    cy.xpath(amendmentTitleHeader).next().should("be.visible");
   }
+  verifyAmendmentTitleIs(s) {
+    cy.xpath(amendmentTitleHeader).next().contains(s);
+  }
+
   verifyWaiverAuthorityHeaderExists() {
     cy.xpath(waiverAuthorityHeader).should("be.visible");
   }

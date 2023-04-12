@@ -245,12 +245,32 @@ functions:
           cors: true
           authorizer: aws_iam
 
+  validateParentOfMedicaidSpaWithdraw:
+    handler: validation/validateParentOfMedicaidSpaWithdraw.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: validateParentOfMedicaidSpaWithdraw/{parentId}
+          method: get
+          cors: true
+          authorizer: aws_iam
+
   validateParentOfChipSpaRaiResponse:
     handler: validation/validateParentOfChipSpaRaiResponse.main
     role: LambdaApiRole
     events:
       - http:
           path: validateParentOfChipSpaRaiResponse/{parentId}
+          method: get
+          cors: true
+          authorizer: aws_iam
+
+  validateParentOfChipSpaWithdraw:
+    handler: validation/validateParentOfChipSpaWithdraw.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: validateParentOfChipWithdraw/{parentId}
           method: get
           cors: true
           authorizer: aws_iam
@@ -265,6 +285,16 @@ functions:
           cors: true
           authorizer: aws_iam
 
+  validateParentOfWaiverWithdraw:
+    handler: validation/validateParentOfWaiverWithdraw.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: validateParentOfWaiverWithdraw/{parentId}
+          method: get
+          cors: true
+          authorizer: aws_iam
+
   validateParentOfAppKRaiResponse:
     handler: validation/validateParentOfAppKRaiResponse.main
     role: LambdaApiRole
@@ -275,8 +305,18 @@ functions:
           cors: true
           authorizer: aws_iam
 
+  validateParentOfAppKWithdraw:
+    handler: validation/validateParentOfAppKWithdraw.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: validateParentOfAppKWithdraw/{parentId}
+          method: get
+          cors: true
+          authorizer: aws_iam
+
   withdrawInitialWaiver:
-    handler: action/withdrawInitialWaiver.main
+    handler: form/withdrawInitialWaiver.main
     role: LambdaApiRole
     events:
       - http:
@@ -286,7 +326,7 @@ functions:
           authorizer: aws_iam
 
   withdrawMedicaidSPA:
-    handler: action/withdrawMedicaidSPA.main
+    handler: form/withdrawMedicaidSPA.main
     role: LambdaApiRole
     events:
       - http:
@@ -296,7 +336,7 @@ functions:
           authorizer: aws_iam
 
   withdrawCHIPSPA:
-    handler: action/withdrawCHIPSPA.main
+    handler: form/withdrawCHIPSPA.main
     role: LambdaApiRole
     events:
       - http:
@@ -305,18 +345,8 @@ functions:
           cors: true
           authorizer: aws_iam
 
-  withdrawWaiverTemporaryExtension:
-    handler: action/withdrawWaiverTemporaryExtension.main
-    role: LambdaApiRole
-    events:
-      - http:
-          path: withdrawWaiverTemporaryExtension
-          method: post
-          cors: true
-          authorizer: aws_iam
-
   withdrawWaiverRenewal:
-    handler: action/withdrawWaiverRenewal.main
+    handler: form/withdrawWaiverRenewal.main
     role: LambdaApiRole
     events:
       - http:
@@ -326,7 +356,7 @@ functions:
           authorizer: aws_iam
 
   withdrawWaiverAmendment:
-    handler: action/withdrawWaiverAmendment.main
+    handler: form/withdrawWaiverAmendment.main
     role: LambdaApiRole
     events:
       - http:
@@ -336,7 +366,7 @@ functions:
           authorizer: aws_iam
   
   withdrawWaiverAppendixK:
-    handler: action/withdrawWaiverAppendixK.main
+    handler: form/withdrawWaiverAppendixK.main
     role: LambdaApiRole
     events:
       - http:

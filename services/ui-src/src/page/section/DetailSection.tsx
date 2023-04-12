@@ -42,11 +42,6 @@ export const DetailSection = ({
 
   return (
     <>
-      {(detail.title || pageConfig.defaultTitle) && (
-        <section className="detail-title">
-          <h2>{detail.title ?? pageConfig.defaultTitle}</h2>
-        </section>
-      )}
       <section className="detail-card-section">
         <div className="detail-card-container">
           <div className="detail-card-top"></div>
@@ -180,6 +175,51 @@ export const DetailSection = ({
                     <AdditionalInfoSection
                       additionalInfo={raiResponse.additionalInformation}
                       id={"addl-info-rai-" + index}
+                    />
+                  </AccordionItem>
+                );
+              })}
+            </Accordion>
+          </section>
+        )}
+        {detail.withdrawalRequests?.length > 0 && (
+          <section className="detail-section">
+            <h2>Withdrawal Request</h2>
+            <Accordion>
+              {detail.withdrawalRequests?.map((withdrawalRequest, index) => {
+                return (
+                  <AccordionItem
+                    buttonClassName="accordion-button"
+                    contentClassName="accordion-content"
+                    heading={
+                      "Submitted on " +
+                      formatDate(withdrawalRequest.submissionTimestamp)
+                    }
+                    headingLevel="6"
+                    id={withdrawalRequest.componentType + index + "_caret"}
+                    key={withdrawalRequest.componentType + index}
+                    defaultOpen={index === 0}
+                  >
+                    {withdrawalRequest.attachments?.length > 0 ? (
+                      <FileList
+                        heading={"Withdrawal Request Documentation"}
+                        uploadList={withdrawalRequest.attachments}
+                        zipId={withdrawalRequest.componentType + index}
+                      />
+                    ) : (
+                      <>
+                        <h2>Withdrawal Request Documentation</h2>
+                        <Review
+                          className="original-review-component preserve-spacing"
+                          headingLevel="2"
+                        >
+                          <i>No attachments have been submitted.</i>
+                        </Review>
+                      </>
+                    )}
+                    <AdditionalInfoSection
+                      additionalInfo={withdrawalRequest.additionalInformation}
+                      id={"addl-info-withdraw-" + index}
                     />
                   </AccordionItem>
                 );
