@@ -16,7 +16,7 @@ Feature: CHIP SPA CMS Details View - Card View with Actions
         And Click on Filter Button
         And click the SPA ID link in the first row
         And verify the package details page is visible
-        And verify action card exists
+        And verify 2 action cards exist
         And verify the status on the card is "Submitted - Intake Needed"
         And verify the package actions section is unavailable
         And verify the details section exists
@@ -36,7 +36,7 @@ Feature: CHIP SPA CMS Details View - Card View with Actions
         And Click on Filter Button
         And click the SPA ID link in the first row
         And verify the package details page is visible
-        And verify action card exists
+        And verify 2 action cards exist
         And verify the status on the card is "Pending"
         And verify the package actions section is unavailable
         And verify the details section exists
@@ -56,7 +56,7 @@ Feature: CHIP SPA CMS Details View - Card View with Actions
         And Click on Filter Button
         And click the SPA ID link in the first row
         And verify the package details page is visible
-        And verify action card exists
+        And verify 2 action cards exist
         And verify the status on the card is "Withdrawn"
         And verify the package actions section is unavailable
         And verify the details section exists
@@ -76,10 +76,11 @@ Feature: CHIP SPA CMS Details View - Card View with Actions
         And Click on Filter Button
         And click the SPA ID link in the first row
         And verify the package details page is visible
-        And verify action card exists
+        And verify 2 action cards exist
         And verify the status on the card is "Disapproved"
         And verify the package actions section is unavailable
         And verify the details section exists
+        And verify the package details title contains "CHIP SPA Package"
         And verify there is a Type header in the details section
         And verify a type containing SPA exists for the Type
         And verify there is a State header in the details section
@@ -90,35 +91,34 @@ Feature: CHIP SPA CMS Details View - Card View with Actions
         And verify the attachments section exists
         And verify the download all button exists
         And verify the additional information section exists
-        
-    # Need seed data / reset data update
-    # Scenario: Screen Enhance - Pending - RAI CHIP SPA
-    #     And click Pending - RAI checkbox
-    #     And Click on Filter Button
-    #     And click the SPA ID link in the first row
-    #     And verify the package details page is visible
-    #     And verify action card exists
-    #     And verify the status on the card is "Pending - RAI"
-    #     And verify the package actions section is unavailable
-    #     And verify the package details page is visible
-    #     And verify the details section exists
-    #     And verify there is a Type header in the details section
-    #     And verify a type containing SPA exists for the Type
-    #     And verify there is a State header in the details section
-    #     And verify a state exists for the State
-    #     And verify there is an Initial Submission Date header in the details section
-    #     And verify a date exists for the Initial Submission Date
-    #     And verify there is a Proposed Effective Date header in the details section
-    #     And verify the attachments section exists
-    #     And verify the download all button exists
-    #     And verify the additional information section exists
+
+    Scenario: Screen Enhance - Pending - RAI CHIP SPA
+        And click Pending - RAI checkbox
+        And Click on Filter Button
+        And click the SPA ID link in the first row
+        And verify the package details page is visible
+        And verify 2 action cards exist
+        And verify the status on the card is "Pending - RAI"
+        And verify the package actions section is unavailable
+        And verify the package details page is visible
+        And verify the details section exists
+        And verify there is a Type header in the details section
+        And verify a type containing SPA exists for the Type
+        And verify there is a State header in the details section
+        And verify a state exists for the State
+        And verify there is an Initial Submission Date header in the details section
+        And verify a date exists for the Initial Submission Date
+        And verify there is a Proposed Effective Date header in the details section
+        And verify the attachments section exists
+        #And verify the download all button exists
+        And verify the additional information section exists
 
     Scenario: Screen Enhance - Approved CHIP SPA
         And click Approved checkbox
         And Click on Filter Button
         And click the SPA ID link in the first row
         And verify the package details page is visible
-        And verify action card exists
+        And verify 2 action cards exist
         And verify the status on the card is "Approved"
         And verify there is not a 90th day date on the card
         And verify the package actions section is unavailable
@@ -140,7 +140,7 @@ Feature: CHIP SPA CMS Details View - Card View with Actions
         And Click on Filter Button
         And click the SPA ID link in the first row
         And verify the package details page is visible
-        And verify action card exists
+        And verify 2 action cards exist
         And verify the status on the card is "Pending - Concurrence"
         And verify the package actions section is unavailable
         And verify the package details page is visible
@@ -161,7 +161,7 @@ Feature: CHIP SPA CMS Details View - Card View with Actions
         And Click on Filter Button
         And click the SPA ID link in the first row
         And verify the package details page is visible
-        And verify action card exists
+        And verify 2 action cards exist
         And verify the status on the card is "Pending - Approval"
         And verify the package actions section is unavailable
         And verify the package details page is visible
