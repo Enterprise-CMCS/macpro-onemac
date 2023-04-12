@@ -1,6 +1,5 @@
 import React, { FC } from "react";
 import OneMACForm from "../OneMACForm";
-import config from "../../utils/config";
 import {
   defaultAttachmentFileSizeJSX,
   defaultWithdrawConfig,
