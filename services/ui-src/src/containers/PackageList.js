@@ -50,6 +50,7 @@ const DEFAULT_COLUMNS = {
   [USER_ROLE.CMS_REVIEWER]: defaultCMSHiddenCols,
   [USER_ROLE.CMS_ROLE_APPROVER]: defaultCMSHiddenCols,
   [USER_ROLE.SYSTEM_ADMIN]: defaultCMSHiddenCols,
+  [USER_ROLE.DEFAULT_CMS_USER]: defaultCMSHiddenCols,
 };
 
 const renderDate = ({ value }) =>
