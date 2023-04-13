@@ -5,18 +5,18 @@ Feature: Verify package actions in RAI Issued Status in the package dashboard
         When Login with state submitter user
         And click on Packages
 
-    # Need seed data / reset data update
-    # Scenario: Demonstrate withdraw package and respond to rai are available for CHIP SPA in RAI Issued Status
-    #     And Click on Filter Button
-    #     And click on Status
-    #     And uncheck all of the status checkboxes
-    #     And click RAI Issued checkbox
-    #     And click on Type
-    #     And uncheck all of the type checkboxes
-    #     And click CHIP SPA check box
-    #     And click the actions button in row one
-    #     And verify withdraw package button is visible for package in package dashboard
-    #     And verify the Respond to RAI button is displayed
+
+    Scenario: Demonstrate withdraw package and respond to rai are available for CHIP SPA in RAI Issued Status
+        And Click on Filter Button
+        And click on Status
+        And uncheck all of the status checkboxes
+        And click RAI Issued checkbox
+        And click on Type
+        And uncheck all of the type checkboxes
+        And click CHIP SPA check box
+        And click the actions button in row one
+        And verify withdraw package button is visible for package in package dashboard
+        And verify the Respond to RAI button is displayed
 
     Scenario: Demonstrate withdraw package and respond to rai are available for Medicaid SPA in RAI Issued Status
         And Click on Filter Button
