@@ -17,6 +17,7 @@ import oneMacRequestARoleChangePage from "../../../support/pages/oneMacRequestAR
 import oneMacPackageDetailsPage from "../../../support/pages/oneMacPackageDetailsPage";
 import oneMacRespondToRAIPage from "../../../support/pages/oneMacRespondToRAIPage";
 import oneMacDefaultForms from "../../../support/pages/oneMacDefaultForms";
+import withdrawPackagePage from "../../../support/pages/WithdrawPackagePage";
 
 const medicaidSPARAIResponsePage = new MedicaidSPARAIResponsePage();
 const OneMacDashboardPage = new oneMacDashboardPage();
@@ -37,6 +38,7 @@ const OneMacRequestARoleChangePage = new oneMacRequestARoleChangePage();
 const OneMacPackageDetailsPage = new oneMacPackageDetailsPage();
 const OneMacRespondToRAIPage = new oneMacRespondToRAIPage();
 const OneMacDefaultForms = new oneMacDefaultForms();
+const WithdrawPackagePage = new withdrawPackagePage();
 
 Given("I am on Login Page", () => {
   OneMacHomePage.launch();
@@ -1815,7 +1817,7 @@ And("verify the error message says {string}", (string) => {
   OneMacRequestARoleChangePage.verifyErrorMessageTextIs(string);
 });
 
-And("verify the submit button is disabled", () => {
+And("verify the submit button is disabled on request a role page", () => {
   OneMacRequestARoleChangePage.verifySubmitBtnIsDisabled();
 });
 And("verify the submit button is disabled via class", () => {
@@ -1896,6 +1898,9 @@ And("click withdraw package button", () => {
 });
 And("click yes, withdraw package button", () => {
   OneMacPackagePage.clickConfirmWithdrawPackageBtn();
+});
+And("verify yes, withdraw package button exists", () => {
+  OneMacPackagePage.verifyConfirmWithdrawPackageBtnExists();
 });
 And("verify the package details page is visible", () => {
   OneMacPackageDetailsPage.verifyPackageDetailsPageIsVisible();
@@ -2714,4 +2719,46 @@ And("select the 1915b Temporary Extension Type button", () => {
 });
 And("select the 1915c Temporary Extension Type button", () => {
   OneMacRequestWaiverTemporaryExtension.selectOption1915cInTempExtensionType();
+});
+And("verify the header is {string} on the withdrawal form", (string) => {
+  WithdrawPackagePage.verifyWithdrawPageHeader(string);
+});
+And("verify the form intro exists on the withdrawal form", () => {
+  WithdrawPackagePage.verifyFormIntroIsVisible();
+});
+And("verify the SPA ID header exists on the withdrawal form", () => {
+  WithdrawPackagePage.verifySPAIDHeaderExists();
+});
+And("verify the SPA ID exists on the withdrawal form", () => {
+  WithdrawPackagePage.verifySPAIDExists();
+});
+And("verify the Waiver number header exists on the withdrawal form", () => {
+  WithdrawPackagePage.verifyWaiverIDHeaderExists();
+});
+And("verify the Waiver number exists on the withdrawal form", () => {
+  WithdrawPackagePage.verifyWaiverIDExists();
+});
+And("verify the Type header exists on the withdrawal form", () => {
+  WithdrawPackagePage.verifyTypeHeaderExists();
+});
+And("verify the type is {string}", (string) => {
+  WithdrawPackagePage.verifyTypeIs(string);
+});
+And(
+  "verify the Upload Supporting Documentation header exists on the withdrawal form",
+  () => {
+    WithdrawPackagePage.verifyUploadSupportingDocumentationHeaderExists();
+  }
+);
+And("upload withdrawal documentation", () => {
+  WithdrawPackagePage.uploadWithdrawalLetterAddFile();
+});
+And("verify the Additional Info header exists on the withdrawal form", () => {
+  WithdrawPackagePage.verifyAdditionalInfoHeaderExists();
+});
+And("add additional info comment in the withdrawal form", () => {
+  WithdrawPackagePage.addWithdrawalComment();
+});
+And("clear additional info comment in the withdrawal form", () => {
+  WithdrawPackagePage.clearWithdrawalComment();
 });
