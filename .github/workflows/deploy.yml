@@ -326,7 +326,6 @@ jobs:
     steps:
       - name: set branch_name
         run: echo "branch_name=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
-      - uses: actions/checkout@v1
       - name: set branch specific variable names
         run: ./.github/build_vars.sh set_names
       - name: set variable values
@@ -345,11 +344,9 @@ jobs:
           aws-region: ${{ env.AWS_DEFAULT_REGION }}
       - uses: actions/setup-node@v1
         with:
-          node-version: "14.x"
       - name: Combine package-lock.json files to single file
         run: find services -maxdepth 3 -name package-lock.json | xargs cat package-lock.json > combined-package-lock.txt
       - name: cache service dependencies
-        uses: actions/cache@v2
         with:
           path: |
             services/uploads/node_modules
@@ -361,7 +358,9 @@ jobs:
             node_modules
           key: ${{ runner.os }}-${{ hashFiles('combined-package-lock.txt') }}
       - name: Install dependencies
-        run: npm ci
+        run: |
+          npm ci
+          npm i @badeball/cypress-cucumber-preprocessor
       - name: set path
         run: |
           echo "PATH=$(pwd)/node_modules/.bin/:$PATH" >> $GITHUB_ENV
@@ -373,7 +372,6 @@ jobs:
           echo "Application endpoint: $APPLICATION_ENDPOINT"
           popd         
       - name: Run Cypress Tests
-        uses: cypress-io/github-action@v2.11.7
         with:
           working-directory: tests/cypress
           spec: cypress/e2e/${{ matrix.containers }}
@@ -381,7 +379,6 @@ jobs:
           headless: true
           config: baseUrl=${{ env.APPLICATION_ENDPOINT }}
       - name: Upload screenshots
-        uses: actions/upload-artifact@v2
         if: failure()
         with:
           name: cypress-screenshots
@@ -430,7 +427,6 @@ jobs:
     steps:
       - name: set branch_name
         run: echo "branch_name=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
-      - uses: actions/checkout@v1
       - name: set branch specific variable names
         run: ./.github/build_vars.sh set_names
       - name: set variable values
@@ -449,11 +445,9 @@ jobs:
           aws-region: ${{ env.AWS_DEFAULT_REGION }}
       - uses: actions/setup-node@v1
         with:
-          node-version: "14.x"
       - name: Combine package-lock.json files to single file
         run: find services -maxdepth 3 -name package-lock.json | xargs cat package-lock.json > combined-package-lock.txt
       - name: cache service dependencies
-        uses: actions/cache@v2
         with:
           path: |
             services/app-api/node_modules
@@ -465,7 +459,8 @@ jobs:
             node_modules
           key: ${{ runner.os }}-${{ hashFiles('combined-package-lock.txt') }}
       - name: Install dependencies
-        run: npm install --frozen-lockfile
+          npm i @badeball/cypress-cucumber-preprocessor
+          npm install --frozen-lockfile
       - name: set path
         run: |
           echo "PATH=$(pwd)/node_modules/.bin/:$PATH" >> $GITHUB_ENV
@@ -477,7 +472,7 @@ jobs:
           echo "Application endpoint: $APPLICATION_ENDPOINT"
           popd
       - name: Check Project A11y
-        uses: cypress-io/github-action@v2.11.7
+        uses: cypress-io/github-action@v5
         with:
           working-directory: tests/cypress
           spec: cypress/e2e/a11y/${{ matrix.containers }}.spec.js
