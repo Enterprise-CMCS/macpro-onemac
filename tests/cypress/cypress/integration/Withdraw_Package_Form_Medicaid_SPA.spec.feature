@@ -35,6 +35,7 @@ Feature: Verify user can withdraw a package in Under Review Status in the packag
     Scenario: Screen Enhance - Validate Medicaid Withdrawal Page from details page
         And click the SPA ID link in the first row
         And verify the package details page is visible
+        And click withdraw button
         And verify the header is "Withdraw Medicaid SPA Package" on the withdrawal form
         And verify the form intro exists on the withdrawal form
         And verify the SPA ID header exists on the withdrawal form

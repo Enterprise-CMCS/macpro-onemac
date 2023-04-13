@@ -33,6 +33,7 @@ Feature: Verify user can withdraw a package in Under Review Status in the packag
     Scenario: Screen Enhance - Validate CHIP Withdrawal Page from the details page
         And click the SPA ID link in the first row
         And verify the package details page is visible
+        And click withdraw button
         And verify the header is "Withdraw CHIP SPA Package" on the withdrawal form
         And verify the form intro exists on the withdrawal form
         And verify the SPA ID header exists on the withdrawal form
