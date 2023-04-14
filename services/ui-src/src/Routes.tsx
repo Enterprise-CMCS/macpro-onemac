@@ -6,7 +6,6 @@ import React, { FC } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 
 import {
-  ChangeRequest,
   ROUTES,
   ONEMAC_ROUTES,
   UserRole,
@@ -18,55 +17,42 @@ import Home from "./containers/Home";
 import FAQ from "./containers/FAQ";
 import { AttachmentLanding } from "./containers/AttachmentLanding";
 import NotFound from "./containers/NotFound";
-import Dashboard from "./containers/Dashboard";
 import DevLogin from "./containers/DevLogin";
-import Metrics from "./containers/Metrics";
-import NewSubmission from "./changeRequest/NewSubmission";
-import NewSPA from "./changeRequest/NewSPA";
-import NewWaiver from "./changeRequest/NewWaiver";
 import PackageList from "./containers/PackageList";
 import { Signup } from "./containers/Signup";
 import { StateSignup } from "./containers/StateSignup";
 import { GroupAndDivision } from "./containers/GroupAndDivision";
-import SubmissionForm from "./changeRequest/SubmissionForm";
-import SubmissionView from "./changeRequest/SubmissionView";
 import Triage from "./containers/Triage";
 import UserManagement from "./containers/UserManagement";
 import UserPage from "./containers/UserPage";
 import { useAppContext } from "./libs/contextLib";
 import InitialWaiverForm from "./page/initial-waiver/InitialWaiverForm";
+import InitialWaiverWithdraw from "./page/initial-waiver/InitialWaiverWithdraw";
 import InitialWaiverDetail from "./page/initial-waiver/InitialWaiverDetail";
 import WaiverRenewalForm from "./page/waiver-renewal/WaiverRenewalForm";
+import WaiverRenewalWithdraw from "./page/waiver-renewal/WaiverRenewalWithdraw";
 import WaiverRenewalDetail from "./page/waiver-renewal/WaiverRenewalDetail";
 import WaiverAmendmentDetail from "./page/waiver-amendment/WaiverAmendmentDetail";
 import WaiverAppendixKDetail from "./page/waiver-appendix-k/WaiverAppendixKDetail";
 import TemporaryExtensionForm from "./page/temporary-extension/TemporaryExtensionForm";
 import TemporaryExtensionDetail from "./page/temporary-extension/TemporaryExtensionDetail";
 import MedicaidSpaForm from "./page/medicaid-spa/MedicaidSpaForm";
+import MedicaidSpaWithdraw from "./page/medicaid-spa/MedicaidSpaWithdraw";
 import MedicaidSPADetail from "./page/medicaid-spa/MedicaidSPADetail";
 import ChipSpaForm from "./page/chip-spa/ChipSpaForm";
+import ChipSpaWithdraw from "./page/chip-spa/ChipSpaWithdraw";
 import CHIPSPADetail from "./page/chip-spa/CHIPSPADetail";
 import MedicaidSPARAIForm from "./page/medicaid-spa/MedicaidSPARAIForm";
 import CHIPSPARAIForm from "./page/chip-spa/CHIPSPARAIForm";
 import WaiverRAIForm from "./page/waiver-rai/WaiverRAIForm";
 import WaiverAmendmentForm from "./page/waiver-amendment/WaiverAmendmentForm";
+import WaiverAmendmentWithdraw from "./page/waiver-amendment/WaiverAmendmentWithdraw";
 import WaiverAppendixKForm from "./page/waiver-appendix-k/WaiverAppendixKForm";
+import WaiverAppendixKWithdraw from "./page/waiver-appendix-k/WaiverAppendixKWithdraw";
 import WaiverAppendixKRAIForm from "./page/waiver-appendix-k/WaiverAppendixKRAIForm";
 import DescribeForms from "./page/DescribeForms";
 import EventList from "./page/event/EventList";
 import EventDetail from "./page/event/EventDetail";
-
-// this is legacy and should not be touched!
-const FORM_TYPES = {
-  [ROUTES.CHIP_SPA]: ChangeRequest.TYPE.CHIP_SPA,
-  [ROUTES.CHIP_SPA_RAI]: ChangeRequest.TYPE.CHIP_SPA_RAI,
-  [ROUTES.SPA]: ChangeRequest.TYPE.SPA,
-  [ROUTES.SPA_RAI]: ChangeRequest.TYPE.SPA_RAI,
-  [ROUTES.WAIVER]: ChangeRequest.TYPE.WAIVER,
-  [ROUTES.WAIVER_APP_K]: ChangeRequest.TYPE.WAIVER_APP_K,
-  [ROUTES.WAIVER_EXTENSION]: ChangeRequest.TYPE.WAIVER_EXTENSION,
-  [ROUTES.WAIVER_RAI]: ChangeRequest.TYPE.WAIVER_RAI,
-};
 
 type RouteSpec = {
   path: string;
@@ -180,13 +166,6 @@ const ROUTE_LIST: RouteSpec[] = [
       component: UserManagement,
     },
     {
-      path: ROUTES.DASHBOARD,
-      accessKey: "canAccessDashboard",
-      redirectAccessKey: "canAccessUserManagement",
-      redirectTo: ROUTES.USER_MANAGEMENT,
-      component: Dashboard,
-    },
-    {
       path: ONEMAC_ROUTES.PACKAGE_LIST,
       accessKey: "canAccessDashboard",
       redirectAccessKey: "canAccessUserManagement",
@@ -210,20 +189,38 @@ const ROUTE_LIST: RouteSpec[] = [
   })),
   // legacy triage screens, plus current OneMACForm forms
   ...[
-    { path: ROUTES.NEW_SUBMISSION_SELECTION, component: NewSubmission },
-    { path: ROUTES.NEW_SPA, component: NewSPA },
-    { path: ROUTES.NEW_WAIVER, component: NewWaiver },
     { path: ONEMAC_ROUTES.MEDICAID_SPA, component: MedicaidSpaForm },
     { path: ONEMAC_ROUTES.CHIP_SPA, component: ChipSpaForm },
     { path: ONEMAC_ROUTES.MEDICAID_SPA_RAI, component: MedicaidSPARAIForm },
     { path: ONEMAC_ROUTES.CHIP_SPA_RAI, component: CHIPSPARAIForm },
+    { path: ONEMAC_ROUTES.CHIP_SPA_WITHDRAW, component: ChipSpaWithdraw },
+    {
+      path: ONEMAC_ROUTES.MEDICAID_SPA_WITHDRAW,
+      component: MedicaidSpaWithdraw,
+    },
     { path: ONEMAC_ROUTES.WAIVER_RAI, component: WaiverRAIForm },
     { path: ONEMAC_ROUTES.INITIAL_WAIVER, component: InitialWaiverForm },
+    {
+      path: ONEMAC_ROUTES.INITIAL_WAIVER_WITHDRAW,
+      component: InitialWaiverWithdraw,
+    },
     { path: ONEMAC_ROUTES.WAIVER_RENEWAL, component: WaiverRenewalForm },
+    {
+      path: ONEMAC_ROUTES.WAIVER_RENEWAL_WITHDRAW,
+      component: WaiverRenewalWithdraw,
+    },
     { path: ONEMAC_ROUTES.WAIVER_AMENDMENT, component: WaiverAmendmentForm },
+    {
+      path: ONEMAC_ROUTES.WAIVER_AMENDMENT_WITHDRAW,
+      component: WaiverAmendmentWithdraw,
+    },
     {
       path: ONEMAC_ROUTES.APPENDIX_K_AMENDMENT,
       component: WaiverAppendixKForm,
+    },
+    {
+      path: ONEMAC_ROUTES.APPENDIX_K_AMENDMENT_WITHDRAW,
+      component: WaiverAppendixKWithdraw,
     },
     {
       path: ONEMAC_ROUTES.WAIVER_APP_K_RAI,
@@ -241,37 +238,6 @@ const ROUTE_LIST: RouteSpec[] = [
         path,
         component: accessGuardRouteListRenderer("canAccessForms"),
         routes: [{ path, exact: true, ...rest }],
-      },
-    ],
-  })),
-  // legacy detail views and forms
-  ...Object.entries(FORM_TYPES).map(([path, type]) => ({
-    path,
-    component: AuthenticatedRouteListRenderer,
-    routes: [
-      {
-        path,
-        exact: true,
-        component: accessGuardRouteListRenderer("canAccessForms"),
-        routes: [
-          {
-            path,
-            exact: true,
-            component: () => <SubmissionForm changeRequestType={type} />,
-          },
-        ],
-      },
-      {
-        path: path + "/:id/:userId",
-        exact: true,
-        component: accessGuardRouteListRenderer("canAccessDashboard"),
-        routes: [
-          {
-            path: path + "/:id/:userId",
-            exact: true,
-            component: () => <SubmissionView changeRequestType={type} />,
-          },
-        ],
       },
     ],
   })),
@@ -340,24 +306,6 @@ const ROUTE_LIST: RouteSpec[] = [
           //   exact: true,
           //   component: DetailView,
           // },
-        ],
-      },
-    ],
-  },
-  // TODO determine if these features are supported or even wanted anymore
-  {
-    path: ROUTES.METRICS,
-    component: AuthenticatedRouteListRenderer,
-    routes: [
-      {
-        path: ROUTES.METRICS,
-        component: accessGuardRouteListRenderer("canAccessMetrics"),
-        routes: [
-          {
-            path: ROUTES.METRICS,
-            exact: true,
-            component: Metrics,
-          },
         ],
       },
     ],

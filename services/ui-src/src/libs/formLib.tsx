@@ -1,19 +1,26 @@
+import React from "react";
 import {
   FieldHint,
   SelectOption,
   FileUploadProps,
   ONEMAC_ROUTES,
 } from "cmscommonlib";
-import React from "react";
+import config from "../utils/config";
 
 export type OneMACFormConfig = {
-  idFormat: string;
-  idFieldHint: FieldHint[];
+  idFormat?: string;
+  idFieldHint?: FieldHint[];
   idAdditionalErrorMessage?: string[];
-  idFAQLink: string;
-  pageTitle: string;
+  idFAQLink?: string;
+  pageTitle?: string;
+  introJSX?: JSX.Element;
   addlIntroJSX?: JSX.Element;
   detailsHeader?: string;
+  detailsHeaderFull?: string;
+  parentTypeNice?: string;
+  attachmentsTitle?: string;
+  attachmentIntroJSX: JSX.Element;
+  addlInfoText?: string;
   landingPage: string;
   confirmSubmit?: ConfirmSubmitType;
   proposedEffectiveDate?: boolean;
@@ -34,6 +41,8 @@ type ParentPackageType = {
 type ConfirmSubmitType = {
   confirmSubmitHeading: string;
   confirmSubmitMessage: JSX.Element | string;
+  buildMessage?: (toConfirm: string) => JSX.Element;
+  confirmSubmitYesButton?: string;
 };
 
 export const defaultOneMACFormConfig = {
@@ -42,6 +51,18 @@ export const defaultOneMACFormConfig = {
   idFAQLink: "",
   landingPage: ONEMAC_ROUTES.PACKAGE_LIST,
   proposedEffectiveDate: false,
+  attachmentIntroJSX: (
+    <>
+      <p className="req-message">
+        Maximum file size of {config.MAX_ATTACHMENT_SIZE_MB} MB. You can add
+        multiple files per attachment type. Read the description for each of the
+        attachment types on the FAQ Page.
+      </p>
+      <p className="req-message">
+        <span className="required-mark">*</span> indicates required attachment.
+      </p>
+    </>
+  ),
 };
 
 export const defaultWaiverAuthority = [
@@ -60,6 +81,21 @@ export const defaultConfirmSubmitMessageRAI = (
 export const defaultConfirmSubmitRAI = {
   confirmSubmitHeading: defaultConfirmSubmitHeadingRAI,
   confirmSubmitMessage: defaultConfirmSubmitMessageRAI,
+};
+
+export const defaultConfirmSubmitHeadingWithdraw = "Withdraw Package?";
+export const defaultConfirmSubmitMessageWithdraw = (toConfirm: string) => (
+  <p>
+    You are about to withdraw {toConfirm}. Once complete, you will not be able
+    to resubmit this package. CMS will be notified.
+  </p>
+);
+
+export const defaultConfirmSubmitWithdraw = {
+  confirmSubmitHeading: defaultConfirmSubmitHeadingWithdraw,
+  confirmSubmitMessage: defaultConfirmSubmitMessageWithdraw("this package"),
+  buildMessage: defaultConfirmSubmitMessageWithdraw,
+  confirmSubmitYesButton: "Yes, withdraw package",
 };
 
 export type PackageType = {
@@ -90,6 +126,8 @@ export type Message = {
 
 export type OneMacFormData = {
   territory: string;
+  componentType?: string;
+  typeNice?: string;
   additionalInformation: string;
   componentId: string;
   waiverAuthority?: string;
@@ -117,3 +155,48 @@ export const buildMustNotExistMessage = (formConfig: OneMACFormConfig) => ({
   statusLevel: "error",
   statusMessage: `According to our records, this ${formConfig.idLabel} already exists. Please check the ${formConfig.idLabel} and try entering it again.`,
 });
+
+export const defaultWithdrawConfig = {
+  introJSX: (
+    <p id="form-intro">
+      Complete this form to withdraw a package. Once complete, you will not be
+      able to resubmit this package. CMS will be notified and will use this
+      content to review your request, and you will not be able to edit this
+      form. If CMS needs any additional information, they will follow up by
+      email.
+    </p>
+  ),
+  confirmSubmit: defaultConfirmSubmitWithdraw,
+  attachmentsTitle: "Upload Supporting Documentation",
+  attachmentIntroJSX: (
+    <>
+      <p className="req-message">
+        Upload your supporting documentation for withdrawal or explain your need
+        for withdrawal in the <i>Additional Information</i> box.
+      </p>
+      <p>
+        Maximum file size of {config.MAX_ATTACHMENT_SIZE_MB} MB.{" "}
+        <b>You can add multiple files</b>. We accept the following file types:{" "}
+        <b>.pdf, .docx, .jpg, .png</b>.
+      </p>
+    </>
+  ),
+  addlInfoText:
+    "Explain your need for withdrawal or upload supporting documentation.",
+  landingPage: ONEMAC_ROUTES.PACKAGE_LIST,
+  proposedEffectiveDate: false,
+};
+
+export const defaultWaiverAttachJSX = (
+  <>
+    <p className="req-message">
+      Maximum file size of {config.MAX_ATTACHMENT_SIZE_MB} MB. You can add
+      multiple files per attachment type. Read the description for each of the
+      attachment types on the FAQ Page.
+    </p>
+    <p className="req-message">
+      <span className="required-mark">*</span> At least one attachment is
+      required.
+    </p>
+  </>
+);

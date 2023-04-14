@@ -9,7 +9,6 @@ export type AttributeDetail = {
 };
 
 export type OneMACDetail = {
-  defaultTitle: null;
   componentType: string;
   actionLabel: string;
   show90thDayInfo: boolean;
@@ -120,7 +119,6 @@ export const defaultDetail: OneMACDetail = {
   show90thDayInfo: false,
   showEffectiveDate: false,
   detailHeader: "Package",
-  defaultTitle: null,
   allowWaiverExtension: false,
   detailSection: [...defaultDetailSectionItems],
 };

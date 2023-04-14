@@ -14,8 +14,6 @@ plugins:
 custom:
   stage: ${opt:stage, self:provider.stage}
   iamPermissionsBoundaryPolicy: ${ssm:/configuration/${self:custom.stage}/iam/permissionsBoundaryPolicy, ssm:/configuration/default/iam/permissionsBoundaryPolicy, ""}
-  tableName: cms-spa-form-${self:custom.stage}-change-requests
-  spaIdTableName: cms-spa-form-${self:custom.stage}-spa-ids
   oneMacTableName: onemac-${self:custom.stage}-one
 provider:
   name: aws
@@ -39,19 +37,11 @@ provider:
             - arn:aws:dynamodb:*:*:table/onemac-develop-one
             - arn:aws:dynamodb:*:*:table/${self:custom.oneMacTableName}
             - arn:aws:dynamodb:*:*:table/${self:custom.oneMacTableName}/index/*
-            - arn:aws:dynamodb:*:*:table/${self:custom.tableName}
-            - arn:aws:dynamodb:*:*:table/${self:custom.tableName}/index/*
   environment:
     NODE_OPTIONS: '--enable-source-maps'
-    tableName: ${self:custom.tableName}
-    spaIdTableName: ${self:custom.spaIdTableName}
     oneMacTableName: ${self:custom.oneMacTableName}
 
 functions:
-
-  updateChangeRequestId:
-    handler: ./handlers/updateChangeRequestId.main
-    timeout: 180
      
   resetData:
     handler: ./handlers/resetData.main
@@ -61,26 +51,8 @@ functions:
     handler: ./handlers/resetOneTable.main
     timeout: 180
 
-  softDeleteChangeRequest:
-    handler: ./handlers/softDeleteChangeRequest.main
-    timeout: 180
-
   softDeleteComponent:
     handler: ./handlers/softDeleteComponent.main
-    timeout: 180
-
-  batchUpdateChangeRequestId:
-    handler: ./handlers/batchUpdateChangeRequestId.main
-    timeout: 180
-
-  convertChangeRequests:
-    handler: ./handlers/convertChangeRequests.main
-    timeout: 180
-    events:
-      - schedule: rate(15 minutes)
-
-  verifyChangeRequests:
-    handler: ./handlers/verifyChangeRequests.main
     timeout: 180
 
   createOneMacPackage:

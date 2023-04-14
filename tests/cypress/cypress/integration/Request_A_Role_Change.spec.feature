@@ -12,7 +12,7 @@ Feature: OY2-12679 Users can request a role change in OneMAC
         And click on the SSA role
         And verify the user role is "State System Admin"
         And verify the error message says "Please select a state."
-        And verify the submit button is disabled
+        And verify the submit button is disabled on request a role page
         And select "Alabama" for state access
         And verify the submit button is enabled
         And verify there is no error message
@@ -33,7 +33,7 @@ Feature: OY2-12679 Users can request a role change in OneMAC
         And click on the State Submitter role
         And verify the user role is "State Submitter"
         And verify the error message says "Please select at least one state."
-        And verify the submit button is disabled
+        And verify the submit button is disabled on request a role page
         And select "Alabama" for state access
         And verify the submit button is enabled
         And verify there is no error message

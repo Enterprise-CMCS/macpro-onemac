@@ -27,7 +27,7 @@ import { stateSubmissionReceipt } from "../email/stateSubmissionReceipt";
  */
 
 export const submitAny = async (event, config) => {
-  let data;
+  let data, doneBy;
   const warningsInCMSNotice = [];
 
   try {
@@ -45,7 +45,7 @@ export const submitAny = async (event, config) => {
     }
 
     // get the rest of the details about the current user
-    const doneBy = await getUser(data.submitterEmail);
+    doneBy = await getUser(data.submitterEmail);
 
     if (JSON.stringify(doneBy) === "{}") {
       throw RESPONSE_CODE.USER_NOT_FOUND;
@@ -121,7 +121,10 @@ export const submitAny = async (event, config) => {
 
   try {
     // Now send the CMS email
-    await sendEmail(CMSSubmissionNotice(data, config, warningsInCMSNotice));
+    if (config?.buildCMSNotice)
+      await sendEmail(config.buildCMSNotice(data, config, doneBy));
+    else
+      await sendEmail(CMSSubmissionNotice(data, config, warningsInCMSNotice));
   } catch (error) {
     console.log("%s Error is: ", data.componentId, error);
     return RESPONSE_CODE.EMAIL_NOT_SENT;
@@ -130,7 +133,10 @@ export const submitAny = async (event, config) => {
   //An error sending the user email is not a failure.
   try {
     // send the submission "reciept" to the State Submitter
-    await sendEmail(stateSubmissionReceipt(data, config));
+    if (config?.buildStateReceipt) {
+      const stateEmail = await config.buildStateReceipt(data, config, doneBy);
+      await sendEmail(stateEmail);
+    } else await sendEmail(stateSubmissionReceipt(data, config));
   } catch (error) {
     console.log(
       "%s Warning: There was an error sending the user acknowledgement email.",

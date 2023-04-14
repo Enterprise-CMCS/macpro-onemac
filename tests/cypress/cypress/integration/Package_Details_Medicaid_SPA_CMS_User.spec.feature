@@ -16,7 +16,7 @@ Feature: Medicaid SPA CMS Details View - Card View with Actions
         And Click on Filter Button
         And click the SPA ID link in the first row
         And verify the package details page is visible
-        And verify action card exists
+        And verify 2 action cards exist
         And verify the status on the card is "Submitted - Intake Needed"
         And verify the package actions section is unavailable
         And verify the details section exists
@@ -36,7 +36,7 @@ Feature: Medicaid SPA CMS Details View - Card View with Actions
         And Click on Filter Button
         And click the SPA ID link in the first row
         And verify the package details page is visible
-        And verify action card exists
+        And verify 2 action cards exist
         And verify the status on the card is "Pending"
         And verify the package actions section is unavailable
         And verify the details section exists
@@ -56,7 +56,7 @@ Feature: Medicaid SPA CMS Details View - Card View with Actions
         And Click on Filter Button
         And click the SPA ID link in the first row
         And verify the package details page is visible
-        And verify action card exists
+        And verify 2 action cards exist
         And verify the status on the card is "Withdrawn"
         And verify the package actions section is unavailable
         And verify the details section exists
@@ -76,7 +76,7 @@ Feature: Medicaid SPA CMS Details View - Card View with Actions
         And Click on Filter Button
         And click the SPA ID link in the first row
         And verify the package details page is visible
-        And verify action card exists
+        And verify 2 action cards exist
         And verify the status on the card is "Disapproved"
         And verify the package actions section is unavailable
         And verify the details section exists
@@ -97,7 +97,7 @@ Feature: Medicaid SPA CMS Details View - Card View with Actions
     #     And Click on Filter Button
     #     And click the SPA ID link in the first row
     #     And verify the package details page is visible
-    #     And verify action card exists
+    #     And verify 2 action cards exist
     #     And verify the status on the card is "Pending - RAI"
     #     And verify the package actions section is unavailable
     #     And verify the package details page is visible
@@ -118,7 +118,7 @@ Feature: Medicaid SPA CMS Details View - Card View with Actions
         And Click on Filter Button
         And click the SPA ID link in the first row
         And verify the package details page is visible
-        And verify action card exists
+        And verify 2 action cards exist
         And verify the status on the card is "Approved"
         And verify there is not a 90th day date on the card
         And verify the package actions section is unavailable
@@ -140,7 +140,7 @@ Feature: Medicaid SPA CMS Details View - Card View with Actions
         And Click on Filter Button
         And click the SPA ID link in the first row
         And verify the package details page is visible
-        And verify action card exists
+        And verify 2 action cards exist
         And verify the status on the card is "Pending - Concurrence"
         And verify the package actions section is unavailable
         And verify the package details page is visible
@@ -161,7 +161,7 @@ Feature: Medicaid SPA CMS Details View - Card View with Actions
         And Click on Filter Button
         And click the SPA ID link in the first row
         And verify the package details page is visible
-        And verify action card exists
+        And verify 2 action cards exist
         And verify the status on the card is "Pending - Approval"
         And verify the package actions section is unavailable
         And verify the package details page is visible

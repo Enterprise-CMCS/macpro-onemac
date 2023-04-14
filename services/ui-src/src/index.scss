@@ -590,6 +590,8 @@ input[type="file"] {
   @extend .app-bar;
   @extend .ds-u-padding-top--5;
   @extend .ds-u-justify-content--center;
+  flex-direction: column;
+  align-items: center;
 
   form {
     @include max-width-ultra-wide;
@@ -600,7 +602,7 @@ input[type="file"] {
       @extend .ds-u-margin-bottom--1;
     }
     h3 {
-      @extend .ds-u-padding-top--5;
+      @extend .ds-u-padding-top--2;
       @extend .ds-u-font-weight--bold;
     }
     .ds-c-review {
@@ -638,6 +640,7 @@ input[type="file"] {
     span {
       display: block;
       @extend .ds-u-margin-bottom--1;
+      width: 685px;
     }
 
     span:first-child {
@@ -2637,6 +2640,27 @@ aside#faq-contact-info-box {
   }
 }
 
+.detail-card-section {
+  display: flex;
+  justify-content: space-between;
+
+  @media only screen and (max-width: $width-sm) {
+    justify-content: start;
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+
+.detail-card-container {
+  display: flex;
+  flex-direction: column;
+  width: 45%;
+
+  @media only screen and (max-width: $width-sm) {
+    width: 100%;
+  }
+}
+
 .detail-card-top {
   @include gradient-top-border;
 }
@@ -2644,6 +2668,8 @@ aside#faq-contact-info-box {
 .detail-card {
   @extend .ds-u-display--flex;
   @extend .ds-u-padding--4;
+  height: -moz-available; /* Mozilla Firefox will use this. */
+  height: -webkit-fill-available; /* WebKit-based browsers will use this. */
   justify-content: space-between;
   background: $color-white;
   border: 1px solid $color-gray-lighter;
@@ -2664,7 +2690,6 @@ aside#faq-contact-info-box {
 
 .package-actions {
   @extend .ds-u-flex-direction--column;
-  width: 50%;
 }
 .action-list {
   list-style-type: none;

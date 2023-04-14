@@ -13,7 +13,7 @@ Feature: Waiver Package Details View: Temporary Extension for a CMS User
     Scenario: Screen Enhance: Temporary Extension Details View - double dash
         And click the Waiver Number link in the first row
         And verify the package details page is visible
-        And verify action card exists
+        And verify 2 action cards exist
         And verify the status on the card is "Requested"
         And verify the package actions section is unavailable
         And verify the details section exists
