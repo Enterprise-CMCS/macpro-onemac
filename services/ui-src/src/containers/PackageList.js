@@ -40,6 +40,7 @@ import {
   LOCAL_STORAGE_TABLE_FILTERS_WAIVER,
 } from "../utils/StorageKeys";
 import { portalTableExportToCSV } from "../utils/portalTableExportToCSV";
+import { FORM_SOURCE } from "../domain-types";
 
 const renderDate = ({ value }) =>
   typeof value === "number" && value > 0
@@ -155,6 +156,7 @@ const PackageList = () => {
       return (
         <ActionPopup
           theComponent={row.original}
+          formSource={FORM_SOURCE.PACKAGE_LIST}
           alertCallback={tellPackageListAboutAction}
         />
       );

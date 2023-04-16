@@ -7,7 +7,7 @@ export const AdditionalInfoSection: FC<{
 }> = ({ additionalInfo, id = "addl-info-base" }) => {
   return (
     <>
-      <section id={id} className="detail-section">
+      <section id={id} className="read-only-submission">
         <h2>Additional Information</h2>
         <Review
           className="original-review-component preserve-spacing"

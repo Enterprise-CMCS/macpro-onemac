@@ -98,7 +98,6 @@ functions:
   submitInitialWaiver:
     handler: form/submitInitialWaiver.main
     role: LambdaApiRole
-    timeout: 30
     events:
       - http:
           path: submitInitialWaiver
@@ -109,7 +108,6 @@ functions:
   submitMedicaidSpa:
     handler: form/submitMedicaidSPA.main
     role: LambdaApiRole
-    timeout: 30
     events:
       - http:
           path: submitMedicaidSPA
@@ -120,7 +118,6 @@ functions:
   submitMedicaidSpaRaiResponse:
     handler: form/submitMedicaidSPARAIResponse.main
     role: LambdaApiRole
-    timeout: 30
     events:
       - http:
           path: submitMedicaidSPARAIResponse
@@ -131,7 +128,6 @@ functions:
   submitChipSpa:
     handler: form/submitCHIPSPA.main
     role: LambdaApiRole
-    timeout: 30
     events:
       - http:
           path: submitCHIPSPA
@@ -142,7 +138,6 @@ functions:
   submitCHIPSPARAIResponse:
     handler: form/submitCHIPSPARAIResponse.main
     role: LambdaApiRole
-    timeout: 30
     events:
       - http:
           path: submitCHIPSPARAIResponse
@@ -153,7 +148,6 @@ functions:
   submitWaiverExtension:
     handler: form/submitWaiverExtension.main
     role: LambdaApiRole
-    timeout: 30
     events:
       - http:
           path: submitWaiverExtension
@@ -164,7 +158,6 @@ functions:
   submitWaiverRaiResponse:
     handler: form/submitWaiverRAIResponse.main
     role: LambdaApiRole
-    timeout: 30
     events:
       - http:
           path: submitWaiverRAIResponse
@@ -175,7 +168,6 @@ functions:
   submitWaiverRenewal:
     handler: form/submitWaiverRenewal.main
     role: LambdaApiRole
-    timeout: 30
     events:
       - http:
           path: submitWaiverRenewal
@@ -186,7 +178,6 @@ functions:
   submitWaiverAmendment:
     handler: form/submitWaiverAmendment.main
     role: LambdaApiRole
-    timeout: 30
     events:
       - http:
           path: submitWaiverAmendment
@@ -197,7 +188,6 @@ functions:
   submitWaiverAppendixK:
     handler: form/submitWaiverAppendixK.main
     role: LambdaApiRole
-    timeout: 30
     events:
       - http:
           path: submitWaiverAppendixK
@@ -208,7 +198,6 @@ functions:
   submitWaiverAppendixKRAIResponse:
     handler: form/submitWaiverAppendixKRAIResponse.main
     role: LambdaApiRole
-    timeout: 30
     events:
       - http:
           path: submitWaiverAppendixKRAIResponse
@@ -329,7 +318,6 @@ functions:
   withdrawInitialWaiver:
     handler: form/withdrawInitialWaiver.main
     role: LambdaApiRole
-    timeout: 30
     events:
       - http:
           path: withdrawInitialWaiver
@@ -340,7 +328,6 @@ functions:
   withdrawMedicaidSPA:
     handler: form/withdrawMedicaidSPA.main
     role: LambdaApiRole
-    timeout: 30
     events:
       - http:
           path: withdrawMedicaidSPA
@@ -351,7 +338,6 @@ functions:
   withdrawCHIPSPA:
     handler: form/withdrawCHIPSPA.main
     role: LambdaApiRole
-    timeout: 30
     events:
       - http:
           path: withdrawCHIPSPA
@@ -362,7 +348,6 @@ functions:
   withdrawWaiverRenewal:
     handler: form/withdrawWaiverRenewal.main
     role: LambdaApiRole
-    timeout: 30
     events:
       - http:
           path: withdrawWaiverRenewal
@@ -373,7 +358,6 @@ functions:
   withdrawWaiverAmendment:
     handler: form/withdrawWaiverAmendment.main
     role: LambdaApiRole
-    timeout: 30
     events:
       - http:
           path: withdrawWaiverAmendment
@@ -384,7 +368,6 @@ functions:
   withdrawWaiverAppendixK:
     handler: form/withdrawWaiverAppendixK.main
     role: LambdaApiRole
-    timeout: 30
     events:
       - http:
           path: withdrawWaiverAppendixK
@@ -485,7 +468,6 @@ functions:
   updateUserStatus:
     handler: updateUserStatus.main
     role: LambdaApiRole
-    timeout: 30
     events:
       - http:
           path: updateUserStatus
@@ -496,7 +478,6 @@ functions:
   setUserPhoneNumber:
     handler: putPhoneNumber.main
     role: LambdaApiRole
-    timeout: 30
     events:
       - http:
           path: phoneNumber

@@ -1,4 +1,4 @@
-import { USER_STATUS, USER_ROLE, RoleEntry } from "cmscommonlib";
+import { USER_STATUS, USER_ROLE, RoleEntry, Workflow } from "cmscommonlib";
 
 export type UserProfile = {
   ismemberof: string;
@@ -61,8 +61,14 @@ export type LocationState = {
   passCode?: string;
 };
 
+export enum FORM_SOURCE {
+  PACKAGE_LIST = "packageList",
+  DETAIL = "detail",
+}
+
 export type FormLocationState = {
   parentId?: string;
   parentType?: string;
   componentId?: string;
+  formSource?: FORM_SOURCE;
 };

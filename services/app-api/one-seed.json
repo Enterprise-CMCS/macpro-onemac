@@ -14394,7 +14394,7 @@
   },
   {
     "clockEndTimestamp": 1681930575838,
-    "componentType": "waiverappk",
+    "componentType": "waivernew",
     "currentStatus": "Under Review",
     "waiverExtensions": [],
     "attachments": [
@@ -14559,13 +14559,13 @@
     "COMPONENTS_SP": null,
     "PLAN_TYPES": [
       {
-        "PLAN_TYPE_ID": 123,
-        "PLAN_TYPE_NAME": "1915(c)"
+        "PLAN_TYPE_ID": 122,
+        "PLAN_TYPE_NAME": "1915(b)"
       }
     ],
     "PRIORITY_CODES": null,
     "SP_IMPACT_FUNDING": null,
-    "GSI1pk": "SEATool#1915c_waivers",
+    "GSI1pk": "SEATool#1915b_waivers",
     "CODEAFTERINITACCESS": null,
     "STOP_RESUME_DATES": null,
     "COMPONENTS": null,

@@ -17,6 +17,7 @@ import PageTitleBar from "../components/PageTitleBar";
 import AlertBar from "../components/AlertBar";
 import { OneMACDetail } from "../libs/detailLib";
 import { DetailSection } from "./section/DetailSection";
+import { AdditionalInfoSection } from "./section/AdditionalInfoSection";
 import { temporaryExtensionTypes } from "./temporary-extension/TemporaryExtensionForm";
 import { getTerritoryFromComponentId } from "./OneMACForm";
 
@@ -174,6 +175,10 @@ const DetailView: React.FC<{ pageConfig: OneMACDetail }> = ({ pageConfig }) => {
                 detail={detail}
                 loadDetail={loadDetail}
                 setAlertCode={setAlertCode}
+              />
+
+              <AdditionalInfoSection
+                additionalInfo={detail.additionalInformation}
               />
             </article>
           </div>
