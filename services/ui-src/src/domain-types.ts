@@ -1,4 +1,4 @@
-import { USER_STATUS, USER_ROLE, RoleEntry, Workflow } from "cmscommonlib";
+import { USER_STATUS, USER_ROLE, RoleEntry } from "cmscommonlib";
 
 export type UserProfile = {
   ismemberof: string;
