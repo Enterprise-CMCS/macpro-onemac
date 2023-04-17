@@ -175,8 +175,8 @@ export const buildAnyPackage = async (packageId, config) => {
           (putParams.Item.currentStatus =
             SEATOOL_TO_ONEMAC_STATUS[seaToolStatus]);
 
-        putParams.subject = anEvent.STATE_PLAN.TITLE_NAME;
-        putParams.description = anEvent.STATE_PLAN.SUMMARY_MEMO;
+        putParams.Item.subject = anEvent.STATE_PLAN.TITLE_NAME;
+        putParams.Item.description = anEvent.STATE_PLAN.SUMMARY_MEMO;
         return;
       }
 
