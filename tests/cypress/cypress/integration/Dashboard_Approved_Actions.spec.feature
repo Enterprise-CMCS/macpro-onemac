@@ -3,7 +3,6 @@ Feature: Verify package actions in Approved Status in the package dashboard
         Given I am on Login Page
         When Clicking on Development Login
         When Login with state submitter user
-        And click on Packages
 
     Scenario: Demonstrate add amendment and temp ext are available for Initial Waiver in Approved Status
         And click on the Waivers tab
