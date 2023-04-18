@@ -64,11 +64,11 @@ export const getDetails = async (event) => {
       }
     }
 
-    // CMS Roles and State Roles get different details
-    if (userRoleObj.isCMSUser) {
-      result.Item.currentStatus = cmsStatusUIMap[result.Item.currentStatus];
-    } else {
-      result.Item.currentStatus = stateStatusUIMap[result.Item.currentStatus];
+    result.Item.currentStatus = userRoleObj.isCMSUser
+      ? cmsStatusUIMap[result.Item.currentStatus]
+      : stateStatusUIMap[result.Item.currentStatus];
+
+    if (!userRoleObj.canSeeSubjectAndDescription) {
       if (result.Item.subject) delete result.Item.subject;
       if (result.Item.description) delete result.Item.description;
     }

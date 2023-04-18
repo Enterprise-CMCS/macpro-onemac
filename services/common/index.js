@@ -152,6 +152,7 @@ export class Role {
     this.canAccessDashboard = false;
     this.canDownloadCsv = false;
     this.canAccessForms = false;
+    this.canSeeSubjectAndDescription = false;
     this.canAccessUserManagement = false;
     this.canAccessMetrics = false;
     this.canManageUsers = false;
@@ -192,6 +193,7 @@ class DefaultUser extends Role {
     super();
     this.canAccessDashboard = true;
     this.canDownloadCsv = true;
+    this.canSeeSubjectAndDescription = true;
   }
 }
 
@@ -200,6 +202,7 @@ class DefaultCMSUser extends Role {
     super();
     this.canAccessDashboard = true;
     this.canDownloadCsv = true;
+    this.canSeeSubjectAndDescription = true;
     this.isCMSUser = true;
   }
 }
@@ -226,6 +229,7 @@ class CmsReviewer extends Role {
   constructor() {
     super();
     this.canAccessDashboard = true;
+    this.canSeeSubjectAndDescription = true;
     this.isCMSUser = true;
   }
 }
@@ -249,6 +253,7 @@ class SystemAdmin extends Role {
     this.canAccessMetrics = true;
     this.canManageUsers = true;
     this.canAccessAdminTools = true;
+    this.canSeeSubjectAndDescription = true;
     this.isCMSUser = true;
   }
 }
@@ -259,6 +264,7 @@ class Helpdesk extends Role {
     this.canAccessDashboard = true;
     this.canAccessUserManagement = true;
     this.canAccessMetrics = true;
+    this.canSeeSubjectAndDescription = true;
     this.canDownloadCsv = true;
   }
 }
