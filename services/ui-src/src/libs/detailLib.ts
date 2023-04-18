@@ -54,12 +54,10 @@ export const proposedEffectiveDateDefault: AttributeDetail = {
 export const subjectDefault: AttributeDetail = {
   heading: "Subject",
   fieldName: "subject",
-  default: "-- --",
 };
 export const descriptionDefault: AttributeDetail = {
   heading: "Description",
   fieldName: "description",
-  default: "-- --",
 };
 
 export enum DetailViewTab {

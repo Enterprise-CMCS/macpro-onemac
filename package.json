@@ -49,5 +49,7 @@
       "prettier --write"
     ]
   },
-  "dependencies": {}
+  "dependencies": {
+    "dynamodb-local": "^0.0.32"
+  }
 }
