@@ -3,6 +3,9 @@ Feature: OY2-13094 Package Dashboard - Filter by State
         Given I am on Login Page
         When Clicking on Development Login
         When Login with state submitter user
+        And click show hide columns button
+        And click state checkbox
+        And click show hide columns button
 
     Scenario: Screen enhancement
         And Click on Filter Button
