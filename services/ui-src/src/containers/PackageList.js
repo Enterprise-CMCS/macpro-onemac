@@ -47,6 +47,7 @@ const defaultCMSHiddenCols = ["submitter"];
 const DEFAULT_COLUMNS = {
   [USER_ROLE.STATE_SUBMITTER]: defaultStateHiddenCols,
   [USER_ROLE.STATE_SYSTEM_ADMIN]: defaultStateHiddenCols,
+  [USER_ROLE.HELPDESK]: defaultStateHiddenCols,
   [USER_ROLE.CMS_REVIEWER]: defaultCMSHiddenCols,
   [USER_ROLE.CMS_ROLE_APPROVER]: defaultCMSHiddenCols,
   [USER_ROLE.SYSTEM_ADMIN]: defaultCMSHiddenCols,
