@@ -2217,7 +2217,9 @@ aside#faq-contact-info-box {
 }
 
 .choice-list {
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
   padding: 0px;
   box-sizing: border-box;
   color: $color-primary;
@@ -2228,6 +2230,7 @@ aside#faq-contact-info-box {
   border-right: 1px solid #d6d7d9;
   border-radius: 0 0 3px 3px;
   label {
+    max-width: 100%;
     list-style-type: none;
     margin: 0px;
     min-height: 110px;
