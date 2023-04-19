@@ -368,7 +368,7 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('combined-package-lock.txt') }}
       - name: Install dependencies
         run: |
-          npm ci --legacy-peer-deps
+          npm i --legacy-peer-deps
       - name: set path
         run: |
           echo "PATH=$(pwd)/node_modules/.bin/:$PATH" >> $GITHUB_ENV
@@ -473,7 +473,7 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('combined-package-lock.txt') }}
       - name: Install dependencies
         run: |
-          npm install --frozen-lockfile
+          npm install --frozen-lockfile --legacy-peer-deps
       - name: set path
         run: |
           echo "PATH=$(pwd)/node_modules/.bin/:$PATH" >> $GITHUB_ENV
