@@ -3,185 +3,185 @@ Feature: Waiver Package Details View: Waiver Renewal for a CMS User
         Given I am on Login Page
         When Clicking on Development Login
         When Login as EUA CMS Read Only User
-        And click on the Waivers tab
-        And Click on Filter Button
-        And click on Type
-        And uncheck all of the type checkboxes
-        And click 1915b Waiver Renewal check box
-        And click on Type
-        And click on Status
-        And uncheck all of the status checkboxes
+        Then click on the Waivers tab
+        Then Click on Filter Button
+        Then click on Type
+        Then uncheck all of the type checkboxes
+        Then click 1915b Waiver Renewal check box
+        Then click on Type
+        Then click on Status
+        Then uncheck all of the status checkboxes
 
     Scenario: Screen Enhance: Waiver Renewal Details View - Submitted - Intake Needed
-        And click Submitted - Intake Needed checkbox
-        And click the Waiver Number link in the first row
-        And verify the package details page is visible
-        And verify 2 action cards exist
-        And verify the status on the card is "Submitted - Intake Needed"
-        And verify the package actions section is unavailable
-        And verify the details section exists
-        And verify there is a Type header in the details section
-        And verify the type is Waiver Renewal
-        And verify there is a State header in the details section
-        And verify a state exists for the State
-        And verify there is an Initial Submission Date header in the details section
-        And verify a date exists for the Initial Submission Date
-        And verify there is a Proposed Effective Date header in the details section
-        And verify the attachments section exists
-        And verify the download all button exists
-        And verify the additional information section exists
+        Then click Submitted - Intake Needed checkbox
+        Then click the Waiver Number link in the first row
+        Then verify the package details page is visible
+        Then verify 2 action cards exist
+        Then verify the status on the card is "Submitted - Intake Needed"
+        Then verify the package actions section is unavailable
+        Then verify the details section exists
+        Then verify there is a Type header in the details section
+        Then verify the type is Waiver Renewal
+        Then verify there is a State header in the details section
+        Then verify a state exists for the State
+        Then verify there is an Initial Submission Date header in the details section
+        Then verify a date exists for the Initial Submission Date
+        Then verify there is a Proposed Effective Date header in the details section
+        Then verify the attachments section exists
+        Then verify the download all button exists
+        Then verify the additional information section exists
 
     # Need seed data / reset data update
     # Scenario: Screen Enhance: Waiver Renewal Details View - Pending
-    #     And click the Pending checkbox
-    #     And click the Waiver Number link in the first row
-    #     And verify the package details page is visible
-    #     And verify 2 action cards exist
-    #     And verify the status on the card is "Pending"
-    #     And verify the package actions section is unavailable
-    #     And verify the details section exists
-    #     And verify there is a Type header in the details section
-    #     And verify the type is Waiver Renewal
-    #     And verify there is a State header in the details section
-    #     And verify a state exists for the State
-    #     And verify there is an Initial Submission Date header in the details section
-    #     And verify a date exists for the Initial Submission Date
-    #     And verify there is a Proposed Effective Date header in the details section
-    #     And verify the attachments section exists
-    #     And verify the download all button exists
-    #     And verify the additional information section exists
+    #     Then click the Pending checkbox
+    #     Then click the Waiver Number link in the first row
+    #     Then verify the package details page is visible
+    #     Then verify 2 action cards exist
+    #     Then verify the status on the card is "Pending"
+    #     Then verify the package actions section is unavailable
+    #     Then verify the details section exists
+    #     Then verify there is a Type header in the details section
+    #     Then verify the type is Waiver Renewal
+    #     Then verify there is a State header in the details section
+    #     Then verify a state exists for the State
+    #     Then verify there is an Initial Submission Date header in the details section
+    #     Then verify a date exists for the Initial Submission Date
+    #     Then verify there is a Proposed Effective Date header in the details section
+    #     Then verify the attachments section exists
+    #     Then verify the download all button exists
+    #     Then verify the additional information section exists
 
     Scenario: Screen Enhance: Waiver Renewal Details View - Terminated
-        And click Waiver Terminated checkbox
-        And click the Waiver Number link in the first row
-        And verify the package details page is visible
-        And verify 2 action cards exist
-        And verify the status on the card is "Terminated"
-        And verify the package actions section is unavailable
-        And verify the details section exists
-        And verify there is a Type header in the details section
-        And verify the type is Waiver Renewal
-        And verify there is a State header in the details section
-        And verify a state exists for the State
-        And verify there is an Initial Submission Date header in the details section
-        And verify a date exists for the Initial Submission Date
-        And verify there is a Proposed Effective Date header in the details section
-        And verify the attachments section exists
-        And verify the download all button exists
-        And verify the additional information section exists
+        Then click Waiver Terminated checkbox
+        Then click the Waiver Number link in the first row
+        Then verify the package details page is visible
+        Then verify 2 action cards exist
+        Then verify the status on the card is "Terminated"
+        Then verify the package actions section is unavailable
+        Then verify the details section exists
+        Then verify there is a Type header in the details section
+        Then verify the type is Waiver Renewal
+        Then verify there is a State header in the details section
+        Then verify a state exists for the State
+        Then verify there is an Initial Submission Date header in the details section
+        Then verify a date exists for the Initial Submission Date
+        Then verify there is a Proposed Effective Date header in the details section
+        Then verify the attachments section exists
+        Then verify the download all button exists
+        Then verify the additional information section exists
 
     Scenario: Screen Enhance: Waiver Renewal Details View - Pending - RAI
-        And click Pending - RAI checkbox
-        And click the Waiver Number link in the first row
-        And verify the package details page is visible
-        And verify 2 action cards exist
-        And verify the status on the card is "Pending - RAI"
-        And verify the package actions section is unavailable
-        And verify the details section exists
-        And verify there is a Type header in the details section
-        And verify the type is Waiver Renewal
-        And verify there is a State header in the details section
-        And verify a state exists for the State
-        And verify there is an Initial Submission Date header in the details section
-        And verify a date exists for the Initial Submission Date
-        And verify there is a Proposed Effective Date header in the details section
-        And verify the attachments section exists
-        And verify the download all button exists
-        And verify the additional information section exists
+        Then click Pending - RAI checkbox
+        Then click the Waiver Number link in the first row
+        Then verify the package details page is visible
+        Then verify 2 action cards exist
+        Then verify the status on the card is "Pending - RAI"
+        Then verify the package actions section is unavailable
+        Then verify the details section exists
+        Then verify there is a Type header in the details section
+        Then verify the type is Waiver Renewal
+        Then verify there is a State header in the details section
+        Then verify a state exists for the State
+        Then verify there is an Initial Submission Date header in the details section
+        Then verify a date exists for the Initial Submission Date
+        Then verify there is a Proposed Effective Date header in the details section
+        Then verify the attachments section exists
+        Then verify the download all button exists
+        Then verify the additional information section exists
 
     Scenario: Screen Enhance: Waiver Renewal Details View - Approved
-        And click Approved checkbox
-        And click the Waiver Number link in the first row
-        And verify the package details page is visible
-        And verify 2 action cards exist
-        And verify the status on the card is "Approved"
-        And verify the package actions section is unavailable
-        And verify the details section exists
-        And verify there is a Type header in the details section
-        And verify the type is Waiver Renewal
-        And verify there is a State header in the details section
-        And verify a state exists for the State
-        And verify there is an Initial Submission Date header in the details section
-        And verify a date exists for the Initial Submission Date
-        And verify there is a Proposed Effective Date header in the details section
-        And verify the Proposed Effective Date is a date formated like Mon dd yyyy
-        And verify the attachments section exists
-        And verify the download all button exists
-        And verify the additional information section exists
+        Then click Approved checkbox
+        Then click the Waiver Number link in the first row
+        Then verify the package details page is visible
+        Then verify 2 action cards exist
+        Then verify the status on the card is "Approved"
+        Then verify the package actions section is unavailable
+        Then verify the details section exists
+        Then verify there is a Type header in the details section
+        Then verify the type is Waiver Renewal
+        Then verify there is a State header in the details section
+        Then verify a state exists for the State
+        Then verify there is an Initial Submission Date header in the details section
+        Then verify a date exists for the Initial Submission Date
+        Then verify there is a Proposed Effective Date header in the details section
+        Then verify the Proposed Effective Date is a date formated like Mon dd yyyy
+        Then verify the attachments section exists
+        Then verify the download all button exists
+        Then verify the additional information section exists
 
     Scenario: Screen Enhance: Waiver Renewal Details View - Disapproved
-        And click Disapproved checkbox
-        And click the Waiver Number link in the first row
-        And verify the package details page is visible
-        And verify 2 action cards exist
-        And verify the status on the card is "Disapproved"
-        And verify the package actions section is unavailable
-        And verify the details section exists
-        And verify there is a Type header in the details section
-        And verify the type is Waiver Renewal
-        And verify there is a State header in the details section
-        And verify a state exists for the State
-        And verify there is an Initial Submission Date header in the details section
-        And verify a date exists for the Initial Submission Date
-        And verify there is a Proposed Effective Date header in the details section
-        And verify the attachments section exists
-        And verify the download all button exists
-        And verify the additional information section exists
+        Then click Disapproved checkbox
+        Then click the Waiver Number link in the first row
+        Then verify the package details page is visible
+        Then verify 2 action cards exist
+        Then verify the status on the card is "Disapproved"
+        Then verify the package actions section is unavailable
+        Then verify the details section exists
+        Then verify there is a Type header in the details section
+        Then verify the type is Waiver Renewal
+        Then verify there is a State header in the details section
+        Then verify a state exists for the State
+        Then verify there is an Initial Submission Date header in the details section
+        Then verify a date exists for the Initial Submission Date
+        Then verify there is a Proposed Effective Date header in the details section
+        Then verify the attachments section exists
+        Then verify the download all button exists
+        Then verify the additional information section exists
 
     Scenario: Screen Enhance: Waiver Renewal Details View - Withdrawn
-        And click the Package Withdrawn checkbox
-        And click the Waiver Number link in the first row
-        And verify the package details page is visible
-        And verify 2 action cards exist
-        And verify the status on the card is "Package Withdrawn"
-        And verify the package actions section is unavailable
-        And verify the details section exists
-        And verify there is a Type header in the details section
-        And verify the type is Waiver Renewal
-        And verify there is a State header in the details section
-        And verify a state exists for the State
-        And verify there is an Initial Submission Date header in the details section
-        And verify a date exists for the Initial Submission Date
-        And verify there is a Proposed Effective Date header in the details section
-        And verify the attachments section exists
-        And verify the download all button exists
-        And verify the additional information section exists
+        Then click the Package Withdrawn checkbox
+        Then click the Waiver Number link in the first row
+        Then verify the package details page is visible
+        Then verify 2 action cards exist
+        Then verify the status on the card is "Package Withdrawn"
+        Then verify the package actions section is unavailable
+        Then verify the details section exists
+        Then verify there is a Type header in the details section
+        Then verify the type is Waiver Renewal
+        Then verify there is a State header in the details section
+        Then verify a state exists for the State
+        Then verify there is an Initial Submission Date header in the details section
+        Then verify a date exists for the Initial Submission Date
+        Then verify there is a Proposed Effective Date header in the details section
+        Then verify the attachments section exists
+        Then verify the download all button exists
+        Then verify the additional information section exists
 
     # Need seed data / reset data update
     # Scenario: Screen Enhance: Waiver Renewal Details View - Pending - Concurrence
-    #     And click the Pending - Concurrence checkbox
-    #     And click the Waiver Number link in the first row
-    #     And verify the package details page is visible
-    #     And verify 2 action cards exist
-    #     And verify the status on the card is "Pending - Concurrence"
-    #     And verify the package actions section is unavailable
-    #     And verify the details section exists
-    #     And verify there is a Type header in the details section
-    #     And verify the type is Waiver Renewal
-    #     And verify there is a State header in the details section
-    #     And verify a state exists for the State
-    #     And verify there is an Initial Submission Date header in the details section
-    #     And verify a date exists for the Initial Submission Date
-    #     And verify there is a Proposed Effective Date header in the details section
-    #     And verify the attachments section exists
-    #     And verify the download all button exists
-    #     And verify the additional information section exists
+    #     Then click the Pending - Concurrence checkbox
+    #     Then click the Waiver Number link in the first row
+    #     Then verify the package details page is visible
+    #     Then verify 2 action cards exist
+    #     Then verify the status on the card is "Pending - Concurrence"
+    #     Then verify the package actions section is unavailable
+    #     Then verify the details section exists
+    #     Then verify there is a Type header in the details section
+    #     Then verify the type is Waiver Renewal
+    #     Then verify there is a State header in the details section
+    #     Then verify a state exists for the State
+    #     Then verify there is an Initial Submission Date header in the details section
+    #     Then verify a date exists for the Initial Submission Date
+    #     Then verify there is a Proposed Effective Date header in the details section
+    #     Then verify the attachments section exists
+    #     Then verify the download all button exists
+    #     Then verify the additional information section exists
 
     Scenario: Screen Enhance: Waiver Renewal Details View - Pending - Approval
-        And click the Pending - Approval checkbox
-        And click the Waiver Number link in the first row
-        And verify the package details page is visible
-        And verify 2 action cards exist
-        And verify the status on the card is "Pending - Approval"
-        And verify the package actions section is unavailable
-        And verify the details section exists
-        And verify there is a Type header in the details section
-        And verify the type is Waiver Renewal
-        And verify there is a State header in the details section
-        And verify a state exists for the State
-        And verify there is an Initial Submission Date header in the details section
-        And verify a date exists for the Initial Submission Date
-        And verify there is a Proposed Effective Date header in the details section
-        And verify the attachments section exists
-        And verify the download all button exists
-        And verify the additional information section exists
+        Then click the Pending - Approval checkbox
+        Then click the Waiver Number link in the first row
+        Then verify the package details page is visible
+        Then verify 2 action cards exist
+        Then verify the status on the card is "Pending - Approval"
+        Then verify the package actions section is unavailable
+        Then verify the details section exists
+        Then verify there is a Type header in the details section
+        Then verify the type is Waiver Renewal
+        Then verify there is a State header in the details section
+        Then verify a state exists for the State
+        Then verify there is an Initial Submission Date header in the details section
+        Then verify a date exists for the Initial Submission Date
+        Then verify there is a Proposed Effective Date header in the details section
+        Then verify the attachments section exists
+        Then verify the download all button exists
+        Then verify the additional information section exists

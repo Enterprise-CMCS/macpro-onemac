@@ -5,68 +5,68 @@ Feature: Package Dashboard - Waiver Tab Column Picker for CMS User
         When Login with cms System Admin
     
     Scenario: Waivers Tab - Screen enhancement
-        And click on the Waivers tab
-        And verify show hide columns button exists
-        And verify IDNumber column exists
-        And verify type column exists
-        And verify state column exists
-        And verify Waiver Number column exists
-        And verify status column exists
-        And verify Initial Submission Date column exists
-        And verify Formal RAI Received column exists
-        And verify submitted by column does not exist
-        And click show hide columns button
-        And verify Formal RAI Received checkbox exists
-        And verify state exists
-        And verify status exists
-        And verify Initial Submission Date exists
-        And verify submitted by exists
-        And verify type exists
-        And click show hide columns button
+        Then click on the Waivers tab
+        Then verify show hide columns button exists
+        Then verify IDNumber column exists
+        Then verify type column exists
+        Then verify state column exists
+        Then verify Waiver Number column exists
+        Then verify status column exists
+        Then verify Initial Submission Date column exists
+        Then verify Formal RAI Received column exists
+        Then verify submitted by column does not exist
+        Then click show hide columns button
+        Then verify Formal RAI Received checkbox exists
+        Then verify state exists
+        Then verify status exists
+        Then verify Initial Submission Date exists
+        Then verify submitted by exists
+        Then verify type exists
+        Then click show hide columns button
         Then Click on My Account
-        And click the logout button
+        Then click the logout button
 
     Scenario: Waivers Tab - Uncheck all and verify Waiver Number exists
-        And click on the Waivers tab
-        And click show hide columns button
-        And click Formal RAI Received checkbox
-        And click Initial Submission Date checkbox
-        And click state checkbox
-        And click status checkbox
-        And click type checkbox
-        And click show hide columns button
-        And verify Waiver Number column exists
-        And verify type column does not exist
-        And verify state column does not exist
-        And verify status column does not exist
-        And verify Initial Submission Date column does not exist
-        And verify submitted by column does not exist
-        And verify Formal RAI Received column does not exist
+        Then click on the Waivers tab
+        Then click show hide columns button
+        Then click Formal RAI Received checkbox
+        Then click Initial Submission Date checkbox
+        Then click state checkbox
+        Then click status checkbox
+        Then click type checkbox
+        Then click show hide columns button
+        Then verify Waiver Number column exists
+        Then verify type column does not exist
+        Then verify state column does not exist
+        Then verify status column does not exist
+        Then verify Initial Submission Date column does not exist
+        Then verify submitted by column does not exist
+        Then verify Formal RAI Received column does not exist
         Then Click on My Account
-        And click the logout button
+        Then click the logout button
 
     Scenario: Waivers Tab - verify tabs reset after login
-        And click on the Waivers tab
-        And verify show hide columns button exists
-        And verify IDNumber column exists
-        And verify type column exists
-        And verify submitted by column does not exist
-        And verify Waiver Number column exists
-        And verify status column exists
-        And verify Initial Submission Date column exists
-        And verify Formal RAI Received column exists
+        Then click on the Waivers tab
+        Then verify show hide columns button exists
+        Then verify IDNumber column exists
+        Then verify type column exists
+        Then verify submitted by column does not exist
+        Then verify Waiver Number column exists
+        Then verify status column exists
+        Then verify Initial Submission Date column exists
+        Then verify Formal RAI Received column exists
         Then Click on My Account
-        And click the logout button
+        Then click the logout button
 
     Scenario: Verify submitted by doesn't exists, but is selectable
-        And verify submitted by column does not exist
-        And click show hide columns button
-        And click submitted by checkbox
-        And click show hide columns button
-        And verify submitted by column exists
-        And click show hide columns button
-        And click submitted by checkbox
-        And click show hide columns button
-        And verify submitted by column does not exist
+        Then verify submitted by column does not exist
+        Then click show hide columns button
+        Then click submitted by checkbox
+        Then click show hide columns button
+        Then verify submitted by column exists
+        Then click show hide columns button
+        Then click submitted by checkbox
+        Then click show hide columns button
+        Then verify submitted by column does not exist
         Then Click on My Account
-        And click the logout button
+        Then click the logout button

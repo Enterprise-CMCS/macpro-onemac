@@ -5,43 +5,43 @@ Feature: OY2-14464 Package Dashboard - Separate Tab for Waivers and SPAs
         When Login with state submitter user
 
     Scenario: SPAs Tab - Screen enhancement
-        And verify the SPAs tab exists
-        And verify the SPAs tab is selected
-        And verify SPA ID column exists
+        Then verify the SPAs tab exists
+        Then verify the SPAs tab is selected
+        Then verify SPA ID column exists
 
     Scenario: Waivers Tab - Screen enhancement
-        And verify search bar exists
-        And verify the Waivers tab exists
-        And verify the Waivers tab is clickable
-        And click on the Waivers tab
-        And verify the Waivers tab is selected
-        And verify Waiver Number column exists
+        Then verify search bar exists
+        Then verify the Waivers tab exists
+        Then verify the Waivers tab is clickable
+        Then click on the Waivers tab
+        Then verify the Waivers tab is selected
+        Then verify Waiver Number column exists
 
     Scenario: Verify the SPAs tab is the default
-        And click on the Waivers tab
-        And refresh the page
-        And verify the SPAs tab is selected
+        Then click on the Waivers tab
+        Then refresh the page
+        Then verify the SPAs tab is selected
 
     Scenario: screen enhancement
-        And click on the Waivers tab
-        And verify the Waivers tab is selected
+        Then click on the Waivers tab
+        Then verify the Waivers tab is selected
 
     Scenario: verify initial waiver waiver number pattern
-        And click on the Waivers tab
-        And Click on Filter Button
-        And click on Type
-        And uncheck all of the type checkboxes
-        And click 1915b Initial Waiver check box
-        And Click on Filter Button
-        And verify the type in row one is Initial Waiver
-        And verify the waiver number format in row one is SS.#### or SS.#####
+        Then click on the Waivers tab
+        Then Click on Filter Button
+        Then click on Type
+        Then uncheck all of the type checkboxes
+        Then click 1915b Initial Waiver check box
+        Then Click on Filter Button
+        Then verify the type in row one is Initial Waiver
+        Then verify the waiver number format in row one is SS.#### or SS.#####
 
     Scenario: verify waiver renewal waiver number pattern
-        And click on the Waivers tab
-        And Click on Filter Button
-        And click on Type
-        And uncheck all of the type checkboxes
-        And click 1915b Waiver Renewal check box
-        And Click on Filter Button
-        And verify the type in row one is Waiver Renewal
-        And verify the waiver number format in row one is SS.#####.S## or SS.####.S##
+        Then click on the Waivers tab
+        Then Click on Filter Button
+        Then click on Type
+        Then uncheck all of the type checkboxes
+        Then click 1915b Waiver Renewal check box
+        Then Click on Filter Button
+        Then verify the type in row one is Waiver Renewal
+        Then verify the waiver number format in row one is SS.#####.S## or SS.####.S##

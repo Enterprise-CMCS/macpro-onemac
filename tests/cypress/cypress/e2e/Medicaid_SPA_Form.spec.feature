@@ -6,22 +6,22 @@ Feature: Package Dashboard: Medicaid SPA Form
 
     Scenario: Screen Enhance - Medicaid SPA
         Then click on New Submission
-        And Click on State Plan Amendment SPA
-        And verify Medicaid SPA is a clickable option
-        And click on Medicaid SPA
-        And verify user is on new Medicaid SPA page
+        Then Click on State Plan Amendment SPA
+        Then verify Medicaid SPA is a clickable option
+        Then click on Medicaid SPA
+        Then verify user is on new Medicaid SPA page
 
     Scenario: Create Medicaid SPA from package dashboard and search it
         Then click on New Submission
-        And Click on State Plan Amendment SPA
-        And click on Medicaid SPA
-        And type in Medicaid SPA ID
-        And select proposed effective date 3 months from today
-        And Add file for CMS Form 179
-        And Add file for SPA Pages
-        And Type Additonal Info Comments in new form
-        And Click on Submit Button
-        And verify submission successful message in the alert bar
-        And verify the SPAs tab is selected
-        And search for Medicaid SPA ID
-        And verify id number in the first row matches Medicaid SPA ID
+        Then Click on State Plan Amendment SPA
+        Then click on Medicaid SPA
+        Then type in Medicaid SPA ID
+        Then select proposed effective date 3 months from today
+        Then Add file for CMS Form 179
+        Then Add file for SPA Pages
+        Then Type Additonal Info Comments in new form
+        Then Click on Submit Button
+        Then verify submission successful message in the alert bar
+        Then verify the SPAs tab is selected
+        Then search for Medicaid SPA ID
+        Then verify id number in the first row matches Medicaid SPA ID

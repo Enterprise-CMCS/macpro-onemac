@@ -4,30 +4,30 @@ Feature: OY2-11149 Submission Dashboard - Search bar
         Given I am on Login Page
         When Clicking on Development Login
         When Login with state submitter user
-        And type in search bar not existing ID in search bar
-        And verify Error message displayed should be No Results Found
-        And verify Error message details is displayed
+        Then type in search bar not existing ID in search bar
+        Then verify Error message displayed should be No Results Found
+        Then verify Error message details is displayed
 
     Scenario: Search for non existing criteria and verify error message
         Given I am on Login Page
         When Clicking on Development Login
         When Login with state submitter user
-        And type in search bar expiration status “pending”
-        And verify Error message displayed should be No Results Found
-        And verify Error message details is displayed
+        Then type in search bar expiration status “pending”
+        Then verify Error message displayed should be No Results Found
+        Then verify Error message details is displayed
 
     Scenario: Search for medicaid SPA
         Given I am on Login Page
         When Clicking on Development Login
         When Login with state submitter user
-        And Click on Filter Button
-        And click on Type
-        And click CHIP SPA check box
-        And Click on Filter Button
-        And copy the ID from the link in the first row
-        And search for the ID copied from the link in the first row
-        And verify the ID searched for is the ID in the first result
-        And clear search bar
+        Then Click on Filter Button
+        Then click on Type
+        Then click CHIP SPA check box
+        Then Click on Filter Button
+        Then copy the ID from the link in the first row
+        Then search for the ID copied from the link in the first row
+        Then verify the ID searched for is the ID in the first result
+        Then clear search bar
 
 
     Scenario: Create Initial Waiver and search it
@@ -35,55 +35,55 @@ Feature: OY2-11149 Submission Dashboard - Search bar
         When Clicking on Development Login
         When Login with state submitter user
         Then click on New Submission
-        And Click on Waiver Action
-        And click on Initial Waiver
-        And Click on 1915 b 4 FFS Selective Contracting waivers under Waiver Authority
-        And Type Initial Waiver Number 2 in format SS-#####.R00.00
-        And select proposed effective date 3 months from today
-        And Upload 1915 b 4 file
-        And Type Additonal Info Comments in new form
-        And Click on Submit Button
-        And verify submission successful message in the alert bar
+        Then Click on Waiver Action
+        Then click on Initial Waiver
+        Then Click on 1915 b 4 FFS Selective Contracting waivers under Waiver Authority
+        Then Type Initial Waiver Number 2 in format SS-#####.R00.00
+        Then select proposed effective date 3 months from today
+        Then Upload 1915 b 4 file
+        Then Type Additonal Info Comments in new form
+        Then Click on Submit Button
+        Then verify submission successful message in the alert bar
 
-        And search for Initial Waiver Number 2 with 12 Characters
-        And clear search bar
-        And type in submitters name
-        And verify user exists with id number searched
+        Then search for Initial Waiver Number 2 with 12 Characters
+        Then clear search bar
+        Then type in submitters name
+        Then verify user exists with id number searched
 
     Scenario: Search existing user with Upper case
         Given I am on Login Page
         When Clicking on Development Login
         When Login with state submitter user
-        And search existing user with all upper case
-        And verify user exists with id number searched
+        Then search existing user with all upper case
+        Then verify user exists with id number searched
 
 
     Scenario: Search existing user with special characters
         Given I am on Login Page
         When Clicking on Development Login
         When Login with state submitter user
-        And search existing user with dash
-        And verify user exists with id number searched
+        Then search existing user with dash
+        Then verify user exists with id number searched
 
     Scenario: Log in with help desk user
         Given I am on Login Page
         When Clicking on Development Login
         When Login with cms Help Desk User
-        And verify search bar exists
-        And verify search by package id or submitter name is displayed ontop of search bar
+        Then verify search bar exists
+        Then verify search by package id or submitter name is displayed ontop of search bar
 
     Scenario: Log in with system admin user
         Given I am on Login Page
         When Clicking on Development Login
         When Login with cms System Admin
-        And verify search bar exists
-        And verify search by package id or submitter name is displayed ontop of search bar
+        Then verify search bar exists
+        Then verify search by package id or submitter name is displayed ontop of search bar
 
     Scenario: Screen Enhancement
         Given I am on Login Page
         When Clicking on Development Login
         When Login with state submitter user
-        And verify search bar exists
-        And verify search by package id or submitter name is displayed ontop of search bar
-        And search existing user with all upper case
-        And verify x in search bar exists to clear search and click it
+        Then verify search bar exists
+        Then verify search by package id or submitter name is displayed ontop of search bar
+        Then search existing user with all upper case
+        Then verify x in search bar exists to clear search and click it

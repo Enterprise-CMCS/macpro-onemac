@@ -4,9 +4,9 @@ Feature: OY2-11159 Case sensitive emails causing login error
         When Clicking on Development Login
         When Login with state submitter user
         Then i am on Dashboard Page
-        And navigate to "/profile/statesubmitter@nightwatch.test"
-        And Actual Full Name is Displayed
-        And navigate to "/profile/STATESUBMITTER@NIGHTWATCH.TEST"
-        And Actual Full Name is Displayed
-        And navigate to "/profile/staTEsubmiTTeR@nightwatch.test"
-        And Actual Full Name is Displayed
+        Then navigate to "/profile/statesubmitter@nightwatch.test"
+        Then Actual Full Name is Displayed
+        Then navigate to "/profile/STATESUBMITTER@NIGHTWATCH.TEST"
+        Then Actual Full Name is Displayed
+        Then navigate to "/profile/staTEsubmiTTeR@nightwatch.test"
+        Then Actual Full Name is Displayed

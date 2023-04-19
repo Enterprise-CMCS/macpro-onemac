@@ -3,69 +3,69 @@ Feature: Verify user can withdraw a package in Under Review Status in the packag
         Given I am on Login Page
         When Clicking on Development Login
         When Login with state submitter user
-        And click on Packages
-        And click on the Waivers tab
-        And Click on Filter Button
-        And click on Status
-        And uncheck all of the status checkboxes
-        And click Under Review checkbox
-        And click on Type
-        And uncheck all of the type checkboxes
-        And click 1915b Waiver Amendment check box
+        Then click on Packages
+        Then click on the Waivers tab
+        Then Click on Filter Button
+        Then click on Status
+        Then uncheck all of the status checkboxes
+        Then click Under Review checkbox
+        Then click on Type
+        Then uncheck all of the type checkboxes
+        Then click 1915b Waiver Amendment check box
 
     Scenario: Screen Enhance - Validate 1915B Waiver Amendment Withdrawal Page from dashboard
-        And click the actions button in row one
-        And click withdraw package button
-        And verify the header is "Withdraw Waiver" on the withdrawal form
-        And verify the form intro exists on the withdrawal form
-        And verify the Waiver number header exists on the withdrawal form
-        And verify the Waiver number exists on the withdrawal form
-        And verify the Type header exists on the withdrawal form
-        And verify the type is "Waiver Amendment"
-        And verify the Upload Supporting Documentation header exists on the withdrawal form
-        And verify the Additional Info header exists on the withdrawal form
-        And verify the submit button is disabled
-        And verify form cancel button exists
-        And click form cancel button
-        And click Stay on Page
-        And click form cancel button
-        And click Leave Anyway form button
+        Then click the actions button in row one
+        Then click withdraw package button
+        Then verify the header is "Withdraw Waiver" on the withdrawal form
+        Then verify the form intro exists on the withdrawal form
+        Then verify the Waiver number header exists on the withdrawal form
+        Then verify the Waiver number exists on the withdrawal form
+        Then verify the Type header exists on the withdrawal form
+        Then verify the type is "Waiver Amendment"
+        Then verify the Upload Supporting Documentation header exists on the withdrawal form
+        Then verify the Additional Info header exists on the withdrawal form
+        Then verify the submit button is disabled
+        Then verify form cancel button exists
+        Then click form cancel button
+        Then click Stay on Page
+        Then click form cancel button
+        Then click Leave Anyway form button
         Then Click on My Account
-        And click the logout button
+        Then click the logout button
 
     Scenario: Screen Enhance - Validate 1915B Waiver Amendment Withdrawal Page from details page
-        And click the Waiver Number link in the first row
-        And verify the package details page is visible
-        And click withdraw button
-        And verify the header is "Withdraw Waiver" on the withdrawal form
-        And verify the form intro exists on the withdrawal form
-        And verify the Waiver number header exists on the withdrawal form
-        And verify the Waiver number exists on the withdrawal form
-        And verify the Type header exists on the withdrawal form
-        And verify the type is "Waiver Amendment"
-        And verify the Upload Supporting Documentation header exists on the withdrawal form
-        And verify the Additional Info header exists on the withdrawal form
-        And verify the submit button is disabled
-        And verify form cancel button exists
-        And click form cancel button
-        And click Stay on Page
-        And click form cancel button
-        And click Leave Anyway form button
+        Then click the Waiver Number link in the first row
+        Then verify the package details page is visible
+        Then click withdraw button
+        Then verify the header is "Withdraw Waiver" on the withdrawal form
+        Then verify the form intro exists on the withdrawal form
+        Then verify the Waiver number header exists on the withdrawal form
+        Then verify the Waiver number exists on the withdrawal form
+        Then verify the Type header exists on the withdrawal form
+        Then verify the type is "Waiver Amendment"
+        Then verify the Upload Supporting Documentation header exists on the withdrawal form
+        Then verify the Additional Info header exists on the withdrawal form
+        Then verify the submit button is disabled
+        Then verify form cancel button exists
+        Then click form cancel button
+        Then click Stay on Page
+        Then click form cancel button
+        Then click Leave Anyway form button
         Then Click on My Account
-        And click the logout button
+        Then click the logout button
     
     Scenario: Screen Enhance - Validate Form logic
-        And click the actions button in row one
-        And click withdraw package button
-        And verify the submit button is disabled
-        And add additional info comment in the withdrawal form
-        And verify the submit button is not disabled
-        And upload withdrawal documentation
-        And verify the submit button is not disabled
-        And clear additional info comment in the withdrawal form
-        And verify the submit button is not disabled
-        And Click the Submit Button without waiting
-        And verify yes, withdraw package button exists
-        And click modal cancel button
+        Then click the actions button in row one
+        Then click withdraw package button
+        Then verify the submit button is disabled
+        Then add additional info comment in the withdrawal form
+        Then verify the submit button is not disabled
+        Then upload withdrawal documentation
+        Then verify the submit button is not disabled
+        Then clear additional info comment in the withdrawal form
+        Then verify the submit button is not disabled
+        Then Click the Submit Button without waiting
+        Then verify yes, withdraw package button exists
+        Then click modal cancel button
         Then Click on My Account
-        And click the logout button
+        Then click the logout button

@@ -1,47 +1,47 @@
 Feature: OY2-12297 Home Page Update - Include guidance for CMS User
     Scenario: verify key words exist properly on home page
         Given I am on Login Page
-        And Home tab exists
-        And FAQ tab exists
-        And Register exists
-        And Login Exists
-        And welcome message exists
-        And state users section exists
-        And cms users section exists
-        And do you have questions or need support exists
-        And View FAQ exists
+        Then Home tab exists
+        Then FAQ tab exists
+        Then Register exists
+        Then Login Exists
+        Then welcome message exists
+        Then state users section exists
+        Then cms users section exists
+        Then do you have questions or need support exists
+        Then View FAQ exists
 
     Scenario: verify state users section information
         Given I am on Login Page
-        And state users section exists
-        And How to create a submission exists
-        And Login with IDM Exists
-        And Login with IDM Info Exists
-        And Attach your documents Exists
-        And Attach your documents info Exists
-        And Receive an email confirmation Exists
-        And Receive an email confirmation details Exists
-        And Submission Types include Exists
-        And Amendments to your Medicaid and CHIP State Plans not submitted through MACPro MMDL or WMS Exists
-        And Official state responses to formal requests for additional information RAIs for SPAs not submitted through MACPro Exists
-        And Section 1915b waiver submissions those not submitted through WMS Exists
-        And Section 1915c Appendix K amendments which cannot be submitted through WMS Exists
-        And Official state responses to formal requests for additional information RAIs for Section 1915b waiver actions in addition to submitting waiver changes in WMS if applicable Exists
+        Then state users section exists
+        Then How to create a submission exists
+        Then Login with IDM Exists
+        Then Login with IDM Info Exists
+        Then Attach your documents Exists
+        Then Attach your documents info Exists
+        Then Receive an email confirmation Exists
+        Then Receive an email confirmation details Exists
+        Then Submission Types include Exists
+        Then Amendments to your Medicaid and CHIP State Plans not submitted through MACPro MMDL or WMS Exists
+        Then Official state responses to formal requests for additional information RAIs for SPAs not submitted through MACPro Exists
+        Then Section 1915b waiver submissions those not submitted through WMS Exists
+        Then Section 1915c Appendix K amendments which cannot be submitted through WMS Exists
+        Then Official state responses to formal requests for additional information RAIs for Section 1915b waiver actions in addition to submitting waiver changes in WMS if applicable Exists
 
     Scenario: verify CMS Users section information
         Given I am on Login Page
-        And cms users section exists
-        And How to review a submission exists
-        And Receive an email for submission notification exists
-        And Receive an email for submission notification information exists
-        And Login with EUA exists
-        And Login with EUA information exists
-        And Review your assigned submission exists
-        And Review your assigned submission information exists
-        And Submission Types include exists
-        And Amendments to your Medicaid and CHIP State Plans exists
-        And Official state responses to formal requests for additional information RAIs for SPAs exists
-        And Section 1915b waiver submissions exists
-        And Section 1915c Appendix K amendments exists
-        And Official state responses to formal requests for additional information RAIs for Section 1915b waiver actions exists
-        And State requests for Temporary Extensions for section 1915b and 1915c waivers exists
+        Then cms users section exists
+        Then How to review a submission exists
+        Then Receive an email for submission notification exists
+        Then Receive an email for submission notification information exists
+        Then Login with EUA exists
+        Then Login with EUA information exists
+        Then Review your assigned submission exists
+        Then Review your assigned submission information exists
+        Then Submission Types include exists
+        Then Amendments to your Medicaid and CHIP State Plans exists
+        Then Official state responses to formal requests for additional information RAIs for SPAs exists
+        Then Section 1915b waiver submissions exists
+        Then Section 1915c Appendix K amendments exists
+        Then Official state responses to formal requests for additional information RAIs for Section 1915b waiver actions exists
+        Then State requests for Temporary Extensions for section 1915b and 1915c waivers exists

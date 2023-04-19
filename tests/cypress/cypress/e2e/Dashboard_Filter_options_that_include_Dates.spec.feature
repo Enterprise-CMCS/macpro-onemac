@@ -5,20 +5,20 @@ Feature: Package Dashboard - Filter options that include Dates
         When Login with state submitter user
 
     Scenario: Change Initial Submission Date filter. Verify no results. Then reset filter
-        And click on the Waivers tab
-        And Click on Filter Button
-        And click on Initial Submission Date filter dropdown
-        And click on Initial Submission Date date picker filter
-        And click on quarter to date date picker button
-        And click on Initial Submission Date filter dropdown
-        And click on reset button
-        And Click on Filter Button
-        And verify package row one exists
+        Then click on the Waivers tab
+        Then Click on Filter Button
+        Then click on Initial Submission Date filter dropdown
+        Then click on Initial Submission Date date picker filter
+        Then click on quarter to date date picker button
+        Then click on Initial Submission Date filter dropdown
+        Then click on reset button
+        Then Click on Filter Button
+        Then verify package row one exists
 
     Scenario: Filter by Initial Submission Date - Date picker
-        And Click on Filter Button
-        And click on Initial Submission Date filter dropdown
-        And click on Initial Submission Date date picker filter
-        And click on quarter to date date picker button
-        And Click on Filter Button
-        And verify Initial Submission Date column one date is this quarter
+        Then Click on Filter Button
+        Then click on Initial Submission Date filter dropdown
+        Then click on Initial Submission Date date picker filter
+        Then click on quarter to date date picker button
+        Then Click on Filter Button
+        Then verify Initial Submission Date column one date is this quarter

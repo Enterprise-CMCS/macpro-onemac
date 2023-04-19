@@ -6,12 +6,12 @@ Feature: Package Dashboard Read Only View
 
     Scenario: CMS Read Only user actions column unavailable in Package Dashboard
 
-        And verify actions column is unavailable
-        And click on the Waivers tab
-        And verify actions column is unavailable
+        Then verify actions column is unavailable
+        Then click on the Waivers tab
+        Then verify actions column is unavailable
 
     Scenario: CMS Read Only user actions column unavailable in Package Mini-Dashboard
 
-        And click on the Waivers tab
-        And click the Waiver Number link in the first row
-        And verify the package actions section is unavailable
+        Then click on the Waivers tab
+        Then click the Waiver Number link in the first row
+        Then verify the package actions section is unavailable

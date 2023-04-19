@@ -4,19 +4,19 @@ Feature: OY2_10093_Helpdesk_User
         When Clicking on Development Login
         When Login with cms Help Desk User
         Then i am on Dashboard Page
-        And verify the SPAs tab is selected
-        And verify Export to Excel CSV is Displayed
-        And verify IDNumber column exists
-        And verify type column exists
-        And verify state column exists
-        And verify submitted by column exists
-        And Click on User Management Tab
+        Then verify the SPAs tab is selected
+        Then verify Export to Excel CSV is Displayed
+        Then verify IDNumber column exists
+        Then verify type column exists
+        Then verify state column exists
+        Then verify submitted by column exists
+        Then Click on User Management Tab
         Then i am on User Management Page
-        And verify User Management is Displayed
-        And verify Export to Excel CSV is Displayed
-        And verify Name is Displayed
-        And verify State is Displayed
-        And verify Status is Displayed
-        And verify Role is Displayed
-        And verify Last Modified is Displayed
-        And verify Modified By is Displayed
+        Then verify User Management is Displayed
+        Then verify Export to Excel CSV is Displayed
+        Then verify Name is Displayed
+        Then verify State is Displayed
+        Then verify Status is Displayed
+        Then verify Role is Displayed
+        Then verify Last Modified is Displayed
+        Then verify Modified By is Displayed
