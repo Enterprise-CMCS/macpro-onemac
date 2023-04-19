@@ -968,6 +968,9 @@ export class oneMacPackagePage {
   clickConfirmWithdrawPackageBtn() {
     cy.xpath(withdrawPackageConfirmBtn).click();
   }
+  verifyConfirmWithdrawPackageBtnExists() {
+    cy.xpath(withdrawPackageConfirmBtn).should("be.visible");
+  }
   verifyChildRowStatusIs(status) {
     cy.get(packageRowTwoStatus).should("contain.text", status);
   }

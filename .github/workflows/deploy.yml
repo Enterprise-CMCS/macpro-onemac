@@ -321,6 +321,12 @@ jobs:
             Dashboard_Under_Review_Actions.spec.feature,
             Dashboard_Approved_Actions.spec.feature,
             Dashboard_Filter_CMS.spec.feature,
+            Withdraw_Package_Form_App_K_Amendment.spec.feature,
+            Withdraw_Package_Form_CHIP_SPA.spec.feature,
+            Withdraw_Package_Form_Initial_Waiver.spec.feature,
+            Withdraw_Package_Form_Medicaid_SPA.spec.feature,
+            Withdraw_Package_Form_Waiver_Amendment.spec.feature,
+            Withdraw_Package_Form_Waiver_Renewal.spec.feature,
             
           ]
     steps:
