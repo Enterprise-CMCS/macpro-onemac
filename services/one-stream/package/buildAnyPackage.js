@@ -56,8 +56,8 @@ export const buildAnyPackage = async (packageId, config) => {
         submissionTimestamp: 0,
         submitterName: "-- --",
         submitterEmail: "-- --",
-        subject: "",
-        description: "",
+        subject: "-- --",
+        description: "-- --",
       },
     };
     let currentPackage;
