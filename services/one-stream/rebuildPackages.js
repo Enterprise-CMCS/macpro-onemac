@@ -52,11 +52,19 @@ export const main = async () => {
   console.log("toRebuild: ", toRebuild);
   await Promise.all(
     toRebuild.map(async (item) => {
-      baseUpdateParams.Key.pk = item.pk;
-      baseUpdateParams.Key.sk = item.sk;
-
-      console.log("update params: ", baseUpdateParams);
-      await dynamoDb.update(baseUpdateParams).promise();
+      await dynamoDb
+        .update({
+          TableName: process.env.oneMacTableName,
+          Key: {
+            pk: item.pk,
+            sk: item.sk,
+          },
+          UpdateExpression: "SET deployTrigger = :dt",
+          ExpressionAttributeValues: {
+            ":dt": process.env.deployTrigger,
+          },
+        })
+        .promise();
     })
   );
 };
