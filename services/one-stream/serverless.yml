@@ -70,8 +70,8 @@ functions:
       localTableName: ${self:custom.localTableName}
     maximumRetryAttempts: 2
 
-  buildOldPackages:
-    handler: buildOldPackages.main
+  rebuildPackages:
+    handler: rebuildPackages.main
     role: LambdaOneStreamRole
     environment:
       STAGE: ${self:custom.stage}
