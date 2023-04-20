@@ -4,7 +4,12 @@ import { dynamoConfig } from "cmscommonlib";
 
 const dynamoDb = new AWS.DynamoDB.DocumentClient(dynamoConfig);
 
-const gsi1pksToRebuild = ["SEATool#Medicaid_SPA", "SEATool#Medicaid_SPA"];
+const gsi1pksToRebuild = [
+  "SEATool#Medicaid_SPA",
+  "SEATool#CHIP_SPA",
+  "SEATool#1915b_waivers",
+  "SEATool#1915c_waivers",
+];
 
 export const main = async () => {
   // only run this if indicated in the deploy
@@ -15,6 +20,7 @@ export const main = async () => {
     TableName: process.env.oneMacTableName,
     IndexName: "GSI1",
     KeyConditionExpression: "GSI1pk = :pk",
+    Limit: 5,
     ProjectionExpression: "pk, sk",
   };
 
@@ -43,11 +49,13 @@ export const main = async () => {
     })
   );
 
+  console.log("toRebuild: ", toRebuild);
   await Promise.all(
     toRebuild.map(async (item) => {
       baseUpdateParams.Key.pk = item.pk;
       baseUpdateParams.Key.sk = item.sk;
 
+      console.log("update params: ", baseUpdateParams);
       await dynamoDb.update(baseUpdateParams).promise();
     })
   );

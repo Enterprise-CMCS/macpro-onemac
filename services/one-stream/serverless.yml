@@ -79,6 +79,7 @@ functions:
       localTableName: ${self:custom.localTableName}
       deployTrigger: "rebuild to add Subject and Description to packages"
     maximumRetryAttempts: 2
+    timeout: 600
 
 resources:
   Conditions:
