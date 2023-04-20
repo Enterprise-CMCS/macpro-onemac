@@ -26,7 +26,7 @@ export const main = async () => {
     },
   };
 
-  let toRebuild = [];
+  const toRebuild = [];
 
   await Promise.all(
     gsi1pksToRebuild.map(async (gsi1pk) => {
