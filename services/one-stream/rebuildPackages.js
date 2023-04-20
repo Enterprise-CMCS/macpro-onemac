@@ -36,14 +36,14 @@ export const main = async () => {
         ExpressionAttributeValues: {
           ":pk": gsi1pk,
         },
-        Limit: 5,
         ProjectionExpression: "pk, sk",
       };
 
       do {
         console.log(`queryGSI1Params: %s`, queryGSI1Params);
         const results = await dynamoDb.query(queryGSI1Params).promise();
-        toRebuild.concat(results.Items);
+        console.log("results: ", results);
+        toRebuild.concat(...results.Items);
         queryGSI1Params.ExclusiveStartKey = results.LastEvaluatedKey;
       } while (queryGSI1Params.ExclusiveStartKey);
     })
