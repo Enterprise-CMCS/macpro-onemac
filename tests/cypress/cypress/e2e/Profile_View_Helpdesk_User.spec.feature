@@ -1,4 +1,5 @@
-Feature: OY2_10093_Helpdesk_User
+Feature: Helpdesk User
+
     Scenario: Verify that there are Dashboard and User Management tabs
         Given I am on Login Page
         When Clicking on Development Login
@@ -8,7 +9,7 @@ Feature: OY2_10093_Helpdesk_User
         Then verify Export to Excel CSV is Displayed
         Then verify IDNumber column exists
         Then verify type column exists
-        Then verify state column exists
+        Then verify state column does not exist
         Then verify submitted by column exists
         Then Click on User Management Tab
         Then i am on User Management Page

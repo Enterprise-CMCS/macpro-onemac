@@ -26,7 +26,6 @@ Feature: Package Dashboard - SPA Tab Column Picker
     Scenario: SPAs Tab - Uncheck all and verify SPA ID and actions exists
         Then click show hide columns button
         Then click Initial Submission Date checkbox
-        Then click state checkbox
         Then click status checkbox
         Then click submitted by checkbox
         Then click type checkbox

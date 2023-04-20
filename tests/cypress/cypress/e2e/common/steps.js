@@ -387,7 +387,7 @@ Then("Return to dashboard Page", () => {
 });
 
 Then("type in invalid SPA ID on Medicaid SPA page", () => {
-  OneMacSubmitNewMedicaidSpaPage.typeIncorrectSPAIDThenFormat();
+  OneMacSubmitNewMedicaidSpaPage.typeIncorrectSPAIDAndFormat();
 });
 
 Then("verify that error message for incorrect SPA ID is Displayed", () => {

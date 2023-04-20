@@ -45,7 +45,7 @@ Feature: Package Dashboard - Filter
         Then click on Status
         Then verify Submitted status checkbox exists
         Then verify Package Withdrawn status checkbox exists
-        #Then verify RAI Issued status checkbox exists     # Need seed data / reset data update
+        Then verify RAI Issued status checkbox exists
         Then verify Under Review checkbox exists
         Then verify Approved checkbox exists
         Then verify Disapproved checkbox exists
@@ -95,7 +95,6 @@ Feature: Package Dashboard - Filter
         Then Click on My Account
         Then click the logout button
 
-
     Scenario: SPAs tab - verify one exists, deselct selection then verify error message
         Then Click on Filter Button
         Then click on Type
@@ -110,7 +109,6 @@ Feature: Package Dashboard - Filter
         Then verify Error message details is displayed
         Then Click on My Account
         Then click the logout button
-
 
     Scenario: Waivers tab - deselect all and verify error message, then select one and verify it exists
         Then click on the Waivers tab
