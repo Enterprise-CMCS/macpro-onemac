@@ -6,7 +6,7 @@ import { formatPackageDetails } from "./formatPackageDetails.js";
  * @returns {Object} email parameters in generic format.
  */
 export const CMSWithdrawalNotice = (data, config, user) => ({
-  ToAddresses: [process.env.reviewerEmail],
+  ToAddresses: [config.CMSToAddresses],
   CcAddresses:
     data.componentType === "chipspa" || data.componentType === "chipsparai"
       ? process.env.chipCcEmail?.split(";")?.filter((s) => s.trim())
