@@ -16,14 +16,6 @@ export const main = async () => {
   if (!process.env.deployTrigger || process.env.deployTrigger === "none")
     return;
 
-  const queryGSI2Params = {
-    TableName: process.env.oneMacTableName,
-    IndexName: "GSI1",
-    KeyConditionExpression: "GSI1pk = :pk",
-    Limit: 5,
-    ProjectionExpression: "pk, sk",
-  };
-
   const baseUpdateParams = {
     TableName: process.env.oneMacTableName,
     UpdateExpression: "SET deployTrigger = :dt",
@@ -36,16 +28,24 @@ export const main = async () => {
 
   await Promise.all(
     gsi1pksToRebuild.map(async (gsi1pk) => {
-      console.log(`Processing GSI1pk: %s`, gsi1pk);
-      queryGSI2Params.ExpressionAttributeValues = {
-        ":pk": gsi1pk,
+      // need the parameters inside the scope of the Promise
+      const queryGSI1Params = {
+        TableName: process.env.oneMacTableName,
+        IndexName: "GSI1",
+        KeyConditionExpression: "GSI1pk = :pk",
+        ExpressionAttributeValues: {
+          ":pk": gsi1pk,
+        },
+        Limit: 5,
+        ProjectionExpression: "pk, sk",
       };
 
       do {
-        const results = await dynamoDb.query(queryGSI2Params).promise();
+        console.log(`queryGSI1Params: %s`, queryGSI1Params);
+        const results = await dynamoDb.query(queryGSI1Params).promise();
         toRebuild.concat(results.Items);
-        queryGSI2Params.ExclusiveStartKey = results.LastEvaluatedKey;
-      } while (queryGSI2Params.ExclusiveStartKey);
+        queryGSI1Params.ExclusiveStartKey = results.LastEvaluatedKey;
+      } while (queryGSI1Params.ExclusiveStartKey);
     })
   );
 
