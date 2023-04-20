@@ -37,7 +37,7 @@ export const main = async () => {
 
       do {
         const results = await dynamoDb.query(queryGSI2Params).promise();
-        toRebuild.append(results.Items);
+        toRebuild.concat(results.Items);
         queryGSI2Params.ExclusiveStartKey = results.LastEvaluatedKey;
       } while (queryGSI2Params.ExclusiveStartKey);
     })
