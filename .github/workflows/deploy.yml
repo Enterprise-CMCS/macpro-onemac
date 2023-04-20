@@ -385,7 +385,6 @@ jobs:
           working-directory: tests/cypress
           spec: cypress/e2e/${{ matrix.containers }}
           browser: chrome
-          headless: true
           config: baseUrl=${{ env.APPLICATION_ENDPOINT }}
       - name: Upload screenshots
         uses: actions/upload-artifact@v2
@@ -490,7 +489,6 @@ jobs:
           working-directory: tests/cypress
           spec: cypress/e2e/a11y/${{ matrix.containers }}.spec.js
           browser: chrome
-          headless: true
           config: baseUrl=${{ env.APPLICATION_ENDPOINT }}
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
