@@ -16,14 +16,6 @@ export const main = async () => {
   if (!process.env.deployTrigger || process.env.deployTrigger === "none")
     return;
 
-  const baseUpdateParams = {
-    TableName: process.env.oneMacTableName,
-    UpdateExpression: "SET deployTrigger = :dt",
-    ExpressionAttributeValues: {
-      ":dt": process.env.deployTrigger,
-    },
-  };
-
   const toRebuild = [];
 
   await Promise.all(
