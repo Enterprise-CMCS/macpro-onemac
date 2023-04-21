@@ -345,17 +345,17 @@ jobs:
           COGNITO_TEST_USERS_PASSWORD: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_COGNITO_TEST_USERS_PASSWORD] || secrets.COGNITO_TEST_USERS_PASSWORD }}
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       - name: Configure AWS credentials for GitHub Actions
-        uses: aws-actions/configure-aws-credentials@v1
+        uses: aws-actions/configure-aws-credentials@v2
         with:
           role-to-assume: ${{ env.AWS_OIDC_ROLE_TO_ASSUME }}
           aws-region: ${{ env.AWS_DEFAULT_REGION }}
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v3
         with:
-          node-version: "14.x"
+          node-version: 16
       - name: Combine package-lock.json files to single file
         run: find services -maxdepth 3 -name package-lock.json | xargs cat package-lock.json > combined-package-lock.txt
       - name: cache service dependencies
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: |
             services/uploads/node_modules
@@ -367,7 +367,8 @@ jobs:
             node_modules
           key: ${{ runner.os }}-${{ hashFiles('combined-package-lock.txt') }}
       - name: Install dependencies
-        run: npm ci
+        run: |
+          npm i --legacy-peer-deps
       - name: set path
         run: |
           echo "PATH=$(pwd)/node_modules/.bin/:$PATH" >> $GITHUB_ENV
@@ -379,12 +380,11 @@ jobs:
           echo "Application endpoint: $APPLICATION_ENDPOINT"
           popd         
       - name: Run Cypress Tests
-        uses: cypress-io/github-action@v2.11.7
+        uses: cypress-io/github-action@v5
         with:
           working-directory: tests/cypress
-          spec: cypress/integration/${{ matrix.containers }}
+          spec: cypress/e2e/${{ matrix.containers }}
           browser: chrome
-          headless: true
           config: baseUrl=${{ env.APPLICATION_ENDPOINT }}
       - name: Upload screenshots
         uses: actions/upload-artifact@v2
@@ -449,17 +449,17 @@ jobs:
           COGNITO_TEST_USERS_PASSWORD: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_COGNITO_TEST_USERS_PASSWORD] || secrets.COGNITO_TEST_USERS_PASSWORD }}
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       - name: Configure AWS credentials for GitHub Actions
-        uses: aws-actions/configure-aws-credentials@v1
+        uses: aws-actions/configure-aws-credentials@v2
         with:
           role-to-assume: ${{ env.AWS_OIDC_ROLE_TO_ASSUME }}
           aws-region: ${{ env.AWS_DEFAULT_REGION }}
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v3
         with:
-          node-version: "14.x"
+          node-version: 16
       - name: Combine package-lock.json files to single file
         run: find services -maxdepth 3 -name package-lock.json | xargs cat package-lock.json > combined-package-lock.txt
       - name: cache service dependencies
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: |
             services/app-api/node_modules
@@ -471,7 +471,8 @@ jobs:
             node_modules
           key: ${{ runner.os }}-${{ hashFiles('combined-package-lock.txt') }}
       - name: Install dependencies
-        run: npm install --frozen-lockfile
+        run: |
+          npm install --frozen-lockfile --legacy-peer-deps
       - name: set path
         run: |
           echo "PATH=$(pwd)/node_modules/.bin/:$PATH" >> $GITHUB_ENV
@@ -483,12 +484,11 @@ jobs:
           echo "Application endpoint: $APPLICATION_ENDPOINT"
           popd
       - name: Check Project A11y
-        uses: cypress-io/github-action@v2.11.7
+        uses: cypress-io/github-action@v5
         with:
           working-directory: tests/cypress
-          spec: cypress/integration/a11y/${{ matrix.containers }}.spec.js
+          spec: cypress/e2e/a11y/${{ matrix.containers }}.spec.js
           browser: chrome
-          headless: true
           config: baseUrl=${{ env.APPLICATION_ENDPOINT }}
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}

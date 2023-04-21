@@ -1,0 +1,31 @@
+Feature: RAI Response for Initial Waiver - Package View
+
+    Background: Reoccuring Steps
+        Given I am on Login Page
+        When Clicking on Development Login
+        When Login with state submitter user
+        Then click on Packages
+        Then click on the Waivers tab
+        Then Click on Filter Button
+        Then click on Status
+        Then uncheck all of the status checkboxes
+        Then click RAI Issued checkbox
+        Then click on Status
+        Then click on Type
+        Then uncheck all of the type checkboxes
+        Then click 1915b Initial Waiver check box
+        Then Click on Filter Button
+
+    Scenario: validate response to RAI from package dashboard
+        Then click the actions button in row one
+        Then click the Respond to RAI button
+        Then verify the package ID is prefilled in the form
+        Then Add file for Waiver RAI Response
+        Then verify the submit button is enabled 
+
+    Scenario: validate response to RAI from package details page
+        Then click the Waiver Number link in the first row
+        Then click on Respond to RAI package action
+        Then verify the package ID is prefilled in the form
+        Then Add file for Waiver RAI Response
+        Then verify the submit button is enabled 
