@@ -7,7 +7,7 @@ Feature: OY2_9990_State_Submitter_Profile_Screen_Enhancements
         And verify New Submission BTN is Displayed
         And verify IDNumber column exists
         And verify type column exists
-        And verify state column exists
+        And verify state column does not exist
         And verify submitted by column exists
         And verify Home tab is Displayed
         And dashboard tab is Displayed
