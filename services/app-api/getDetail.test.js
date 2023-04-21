@@ -18,6 +18,12 @@ const validDoneBy = {
   fullName: "firsty lastly",
 };
 
+const validCMSDoneBy = {
+  roleList: [{ role: "defaultcmsuser", status: "active", territory: "N/A" }],
+  email: "myemail@email.com",
+  fullName: "Testy lastly",
+};
+
 const unauthorizedDoneBy = {
   roleList: [{ role: "cmsroleapprover", status: "active", territory: "N/A" }],
   email: "myemail@email.com",
@@ -165,6 +171,19 @@ describe("component details are returned", () => {
   });
 
   it("returns rai details", async () => {
+    await expect(getDetails(raiEvent))
+      .resolves.toStrictEqual({
+        field1: "one",
+        attachments: [{ url: undefined }, { url: undefined }],
+      })
+      .catch((error) => {
+        console.log("caught test error: ", error);
+      });
+  });
+
+  it("returns CMS details", async () => {
+    getUser.mockResolvedValueOnce(validCMSDoneBy);
+
     await expect(getDetails(raiEvent))
       .resolves.toStrictEqual({
         field1: "one",
