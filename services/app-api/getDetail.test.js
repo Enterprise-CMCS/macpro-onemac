@@ -14,6 +14,8 @@ beforeAll(() => {
 
 const validDoneBy = {
   roleList: [{ role: "statesubmitter", status: "active", territory: "MI" }],
+  isCMSUser: false,
+  canSeeSubjectAndDescription: true,
   email: "myemail@email.com",
   fullName: "firsty lastly",
 };
