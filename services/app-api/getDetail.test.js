@@ -15,13 +15,15 @@ beforeAll(() => {
 const validDoneBy = {
   roleList: [{ role: "statesubmitter", status: "active", territory: "MI" }],
   isCMSUser: false,
-  canSeeSubjectAndDescription: true,
+  canSeeSubjectAndDescription: false,
   email: "myemail@email.com",
   fullName: "firsty lastly",
 };
 
 const validCMSDoneBy = {
   roleList: [{ role: "defaultcmsuser", status: "active", territory: "N/A" }],
+  isCMSUser: true,
+  canSeeSubjectAndDescription: true,
   email: "myemail@email.com",
   fullName: "Testy lastly",
 };
@@ -86,6 +88,9 @@ beforeEach(() => {
     Item: {
       field1: "one",
       attachments: [{ url: "aURL" }, { url: "anotherURL" }],
+      raiResponses: [
+        { attachments: [{ url: "raiURL" }, { url: "anotherraiURL" }] },
+      ],
     },
   });
 
