@@ -425,12 +425,14 @@ function FilterPane<V extends {}>({
   const [showFilters, toggleShowFilters] = useToggle(false);
   const onResetFilters = useCallback(() => {
     setAllFilters(
-      // this awful complicated dance is because the DateRangePicker gets
-      // confused on reset if you don't explicitly pass an empty array
+      /* The DateFilter requires the value passed to reset be an empty array
+      rather than undefined. Before this, there was a bug where the filter UI 
+      would not reset the DateFilter */
       columnsInternal.flatMap(({ canFilter, filter, id }) => {
         if (!canFilter) return [];
         switch (filter) {
           case CustomFilterTypes.DateRange:
+            return { id, value: [] };
           default:
             return { id, value: undefined };
         }
