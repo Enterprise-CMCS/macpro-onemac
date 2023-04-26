@@ -1,6 +1,6 @@
 import { Accordion, AccordionItem, Review } from "@cmsgov/design-system";
 import { Workflow, getUserRoleObj } from "cmscommonlib";
-import React, { useCallback } from "react";
+import React from "react";
 import { useAppContext } from "../../libs/contextLib";
 import { formatDateOnly, formatDate } from "../../utils/date-utils";
 import { ComponentDetail } from "../DetailView";
@@ -8,6 +8,7 @@ import { OneMACDetail } from "../../libs/detailLib";
 import FileList from "../../components/FileList";
 import { actionComponent } from "../../libs/actionLib";
 import { AdditionalInfoSection } from "./AdditionalInfoSection";
+import { FORM_SOURCE } from "../../domain-types";
 
 export const DetailSection = ({
   pageConfig,
@@ -31,14 +32,6 @@ export const DetailSection = ({
   );
 
   const userRoleObj = getUserRoleObj(userProfile?.userData?.roleList);
-
-  const updateData = useCallback(
-    async (retCode) => {
-      loadDetail();
-      setAlertCode(retCode);
-    },
-    [loadDetail, setAlertCode]
-  );
 
   return (
     <>
@@ -79,7 +72,7 @@ export const DetailSection = ({
                       pageConfig.actionsByStatus[detail.currentStatus]?.map(
                         (actionName, i) => (
                           <li key={i}>
-                            {actionComponent[actionName](detail, updateData)}
+                            {actionComponent[actionName](detail, FORM_SOURCE.DETAIL)}
                           </li>
                         )
                       )
