@@ -22,3 +22,26 @@ Feature: Package Dashboard - Filter options that include Dates
         Then click on quarter to date date picker button
         Then Click on Filter Button
         Then verify Initial Submission Date column one date is this quarter
+
+    Scenario: Filter by Formal RAI Received - Date picker
+        Then Click on Filter Button
+        Then click on Formal RAI Received dropdown filter
+        Then click on Formal RAI Received date picker filter
+        Then click on quarter to date date picker button
+        Then Click on Filter Button
+        Then verify Initial Submission Date column one date is this quarter
+        Then Click on My Account
+        Then click the logout button
+
+    Scenario: Change Formal RAI Received date filter. Verify results. Then reset filter
+        Then click on the Waivers tab
+        Then Click on Filter Button
+        Then click on Formal RAI Received dropdown filter
+        Then click on Formal RAI Received date picker filter
+        Then click on quarter to date date picker button
+        Then click on Formal RAI Received dropdown filter
+        Then click on reset button
+        Then Click on Filter Button
+        Then verify package row one exists
+        Then Click on My Account
+        Then click the logout button
