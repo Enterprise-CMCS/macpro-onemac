@@ -24,6 +24,7 @@ export const defaultParentType = Joi.string().required();
 
 export const defaultWithdrawConfig = {
   ...defaultFormConfig,
+  successResponseCode: RESPONSE_CODE.WITHDRAW_REQUESTED,
   buildCMSNotice: CMSWithdrawalNotice,
   buildStateReceipt: stateWithdrawalReceipt,
   appendToSchema: {

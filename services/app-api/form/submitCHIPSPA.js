@@ -9,6 +9,7 @@ import {
 export const chipSPAFormConfig = {
   ...defaultFormConfig,
   ...chipSPA,
+  CMSToAddresses: [process.env.reviewerCHIPEmail],
   CMSCcAddresses: process.env.chipCcEmail?.split(";")?.filter((s) => s.trim()),
   appendToSchema: {
     proposedEffectiveDate: defaultProposedEffectiveDateSchema,

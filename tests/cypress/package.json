@@ -4,20 +4,21 @@
   "description": "",
   "main": "index.js",
   "devDependencies": {
+    "@badeball/cypress-cucumber-preprocessor": "^16.0.3",
+    "@bahmutov/cypress-esbuild-preprocessor": "^2.2.0",
     "axe-core": "^4.4.1",
     "concurrently": "^6.2.1",
-    "cypress": "^8.7.0",
-    "cypress-axe": "^0.14.0",
-    "cypress-cucumber-preprocessor": "^4.2.0",
+    "cypress": "^12.9.0",
+    "cypress-axe": "^1.4.0",
     "cypress-file-upload": "^5.0.8",
     "cypress-xpath": "^1.6.2"
   },
   "cypress-cucumber-preprocessor": {
-    "nonGlobalStepDefinitions": true
+    "stepDefinitions": "cypress/e2e/common/steps.js"
   },
   "scripts": {
     "start": "cd ../../ && ./dev local && cd -",
-    "test:ci": "npx cypress run --browser chrome --headless",
+    "test:ci": "npx cypress run --browser chrome",
     "cypress": "cypress open",
     "test": "concurrently --kill-others \"npm start\" \"npm run cypress\""
   },

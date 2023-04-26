@@ -6,11 +6,11 @@ const ChoiceList = ({ choices }) => {
   return (
     <>
       <div className="gradient-box"></div>
-      <ul className="choice-list">
+      <div className="choice-list">
         {choices.map((choice, key) => (
           <ChoiceItem {...choice} key={key} />
         ))}
-      </ul>
+      </div>
     </>
   );
 };

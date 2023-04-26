@@ -6,8 +6,8 @@ import Withdraw from "../page/action/Withdraw";
 import AddAmendment from "../page/action/AddAmendment";
 
 export const actionComponent = {
-  [Workflow.PACKAGE_ACTION.WITHDRAW]: (theComponent, alertCallback) => (
-    <Withdraw theComponent={theComponent} alertCallback={alertCallback} />
+  [Workflow.PACKAGE_ACTION.WITHDRAW]: (theComponent, formSource) => (
+    <Withdraw theComponent={theComponent} formSource={formSource} />
   ),
   [Workflow.PACKAGE_ACTION.RESPOND_TO_RAI]: (theComponent) => (
     <RespondToRAI theComponent={theComponent} />
