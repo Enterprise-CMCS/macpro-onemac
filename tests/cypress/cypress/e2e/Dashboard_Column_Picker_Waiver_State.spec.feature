@@ -17,12 +17,12 @@ Feature: Package Dashboard - Waiver Tab Column Picker
         Then verify actions column exists
         Then verify Formal RAI Received column exists
         Then click show hide columns button
+        Then verify Formal RAI Received checkbox exists
         Then verify state exists
         Then verify status exists
         Then verify Initial Submission Date exists
         Then verify submitted by exists
         Then verify type exists
-        Then verify Formal RAI Received checkbox does not exist
         Then click show hide columns button
         Then Click on My Account
         Then click the logout button
@@ -32,6 +32,8 @@ Feature: Package Dashboard - Waiver Tab Column Picker
         Then click Initial Submission Date checkbox
         Then click status checkbox
         Then click submitted by checkbox
+        Then click Formal RAI Received checkbox
+        Then click Initial Submission Date checkbox
         Then click type checkbox
         Then click show hide columns button
         Then verify Waiver Number column exists
@@ -41,6 +43,7 @@ Feature: Package Dashboard - Waiver Tab Column Picker
         Then verify status column does not exist
         Then verify Initial Submission Date column does not exist
         Then verify submitted by column does not exist
+        Then verify Formal RAI Received column does not exist
         Then Click on My Account
         Then click the logout button
 
@@ -53,6 +56,7 @@ Feature: Package Dashboard - Waiver Tab Column Picker
         Then verify status column exists
         Then verify Initial Submission Date column exists
         Then verify submitted by column exists
+        Then verify Formal RAI Received column exists
         Then verify actions column exists
         Then Click on My Account
         Then click the logout button

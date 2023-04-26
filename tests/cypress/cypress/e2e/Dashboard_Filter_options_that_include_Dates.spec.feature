@@ -32,7 +32,7 @@ Feature: Package Dashboard - Filter options that include Dates
         Then verify Initial Submission Date column one date is this quarter
         Then Click on My Account
         Then click the logout button
-
+    
     Scenario: Change Formal RAI Received date filter. Verify results. Then reset filter
         Then click on the Waivers tab
         Then Click on Filter Button
