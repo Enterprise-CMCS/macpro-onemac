@@ -13,8 +13,9 @@ Feature: Package Dashboard - SPA Tab Column Picker
         Then verify Initial Submission Date column exists
         Then verify submitted by column exists
         Then verify actions column exists
-        Then verify Formal RAI Received column does not exist
+        Then verify Formal RAI Received column exists
         Then click show hide columns button
+        Then verify Formal RAI Received checkbox exists
         Then verify Initial Submission Date exists
         Then verify state exists
         Then verify status exists
