@@ -29,7 +29,6 @@ Feature: Package Dashboard - Waiver Tab Column Picker
 
     Scenario: Waivers Tab - Uncheck all and verify Waiver Number and actions exists
         Then click show hide columns button
-        Then click Initial Submission Date checkbox
         Then click status checkbox
         Then click submitted by checkbox
         Then click Formal RAI Received checkbox
