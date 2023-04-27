@@ -5,10 +5,6 @@ jest.mock("../libs/dynamodb-lib");
 
 beforeEach(() => {
   jest.clearAllMocks();
-
-  dynamoDb.query.mockImplementation(() => {
-    return { Attributes: { Latest: 2 } };
-  });
 });
 
 const testEvent = {
@@ -26,17 +22,30 @@ const testConfig2 = {
   allowedParentTypes: ["ParentType1", "ParentType2"],
 };
 
-const queryResults0 = {};
+const emptyResults = {};
+const getResults1 = { Item: [{ someAttribute: "someValue" }] };
 const queryResults1 = { Items: [{ someAttribute: "someValue" }] };
-const queryResults2 = {
-  Items: [
+const getResults2 = {
+  Item: [
     { someAttribute: "someValue" },
     { componentType: "ParentType1", currentStatus: "AllowedStatus2" },
   ],
 };
+const queryResults2 = {
+  Items: [
+    { someAttribute: "someValue" },
+    {
+      STATE_PLAN: { SPW_STATUS_ID: 1, PLAN_TYPE: 2, ACTION_TYPE: 1 },
+      SPW_STATUS: { SPW_STATUS_ID: 1, SPW_STATUS_DESC: "AllowedStatus1" },
+      PLAN_TYPES: { PLAN_TYPE_ID: 2, PLAN_TYPE_NAME: "Parent" },
+      ACTIONTYPES: { ACTION_NAME: "Type2", ACTION_ID: 1 },
+    },
+  ],
+};
 
-it("returns false if it does not find the parent", async () => {
-  dynamoDb.query.mockResolvedValue(queryResults0);
+it("returns false if it does not find the parent as either a package item or a SEATool event", async () => {
+  dynamoDb.get.mockResolvedValue(emptyResults);
+  dynamoDb.query.mockResolvedValue(emptyResults);
 
   expect(validateParentOfAny(testEvent, testConfig1))
     .resolves.toEqual(false)
@@ -45,7 +54,8 @@ it("returns false if it does not find the parent", async () => {
     });
 });
 
-it("returns true if any Items return and there are no config specifics", async () => {
+it("returns true if any Package Items return and there are no config specifics", async () => {
+  dynamoDb.get.mockResolvedValue(getResults1);
   dynamoDb.query.mockResolvedValue(queryResults1);
 
   expect(validateParentOfAny(testEvent, testConfig1))
@@ -56,6 +66,7 @@ it("returns true if any Items return and there are no config specifics", async (
 });
 
 it("returns false if Items do not match config specifics", async () => {
+  dynamoDb.get.mockResolvedValue(getResults1);
   dynamoDb.query.mockResolvedValue(queryResults1);
 
   expect(validateParentOfAny(testEvent, testConfig2))
@@ -65,7 +76,18 @@ it("returns false if Items do not match config specifics", async () => {
     });
 });
 
-it("returns true if an Item does match config specifics", async () => {
+it("returns true if a Package Item does match config specifics", async () => {
+  dynamoDb.get.mockResolvedValue(getResults2);
+
+  expect(validateParentOfAny(testEvent, testConfig2))
+    .resolves.toEqual(true)
+    .catch((error) => {
+      console.log("caught test error: ", error);
+    });
+});
+
+it("returns true if a Package Item is not found, but a SEATool event does match config specifics", async () => {
+  dynamoDb.get.mockResolvedValue(emptyResults);
   dynamoDb.query.mockResolvedValue(queryResults2);
 
   expect(validateParentOfAny(testEvent, testConfig2))

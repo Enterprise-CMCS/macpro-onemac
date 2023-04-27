@@ -67,6 +67,7 @@ const snapshotIds = [
   "MD-22-2203-VM",
   "MD-22-2204-VM",
   "MD-23-3331-VM",
+  "MD-23-4441-VM",
   "MD-22-2206-VM",
   "MD-22-2207-VM",
   "MD-12958.R00.02",
@@ -185,32 +186,6 @@ export const main = async (event) => {
       }
     })
   );
-
-  // scan changeRequest table
-  const scanparams = {
-    TableName: process.env.tableName,
-    ExclusiveStartKey: null,
-  };
-  try {
-    do {
-      const newresults = await dynamoDb.scan(scanparams).promise();
-      console.log("a page of scans");
-      for (const item of newresults.Items) {
-        if (!resetIds.includes(item.transmittalNumber)) continue;
-        console.log("Found an entry with id: ", item.transmittalNumber);
-        promiseItems.push({
-          TableName: process.env.tableName,
-          Key: {
-            userId: item.userId,
-            id: item.id,
-          },
-        });
-      }
-      scanparams.ExclusiveStartKey = newresults.LastEvaluatedKey;
-    } while (scanparams.ExclusiveStartKey);
-  } catch (e) {
-    console.log("scan error: ", e.message);
-  }
 
   await Promise.all(
     promiseItems.map(async (deleteParams) => {

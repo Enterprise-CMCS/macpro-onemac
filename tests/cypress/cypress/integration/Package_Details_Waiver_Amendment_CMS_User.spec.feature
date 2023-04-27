@@ -16,7 +16,7 @@ Feature: Waiver Package Details View: 1915 b Waiver Amendment for a CMS User
         And click Submitted - Intake Needed checkbox
         And click the Waiver Number link in the first row
         And verify the package details page is visible
-        And verify action card exists
+        And verify 2 action cards exist
         And verify the status on the card is "Submitted - Intake Needed"
         And verify the package actions section is unavailable
         And verify the details section exists
@@ -36,7 +36,7 @@ Feature: Waiver Package Details View: 1915 b Waiver Amendment for a CMS User
     #     And click the Pending checkbox
     #     And click the Waiver Number link in the first row
     #     And verify the package details page is visible
-    #     And verify action card exists
+    #     And verify 2 action cards exist
     #     And verify the status on the card is "Pending"
     #     And verify the package actions section is unavailable
     #     And verify the details section exists
@@ -55,7 +55,7 @@ Feature: Waiver Package Details View: 1915 b Waiver Amendment for a CMS User
         And click Pending - RAI checkbox
         And click the Waiver Number link in the first row
         And verify the package details page is visible
-        And verify action card exists
+        And verify 2 action cards exist
         And verify the status on the card is "Pending - RAI"
         And verify the package actions section is unavailable
         And verify the details section exists
@@ -74,7 +74,7 @@ Feature: Waiver Package Details View: 1915 b Waiver Amendment for a CMS User
         And click Approved checkbox
         And click the Waiver Number link in the first row
         And verify the package details page is visible
-        And verify action card exists
+        And verify 2 action cards exist
         And verify the status on the card is "Approved"
         And verify the package actions section is unavailable
         And verify the details section exists
@@ -93,7 +93,7 @@ Feature: Waiver Package Details View: 1915 b Waiver Amendment for a CMS User
         And click Disapproved checkbox
         And click the Waiver Number link in the first row
         And verify the package details page is visible
-        And verify action card exists
+        And verify 2 action cards exist
         And verify the status on the card is "Disapproved"
         And verify the package actions section is unavailable
         And verify the details section exists
@@ -113,7 +113,7 @@ Feature: Waiver Package Details View: 1915 b Waiver Amendment for a CMS User
     #     And click the Package Withdrawn checkbox
     #     And click the Waiver Number link in the first row
     #     And verify the package details page is visible
-    #     And verify action card exists
+    #     And verify 2 action cards exist
     #     And verify the status on the card is "Package Withdrawn"
     #     And verify the package actions section is unavailable
     #     And verify the details section exists
@@ -132,7 +132,7 @@ Feature: Waiver Package Details View: 1915 b Waiver Amendment for a CMS User
         And click the Pending - Concurrence checkbox
         And click the Waiver Number link in the first row
         And verify the package details page is visible
-        And verify action card exists
+        And verify 2 action cards exist
         And verify the status on the card is "Pending - Concurrence"
         And verify the package actions section is unavailable
         And verify the details section exists
@@ -152,7 +152,7 @@ Feature: Waiver Package Details View: 1915 b Waiver Amendment for a CMS User
     #     And click the Pending - Approval checkbox
     #     And click the Waiver Number link in the first row
     #     And verify the package details page is visible
-    #     And verify action card exists
+    #     And verify 2 action cards exist
     #     And verify the status on the card is "Pending - Approval"
     #     And verify the package actions section is unavailable
     #     And verify the details section exists

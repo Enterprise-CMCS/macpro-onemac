@@ -1,52 +1,4 @@
 Resources:
-  #  This is really a submissions table... keeping "pure" for now because it is in production
-  AmendmentsTable:
-    Type: AWS::DynamoDB::Table
-    Properties:
-      TableName: ${self:custom.tableName}
-      PointInTimeRecoverySpecification:
-        PointInTimeRecoveryEnabled: true
-      StreamSpecification:
-        StreamViewType: NEW_AND_OLD_IMAGES
-      AttributeDefinitions:
-        - AttributeName: userId
-          AttributeType: S
-        - AttributeName: id
-          AttributeType: S
-        # Attributes required for GlobalSecondaryIndex
-        - AttributeName: territory
-          AttributeType: S
-        - AttributeName: submittedAt
-          AttributeType: N
-      KeySchema:
-        - AttributeName: userId
-          KeyType: HASH
-        - AttributeName: id
-          KeyType: RANGE
-      # GlobalSecondaryIndex on the territory with submittedAt as the sort key
-      GlobalSecondaryIndexes:
-        - IndexName: territory-submittedAt-index
-          KeySchema:
-            - AttributeName: territory
-              KeyType: HASH
-            - AttributeName: submittedAt
-              KeyType: RANGE
-          Projection:
-            ProjectionType: ALL # Makes all columns available in the index
-      # Set the capacity to auto-scale
-      BillingMode: PAY_PER_REQUEST
-  SpaIdTable:
-    Type: AWS::DynamoDB::Table
-    Properties:
-      TableName: ${self:custom.spaIdTableName}
-      AttributeDefinitions:
-        - AttributeName: id
-          AttributeType: S
-      KeySchema:
-        - AttributeName: id
-          KeyType: HASH
-      # Set the capacity to auto-scale
-      BillingMode: PAY_PER_REQUEST
   OneMacTable:
     Type: AWS::DynamoDB::Table
     Properties:
@@ -91,12 +43,6 @@ Resources:
       # Set the capacity to auto-scale
       BillingMode: PAY_PER_REQUEST
 Outputs:
-  AmendmentsTableStreamArn:
-    Value: !GetAtt AmendmentsTable.StreamArn
-  SpaIdTableName:
-    Value: !Ref SpaIdTable
-  SpaIdTableArn:
-    Value: !GetAtt SpaIdTable.Arn
   OneMacTableName:
     Value: !Ref OneMacTable
   OneMacTableArn:

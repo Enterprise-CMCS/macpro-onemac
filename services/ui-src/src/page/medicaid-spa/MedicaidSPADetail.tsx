@@ -7,6 +7,7 @@ export const medicaidSPADetail: OneMACDetail = {
   ...defaultDetail,
   ...medicaidSPA,
   actionsByStatus: Workflow.defaultActionsByStatus,
+  detailHeader: "Medicaid SPA Package",
 };
 
 const MedicaidSPADetail: FC = () => {
