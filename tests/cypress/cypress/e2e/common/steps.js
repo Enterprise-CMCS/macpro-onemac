@@ -2773,3 +2773,24 @@ Then("add additional info comment in the withdrawal form", () => {
 Then("clear additional info comment in the withdrawal form", () => {
   WithdrawPackagePage.clearWithdrawalComment();
 });
+Then("verify there is a Subject header in the details section", () => {
+  OneMacPackageDetailsPage.verifySubjectHeaderExists();
+});
+Then("verify the subject has a value displayed in the details section", () => {
+  OneMacPackageDetailsPage.verifySubjectValueExists();
+});
+Then("verify subject is not visible in the details section", () => {
+  OneMacPackageDetailsPage.verifySubjectDoesNotExists();
+});
+Then("verify there is a description header in the details section", () => {
+  OneMacPackageDetailsPage.verifyDescrptionHeaderExists();
+});
+Then(
+  "verify the description has a value displayed in the details section",
+  () => {
+    OneMacPackageDetailsPage.verifyDescriptionValueExists();
+  }
+);
+Then("verify description is not visible in the details section", () => {
+  OneMacPackageDetailsPage.verifyDescrptionDoesNotExists();
+});

@@ -19518,7 +19518,13 @@
         "SPW_STATUS_DESC": "Pending"
       }
     ],
-    "ACTIONTYPES": null,
+    "ACTIONTYPES": [
+      {
+       "ACTION_ID": 73,
+       "ACTION_NAME": "Renew",
+       "PLAN_TYPE_ID": 122
+      }
+     ],
     "SP_TYPE": null,
     "SP_APD_SUB_TYPE": null,
     "STATE_PLAN_SERVICE_SUBTYPES": null,
