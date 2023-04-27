@@ -2216,6 +2216,10 @@ aside#faq-contact-info-box {
   color: #212121;
 }
 
+ul.choice-list {
+  margin-top: 0;
+}
+
 .choice-list {
   display: flex;
   flex-direction: column;
@@ -2229,7 +2233,8 @@ aside#faq-contact-info-box {
   border-left: 1px solid #d6d7d9;
   border-right: 1px solid #d6d7d9;
   border-radius: 0 0 3px 3px;
-  label {
+  label,
+  li {
     max-width: 100%;
     list-style-type: none;
     margin: 0px;
@@ -2247,14 +2252,17 @@ aside#faq-contact-info-box {
       align-items: center;
     }
   }
-  label:nth-child(even) {
+  label:nth-child(even),
+  li:nth-child(even) {
     background-color: rgba(196, 196, 196, 0.1);
   }
-  label:hover {
+  label:hover,
+  li:hover {
     background-color: #f0fafe;
   }
 
-  label.choice-list-item {
+  label.choice-list-item,
+  li.choice-list-item {
     @extend .ds-u-padding--3;
     color: $color-base;
 
