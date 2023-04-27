@@ -98,7 +98,7 @@ resources:
         OwnershipControls:
           Rules:
             - ObjectOwnership: BucketOwnerPreferred
-        DeletionPolicy: Delete
+      DeletionPolicy: Delete
     LogBucketPolicy:
       Type: AWS::S3::BucketPolicy
       Properties:
