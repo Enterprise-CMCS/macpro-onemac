@@ -61,8 +61,14 @@ export type LocationState = {
   passCode?: string;
 };
 
+export enum FORM_SOURCE {
+  PACKAGE_LIST = "packageList",
+  DETAIL = "detail",
+}
+
 export type FormLocationState = {
   parentId?: string;
   parentType?: string;
   componentId?: string;
+  formSource?: FORM_SOURCE;
 };
