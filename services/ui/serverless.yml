@@ -95,7 +95,10 @@ resources:
           ServerSideEncryptionConfiguration:
             - ServerSideEncryptionByDefault:
                 SSEAlgorithm: AES256
-      DeletionPolicy: Delete
+        OwnershipControls:
+          Rules:
+            - ObjectOwnership: BucketOwnerPreferred
+        DeletionPolicy: Delete
     LogBucketPolicy:
       Type: AWS::S3::BucketPolicy
       Properties:
