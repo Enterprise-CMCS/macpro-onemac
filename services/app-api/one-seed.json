@@ -4022,7 +4022,7 @@
       "ADDED_COST": null,
       "MISSING_INFORMATION": null,
       "PRIORITY_COMPLEXITY_ID": null,
-      "ACTION_TYPE": null,
+      "ACTION_TYPE": 76,
       "PENDING_CONCURRENCE_DATE": null,
       "PUBLICHEALTH_STATEEMERGENCY": null,
       "COMPONENT_ID": null,
@@ -4061,7 +4061,13 @@
         "SPW_STATUS_DESC": "Pending"
       }
     ],
-    "ACTIONTYPES": null,
+    "ACTIONTYPES": [
+      {
+       "ACTION_ID": 76,
+       "ACTION_NAME": "Amend",
+       "PLAN_TYPE_ID": 123
+      }
+     ],
     "SP_TYPE": null,
     "SP_APD_SUB_TYPE": null,
     "STATE_PLAN_SERVICE_SUBTYPES": null,
@@ -12931,7 +12937,7 @@
       "ADDED_COST": null,
       "MISSING_INFORMATION": null,
       "PRIORITY_COMPLEXITY_ID": null,
-      "ACTION_TYPE": null,
+      "ACTION_TYPE": 76,
       "PENDING_CONCURRENCE_DATE": null,
       "PUBLICHEALTH_STATEEMERGENCY": null,
       "COMPONENT_ID": null,
@@ -12970,7 +12976,13 @@
         "SPW_STATUS_DESC": "Pending"
       }
     ],
-    "ACTIONTYPES": null,
+    "ACTIONTYPES": [
+      {
+       "ACTION_ID": 76,
+       "ACTION_NAME": "Amend",
+       "PLAN_TYPE_ID": 123
+      }
+     ],
     "SP_TYPE": null,
     "SP_APD_SUB_TYPE": null,
     "STATE_PLAN_SERVICE_SUBTYPES": null,
@@ -13585,7 +13597,7 @@
       "ADDED_COST": null,
       "MISSING_INFORMATION": null,
       "PRIORITY_COMPLEXITY_ID": null,
-      "ACTION_TYPE": null,
+      "ACTION_TYPE": 76,
       "PENDING_CONCURRENCE_DATE": null,
       "PUBLICHEALTH_STATEEMERGENCY": null,
       "COMPONENT_ID": null,
@@ -13624,7 +13636,13 @@
         "SPW_STATUS_DESC": "Pending"
       }
     ],
-    "ACTIONTYPES": null,
+    "ACTIONTYPES": [
+      {
+       "ACTION_ID": 76,
+       "ACTION_NAME": "New",
+       "PLAN_TYPE_ID": 122
+      }
+     ],
     "SP_TYPE": null,
     "SP_APD_SUB_TYPE": null,
     "STATE_PLAN_SERVICE_SUBTYPES": null,
@@ -14035,7 +14053,7 @@
       "ADDED_COST": null,
       "MISSING_INFORMATION": null,
       "PRIORITY_COMPLEXITY_ID": null,
-      "ACTION_TYPE": null,
+      "ACTION_TYPE": 76,
       "PENDING_CONCURRENCE_DATE": null,
       "PUBLICHEALTH_STATEEMERGENCY": null,
       "COMPONENT_ID": null,
@@ -14074,7 +14092,13 @@
         "SPW_STATUS_DESC": "Pending"
       }
     ],
-    "ACTIONTYPES": null,
+    "ACTIONTYPES": [
+      {
+       "ACTION_ID": 76,
+       "ACTION_NAME": "New",
+       "PLAN_TYPE_ID": 123
+      }
+     ],
     "SP_TYPE": null,
     "SP_APD_SUB_TYPE": null,
     "STATE_PLAN_SERVICE_SUBTYPES": null,
@@ -14612,7 +14636,7 @@
       "ADDED_COST": null,
       "MISSING_INFORMATION": null,
       "PRIORITY_COMPLEXITY_ID": null,
-      "ACTION_TYPE": null,
+      "ACTION_TYPE": 76,
       "PENDING_CONCURRENCE_DATE": null,
       "PUBLICHEALTH_STATEEMERGENCY": null,
       "COMPONENT_ID": null,
@@ -14651,7 +14675,13 @@
         "SPW_STATUS_DESC": "Pending"
       }
     ],
-    "ACTIONTYPES": null,
+    "ACTIONTYPES": [
+      {
+       "ACTION_ID": 76,
+       "ACTION_NAME": "New",
+       "PLAN_TYPE_ID": 123
+      }
+     ],
     "SP_TYPE": null,
     "SP_APD_SUB_TYPE": null,
     "STATE_PLAN_SERVICE_SUBTYPES": null,
@@ -17151,7 +17181,7 @@
       "ADDED_COST": null,
       "MISSING_INFORMATION": null,
       "PRIORITY_COMPLEXITY_ID": null,
-      "ACTION_TYPE": null,
+      "ACTION_TYPE": 76,
       "PENDING_CONCURRENCE_DATE": null,
       "PUBLICHEALTH_STATEEMERGENCY": null,
       "COMPONENT_ID": null,
@@ -17190,7 +17220,13 @@
         "SPW_STATUS_DESC": "Pending"
       }
     ],
-    "ACTIONTYPES": null,
+    "ACTIONTYPES": [
+      {
+       "ACTION_ID": 76,
+       "ACTION_NAME": "New",
+       "PLAN_TYPE_ID": 123
+      }
+     ],
     "SP_TYPE": null,
     "SP_APD_SUB_TYPE": null,
     "STATE_PLAN_SERVICE_SUBTYPES": null,
@@ -17634,7 +17670,7 @@
       "ADDED_COST": null,
       "MISSING_INFORMATION": null,
       "PRIORITY_COMPLEXITY_ID": null,
-      "ACTION_TYPE": null,
+      "ACTION_TYPE": 76,
       "PENDING_CONCURRENCE_DATE": null,
       "PUBLICHEALTH_STATEEMERGENCY": null,
       "COMPONENT_ID": null,
@@ -17673,7 +17709,13 @@
         "SPW_STATUS_DESC": "Pending"
       }
     ],
-    "ACTIONTYPES": null,
+    "ACTIONTYPES": [
+      {
+       "ACTION_ID": 76,
+       "ACTION_NAME": "New",
+       "PLAN_TYPE_ID": 123
+      }
+     ],
     "SP_TYPE": null,
     "SP_APD_SUB_TYPE": null,
     "STATE_PLAN_SERVICE_SUBTYPES": null,
@@ -18096,7 +18138,7 @@
       "ADDED_COST": null,
       "MISSING_INFORMATION": null,
       "PRIORITY_COMPLEXITY_ID": null,
-      "ACTION_TYPE": null,
+      "ACTION_TYPE": 76,
       "PENDING_CONCURRENCE_DATE": null,
       "PUBLICHEALTH_STATEEMERGENCY": null,
       "COMPONENT_ID": null,
@@ -18135,7 +18177,13 @@
         "SPW_STATUS_DESC": "Pending"
       }
     ],
-    "ACTIONTYPES": null,
+    "ACTIONTYPES": [
+      {
+       "ACTION_ID": 76,
+       "ACTION_NAME": "New",
+       "PLAN_TYPE_ID": 122
+      }
+     ],
     "SP_TYPE": null,
     "SP_APD_SUB_TYPE": null,
     "STATE_PLAN_SERVICE_SUBTYPES": null,
@@ -18553,7 +18601,7 @@
       "ADDED_COST": null,
       "MISSING_INFORMATION": null,
       "PRIORITY_COMPLEXITY_ID": null,
-      "ACTION_TYPE": null,
+      "ACTION_TYPE": 76,
       "PENDING_CONCURRENCE_DATE": null,
       "PUBLICHEALTH_STATEEMERGENCY": null,
       "COMPONENT_ID": null,
@@ -18592,7 +18640,13 @@
         "SPW_STATUS_DESC": "Pending"
       }
     ],
-    "ACTIONTYPES": null,
+    "ACTIONTYPES": [
+      {
+       "ACTION_ID": 76,
+       "ACTION_NAME": "New",
+       "PLAN_TYPE_ID": 123
+      }
+     ],
     "SP_TYPE": null,
     "SP_APD_SUB_TYPE": null,
     "STATE_PLAN_SERVICE_SUBTYPES": null,
@@ -19033,7 +19087,7 @@
       "ADDED_COST": null,
       "MISSING_INFORMATION": null,
       "PRIORITY_COMPLEXITY_ID": null,
-      "ACTION_TYPE": null,
+      "ACTION_TYPE": 76,
       "PENDING_CONCURRENCE_DATE": null,
       "PUBLICHEALTH_STATEEMERGENCY": null,
       "COMPONENT_ID": null,
@@ -19072,7 +19126,13 @@
         "SPW_STATUS_DESC": "Pending"
       }
     ],
-    "ACTIONTYPES": null,
+    "ACTIONTYPES": [
+      {
+       "ACTION_ID": 76,
+       "ACTION_NAME": "New",
+       "PLAN_TYPE_ID": 122
+      }
+     ],
     "SP_TYPE": null,
     "SP_APD_SUB_TYPE": null,
     "STATE_PLAN_SERVICE_SUBTYPES": null,
@@ -19479,7 +19539,7 @@
       "ADDED_COST": null,
       "MISSING_INFORMATION": null,
       "PRIORITY_COMPLEXITY_ID": null,
-      "ACTION_TYPE": null,
+      "ACTION_TYPE": 73,
       "PENDING_CONCURRENCE_DATE": null,
       "PUBLICHEALTH_STATEEMERGENCY": null,
       "COMPONENT_ID": null,
@@ -19728,7 +19788,7 @@
       "ADDED_COST": null,
       "MISSING_INFORMATION": null,
       "PRIORITY_COMPLEXITY_ID": null,
-      "ACTION_TYPE": null,
+      "ACTION_TYPE": 76,
       "PENDING_CONCURRENCE_DATE": null,
       "PUBLICHEALTH_STATEEMERGENCY": null,
       "COMPONENT_ID": null,
@@ -19767,7 +19827,13 @@
         "SPW_STATUS_DESC": "Pending"
       }
     ],
-    "ACTIONTYPES": null,
+    "ACTIONTYPES": [
+      {
+       "ACTION_ID": 76,
+       "ACTION_NAME": "Renew",
+       "PLAN_TYPE_ID": 122
+      }
+     ],
     "SP_TYPE": null,
     "SP_APD_SUB_TYPE": null,
     "STATE_PLAN_SERVICE_SUBTYPES": null,
@@ -20973,7 +21039,7 @@
       "ADDED_COST": null,
       "MISSING_INFORMATION": null,
       "PRIORITY_COMPLEXITY_ID": null,
-      "ACTION_TYPE": null,
+      "ACTION_TYPE": 76,
       "PENDING_CONCURRENCE_DATE": null,
       "PUBLICHEALTH_STATEEMERGENCY": null,
       "COMPONENT_ID": null,
@@ -21012,7 +21078,13 @@
         "SPW_STATUS_DESC": "Pending"
       }
     ],
-    "ACTIONTYPES": null,
+    "ACTIONTYPES": [
+      {
+       "ACTION_ID": 76,
+       "ACTION_NAME": "Renew",
+       "PLAN_TYPE_ID": 122
+      }
+     ],
     "SP_TYPE": null,
     "SP_APD_SUB_TYPE": null,
     "STATE_PLAN_SERVICE_SUBTYPES": null,
@@ -21430,7 +21502,7 @@
       "ADDED_COST": null,
       "MISSING_INFORMATION": null,
       "PRIORITY_COMPLEXITY_ID": null,
-      "ACTION_TYPE": null,
+      "ACTION_TYPE": 76,
       "PENDING_CONCURRENCE_DATE": null,
       "PUBLICHEALTH_STATEEMERGENCY": null,
       "COMPONENT_ID": null,
@@ -21469,7 +21541,13 @@
         "SPW_STATUS_DESC": "Pending"
       }
     ],
-    "ACTIONTYPES": null,
+    "ACTIONTYPES": [
+      {
+       "ACTION_ID": 76,
+       "ACTION_NAME": "Renew",
+       "PLAN_TYPE_ID": 122
+      }
+     ],
     "SP_TYPE": null,
     "SP_APD_SUB_TYPE": null,
     "STATE_PLAN_SERVICE_SUBTYPES": null,
@@ -23829,7 +23907,7 @@
       "ADDED_COST": null,
       "MISSING_INFORMATION": null,
       "PRIORITY_COMPLEXITY_ID": null,
-      "ACTION_TYPE": null,
+      "ACTION_TYPE": 76,
       "PENDING_CONCURRENCE_DATE": null,
       "PUBLICHEALTH_STATEEMERGENCY": null,
       "COMPONENT_ID": null,
@@ -23868,7 +23946,13 @@
         "SPW_STATUS_DESC": "Pending"
       }
     ],
-    "ACTIONTYPES": null,
+    "ACTIONTYPES": [
+      {
+       "ACTION_ID": 76,
+       "ACTION_NAME": "Renew",
+       "PLAN_TYPE_ID": 122
+      }
+     ],
     "SP_TYPE": null,
     "SP_APD_SUB_TYPE": null,
     "STATE_PLAN_SERVICE_SUBTYPES": null,
@@ -24773,7 +24857,7 @@
       "ADDED_COST": null,
       "MISSING_INFORMATION": null,
       "PRIORITY_COMPLEXITY_ID": null,
-      "ACTION_TYPE": null,
+      "ACTION_TYPE": 76,
       "PENDING_CONCURRENCE_DATE": null,
       "PUBLICHEALTH_STATEEMERGENCY": null,
       "COMPONENT_ID": null,
@@ -24812,7 +24896,13 @@
         "SPW_STATUS_DESC": "Pending"
       }
     ],
-    "ACTIONTYPES": null,
+    "ACTIONTYPES": [
+      {
+       "ACTION_ID": 76,
+       "ACTION_NAME": "Renew",
+       "PLAN_TYPE_ID": 122
+      }
+     ],
     "SP_TYPE": null,
     "SP_APD_SUB_TYPE": null,
     "STATE_PLAN_SERVICE_SUBTYPES": null,
@@ -27120,7 +27210,7 @@
       "ADDED_COST": null,
       "MISSING_INFORMATION": null,
       "PRIORITY_COMPLEXITY_ID": null,
-      "ACTION_TYPE": null,
+      "ACTION_TYPE": 76,
       "PENDING_CONCURRENCE_DATE": null,
       "PUBLICHEALTH_STATEEMERGENCY": null,
       "COMPONENT_ID": null,
@@ -27159,7 +27249,13 @@
         "SPW_STATUS_DESC": "Pending"
       }
     ],
-    "ACTIONTYPES": null,
+    "ACTIONTYPES": [
+      {
+       "ACTION_ID": 76,
+       "ACTION_NAME": "Amend",
+       "PLAN_TYPE_ID": 122
+      }
+     ],
     "SP_TYPE": null,
     "SP_APD_SUB_TYPE": null,
     "STATE_PLAN_SERVICE_SUBTYPES": null,
@@ -27566,7 +27662,7 @@
       "ADDED_COST": null,
       "MISSING_INFORMATION": null,
       "PRIORITY_COMPLEXITY_ID": null,
-      "ACTION_TYPE": null,
+      "ACTION_TYPE": 76,
       "PENDING_CONCURRENCE_DATE": null,
       "PUBLICHEALTH_STATEEMERGENCY": null,
       "COMPONENT_ID": null,
@@ -27605,7 +27701,13 @@
         "SPW_STATUS_DESC": "Pending"
       }
     ],
-    "ACTIONTYPES": null,
+    "ACTIONTYPES": [
+      {
+       "ACTION_ID": 76,
+       "ACTION_NAME": "Amend",
+       "PLAN_TYPE_ID": 122
+      }
+     ],
     "SP_TYPE": null,
     "SP_APD_SUB_TYPE": null,
     "STATE_PLAN_SERVICE_SUBTYPES": null,
@@ -28023,7 +28125,7 @@
       "ADDED_COST": null,
       "MISSING_INFORMATION": null,
       "PRIORITY_COMPLEXITY_ID": null,
-      "ACTION_TYPE": null,
+      "ACTION_TYPE": 76,
       "PENDING_CONCURRENCE_DATE": null,
       "PUBLICHEALTH_STATEEMERGENCY": null,
       "COMPONENT_ID": null,
@@ -28062,7 +28164,13 @@
         "SPW_STATUS_DESC": "Pending"
       }
     ],
-    "ACTIONTYPES": null,
+    "ACTIONTYPES": [
+      {
+       "ACTION_ID": 76,
+       "ACTION_NAME": "Amend",
+       "PLAN_TYPE_ID": 122
+      }
+     ],
     "SP_TYPE": null,
     "SP_APD_SUB_TYPE": null,
     "STATE_PLAN_SERVICE_SUBTYPES": null,
@@ -30120,7 +30228,7 @@
       "ADDED_COST": null,
       "MISSING_INFORMATION": null,
       "PRIORITY_COMPLEXITY_ID": null,
-      "ACTION_TYPE": null,
+      "ACTION_TYPE": 76,
       "PENDING_CONCURRENCE_DATE": null,
       "PUBLICHEALTH_STATEEMERGENCY": null,
       "COMPONENT_ID": null,
@@ -30159,7 +30267,13 @@
         "SPW_STATUS_DESC": "Pending"
       }
     ],
-    "ACTIONTYPES": null,
+    "ACTIONTYPES": [
+      {
+       "ACTION_ID": 76,
+       "ACTION_NAME": "Amend",
+       "PLAN_TYPE_ID": 122
+      }
+     ],
     "SP_TYPE": null,
     "SP_APD_SUB_TYPE": null,
     "STATE_PLAN_SERVICE_SUBTYPES": null,
@@ -30570,7 +30684,7 @@
       "ADDED_COST": null,
       "MISSING_INFORMATION": null,
       "PRIORITY_COMPLEXITY_ID": null,
-      "ACTION_TYPE": null,
+      "ACTION_TYPE": 76,
       "PENDING_CONCURRENCE_DATE": null,
       "PUBLICHEALTH_STATEEMERGENCY": null,
       "COMPONENT_ID": null,
@@ -30609,7 +30723,13 @@
         "SPW_STATUS_DESC": "Pending"
       }
     ],
-    "ACTIONTYPES": null,
+    "ACTIONTYPES": [
+      {
+       "ACTION_ID": 76,
+       "ACTION_NAME": "Amend",
+       "PLAN_TYPE_ID": 122
+      }
+     ],
     "SP_TYPE": null,
     "SP_APD_SUB_TYPE": null,
     "STATE_PLAN_SERVICE_SUBTYPES": null,
@@ -31020,7 +31140,7 @@
       "ADDED_COST": null,
       "MISSING_INFORMATION": null,
       "PRIORITY_COMPLEXITY_ID": null,
-      "ACTION_TYPE": null,
+      "ACTION_TYPE": 76,
       "PENDING_CONCURRENCE_DATE": null,
       "PUBLICHEALTH_STATEEMERGENCY": null,
       "COMPONENT_ID": null,
@@ -31059,7 +31179,13 @@
         "SPW_STATUS_DESC": "Pending"
       }
     ],
-    "ACTIONTYPES": null,
+    "ACTIONTYPES": [
+      {
+       "ACTION_ID": 76,
+       "ACTION_NAME": "Amend",
+       "PLAN_TYPE_ID": 122
+      }
+     ],
     "SP_TYPE": null,
     "SP_APD_SUB_TYPE": null,
     "STATE_PLAN_SERVICE_SUBTYPES": null,
@@ -31476,7 +31602,7 @@
       "ADDED_COST": null,
       "MISSING_INFORMATION": null,
       "PRIORITY_COMPLEXITY_ID": null,
-      "ACTION_TYPE": null,
+      "ACTION_TYPE": 76,
       "PENDING_CONCURRENCE_DATE": null,
       "PUBLICHEALTH_STATEEMERGENCY": null,
       "COMPONENT_ID": null,
@@ -31515,7 +31641,13 @@
         "SPW_STATUS_DESC": "Pending"
       }
     ],
-    "ACTIONTYPES": null,
+    "ACTIONTYPES": [
+      {
+       "ACTION_ID": 76,
+       "ACTION_NAME": "Amend",
+       "PLAN_TYPE_ID": 122
+      }
+     ],
     "SP_TYPE": null,
     "SP_APD_SUB_TYPE": null,
     "STATE_PLAN_SERVICE_SUBTYPES": null,
@@ -31991,7 +32123,7 @@
       "ADDED_COST": null,
       "MISSING_INFORMATION": null,
       "PRIORITY_COMPLEXITY_ID": null,
-      "ACTION_TYPE": null,
+      "ACTION_TYPE": 76,
       "PENDING_CONCURRENCE_DATE": null,
       "PUBLICHEALTH_STATEEMERGENCY": null,
       "COMPONENT_ID": null,
@@ -32030,7 +32162,13 @@
         "SPW_STATUS_DESC": "Pending"
       }
     ],
-    "ACTIONTYPES": null,
+    "ACTIONTYPES": [
+      {
+       "ACTION_ID": 76,
+       "ACTION_NAME": "Amend",
+       "PLAN_TYPE_ID": 122
+      }
+     ],
     "SP_TYPE": null,
     "SP_APD_SUB_TYPE": null,
     "STATE_PLAN_SERVICE_SUBTYPES": null,
@@ -32435,7 +32573,7 @@
       "ADDED_COST": null,
       "MISSING_INFORMATION": null,
       "PRIORITY_COMPLEXITY_ID": null,
-      "ACTION_TYPE": null,
+      "ACTION_TYPE": 76,
       "PENDING_CONCURRENCE_DATE": null,
       "PUBLICHEALTH_STATEEMERGENCY": null,
       "COMPONENT_ID": null,
@@ -32474,7 +32612,13 @@
         "SPW_STATUS_DESC": "Pending"
       }
     ],
-    "ACTIONTYPES": null,
+    "ACTIONTYPES": [
+      {
+       "ACTION_ID": 76,
+       "ACTION_NAME": "Amend",
+       "PLAN_TYPE_ID": 122
+      }
+     ],
     "SP_TYPE": null,
     "SP_APD_SUB_TYPE": null,
     "STATE_PLAN_SERVICE_SUBTYPES": null,
@@ -32997,7 +33141,7 @@
       "ADDED_COST": null,
       "MISSING_INFORMATION": null,
       "PRIORITY_COMPLEXITY_ID": null,
-      "ACTION_TYPE": null,
+      "ACTION_TYPE": 76,
       "PENDING_CONCURRENCE_DATE": null,
       "PUBLICHEALTH_STATEEMERGENCY": null,
       "COMPONENT_ID": null,
@@ -33036,7 +33180,13 @@
         "SPW_STATUS_DESC": "Pending"
       }
     ],
-    "ACTIONTYPES": null,
+    "ACTIONTYPES": [
+      {
+       "ACTION_ID": 76,
+       "ACTION_NAME": "Amend",
+       "PLAN_TYPE_ID": 122
+      }
+     ],
     "SP_TYPE": null,
     "SP_APD_SUB_TYPE": null,
     "STATE_PLAN_SERVICE_SUBTYPES": null,
@@ -33963,7 +34113,7 @@
       "ADDED_COST": null,
       "MISSING_INFORMATION": null,
       "PRIORITY_COMPLEXITY_ID": null,
-      "ACTION_TYPE": null,
+      "ACTION_TYPE": 76,
       "PENDING_CONCURRENCE_DATE": null,
       "PUBLICHEALTH_STATEEMERGENCY": null,
       "COMPONENT_ID": null,
@@ -34002,7 +34152,13 @@
         "SPW_STATUS_DESC": "Pending"
       }
     ],
-    "ACTIONTYPES": null,
+    "ACTIONTYPES": [
+      {
+       "ACTION_ID": 76,
+       "ACTION_NAME": "Amend",
+       "PLAN_TYPE_ID": 122
+      }
+     ],
     "SP_TYPE": null,
     "SP_APD_SUB_TYPE": null,
     "STATE_PLAN_SERVICE_SUBTYPES": null,
@@ -34438,7 +34594,7 @@
       "ADDED_COST": null,
       "MISSING_INFORMATION": null,
       "PRIORITY_COMPLEXITY_ID": null,
-      "ACTION_TYPE": null,
+      "ACTION_TYPE": 76,
       "PENDING_CONCURRENCE_DATE": null,
       "PUBLICHEALTH_STATEEMERGENCY": null,
       "COMPONENT_ID": null,
@@ -34477,7 +34633,13 @@
         "SPW_STATUS_DESC": "Pending"
       }
     ],
-    "ACTIONTYPES": null,
+    "ACTIONTYPES": [
+      {
+       "ACTION_ID": 76,
+       "ACTION_NAME": "Amend",
+       "PLAN_TYPE_ID": 122
+      }
+     ],
     "SP_TYPE": null,
     "SP_APD_SUB_TYPE": null,
     "STATE_PLAN_SERVICE_SUBTYPES": null,
@@ -35341,7 +35503,7 @@
       "ADDED_COST": null,
       "MISSING_INFORMATION": null,
       "PRIORITY_COMPLEXITY_ID": null,
-      "ACTION_TYPE": null,
+      "ACTION_TYPE": 76,
       "PENDING_CONCURRENCE_DATE": null,
       "PUBLICHEALTH_STATEEMERGENCY": null,
       "COMPONENT_ID": null,
@@ -35380,7 +35542,13 @@
         "SPW_STATUS_DESC": "Pending"
       }
     ],
-    "ACTIONTYPES": null,
+    "ACTIONTYPES": [
+      {
+       "ACTION_ID": 76,
+       "ACTION_NAME": "Amend",
+       "PLAN_TYPE_ID": 122
+      }
+     ],
     "SP_TYPE": null,
     "SP_APD_SUB_TYPE": null,
     "STATE_PLAN_SERVICE_SUBTYPES": null,
@@ -35816,7 +35984,7 @@
       "ADDED_COST": null,
       "MISSING_INFORMATION": null,
       "PRIORITY_COMPLEXITY_ID": null,
-      "ACTION_TYPE": null,
+      "ACTION_TYPE": 76,
       "PENDING_CONCURRENCE_DATE": null,
       "PUBLICHEALTH_STATEEMERGENCY": null,
       "COMPONENT_ID": null,
@@ -35855,7 +36023,13 @@
         "SPW_STATUS_DESC": "Pending"
       }
     ],
-    "ACTIONTYPES": null,
+    "ACTIONTYPES": [
+      {
+       "ACTION_ID": 76,
+       "ACTION_NAME": "Amend",
+       "PLAN_TYPE_ID": 122
+      }
+     ],
     "SP_TYPE": null,
     "SP_APD_SUB_TYPE": null,
     "STATE_PLAN_SERVICE_SUBTYPES": null,
@@ -37051,7 +37225,7 @@
       "ADDED_COST": null,
       "MISSING_INFORMATION": null,
       "PRIORITY_COMPLEXITY_ID": null,
-      "ACTION_TYPE": null,
+      "ACTION_TYPE": 76,
       "PENDING_CONCURRENCE_DATE": null,
       "PUBLICHEALTH_STATEEMERGENCY": null,
       "COMPONENT_ID": null,
@@ -37090,7 +37264,13 @@
         "SPW_STATUS_DESC": "Pending"
       }
     ],
-    "ACTIONTYPES": null,
+    "ACTIONTYPES": [
+      {
+       "ACTION_ID": 76,
+       "ACTION_NAME": "Amend",
+       "PLAN_TYPE_ID": 122
+      }
+     ],
     "SP_TYPE": null,
     "SP_APD_SUB_TYPE": null,
     "STATE_PLAN_SERVICE_SUBTYPES": null,
@@ -37497,7 +37677,7 @@
       "ADDED_COST": null,
       "MISSING_INFORMATION": null,
       "PRIORITY_COMPLEXITY_ID": null,
-      "ACTION_TYPE": null,
+      "ACTION_TYPE": 76,
       "PENDING_CONCURRENCE_DATE": null,
       "PUBLICHEALTH_STATEEMERGENCY": null,
       "COMPONENT_ID": null,
@@ -37536,7 +37716,13 @@
         "SPW_STATUS_DESC": "Pending"
       }
     ],
-    "ACTIONTYPES": null,
+    "ACTIONTYPES": [
+      {
+        "PLAN_TYPE_ID": 123,
+        "ACTION_NAME": "Amend",
+        "ACTION_ID": 76
+      }
+    ],
     "SP_TYPE": null,
     "SP_APD_SUB_TYPE": null,
     "STATE_PLAN_SERVICE_SUBTYPES": null,
