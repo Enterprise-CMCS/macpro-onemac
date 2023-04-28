@@ -100,17 +100,17 @@ export const choicesFromRoute = {
       {
         title: "1915(b) Initial Waiver",
         description: "Create a new 1915(b) initial waiver",
-        linkTo: ONEMAC_ROUTES.INITIAL_WAIVER,
+        linkTo: ONEMAC_ROUTES.INITIAL_WAIVER_B_OTHER,
       },
       {
         title: "1915(b) Waiver Renewal",
         description: "Renew an existing 1915(b) waiver",
-        linkTo: ONEMAC_ROUTES.WAIVER_RENEWAL,
+        linkTo: ONEMAC_ROUTES.WAIVER_RENEWAL_B_OTHER,
       },
       {
         title: "1915(b) Waiver Amendment",
         description: "Amend an existing 1915(b) waiver",
-        linkTo: ONEMAC_ROUTES.WAIVER_AMENDMENT,
+        linkTo: ONEMAC_ROUTES.WAIVER_AMENDMENT_B_OTHER,
       },
     ],
   },
