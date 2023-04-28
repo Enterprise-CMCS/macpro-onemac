@@ -33,6 +33,8 @@ Feature: CHIP SPA State Details View - Card View with Actions
         Then verify the attachments section exists
         Then verify the download all button exists
         Then verify the additional information section exists
+        Then verify subject is not visible in the details section
+        Then verify description is not visible in the details section
 
     # Need seed data / reset data update
     # Scenario: Screen Enhance - Withdrawal Requested SPA
@@ -55,6 +57,8 @@ Feature: CHIP SPA State Details View - Card View with Actions
     #     Then verify the attachments section exists
     #     Then verify the download all button exists
     #     Then verify the additional information section exists
+    #     Then verify subject is not visible in the details section
+    #     Then verify description is not visible in the details section
 
     Scenario: Screen Enhance - Withdrawn SPA
         Then click the Package Withdrawn checkbox
@@ -76,6 +80,8 @@ Feature: CHIP SPA State Details View - Card View with Actions
         Then verify the attachments section exists
         Then verify the download all button exists
         Then verify the additional information section exists
+        Then verify subject is not visible in the details section
+        Then verify description is not visible in the details section
 
     Scenario: Screen Enhance - Disapproved SPA
         Then click Disapproved checkbox
@@ -97,6 +103,8 @@ Feature: CHIP SPA State Details View - Card View with Actions
         Then verify the attachments section exists
         Then verify the download all button exists
         Then verify the additional information section exists
+        Then verify subject is not visible in the details section
+        Then verify description is not visible in the details section
 
 
     Scenario: Screen Enhance - Under Review SPA
@@ -119,6 +127,8 @@ Feature: CHIP SPA State Details View - Card View with Actions
         Then verify the attachments section exists
         Then verify the download all button exists
         Then verify the additional information section exists
+        Then verify subject is not visible in the details section
+        Then verify description is not visible in the details section
 
     Scenario: Screen Enhance - Submitted SPA
         Then click Submitted checkbox
@@ -140,6 +150,8 @@ Feature: CHIP SPA State Details View - Card View with Actions
         Then verify the attachments section exists
         Then verify the download all button exists
         Then verify the additional information section exists
+        Then verify subject is not visible in the details section
+        Then verify description is not visible in the details section
 
     Scenario: Screen Enhance - RAI Issued SPA
         Then click RAI Issued checkbox
@@ -163,3 +175,5 @@ Feature: CHIP SPA State Details View - Card View with Actions
         Then verify the attachments section exists
         #Then verify the download all button exists
         Then verify the additional information section exists
+        Then verify subject is not visible in the details section
+        Then verify description is not visible in the details section

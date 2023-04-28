@@ -51,6 +51,14 @@ export const proposedEffectiveDateDefault: AttributeDetail = {
   fieldName: "proposedEffectiveDateNice",
   default: "N/A",
 };
+export const subjectDefault: AttributeDetail = {
+  heading: "Subject",
+  fieldName: "subject",
+};
+export const descriptionDefault: AttributeDetail = {
+  heading: "Description",
+  fieldName: "description",
+};
 
 export enum DetailViewTab {
   MAIN = "main",
@@ -100,15 +108,13 @@ export const defaultDetailSectionItems = [
   submissionDateDefault,
   latestRaiResponseDateDefault,
   proposedEffectiveDateDefault,
+  subjectDefault,
+  descriptionDefault,
 ];
 
 export const defaultWaiverDetailSectionItems = [
   waiverAuthorityDefault,
-  typeDefault,
-  territoryDefault,
-  submissionDateDefault,
-  latestRaiResponseDateDefault,
-  proposedEffectiveDateDefault,
+  ...defaultDetailSectionItems,
 ];
 
 export const defaultDetail: OneMACDetail = {

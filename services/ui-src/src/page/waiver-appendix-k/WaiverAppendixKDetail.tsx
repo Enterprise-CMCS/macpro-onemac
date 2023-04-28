@@ -3,7 +3,9 @@ import DetailView from "../DetailView";
 import {
   OneMACDetail,
   defaultDetail,
+  descriptionDefault,
   proposedEffectiveDateDefault,
+  subjectDefault,
   submissionDateDefault,
   territoryDefault,
   waiverAuthorityDefault,
@@ -30,6 +32,8 @@ export const waiverAppendixKDetail: OneMACDetail = {
     },
     submissionDateDefault,
     proposedEffectiveDateDefault,
+    subjectDefault,
+    descriptionDefault,
   ],
 };
 

@@ -31,6 +31,8 @@ Feature: Waiver Package Details View: Waiver Renewals for a State User
         Then verify the attachments section exists
         Then verify the download all button exists
         Then verify the additional information section exists
+        Then verify subject is not visible in the details section
+        Then verify description is not visible in the details section
 
     Scenario: Screen Enhance: Waiver Renewal Details View - Under Review
         Then click Under Review checkbox
@@ -51,6 +53,8 @@ Feature: Waiver Package Details View: Waiver Renewals for a State User
         Then verify the attachments section exists
         Then verify the download all button exists
         Then verify the additional information section exists
+        Then verify subject is not visible in the details section
+        Then verify description is not visible in the details section
 
     Scenario: Screen Enhance: Waiver Renewal Details View - Waiver Terminated
         Then click Waiver Terminated checkbox
@@ -70,6 +74,8 @@ Feature: Waiver Package Details View: Waiver Renewals for a State User
         Then verify the attachments section exists
         Then verify the download all button exists
         Then verify the additional information section exists
+        Then verify subject is not visible in the details section
+        Then verify description is not visible in the details section
 
     Scenario: Screen Enhance: Waiver Renewal Details View - RAI Issued
         Then click RAI Issued checkbox
@@ -91,6 +97,8 @@ Feature: Waiver Package Details View: Waiver Renewals for a State User
         Then verify the attachments section exists
         Then verify the download all button exists
         Then verify the additional information section exists
+        Then verify subject is not visible in the details section
+        Then verify description is not visible in the details section
 
     Scenario: Screen Enhance: Waiver Renewal Details View - Approved
         Then click Approved checkbox
@@ -113,6 +121,8 @@ Feature: Waiver Package Details View: Waiver Renewals for a State User
         Then verify the attachments section exists
         Then verify the download all button exists
         Then verify the additional information section exists
+        Then verify subject is not visible in the details section
+        Then verify description is not visible in the details section
 
     Scenario: Screen Enhance: Waiver Renewal Details View - Disapproved
         Then click Disapproved checkbox
@@ -133,6 +143,8 @@ Feature: Waiver Package Details View: Waiver Renewals for a State User
         Then verify the attachments section exists
         Then verify the download all button exists
         Then verify the additional information section exists
+        Then verify subject is not visible in the details section
+        Then verify description is not visible in the details section
 
     # Need seed data / reset data update
     # Scenario: Screen Enhance: Waiver Renewal Details View - Withdrawal Requested
@@ -154,6 +166,8 @@ Feature: Waiver Package Details View: Waiver Renewals for a State User
     #     Then verify the attachments section exists
     #     Then verify the download all button exists
     #     Then verify the additional information section exists
+    #     Then verify subject is not visible in the details section
+    #     Then verify description is not visible in the details section
 
     Scenario: Screen Enhance: Waiver Renewal Details View - Package Withdrawn
         Then click the Package Withdrawn checkbox
@@ -174,3 +188,5 @@ Feature: Waiver Package Details View: Waiver Renewals for a State User
         Then verify the attachments section exists
         Then verify the download all button exists
         Then verify the additional information section exists
+        Then verify subject is not visible in the details section
+        Then verify description is not visible in the details section

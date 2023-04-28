@@ -27,29 +27,36 @@ Feature: Waiver Package Details View: 1915 b Waiver Amendment for a CMS User
         Then verify there is an Initial Submission Date header in the details section
         Then verify a date exists for the Initial Submission Date
         Then verify there is a Proposed Effective Date header in the details section
+        Then verify there is a Subject header in the details section
+        Then verify there is a description header in the details section
+        Then verify the description has a value displayed in the details section
         Then verify the attachments section exists
         Then verify the download all button exists
         Then verify the additional information section exists
 
     # Need seed data / reset data update
-    # Scenario: Screen Enhance: 1915 b Waiver Amendment Details View - Pending
-    #     Then click the Pending checkbox
-    #     Then click the Waiver Number link in the first row
-    #     Then verify the package details page is visible
-    #     Then verify 2 action cards exist
-    #     Then verify the status on the card is "Pending"
-    #     Then verify the package actions section is unavailable
-    #     Then verify the details section exists
-    #     Then verify there is a Type header in the details section
-    #     Then verify the type is 1915b Waiver Amendment
-    #     Then verify there is a State header in the details section
-    #     Then verify a state exists for the State
-    #     Then verify there is an Initial Submission Date header in the details section
-    #     Then verify a date exists for the Initial Submission Date
-    #     Then verify there is a Proposed Effective Date header in the details section
-    #     Then verify the attachments section exists
-    #     Then verify the download all button exists
-    #     Then verify the additional information section exists
+    Scenario: Screen Enhance: 1915 b Waiver Amendment Details View - Pending
+        Then click the Pending checkbox
+        Then click the Waiver Number link in the first row
+        Then verify the package details page is visible
+        Then verify 2 action cards exist
+        Then verify the status on the card is "Pending"
+        Then verify the package actions section is unavailable
+        Then verify the details section exists
+        Then verify there is a Type header in the details section
+        Then verify the type is 1915b Waiver Amendment
+        Then verify there is a State header in the details section
+        Then verify a state exists for the State
+        Then verify there is an Initial Submission Date header in the details section
+        Then verify a date exists for the Initial Submission Date
+        Then verify there is a Proposed Effective Date header in the details section
+        Then verify there is a Subject header in the details section
+        Then verify the subject has a value displayed in the details section
+        Then verify there is a description header in the details section
+        Then verify the description has a value displayed in the details section
+        Then verify the attachments section exists
+        Then verify the download all button exists
+        Then verify the additional information section exists
 
     Scenario: Screen Enhance: 1915 b Waiver Amendment Details View - Pending - RAI
         Then click Pending - RAI checkbox
@@ -66,6 +73,10 @@ Feature: Waiver Package Details View: 1915 b Waiver Amendment for a CMS User
         Then verify there is an Initial Submission Date header in the details section
         Then verify a date exists for the Initial Submission Date
         Then verify there is a Proposed Effective Date header in the details section
+        Then verify there is a Subject header in the details section
+        Then verify the subject has a value displayed in the details section
+        Then verify there is a description header in the details section
+        Then verify the description has a value displayed in the details section
         Then verify the attachments section exists
         Then verify the download all button exists
         Then verify the additional information section exists
@@ -85,6 +96,10 @@ Feature: Waiver Package Details View: 1915 b Waiver Amendment for a CMS User
         Then verify there is an Initial Submission Date header in the details section
         Then verify a date exists for the Initial Submission Date
         Then verify there is a Proposed Effective Date header in the details section
+        Then verify there is a Subject header in the details section
+        Then verify the subject has a value displayed in the details section
+        Then verify there is a description header in the details section
+        Then verify the description has a value displayed in the details section
         Then verify the attachments section exists
         Then verify the download all button exists
         Then verify the additional information section exists
@@ -104,29 +119,37 @@ Feature: Waiver Package Details View: 1915 b Waiver Amendment for a CMS User
         Then verify there is an Initial Submission Date header in the details section
         Then verify a date exists for the Initial Submission Date
         Then verify there is a Proposed Effective Date header in the details section
+        Then verify there is a Subject header in the details section
+        Then verify the subject has a value displayed in the details section
+        Then verify there is a description header in the details section
+        Then verify the description has a value displayed in the details section
         Then verify the attachments section exists
         Then verify the download all button exists
         Then verify the additional information section exists
 
     # Need seed data / reset data update
-    # Scenario: Screen Enhance: 1915 b Waiver Amendment Details View - Withdrawn
-    #     Then click the Package Withdrawn checkbox
-    #     Then click the Waiver Number link in the first row
-    #     Then verify the package details page is visible
-    #     Then verify 2 action cards exist
-    #     Then verify the status on the card is "Package Withdrawn"
-    #     Then verify the package actions section is unavailable
-    #     Then verify the details section exists
-    #     Then verify there is a Type header in the details section
-    #     Then verify the type is 1915b Waiver Amendment
-    #     Then verify there is a State header in the details section
-    #     Then verify a state exists for the State
-    #     Then verify there is an Initial Submission Date header in the details section
-    #     Then verify a date exists for the Initial Submission Date
-    #     Then verify there is a Proposed Effective Date header in the details section
-    #     Then verify the attachments section exists
-    #     Then verify the download all button exists
-    #     Then verify the additional information section exists
+    Scenario: Screen Enhance: 1915 b Waiver Amendment Details View - Withdrawn
+        Then click the Package Withdrawn checkbox
+        Then click the Waiver Number link in the first row
+        Then verify the package details page is visible
+        Then verify 2 action cards exist
+        Then verify the status on the card is "Package Withdrawn"
+        Then verify the package actions section is unavailable
+        Then verify the details section exists
+        Then verify there is a Type header in the details section
+        Then verify the type is 1915b Waiver Amendment
+        Then verify there is a State header in the details section
+        Then verify a state exists for the State
+        Then verify there is an Initial Submission Date header in the details section
+        Then verify a date exists for the Initial Submission Date
+        Then verify there is a Proposed Effective Date header in the details section
+        Then verify there is a Subject header in the details section
+        Then verify the subject has a value displayed in the details section
+        Then verify there is a description header in the details section
+        Then verify the description has a value displayed in the details section
+        Then verify the attachments section exists
+        Then verify the download all button exists
+        Then verify the additional information section exists
 
     Scenario: Screen Enhance: 1915 b Waiver Amendment Details View - Pending - Concurrence
         Then click the Pending - Concurrence checkbox
@@ -143,27 +166,35 @@ Feature: Waiver Package Details View: 1915 b Waiver Amendment for a CMS User
         Then verify there is an Initial Submission Date header in the details section
         Then verify a date exists for the Initial Submission Date
         Then verify there is a Proposed Effective Date header in the details section
+        Then verify there is a Subject header in the details section
+        Then verify the subject has a value displayed in the details section
+        Then verify there is a description header in the details section
+        Then verify the description has a value displayed in the details section
         Then verify the attachments section exists
         Then verify the download all button exists
         Then verify the additional information section exists
 
     # Need seed data / reset data update
-    # Scenario: Screen Enhance: 1915 b Waiver Amendment Details View - Pending - Approval
-    #     Then click the Pending - Approval checkbox
-    #     Then click the Waiver Number link in the first row
-    #     Then verify the package details page is visible
-    #     Then verify 2 action cards exist
-    #     Then verify the status on the card is "Pending - Approval"
-    #     Then verify the package actions section is unavailable
-    #     Then verify the details section exists
-    #     Then verify there is a Type header in the details section
-    #     Then verify the type is 1915b Waiver Amendment
-    #     Then verify there is a State header in the details section
-    #     Then verify a state exists for the State
-    #     Then verify there is an Initial Submission Date header in the details section
-    #     Then verify a date exists for the Initial Submission Date
-    #     Then verify there is a Proposed Effective Date header in the details section
-    #     Then verify the Proposed Effective Date is a date formated like Mon dd yyyy
-    #     Then verify the attachments section exists
-    #     Then verify the download all button exists
-    #     Then verify the additional information section exists
+    Scenario: Screen Enhance: 1915 b Waiver Amendment Details View - Pending - Approval
+        Then click the Pending - Approval checkbox
+        Then click the Waiver Number link in the first row
+        Then verify the package details page is visible
+        Then verify 2 action cards exist
+        Then verify the status on the card is "Pending - Approval"
+        Then verify the package actions section is unavailable
+        Then verify the details section exists
+        Then verify there is a Type header in the details section
+        Then verify the type is 1915b Waiver Amendment
+        Then verify there is a State header in the details section
+        Then verify a state exists for the State
+        Then verify there is an Initial Submission Date header in the details section
+        Then verify a date exists for the Initial Submission Date
+        Then verify there is a Proposed Effective Date header in the details section
+        Then verify there is a Subject header in the details section
+        Then verify the subject has a value displayed in the details section
+        Then verify there is a description header in the details section
+        Then verify the description has a value displayed in the details section
+        Then verify the Proposed Effective Date is a date formated like Mon dd yyyy
+        Then verify the attachments section exists
+        Then verify the download all button exists
+        Then verify the additional information section exists

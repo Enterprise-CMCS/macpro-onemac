@@ -28,6 +28,7 @@ export interface FieldHint {
 export class UserRole {
   canAccessDashboard: boolean;
   canAccessForms: boolean;
+  canSeeSubjectAndDescription: boolean;
   canAccessMetrics: boolean;
   canAccessUserManagement: boolean;
   canDownloadCsv: boolean;

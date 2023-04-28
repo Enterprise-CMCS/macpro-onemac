@@ -49,5 +49,8 @@
     "*.{js,jsx,ts,tsx,scss,css,md}": [
       "prettier --write"
     ]
+  },
+  "dependencies": {
+    "dynamodb-local": "^0.0.32"
   }
 }

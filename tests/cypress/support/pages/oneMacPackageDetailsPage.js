@@ -53,6 +53,8 @@ const tempExtensionsNavBtn =
 const tempExtensionID = "//td[contains(@id,'componentId-')]";
 const withdrawBtnOnTempExt = "//li[text()='Withdraw Package']";
 const packageAction = "//td[contains(@id,'packageActions-')]";
+const subjectHeader = "//h3[contains(text(),'Subject')]";
+const descriptionHeader = "//h3[contains(text(),'Description')]";
 
 export class oneMacPackageDetailsPage {
   verifyPackageDetailsPageIsVisible() {
@@ -314,6 +316,28 @@ export class oneMacPackageDetailsPage {
   }
   clickWithdrawBtnOnTempExt() {
     cy.xpath(withdrawBtnOnTempExt).filter(":visible").click();
+  }
+  verifySubjectHeaderExists() {
+    cy.xpath(subjectHeader).should("be.visible");
+  }
+  verifySubjectValueExists() {
+    cy.xpath(subjectHeader)
+      .next("div")
+      .contains(/^(?!\s*$).+/);
+  }
+  verifySubjectDoesNotExists() {
+    cy.xpath(subjectHeader).should("not.exist");
+  }
+  verifyDescrptionHeaderExists() {
+    cy.xpath(descriptionHeader).should("be.visible");
+  }
+  verifyDescriptionValueExists() {
+    cy.xpath(descriptionHeader)
+      .next("div")
+      .contains(/^(?!\s*$).+/);
+  }
+  verifyDescrptionDoesNotExists() {
+    cy.xpath(descriptionHeader).should("not.exist");
   }
 }
 export default oneMacPackageDetailsPage;

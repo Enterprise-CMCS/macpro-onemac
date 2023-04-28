@@ -56,6 +56,8 @@ export const buildAnyPackage = async (packageId, config) => {
         submissionTimestamp: 0,
         submitterName: "-- --",
         submitterEmail: "-- --",
+        subject: "-- --",
+        description: "-- --",
       },
     };
     let currentPackage;
@@ -173,6 +175,8 @@ export const buildAnyPackage = async (packageId, config) => {
           (putParams.Item.currentStatus =
             SEATOOL_TO_ONEMAC_STATUS[seaToolStatus]);
 
+        putParams.Item.subject = anEvent.STATE_PLAN.TITLE_NAME;
+        putParams.Item.description = anEvent.STATE_PLAN.SUMMARY_MEMO;
         return;
       }
 
