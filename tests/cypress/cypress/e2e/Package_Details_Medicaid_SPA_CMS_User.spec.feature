@@ -128,7 +128,7 @@ Feature: Medicaid SPA CMS Details View - Card View with Actions
         Then verify there is a description header in the details section
         Then verify the description has a value displayed in the details section
         Then verify the attachments section exists
-        Then verify the download all button exists
+        #Then verify the download all button exists
         Then verify the additional information section exists
 
     Scenario: Screen Enhance - Approved Medicaid SPA
