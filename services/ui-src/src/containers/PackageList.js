@@ -235,7 +235,14 @@ const PackageList = () => {
               filter: CustomFilterTypes.DateRange,
               Filter: CustomFilterUi.DateRangeInPast,
             }
-          : null,
+          : {
+              Header: "Formal RAI Response",
+              accessor: "latestRaiResponseTimestamp",
+              Cell: renderDate,
+              disableFilters: false,
+              filter: CustomFilterTypes.DateRange,
+              Filter: CustomFilterUi.DateRangeInPast,
+            },
         {
           Header: "Submitted By",
           accessor: "submitterName",
