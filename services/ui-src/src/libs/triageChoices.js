@@ -36,7 +36,7 @@ export const choicesFromRoute = {
   },
   [ONEMAC_ROUTES.TRIAGE_WAIVER]: {
     heading: "Waiver Action Type",
-    intro: "Select a Waiver Type to start your Submission.",
+    intro: "Select a Waiver type to start your submission.",
     choices: [
       {
         title: "Request Temporary Extension",
@@ -45,7 +45,7 @@ export const choicesFromRoute = {
       },
       {
         title: "1915(b) Waiver Actions",
-        description: "Submit 1915(b) Waivers, Amendments & Renewals",
+        description: "Submit 1915(b) Waivers, Amendments, and Renewals",
         linkTo: ONEMAC_ROUTES.TRIAGE_WAIVER_B,
       },
       {
@@ -66,8 +66,8 @@ export const choicesFromRoute = {
       },
       {
         title: "All Other 1915(b) Waiver Authority",
-        description:
-          "Submit 1915(b) Waivers, Amendments, and Renewals<br/><b>Not applicable for 1915(b)(4) waiver actions</b>",
+        description: "Submit 1915(b) Waivers, Amendments, and Renewals",
+        strongText: "Not applicable for 1915(b)(4) waiver actions",
         linkTo: ONEMAC_ROUTES.TRIAGE_WAIVER_B_OTHER,
       },
     ],
@@ -98,17 +98,17 @@ export const choicesFromRoute = {
     intro: "Select a Waiver type to start your submission.",
     choices: [
       {
-        title: "1915(b) Initial Waiver",
+        title: "1915(b) New Initial Waiver",
         description: "Create a new 1915(b) initial waiver",
         linkTo: ONEMAC_ROUTES.INITIAL_WAIVER_B_OTHER,
       },
       {
-        title: "1915(b) Waiver Renewal",
+        title: "1915(b) Renewal Waiver",
         description: "Renew an existing 1915(b) waiver",
         linkTo: ONEMAC_ROUTES.WAIVER_RENEWAL_B_OTHER,
       },
       {
-        title: "1915(b) Waiver Amendment",
+        title: "1915(b) Amendment",
         description: "Amend an existing 1915(b) waiver",
         linkTo: ONEMAC_ROUTES.WAIVER_AMENDMENT_B_OTHER,
       },
