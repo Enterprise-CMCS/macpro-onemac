@@ -51,7 +51,7 @@ const ninetiethDayPendingCheckbox =
 const ninetiethDayClockStoppedCheckbox =
   "//label[contains(@for,'checkbox_ninetiethDay-Clock Stopped')]";
 const formalRAIReceivedCheckbox =
-  "//label[contains(@for,'checkbox_columnPicker-Formal RAI Received')]";
+  "//label[contains(@for,'checkbox_columnPicker-Formal RAI')]";
 const ninetiethDayDatePickerFilter =
   '*[role=combobox][aria-owns^="ninetiethDay-date-filter"]';
 //Element is Xpath use cy.xpath instead of cy.get
