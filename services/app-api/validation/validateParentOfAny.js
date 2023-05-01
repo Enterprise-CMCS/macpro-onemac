@@ -59,7 +59,6 @@ export const validateParentOfAny = async (event, config) => {
   }
 
   console.log("%s parentPackage is: ", parentId, parentPackage);
-
   // matches with no more specifics, parent is found
   if (!config.allowedParentTypes && !config.allowedParentStatuses) return true;
 
