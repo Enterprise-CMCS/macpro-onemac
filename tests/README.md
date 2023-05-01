@@ -4,8 +4,8 @@ oneMAC uses the Cypress (https://cypress.io) front end testing tool with Cucumbe
 
 ### Installing and using cypress locally
 
-cd ~projectDir/tests/cypress ?? (check this!)
-npm install cypress --save-dev
+cd ~projectDir/tests/cypress
+npm i
 
 go to /tests/cypress
 npx cypress open
@@ -13,4 +13,4 @@ npx cypress open
 ## Run an individual cypress test rather than whole test suite
 
 go to /tests/cypress
-npx cypress run --spec "./cypress/integration/OY2_16294_Withdraw_action_on_waiver_component.spec.feature" --headed
+npx cypress run --spec "./cypress/e2e/Dashboard_Filter_By_State.spec.feature" --headed

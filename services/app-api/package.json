@@ -28,6 +28,7 @@
     "@aws-sdk/lib-dynamodb": "^3.43.0",
     "cmscommonlib": "file:../common",
     "date-fns": "^2.16.1",
+    "dynamodb-local": "^0.0.32",
     "esbuild": "^0.16.7",
     "joi": "^17.4.0",
     "luxon": "^1.25.0",

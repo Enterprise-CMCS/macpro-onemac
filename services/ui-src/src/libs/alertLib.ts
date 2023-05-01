@@ -38,6 +38,12 @@ export const ALERTS_MSG: Record<
     text: "Your submission has been received.",
   },
 
+  WITHDRAW_REQUESTED: {
+    type: ALERT_TYPES.SUCCESS,
+    heading: "Withdraw package request has been submitted.",
+    text: "If CMS needs any additional information, they will follow up by email.",
+  },
+
   HELPDESK_SUBMISSION_SUCCESS: {
     type: ALERT_TYPES.SUCCESS,
     heading: "Submission Complete",
@@ -48,12 +54,6 @@ export const ALERTS_MSG: Record<
     type: ALERT_TYPES.SUCCESS,
     heading: "Registration Complete",
     text: "Thank you. The CMS Role Approver will verify your access and credentials.  Please check your email for details on access.",
-  },
-
-  WITHDREW_PACKAGE: {
-    type: ALERT_TYPES.SUCCESS,
-    heading: "Your submission package has successfully been withdrawn.",
-    text: "Please check your inbox for an email confirmation.",
   },
 
   // Success woth Survey Link
@@ -204,6 +204,7 @@ export const alertCodeAlerts = {
   [RESPONSE_CODE.NONE]: ALERTS_MSG.NONE,
   [RESPONSE_CODE.LOGIN_ERROR]: ALERTS_MSG.LOGIN_ERROR,
   [RESPONSE_CODE.SUCCESSFULLY_SUBMITTED]: ALERTS_MSG.SUBMISSION_SUCCESS,
+  [RESPONSE_CODE.WITHDRAW_REQUESTED]: ALERTS_MSG.WITHDRAW_REQUESTED,
   [RESPONSE_CODE.SUBMISSION_SAVE_FAILURE]: ALERTS_MSG.SUBMISSION_SAVE_ERROR,
   [RESPONSE_CODE.DATA_MISSING]: ALERTS_MSG.SUBMISSION_INCOMPLETE,
   [RESPONSE_CODE.ATTACHMENTS_MISSING]: ALERTS_MSG.REQUIRED_UPLOADS_MISSING,

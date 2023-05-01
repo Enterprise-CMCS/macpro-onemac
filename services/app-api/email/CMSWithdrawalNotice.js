@@ -6,11 +6,8 @@ import { formatPackageDetails } from "./formatPackageDetails.js";
  * @returns {Object} email parameters in generic format.
  */
 export const CMSWithdrawalNotice = (data, config, user) => ({
-  ToAddresses: [process.env.reviewerEmail],
-  CcAddresses:
-    data.componentType === "chipspa" || data.componentType === "chipsparai"
-      ? process.env.chipCcEmail?.split(";")?.filter((s) => s.trim())
-      : [],
+  ToAddresses: config.CMSToAddresses,
+  CcAddresses: config.CMSCcAddresses,
   Subject: `${config.typeLabel} Package ${data.componentId} Withdraw Request`,
   HTML: `
       <p>The OneMAC submission portal received a request to withdraw a package. You are receiving this email notification as ${

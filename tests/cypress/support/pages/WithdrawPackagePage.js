@@ -9,7 +9,7 @@ const addFileBtn = "#uploader-input-0";
 const additionalInfoHeader = "#additional-information-label";
 const additionalInfoTextArea = "#additional-information";
 
-export class WithdrawPackagePage {
+export class withdrawPackagePage {
   verifyWithdrawPageHeader(s) {
     cy.xpath(withdrawPageHeader).contains(s);
   }
@@ -55,4 +55,4 @@ export class WithdrawPackagePage {
     cy.get(additionalInfoTextArea).clear();
   }
 }
-export default WithdrawPackagePage;
+export default withdrawPackagePage;
