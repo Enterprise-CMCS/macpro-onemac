@@ -18,5 +18,5 @@ Resources:
             status:
               - "TIMED_OUT"
         Targets:
-          - Arn: !GetAtt OneMacApiLambdaTimeoutTopic.Arn
+          - Arn: !Ref OneMacApiLambdaTimeoutTopic
             Id: my-target
