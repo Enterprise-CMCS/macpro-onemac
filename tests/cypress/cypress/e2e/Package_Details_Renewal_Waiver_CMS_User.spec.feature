@@ -27,29 +27,34 @@ Feature: Waiver Package Details View: Waiver Renewal for a CMS User
         Then verify there is an Initial Submission Date header in the details section
         Then verify a date exists for the Initial Submission Date
         Then verify there is a Proposed Effective Date header in the details section
+        Then verify there is a Subject header in the details section
+        Then verify there is a description header in the details section
         Then verify the attachments section exists
         Then verify the download all button exists
         Then verify the additional information section exists
 
-    # Need seed data / reset data update
-    # Scenario: Screen Enhance: Waiver Renewal Details View - Pending
-    #     Then click the Pending checkbox
-    #     Then click the Waiver Number link in the first row
-    #     Then verify the package details page is visible
-    #     Then verify 2 action cards exist
-    #     Then verify the status on the card is "Pending"
-    #     Then verify the package actions section is unavailable
-    #     Then verify the details section exists
-    #     Then verify there is a Type header in the details section
-    #     Then verify the type is Waiver Renewal
-    #     Then verify there is a State header in the details section
-    #     Then verify a state exists for the State
-    #     Then verify there is an Initial Submission Date header in the details section
-    #     Then verify a date exists for the Initial Submission Date
-    #     Then verify there is a Proposed Effective Date header in the details section
-    #     Then verify the attachments section exists
-    #     Then verify the download all button exists
-    #     Then verify the additional information section exists
+    Scenario: Screen Enhance: Waiver Renewal Details View - Pending
+        Then click the Pending checkbox
+        Then click the Waiver Number link in the first row
+        Then verify the package details page is visible
+        Then verify 2 action cards exist
+        Then verify the status on the card is "Pending"
+        Then verify the package actions section is unavailable
+        Then verify the details section exists
+        Then verify there is a Type header in the details section
+        Then verify the type is Waiver Renewal
+        Then verify there is a State header in the details section
+        Then verify a state exists for the State
+        Then verify there is an Initial Submission Date header in the details section
+        Then verify a date exists for the Initial Submission Date
+        Then verify there is a Proposed Effective Date header in the details section
+        Then verify there is a Subject header in the details section
+        Then verify the subject has a value displayed in the details section
+        Then verify there is a description header in the details section
+        Then verify the description has a value displayed in the details section
+        Then verify the attachments section exists
+        Then verify the download all button exists
+        Then verify the additional information section exists
 
     Scenario: Screen Enhance: Waiver Renewal Details View - Terminated
         Then click Waiver Terminated checkbox
@@ -66,6 +71,10 @@ Feature: Waiver Package Details View: Waiver Renewal for a CMS User
         Then verify there is an Initial Submission Date header in the details section
         Then verify a date exists for the Initial Submission Date
         Then verify there is a Proposed Effective Date header in the details section
+        Then verify there is a Subject header in the details section
+        Then verify the subject has a value displayed in the details section
+        Then verify there is a description header in the details section
+        Then verify the description has a value displayed in the details section
         Then verify the attachments section exists
         Then verify the download all button exists
         Then verify the additional information section exists
@@ -85,6 +94,10 @@ Feature: Waiver Package Details View: Waiver Renewal for a CMS User
         Then verify there is an Initial Submission Date header in the details section
         Then verify a date exists for the Initial Submission Date
         Then verify there is a Proposed Effective Date header in the details section
+        Then verify there is a Subject header in the details section
+        Then verify the subject has a value displayed in the details section
+        Then verify there is a description header in the details section
+        Then verify the description has a value displayed in the details section
         Then verify the attachments section exists
         Then verify the download all button exists
         Then verify the additional information section exists
@@ -104,6 +117,10 @@ Feature: Waiver Package Details View: Waiver Renewal for a CMS User
         Then verify there is an Initial Submission Date header in the details section
         Then verify a date exists for the Initial Submission Date
         Then verify there is a Proposed Effective Date header in the details section
+        Then verify there is a Subject header in the details section
+        Then verify the subject has a value displayed in the details section
+        Then verify there is a description header in the details section
+        Then verify the description has a value displayed in the details section
         Then verify the Proposed Effective Date is a date formated like Mon dd yyyy
         Then verify the attachments section exists
         Then verify the download all button exists
@@ -124,6 +141,10 @@ Feature: Waiver Package Details View: Waiver Renewal for a CMS User
         Then verify there is an Initial Submission Date header in the details section
         Then verify a date exists for the Initial Submission Date
         Then verify there is a Proposed Effective Date header in the details section
+        Then verify there is a Subject header in the details section
+        Then verify the subject has a value displayed in the details section
+        Then verify there is a description header in the details section
+        Then verify the description has a value displayed in the details section
         Then verify the attachments section exists
         Then verify the download all button exists
         Then verify the additional information section exists
@@ -143,29 +164,36 @@ Feature: Waiver Package Details View: Waiver Renewal for a CMS User
         Then verify there is an Initial Submission Date header in the details section
         Then verify a date exists for the Initial Submission Date
         Then verify there is a Proposed Effective Date header in the details section
+        Then verify there is a Subject header in the details section
+        Then verify the subject has a value displayed in the details section
+        Then verify there is a description header in the details section
+        Then verify the description has a value displayed in the details section
         Then verify the attachments section exists
         Then verify the download all button exists
         Then verify the additional information section exists
 
-    # Need seed data / reset data update
-    # Scenario: Screen Enhance: Waiver Renewal Details View - Pending - Concurrence
-    #     Then click the Pending - Concurrence checkbox
-    #     Then click the Waiver Number link in the first row
-    #     Then verify the package details page is visible
-    #     Then verify 2 action cards exist
-    #     Then verify the status on the card is "Pending - Concurrence"
-    #     Then verify the package actions section is unavailable
-    #     Then verify the details section exists
-    #     Then verify there is a Type header in the details section
-    #     Then verify the type is Waiver Renewal
-    #     Then verify there is a State header in the details section
-    #     Then verify a state exists for the State
-    #     Then verify there is an Initial Submission Date header in the details section
-    #     Then verify a date exists for the Initial Submission Date
-    #     Then verify there is a Proposed Effective Date header in the details section
-    #     Then verify the attachments section exists
-    #     Then verify the download all button exists
-    #     Then verify the additional information section exists
+    Scenario: Screen Enhance: Waiver Renewal Details View - Pending - Concurrence
+        Then click the Pending - Concurrence checkbox
+        Then click the Waiver Number link in the first row
+        Then verify the package details page is visible
+        Then verify 2 action cards exist
+        Then verify the status on the card is "Pending - Concurrence"
+        Then verify the package actions section is unavailable
+        Then verify the details section exists
+        Then verify there is a Type header in the details section
+        Then verify the type is Waiver Renewal
+        Then verify there is a State header in the details section
+        Then verify a state exists for the State
+        Then verify there is an Initial Submission Date header in the details section
+        Then verify a date exists for the Initial Submission Date
+        Then verify there is a Proposed Effective Date header in the details section
+        Then verify there is a Subject header in the details section
+        Then verify the subject has a value displayed in the details section
+        Then verify there is a description header in the details section
+        Then verify the description has a value displayed in the details section
+        Then verify the attachments section exists
+        Then verify the download all button exists
+        Then verify the additional information section exists
 
     Scenario: Screen Enhance: Waiver Renewal Details View - Pending - Approval
         Then click the Pending - Approval checkbox
@@ -182,6 +210,10 @@ Feature: Waiver Package Details View: Waiver Renewal for a CMS User
         Then verify there is an Initial Submission Date header in the details section
         Then verify a date exists for the Initial Submission Date
         Then verify there is a Proposed Effective Date header in the details section
+        Then verify there is a Subject header in the details section
+        Then verify the subject has a value displayed in the details section
+        Then verify there is a description header in the details section
+        Then verify the description has a value displayed in the details section
         Then verify the attachments section exists
         Then verify the download all button exists
         Then verify the additional information section exists
