@@ -19,4 +19,4 @@ Resources:
               - "TIMED_OUT"
         Targets:
           - Arn: !Ref OneMacApiLambdaTimeoutTopic
-            Id: my-target
+            Id: timeout-sns-target
