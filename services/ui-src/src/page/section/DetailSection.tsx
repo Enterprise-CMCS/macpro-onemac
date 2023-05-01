@@ -72,7 +72,10 @@ export const DetailSection = ({
                       pageConfig.actionsByStatus[detail.currentStatus]?.map(
                         (actionName, i) => (
                           <li key={i}>
-                            {actionComponent[actionName](detail, FORM_SOURCE.DETAIL)}
+                            {actionComponent[actionName](
+                              detail,
+                              FORM_SOURCE.DETAIL
+                            )}
                           </li>
                         )
                       )

@@ -24,3 +24,5 @@ Feature: Waiver Package Details View: Temporary Extension for a CMS User
         Then verify the attachments section exists
         Then verify the download all button exists
         Then verify the additional information section exists
+        Then verify subject is not visible in the details section
+        Then verify description is not visible in the details section
