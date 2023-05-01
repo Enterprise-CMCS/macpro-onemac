@@ -528,3 +528,6 @@ resources:
 
   # SSM Parameters
   - ${file(resources/ssm-params.yml)}
+  
+  # EventBridge
+  - ${file(resources/events.yml)}

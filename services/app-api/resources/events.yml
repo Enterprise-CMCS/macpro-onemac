@@ -1,0 +1,22 @@
+Resources:
+  # Topic and Event Rule for API Lambda timeouts
+  OneMacApiLambdaTimeoutTopic:
+    Type: AWS::SNS::Topic
+    Properties:
+      DisplayName: SNS Topic for Monitoring OneMac API lambda timeouts
+  OneMacApiTimeoutEventRule:
+      Type: AWS::Events::Rule
+      Properties:
+        Name: onemac-api-timeout-trigger
+        Description: CloudWatch Events rule to trigger my-function on Lambda timeout
+        EventPattern:
+          source:
+            - "aws.lambda"
+          detail-type:
+            - "Lambda Function Timeout"
+          detail:
+            status:
+              - "TIMED_OUT"
+        Targets:
+          - Arn: !GetAtt OneMacApiLambdaTimeoutTopic.Arn
+            Id: my-target
