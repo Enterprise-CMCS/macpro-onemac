@@ -94,13 +94,6 @@ functions:
     handler: timeout.main
     role: LambdaApiRole
     timeout: 1
-    policies:
-      - EventBridgePutEventsPolicy:
-          Statement:
-            - Action:
-                - events:PutEvents
-              Effect: Allow
-              Resource: "*"
 
   migrate:
     handler: migrate.main
