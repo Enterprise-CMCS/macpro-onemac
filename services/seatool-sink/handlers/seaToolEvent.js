@@ -11,8 +11,7 @@ function myHandler(event) {
   }
   console.log("Received event:", JSON.stringify(event, null, 2));
   const topicName = event.topic.replace(topicPrefix, "");
-  const value =
-    event.value !== "" ? JSON.parse(event.value) : JSON.parse(event);
+  const value = event?.value ? JSON.parse(event.value) : event;
   console.log(`Type: ${topicName} Topic: ${event.topic}`);
 
   const pk = event.key.toUpperCase();
