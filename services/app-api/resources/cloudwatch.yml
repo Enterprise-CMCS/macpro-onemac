@@ -13,7 +13,7 @@ Resources:
         MetricName: Errors
         Dimensions:
           - Name: FunctionName
-            Value: !Ref timeout
+            Value: !Ref timeoutFunction
         Statistic: Sum
         Period: 60
         EvaluationPeriods: 1
