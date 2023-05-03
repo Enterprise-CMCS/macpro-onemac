@@ -13,7 +13,7 @@ Resources:
         MetricName: Errors
         Dimensions:
           - Name: FunctionName
-            Value: ${self:service}-${self:custom.stage}-timeoutFunction
+            Value: !GetAtt timeout.Arn
         Statistic: Sum
         Period: 60
         EvaluationPeriods: 1

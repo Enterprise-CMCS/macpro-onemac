@@ -90,7 +90,7 @@ provider:
     lambda: true
 
 functions:
-  timeoutFunction:
+  timeout:
     handler: timeout.main
     role: LambdaApiRole
     timeout: 1
