@@ -1,32 +1,23 @@
 Resources:
   # Topic and Event Rule for API Lambda timeouts
-  ApiLambdaTimeoutTopic:
+  ApiLambdaErrorTopic:
     Type: AWS::SNS::Topic
     Properties:
       DisplayName: SNS Topic for Monitoring OneMac API lambda errors
-  ApiLambdaTimeoutCount:
-      Type: AWS::Logs::MetricFilter
-      Properties:
-        LogGroupName: /aws/api-gateway/${self:service}-${self:custom.stage}
-        FilterName: ApiLambdaTimeoutCount
-        FilterPattern: "Timed out after"
-        MetricTransformations:
-          - MetricValue: "1"
-            DefaultValue: 0
-            MetricNamespace: ${self:service}-${self:custom.stage}/lambda/timeout
-            MetricName: "LambdaTimeoutCount"
-            Unit: Count
-  ApiLambdaTimeoutAlarm:
+  OneMacApiLambdaErrorAlarm:
       Type: AWS::CloudWatch::Alarm
       Properties:
-        AlarmName: ${self:service}-${self:custom.stage}-LambdaTimeoutAlarm
-        AlarmDescription: "Notify ApiLambdaTimeoutTopic when ApiLambdaTimeoutCount is > 1 over 1 minute"
-        MetricName: ApiLambdaTimeoutCount
-        AlarmActions: 
-          - !Ref ApiLambdaTimeoutTopic
-        ComparisonOperator: GreaterThanOrEqualToThreshold
-        Statistic: SampleCount
+        AlarmName: ${self:service}-${self:custom.stage}-timeout-ErrorAlarm
+        AlarmDescription: Alarm triggered when any Lambda function in the current stage has an error
+        Namespace: AWS/Lambda
+        MetricName: Errors
+        Dimensions:
+          - Name: FunctionName
+            Value: !Ref timeout
+        Statistic: Sum
         Period: 60
         EvaluationPeriods: 1
         Threshold: 1
-        Namespace: ${self:service}-${self:custom.stage}/lambda/timeout
+        ComparisonOperator: GreaterThanOrEqualToThreshold
+        AlarmActions:
+          - !Ref ApiLambdaErrorTopic
