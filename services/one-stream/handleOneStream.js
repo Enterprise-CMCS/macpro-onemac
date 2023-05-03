@@ -51,6 +51,11 @@ export const main = async (eventBatch) => {
             break;
           case "SEATool": {
             const [, topic] = newEventData.GSI1pk.S.split("#");
+            if (newEventData.seaToolDelete.S === "true") {
+              packageToBuild.type = "delete";
+              break;
+            }
+
             let actionType;
             console.log("%s ACTIONTYPES: ", inPK, newEventData.ACTIONTYPES);
             if (!newEventData.ACTIONTYPES.NULL)
@@ -109,6 +114,9 @@ export const main = async (eventBatch) => {
           return;
         }
         switch (packageToBuild.type) {
+          case "delete":
+            console.log("%s got a delete for package", inPK, packageToBuild);
+            break;
           case Workflow.ONEMAC_TYPE.CHIP_SPA:
           case Workflow.ONEMAC_TYPE.CHIP_SPA_RAI:
           case Workflow.ONEMAC_TYPE.CHIP_SPA_WITHDRAW:
