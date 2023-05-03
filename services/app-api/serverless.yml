@@ -90,11 +90,6 @@ provider:
     lambda: true
 
 functions:
-  timeout:
-    handler: timeout.main
-    role: LambdaApiRole
-    timeout: 1
-
   migrate:
     handler: migrate.main
     role: LambdaApiRole
