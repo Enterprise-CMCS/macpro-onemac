@@ -4,7 +4,7 @@ Resources:
     Type: AWS::SNS::Topic
     Properties:
       DisplayName: SNS Topic for Monitoring OneMac API lambda errors
-  OneMacApiLambdaErrorAlarm:
+  ApiLambdaErrorAlarm:
       Type: AWS::CloudWatch::Alarm
       Properties:
         AlarmName: ${self:service}-${self:custom.stage}-timeout-ErrorAlarm
@@ -13,7 +13,7 @@ Resources:
         MetricName: Errors
         Dimensions:
           - Name: FunctionName
-            Value: !Ref timeoutFunction
+            Value: ${self:service}-${self:custom.stage}-timeoutFunction
         Statistic: Sum
         Period: 60
         EvaluationPeriods: 1
