@@ -2242,7 +2242,7 @@ ul.choice-list {
     p {
       color: #5b616b;
       font-size: 16px;
-      font-weight: 600;
+      font-weight: 400;
     }
     a {
       @extend .ds-u-padding--3;
@@ -2772,4 +2772,8 @@ ul.choice-list {
     @extend .ds-u-justify-content--center;
     width: 100%;
   }
+}
+.strong-text {
+  font-weight: 600;
+  font-style: italic;
 }
