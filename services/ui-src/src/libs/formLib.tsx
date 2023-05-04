@@ -4,6 +4,7 @@ import {
   SelectOption,
   FileUploadProps,
   ONEMAC_ROUTES,
+  ROUTES,
 } from "cmscommonlib";
 import config from "../utils/config";
 import { Link } from "react-router-dom";
@@ -57,7 +58,8 @@ export const defaultOneMACFormConfig = {
       <p className="req-message">
         Maximum file size of {config.MAX_ATTACHMENT_SIZE_MB} MB. You can add
         multiple files per attachment type. Read the description for each of the
-        attachment types on the FAQ Page.
+        attachment types on the{" "}
+        <Link to={ROUTES.FAQ_ACCEPTED_FILE_TYPES}>FAQ Page</Link>.
       </p>
       <p className="req-message">
         <span className="required-mark">*</span> indicates required attachment.
@@ -188,12 +190,13 @@ export const defaultWithdrawConfig = {
   proposedEffectiveDate: false,
 };
 
-export const defaultWaiverAttachJSX = (faqAnchor: string) => (
+export const defaultWaiverAttachJSX = (
   <>
     <p className="req-message">
       Maximum file size of {config.MAX_ATTACHMENT_SIZE_MB} MB. You can add
       multiple files per attachment type. Read the description for each of the
-      attachment types on the <Link to={faqAnchor}>FAQ Page</Link>.
+      attachment types on the{" "}
+      <Link to={ROUTES.FAQ_ACCEPTED_FILE_TYPES}>FAQ Page</Link>.
     </p>
     <p className="req-message">
       <span className="required-mark">*</span> At least one attachment is

@@ -28,7 +28,7 @@ export const waiverRenewalFormInfo: OneMACFormConfig = {
     "For renewals, the “R##” starts with ‘01’ and ascends.",
   ],
   proposedEffectiveDate: true,
-  attachmentIntroJSX: defaultWaiverAttachJSX(ROUTES.FAQ),
+  attachmentIntroJSX: defaultWaiverAttachJSX,
   landingPage: ONEMAC_ROUTES.PACKAGE_LIST_WAIVER,
   parentLabel: "Existing Waiver Number to Renew",
   parentFieldHint: [

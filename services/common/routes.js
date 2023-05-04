@@ -12,6 +12,7 @@ export const ROUTES = {
   DETAIL: "/detail",
   USER_MANAGEMENT: "/usermanagement",
   FAQ: "/FAQ",
+  FAQ_ACCEPTED_FILE_TYPES: "/FAQ#accepted-file-types",
   FAQ_TOP: "/FAQ/#top",
   FAQ_SPA_ID: "/FAQ#spa-id-format",
   FAQ_INITIAL_1915B_WAIVER_ID: "/FAQ#initial-waiver-id-format",
