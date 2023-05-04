@@ -79,6 +79,7 @@ $color-primary-alt-lightest: #f0fafe;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
 
   .header-and-content {
     flex: 1 0 auto;
@@ -1010,6 +1011,7 @@ article.form-container {
   width: 100%;
   max-width: 1024px;
   margin-left: 1rem;
+  padding-bottom: 12rem;
 
   @media only screen and (min-width: 1024px) {
     overflow: visible;
@@ -2489,7 +2491,7 @@ ul.choice-list {
 
   .dashboard-and-alert-bar {
     flex: 1;
-    overflow-x: auto;
+    overflow-x: scroll;
   }
 
   .filter-pane {
