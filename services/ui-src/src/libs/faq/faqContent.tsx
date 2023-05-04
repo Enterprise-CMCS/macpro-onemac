@@ -866,7 +866,7 @@ export const oneMACFAQContent: FAQContent[] = [
         ),
       },
       {
-        anchorText: "test-123",
+        anchorText: "acceptable-file-formats",
         question: "What are the kinds of file formats I can upload into OneMAC",
         answerJSX: (
           <section>
