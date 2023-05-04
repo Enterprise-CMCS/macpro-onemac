@@ -6,6 +6,7 @@ import {
   ONEMAC_ROUTES,
 } from "cmscommonlib";
 import config from "../utils/config";
+import { Link } from "react-router-dom";
 
 export type OneMACFormConfig = {
   idFormat?: string;
@@ -187,12 +188,12 @@ export const defaultWithdrawConfig = {
   proposedEffectiveDate: false,
 };
 
-export const defaultWaiverAttachJSX = (
+export const defaultWaiverAttachJSX = (faqAnchor: string) => (
   <>
     <p className="req-message">
       Maximum file size of {config.MAX_ATTACHMENT_SIZE_MB} MB. You can add
       multiple files per attachment type. Read the description for each of the
-      attachment types on the FAQ Page.
+      attachment types on the <Link to={faqAnchor}>FAQ Page</Link>.
     </p>
     <p className="req-message">
       <span className="required-mark">*</span> At least one attachment is
