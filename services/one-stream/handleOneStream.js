@@ -8,6 +8,8 @@ import { buildWaiverAmendment } from "./package/buildWaiverAmendment";
 import { buildWaiverAppendixK } from "./package/buildWaiverAppendixK";
 import { buildWaiverExtension } from "./package/buildWaiverExtension";
 
+import { deletePackage } from "./package/deletePackage";
+
 export const main = async (eventBatch) => {
   console.log("One Stream event: ", eventBatch);
 
@@ -116,6 +118,7 @@ export const main = async (eventBatch) => {
         switch (packageToBuild.type) {
           case "delete":
             console.log("%s got a delete for package", inPK, packageToBuild);
+            await deletePackage(packageToBuild.id);
             break;
           case Workflow.ONEMAC_TYPE.CHIP_SPA:
           case Workflow.ONEMAC_TYPE.CHIP_SPA_RAI:
