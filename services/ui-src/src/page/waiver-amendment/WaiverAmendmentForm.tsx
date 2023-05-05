@@ -31,7 +31,7 @@ export const waiverAmendmentFormInfo: OneMACFormConfig = {
     "For amendments, the last two digits start with ‘01’ and ascends.",
   ],
   proposedEffectiveDate: true,
-  attachmentIntroJSX: defaultAttachmentInstructionsJSX,
+  attachmentIntroJSX: defaultAttachmentInstructionsJSX(),
   landingPage: ONEMAC_ROUTES.PACKAGE_LIST_WAIVER,
   parentLabel: "Existing Waiver Number to Amend",
   parentFieldHint: [

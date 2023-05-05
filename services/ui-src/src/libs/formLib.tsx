@@ -62,12 +62,12 @@ export const DefaultFileTypesInfo = () => (
   </p>
 );
 
-export const DefaultFileSizeInfo = () => (
+export const DefaultFileSizeInfo = ({ route }: { route: string }) => (
   <p className="req-message">
     Maximum file size of {config.MAX_ATTACHMENT_SIZE_MB} MB. You can add
     multiple files per attachment type. Read the description for each of the
     attachment types on the{" "}
-    <Link to={ROUTES.FAQ_ACCEPTED_FILE_TYPES} target="_blank">
+    <Link to={route} target="_blank">
       FAQ Page
     </Link>
     .
@@ -82,8 +82,10 @@ export const RequiredAttachmentSpan = () => (
 );
 
 export const defaultAttachmentInstructionsJSX = (
+  anchoredFAQRoute: string = ROUTES.FAQ
+) => (
   <>
-    <DefaultFileSizeInfo />
+    <DefaultFileSizeInfo route={anchoredFAQRoute} />
     <DefaultFileTypesInfo />
     <RequiredAttachmentSpan />
   </>
@@ -95,7 +97,7 @@ export const defaultOneMACFormConfig = {
   idFAQLink: "",
   landingPage: ONEMAC_ROUTES.PACKAGE_LIST,
   proposedEffectiveDate: false,
-  attachmentIntroJSX: defaultAttachmentInstructionsJSX,
+  attachmentIntroJSX: defaultAttachmentInstructionsJSX(),
 };
 
 export const defaultWaiverAuthority = [
@@ -207,7 +209,7 @@ export const defaultWithdrawConfig = {
         Upload your supporting documentation for withdrawal or explain your need
         for withdrawal in the <i>Additional Information</i> box.
       </p>
-      {defaultAttachmentInstructionsJSX}
+      {defaultAttachmentInstructionsJSX()}
     </>
   ),
   addlInfoText:
