@@ -603,9 +603,9 @@ export const oneMACFAQContent: FAQContent[] = [
                     application pre-print (Initial, Renewal, Amendment)
                   </td>
                   <td>
-                    State submission of the 1915(b)(4) FFS Selective Contracting
-                    Waiver Fee-for-Service Selective Contracting Program
-                    preprint narrative (Sections A, B, and C)
+                    State submission of the 1915(b)(4) Fee-for-Service Selective
+                    Contracting Program preprint narrative (Sections A, B, and
+                    C)
                   </td>
                 </tr>
                 <tr>
