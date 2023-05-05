@@ -3,7 +3,7 @@ import OneMACForm from "../OneMACForm";
 import {
   defaultOneMACFormConfig,
   OneMACFormConfig,
-  defaultWaiverAttachJSX,
+  defaultAttachmentInstructionsJSX,
 } from "../../libs/formLib";
 import { ROUTES, ONEMAC_ROUTES, initialWaiver } from "cmscommonlib";
 
@@ -23,7 +23,7 @@ export const initialWaiverFormInfo: OneMACFormConfig = {
     },
   ],
   proposedEffectiveDate: true,
-  attachmentIntroJSX: defaultWaiverAttachJSX,
+  attachmentIntroJSX: defaultAttachmentInstructionsJSX,
   landingPage: ONEMAC_ROUTES.PACKAGE_LIST_WAIVER,
 };
 

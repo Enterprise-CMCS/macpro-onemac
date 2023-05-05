@@ -3,7 +3,7 @@ import OneMACForm from "../OneMACForm";
 import {
   defaultOneMACFormConfig,
   OneMACFormConfig,
-  defaultWaiverAttachJSX,
+  defaultAttachmentInstructionsJSX,
 } from "../../libs/formLib";
 import { ROUTES, ONEMAC_ROUTES, waiverRenewal } from "cmscommonlib";
 
@@ -28,7 +28,7 @@ export const waiverRenewalFormInfo: OneMACFormConfig = {
     "For renewals, the “R##” starts with ‘01’ and ascends.",
   ],
   proposedEffectiveDate: true,
-  attachmentIntroJSX: defaultWaiverAttachJSX,
+  attachmentIntroJSX: defaultAttachmentInstructionsJSX,
   landingPage: ONEMAC_ROUTES.PACKAGE_LIST_WAIVER,
   parentLabel: "Existing Waiver Number to Renew",
   parentFieldHint: [

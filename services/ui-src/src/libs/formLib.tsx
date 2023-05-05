@@ -47,28 +47,55 @@ type ConfirmSubmitType = {
   confirmSubmitYesButton?: string;
 };
 
+export const DefaultFileTypesInfo = () => (
+  <p>
+    We accept the following file types:{" "}
+    <b>
+      .doc, .docx, .jpg, .odp, .ods, .odt, .png, .pdf, .ppt, .pptx, .rtf, .txt,
+      .xls, .xlsx, and a few others.
+    </b>{" "}
+    See the full list on the{" "}
+    <Link to={ROUTES.FAQ_ACCEPTED_FILE_TYPES} target="_blank">
+      FAQ Page
+    </Link>
+    .
+  </p>
+);
+
+export const DefaultFileSizeInfo = () => (
+  <p className="req-message">
+    Maximum file size of {config.MAX_ATTACHMENT_SIZE_MB} MB. You can add
+    multiple files per attachment type. Read the description for each of the
+    attachment types on the{" "}
+    <Link to={ROUTES.FAQ_ACCEPTED_FILE_TYPES} target="_blank">
+      FAQ Page
+    </Link>
+    .
+  </p>
+);
+
+export const RequiredAttachmentSpan = () => (
+  <p className="req-message">
+    <span className="required-mark">*</span> At least one attachment is
+    required.
+  </p>
+);
+
+export const defaultAttachmentInstructionsJSX = (
+  <>
+    <DefaultFileSizeInfo />
+    <DefaultFileTypesInfo />
+    <RequiredAttachmentSpan />
+  </>
+);
+
 export const defaultOneMACFormConfig = {
   idFormat: "",
   idFieldHint: [],
   idFAQLink: "",
   landingPage: ONEMAC_ROUTES.PACKAGE_LIST,
   proposedEffectiveDate: false,
-  attachmentIntroJSX: (
-    <>
-      <p className="req-message">
-        Maximum file size of {config.MAX_ATTACHMENT_SIZE_MB} MB. You can add
-        multiple files per attachment type. Read the description for each of the
-        attachment types on the{" "}
-        <Link to={ROUTES.FAQ_ACCEPTED_FILE_TYPES} target="_blank">
-          FAQ Page
-        </Link>
-        .
-      </p>
-      <p className="req-message">
-        <span className="required-mark">*</span> indicates required attachment.
-      </p>
-    </>
-  ),
+  attachmentIntroJSX: defaultAttachmentInstructionsJSX,
 };
 
 export const defaultWaiverAuthority = [
@@ -180,11 +207,7 @@ export const defaultWithdrawConfig = {
         Upload your supporting documentation for withdrawal or explain your need
         for withdrawal in the <i>Additional Information</i> box.
       </p>
-      <p>
-        Maximum file size of {config.MAX_ATTACHMENT_SIZE_MB} MB.{" "}
-        <b>You can add multiple files</b>. We accept the following file types:{" "}
-        <b>.pdf, .docx, .jpg, .png</b>.
-      </p>
+      {defaultAttachmentInstructionsJSX}
     </>
   ),
   addlInfoText:
@@ -192,21 +215,3 @@ export const defaultWithdrawConfig = {
   landingPage: ONEMAC_ROUTES.PACKAGE_LIST,
   proposedEffectiveDate: false,
 };
-
-export const defaultWaiverAttachJSX = (
-  <>
-    <p className="req-message">
-      Maximum file size of {config.MAX_ATTACHMENT_SIZE_MB} MB. You can add
-      multiple files per attachment type. Read the description for each of the
-      attachment types on the{" "}
-      <Link to={ROUTES.FAQ_ACCEPTED_FILE_TYPES} target="_blank">
-        FAQ Page
-      </Link>
-      .
-    </p>
-    <p className="req-message">
-      <span className="required-mark">*</span> At least one attachment is
-      required.
-    </p>
-  </>
-);
