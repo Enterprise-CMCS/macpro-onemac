@@ -28,6 +28,10 @@ export const deletePackage = async (packageId) => {
     }
     await Promise.all(
       result.Items.map(async (item) => {
+        if (item.GSI1pk) delete item.GSI1pk;
+        if (item.GSI1sk) delete item.GSI1sk;
+        if (item.GSI2pk) delete item.GSI2pk;
+        if (item.GSI2sk) delete item.GSI2sk;
         const putParams = {
           TableName: oneMacTableName,
           Item: {
