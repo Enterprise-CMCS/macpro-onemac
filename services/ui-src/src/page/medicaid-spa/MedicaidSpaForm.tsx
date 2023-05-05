@@ -1,6 +1,11 @@
 import React, { FC } from "react";
 import OneMACForm from "../OneMACForm";
-import { defaultOneMACFormConfig, OneMACFormConfig } from "../../libs/formLib";
+import {
+  DefaultFileTypesInfo,
+  defaultOneMACFormConfig,
+  OneMACFormConfig,
+  RequiredAttachmentSpan,
+} from "../../libs/formLib";
 import { ROUTES, ONEMAC_ROUTES, medicaidSPA } from "cmscommonlib";
 import config from "../../utils/config";
 import { Link } from "react-router-dom";
@@ -28,14 +33,13 @@ export const medicaidSpaFormInfo: OneMACFormConfig = {
         Maximum file size of {config.MAX_ATTACHMENT_SIZE_MB} MB. You can add
         multiple files per attachment type, except for the CMS Form 179. Read
         the description for each of the attachment types on the{" "}
-        <Link to={ROUTES.FAQ} target="_blank">
+        <Link to={ROUTES.FAQ_ATTACHMENTS_MED_SPA} target="_blank">
           FAQ Page
         </Link>
         .
       </p>
-      <p className="req-message">
-        <span className="required-mark">*</span> indicates required attachment.
-      </p>
+      <DefaultFileTypesInfo />
+      <RequiredAttachmentSpan />
     </>
   ),
   landingPage: ONEMAC_ROUTES.PACKAGE_LIST_SPA,

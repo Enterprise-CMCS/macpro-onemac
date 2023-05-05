@@ -1,11 +1,12 @@
 import React, { FC } from "react";
 import OneMACForm from "../OneMACForm";
 import {
+  defaultAttachmentInstructionsJSX,
   defaultConfirmSubmitRAI,
   defaultOneMACFormConfig,
   OneMACFormConfig,
 } from "../../libs/formLib";
-import { ONEMAC_ROUTES, waiverRAIResponse } from "cmscommonlib";
+import { ROUTES, ONEMAC_ROUTES, waiverRAIResponse } from "cmscommonlib";
 
 export const waiverRAIFormInfo: OneMACFormConfig = {
   ...defaultOneMACFormConfig,
@@ -15,6 +16,9 @@ export const waiverRAIFormInfo: OneMACFormConfig = {
   landingPage: ONEMAC_ROUTES.PACKAGE_LIST_WAIVER,
   confirmSubmit: defaultConfirmSubmitRAI,
   validateParentAPI: "validateParentOfWaiverRaiResponse",
+  attachmentIntroJSX: defaultAttachmentInstructionsJSX(
+    ROUTES.FAQ_ATTACHMENTS_RAI
+  ),
 };
 
 const WaiverRAIForm: FC = () => {
