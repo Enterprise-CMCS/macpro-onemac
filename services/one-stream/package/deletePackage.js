@@ -1,8 +1,6 @@
-const _ = require("lodash");
 import AWS from "aws-sdk";
-import { DateTime } from "luxon";
 
-import { dynamoConfig, Workflow } from "cmscommonlib";
+import { dynamoConfig } from "cmscommonlib";
 
 const dynamoDb = new AWS.DynamoDB.DocumentClient(dynamoConfig);
 
@@ -35,7 +33,7 @@ export const deletePackage = async (packageId) => {
           Item: {
             ...item,
             pk: "DELETED_ITEMS",
-            sk: `${pk}#${item.sk}`,
+            sk: `${item.pk}#${item.sk}`,
           },
         };
         await dynamoDb.put(putParams).promise();
