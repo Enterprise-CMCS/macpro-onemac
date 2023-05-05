@@ -59,7 +59,10 @@ export const defaultOneMACFormConfig = {
         Maximum file size of {config.MAX_ATTACHMENT_SIZE_MB} MB. You can add
         multiple files per attachment type. Read the description for each of the
         attachment types on the{" "}
-        <Link to={ROUTES.FAQ_ACCEPTED_FILE_TYPES}>FAQ Page</Link>.
+        <Link to={ROUTES.FAQ_ACCEPTED_FILE_TYPES} target="_blank">
+          FAQ Page
+        </Link>
+        .
       </p>
       <p className="req-message">
         <span className="required-mark">*</span> indicates required attachment.
@@ -196,7 +199,10 @@ export const defaultWaiverAttachJSX = (
       Maximum file size of {config.MAX_ATTACHMENT_SIZE_MB} MB. You can add
       multiple files per attachment type. Read the description for each of the
       attachment types on the{" "}
-      <Link to={ROUTES.FAQ_ACCEPTED_FILE_TYPES}>FAQ Page</Link>.
+      <Link to={ROUTES.FAQ_ACCEPTED_FILE_TYPES} target="_blank">
+        FAQ Page
+      </Link>
+      .
     </p>
     <p className="req-message">
       <span className="required-mark">*</span> At least one attachment is
