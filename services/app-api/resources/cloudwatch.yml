@@ -1,0 +1,246 @@
+Resources:
+  # Topic and Event Rule for API Lambda timeouts
+  ApiLambdaErrorTopic:
+    Type: AWS::SNS::Topic
+    Properties:
+      DisplayName: SNS Topic for Monitoring OneMac API lambda errors
+  
+  # One alarm per lambda function
+  submitInitialWaiverErrorAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: ${self:service}-${self:custom.stage}-submitInitialWaiver-ErrorAlarm
+      AlarmDescription: Alarm triggered the submitInitialWaiver Lambda function in the given environment has an error
+      Namespace: AWS/Lambda
+      MetricName: Errors
+      Dimensions:
+        - Name: FunctionName
+          Value: ${self:service}-${self:custom.stage}-submitInitialWaiver
+      Statistic: Sum
+      Period: 60
+      EvaluationPeriods: 1
+      Threshold: 1
+      ComparisonOperator: GreaterThanOrEqualToThreshold
+      AlarmActions:
+        - !Ref ApiLambdaErrorTopic
+  submitMedicaidSpaErrorAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: ${self:service}-${self:custom.stage}-submitMedicaidSpa-ErrorAlarm
+      AlarmDescription: Alarm triggered the submitMedicaidSpa Lambda function in the given environment has an error
+      Namespace: AWS/Lambda
+      MetricName: Errors
+      Dimensions:
+        - Name: FunctionName
+          Value: ${self:service}-${self:custom.stage}-submitMedicaidSpa
+      Statistic: Sum
+      Period: 60
+      EvaluationPeriods: 1
+      Threshold: 1
+      ComparisonOperator: GreaterThanOrEqualToThreshold
+      AlarmActions:
+        - !Ref ApiLambdaErrorTopic
+  submitChipSpaErrorAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: ${self:service}-${self:custom.stage}-submitChipSpa-ErrorAlarm
+      AlarmDescription: Alarm triggered the submitChipSpa Lambda function in the given environment has an error
+      Namespace: AWS/Lambda
+      MetricName: Errors
+      Dimensions:
+        - Name: FunctionName
+          Value: ${self:service}-${self:custom.stage}-submitChipSpa
+      Statistic: Sum
+      Period: 60
+      EvaluationPeriods: 1
+      Threshold: 1
+      ComparisonOperator: GreaterThanOrEqualToThreshold
+      AlarmActions:
+        - !Ref ApiLambdaErrorTopic
+  submitCHIPSPARAIResponseErrorAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: ${self:service}-${self:custom.stage}-submitCHIPSPARAIResponse-ErrorAlarm
+      AlarmDescription: Alarm triggered the submitCHIPSPARAIResponse Lambda function in the given environment has an error
+      Namespace: AWS/Lambda
+      MetricName: Errors
+      Dimensions:
+        - Name: FunctionName
+          Value: ${self:service}-${self:custom.stage}-submitCHIPSPARAIResponse
+      Statistic: Sum
+      Period: 60
+      EvaluationPeriods: 1
+      Threshold: 1
+      ComparisonOperator: GreaterThanOrEqualToThreshold
+      AlarmActions:
+        - !Ref ApiLambdaErrorTopic
+  submitWaiverAmendmentErrorAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: ${self:service}-${self:custom.stage}-submitWaiverAmendment-ErrorAlarm
+      AlarmDescription: Alarm triggered the submitWaiverAmendment Lambda function in the given environment has an error
+      Namespace: AWS/Lambda
+      MetricName: Errors
+      Dimensions:
+        - Name: FunctionName
+          Value: ${self:service}-${self:custom.stage}-submitWaiverAmendment
+      Statistic: Sum
+      Period: 60
+      EvaluationPeriods: 1
+      Threshold: 1
+      ComparisonOperator: GreaterThanOrEqualToThreshold
+      AlarmActions:
+        - !Ref ApiLambdaErrorTopic
+  submitWaiverAppendixKErrorAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: ${self:service}-${self:custom.stage}-submitWaiverAppendixK-ErrorAlarm
+      AlarmDescription: Alarm triggered the submitWaiverAppendixK Lambda function in the given environment has an error
+      Namespace: AWS/Lambda
+      MetricName: Errors
+      Dimensions:
+        - Name: FunctionName
+          Value: ${self:service}-${self:custom.stage}-submitWaiverAppendixK
+      Statistic: Sum
+      Period: 60
+      EvaluationPeriods: 1
+      Threshold: 1
+      ComparisonOperator: GreaterThanOrEqualToThreshold
+      AlarmActions:
+        - !Ref ApiLambdaErrorTopic
+  submitWaiverAppendixKRAIResponseErrorAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: ${self:service}-${self:custom.stage}-submitWaiverAppendixKRAIResponse-ErrorAlarm
+      AlarmDescription: Alarm triggered the submitWaiverAppendixKRAIResponse Lambda function in the given environment has an error
+      Namespace: AWS/Lambda
+      MetricName: Errors
+      Dimensions:
+        - Name: FunctionName
+          Value: ${self:service}-${self:custom.stage}-submitWaiverAppendixKRAIResponse
+      Statistic: Sum
+      Period: 60
+      EvaluationPeriods: 1
+      Threshold: 1
+      ComparisonOperator: GreaterThanOrEqualToThreshold
+      AlarmActions:
+        - !Ref ApiLambdaErrorTopic
+  withdrawInitialWaiverErrorAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: ${self:service}-${self:custom.stage}-withdrawInitialWaiver-ErrorAlarm
+      AlarmDescription: Alarm triggered the withdrawInitialWaiver Lambda function in the given environment has an error
+      Namespace: AWS/Lambda
+      MetricName: Errors
+      Dimensions:
+        - Name: FunctionName
+          Value: ${self:service}-${self:custom.stage}-withdrawInitialWaiver
+      Statistic: Sum
+      Period: 60
+      EvaluationPeriods: 1
+      Threshold: 1
+      ComparisonOperator: GreaterThanOrEqualToThreshold
+      AlarmActions:
+        - !Ref ApiLambdaErrorTopic
+  withdrawMedicaidSPAAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: ${self:service}-${self:custom.stage}-withdrawMedicaidSPA-ErrorAlarm
+      AlarmDescription: Alarm triggered the withdrawMedicaidSPA Lambda function in the given environment has an error
+      Namespace: AWS/Lambda
+      MetricName: Errors
+      Dimensions:
+        - Name: FunctionName
+          Value: ${self:service}-${self:custom.stage}-withdrawMedicaidSPA
+      Statistic: Sum
+      Period: 60
+      EvaluationPeriods: 1
+      Threshold: 1
+      ComparisonOperator: GreaterThanOrEqualToThreshold
+      AlarmActions:
+        - !Ref ApiLambdaErrorTopic
+  withdrawCHIPSPAAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: ${self:service}-${self:custom.stage}-withdrawCHIPSPA-ErrorAlarm
+      AlarmDescription: Alarm triggered the withdrawCHIPSPA Lambda function in the given environment has an error
+      Namespace: AWS/Lambda
+      MetricName: Errors
+      Dimensions:
+        - Name: FunctionName
+          Value: ${self:service}-${self:custom.stage}-withdrawCHIPSPA
+      Statistic: Sum
+      Period: 60
+      EvaluationPeriods: 1
+      Threshold: 1
+      ComparisonOperator: GreaterThanOrEqualToThreshold
+      AlarmActions:
+        - !Ref ApiLambdaErrorTopic
+  withdrawWaiverAppendixKAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: ${self:service}-${self:custom.stage}-withdrawWaiverAppendixK-ErrorAlarm
+      AlarmDescription: Alarm triggered the withdrawWaiverAppendixK Lambda function in the given environment has an error
+      Namespace: AWS/Lambda
+      MetricName: Errors
+      Dimensions:
+        - Name: FunctionName
+          Value: ${self:service}-${self:custom.stage}-withdrawWaiverAppendixK
+      Statistic: Sum
+      Period: 60
+      EvaluationPeriods: 1
+      Threshold: 1
+      ComparisonOperator: GreaterThanOrEqualToThreshold
+      AlarmActions:
+        - !Ref ApiLambdaErrorTopic
+  requestAccessAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: ${self:service}-${self:custom.stage}-requestAccess-ErrorAlarm
+      AlarmDescription: Alarm triggered the requestAccess Lambda function in the given environment has an error
+      Namespace: AWS/Lambda
+      MetricName: Errors
+      Dimensions:
+        - Name: FunctionName
+          Value: ${self:service}-${self:custom.stage}-requestAccess
+      Statistic: Sum
+      Period: 60
+      EvaluationPeriods: 1
+      Threshold: 1
+      ComparisonOperator: GreaterThanOrEqualToThreshold
+      AlarmActions:
+        - !Ref ApiLambdaErrorTopic
+  updateUserStatusAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: ${self:service}-${self:custom.stage}-updateUserStatus-ErrorAlarm
+      AlarmDescription: Alarm triggered the updateUserStatus Lambda function in the given environment has an error
+      Namespace: AWS/Lambda
+      MetricName: Errors
+      Dimensions:
+        - Name: FunctionName
+          Value: ${self:service}-${self:custom.stage}-updateUserStatus
+      Statistic: Sum
+      Period: 60
+      EvaluationPeriods: 1
+      Threshold: 1
+      ComparisonOperator: GreaterThanOrEqualToThreshold
+      AlarmActions:
+        - !Ref ApiLambdaErrorTopic
+  setUserPhoneNumberAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: ${self:service}-${self:custom.stage}-setUserPhoneNumber-ErrorAlarm
+      AlarmDescription: Alarm triggered the setUserPhoneNumber Lambda function in the given environment has an error
+      Namespace: AWS/Lambda
+      MetricName: Errors
+      Dimensions:
+        - Name: FunctionName
+          Value: ${self:service}-${self:custom.stage}-setUserPhoneNumber
+      Statistic: Sum
+      Period: 60
+      EvaluationPeriods: 1
+      Threshold: 1
+      ComparisonOperator: GreaterThanOrEqualToThreshold
+      AlarmActions:
+        - !Ref ApiLambdaErrorTopic
