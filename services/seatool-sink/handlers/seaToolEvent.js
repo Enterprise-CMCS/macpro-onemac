@@ -15,7 +15,7 @@ function myHandler(event) {
   if (!event?.value) value.seaToolDelete = "true";
   console.log(`Type: ${topicName} Topic: ${event.topic}`);
 
-  const pk = event.key.toUpperCase();
+  const pk = JSON.parse(event.key).toUpperCase();
   const changedDate = value?.STATE_PLAN?.CHANGED_DATE || value.timestamp;
   if (!pk || !changedDate) return;
 
