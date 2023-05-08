@@ -23,7 +23,9 @@ export const initialWaiverFormInfo: OneMACFormConfig = {
     },
   ],
   proposedEffectiveDate: true,
-  attachmentIntroJSX: defaultAttachmentInstructionsJSX(),
+  attachmentIntroJSX: defaultAttachmentInstructionsJSX(
+    ROUTES.FAQ_ATTACHMENTS_WAIVER_B
+  ),
   landingPage: ONEMAC_ROUTES.PACKAGE_LIST_WAIVER,
 };
 
