@@ -17,7 +17,7 @@ export const waiverRAIFormInfo: OneMACFormConfig = {
   confirmSubmit: defaultConfirmSubmitRAI,
   validateParentAPI: "validateParentOfWaiverRaiResponse",
   attachmentIntroJSX: defaultAttachmentInstructionsJSX(
-    ROUTES.FAQ_ATTACHMENTS_RAI
+    ROUTES.FAQ_ATTACHMENTS_MED_SPA_RAI
   ),
 };
 
