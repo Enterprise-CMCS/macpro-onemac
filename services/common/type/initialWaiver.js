@@ -30,10 +30,7 @@ export const initialWaiverB4 = {
   requiredAttachments: [
     "1915(b)(4) FFS Selective Contracting (Streamlined) waiver application pre-print",
   ],
-  optionalAttachments: [
-    "Tribal Consultation (Initial, Renewal, Amendment)",
-    "Other",
-  ],
+  optionalAttachments: ["Tribal Consultation", "Other"],
 };
 
 export const initialWaiverB = {
@@ -43,8 +40,5 @@ export const initialWaiverB = {
     "1915(b) Comprehensive (Capitated) Waiver Application Pre-print",
     "1915(b) Comprehensive Cost effectiveness spreadsheets",
   ],
-  optionalAttachments: [
-    "Tribal Consultation (Initial, Renewal, Amendment)",
-    "Other",
-  ],
+  optionalAttachments: ["Tribal Consultation", "Other"],
 };
