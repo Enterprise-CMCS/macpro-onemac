@@ -28,7 +28,7 @@ export const initialWaiverB4 = {
   ...initialWaiver,
   waiverAuthority: waiverAuthorityB4,
   requiredAttachments: [
-    "1915(b)(4) FFS Selective Contracting (Streamlined) waiver application pre-print",
+    "1915(b)(4) FFS Selective Contracting (Streamlined) waiver application Pre-print",
   ],
   optionalAttachments: ["Tribal Consultation", "Other"],
 };
@@ -38,7 +38,7 @@ export const initialWaiverB = {
   waiverAuthority: waiverAuthorityB,
   requiredAttachments: [
     "1915(b) Comprehensive (Capitated) Waiver Application Pre-print",
-    "1915(b) Comprehensive Cost effectiveness spreadsheets",
+    "1915(b) Comprehensive (Capitated) Cost Effectiveness Spreadsheets",
   ],
   optionalAttachments: ["Tribal Consultation", "Other"],
 };
