@@ -1,5 +1,4 @@
 import { ROUTES, ONEMAC_ROUTES } from "cmscommonlib";
-import { defaultWaiverAttachJSX } from "../../libs/formLib";
 
 export const waiverRenewalIdFormat: string =
   "SS-####.R##.00 or SS-#####.R##.00";

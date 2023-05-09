@@ -23,7 +23,7 @@ const initialWaiverFormConfig = {
   },
 };
 
-export const intialWaiverB4FormConifg = {
+export const initialWaiverB4FormConifg = {
   ...initialWaiverFormConfig,
   ...initialWaiverB4,
 };
@@ -43,7 +43,7 @@ export const main = handler(async (event) => {
   }
 
   if (data.waiverAuthority === initialWaiverB4.waiverAuthority.value) {
-    formConfig = intialWaiverB4FormConifg;
+    formConfig = initialWaiverB4FormConifg;
   } else if (data.waiverAuthority === initialWaiverB.waiverAuthority.value) {
     formConfig = intialWaiverBFormConifg;
   } else {
