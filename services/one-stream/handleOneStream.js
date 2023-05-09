@@ -53,7 +53,7 @@ export const main = async (eventBatch) => {
             break;
           case "SEATool": {
             const [, topic] = newEventData.GSI1pk.S.split("#");
-            if (newEventData.seaToolDelete.S === "true") {
+            if (newEventData?.seaToolDelete?.S === "true") {
               packageToBuild.type = "delete";
               break;
             }
