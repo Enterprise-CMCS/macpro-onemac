@@ -38,7 +38,7 @@ export const waiverRenewalB4 = {
     "1915(b)(4) FFS Selective Contracting (Streamlined) waiver application pre-print",
   ],
   optionalAttachments: [
-    "1915(b)(4) FFS Selective Contracting (Streamlined) and 1915(b) Comprehensive (Capitated) Waiver Independent Assessment (first two renewals only)",
+    "1915(b)(4) FFS Selective Contracting (Streamlined) Independent Assessment (first two renewals only)",
     "Tribal Consultation",
     "Other",
   ],
@@ -52,7 +52,7 @@ export const waiverRenewalB = {
     "1915(b) Comprehensive (Capitated) Waiver Cost effectiveness spreadsheets",
   ],
   optionalAttachments: [
-    "1915(b)(4) FFS Selective Contracting (Streamlined) and 1915(b) Comprehensive (Capitated) Waiver Independent Assessment (first two renewals only)",
+    "1915(b) Comprehensive (Capitated) Waiver Independent Assessment (first two renewals only)",
     "Tribal Consultation",
     "Other",
   ],
