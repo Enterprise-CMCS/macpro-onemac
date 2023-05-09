@@ -1,4 +1,11 @@
 import { waiverAuthorityB, waiverAuthorityB4 } from "../waiverAuthorities.js";
+import {
+  other,
+  tribalConsultation,
+  waiverB4ApplicationPrePrint,
+  waiverBCostEffectivenessSpreadsheets,
+  waiverBApplicationPrePrint,
+} from "../attachmentTypes.js";
 
 export const initialWaiver = {
   whichTab: "waiver",
@@ -27,18 +34,16 @@ export const initialWaiver = {
 export const initialWaiverB4 = {
   ...initialWaiver,
   waiverAuthority: waiverAuthorityB4,
-  requiredAttachments: [
-    "1915(b)(4) FFS Selective Contracting (Streamlined) waiver application Pre-print",
-  ],
-  optionalAttachments: ["Tribal Consultation", "Other"],
+  requiredAttachments: [waiverB4ApplicationPrePrint],
+  optionalAttachments: [tribalConsultation, other],
 };
 
 export const initialWaiverB = {
   ...initialWaiver,
   waiverAuthority: waiverAuthorityB,
   requiredAttachments: [
-    "1915(b) Comprehensive (Capitated) Waiver Application Pre-print",
-    "1915(b) Comprehensive (Capitated) Cost Effectiveness Spreadsheets",
+    waiverBApplicationPrePrint,
+    waiverBCostEffectivenessSpreadsheets,
   ],
-  optionalAttachments: ["Tribal Consultation", "Other"],
+  optionalAttachments: [tribalConsultation, other],
 };

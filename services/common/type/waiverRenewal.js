@@ -1,3 +1,12 @@
+import {
+  other,
+  tribalConsultation,
+  waiverB4ApplicationPrePrint,
+  waiverB4IndependentAssessment,
+  waiverBApplicationPrePrint,
+  waiverBCostEffectivenessSpreadsheets,
+  waiverBIndependentAssessment,
+} from "../attachmentTypes.js";
 import { waiverAuthorityB, waiverAuthorityB4 } from "../waiverAuthorities.js";
 
 export const waiverRenewal = {
@@ -34,13 +43,11 @@ export const waiverRenewal = {
 export const waiverRenewalB4 = {
   ...waiverRenewal,
   waiverAuthority: waiverAuthorityB4,
-  requiredAttachments: [
-    "1915(b)(4) FFS Selective Contracting (Streamlined) Waiver Application Pre-print",
-  ],
+  requiredAttachments: [waiverB4ApplicationPrePrint],
   optionalAttachments: [
-    "1915(b)(4) FFS Selective Contracting (Streamlined) Independent Assessment (first two renewals only)",
-    "Tribal Consultation",
-    "Other",
+    waiverB4IndependentAssessment,
+    tribalConsultation,
+    other,
   ],
 };
 
@@ -48,12 +55,12 @@ export const waiverRenewalB = {
   ...waiverRenewal,
   waiverAuthority: waiverAuthorityB,
   requiredAttachments: [
-    "1915(b) Comprehensive (Capitated) Waiver Application Pre-print",
-    "1915(b) Comprehensive (Capitated) Waiver Cost Effectiveness Spreadsheets",
+    waiverBApplicationPrePrint,
+    waiverBCostEffectivenessSpreadsheets,
   ],
   optionalAttachments: [
-    "1915(b) Comprehensive (Capitated) Waiver Independent Assessment (first two renewals only)",
-    "Tribal Consultation",
-    "Other",
+    waiverBIndependentAssessment,
+    tribalConsultation,
+    other,
   ],
 };
