@@ -39,5 +39,5 @@ export const main = handler(async (event) => {
   } else {
     throw new Error("Waiver Authority not found");
   }
-  submitAny(event, formConfig);
+  return await submitAny(event, formConfig);
 });
