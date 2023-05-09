@@ -22,6 +22,11 @@ export const defaultWaiverAuthoritySchema = Joi.string().required();
 export const defaultParentId = Joi.string().required();
 export const defaultParentType = Joi.string().required();
 
+export const defaultWaiverSchema = {
+  waiverAuthority: defaultWaiverAuthoritySchema,
+  proposedEffectiveDate: defaultProposedEffectiveDateSchema,
+};
+
 export const defaultWithdrawConfig = {
   ...defaultFormConfig,
   successResponseCode: RESPONSE_CODE.WITHDRAW_REQUESTED,

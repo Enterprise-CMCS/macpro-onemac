@@ -108,12 +108,25 @@ export namespace Workflow {
 export * as Validate from "./idValidation.js";
 //export * as Workflow from "./workflow.js";
 
-export { initialWaiver } from "./type/initialWaiver.js";
+export { waiverAuthorityB4, waiverAuthorityB } from "./type/waiverAuthority.js";
+export {
+  initialWaiver,
+  initialWaiverB4,
+  initialWaiverB,
+} from "./type/initialWaiver.js";
 export { initialWaiverWithdraw } from "./type/initialWaiverWithdraw.js";
 export { waiverTemporaryExtension } from "./type/waiverTemporaryExtension.js";
-export { waiverRenewal } from "./type/waiverRenewal.js";
+export {
+  waiverRenewal,
+  waiverRenewalB4,
+  waiverRenewalB,
+} from "./type/waiverRenewal.js";
 export { waiverRenewalWithdraw } from "./type/waiverRenewalWithdraw.js";
-export { waiverAmendment } from "./type/waiverAmendment.js";
+export {
+  waiverAmendment,
+  waiverAmendmentB4,
+  waiverAmendmentB,
+} from "./type/waiverAmendment.js";
 export { waiverAmendmentWithdraw } from "./type/waiverAmendmentWithdraw.js";
 export { waiverAppendixK } from "./type/waiverAppendixK.js";
 export { waiverAppendixKRAIResponse } from "./type/waiverAppendixKRAIResponse.js";

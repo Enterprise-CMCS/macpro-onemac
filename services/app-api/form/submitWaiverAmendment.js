@@ -1,26 +1,48 @@
 import Joi from "joi";
-import { waiverAmendment } from "cmscommonlib";
-
+import {
+  waiverAmendmentB4,
+  waiverAmendmentB,
+  waiverAuthorityB4,
+  waiverAuthorityB,
+} from "cmscommonlib";
 import handler from "../libs/handler-lib";
 import { submitAny } from "./submitAny";
-import {
-  defaultFormConfig,
-  defaultProposedEffectiveDateSchema,
-  defaultWaiverAuthoritySchema,
-} from "./defaultFormConfig";
+import { defaultFormConfig, defaultWaiverSchema } from "./defaultFormConfig";
 
-export const waiverAmendmentFormConfig = {
+const waiverAmendmentFormConfig = {
   ...defaultFormConfig,
-  ...waiverAmendment,
   appendToSchema: {
+    ...defaultWaiverSchema,
     parentId: Joi.string().required(),
-    waiverAuthority: defaultWaiverAuthoritySchema,
-    // Should look into a real validation with choices centrally located in cmscommonlib
-    //      waiverAuthority: Joi.string().valid(WAIVER_AUTHORITY_CHOICES).required(),
-    proposedEffectiveDate: defaultProposedEffectiveDateSchema,
   },
 };
 
-export const main = handler(async (event) =>
-  submitAny(event, waiverAmendmentFormConfig)
-);
+export const waiverAmendmentB4FormConifg = {
+  ...waiverAmendmentFormConfig,
+  ...waiverAmendmentB4,
+};
+
+export const waiverAmendmentBFormConifg = {
+  ...waiverAmendmentFormConfig,
+  ...waiverAmendmentB,
+};
+
+export const main = handler(async (event) => {
+  let data, formConfig;
+  try {
+    data = JSON.parse(event.body);
+  } catch (error) {
+    console.log("event couldn't parse: ", error);
+    throw error;
+  }
+
+  if (data.waiverAuthority === waiverAuthorityB4.value) {
+    formConfig = waiverAmendmentB4FormConifg;
+  } else if (data.waiverAuthority === waiverAuthorityB.value) {
+    formConfig = waiverAmendmentBFormConifg;
+  } else {
+    throw new Error("Waiver Authority not found");
+  }
+
+  submitAny(event, formConfig);
+});

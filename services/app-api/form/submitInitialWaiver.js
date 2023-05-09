@@ -1,12 +1,8 @@
-import { initialWaiver } from "cmscommonlib";
+import { initialWaiverB4, initialWaiverB } from "cmscommonlib";
 
 import handler from "../libs/handler-lib";
 import { submitAny } from "./submitAny";
-import {
-  defaultFormConfig,
-  defaultProposedEffectiveDateSchema,
-  defaultWaiverAuthoritySchema,
-} from "./defaultFormConfig";
+import { defaultFormConfig, defaultWaiverSchema } from "./defaultFormConfig";
 
 /**
  * Submitting a Initial Waiver MUST do the following to return SUCCESS:
@@ -20,17 +16,39 @@ import {
  *  - sends submission receipt
  */
 
-export const initialWaiverFormConfig = {
+const initialWaiverFormConfig = {
   ...defaultFormConfig,
-  ...initialWaiver,
   appendToSchema: {
-    waiverAuthority: defaultWaiverAuthoritySchema,
-    // Should look into a real validation with choices centrally located in cmscommonlib
-    //      waiverAuthority: Joi.string().valid(WAIVER_AUTHORITY_CHOICES).required(),
-    proposedEffectiveDate: defaultProposedEffectiveDateSchema,
+    ...defaultWaiverSchema,
   },
 };
 
-export const main = handler(async (event) =>
-  submitAny(event, initialWaiverFormConfig)
-);
+export const intialWaiverB4FormConifg = {
+  ...initialWaiverFormConfig,
+  ...initialWaiverB4,
+};
+
+export const intialWaiverBFormConifg = {
+  ...initialWaiverFormConfig,
+  ...initialWaiverB,
+};
+
+export const main = handler(async (event) => {
+  let data, formConfig;
+  try {
+    data = JSON.parse(event.body);
+  } catch (error) {
+    console.log("event couldn't parse: ", error);
+    throw error;
+  }
+
+  if (data.waiverAuthority === initialWaiverB4.waiverAuthority.value) {
+    formConfig = intialWaiverB4FormConifg;
+  } else if (data.waiverAuthority === initialWaiverB.waiverAuthority.value) {
+    formConfig = intialWaiverBFormConifg;
+  } else {
+    throw new Error("Waiver Authority not found");
+  }
+
+  submitAny(event, formConfig);
+});

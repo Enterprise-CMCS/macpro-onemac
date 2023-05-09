@@ -6,7 +6,7 @@ import { Router } from "react-router-dom";
 import { stateSubmitterInitialAuthState } from "../../libs/testDataAppContext";
 
 import { ONEMAC_ROUTES } from "cmscommonlib";
-import WaiverRenewalForm from "./WaiverRenewalForm";
+import WaiverRenewalForm from "./WaiverRenewalB4Form";
 import PackageApi from "../../utils/PackageApi";
 import { AppContext } from "../../libs/contextLib";
 
