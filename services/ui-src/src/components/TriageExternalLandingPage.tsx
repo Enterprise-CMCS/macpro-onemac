@@ -13,7 +13,7 @@ export interface TriageLandingPageConfig {
 }
 
 const FAQHelperText = () => (
-  <p>
+  <p className="landing-description">
     <i>
       For additional information on where to submit, refer to the Crosswalk from
       Paper-based State Plan to MACPro and MMDL document in our FAQ section.
@@ -33,13 +33,13 @@ const TriageExternalLandingPage = ({
   return (
     <>
       <PageTitleBar heading={pageTitle} enableBackNav />
-      <div className="form-container">
-        <div className="">{logoJSX}</div>
-        <section>
-          {descriptionJSX}
-          <Button>{buttonLabel}</Button>
-          <FAQHelperText />
-        </section>
+      <div className="landing-container">
+        <div className="landing-logo">{logoJSX}</div>
+        <section className="landing-description">{descriptionJSX}</section>
+        <Button variation="primary" className="landing-button">
+          {buttonLabel}
+        </Button>
+        <FAQHelperText />
       </div>
     </>
   );

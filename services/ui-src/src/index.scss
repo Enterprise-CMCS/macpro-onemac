@@ -2780,6 +2780,15 @@ ul.choice-list {
   font-style: italic;
 }
 
-.landing-page-container {
+.landing-container {
+  margin: 2rem 0;
   max-width: $width-lg;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.landing-description {
+  max-width: $width-sm;
+  margin: 3rem 0;
 }
