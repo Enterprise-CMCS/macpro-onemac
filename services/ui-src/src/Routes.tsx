@@ -53,7 +53,9 @@ import WaiverAppendixKRAIForm from "./page/waiver-appendix-k/WaiverAppendixKRAIF
 import DescribeForms from "./page/DescribeForms";
 import EventList from "./page/event/EventList";
 import EventDetail from "./page/event/EventDetail";
-import TriageExternalLandingPage from "./page/landing/TriageExternalLandingPage";
+import MedicaidABPLandingPage from "./page/landing/MedicaidABPLandingPage";
+import MedicaidEligibilityLandingPage from "./page/landing/MedicaidEligibilityLandingPage";
+import CHIPEligibilityLandingPage from "./page/landing/CHIPEligibilityLandingPage";
 
 type RouteSpec = {
   path: string;
@@ -334,17 +336,17 @@ const ROUTE_LIST: RouteSpec[] = [
   {
     path: ROUTES.ABP_LANDING,
     exact: true,
-    component: TriageExternalLandingPage,
+    component: MedicaidABPLandingPage,
   },
   {
     path: ROUTES.MEDICAID_ELIGIBILITY_LANDING,
     exact: true,
-    component: TriageExternalLandingPage,
+    component: MedicaidEligibilityLandingPage,
   },
   {
     path: ROUTES.CHIP_ELIGIBILITY_LANDING,
     exact: true,
-    component: TriageExternalLandingPage,
+    component: CHIPEligibilityLandingPage,
   },
   {
     path: ONEMAC_ROUTES.FORMS_DESCRIBE,
