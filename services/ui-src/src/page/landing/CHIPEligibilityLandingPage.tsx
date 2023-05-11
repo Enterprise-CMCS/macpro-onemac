@@ -6,7 +6,7 @@ import TriageExternalLandingPage, {
 // config for /chip-eligibility
 export const chipEligibilityLandingConfig: TriageLandingPageConfig = {
   pageTitle: "CHIP Eligibility SPAs",
-  logoJSX: <></>,
+  logoJSX: <img src="/assets/images/logos/mmdl.png" alt="MMDL Logo" />,
   descriptionJSX: (
     <>
       <p>

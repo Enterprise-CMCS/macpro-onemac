@@ -2781,11 +2781,12 @@ ul.choice-list {
 }
 
 .landing-container {
-  margin: 2rem 0;
-  max-width: $width-lg;
+  margin: 2rem;
+  padding: 2rem 0 8rem 0;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
 }
 
 .landing-description {

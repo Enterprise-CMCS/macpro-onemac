@@ -7,7 +7,7 @@ import TriageExternalLandingPage, {
 const ABPLandingConfig: TriageLandingPageConfig = {
   pageTitle:
     "Medicaid Alternative Benefits Plans (ABP), and Medicaid Premiums and Cost Sharing",
-  logoJSX: <></>,
+  logoJSX: <img src="/assets/images/logos/mmdl.png" alt="MMDL Logo" />,
   descriptionJSX: (
     <>
       <p>

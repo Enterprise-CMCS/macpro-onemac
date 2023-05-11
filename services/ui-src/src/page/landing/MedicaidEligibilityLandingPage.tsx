@@ -7,7 +7,7 @@ import TriageExternalLandingPage, {
 export const medicaidEligibilityLandingConfig: TriageLandingPageConfig = {
   pageTitle:
     "Medicaid Eligibility, Enrollment, Administration, and Health Homes",
-  logoJSX: <></>,
+  logoJSX: <img src="/assets/images/logos/macpro.png" alt="MacPRO Logo" />,
   descriptionJSX: (
     <>
       <p>
