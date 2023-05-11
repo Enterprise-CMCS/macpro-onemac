@@ -36,8 +36,9 @@ export const ROUTES = {
   WAIVER_EXTENSION: "/waiverextension",
   WAIVER_APP_K: "/waiverappk",
   ATTACHMENT_LANDING: "/legacy-attachments",
-  MMDL_LANDING: "/mmdl-landing",
-  ONEMAC_LANDING: "onemac-landing",
+  ABP_LANDING: "/medicaid-abp",
+  MEDICAID_ELIGIBILITY_LANDING: "/medicaid-eligibility",
+  CHIP_ELIGIBILITY_LANDING: "/chip-eligibility",
 };
 
 export const ONEMAC_ROUTES = {

@@ -332,12 +332,17 @@ const ROUTE_LIST: RouteSpec[] = [
     component: AttachmentLanding,
   },
   {
-    path: ROUTES.MMDL_LANDING,
+    path: ROUTES.ABP_LANDING,
     exact: true,
     component: TriageExternalLandingPage,
   },
   {
-    path: ROUTES.ONEMAC_LANDING,
+    path: ROUTES.MEDICAID_ELIGIBILITY_LANDING,
+    exact: true,
+    component: TriageExternalLandingPage,
+  },
+  {
+    path: ROUTES.CHIP_ELIGIBILITY_LANDING,
     exact: true,
     component: TriageExternalLandingPage,
   },
