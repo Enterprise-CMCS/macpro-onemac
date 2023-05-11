@@ -186,17 +186,3 @@ export const defaultWithdrawConfig = {
   landingPage: ONEMAC_ROUTES.PACKAGE_LIST,
   proposedEffectiveDate: false,
 };
-
-export const defaultWaiverAttachJSX = (
-  <>
-    <p className="req-message">
-      Maximum file size of {config.MAX_ATTACHMENT_SIZE_MB} MB. You can add
-      multiple files per attachment type. Read the description for each of the
-      attachment types on the FAQ Page.
-    </p>
-    <p className="req-message">
-      <span className="required-mark">*</span> At least one attachment is
-      required.
-    </p>
-  </>
-);

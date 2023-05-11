@@ -7,6 +7,7 @@ import { stateSubmitterInitialAuthState } from "../../libs/testDataAppContext";
 
 import { ONEMAC_ROUTES } from "cmscommonlib";
 import WaiverAmendmentB4Form from "./WaiverAmendmentB4Form";
+import WaiverAmendmentBForm from "./WaiverAmendmentBForm";
 import PackageApi from "../../utils/PackageApi";
 import { AppContext } from "../../libs/contextLib";
 
@@ -54,7 +55,7 @@ describe("1915(b) Waiver Amendment Form", () => {
         }}
       >
         <Router history={history}>
-          <WaiverAmendmentB4Form />
+          <WaiverAmendmentBForm />
         </Router>
       </AppContext.Provider>
     );
