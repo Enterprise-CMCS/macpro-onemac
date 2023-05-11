@@ -29,7 +29,11 @@ function useOutsideAlerter(ref, setShowMenu) {
   }, [ref, setShowMenu]);
 }
 
-export default function ActionPopup({ theComponent, alertCallback }) {
+export default function ActionPopup({
+  theComponent,
+  formSource,
+  alertCallback,
+}) {
   const [showMenu, setShowMenu] = useState(false);
   const availableActions =
     Workflow.ACTIONS[theComponent.componentType][theComponent.currentStatus];
@@ -62,7 +66,11 @@ export default function ActionPopup({ theComponent, alertCallback }) {
           {availableActions.map((actionName, i) => (
             <div key={i}>
               {i !== 0 && <hr />}
-              {actionComponent[actionName](theComponent, alertCallback)}
+              {actionComponent[actionName](
+                theComponent,
+                formSource,
+                alertCallback
+              )}
             </div>
           ))}
         </div>

@@ -14,7 +14,7 @@ const WithdrawLink = {
     ONEMAC_ROUTES.APPENDIX_K_AMENDMENT_WITHDRAW,
 };
 
-export default function Withdraw({ theComponent }) {
+export default function Withdraw({ theComponent, formSource }) {
   return (
     <Link
       key={`popup-action-${theComponent.componentId}`}
@@ -24,6 +24,7 @@ export default function Withdraw({ theComponent }) {
           componentId: theComponent.componentId,
           parentId: theComponent.componentId,
           parentType: theComponent.componentType,
+          formSource: formSource,
         },
       }}
       id={"withdraw-request-action-" + theComponent.componentId}

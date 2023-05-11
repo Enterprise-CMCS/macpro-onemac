@@ -11,7 +11,12 @@ import { Input } from "rsuite";
 
 import { TextField, Button, Dropdown, Review } from "@cmsgov/design-system";
 
-import { RESPONSE_CODE, ROUTES } from "cmscommonlib";
+import {
+  FORM_SUCCESS_RESPONSE_CODES,
+  RESPONSE_CODE,
+  ROUTES,
+  TYPE_TO_DETAIL_ROUTE,
+} from "cmscommonlib";
 
 import { useAppContext } from "../libs/contextLib";
 import {
@@ -31,9 +36,10 @@ import FileUploader from "../components/FileUploader";
 import PackageApi from "../utils/PackageApi";
 import PageTitleBar from "../components/PageTitleBar";
 import AlertBar from "../components/AlertBar";
-import { FormLocationState } from "../domain-types";
+import { FormLocationState, FORM_SOURCE } from "../domain-types";
 import ComponentId from "../components/ComponentId";
 import TemporaryExtensionTypeInput from "./temporary-extension/TemporaryExtensionTypeInput";
+import { Location } from "history";
 
 const leavePageConfirmMessage = "Changes you made will not be saved.";
 
@@ -79,6 +85,9 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
   const presetComponentId = location.state?.componentId ?? "";
   const presetParentId = location.state?.parentId ?? undefined;
 
+  //if location contains parentType and formSource was detail page then override landingpage to type specific detail page
+  formConfig.landingPage = getLandingPage(location, formConfig);
+
   // if only one waiver Authority choice, it is the default
   const presetWaiverAuthority =
     formConfig.waiverAuthorities && formConfig.waiverAuthorities.length === 1
@@ -96,6 +105,22 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
     parentId: presetParentId,
     parentType: location.state?.parentType,
   });
+
+  function getLandingPage(
+    location: Location<FormLocationState>,
+    formConfig: OneMACFormConfig
+  ) {
+    if (
+      location.state?.parentId &&
+      location.state?.parentType &&
+      location.state?.formSource === FORM_SOURCE.DETAIL
+    ) {
+      return `${TYPE_TO_DETAIL_ROUTE[location.state?.parentType]}/${
+        location.state?.parentId
+      }`;
+    }
+    return formConfig.landingPage;
+  }
 
   function matchesRegex(fieldValue: string, regexFormatString: string) {
     let fieldValidationRegEx = new RegExp(regexFormatString);
@@ -327,8 +352,8 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
           uploadedList,
           formConfig.componentType
         );
-
-        if (returnCode !== RESPONSE_CODE.SUCCESSFULLY_SUBMITTED)
+        console.log("return code is: ", returnCode);
+        if (returnCode in FORM_SUCCESS_RESPONSE_CODES)
           throw new Error(returnCode);
 
         history.push(formConfig.landingPage, {
@@ -382,6 +407,7 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
       <PageTitleBar
         heading={formConfig.pageTitle ?? oneMacFormData.componentId ?? ""}
         enableBackNav
+        backTo={getLandingPage(location, formConfig)}
         backNavConfirmationMessage={leavePageConfirmMessage}
       />
       <AlertBar alertCode={alertCode} closeCallback={closedAlert} />

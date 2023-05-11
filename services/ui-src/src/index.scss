@@ -130,6 +130,9 @@ h4 {
   @extend .ds-h4;
 }
 
+legend {
+  border-bottom-style: none !important;
+}
 .white-text {
   color: $color-white;
   @extend .white-link;
@@ -2168,7 +2171,6 @@ aside#faq-contact-info-box {
     border: 0;
     border-radius: 3px 3px 0 0;
     background: linear-gradient(90.11deg, #0071bc 49.91%, #02bfe7 66.06%);
-    margin-bottom: -16px;
   }
 
   &.file-list-container {
@@ -2180,13 +2182,11 @@ aside#faq-contact-info-box {
     .choice-intro {
       @extend .ds-u-margin-bottom--2;
       @extend .ds-u-padding-bottom--0;
+      // Possibly unnecessary? Can't find a use for this since this class is only
+      // applied to a list title.
       display: flex;
       justify-content: space-between;
       align-items: center;
-
-      h2 {
-        @extend .ds-u-margin--0;
-      }
     }
 
     .choice-info {
@@ -2198,7 +2198,12 @@ aside#faq-contact-info-box {
       align-self: flex-end;
     }
   }
+
+  label {
+    width: 100%;
+  }
 }
+
 .choice-intro {
   @extend .ds-u-padding-bottom--1;
   font-family: Open Sans;
@@ -2211,8 +2216,14 @@ aside#faq-contact-info-box {
   color: #212121;
 }
 
+ul.choice-list {
+  margin-top: 0;
+}
+
 .choice-list {
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
   padding: 0px;
   box-sizing: border-box;
   color: $color-primary;
@@ -2222,7 +2233,9 @@ aside#faq-contact-info-box {
   border-left: 1px solid #d6d7d9;
   border-right: 1px solid #d6d7d9;
   border-radius: 0 0 3px 3px;
+  label,
   li {
+    max-width: 100%;
     list-style-type: none;
     margin: 0px;
     min-height: 110px;
@@ -2239,13 +2252,16 @@ aside#faq-contact-info-box {
       align-items: center;
     }
   }
+  label:nth-child(even),
   li:nth-child(even) {
     background-color: rgba(196, 196, 196, 0.1);
   }
+  label:hover,
   li:hover {
     background-color: #f0fafe;
   }
 
+  label.choice-list-item,
   li.choice-list-item {
     @extend .ds-u-padding--3;
     color: $color-base;

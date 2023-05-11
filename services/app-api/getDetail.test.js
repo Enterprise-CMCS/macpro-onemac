@@ -14,8 +14,18 @@ beforeAll(() => {
 
 const validDoneBy = {
   roleList: [{ role: "statesubmitter", status: "active", territory: "MI" }],
+  isCMSUser: false,
+  canSeeSubjectAndDescription: false,
   email: "myemail@email.com",
   fullName: "firsty lastly",
+};
+
+const validCMSDoneBy = {
+  roleList: [{ role: "defaultcmsuser", status: "active", territory: "N/A" }],
+  isCMSUser: true,
+  canSeeSubjectAndDescription: true,
+  email: "myemail@email.com",
+  fullName: "Testy lastly",
 };
 
 const unauthorizedDoneBy = {
@@ -78,6 +88,9 @@ beforeEach(() => {
     Item: {
       field1: "one",
       attachments: [{ url: "aURL" }, { url: "anotherURL" }],
+      raiResponses: [
+        { attachments: [{ url: "raiURL" }, { url: "anotherraiURL" }] },
+      ],
     },
   });
 
@@ -165,6 +178,19 @@ describe("component details are returned", () => {
   });
 
   it("returns rai details", async () => {
+    await expect(getDetails(raiEvent))
+      .resolves.toStrictEqual({
+        field1: "one",
+        attachments: [{ url: undefined }, { url: undefined }],
+      })
+      .catch((error) => {
+        console.log("caught test error: ", error);
+      });
+  });
+
+  it("returns CMS details", async () => {
+    getUser.mockResolvedValueOnce(validCMSDoneBy);
+
     await expect(getDetails(raiEvent))
       .resolves.toStrictEqual({
         field1: "one",

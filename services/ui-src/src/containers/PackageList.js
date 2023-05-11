@@ -40,6 +40,20 @@ import {
   LOCAL_STORAGE_TABLE_FILTERS_WAIVER,
 } from "../utils/StorageKeys";
 import { portalTableExportToCSV } from "../utils/portalTableExportToCSV";
+import { FORM_SOURCE } from "../domain-types";
+
+const defaultStateHiddenCols = ["territory"];
+const defaultCMSHiddenCols = ["submitter"];
+
+const DEFAULT_COLUMNS = {
+  [USER_ROLE.STATE_SUBMITTER]: defaultStateHiddenCols,
+  [USER_ROLE.STATE_SYSTEM_ADMIN]: defaultStateHiddenCols,
+  [USER_ROLE.HELPDESK]: defaultStateHiddenCols,
+  [USER_ROLE.CMS_REVIEWER]: defaultCMSHiddenCols,
+  [USER_ROLE.CMS_ROLE_APPROVER]: defaultCMSHiddenCols,
+  [USER_ROLE.SYSTEM_ADMIN]: defaultCMSHiddenCols,
+  [USER_ROLE.DEFAULT_CMS_USER]: defaultCMSHiddenCols,
+};
 
 const renderDate = ({ value }) =>
   typeof value === "number" && value > 0
@@ -155,6 +169,7 @@ const PackageList = () => {
       return (
         <ActionPopup
           theComponent={row.original}
+          formSource={FORM_SOURCE.PACKAGE_LIST}
           alertCallback={tellPackageListAboutAction}
         />
       );
@@ -220,7 +235,14 @@ const PackageList = () => {
               filter: CustomFilterTypes.DateRange,
               Filter: CustomFilterUi.DateRangeInPast,
             }
-          : null,
+          : {
+              Header: "Formal RAI Response",
+              accessor: "latestRaiResponseTimestamp",
+              Cell: renderDate,
+              disableFilters: false,
+              filter: CustomFilterTypes.DateRange,
+              Filter: CustomFilterUi.DateRangeInPast,
+            },
         {
           Header: "Submitted By",
           accessor: "submitterName",
@@ -269,11 +291,13 @@ const PackageList = () => {
     return {
       sortBy: [{ id: "submissionTimestamp", desc: true }],
       // Set saved hidden cols
-      hiddenColumns: localHiddenColumns ? JSON.parse(localHiddenColumns) : [],
+      hiddenColumns: localHiddenColumns
+        ? JSON.parse(localHiddenColumns)
+        : DEFAULT_COLUMNS[userRole],
       // Set saved filters
       filters: localTableFilters ? JSON.parse(localTableFilters) : [],
     };
-  }, [tab]);
+  }, [tab, userRole]);
 
   const csvExportPackages = (
     <Button

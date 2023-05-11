@@ -51,7 +51,7 @@ const ninetiethDayPendingCheckbox =
 const ninetiethDayClockStoppedCheckbox =
   "//label[contains(@for,'checkbox_ninetiethDay-Clock Stopped')]";
 const formalRAIReceivedCheckbox =
-  "//label[contains(@for,'checkbox_columnPicker-Formal RAI Received')]";
+  "//label[contains(@for,'checkbox_columnPicker-Formal RAI')]";
 const ninetiethDayDatePickerFilter =
   '*[role=combobox][aria-owns^="ninetiethDay-date-filter"]';
 //Element is Xpath use cy.xpath instead of cy.get
@@ -117,9 +117,6 @@ const sparaiSubmitted = "//span[contains(text(),'sparai Submitted')]";
 const raiResponseSubmitted = "//span[contains(text(),'RAIResponse Submitted')]";
 //Element is Xpath use cy.xpath instead of cy.get
 const seaToolStatus1 = "//span[contains(text(),'SEATool Status: 1')]";
-//Element is Xpath use cy.xpath instead of cy.get
-const medicaidSPAInList = "//tbody/tr[1]/td[3]/span[1]";
-const initialWaiverInList = "//tbody/tr[1]/td[3]/span[1]";
 //Element is Xpath use cy.xpath instead of cy.get
 const ShowHideColumnsBTN = "//button[contains(text(),'Show/Hide Columns')]";
 //Element is Xpath use cy.xpath instead of cy.get
@@ -554,10 +551,10 @@ export class oneMacPackagePage {
     cy.xpath(seaToolStatus1).should("be.visible");
   }
   verifyMedicaidSPAInListExists() {
-    cy.xpath(medicaidSPAInList).contains("Medicaid");
+    cy.get(packageRowOneType).contains("Medicaid");
   }
   verifyInitialWaiverInListExists() {
-    cy.xpath(initialWaiverInList).contains("Initial Waiver");
+    cy.get(packageRowOneType).contains("Initial Waiver");
   }
   verifyShowHideColumnsBTNExists() {
     cy.xpath(ShowHideColumnsBTN).should("be.visible");

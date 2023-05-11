@@ -18,10 +18,12 @@ const Triage = () => {
   return (
     <>
       <PageTitleBar heading={triageData.heading} enableBackNav />
-      <div className="choice-container">
-        <div className="choice-intro">{triageData.intro}</div>
-        <ChoiceList choices={triageData.choices} />
-      </div>
+      <section className="choice-container">
+        <fieldset>
+          <legend className="choice-intro">{triageData.intro}</legend>
+          <ChoiceList choices={triageData.choices} />
+        </fieldset>
+      </section>
     </>
   );
 };

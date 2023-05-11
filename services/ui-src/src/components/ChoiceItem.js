@@ -6,7 +6,7 @@ import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 
 const ChoiceItem = ({ linkTo, title, description, onclick }) => {
   return (
-    <li className="choice" onClick={onclick}>
+    <label className="choice" onClick={onclick}>
       <Link to={linkTo}>
         <div>
           <div className="choice-title">{title}</div>
@@ -14,7 +14,7 @@ const ChoiceItem = ({ linkTo, title, description, onclick }) => {
         </div>
         <FontAwesomeIcon icon={faChevronRight} className="choice-item-arrow" />
       </Link>
-    </li>
+    </label>
   );
 };
 
