@@ -53,6 +53,7 @@ import WaiverAppendixKRAIForm from "./page/waiver-appendix-k/WaiverAppendixKRAIF
 import DescribeForms from "./page/DescribeForms";
 import EventList from "./page/event/EventList";
 import EventDetail from "./page/event/EventDetail";
+import TriageExternalLandingPage from "./page/landing/TriageExternalLandingPage";
 
 type RouteSpec = {
   path: string;
@@ -329,6 +330,16 @@ const ROUTE_LIST: RouteSpec[] = [
     path: ROUTES.ATTACHMENT_LANDING,
     exact: true,
     component: AttachmentLanding,
+  },
+  {
+    path: ROUTES.MMDL_LANDING,
+    exact: true,
+    component: TriageExternalLandingPage,
+  },
+  {
+    path: ROUTES.ONEMAC_LANDING,
+    exact: true,
+    component: TriageExternalLandingPage,
   },
   {
     path: ONEMAC_ROUTES.FORMS_DESCRIBE,

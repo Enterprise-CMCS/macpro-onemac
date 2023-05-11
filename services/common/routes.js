@@ -36,6 +36,8 @@ export const ROUTES = {
   WAIVER_EXTENSION: "/waiverextension",
   WAIVER_APP_K: "/waiverappk",
   ATTACHMENT_LANDING: "/legacy-attachments",
+  MMDL_LANDING: "/mmdl-landing",
+  ONEMAC_LANDING: "onemac-landing",
 };
 
 export const ONEMAC_ROUTES = {
