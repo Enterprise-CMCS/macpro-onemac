@@ -12,6 +12,15 @@ export interface TriageLandingPageConfig {
   buttonLabel: string;
 }
 
+const FAQHelperText = () => (
+  <p>
+    <i>
+      For additional information on where to submit, refer to the Crosswalk from
+      Paper-based State Plan to MACPro and MMDL document in our FAQ section.
+    </i>
+  </p>
+);
+
 /** Config-driven template to build landing pages that link to another system.
  * See {@link TriageLandingPageConfig} for details on the config object.
  */
@@ -24,11 +33,12 @@ const TriageExternalLandingPage = ({
   return (
     <>
       <PageTitleBar heading={pageTitle} enableBackNav />
-      <div>
+      <div className="form-container">
         <div className="">{logoJSX}</div>
         <section>
           {descriptionJSX}
           <Button>{buttonLabel}</Button>
+          <FAQHelperText />
         </section>
       </div>
     </>

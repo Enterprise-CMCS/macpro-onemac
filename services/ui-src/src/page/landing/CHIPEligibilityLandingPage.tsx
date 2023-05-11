@@ -7,8 +7,19 @@ import TriageExternalLandingPage, {
 export const chipEligibilityLandingConfig: TriageLandingPageConfig = {
   pageTitle: "CHIP Eligibility SPAs",
   logoJSX: <></>,
-  descriptionJSX: <></>,
-  buttonLabel: "",
+  descriptionJSX: (
+    <>
+      <p>
+        CHIP Eligibility SPAs are managed within the Medicaid Model Data Lab
+        (MMDL).
+      </p>
+      <p>
+        The MMDL system allows states to apply for changes to their State plan,
+        and access report on Medicaid program administration/implementation.
+      </p>
+    </>
+  ),
+  buttonLabel: "Enter the MMDL system",
 };
 
 const CHIPEligibilityLandingPage = () => (
