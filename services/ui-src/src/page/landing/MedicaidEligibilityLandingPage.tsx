@@ -11,8 +11,10 @@ export const medicaidEligibilityLandingConfig: TriageLandingPageConfig = {
   descriptionJSX: (
     <>
       <p>
-        Medicaid Eligibility, Enrollment, Administration, and Health Homes SPA
-        packages are submitted within the MACPro system.
+        <b>
+          Medicaid Eligibility, Enrollment, Administration, and Health Homes SPA
+          packages are submitted within the MACPro system.
+        </b>
       </p>
       <p>
         The MACPro system allows CMS and states to collaborate online to process

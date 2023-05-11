@@ -11,8 +11,10 @@ const ABPLandingConfig: TriageLandingPageConfig = {
   descriptionJSX: (
     <>
       <p>
-        Medicaid Alternative Benefits Plans (ABP), and Medicaid Premiums and
-        Cost Sharing are managed within the Medicaid Model Data Lab (MMDL).
+        <b>
+          Medicaid Alternative Benefits Plans (ABP), and Medicaid Premiums and
+          Cost Sharing are managed within the Medicaid Model Data Lab (MMDL).
+        </b>
       </p>
       <p>
         The MMDL system allows states to apply for changes to their State plan,

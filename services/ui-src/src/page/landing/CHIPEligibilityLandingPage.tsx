@@ -10,8 +10,10 @@ export const chipEligibilityLandingConfig: TriageLandingPageConfig = {
   descriptionJSX: (
     <>
       <p>
-        CHIP Eligibility SPAs are managed within the Medicaid Model Data Lab
-        (MMDL).
+        <b>
+          CHIP Eligibility SPAs are managed within the Medicaid Model Data Lab
+          (MMDL).
+        </b>
       </p>
       <p>
         The MMDL system allows states to apply for changes to their State plan,

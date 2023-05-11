@@ -13,12 +13,12 @@ export interface TriageLandingPageConfig {
 }
 
 const FAQHelperText = () => (
-  <p className="landing-description">
+  <span className="landing-description">
     <i>
       For additional information on where to submit, refer to the Crosswalk from
       Paper-based State Plan to MACPro and MMDL document in our FAQ section.
     </i>
-  </p>
+  </span>
 );
 
 /** Config-driven template to build landing pages that link to another system.
