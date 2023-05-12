@@ -36,15 +36,16 @@ Feature: OY2-11149 Submission Dashboard - Search bar
         When Login with state submitter user
         Then click on New Submission
         Then Click on Waiver Action
-        Then click on Initial Waiver
-        Then Click on 1915 b 4 FFS Selective Contracting waivers under Waiver Authority
+        Then click on 1915b Waiver Actions
+        Then click on 1915b 4 FFS Selective Contracting waivers
+        Then click on 1915b 4 FFS Selective Contracting New Initial Waiver
+        Then verify 1915 b 4 FFS Selective Contracting waivers is displayed under Waiver Authority
         Then Type Initial Waiver Number 2 in format SS-#####.R00.00
         Then select proposed effective date 3 months from today
-        Then Upload 1915 b 4 file
+        Then Add file for 1915b 4 FFS Selective Contracting waiver application pre-print
         Then Type Additonal Info Comments in new form
         Then Click on Submit Button
         Then verify submission successful message in the alert bar
-
         Then search for Initial Waiver Number 2 with 12 Characters
         Then clear search bar
         Then type in submitters name
