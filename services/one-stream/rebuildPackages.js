@@ -24,9 +24,9 @@ export const main = async () => {
       const queryGSI1Params = {
         TableName: process.env.oneMacTableName,
         IndexName: "GSI1",
-        KeyConditionExpression: "GSI1pk = :pk",
+        KeyConditionExpression: "GSI1pk = :topic",
         ExpressionAttributeValues: {
-          ":pk": gsi1pk,
+          ":topic": gsi1pk,
         },
         ProjectionExpression: "pk, sk",
       };
@@ -35,7 +35,11 @@ export const main = async () => {
         console.log(`queryGSI1Params: %s`, queryGSI1Params);
         const results = await dynamoDb.query(queryGSI1Params).promise();
         console.log("results: ", results);
-        toRebuild.push(...results.Items);
+        results.Items.forEach((item) => {
+          const timestamp = Number(item.sk.replace("SEATool#", ""));
+          if (!toRebuild[item.pk] || timestamp > toRebuild[item.pk])
+            toRebuild[item.pk] = timestamp;
+        });
         queryGSI1Params.ExclusiveStartKey = results.LastEvaluatedKey;
       } while (queryGSI1Params.ExclusiveStartKey);
     })
