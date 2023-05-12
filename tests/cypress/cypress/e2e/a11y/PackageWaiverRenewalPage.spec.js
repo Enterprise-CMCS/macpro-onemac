@@ -14,16 +14,20 @@ describe("New Waiver Renewal Page 508 test", () => {
 
   it("Check a11y on FFS Selective Waiver Renewal Page", () => {
     cy.xpath(
-      "//div[contains(text(), '1915(b)(4) FFS Selective Contracting waivers')]"
+      "//div[contains(text(), '1915(b)(4) FFS Selective Contracting Waivers')]"
     ).click();
-    cy.xpath("//div[contains(text(), '1915(b)(4) Renewal Waiver')]").click();
+    cy.xpath(
+      "//div[contains(text(), '1915(b)(4) FFS Selective Contracting Renewal Waiver')]"
+    ).click();
     cy.checkA11yOfPage();
   });
   it("Check a11y on all other 1915b Waiver Renewal Page", () => {
     cy.xpath(
-      "//div[contains(text(), 'All Other 1915(b) Waiver Authority')]"
+      "//div[contains(text(), '1915(b) Comprehensive (Capitated) Waiver Authority')]"
     ).click();
-    cy.xpath("//div[contains(text(), '1915(b) Renewal Waiver')]").click();
+    cy.xpath(
+      "//div[contains(text(), '1915(b) Comprehensive (Capitated) Renewal Waiver')]"
+    ).click();
     cy.checkA11yOfPage();
   });
 });

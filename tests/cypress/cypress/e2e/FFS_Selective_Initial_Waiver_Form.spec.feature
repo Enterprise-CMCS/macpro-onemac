@@ -22,7 +22,7 @@ Feature: FFS Selective Initial Waiver
         Then verify error message is present on package dashboard New Waiver Page
         Then verify the submit button is disabled
         Then clear Waiver Number Input box in new form
-        Then Type Initial Waiver Number in format SS-#####.R00.00
+        Then Type Initial Waiver Number 3 in format SS-#####.R00.00
         Then verify error message is not present on New Waiver Page
         Then verify the submit button is not disabled
         Then clear Waiver Number Input box in new form
@@ -34,7 +34,7 @@ Feature: FFS Selective Initial Waiver
     Scenario: create initial waiver from package dashboard and search it
         Then click on 1915b 4 FFS Selective Contracting New Initial Waiver
         Then verify 1915 b 4 FFS Selective Contracting waivers is displayed under Waiver Authority
-        Then Type Initial Waiver Number 1 in format SS-#####.R00.00
+        Then Type Initial Waiver Number in format SS-#####.R00.00
         Then select proposed effective date 3 months from today
         Then Add file for 1915b 4 FFS Selective Contracting waiver application pre-print
         Then Type Additonal Info Comments in new form

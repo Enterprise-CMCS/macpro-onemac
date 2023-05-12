@@ -14,18 +14,20 @@ describe("New Initial Waiver Page 508 test", () => {
 
   it("Check a11y on FFS Selective Initial Waiver Page", () => {
     cy.xpath(
-      "//div[contains(text(), '1915(b)(4) FFS Selective Contracting waivers')]"
+      "//div[contains(text(), '1915(b)(4) FFS Selective Contracting Waivers')]"
     ).click();
     cy.xpath(
-      "//div[contains(text(), '1915(b)(4) New Initial Waiver')]"
+      "//div[contains(text(), '1915(b)(4) FFS Selective Contracting New Initial Waiver')]"
     ).click();
     cy.checkA11yOfPage();
   });
   it("Check a11y on all other 1915b Initial Waiver Page", () => {
     cy.xpath(
-      "//div[contains(text(), 'All Other 1915(b) Waiver Authority')]"
+      "//div[contains(text(), '1915(b) Comprehensive (Capitated) Waiver Authority')]"
     ).click();
-    cy.xpath("//div[contains(text(), '1915(b) New Initial Waiver')]").click();
+    cy.xpath(
+      "//div[contains(text(), '1915(b) Comprehensive (Capitated) New Initial Waiver')]"
+    ).click();
     cy.checkA11yOfPage();
   });
 });

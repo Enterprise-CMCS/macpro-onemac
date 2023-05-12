@@ -11,7 +11,7 @@ Feature: Validate Waiver Form is checking ID format without period
 
     Scenario: Verify Initial Waiver number errors when dash is used
         Then click on 1915b Comprehensive Capitated New Initial Waiver
-        Then verify 1915 b 4 FFS Selective Contracting waivers is displayed under Waiver Authority
+        Then verify All other 1915 b Waivers is displayed under Waiver Authority
         Then type initial waiver number in old format SS.####.R00.00
         Then select proposed effective date 3 months from today
         Then Add file for 1915b Comprehensive Capitated Waiver Application Pre-print
@@ -30,7 +30,7 @@ Feature: Validate Waiver Form is checking ID format without period
 
     Scenario: Validate Waiver Form Logic for Waiver Amendment
         Then click on 1915b Comprehensive Capitated Waiver Amendment
-        Then verify 1915 b 4 FFS Selective Contracting waivers is displayed under Waiver Authority
+        Then verify All other 1915 b Waivers is displayed under Waiver Authority
         Then type approved Initial Waiver number into Existing Waiver Number to Amend field
         Then type in invalid Waiver Number
         Then select proposed effective date 3 months from today
@@ -51,7 +51,7 @@ Feature: Validate Waiver Form is checking ID format without period
 
     Scenario: Validate Waiver Form Logic for Waiver Renewal and All other
         Then click on 1915b Comprehensive Capitated Renewal Waiver
-        Then verify 1915 b 4 FFS Selective Contracting waivers is displayed under Waiver Authority
+        Then verify All other 1915 b Waivers is displayed under Waiver Authority
         Then type in Existing Waiver Number in new form
         Then Add file for 1915b Comprehensive Capitated Waiver Application Pre-print
         Then Add file for 1915b Comprehensive Capitated Waiver Cost Effectiveness Spreadsheets
