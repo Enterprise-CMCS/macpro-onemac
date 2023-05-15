@@ -157,6 +157,9 @@ export const buildAnyPackage = async (packageId, config) => {
           ).toFormat("yyyy-LL-dd");
         else putParams.Item.proposedEffectiveDate = "none";
 
+        putParams.Item.subject = anEvent.STATE_PLAN.TITLE_NAME;
+        putParams.Item.description = anEvent.STATE_PLAN.SUMMARY_MEMO;
+
         if (timestamp < lmTimestamp) return;
 
         const seaToolStatus = anEvent.SPW_STATUS.map((oneStatus) =>
@@ -175,8 +178,6 @@ export const buildAnyPackage = async (packageId, config) => {
           (putParams.Item.currentStatus =
             SEATOOL_TO_ONEMAC_STATUS[seaToolStatus]);
 
-        putParams.Item.subject = anEvent.STATE_PLAN.TITLE_NAME;
-        putParams.Item.description = anEvent.STATE_PLAN.SUMMARY_MEMO;
         return;
       }
 
