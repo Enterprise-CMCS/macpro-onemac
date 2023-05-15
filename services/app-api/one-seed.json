@@ -36756,7 +36756,7 @@
     "additionalInformation": "test",
     "submissionTimestamp": 1672336498763,
     "waiverAuthority": "1915(b)",
-    "GSI1pk": "OneMAC#submitwaiverrenewal",
+    "GSI1pk": "OneMAC#submitwaivernew",
     "convertTimestamp": 1674854066999,
     "submitterEmail": "mdstateonemac@gmail.com",
     "sk": "OneMAC#1672336498763",
@@ -36911,7 +36911,7 @@
     "ACTIONTYPES": [
       {
         "PLAN_TYPE_ID": 123,
-        "ACTION_NAME": "Amend",
+        "ACTION_NAME": "New",
         "ACTION_ID": 76
       }
     ],

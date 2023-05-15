@@ -58,6 +58,8 @@ export const buildAnyPackage = async (packageId, config) => {
         submitterEmail: "-- --",
         subject: "-- --",
         description: "-- --",
+        cpocName: "-- --",
+        cpocEmail: "-- --",
       },
     };
     let currentPackage;
@@ -156,6 +158,18 @@ export const buildAnyPackage = async (packageId, config) => {
             anEvent.STATE_PLAN.PROPOSED_DATE
           ).toFormat("yyyy-LL-dd");
         else putParams.Item.proposedEffectiveDate = "none";
+
+        // CPOC name and email
+        if (
+          anEvent.STATE_PLAN.LEAD_ANALYST_ID &&
+          typeof anEvent.STATE_PLAN.LEAD_ANALYST_ID === "number"
+        )
+          [putParams.Item.cpocName, putParams.Item.cpocEmail] =
+            anEvent.LEAD_ANALYST.map((officer) => {
+              anEvent.STATE_PLAN.LEAD_ANALYST_ID === officer.OFFICER_ID
+                ? [officer.FIRST_NAME + " " + officer.LAST_NAME, officer.EMAIL]
+                : [null, null];
+            }).filter(Boolean)[0];
 
         putParams.Item.subject = anEvent.STATE_PLAN.TITLE_NAME;
         putParams.Item.description = anEvent.STATE_PLAN.SUMMARY_MEMO;
