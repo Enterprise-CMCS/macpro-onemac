@@ -23,7 +23,7 @@ Feature: 1915b Comprehensive Capitated Initial Waiver
         Then verify error message is present on package dashboard New Waiver Page
         Then verify the submit button is disabled
         Then clear Waiver Number Input box in new form
-        Then Type Initial Waiver Number in format SS-#####.R00.00
+        Then Type a valid and unused Initial Waiver Number in format SS-#####.R00.00
         Then verify error message is not present on New Waiver Page
         Then verify the submit button is not disabled
         Then clear Waiver Number Input box in new form
@@ -35,7 +35,7 @@ Feature: 1915b Comprehensive Capitated Initial Waiver
     Scenario: Verify pre-print and spreadsheet are both required
         Then click on 1915b Comprehensive Capitated New Initial Waiver
         Then verify All other 1915 b Waivers is displayed under Waiver Authority
-        Then Type Initial Waiver Number in format SS-#####.R00.00
+        Then Type a valid and unused Initial Waiver Number in format SS-#####.R00.00
         Then select proposed effective date 3 months from today
         Then Add file for 1915b Comprehensive Capitated Waiver Cost Effectiveness Spreadsheets
         Then verify the submit button is disabled
