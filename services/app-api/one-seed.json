@@ -16702,7 +16702,7 @@
   {
     "clockEndTimestamp": 1680042316722,
     "componentType": "waivernew",
-    "currentStatus": "Pending - Concurrence",
+    "currentStatus": "Pending - Approval",
     "waiverExtensions": [],
     "attachments": [
       {
@@ -39711,5 +39711,127 @@
     "waiverAuthority": "1915(b)(4)",
     "waiverExtensions": [
     ]
-   }
+   },
+   {
+    "clockEndTimestamp": 1667843096578,
+    "componentType": "waiveramendment",
+    "eventTimestamp": 1660063496578,
+    "currentStatus": "Submitted",
+    "originallyFrom": "cms-spa-form-develop-change-requests",
+    "attachments": [
+      {
+        "s3Key": "1660063495180/Attachment 3.1-A, #4b, Page 3f Track.pdf",
+        "filename": "Attachment 3.1-A, #4b, Page 3f Track.pdf",
+        "title": "1915(b)(4) FFS Selective Contracting (Streamlined) waiver application pre-print (Initial, Renewal, Amendment)",
+        "contentType": "application/pdf",
+        "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1660063495180/Attachment%203.1-A%2C%20%234b%2C%20Page%203f%20Track.pdf"
+      }
+    ],
+    "proposedEffectiveDate": "none",
+    "GSI1sk": "MD-3425.R02.03",
+    "additionalInformation": "",
+    "submissionTimestamp": 1660063496578,
+    "waiverAuthority": "1915(b)(4)",
+    "GSI1pk": "OneMAC#submitwaiveramendment",
+    "convertTimestamp": 1673973224962,
+    "submitterEmail": "statesubmitter@nightwatch.test",
+    "sk": "OneMAC#1660063496578",
+    "componentId": "MD-3425.R02.03",
+    "pk": "MD-3425.R02.03",
+    "submitterName": "Statesubmitter Nightwatch"
+  },
+  {
+    "clockEndTimestamp": 1667843096578,
+    "componentType": "waiveramendment",
+    "currentStatus": "Submitted",
+    "waiverExtensions": [],
+    "attachments": [
+      {
+        "s3Key": "1660063495180/Attachment 3.1-A, #4b, Page 3f Track.pdf",
+        "filename": "Attachment 3.1-A, #4b, Page 3f Track.pdf",
+        "title": "1915(b)(4) FFS Selective Contracting (Streamlined) waiver application pre-print (Initial, Renewal, Amendment)",
+        "contentType": "application/pdf",
+        "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1660063495180/Attachment%203.1-A%2C%20%234b%2C%20Page%203f%20Track.pdf"
+      }
+    ],
+    "proposedEffectiveDate": "none",
+    "GSI1sk": "MD-3425.R02.03",
+    "submissionTimestamp": 1660063496578,
+    "waiverAuthority": "1915(b)(4)",
+    "GSI1pk": "OneMAC#waiver",
+    "submitterEmail": "statesubmitter@nightwatch.test",
+    "sk": "Package",
+    "componentId": "MD-3425.R02.03",
+    "raiResponses": [],
+    "lastEventTimestamp": 1660063496578,
+    "pk": "MD-3425.R02.03",
+    "subject": "-- --",
+    "description": "-- --",
+    "submitterName": "Statesubmitter Nightwatch"
+  },
+  {
+    "clockEndTimestamp": 1691929169711,
+    "componentType": "waiveramendment",
+    "eventTimestamp": 1684153169711,
+    "transmittalNumberWarningMessage": "",
+    "currentStatus": "Submitted",
+    "parentId": "MD-4432.R00.00",
+    "attachments": [
+      {
+        "s3Key": "1684153168200/Screenshot 2023-03-31 at 4.46.08 PM.png",
+        "filename": "Screenshot 2023-03-31 at 4.46.08 PM.png",
+        "title": "1915(b)(4) FFS Selective Contracting (Streamlined) waiver application pre-print (Initial, Renewal, Amendment)",
+        "contentType": "image/png",
+        "url": "https://uploads-oy2-23424-2-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A29bcc0cd-2084-45d2-a111-76c0ecd6daa6/1684153168200/Screenshot%202023-03-31%20at%204.46.08%20PM.png"
+      }
+    ],
+    "parentType": "waivernew",
+    "proposedEffectiveDate": "2023-06-10",
+    "GSI1sk": "MD-4432.R00.01",
+    "additionalInformation": "New amendment for seed data",
+    "submissionTimestamp": 1684153169711,
+    "waiverAuthority": "1915(b)",
+    "GSI1pk": "OneMAC#submitwaiveramendment",
+    "submitterEmail": "statesubmitter@nightwatch.test",
+    "territory": "MD",
+    "sk": "OneMAC#1684153169711",
+    "componentId": "MD-4432.R00.01",
+    "pk": "MD-4432.R00.01",
+    "submitterName": "StateSubmitter Nightwatch"
+  },
+  {
+    "subject": "-- --",
+    "clockEndTimestamp": 1691929169711,
+    "withdrawalRequests": [],
+    "waiverExtensions": [],
+    "parentType": "waivernew",
+    "proposedEffectiveDate": "2023-06-10",
+    "GSI1sk": "MD-4432.R00.01",
+    "additionalInformation": "New amendment for seed data",
+    "submissionTimestamp": 1684153169711,
+    "GSI2sk": "waiveramendment",
+    "waiverAuthority": "1915(b)",
+    "submitterEmail": "statesubmitter@nightwatch.test",
+    "sk": "Package",
+    "raiResponses": [],
+    "lastEventTimestamp": 1684153169711,
+    "componentType": "waiveramendment",
+    "currentStatus": "Submitted",
+    "parentId": "MD-4432.R00.00",
+    "attachments": [
+      {
+        "s3Key": "1684153168200/Screenshot 2023-03-31 at 4.46.08 PM.png",
+        "filename": "Screenshot 2023-03-31 at 4.46.08 PM.png",
+        "title": "1915(b)(4) FFS Selective Contracting (Streamlined) waiver application pre-print (Initial, Renewal, Amendment)",
+        "contentType": "image/png",
+        "url": "https://uploads-oy2-23424-2-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A29bcc0cd-2084-45d2-a111-76c0ecd6daa6/1684153168200/Screenshot%202023-03-31%20at%204.46.08%20PM.png"
+      }
+    ],
+    "GSI2pk": "MD-4432.R00.00",
+    "GSI1pk": "OneMAC#waiver",
+    "componentId": "MD-4432.R00.01",
+    "description": "-- --",
+    "pk": "MD-4432.R00.01",
+    "submitterName": "StateSubmitter Nightwatch"
+  }
 ]
