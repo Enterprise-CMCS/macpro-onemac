@@ -5,20 +5,22 @@ Feature: Waiver Renewal in Package Dashboard
         When Login with state submitter user
         Then click on New Submission
         Then Click on Waiver Action
+        Then click on 1915b Waiver Actions
+        Then click on 1915b 4 FFS Selective Contracting waivers
 
     Scenario: Screen Enhance - Waiver Renewal
-        Then verify Waiver Renewal is a clickable option
-        Then click on Waiver Renewal
+        Then verify 1915b 4 Renewal Waiver is a clickable option
+        Then 1915b 4 FFS Selective Contracting Renewal Waiver
         Then verify user is on new waiver renewal page
 
     Scenario: Existing Waiver Number Input Field format
-        Then click on Waiver Renewal
-        Then Click on 1915 b 4 FFS Selective Contracting waivers under Waiver Authority
+        Then 1915b 4 FFS Selective Contracting Renewal Waiver
+        Then verify 1915 b 4 FFS Selective Contracting waivers is displayed under Waiver Authority
         Then verify help text under Existing Waiver Number to Renew field
         Then type bad format into Existing Waiver Number to Renew field
         Then type new waiver renewal number 2 in 1915b Waiver Renewal Number field
         Then select proposed effective date 3 months from today
-        Then Upload 1915 b 4 file
+        Then Add file for 1915b 4 FFS Selective Contracting waiver application pre-print
         Then verify parent error message is present on package dashboard New Waiver Page
         Then verify the submit button is disabled
         Then clear Existing Waiver Number to Renew field
@@ -32,12 +34,12 @@ Feature: Waiver Renewal in Package Dashboard
         Then clear Existing Waiver Number to Renew field
 
     Scenario: 1915b Waiver Renewal Number Input Field format
-        Then click on Waiver Renewal
-        Then Click on 1915 b 4 FFS Selective Contracting waivers under Waiver Authority
+        Then 1915b 4 FFS Selective Contracting Renewal Waiver
+        Then verify 1915 b 4 FFS Selective Contracting waivers is displayed under Waiver Authority
         Then type approved Initial Waiver number into Existing Waiver Number to Renew field
         Then type bad format into 1915b Waiver Renewal Number field
         Then select proposed effective date 3 months from today
-        Then Upload 1915 b 4 file
+        Then Add file for 1915b 4 FFS Selective Contracting waiver application pre-print
         Then verify error message is present on package dashboard New Waiver Page
         Then verify the error message for renewals includes For renewals, the “R##” starts with ‘01’ and ascends.
         Then verify the submit button is disabled
@@ -53,12 +55,12 @@ Feature: Waiver Renewal in Package Dashboard
         Then clear 1915b Waiver Renewal Number field
 
     Scenario: create waiver renewal from package dashboard and search it
-        Then click on Waiver Renewal
-        Then Click on 1915 b 4 FFS Selective Contracting waivers under Waiver Authority
+        Then 1915b 4 FFS Selective Contracting Renewal Waiver
+        Then verify 1915 b 4 FFS Selective Contracting waivers is displayed under Waiver Authority
         Then type approved Initial Waiver number into Existing Waiver Number to Renew field
         Then type new waiver renewal number 1 in 1915b Waiver Renewal Number field
         Then select proposed effective date 3 months from today
-        Then Upload 1915 b 4 file
+        Then Add file for 1915b 4 FFS Selective Contracting waiver application pre-print
         Then Type Additonal Info Comments in new form
         Then Click on Submit Button
         Then verify submission successful message in the alert bar

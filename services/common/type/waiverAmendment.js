@@ -1,3 +1,12 @@
+import { waiverAuthorityB, waiverAuthorityB4 } from "../waiverAuthorities.js";
+import {
+  other,
+  tribalConsultation,
+  waiverB4ApplicationPrePrint,
+  waiverBApplicationPrePrint,
+  waiverBCostEffectivenessSpreadsheets,
+} from "../attachmentTypes.js";
+
 export const waiverAmendment = {
   whichTab: "waiver",
   componentType: "waiveramendment",
@@ -6,22 +15,6 @@ export const waiverAmendment = {
   idRegex: "^[A-Z]{2}[-][0-9]{4,5}[.]R[0-9]{2}[.](0[1-9]|[1-9][0-9])$",
   idMustExist: false,
   allowMultiplesWithSameId: false,
-  requiredAttachments: [],
-  optionalAttachments: [
-    "1915(b)(4) FFS Selective Contracting (Streamlined) waiver application pre-print (Initial, Renewal, Amendment)",
-    "1915(b) Comprehensive (Capitated) Waiver Application Pre-print (Initial, Renewal, Amendment)",
-    "1915(b) Comprehensive (Capitated) Waiver Cost effectiveness spreadsheets (Initial, Renewal, Amendment)",
-    "1915(b)(4) FFS Selective Contracting (Streamlined) and 1915(b) Comprehensive (Capitated) Waiver Independent Assessment (first two renewals only)",
-    "Tribal Consultation (Initial, Renewal, Amendment)",
-    "Other",
-  ],
-  waiverAuthorities: [
-    {
-      label: "1915(b)(4) FFS Selective Contracting waivers",
-      value: "1915(b)(4)",
-    },
-    { label: "All other 1915(b) Waivers", value: "1915(b)" },
-  ],
   allowedParentTypes: [
     "waivernew",
     "waiverrenewal",
@@ -43,4 +36,21 @@ export const waiverAmendment = {
     "parentId",
     "parentType",
   ],
+};
+
+export const waiverAmendmentB4 = {
+  ...waiverAmendment,
+  waiverAuthority: waiverAuthorityB4,
+  requiredAttachments: [waiverB4ApplicationPrePrint],
+  optionalAttachments: [tribalConsultation, other],
+};
+
+export const waiverAmendmentB = {
+  ...waiverAmendment,
+  waiverAuthority: waiverAuthorityB,
+  requiredAttachments: [
+    waiverBApplicationPrePrint,
+    waiverBCostEffectivenessSpreadsheets,
+  ],
+  optionalAttachments: [tribalConsultation, other],
 };
