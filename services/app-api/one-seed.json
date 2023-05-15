@@ -2797,7 +2797,7 @@
   {
     "clockEndTimestamp": 1680187496128,
     "componentType": "waiveramendment",
-    "currentStatus": "Pending - Concurrence",
+    "currentStatus": "Pending - Approval",
     "waiverExtensions": [],
     "attachments": [
       {
@@ -36911,7 +36911,7 @@
     "ACTIONTYPES": [
       {
         "PLAN_TYPE_ID": 123,
-        "ACTION_NAME": "Amend",
+        "ACTION_NAME": "New",
         "ACTION_ID": 76
       }
     ],
