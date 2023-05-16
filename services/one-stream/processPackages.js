@@ -19,6 +19,8 @@ export const main = async () => {
 
   const pResults = await dynamoDb.query(processParams).promise();
 
+  const toRebuild = [];
+
   await Promise.all(
     pResults.Items.map(async (pItem) => {
       // need the parameters inside the scope of the Promise
