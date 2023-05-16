@@ -16,7 +16,7 @@ export const medicaidEligibilityLandingConfig: TriageLandingPageConfig = {
         <b>
           Medicaid Eligibility, Enrollment, Administration, and Health Homes SPA
           packages are submitted within the{" "}
-          <a href={ExternalSystem.MAC_PRO} target="_blank">
+          <a href={ExternalSystem.MAC_PRO} target="_blank" rel="noreferrer">
             MACPro system.
           </a>
         </b>

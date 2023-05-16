@@ -15,7 +15,7 @@ const ABPLandingConfig: TriageLandingPageConfig = {
         <b>
           Medicaid Alternative Benefits Plans (ABP), and Medicaid Premiums and
           Cost Sharing are managed within the{" "}
-          <a href={ExternalSystem.MMDL} target="_blank">
+          <a href={ExternalSystem.MMDL} target="_blank" rel="noreferrer">
             Medicaid Model Data Lab (MMDL)
           </a>
           .

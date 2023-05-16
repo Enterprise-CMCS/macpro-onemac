@@ -13,7 +13,7 @@ export const chipEligibilityLandingConfig: TriageLandingPageConfig = {
       <p>
         <b>
           CHIP Eligibility SPAs are managed within the{" "}
-          <a href={ExternalSystem.MMDL} target="_blank">
+          <a href={ExternalSystem.MMDL} target="_blank" rel="noreferrer">
             Medicaid Model Data Lab (MMDL)
           </a>
           .
