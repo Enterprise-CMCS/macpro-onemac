@@ -20,12 +20,12 @@ export const main = async (event) => {
     topicsToRebuild.map(async (oneTopic) => {
       const processParams = {
         TableName: oneMacTableName,
-        Key: {
+        Item: {
           pk: "Process",
           sk: oneTopic,
+          reason: event.reason,
+          processStartKey: null,
         },
-        reason: event.reason,
-        processStartKey: null,
       };
       await dynamoDb.put(processParams).promise();
     })
