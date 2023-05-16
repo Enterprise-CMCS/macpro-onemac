@@ -1,5 +1,6 @@
 import React from "react";
 import TriageExternalLandingPage, {
+  ExternalSystem,
   TriageLandingPageConfig,
 } from "../../components/TriageExternalLandingPage";
 
@@ -11,8 +12,11 @@ export const chipEligibilityLandingConfig: TriageLandingPageConfig = {
     <>
       <p>
         <b>
-          CHIP Eligibility SPAs are managed within the Medicaid Model Data Lab
-          (MMDL).
+          CHIP Eligibility SPAs are managed within the{" "}
+          <a href={ExternalSystem.MMDL} target="_blank">
+            Medicaid Model Data Lab (MMDL)
+          </a>
+          .
         </b>
       </p>
       <p>
@@ -22,6 +26,7 @@ export const chipEligibilityLandingConfig: TriageLandingPageConfig = {
     </>
   ),
   buttonLabel: "Enter the MMDL system",
+  buttonLink: ExternalSystem.MMDL,
 };
 
 const CHIPEligibilityLandingPage = () => (

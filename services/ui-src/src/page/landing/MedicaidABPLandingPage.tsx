@@ -1,5 +1,6 @@
 import React from "react";
 import TriageExternalLandingPage, {
+  ExternalSystem,
   TriageLandingPageConfig,
 } from "../../components/TriageExternalLandingPage";
 
@@ -13,7 +14,11 @@ const ABPLandingConfig: TriageLandingPageConfig = {
       <p>
         <b>
           Medicaid Alternative Benefits Plans (ABP), and Medicaid Premiums and
-          Cost Sharing are managed within the Medicaid Model Data Lab (MMDL).
+          Cost Sharing are managed within the{" "}
+          <a href={ExternalSystem.MMDL} target="_blank">
+            Medicaid Model Data Lab (MMDL)
+          </a>
+          .
         </b>
       </p>
       <p>
@@ -23,6 +28,7 @@ const ABPLandingConfig: TriageLandingPageConfig = {
     </>
   ),
   buttonLabel: "Enter the MMDL system",
+  buttonLink: ExternalSystem.MMDL,
 };
 
 const MedicaidABPLandingPage = () => (

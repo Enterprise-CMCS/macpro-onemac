@@ -1,7 +1,9 @@
 import React from "react";
 import TriageExternalLandingPage, {
+  ExternalSystem,
   TriageLandingPageConfig,
 } from "../../components/TriageExternalLandingPage";
+import { Link } from "react-router-dom";
 
 // config for /medicaid-eligibility
 export const medicaidEligibilityLandingConfig: TriageLandingPageConfig = {
@@ -13,7 +15,10 @@ export const medicaidEligibilityLandingConfig: TriageLandingPageConfig = {
       <p>
         <b>
           Medicaid Eligibility, Enrollment, Administration, and Health Homes SPA
-          packages are submitted within the MACPro system.
+          packages are submitted within the{" "}
+          <a href={ExternalSystem.MAC_PRO} target="_blank">
+            MACPro system.
+          </a>
         </b>
       </p>
       <p>
@@ -23,6 +28,7 @@ export const medicaidEligibilityLandingConfig: TriageLandingPageConfig = {
     </>
   ),
   buttonLabel: "Enter the MACPro system",
+  buttonLink: ExternalSystem.MAC_PRO,
 };
 
 const MedicaidEligibilityLandingPage = () => (
