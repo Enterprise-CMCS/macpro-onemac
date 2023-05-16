@@ -15,9 +15,9 @@ import { medicaidSpaFormInfo } from "./medicaid-spa/MedicaidSpaForm";
 import { medicaidSPARAIFormInfo } from "./medicaid-spa/MedicaidSPARAIForm";
 import { chipSpaFormInfo } from "./chip-spa/ChipSpaForm";
 import { chipSPARAIFormInfo } from "./chip-spa/CHIPSPARAIForm";
-import { initialWaiverFormInfo } from "./initial-waiver/InitialWaiverForm";
-import { waiverRenewalFormInfo } from "./waiver-renewal/WaiverRenewalForm";
-import { waiverAmendmentFormInfo } from "./waiver-amendment/WaiverAmendmentForm";
+import { initialWaiverB4FormInfo } from "./initial-waiver/InitialWaiverB4Form";
+import { waiverRenewalFormInfo } from "./waiver-renewal/WaiverRenewalB4Form";
+import { waiverAmendmentFormInfo } from "./waiver-amendment/WaiverAmendmentB4Form";
 import { waiverRAIFormInfo } from "./waiver-rai/WaiverRAIForm";
 import { waiverAppendixKFormInfo } from "./waiver-appendix-k/WaiverAppendixKForm";
 import { waiverAppendixKRAIFormInfo } from "./waiver-appendix-k/WaiverAppendixKRAIForm";
@@ -28,7 +28,7 @@ const configList: OneMACFormConfig[] | any = [
   { ...medicaidSPARAIFormInfo },
   { ...chipSpaFormInfo },
   { ...chipSPARAIFormInfo },
-  { ...initialWaiverFormInfo },
+  { ...initialWaiverB4FormInfo },
   { ...waiverRenewalFormInfo },
   { ...waiverAmendmentFormInfo },
   { ...waiverRAIFormInfo },
