@@ -1,4 +1,3 @@
-import React from "react";
 import { defaultAttachmentInstructionsJSX } from "../../libs/formLib";
 import { ROUTES, ONEMAC_ROUTES } from "cmscommonlib";
 
