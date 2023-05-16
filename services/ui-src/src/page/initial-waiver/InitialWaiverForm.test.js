@@ -6,8 +6,8 @@ import { Router } from "react-router-dom";
 import { stateSubmitterInitialAuthState } from "../../libs/testDataAppContext";
 
 import { ONEMAC_ROUTES } from "cmscommonlib";
-import WaiverRenewalB4Form from "./WaiverRenewalB4Form";
-import WaiverRenewalBForm from "./WaiverRenewalBForm";
+import WaiverInitialB4Form from "./InitialWaiverB4Form";
+import WaiverInitialBForm from "./InitialWaiverBForm";
 import PackageApi from "../../utils/PackageApi";
 import { AppContext } from "../../libs/contextLib";
 
@@ -16,12 +16,12 @@ jest.mock("../../utils/PackageApi");
 window.HTMLElement.prototype.scrollIntoView = jest.fn();
 window.scrollTo = jest.fn();
 
-describe("1915(b) Waiver Renewal Form", () => {
+describe("1915(b) Initial Waiver Form", () => {
   let history;
 
   beforeEach(() => {
     history = createMemoryHistory();
-    history.push(ONEMAC_ROUTES.TEMPORARY_EXTENSION);
+    history.push(ONEMAC_ROUTES.WAIVER_INITIAL_B4);
   });
 
   it("has the submit button disabled on initial load", async () => {
@@ -34,7 +34,7 @@ describe("1915(b) Waiver Renewal Form", () => {
         }}
       >
         <Router history={history}>
-          <WaiverRenewalB4Form />
+          <WaiverInitialB4Form />
         </Router>
       </AppContext.Provider>
     );
@@ -46,7 +46,7 @@ describe("1915(b) Waiver Renewal Form", () => {
   });
 
   it("stays disabled even with valid ID", async () => {
-    const testID = "MD-1234.R01.00";
+    const testID = "MD-1234.R00.00";
 
     render(
       <AppContext.Provider
@@ -55,7 +55,7 @@ describe("1915(b) Waiver Renewal Form", () => {
         }}
       >
         <Router history={history}>
-          <WaiverRenewalBForm />
+          <WaiverInitialBForm />
         </Router>
       </AppContext.Provider>
     );
@@ -63,9 +63,7 @@ describe("1915(b) Waiver Renewal Form", () => {
     const submitButtonEl = screen.getByText("Submit");
     expect(submitButtonEl).toBeDisabled();
 
-    const transmittalNumberEl = screen.getByLabelText(
-      "1915(b) Waiver Renewal Number"
-    );
+    const transmittalNumberEl = screen.getByLabelText("Initial Waiver Number");
 
     PackageApi.packageExists.mockResolvedValue(false);
 
