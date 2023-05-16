@@ -3,7 +3,6 @@ import TriageExternalLandingPage, {
   ExternalSystem,
   TriageLandingPageConfig,
 } from "../../components/TriageExternalLandingPage";
-import { Link } from "react-router-dom";
 
 // config for /medicaid-eligibility
 export const medicaidEligibilityLandingConfig: TriageLandingPageConfig = {
