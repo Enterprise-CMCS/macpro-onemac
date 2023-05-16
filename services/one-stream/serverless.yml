@@ -70,6 +70,19 @@ functions:
       localTableName: ${self:custom.localTableName}
     maximumRetryAttempts: 2
 
+  processPackages:
+    handler: processPackages.main
+    role: LambdaOneStreamRole
+    environment:
+      STAGE: ${self:custom.stage}
+      oneMacTableName: ${self:custom.oneMacTableName}
+      localTableName: ${self:custom.localTableName}
+    maximumRetryAttempts: 2
+    events:
+      - schedule:
+          rate: rate(2 minutes)
+    timeout: 600
+
   rebuildPackages:
     handler: rebuildPackages.main
     role: LambdaOneStreamRole
@@ -77,7 +90,6 @@ functions:
       STAGE: ${self:custom.stage}
       oneMacTableName: ${self:custom.oneMacTableName}
       localTableName: ${self:custom.localTableName}
-      deployTrigger: "rebuild to add Subject and Description to packages"
     maximumRetryAttempts: 2
     timeout: 600
 
