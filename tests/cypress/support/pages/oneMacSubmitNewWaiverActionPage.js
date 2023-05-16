@@ -2,11 +2,16 @@ const newWaiverNumberInputBox = "#componentId";
 const actionTypeDropDown = "#action-type";
 const newErrMsgForWaiverNumber = "#componentIdStatusMsg0";
 const errorMsgPart2 = "#componentIdStatusMsg1";
-const waiverAuthority = "#waiver-authority";
+const waiverAuthority = "//h3[text()='Waiver Authority']";
 //this is xpath, use cy.xpath();
-const addFile1915b4 =
-  "//td[div[contains(text(),'1915(b)(4) FFS Selective Contracting (Streamlined) waiver application')]]";
-const fileUpload1915b4 = "#uploader-input-0";
+const addFFSPrePrintFile =
+  "//td[div[contains(text(),'1915(b)(4) FFS Selective Contracting (Streamlined) Waiver Application Pre-print')]]";
+const capitatedPreprintFile =
+  "//td[div[contains(text(),'1915(b) Comprehensive (Capitated) Waiver Application Pre-print')]]";
+const capitatedSpreadsheetFile =
+  "//td[div[contains(text(),'1915(b) Comprehensive (Capitated) Waiver Cost Effectiveness Spreadsheets')]]";
+const fileUpload1 = "#uploader-input-0";
+const fileUpload2 = "#uploader-input-1";
 const commentsInputBox = "#field_2";
 const additionalInfoTextarea = "#additional-information";
 const existingWaiverNumber = "MD-22005.R00.00";
@@ -18,6 +23,33 @@ const parentIDLabel =
   "//h3[text()='Approved Initial or Renewal Waiver Number']";
 const parentIDHelpText = "#parent-fieldHint0";
 
+//internal function for proposed effective date
+function caculate3MonthsInFuture() {
+  var t = new Date();
+  var d = ("0" + t.getDate()).slice(-2);
+  var y = t.getFullYear();
+  var futureMonth = 0;
+  switch (t.getMonth()) {
+    case 9:
+      futureMonth = 0;
+      y += 1;
+      break;
+    case 10:
+      futureMonth = 1;
+      y += 1;
+      break;
+    case 11:
+      futureMonth = 2;
+      y += 1;
+      break;
+    default:
+      futureMonth = t.getMonth() + 3;
+  }
+
+  var m = ("0" + (futureMonth + 1)).slice(-2);
+  var date = y + "-" + m + "-" + d;
+  return date;
+}
 export class oneMacSubmitNewWaiverActionPage {
   inputWaiverNumber(s) {
     cy.get(newWaiverNumberInputBox).type(s, { delay: 500 });
@@ -38,12 +70,14 @@ export class oneMacSubmitNewWaiverActionPage {
     cy.get(actionTypeDropDown).select("renewal");
   }
 
-  select1915b4FFSSelectiveContractingwaiversUnderWaiverAuthority() {
-    cy.get(waiverAuthority).select("1915(b)(4)");
+  verify1915b4FFSSelectiveContractingwaiversUnderWaiverAuthority() {
+    cy.xpath(waiverAuthority)
+      .next("div")
+      .contains("1915(b)(4) FFS Selective Contracting waivers");
   }
 
-  selectAllOther1915bWaiversUnderWaiverAuthority() {
-    cy.get(waiverAuthority).select("1915(b)");
+  verifyAllOther1915bWaiversUnderWaiverAuthority() {
+    cy.xpath(waiverAuthority).next("div").contains("All other 1915(b) Waivers");
   }
 
   verifyErrorMessageIsNotDisplayed() {
@@ -64,10 +98,26 @@ export class oneMacSubmitNewWaiverActionPage {
     cy.get(parentErrMsgForWaiverNumber).should("be.visible");
   }
 
-  upload1915B4File() {
-    cy.xpath(addFile1915b4).next("td").click();
+  upload1915BFFSPrePrintFile() {
+    cy.xpath(addFFSPrePrintFile).next("td").click();
     const filePath = "/files/15MB.pdf";
-    cy.get(fileUpload1915b4).attachFile(filePath);
+    cy.get(fileUpload1).attachFile(filePath);
+  }
+  upload1915BComprehensivePrePrintFile() {
+    cy.xpath(capitatedPreprintFile).next("td").click();
+    const filePath = "/files/15MB.pdf";
+    cy.get(fileUpload1).attachFile(filePath);
+  }
+  upload1915BComprehensiveSpreadsheetFile() {
+    cy.xpath(capitatedSpreadsheetFile).next("td").click();
+    const filePath = "/files/excel.xlsx";
+    cy.get(fileUpload2).attachFile(filePath);
+  }
+  remove1915BComprehensivePrePrintFile() {
+    cy.xpath(capitatedPreprintFile).parent().find("button").click();
+  }
+  remove1915BComprehensiveSpreadsheetFile() {
+    cy.xpath(capitatedSpreadsheetFile).parent().find("button").click();
   }
   verifyParentInitialIDIsPrefilled(s) {
     cy.xpath(parentIDLabel)
@@ -108,14 +158,10 @@ export class oneMacSubmitNewWaiverActionPage {
       }
     });
   }
-  setProposedEffectiveDateThreeMonthsAway() {
-    var t = new Date();
-    var m = ("0" + (t.getMonth() + 1)).slice(-2);
-    var d = ("0" + t.getDate()).slice(-2);
-    var y = t.getFullYear();
-    var dt = y + "-" + m + "-" + d;
 
-    cy.get(proposedEffectiveDate).type(dt);
+  setProposedEffectiveDateThreeMonthsAway() {
+    var futureDate = caculate3MonthsInFuture();
+    cy.get(proposedEffectiveDate).type(futureDate);
   }
 
   inputWaiverParentNumber(s) {

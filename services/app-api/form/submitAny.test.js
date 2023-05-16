@@ -1,7 +1,7 @@
 import { RESPONSE_CODE } from "cmscommonlib";
 import { submitAny } from "./submitAny";
 import { getUser } from "../getUser";
-import { initialWaiverFormConfig } from "./submitInitialWaiver";
+import { initialWaiverB4FormConifg } from "./submitInitialWaiver";
 import { withdrawMedicaidSPAFormConfig } from "./withdrawMedicaidSPA";
 import { waiverTemporaryExtensionFormConfig } from "./submitWaiverExtension";
 import packageExists from "../utils/packageExists";
@@ -147,7 +147,7 @@ const invalidTestEvent = {
   },
 };
 
-const testConfig = { ...initialWaiverFormConfig };
+const testConfig = { ...initialWaiverB4FormConifg };
 const testConfig2 = { ...withdrawMedicaidSPAFormConfig };
 const tempExtentsionTestConfig = { ...waiverTemporaryExtensionFormConfig };
 

@@ -1,6 +1,7 @@
 {
   "newInitialWaiverNumber1": "MD-33463.R00.00",
   "newInitialWaiverNumber2": "MD-39253.R00.00",
+  "newInitialWaiverNumber3": "MD-39263.R00.00",
   "approvedInitialWaiverNum1": "MD-2200.R00.00",
   "approvedRenewalWaiverNum1": "MD-22008.R01.00",
   "newTemporaryExtensionNumber1": "MD-5533.R00.TE00",
@@ -12,6 +13,7 @@
   "newTemporaryExtensionNumber7": "MD-5533.R00.TE06",
   "newWaiverRenewalNum1": "MD-5533.R01.00",
   "newWaiverRenewalNum2": "MD-5533.R02.00",
+  "newWaiverRenewalNum3": "MD-5533.R03.00",
   "newWaiverAmendmentNum1": "MD-5533.R00.01",
   "newWaiverAmendmentNum2": "MD-5533.R00.02",
   "newWaiverAmendmentNum3": "MD-5533.R00.03",
