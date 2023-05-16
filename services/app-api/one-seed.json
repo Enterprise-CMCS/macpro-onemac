@@ -2797,7 +2797,7 @@
   {
     "clockEndTimestamp": 1680187496128,
     "componentType": "waiveramendment",
-    "currentStatus": "Pending - Concurrence",
+    "currentStatus": "Pending - Approval",
     "waiverExtensions": [],
     "attachments": [
       {
@@ -36911,7 +36911,7 @@
     "ACTIONTYPES": [
       {
         "PLAN_TYPE_ID": 123,
-        "ACTION_NAME": "Amend",
+        "ACTION_NAME": "New",
         "ACTION_ID": 76
       }
     ],
@@ -39833,5 +39833,122 @@
     "description": "-- --",
     "pk": "MD-4432.R00.01",
     "submitterName": "StateSubmitter Nightwatch"
+  },
+  {
+    "componentType": "waiveramendment",
+    "eventTimestamp": 1650870000000,
+    "currentStatus": "Submitted",
+    "originallyFrom": "createOneMacPackage Lambda",
+    "attachments": [],
+    "GSI1sk": "MD-0801.R00.01",
+    "additionalInformation": "This package was created outside the OneMAC application.",
+    "submissionTimestamp": 1650870000000,
+    "waiverAuthority": "1915(b)",
+    "GSI1pk": "OneMAC#createwaiveramendment",
+    "convertTimestamp": 1684154035362,
+    "territory": "MD",
+    "sk": "OneMAC#1650870000000",
+    "componentId": "MD-0801.R00.01",
+    "pk": "MD-0801.R00.01"
+  },
+  {
+    "clockEndTimestamp": 1691930089598,
+    "componentType": "waiveramendmentwithdraw",
+    "eventTimestamp": 1684154089598,
+    "transmittalNumberWarningMessage": "",
+    "currentStatus": "Submitted",
+    "parentId": "MD-0801.R00.01",
+    "attachments": [
+      {
+        "s3Key": "1684154088090/Screenshot 2023-03-31 at 4.46.08 PM.png",
+        "filename": "Screenshot 2023-03-31 at 4.46.08 PM.png",
+        "title": "Supporting Documentation",
+        "contentType": "image/png",
+        "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1684154088090/Screenshot%202023-03-31%20at%204.46.08%20PM.png"
+      }
+    ],
+    "parentType": "waiveramendment",
+    "GSI1sk": "MD-0801.R00.01",
+    "additionalInformation": "Withdrawing package to add to seed data.",
+    "submissionTimestamp": 1684154089598,
+    "GSI1pk": "OneMAC#submitwaiveramendmentwithdraw",
+    "submitterEmail": "statesubmitter@nightwatch.test",
+    "territory": "MD",
+    "sk": "OneMAC#1684154089598",
+    "componentId": "MD-0801.R00.01",
+    "pk": "MD-0801.R00.01",
+    "submitterName": "Statesubmitter Nightwatch"
+  },
+  {
+    "subject": "-- --",
+    "componentType": "waiveramendment",
+    "withdrawalRequests": [
+      {
+        "additionalInformation": "Withdrawing package to add to seed data.",
+        "submissionTimestamp": 1684154089598,
+        "attachments": [
+          {
+            "s3Key": "1684154088090/Screenshot 2023-03-31 at 4.46.08 PM.png",
+            "filename": "Screenshot 2023-03-31 at 4.46.08 PM.png",
+            "title": "Supporting Documentation",
+            "contentType": "image/png",
+            "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1684154088090/Screenshot%202023-03-31%20at%204.46.08%20PM.png"
+          }
+        ]
+      }
+    ],
+    "currentStatus": "Withdrawal Requested",
+    "waiverExtensions": [],
+    "attachments": [],
+    "proposedEffectiveDate": "none",
+    "GSI1sk": "MD-0801.R00.01",
+    "additionalInformation": "This package was created outside the OneMAC application.",
+    "submissionTimestamp": 1650870000000,
+    "waiverAuthority": "1915(b)",
+    "GSI1pk": "OneMAC#waiver",
+    "submitterEmail": "-- --",
+    "sk": "Package",
+    "componentId": "MD-0801.R00.01",
+    "raiResponses": [],
+    "lastEventTimestamp": 1684154089598,
+    "pk": "MD-0801.R00.01",
+    "description": "-- --",
+    "submitterName": "-- --"
+  },
+  {
+    "GSI1pk": "SEATool#1915b_waivers",
+    "PLAN_TYPES": [
+      {
+        "PLAN_TYPE_NAME": "1915(b)"
+      }
+    ],
+    "SPW_STATUS": [
+      {
+        "SPW_STATUS_DESC": "Pending-RAI",
+        "SPW_STATUS_ID": 2
+      }
+    ],
+    "ACTIONTYPES": [
+      {
+        "ACTION_NAME": "Amend"
+      }
+    ],
+    "STATE_PLAN": {
+      "ID_NUMBER": "MD-0801.R00.01",
+      "STATUS_DATE": 1650917395996,
+      "CHANGED_DATE": 1650917395996,
+      "SPW_STATUS_ID": 2
+    },
+    "RAI": [
+      {
+        "RAI_WITHDRAWN_DATE": null,
+        "ID_NUMBER": "MD-0801.R00.01",
+        "RAI_RECEIVED_DATE": null,
+        "RAI_REQUESTED_DATE": 1650917395996
+      }
+    ],
+    "sk": "SEATool#1650917395996",
+    "GSI1sk": "MD-0801.R00.01",
+    "pk": "MD-0801.R00.01"
   }
 ]
