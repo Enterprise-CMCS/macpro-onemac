@@ -4,17 +4,15 @@ import handler from "../libs/handler-lib";
 import { submitAny } from "./submitAny";
 import {
   defaultFormConfig,
-  defaultProposedEffectiveDateSchema,
   defaultTitleSchema,
-  defaultWaiverAuthoritySchema,
+  defaultWaiverSchema,
 } from "./defaultFormConfig";
 
 export const waiverAppendixKFormConfig = {
   ...defaultFormConfig,
   ...waiverAppendixK,
   appendToSchema: {
-    waiverAuthority: defaultWaiverAuthoritySchema,
-    proposedEffectiveDate: defaultProposedEffectiveDateSchema,
+    ...defaultWaiverSchema,
     title: defaultTitleSchema,
   },
 };

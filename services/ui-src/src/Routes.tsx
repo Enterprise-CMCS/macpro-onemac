@@ -26,10 +26,8 @@ import Triage from "./containers/Triage";
 import UserManagement from "./containers/UserManagement";
 import UserPage from "./containers/UserPage";
 import { useAppContext } from "./libs/contextLib";
-import InitialWaiverForm from "./page/initial-waiver/InitialWaiverForm";
 import InitialWaiverWithdraw from "./page/initial-waiver/InitialWaiverWithdraw";
 import InitialWaiverDetail from "./page/initial-waiver/InitialWaiverDetail";
-import WaiverRenewalForm from "./page/waiver-renewal/WaiverRenewalForm";
 import WaiverRenewalWithdraw from "./page/waiver-renewal/WaiverRenewalWithdraw";
 import WaiverRenewalDetail from "./page/waiver-renewal/WaiverRenewalDetail";
 import WaiverAmendmentDetail from "./page/waiver-amendment/WaiverAmendmentDetail";
@@ -45,7 +43,6 @@ import CHIPSPADetail from "./page/chip-spa/CHIPSPADetail";
 import MedicaidSPARAIForm from "./page/medicaid-spa/MedicaidSPARAIForm";
 import CHIPSPARAIForm from "./page/chip-spa/CHIPSPARAIForm";
 import WaiverRAIForm from "./page/waiver-rai/WaiverRAIForm";
-import WaiverAmendmentForm from "./page/waiver-amendment/WaiverAmendmentForm";
 import WaiverAmendmentWithdraw from "./page/waiver-amendment/WaiverAmendmentWithdraw";
 import WaiverAppendixKForm from "./page/waiver-appendix-k/WaiverAppendixKForm";
 import WaiverAppendixKWithdraw from "./page/waiver-appendix-k/WaiverAppendixKWithdraw";
@@ -53,6 +50,12 @@ import WaiverAppendixKRAIForm from "./page/waiver-appendix-k/WaiverAppendixKRAIF
 import DescribeForms from "./page/DescribeForms";
 import EventList from "./page/event/EventList";
 import EventDetail from "./page/event/EventDetail";
+import InitialWaiverB4Form from "./page/initial-waiver/InitialWaiverB4Form";
+import InitialWaiverBForm from "./page/initial-waiver/InitialWaiverBForm";
+import WaiverRenewalB4Form from "./page/waiver-renewal/WaiverRenewalB4Form";
+import WaiverRenewalBForm from "./page/waiver-renewal/WaiverRenewalBForm";
+import WaiverAmendmentB4Form from "./page/waiver-amendment/WaiverAmendmentB4Form";
+import WaiverAmendmentBForm from "./page/waiver-amendment/WaiverAmendmentBForm";
 
 type RouteSpec = {
   path: string;
@@ -199,17 +202,32 @@ const ROUTE_LIST: RouteSpec[] = [
       component: MedicaidSpaWithdraw,
     },
     { path: ONEMAC_ROUTES.WAIVER_RAI, component: WaiverRAIForm },
-    { path: ONEMAC_ROUTES.INITIAL_WAIVER, component: InitialWaiverForm },
+    { path: ONEMAC_ROUTES.INITIAL_WAIVER_B_4, component: InitialWaiverB4Form },
+    {
+      path: ONEMAC_ROUTES.INITIAL_WAIVER_B_OTHER,
+      component: InitialWaiverBForm,
+    },
     {
       path: ONEMAC_ROUTES.INITIAL_WAIVER_WITHDRAW,
       component: InitialWaiverWithdraw,
     },
-    { path: ONEMAC_ROUTES.WAIVER_RENEWAL, component: WaiverRenewalForm },
+    { path: ONEMAC_ROUTES.WAIVER_RENEWAL_B_4, component: WaiverRenewalB4Form },
+    {
+      path: ONEMAC_ROUTES.WAIVER_RENEWAL_B_OTHER,
+      component: WaiverRenewalBForm,
+    },
     {
       path: ONEMAC_ROUTES.WAIVER_RENEWAL_WITHDRAW,
       component: WaiverRenewalWithdraw,
     },
-    { path: ONEMAC_ROUTES.WAIVER_AMENDMENT, component: WaiverAmendmentForm },
+    {
+      path: ONEMAC_ROUTES.WAIVER_AMENDMENT_B_4,
+      component: WaiverAmendmentB4Form,
+    },
+    {
+      path: ONEMAC_ROUTES.WAIVER_AMENDMENT_B_OTHER,
+      component: WaiverAmendmentBForm,
+    },
     {
       path: ONEMAC_ROUTES.WAIVER_AMENDMENT_WITHDRAW,
       component: WaiverAmendmentWithdraw,
@@ -252,6 +270,21 @@ const ROUTE_LIST: RouteSpec[] = [
           { path: ONEMAC_ROUTES.TRIAGE_GROUP, exact: true, component: Triage },
           { path: ONEMAC_ROUTES.TRIAGE_SPA, exact: true, component: Triage },
           { path: ONEMAC_ROUTES.TRIAGE_WAIVER, exact: true, component: Triage },
+          {
+            path: ONEMAC_ROUTES.TRIAGE_WAIVER_B,
+            exact: true,
+            component: Triage,
+          },
+          {
+            path: ONEMAC_ROUTES.TRIAGE_WAIVER_B_4,
+            exact: true,
+            component: Triage,
+          },
+          {
+            path: ONEMAC_ROUTES.TRIAGE_WAIVER_B_OTHER,
+            exact: true,
+            component: Triage,
+          },
         ],
       },
     ],

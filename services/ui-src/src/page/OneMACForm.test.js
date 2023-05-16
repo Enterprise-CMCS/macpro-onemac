@@ -14,7 +14,7 @@ import { ROUTES, ONEMAC_ROUTES, initialWaiver } from "cmscommonlib";
 import OneMACForm from "./OneMACForm";
 import PackageApi from "../utils/PackageApi";
 import { AppContext } from "../libs/contextLib";
-import { initialWaiverFormInfo } from "./initial-waiver/InitialWaiverForm";
+import { initialWaiverB4FormInfo } from "./initial-waiver/InitialWaiverB4Form";
 
 jest.mock("../utils/PackageApi");
 
@@ -42,7 +42,7 @@ describe("OneMAC Form", () => {
         }}
       >
         <Router history={history}>
-          <OneMACForm formConfig={initialWaiverFormInfo} />
+          <OneMACForm formConfig={initialWaiverB4FormInfo} />
         </Router>
       </AppContext.Provider>
     );
@@ -67,7 +67,7 @@ describe("OneMAC Form", () => {
         }}
       >
         <Router history={history}>
-          <OneMACForm formConfig={initialWaiverFormInfo} />
+          <OneMACForm formConfig={initialWaiverB4FormInfo} />
         </Router>
       </AppContext.Provider>
     );
@@ -88,7 +88,7 @@ describe("OneMAC Form", () => {
         }}
       >
         <Router history={history}>
-          <OneMACForm formConfig={initialWaiverFormInfo} />
+          <OneMACForm formConfig={initialWaiverB4FormInfo} />
         </Router>
       </AppContext.Provider>
     );
@@ -119,21 +119,21 @@ describe("OneMAC Form", () => {
         }}
       >
         <Router history={history}>
-          <OneMACForm formConfig={initialWaiverFormInfo} />
+          <OneMACForm formConfig={initialWaiverB4FormInfo} />
         </Router>
       </AppContext.Provider>
     );
 
     const transmittalNumberEl = screen.getByLabelText("Initial Waiver Number");
-    const waiverAuthorityEl = screen.getByLabelText("Waiver Authority");
+    // const waiverAuthorityEl = screen.getByLabelText("Waiver Authority");
     const submitButtonEl = screen.getByText("Submit");
 
     // values start out empty
     expect(transmittalNumberEl.value).toBe("");
-    expect(waiverAuthorityEl.value).toBe("");
+    //expect(waiverAuthorityEl.value).toBe("");
 
-    userEvent.selectOptions(waiverAuthorityEl, testValues.waiverAuthority);
-    await screen.findByText("All other 1915(b) Waivers");
+    // userEvent.selectOptions(waiverAuthorityEl, testValues.waiverAuthority);
+    // await screen.findByText("All other 1915(b) Waivers");
 
     // Find the package
     PackageApi.packageExists.mockResolvedValue(true);
@@ -149,7 +149,7 @@ describe("OneMAC Form", () => {
 
     // the transmittal number still contains the value
     expect(transmittalNumberEl.value).toBe(testValues.transmittalNumber);
-    expect(waiverAuthorityEl.value).toBe(testValues.waiverAuthority);
+    // expect(waiverAuthorityEl.value).toBe(testValues.waiverAuthority);
   });
 });
 
@@ -177,7 +177,7 @@ describe("Component Id Section", () => {
         }}
       >
         <Router history={history}>
-          <OneMACForm formConfig={initialWaiverFormInfo} />
+          <OneMACForm formConfig={initialWaiverB4FormInfo} />
         </Router>
       </AppContext.Provider>
     );
@@ -196,7 +196,7 @@ describe("Component Id Section", () => {
         }}
       >
         <Router history={history}>
-          <OneMACForm formConfig={initialWaiverFormInfo} />
+          <OneMACForm formConfig={initialWaiverB4FormInfo} />
         </Router>
       </AppContext.Provider>
     );
@@ -221,7 +221,7 @@ describe("Component Id Section", () => {
         }}
       >
         <Router history={history}>
-          <OneMACForm formConfig={initialWaiverFormInfo} />
+          <OneMACForm formConfig={initialWaiverB4FormInfo} />
         </Router>
       </AppContext.Provider>
     );
@@ -252,7 +252,7 @@ describe("Component Id Section", () => {
         }}
       >
         <Router history={history}>
-          <OneMACForm formConfig={initialWaiverFormInfo} />
+          <OneMACForm formConfig={initialWaiverB4FormInfo} />
         </Router>
       </AppContext.Provider>
     );
@@ -286,13 +286,13 @@ describe("cancelling the form submission", () => {
         }}
       >
         <Router history={history}>
-          <OneMACForm formConfig={initialWaiverFormInfo} />
+          <OneMACForm formConfig={initialWaiverB4FormInfo} />
         </Router>
       </AppContext.Provider>
     );
 
     const transmittalNumberEl = screen.getByLabelText("Initial Waiver Number");
-    const waiverAuthorityEl = screen.getByLabelText("Waiver Authority");
+    // const waiverAuthorityEl = screen.getByLabelText("Waiver Authority");
     const proposedEffectiveEl = screen.getByLabelText(
       "Proposed Effective Date of " + initialWaiver.typeLabel
     );
@@ -300,11 +300,11 @@ describe("cancelling the form submission", () => {
 
     // values start out empty
     expect(transmittalNumberEl.value).toBe("");
-    expect(waiverAuthorityEl.value).toBe("");
+    // expect(waiverAuthorityEl.value).toBe("");
     expect(proposedEffectiveEl.value).toBe("");
 
-    userEvent.selectOptions(waiverAuthorityEl, testValues.waiverAuthority);
-    await screen.findByText("All other 1915(b) Waivers");
+    // userEvent.selectOptions(waiverAuthorityEl, testValues.waiverAuthority);
+    // await screen.findByText("All other 1915(b) Waivers");
 
     // Don't find the package
     PackageApi.packageExists.mockResolvedValue(false);
@@ -321,7 +321,7 @@ describe("cancelling the form submission", () => {
 
     // the transmittal number still contains the value
     expect(transmittalNumberEl.value).toBe(testValues.transmittalNumber);
-    expect(waiverAuthorityEl.value).toBe(testValues.waiverAuthority);
+    // expect(waiverAuthorityEl.value).toBe(testValues.waiverAuthority);
     expect(proposedEffectiveEl.value).toBe(testValues.proposedEffectiveDate);
   });
 
@@ -339,13 +339,13 @@ describe("cancelling the form submission", () => {
         }}
       >
         <Router history={history}>
-          <OneMACForm formConfig={initialWaiverFormInfo} />
+          <OneMACForm formConfig={initialWaiverB4FormInfo} />
         </Router>
       </AppContext.Provider>
     );
 
     const transmittalNumberEl = screen.getByLabelText("Initial Waiver Number");
-    const waiverAuthorityEl = screen.getByLabelText("Waiver Authority");
+    // const waiverAuthorityEl = screen.getByLabelText("Waiver Authority");
     const proposedEffectiveEl = screen.getByLabelText(
       "Proposed Effective Date of " + initialWaiver.typeLabel
     );
@@ -353,11 +353,11 @@ describe("cancelling the form submission", () => {
 
     // values start out empty
     expect(transmittalNumberEl.value).toBe("");
-    expect(waiverAuthorityEl.value).toBe("");
+    // expect(waiverAuthorityEl.value).toBe("");
     expect(proposedEffectiveEl.value).toBe("");
 
-    userEvent.selectOptions(waiverAuthorityEl, testValues.waiverAuthority);
-    await screen.findByText("All other 1915(b) Waivers");
+    // userEvent.selectOptions(waiverAuthorityEl, testValues.waiverAuthority);
+    // await screen.findByText("All other 1915(b) Waivers");
 
     // Don't find the package
     PackageApi.packageExists.mockResolvedValue(false);
@@ -374,7 +374,7 @@ describe("cancelling the form submission", () => {
 
     // the transmittal number still contains the value
     expect(transmittalNumberEl.value).toBe(testValues.transmittalNumber);
-    expect(waiverAuthorityEl.value).toBe(testValues.waiverAuthority);
+    // expect(waiverAuthorityEl.value).toBe(testValues.waiverAuthority);
     expect(proposedEffectiveEl.value).toBe(testValues.proposedEffectiveDate);
   });
   /*
@@ -390,7 +390,7 @@ describe("cancelling the form submission", () => {
         }}
       >
         <Router history={herstory}>
-          <OneMACForm formConfig={initialWaiverFormInfo} />
+          <OneMACForm formConfig={initialWaiverB4FormInfo} />
         </Router>
       </AppContext.Provider>
     );
