@@ -1,17 +1,10 @@
-import React, { FC } from "react";
-import OneMACForm from "../OneMACForm";
-import {
-  defaultOneMACFormConfig,
-  OneMACFormConfig,
-  defaultAttachmentInstructionsJSX,
-} from "../../libs/formLib";
-import { ROUTES, ONEMAC_ROUTES, waiverAmendment } from "cmscommonlib";
+import React from "react";
+import { defaultAttachmentInstructionsJSX } from "../../libs/formLib";
+import { ROUTES, ONEMAC_ROUTES } from "cmscommonlib";
 
 const waiverAmendmentIdFormat: string = "SS-####.R##.## or SS-#####.R##.##";
 
-export const waiverAmendmentFormInfo: OneMACFormConfig = {
-  ...defaultOneMACFormConfig,
-  ...waiverAmendment,
+export const waiverAmendmentFormConfig = {
   pageTitle: "Amend a 1915(b) Waiver",
   detailsHeader: "1915(b) Waiver Amendment Request",
   idFAQLink: ROUTES.FAQ_1915B_WAIVER_AMENDMENT_ID,
@@ -43,9 +36,3 @@ export const waiverAmendmentFormInfo: OneMACFormConfig = {
     "The waiver number entered does not appear to match our records. Please enter an approved initial or renewal waiver number, using a dash after the two character state abbreviation.",
   validateParentAPI: "validateParentOfWaiverAmendment",
 };
-
-const WaiverAmendmentForm: FC = () => {
-  return <OneMACForm formConfig={waiverAmendmentFormInfo} />;
-};
-
-export default WaiverAmendmentForm;

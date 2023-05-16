@@ -1,17 +1,9 @@
-import React, { FC } from "react";
-import OneMACForm from "../OneMACForm";
-import {
-  defaultOneMACFormConfig,
-  OneMACFormConfig,
-  defaultAttachmentInstructionsJSX,
-} from "../../libs/formLib";
-import { ROUTES, ONEMAC_ROUTES, initialWaiver } from "cmscommonlib";
+import { ROUTES, ONEMAC_ROUTES } from "cmscommonlib";
+import { defaultAttachmentInstructionsJSX } from "../../libs/formLib";
 
 const initialWaiverIdFormat: string = "SS-####.R00.00 or SS-#####.R00.00";
 
-export const initialWaiverFormInfo: OneMACFormConfig = {
-  ...defaultOneMACFormConfig,
-  ...initialWaiver,
+export const initialWaiverFormConfig = {
   pageTitle: "1915(b) Initial Waiver Submission",
   detailsHeader: "Initial Waiver",
   idFAQLink: ROUTES.FAQ_INITIAL_1915B_WAIVER_ID,
@@ -28,9 +20,3 @@ export const initialWaiverFormInfo: OneMACFormConfig = {
   ),
   landingPage: ONEMAC_ROUTES.PACKAGE_LIST_WAIVER,
 };
-
-const InitialWaiverForm: FC = () => {
-  return <OneMACForm formConfig={initialWaiverFormInfo} />;
-};
-
-export default InitialWaiverForm;

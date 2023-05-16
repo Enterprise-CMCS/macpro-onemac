@@ -1,17 +1,11 @@
-import React, { FC } from "react";
-import OneMACForm from "../OneMACForm";
-import {
-  defaultOneMACFormConfig,
-  OneMACFormConfig,
-  defaultAttachmentInstructionsJSX,
-} from "../../libs/formLib";
-import { ROUTES, ONEMAC_ROUTES, waiverRenewal } from "cmscommonlib";
+import React from "react";
+import { defaultAttachmentInstructionsJSX } from "../../libs/formLib";
+import { ROUTES, ONEMAC_ROUTES } from "cmscommonlib";
 
-const waiverRenewalIdFormat: string = "SS-####.R##.00 or SS-#####.R##.00";
+export const waiverRenewalIdFormat: string =
+  "SS-####.R##.00 or SS-#####.R##.00";
 
-export const waiverRenewalFormInfo: OneMACFormConfig = {
-  ...defaultOneMACFormConfig,
-  ...waiverRenewal,
+export const waiverRenewalFormConfig = {
   pageTitle: "Renew a 1915(b) Waiver",
   detailsHeader: "1915(b) Waiver Renewal",
   idFAQLink: ROUTES.FAQ_1915B_WAIVER_RENEWAL_ID,
@@ -41,8 +35,4 @@ export const waiverRenewalFormInfo: OneMACFormConfig = {
   validateParentAPI: "validateParentOfWaiverRenewal",
 };
 
-const WaiverRenewalForm: FC = () => {
-  return <OneMACForm formConfig={waiverRenewalFormInfo} />;
-};
-
-export default WaiverRenewalForm;
+export default waiverRenewalFormConfig;

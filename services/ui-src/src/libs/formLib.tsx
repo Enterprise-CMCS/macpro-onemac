@@ -146,7 +146,7 @@ export type PackageType = {
 };
 
 export type WaiverPackageType = {
-  waiverAuthorities: SelectOption[];
+  waiverAuthority: SelectOption;
 };
 
 export type TemporaryExtensionPackageType = {
