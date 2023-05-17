@@ -7,7 +7,11 @@ export * as Workflow from "./workflow.js";
 
 export { initialWaiver } from "./type/initialWaiver.js";
 export { initialWaiverWithdraw } from "./type/initialWaiverWithdraw.js";
-export { waiverTemporaryExtension } from "./type/waiverTemporaryExtension.js";
+export {
+  waiverTemporaryExtension,
+  waiverTemporaryExtension1915b,
+  waiverTemporaryExtension1915c,
+} from "./type/waiverTemporaryExtension.js";
 export { waiverRenewal } from "./type/waiverRenewal.js";
 export { waiverRenewalWithdraw } from "./type/waiverRenewalWithdraw.js";
 export { waiverAmendment } from "./type/waiverAmendment.js";
@@ -183,6 +187,8 @@ export class Role {
         ROUTES.WAIVER,
         ROUTES.WAIVER_APP_K,
         ROUTES.WAIVER_EXTENSION,
+        ROUTES.WAIVER_EXTENSION_B,
+        ROUTES.WAIVER_EXTENSION_C,
         ROUTES.WAIVER_RAI
       );
     }
