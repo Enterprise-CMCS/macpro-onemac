@@ -12,8 +12,9 @@ export const main = async () => {
   // get the process status information from dynamodb
   const processParams = {
     TableName: oneMacTableName,
-    Key: {
-      pk: "Process",
+    KeyConditionExpression: "pk = :pk",
+    ExpressionAttributeValues: {
+      ":pk": "Progress",
     },
   };
 
