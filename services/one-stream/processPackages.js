@@ -14,16 +14,18 @@ export const main = async () => {
     TableName: oneMacTableName,
     KeyConditionExpression: "pk = :pk",
     ExpressionAttributeValues: {
-      ":pk": "Progress",
+      ":pk": "Process",
     },
   };
-
+  console.log("processParams: ", processParams);
   const pResults = await dynamoDb.query(processParams).promise();
 
+  console.log("pResults: ", pResults);
   const toRebuild = [];
 
   await Promise.all(
     pResults.Items.map(async (pItem) => {
+      console.log("processing item: ", pItem);
       // need the parameters inside the scope of the Promise
       const queryGSI1Params = {
         TableName: oneMacTableName,
@@ -32,9 +34,10 @@ export const main = async () => {
         ExpressionAttributeValues: {
           ":pk": pItem.sk,
         },
-        ExclusiveStartKey: pItem.processStartKey,
         ProjectionExpression: "pk, sk",
       };
+      if (pItem.processStartKey)
+        queryGSI1Params.ExclusiveStartKey = pItem.processStartKey;
 
       console.log(`queryGSI1Params: %s`, queryGSI1Params);
       const results = await dynamoDb.query(queryGSI1Params).promise();

@@ -24,7 +24,6 @@ export const main = async (event) => {
           pk: "Process",
           sk: oneTopic,
           reason: event.reason,
-          processStartKey: null,
         },
       };
       await dynamoDb.put(processParams).promise();
