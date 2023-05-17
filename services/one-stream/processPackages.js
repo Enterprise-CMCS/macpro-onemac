@@ -51,7 +51,10 @@ export const main = async () => {
             pk: pItem.pk,
             sk: pItem.sk,
           },
-          processStartKey: results.LastEvaluatedKey,
+          Item: {
+            ...pItem,
+            processStartKey: results.LastEvaluatedKey,
+          },
         };
         await dynamoDb.put(nextProcessParams).promise();
       } else {
