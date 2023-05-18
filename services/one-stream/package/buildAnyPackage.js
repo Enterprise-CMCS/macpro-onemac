@@ -161,7 +161,7 @@ export const buildAnyPackage = async (packageId, config) => {
         putParams.Item.subject = anEvent.STATE_PLAN.TITLE_NAME;
         putParams.Item.description = anEvent.STATE_PLAN.SUMMARY_MEMO;
 
-        const leadAnalyst = anEvent.LEAD_ANALYST.map((oneAnalyst) =>
+        const leadAnalyst = anEvent?.LEAD_ANALYST.map((oneAnalyst) =>
           anEvent.STATE_PLAN.LEAD_ANALYST_ID === oneAnalyst.OFFICER_ID
             ? oneAnalyst
             : null
@@ -172,7 +172,7 @@ export const buildAnyPackage = async (packageId, config) => {
 
         if (timestamp < lmTimestamp) return;
 
-        const seaToolStatus = anEvent.SPW_STATUS.map((oneStatus) =>
+        const seaToolStatus = anEvent?.SPW_STATUS.map((oneStatus) =>
           anEvent.STATE_PLAN.SPW_STATUS_ID === oneStatus.SPW_STATUS_ID
             ? oneStatus.SPW_STATUS_DESC
             : null
