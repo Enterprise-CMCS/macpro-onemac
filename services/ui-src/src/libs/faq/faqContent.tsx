@@ -110,6 +110,29 @@ export const oneMACFAQContent: FAQContent[] = [
         ),
       },
       {
+        anchorText: "acceptable-file-formats",
+        question: "What are the kinds of file formats I can upload into OneMAC",
+        answerJSX: (
+          <section>
+            <p>
+              We accept the following file formats under{" "}
+              {config.MAX_ATTACHMENT_SIZE_MB}MB in size.{" "}
+              <i>
+                Unfortunately, we are unable to accept .zip or compressed files.
+              </i>
+            </p>
+            <h3>Acceptable File Formats</h3>
+            <ul className="file-type-list">
+              {FILE_TYPES.map((info) => (
+                <li>
+                  <FileTypesFAQListItem info={info} />
+                </li>
+              ))}
+            </ul>
+          </section>
+        ),
+      },
+      {
         anchorText: "onboarding-materials",
         question: "Onboarding Materials",
         answerJSX: (
@@ -863,29 +886,6 @@ export const oneMACFAQContent: FAQContent[] = [
               </tbody>
             </table>
           </>
-        ),
-      },
-      {
-        anchorText: "acceptable-file-formats",
-        question: "What are the kinds of file formats I can upload into OneMAC",
-        answerJSX: (
-          <section>
-            <p>
-              We accept the following file formats under{" "}
-              {config.MAX_ATTACHMENT_SIZE_MB}MB in size.{" "}
-              <i>
-                Unfortunately, we are unable to accept .zip or compressed files.
-              </i>
-            </p>
-            <h3>Acceptable File Formats</h3>
-            <ul className="file-type-list">
-              {FILE_TYPES.map((info) => (
-                <li>
-                  <FileTypesFAQListItem info={info} />
-                </li>
-              ))}
-            </ul>
-          </section>
         ),
       },
     ],
