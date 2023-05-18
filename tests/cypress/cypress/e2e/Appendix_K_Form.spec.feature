@@ -10,6 +10,24 @@ Feature: Appendix K Waiver Type Selection
         Then verify Appendix K is a clickable option
         Then Click on Appendix K Amendment
         Then verify user is on new Appendix K page
+    
+    Scenario: Verify the Waiver Number format on Appendix K Form
+        Then Click on Appendix K Amendment
+        Then type Appendix K Submission 1 into Amendment Title field
+        Then type in unused Waiver Number with 5 characters on Appendix K Amendment Page
+        Then Add file for 1915c Appendix K Amendment Waiver Template
+        Then select proposed effective date 3 months from today
+        Then verify error message is not present on Appendix K Amendment Page
+        Then verify the submit button is not disabled
+        Then clear Waiver Number Input box on Appendix K Amendment Page
+        Then type in invalid Waiver Number on Appendix K Amendment Page
+        Then verify that error message for incorrect Waiver Number is Displayed on Appendix K Amendment Page
+        Then verify error message contains 'For amendments, the last two digits start with'
+        Then verify the submit button is disabled
+        Then clear Waiver Number Input box on Appendix K Amendment Page
+        Then type in unused Waiver Number with 5 characters on Appendix K Amendment Page
+        Then verify error message is not present on Appendix K Amendment Page
+        Then verify the submit button is not disabled
 
     Scenario: create Appendix K from package dashboard and search it
         Then Click on Appendix K Amendment

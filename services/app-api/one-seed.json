@@ -1958,928 +1958,6 @@
     "email": "cmsroleapproverdenied@cms.hhs.local"
   },
   {
-    "pk": "MD-82-0021",
-    "sk": "SEATool#1671584977662",
-    "GSI1pk": "SEATool#Medicaid_SPA",
-    "GSI1sk": "MD-82-0021",
-    "SPW_STATUS": [
-      {
-        "SPW_STATUS_DESC": "Pending",
-        "SPW_STATUS_ID": 2
-      }
-    ],
-    "STATE_PLAN": {
-      "CHANGED_DATE": 1671584977662,
-      "ID_NUMBER": "MD-82-0021",
-      "STATUS_DATE": 1671584977662,
-      "SPW_STATUS_ID": 2
-    }
-  },
-  {
-    "GSI1sk": "MD-77-0003",
-    "sk": "SEATool#1664779808945",
-    "STATE_PLAN": {
-      "STATUS_DATE": 1664779808945,
-      "ID_NUMBER": "MD-77-0003",
-      "CHANGED_DATE": 1664779808945,
-      "SPW_STATUS_ID": 4
-    },
-    "GSI1pk": "SEATool#Medicaid_SPA",
-    "pk": "MD-77-0003",
-    "RAI": [
-      {
-        "RAI_WITHDRAWN_DATE": 1638921600000,
-        "ID_NUMBER": "AK-00-0885",
-        "RAI_RECEIVED_DATE": 1633478400000,
-        "RAI_REQUESTED_DATE": 1633392000000
-      }
-    ],
-    "SPW_STATUS": [
-      {
-        "SPW_STATUS_DESC": "Approved",
-        "SPW_STATUS_ID": 4
-      }
-    ],
-    "PLAN_TYPES": [
-      {
-        "PLAN_TYPE_ID": 125,
-        "PLAN_TYPE_NAME": "Medicaid SPA"
-      }
-    ]
-  },
-  {
-    "pk": "MD-22-0013-EID",
-    "sk": "SEATool#1667219831464",
-    "GSI1pk": "SEATool#Medicaid_SPA",
-    "GSI1sk": "MD-22-0013-EID",
-    "PLAN_TYPES": [
-      {
-        "PLAN_TYPE_ID": 125,
-        "PLAN_TYPE_NAME": "Medicaid SPA"
-      }
-    ],
-    "RAI": null,
-    "SPW_STATUS": [
-      {
-        "SPW_STATUS_DESC": "Pending-Approval",
-        "SPW_STATUS_ID": 1
-      }
-    ],
-    "STATE_PLAN": {
-      "CHANGED_DATE": 1667219831464,
-      "ID_NUMBER": "MD-22-0013-EID",
-      "SPW_STATUS_ID": 1,
-      "STATUS_DATE": 1667219831464
-    }
-  },
-  {
-    "pk": "MD-22-0003",
-    "sk": "SEATool#1647913510000",
-    "GSI1pk": "SEATool#Medicaid_SPA",
-    "GSI1sk": "MD-22-0003",
-    "PLAN_TYPES": [
-      {
-        "PLAN_TYPE_ID": 125,
-        "PLAN_TYPE_NAME": "Medicaid SPA"
-      }
-    ],
-    "RAI": null,
-    "SPW_STATUS": [
-      {
-        "SPW_STATUS_DESC": "Disapproved",
-        "SPW_STATUS_ID": 1
-      }
-    ],
-    "STATE_PLAN": {
-      "CHANGED_DATE": 1647913510000,
-      "ID_NUMBER": "MD-22-0003",
-      "SPW_STATUS_ID": 1,
-      "STATUS_DATE": 1647913510000
-    }
-  },
-  {
-    "pk": "MD-22-0006",
-    "sk": "SEATool#1661999710000",
-    "ACTIONTYPES": null,
-    "ACTION_OFFICERS": null,
-    "CALLHELDREASONS": null,
-    "CODEAFTERINITACCESS": null,
-    "COMPONENTS": null,
-    "COMPONENTS_SP": null,
-    "FM_ANALYST": null,
-    "GSI1pk": "SEATool#Medicaid_SPA",
-    "GSI1sk": "MD-22-0006",
-    "LEAD_ANALYST": null,
-    "OCD_REVIEW": [
-      {
-        "OCD_REVIEW_DESCRIPTION": "No",
-        "OCD_REVIEW_ID": 2
-      }
-    ],
-    "PLAN_TYPES": [
-      {
-        "PLAN_TYPE_ID": 125,
-        "PLAN_TYPE_NAME": "Medicaid SPA"
-      }
-    ],
-    "PRIORITY_CODES": null,
-    "PRIORITY_COMPLEXITY": null,
-    "PROGRAM_ANALYST": null,
-    "RAI": [
-      {
-        "RAI_WITHDRAWN_DATE": null,
-        "ID_NUMBER": "MD-22-0006",
-        "RAI_RECEIVED_DATE": null,
-        "RAI_REQUESTED_DATE": 1654749910000
-      }
-    ],
-    "REGION": [
-      {
-        "ALERTS_INBOX_ADDRESS": "SPA_Waivers_Philadelphia_R03@cms.hhs.gov",
-        "REGION_ID": "3",
-        "REGION_NAME": "Philadelphia"
-      }
-    ],
-    "REVIEW_POSITION": null,
-    "RO_ANALYST": null,
-    "SP1115": null,
-    "SPA_TYPE": null,
-    "SPW_STATUS": [
-      {
-        "SPW_STATUS_ID": 8,
-        "SPW_STATUS_DESC": "Pending-Concurrence"
-      }
-    ],
-    "SP_APD": null,
-    "SP_APD_SUB_TYPE": null,
-    "SP_EARLY_ALERTS": {
-      "ALERTFIELD": [
-        {
-          "ACTIVE": true,
-          "EA_DROP_DOWN_VALUES": null,
-          "EA_FIELD_ID": 11,
-          "EA_LABEL": "Reduced Eligibility",
-          "EA_TYPE_ID": 1,
-          "IS_APD": false,
-          "PRIORITY_CODE_ID": 1,
-          "PRIORITY_OPERATOR": null,
-          "PRIORITY_VALUE": "true"
-        },
-        {
-          "ACTIVE": true,
-          "EA_DROP_DOWN_VALUES": null,
-          "EA_FIELD_ID": 24,
-          "EA_LABEL": "Meets expedited criteria",
-          "EA_TYPE_ID": 1,
-          "IS_APD": null,
-          "PRIORITY_CODE_ID": 3,
-          "PRIORITY_OPERATOR": null,
-          "PRIORITY_VALUE": "true"
-        },
-        {
-          "ACTIVE": true,
-          "EA_DROP_DOWN_VALUES": "1",
-          "EA_FIELD_ID": 25,
-          "EA_LABEL": "Customary action",
-          "EA_TYPE_ID": 1,
-          "IS_APD": null,
-          "PRIORITY_CODE_ID": 2,
-          "PRIORITY_OPERATOR": null,
-          "PRIORITY_VALUE": "true"
-        }
-      ],
-      "EARLYALERT": [
-        {
-          "EA_FIELD_ID": 11,
-          "EMAIL_SENT": null,
-          "ID_NUMBER": "MD-22-0006",
-          "TEXT_DD_VAL": null,
-          "YES_NO_VAL": null
-        },
-        {
-          "EA_FIELD_ID": 24,
-          "EMAIL_SENT": null,
-          "ID_NUMBER": "MD-22-0006",
-          "TEXT_DD_VAL": null,
-          "YES_NO_VAL": null
-        },
-        {
-          "EA_FIELD_ID": 25,
-          "EMAIL_SENT": null,
-          "ID_NUMBER": "MD-22-0006",
-          "TEXT_DD_VAL": null,
-          "YES_NO_VAL": null
-        }
-      ]
-    },
-    "SP_IMPACT_FUNDING": null,
-    "SP_TYPE": null,
-    "STATES": [
-      {
-        "PRIORITY_FLAG": false,
-        "REGION_ID": "3",
-        "STATE_CODE": "MD",
-        "STATE_NAME": "Maryland"
-      }
-    ],
-    "STATE_PLAN": {
-      "ACTION_TYPE": null,
-      "ACTUAL_EFFECTIVE_DATE": null,
-      "ADDED_COST": null,
-      "ALERT_90_DAYS_DATE": 1653436800000,
-      "ALERT_MILESTONE1_DAYS": null,
-      "ALERT_MILESTONE2_DAYS": null,
-      "ALERT_MILESTONE3_DAYS": null,
-      "ALERT_MILESTONE4_DAYS": null,
-      "APPROVAL_DOCS_RECEIVED": null,
-      "APPROVAL_STATUS_TYPE": null,
-      "APPROVED_EFFECTIVE_DATE": null,
-      "ATTACHED_SPA": null,
-      "BACKUP_FM_ANALYST_ID": null,
-      "BACKUP_PROGRAM_ANALYST_ID": null,
-      "BLOCKING_SPAS_MEMO": null,
-      "BUDGET_IMPACT": null,
-      "BUDGET_IMPACT_VALUE": null,
-      "BUDGET_NEUTRALITY_ESTABLISHED_FLAG": false,
-      "BUDGET_NEUTRALITY_STATUS_MEMO": null,
-      "CALL_HELD": null,
-      "CALL_HELD_REASON_ID": null,
-      "CHANGED_DATE": 1661999710000,
-      "CODE_AFTER_INIT_ASSESS_ID": null,
-      "COMPANION_LETTER_RECEIVED_DATE": null,
-      "COMPANION_LETTER_REQUESTED_DATE": null,
-      "COMPONENT_ID": null,
-      "CO_SUBMISSION_DATE": null,
-      "CURRENT_WAIVER_EXPIRES_DATE": null,
-      "CURRENT_WAIVER_TE": null,
-      "DATE_OF_CODING_CHANGE": null,
-      "DATE_SENT_PSCCAS": null,
-      "DAYS_EXTENSION_NUMBER": null,
-      "ELIMINATED_COST": null,
-      "END_DATE": null,
-      "FISCAL_QUARTER": null,
-      "FISCAL_YEAR": null,
-      "FRT_DATE": null,
-      "GAP": null,
-      "GAP2": null,
-      "GAP2_NA": null,
-      "GAP3": null,
-      "GAP3_NA": null,
-      "GAP_NA": null,
-      "GUIDANCE_DOCS_SUBMITTED": null,
-      "ID_NUMBER": "MD-22-0002",
-      "INITIAL_SUBMISSION_COMPLETE": null,
-      "LEAD_ANALYST_ID": null,
-      "MISSING_INFORMATION": null,
-      "MMDL_IMPORT": null,
-      "OCD_REVIEW_COMMENTS_MEMO": null,
-      "OCD_REVIEW_ID": 2,
-      "ORGANIZATION_CHANGE": null,
-      "PENDING_CONCURRENCE_DATE": null,
-      "PLAN_TYPE": 125,
-      "PRIORITY_CODE_ID": null,
-      "PRIORITY_COMMENTS_MEMO": null,
-      "PRIORITY_COMPLEXITY_ID": null,
-      "PROPOSED_DATE": null,
-      "PUBLICHEALTH_STATEEMERGENCY": null,
-      "REGION_ID": "3",
-      "REMARKS_MEMO": null,
-      "REVIEW_POSITION_ID": null,
-      "RO_ANALYST_ID": null,
-      "SPA_TYPE_ID": null,
-      "SPW_IMPORT": false,
-      "SPW_STATUS_ID": 8,
-      "START_CLOCK_DATE": 1645660800000,
-      "STATE_CODE": "MD",
-      "STATUS_DATE": 1661999710000,
-      "STATUS_MEMO": null,
-      "SUBMISSION_DATE": 1645660800000,
-      "SUBMISSION_TYPE": null,
-      "SUMMARY_MEMO": "Sample Summary Memo",
-      "TEMPLATE_ISSUES": null,
-      "TEMPLATE_ISSUES_MEMO": null,
-      "TEMPLATE_ISSUES_RESOLVED": null,
-      "TE_END_DATE": null,
-      "TITLE_NAME": "Sample Title Name",
-      "TYPE_ID": null,
-      "UPL_ACCEPTED": null,
-      "UUID": "02EB6F40-22D9-414F-A715-5CDE92BE6D70"
-    },
-    "STATE_PLAN_SERVICETYPES": null,
-    "STATE_PLAN_SERVICE_SUBTYPES": null,
-    "STOP_RESUME_DATES": null
-  },
-  {
-    "pk": "MD-0027.R01.00",
-    "sk": "SEATool#1659988588750",
-    "GSI1pk": "SEATool#1915b_waivers",
-    "GSI1sk": "MD-0027.R01.00",
-    "PLAN_TYPES": [
-      {
-        "PLAN_TYPE_ID": 122,
-        "PLAN_TYPE_NAME": "1915(b)"
-      }
-    ],
-    "RAI": [
-      {
-        "ID_NUMBER": "MD-0027.R01.00",
-        "RAI_RECEIVED_DATE": null,
-        "RAI_REQUESTED_DATE": 1659988588750,
-        "RAI_WITHDRAWN_DATE": null
-      }
-    ],
-    "SPW_STATUS": [
-      {
-        "SPW_STATUS_DESC": "Pending-RAI",
-        "SPW_STATUS_ID": 2
-      }
-    ],
-    "STATE_PLAN": {
-      "CHANGED_DATE": 1659988588750,
-      "ID_NUMBER": "MD-0027.R01.00",
-      "STATUS_DATE": 1659988588750,
-      "SPW_STATUS_ID": 2
-    }
-  },
-  {
-    "pk": "MD-0801.R00.01",
-    "sk": "SEATool#1650917395996",
-    "GSI1pk": "SEATool#1915b_waivers",
-    "GSI1sk": "MD-0801.R00.01",
-    "ACTIONTYPES": [
-      {
-        "ACTION_NAME": "Amend"
-      }
-    ],
-    "PLAN_TYPES": [
-      {
-        "PLAN_TYPE_NAME": "1915(b)"
-      }
-    ],
-    "RAI": [
-      {
-        "ID_NUMBER": "MD-0801.R00.01",
-        "RAI_RECEIVED_DATE": null,
-        "RAI_REQUESTED_DATE": 1650917395996,
-        "RAI_WITHDRAWN_DATE": null
-      }
-    ],
-    "SPW_STATUS": [
-      {
-        "SPW_STATUS_DESC": "Pending-RAI",
-        "SPW_STATUS_ID": 2
-      }
-    ],
-    "STATE_PLAN": {
-      "CHANGED_DATE": 1650917395996,
-      "ID_NUMBER": "MD-0801.R00.01",
-      "STATUS_DATE": 1650917395996,
-      "SPW_STATUS_ID": 2
-    }
-  },
-  {
-    "pk": "MD-77-0024",
-    "sk": "SEATool#1665549125264",
-    "GSI1pk": "SEATool#Medicaid_SPA",
-    "GSI1sk": "MD-77-0024",
-    "PLAN_TYPES": [
-      {
-        "PLAN_TYPE_NAME": "Medicaid SPA"
-      }
-    ],
-    "RAI": [
-      {
-        "ID_NUMBER": "MD-77-0024",
-        "RAI_RECEIVED_DATE": null,
-        "RAI_REQUESTED_DATE": 1665549125264,
-        "RAI_WITHDRAWN_DATE": null
-      }
-    ],
-    "SPW_STATUS": [
-      {
-        "SPW_STATUS_DESC": "Pending-RAI",
-        "SPW_STATUS_ID": 2
-      }
-    ],
-    "STATE_PLAN": {
-      "CHANGED_DATE": 1665549125264,
-      "ID_NUMBER": "MD-77-0024",
-      "STATUS_DATE": 1665549125264,
-      "SPW_STATUS_ID": 2
-    }
-  },
-  {
-    "pk": "MD-1118.R00.00",
-    "sk": "SEATool#1649584977662",
-    "ACTIONTYPES": [
-      {
-        "ACTION_NAME": "New"
-      }
-    ],
-    "GSI1pk": "SEATool#1915b_waivers",
-    "GSI1sk": "MD-1118.R00.00",
-    "PLAN_TYPES": [
-      {
-        "PLAN_TYPE_NAME": "1915(b)"
-      }
-    ],
-    "RAI": [
-      {
-        "ID_NUMBER": "MD-1118.R00.00",
-        "RAI_RECEIVED_DATE": null,
-        "RAI_REQUESTED_DATE": 1649584977662,
-        "RAI_WITHDRAWN_DATE": null
-      }
-    ],
-    "SPW_STATUS": [
-      {
-        "SPW_STATUS_DESC": "Pending-RAI",
-        "SPW_STATUS_ID": 2
-      }
-    ],
-    "STATE_PLAN": {
-      "CHANGED_DATE": 1649584977662,
-      "ID_NUMBER": "MD-1118.R00.00",
-      "STATUS_DATE": 1649584977662,
-      "SPW_STATUS_ID": 2
-    }
-  },
-  {
-    "pk": "MD-0775.R00.00",
-    "sk": "SEATool#1622584977662",
-    "ACTIONTYPES": [
-      {
-        "ACTION_NAME": "New"
-      }
-    ],
-    "GSI1pk": "SEATool#1915b_waivers",
-    "GSI1sk": "MD-0775.R00.00",
-    "PLAN_TYPES": [
-      {
-        "PLAN_TYPE_NAME": "1915(b)"
-      }
-    ],
-    "RAI": [
-      {
-        "ID_NUMBER": "MD-0775.R00.00",
-        "RAI_RECEIVED_DATE": null,
-        "RAI_REQUESTED_DATE": 1622584977662,
-        "RAI_WITHDRAWN_DATE": null
-      }
-    ],
-    "SPW_STATUS": [
-      {
-        "SPW_STATUS_DESC": "Pending-RAI",
-        "SPW_STATUS_ID": 2
-      }
-    ],
-    "STATE_PLAN": {
-      "CHANGED_DATE": 1622584977662,
-      "ID_NUMBER": "MD-0775.R00.00",
-      "STATUS_DATE": 1622584977662,
-      "SPW_STATUS_ID": 2
-    }
-  },
-  {
-    "pk": "MD-0777.R00.00",
-    "sk": "SEATool#1650584977662",
-    "ACTIONTYPES": [
-      {
-        "ACTION_NAME": "New"
-      }
-    ],
-    "GSI1pk": "SEATool#1915b_waivers",
-    "GSI1sk": "MD-0777.R00.00",
-    "PLAN_TYPES": [
-      {
-        "PLAN_TYPE_NAME": "1915(b)"
-      }
-    ],
-    "RAI": [
-      {
-        "ID_NUMBER": "MD-0777.R00.00",
-        "RAI_RECEIVED_DATE": 1640584977662,
-        "RAI_REQUESTED_DATE": 1630584977662,
-        "RAI_WITHDRAWN_DATE": null
-      }
-    ],
-    "SPW_STATUS": [
-      {
-        "SPW_STATUS_DESC": "Approved",
-        "SPW_STATUS_ID": 2
-      }
-    ],
-    "STATE_PLAN": {
-      "CHANGED_DATE": 1650584977662,
-      "ID_NUMBER": "MD-0777.R00.00",
-      "STATUS_DATE": 1650584977662,
-      "SPW_STATUS_ID": 2
-    }
-  },
-  {
-    "pk": "MD-5533.R00.00",
-    "sk": "SEATool#1650584977662",
-    "ACTIONTYPES": [
-      {
-        "ACTION_NAME": "New"
-      }
-    ],
-    "GSI1pk": "SEATool#1915b_waivers",
-    "GSI1sk": "MD-5533.R00.00",
-    "PLAN_TYPES": [
-      {
-        "PLAN_TYPE_NAME": "1915(b)"
-      }
-    ],
-    "RAI": [
-      {
-        "ID_NUMBER": "MD-5533.R00.00",
-        "RAI_RECEIVED_DATE": null,
-        "RAI_REQUESTED_DATE": 1650584977662,
-        "RAI_WITHDRAWN_DATE": null
-      }
-    ],
-    "SPW_STATUS": [
-      {
-        "SPW_STATUS_DESC": "Approved",
-        "SPW_STATUS_ID": 2
-      }
-    ],
-    "STATE_PLAN": {
-      "CHANGED_DATE": 1650584977662,
-      "ID_NUMBER": "MD-5533.R00.00",
-      "STATUS_DATE": 1650584977662,
-      "SPW_STATUS_ID": 2
-    }
-  },
-  {
-    "pk": "MD-0003.R13.00",
-    "sk": "SEATool#1658708386545",
-    "ACTIONTYPES": [
-      {
-        "ACTION_NAME": "Renew"
-      }
-    ],
-    "GSI1pk": "SEATool#1915b_waivers",
-    "GSI1sk": "MD-0003.R13.00",
-    "PLAN_TYPES": [
-      {
-        "PLAN_TYPE_NAME": "1915(b)"
-      }
-    ],
-    "RAI": [
-      {
-        "ID_NUMBER": "MD-0003.R13.00",
-        "RAI_RECEIVED_DATE": null,
-        "RAI_REQUESTED_DATE": 1650584977662,
-        "RAI_WITHDRAWN_DATE": null
-      }
-    ],
-    "SPW_STATUS": [
-      {
-        "SPW_STATUS_DESC": "Approved",
-        "SPW_STATUS_ID": 2
-      }
-    ],
-    "STATE_PLAN": {
-      "CHANGED_DATE": 1658708386545,
-      "ID_NUMBER": "MD-0003.R13.00",
-      "STATUS_DATE": 1658708386545,
-      "SPW_STATUS_ID": 2
-    }
-  },
-  {
-    "pk": "MD-0148.R00.00",
-    "sk": "SEATool#1622272039453",
-    "ACTIONTYPES": [
-      {
-        "ACTION_NAME": "New"
-      }
-    ],
-    "GSI1pk": "SEATool#1915b_waivers",
-    "GSI1sk": "MD-0148.R00.00",
-    "PLAN_TYPES": [
-      {
-        "PLAN_TYPE_NAME": "1915(b)"
-      }
-    ],
-    "RAI": [
-      {
-        "ID_NUMBER": "MD-0148.R00.00",
-        "RAI_RECEIVED_DATE": null,
-        "RAI_REQUESTED_DATE": 1622272039453,
-        "RAI_WITHDRAWN_DATE": null
-      }
-    ],
-    "SPW_STATUS": [
-      {
-        "SPW_STATUS_DESC": "Approved",
-        "SPW_STATUS_ID": 2
-      }
-    ],
-    "STATE_PLAN": {
-      "CHANGED_DATE": 1622272039453,
-      "ID_NUMBER": "MD-0148.R00.00",
-      "STATUS_DATE": 1622272039453,
-      "SPW_STATUS_ID": 2
-    }
-  },
-  {
-    "pk": "MD-22-0008",
-    "sk": "SEATool#1652577796728",
-    "GSI1pk": "SEATool#Medicaid_SPA",
-    "GSI1sk": "MD-22-0008",
-    "PLAN_TYPES": [
-      {
-        "PLAN_TYPE_NAME": "Medicaid SPA"
-      }
-    ],
-    "SPW_STATUS": [
-      {
-        "SPW_STATUS_DESC": "Disapproved",
-        "SPW_STATUS_ID": 2
-      }
-    ],
-    "STATE_PLAN": {
-      "CHANGED_DATE": 1652577796728,
-      "ID_NUMBER": "MD-22-0008",
-      "STATUS_DATE": 1652577796728,
-      "SPW_STATUS_ID": 2
-    }
-  },
-  {
-    "pk": "MD-2027.R01.00",
-    "sk": "SEATool#1660388588750",
-    "ACTIONTYPES": [
-      {
-        "ACTION_NAME": "Renew"
-      }
-    ],
-    "GSI1pk": "SEATool#1915b_waivers",
-    "GSI1sk": "MD-2027.R01.00",
-    "PLAN_TYPES": [
-      {
-        "PLAN_TYPE_NAME": "1915(b)"
-      }
-    ],
-    "RAI": [
-      {
-        "ID_NUMBER": "MD-2027.R01.00",
-        "RAI_RECEIVED_DATE": null,
-        "RAI_REQUESTED_DATE": 1660388588750,
-        "RAI_WITHDRAWN_DATE": null
-      }
-    ],
-    "SPW_STATUS": [
-      {
-        "SPW_STATUS_DESC": "Disapproved",
-        "SPW_STATUS_ID": 2
-      }
-    ],
-    "STATE_PLAN": {
-      "CHANGED_DATE": 1660388588750,
-      "ID_NUMBER": "MD-2027.R01.00",
-      "STATUS_DATE": 1660388588750,
-      "SPW_STATUS_ID": 2
-    }
-  },
-  {
-    "pk": "MD-22-0001",
-    "sk": "SEATool#1652825140199",
-    "GSI1pk": "SEATool#Medicaid_SPA",
-    "GSI1sk": "MD-22-0001",
-    "PLAN_TYPES": [
-      {
-        "PLAN_TYPE_NAME": "Medicaid SPA"
-      }
-    ],
-    "SPW_STATUS": [
-      {
-        "SPW_STATUS_DESC": "Withdrawn",
-        "SPW_STATUS_ID": 2
-      }
-    ],
-    "STATE_PLAN": {
-      "CHANGED_DATE": 1652825140199,
-      "ID_NUMBER": "MD-22-0001",
-      "STATUS_DATE": 1652825140199,
-      "SPW_STATUS_ID": 2
-    }
-  },
-  {
-    "pk": "MD-1029.R01.00",
-    "sk": "SEATool#1661388588750",
-    "ACTIONTYPES": [
-      {
-        "ACTION_NAME": "Renew"
-      }
-    ],
-    "GSI1pk": "SEATool#1915b_waivers",
-    "GSI1sk": "MD-1029.R01.00",
-    "PLAN_TYPES": [
-      {
-        "PLAN_TYPE_NAME": "1915(b)"
-      }
-    ],
-    "SPW_STATUS": [
-      {
-        "SPW_STATUS_DESC": "Withdrawn",
-        "SPW_STATUS_ID": 2
-      }
-    ],
-    "STATE_PLAN": {
-      "CHANGED_DATE": 1661388588750,
-      "ID_NUMBER": "MD-1029.R01.00",
-      "STATUS_DATE": 1661388588750,
-      "SPW_STATUS_ID": 2
-    }
-  },
-  {
-    "pk": "MD-6777.R00.00",
-    "sk": "SEATool#1650584977662",
-    "ACTIONTYPES": [
-      {
-        "ACTION_NAME": "New"
-      }
-    ],
-    "GSI1pk": "SEATool#1915b_waivers",
-    "GSI1sk": "MD-6777.R00.00",
-    "PLAN_TYPES": [
-      {
-        "PLAN_TYPE_NAME": "1915(b)"
-      }
-    ],
-    "SPW_STATUS": [
-      {
-        "SPW_STATUS_DESC": "Unsubmitted",
-        "SPW_STATUS_ID": 2
-      }
-    ],
-    "STATE_PLAN": {
-      "CHANGED_DATE": 1650584977662,
-      "ID_NUMBER": "MD-6777.R00.00",
-      "STATUS_DATE": 1650584977662,
-      "SPW_STATUS_ID": 2
-    }
-  },
-  {
-    "pk": "MD-22-1018",
-    "sk": "SEATool#1665696818833",
-    "GSI1pk": "SEATool#Medicaid_SPA",
-    "GSI1sk": "MD-22-1018",
-    "PLAN_TYPES": [
-      {
-        "PLAN_TYPE_NAME": "Medicaid SPA"
-      }
-    ],
-    "SPW_STATUS": [
-      {
-        "SPW_STATUS_DESC": "Unsubmitted",
-        "SPW_STATUS_ID": 2
-      }
-    ],
-    "STATE_PLAN": {
-      "CHANGED_DATE": 1665696818833,
-      "ID_NUMBER": "MD-22-1018",
-      "STATUS_DATE": 1665696818833,
-      "SPW_STATUS_ID": 2
-    }
-  },
-  {
-    "pk": "MD-22-0002",
-    "sk": "SEATool#1648825662861",
-    "GSI1pk": "SEATool#Medicaid_SPA",
-    "GSI1sk": "MD-22-0002",
-    "PLAN_TYPES": [
-      {
-        "PLAN_TYPE_NAME": "Medicaid SPA"
-      }
-    ],
-    "SPW_STATUS": [
-      {
-        "SPW_STATUS_DESC": "Pending",
-        "SPW_STATUS_ID": 2
-      }
-    ],
-    "STATE_PLAN": {
-      "CHANGED_DATE": 1648825662861,
-      "ID_NUMBER": "MD-22-0002",
-      "STATUS_DATE": 1648825662861,
-      "SPW_STATUS_ID": 2
-    }
-  },
-  {
-    "pk": "MD-0027.R01.00",
-    "sk": "SEATool#1662388588750",
-    "ACTIONTYPES": [
-      {
-        "ACTION_NAME": "Renew"
-      }
-    ],
-    "GSI1pk": "SEATool#1915b_waivers",
-    "GSI1sk": "MD-0027.R01.00",
-    "PLAN_TYPES": [
-      {
-        "PLAN_TYPE_NAME": "1915(b)"
-      }
-    ],
-    "SPW_STATUS": [
-      {
-        "SPW_STATUS_DESC": "Pending",
-        "SPW_STATUS_ID": 2
-      }
-    ],
-    "STATE_PLAN": {
-      "CHANGED_DATE": 1662388588750,
-      "ID_NUMBER": "MD-0027.R01.00",
-      "STATUS_DATE": 1662388588750,
-      "SPW_STATUS_ID": 2
-    }
-  },
-  {
-    "pk": "MD-3777.R00.00",
-    "sk": "SEATool#1651584977662",
-    "ACTIONTYPES": [
-      {
-        "ACTION_NAME": "New"
-      }
-    ],
-    "GSI1pk": "SEATool#1915b_waivers",
-    "GSI1sk": "MD-3777.R00.00",
-    "PLAN_TYPES": [
-      {
-        "PLAN_TYPE_NAME": "1915(b)"
-      }
-    ],
-    "SPW_STATUS": [
-      {
-        "SPW_STATUS_DESC": "Unsubmitted",
-        "SPW_STATUS_ID": 2
-      },
-      {
-        "SPW_STATUS_DESC": "Pending",
-        "SPW_STATUS_ID": 1
-      }
-    ],
-    "STATE_PLAN": {
-      "CHANGED_DATE": 1651584977662,
-      "ID_NUMBER": "MD-3777.R00.00",
-      "STATUS_DATE": 1651584977662,
-      "SPW_STATUS_ID": 2
-    }
-  },
-  {
-    "pk": "MD-0339.R04.06",
-    "sk": "SEATool#1666753662081",
-    "ACTIONTYPES": [
-      {
-        "ACTION_ID": 76,
-        "ACTION_NAME": "Amend",
-        "PLAN_TYPE_ID": 123
-      }
-    ],
-    "GSI1pk": "SEATool#1915c_waivers",
-    "GSI1sk": "MD-0339.R04.06",
-    "PLAN_TYPES": [
-      {
-        "PLAN_TYPE_ID": 122,
-        "PLAN_TYPE_NAME": "1915(c)"
-      }
-    ],
-    "RAI": [
-      {
-        "ID_NUMBER": "MD-0339.R04.06",
-        "RAI_RECEIVED_DATE": 1664753662081,
-        "RAI_REQUESTED_DATE": 1659988588750,
-        "RAI_WITHDRAWN_DATE": null
-      }
-    ],
-    "SPW_STATUS": [
-      {
-        "SPW_STATUS_DESC": "Pending",
-        "SPW_STATUS_ID": 1
-      },
-      {
-        "SPW_STATUS_DESC": "Pending-Concurrence",
-        "SPW_STATUS_ID": 8
-      },
-      {
-        "SPW_STATUS_DESC": "Pending-Approval",
-        "SPW_STATUS_ID": 11
-      },
-      {
-        "SPW_STATUS_DESC": "Approved",
-        "SPW_STATUS_ID": 2
-      }
-    ],
-    "STATE_PLAN": {
-      "CHANGED_DATE": 1666753662081,
-      "ID_NUMBER": "MD-0339.R04.06",
-      "STATUS_DATE": 1666753662081,
-      "SPW_STATUS_ID": 2
-    }
-  },
-  {
     "clockEndTimestamp": 1680063221990,
     "componentType": "medicaidspa",
     "eventTimestamp": 1672290821990,
@@ -2970,6 +2048,8 @@
     "submitterEmail": "statesubmitter@nightwatch.test",
     "sk": "Package",
     "componentId": "MD-22-2205-VM",
+    "subject": "OneMac Connection test",
+    "description": "pending-rai",
     "raiResponses": [
       {
         "additionalInformation": "",
@@ -3283,6 +2363,8 @@
     "raiResponses": [],
     "lastEventTimestamp": 1672291290683,
     "pk": "MD-22-2200-VM",
+    "subject": "test subject",
+    "description": "test description",
     "submitterName": "Statesubmitter Nightwatch"
   },
   {
@@ -3715,7 +2797,7 @@
   {
     "clockEndTimestamp": 1680187496128,
     "componentType": "waiveramendment",
-    "currentStatus": "Pending - Concurrence",
+    "currentStatus": "Pending - Approval",
     "waiverExtensions": [],
     "attachments": [
       {
@@ -4194,6 +3276,8 @@
     "raiResponses": [],
     "lastEventTimestamp": 1674574190176,
     "pk": "MD-12989.R00.00",
+    "subject": "test subject",
+    "description": "test description",
     "submitterName": "Statesubmitter Nightwatch"
   },
   {
@@ -4340,6 +3424,8 @@
     "raiResponses": [],
     "lastEventTimestamp": 1669756201954,
     "pk": "MD-4444.R22.01",
+    "subject": "test subject",
+    "description": "test description",
     "submitterName": "Statesubmitter Nightwatch"
   },
   {
@@ -4395,6 +3481,8 @@
     "raiResponses": [],
     "lastEventTimestamp": 1660229287407,
     "pk": "MD-0093.R00.TE03",
+    "subject": "test subject",
+    "description": "test description",
     "submitterName": "Statesubmitter Nightwatch"
   },
   {
@@ -4477,6 +3565,8 @@
     "raiResponses": [],
     "lastEventTimestamp": 1673560321983,
     "pk": "MD-22-2300-VM",
+    "subject": "test subject",
+    "description": "test description",
     "submitterName": "MDSTATE SUBMITTERNK"
   },
   {
@@ -4764,6 +3854,8 @@
     "raiResponses": [],
     "lastEventTimestamp": 1673561667690,
     "pk": "MD-22-2301-VM",
+    "subject": "test subject",
+    "description": "test description",
     "submitterName": "MDSTATE SUBMITTERNK"
   },
   {
@@ -5065,6 +4157,8 @@
     "raiResponses": [],
     "lastEventTimestamp": 1673561904343,
     "pk": "MD-22-2302-VM",
+    "subject": "test subject",
+    "description": "test description",
     "submitterName": "MDSTATE SUBMITTERNK"
   },
   {
@@ -5571,6 +4665,8 @@
     "raiResponses": [],
     "lastEventTimestamp": 1673562102227,
     "pk": "MD-22-2303-VM",
+    "subject": "test subject",
+    "description": "test description",
     "submitterName": "MDSTATE SUBMITTERNK"
   },
   {
@@ -6507,6 +5603,8 @@
     "raiResponses": [],
     "lastEventTimestamp": 1673560540373,
     "pk": "MD-22-2305-VM",
+    "subject": "test subject",
+    "description": "test description",
     "submitterName": "MDSTATE SUBMITTERNK"
   },
   {
@@ -7029,6 +6127,8 @@
     "raiResponses": [],
     "lastEventTimestamp": 1673563667053,
     "pk": "MD-22-2306-VM",
+    "subject": "test subject",
+    "description": "test description",
     "submitterName": "MDSTATE SUBMITTERNK"
   },
   {
@@ -7613,6 +6713,8 @@
     "raiResponses": [],
     "lastEventTimestamp": 1674139607941,
     "pk": "MD-22-2307-VM",
+    "subject": "test subject",
+    "description": "test description",
     "submitterName": "MDSTATE SUBMITTERNK"
   },
   {
@@ -7850,6 +6952,8 @@
     "raiResponses": [],
     "lastEventTimestamp": 1676477951800,
     "pk": "MD-23-4441-VM",
+    "subject": "test subject",
+    "description": "test description",
     "submitterName": "-- --"
   },
   {
@@ -8540,6 +7644,8 @@
     "raiResponses": [],
     "lastEventTimestamp": 1676387312330,
     "pk": "MD-23-3333-VM",
+    "subject": "test subject",
+    "description": "test description",
     "submitterName": "-- --"
   },
   {
@@ -9007,6 +8113,8 @@
     "raiResponses": [],
     "lastEventTimestamp": 1673562987470,
     "pk": "MD-22-2201-VM",
+    "subject": "test subject",
+    "description": "test description",
     "submitterName": "MDSTATE SUBMITTERNK"
   },
   {
@@ -9478,6 +8586,8 @@
     "raiResponses": [],
     "lastEventTimestamp": 1673563146807,
     "pk": "MD-22-2202-VM",
+    "subject": "test subject",
+    "description": "test description",
     "submitterName": "MDSTATE SUBMITTERNK"
   },
   {
@@ -9949,6 +9059,8 @@
     "raiResponses": [],
     "lastEventTimestamp": 1673563409727,
     "pk": "MD-22-2203-VM",
+    "subject": "test subject",
+    "description": "test description",
     "submitterName": "MDSTATE SUBMITTERNK"
   },
   {
@@ -10453,6 +9565,8 @@
     "raiResponses": [],
     "lastEventTimestamp": 1674138322323,
     "pk": "MD-22-2204-VM",
+    "subject": "test subject",
+    "description": "test description",
     "submitterName": "MDSTATE SUBMITTERNK"
   },
   {
@@ -10894,6 +10008,8 @@
     "raiResponses": [],
     "lastEventTimestamp": 1676477951800,
     "pk": "MD-23-3331-VM",
+    "subject": "test subject",
+    "description": "test description",
     "submitterName": "-- --"
   },
   {
@@ -11610,6 +10726,8 @@
     "raiResponses": [],
     "lastEventTimestamp": 1674139129880,
     "pk": "MD-22-2206-VM",
+    "subject": "test subject",
+    "description": "test description",
     "submitterName": "Statesubmitter Nightwatch"
   },
   {
@@ -12376,6 +11494,8 @@
     "raiResponses": [],
     "lastEventTimestamp": 1674139679117,
     "pk": "MD-22-2207-VM",
+    "subject": "test subject",
+    "description": "test description",
     "submitterName": "Statesubmitter Nightwatch"
   },
   {
@@ -12860,6 +11980,8 @@
     "raiResponses": [],
     "lastEventTimestamp": 1674158680503,
     "pk": "MD-12958.R00.02",
+    "subject": "test subject",
+    "description": "test description",
     "submitterName": "MDSTATE SUBMITTERNK"
   },
   {
@@ -13520,6 +12642,8 @@
     "raiResponses": [],
     "lastEventTimestamp": 1673565127960,
     "pk": "MD-22002.R00.00",
+    "subject": "test subject",
+    "description": "test description",
     "submitterName": "MDSTATE SUBMITTERNK"
   },
   {
@@ -13976,6 +13100,8 @@
     "raiResponses": [],
     "lastEventTimestamp": 1674139803363,
     "pk": "MD-22007.R00.00",
+    "subject": "test subject",
+    "description": "test description",
     "submitterName": "MDSTATE SUBMITTERNK"
   },
   {
@@ -14515,6 +13641,10 @@
     "GSI1pk": "OneMAC#waiver",
     "submitterEmail": "mdstateonemac@gmail.com",
     "sk": "Package",
+    "subject": "test subject",
+    "description": "test description",
+    "subject": "test subject",
+    "description": "test description",
     "componentId": "MD-22003.R00.00",
     "raiResponses": [
       {
@@ -17100,6 +16230,8 @@
     "GSI1pk": "OneMAC#waiver",
     "submitterEmail": "mdstateonemac@gmail.com",
     "sk": "Package",
+    "subject": "test subject",
+    "description": "test description",
     "componentId": "MD-22004.R00.00",
     "raiResponses": [],
     "lastEventTimestamp": 1673560884687,
@@ -17589,6 +16721,8 @@
     "GSI1pk": "OneMAC#waiver",
     "submitterEmail": "mdstateonemac@gmail.com",
     "sk": "Package",
+    "subject": "test subject",
+    "description": "test description",
     "componentId": "MD-22005.R00.00",
     "raiResponses": [],
     "lastEventTimestamp": 1674140031527,
@@ -18057,6 +17191,8 @@
     "GSI1pk": "OneMAC#waiver",
     "submitterEmail": "mdstateonemac@gmail.com",
     "sk": "Package",
+    "subject": "test subject",
+    "description": "test description",
     "componentId": "MD-22006.R00.00",
     "raiResponses": [],
     "lastEventTimestamp": 1674140129073,
@@ -18520,6 +17656,8 @@
     "GSI1pk": "OneMAC#waiver",
     "submitterEmail": "mdstateonemac@gmail.com",
     "sk": "Package",
+    "subject": "test subject",
+    "description": "test description",
     "componentId": "MD-2200.R00.00",
     "raiResponses": [],
     "lastEventTimestamp": 1674140942997,
@@ -19006,6 +18144,8 @@
     "GSI1pk": "OneMAC#waiver",
     "submitterEmail": "statesubmitter@nightwatch.test",
     "sk": "Package",
+    "subject": "test subject",
+    "description": "test description",
     "componentId": "MD-22008.R00.00",
     "raiResponses": [],
     "lastEventTimestamp": 1674655431447,
@@ -19458,6 +18598,8 @@
     "GSI1pk": "OneMAC#waiver",
     "submitterEmail": "mdstateonemac@gmail.com",
     "sk": "Package",
+    "subject": "test subject",
+    "description": "test description",
     "componentId": "MD-22001.R01.00",
     "raiResponses": [],
     "lastEventTimestamp": 1673565420973,
@@ -19707,6 +18849,8 @@
     "GSI1pk": "OneMAC#waiver",
     "submitterEmail": "mdstateonemac@gmail.com",
     "sk": "Package",
+    "subject": "test subject",
+    "description": "test description",
     "componentId": "MD-22002.R01.00",
     "raiResponses": [],
     "lastEventTimestamp": 1674141136500,
@@ -20163,6 +19307,8 @@
     "GSI1pk": "OneMAC#waiver",
     "submitterEmail": "mdstateonemac@gmail.com",
     "sk": "Package",
+    "subject": "test subject",
+    "description": "test description",
     "componentId": "MD-22007.R01.00",
     "raiResponses": [],
     "lastEventTimestamp": 1674141217987,
@@ -20426,6 +19572,8 @@
     "GSI1pk": "OneMAC#waiver",
     "submitterEmail": "mdstateonemac@gmail.com",
     "sk": "Package",
+    "subject": "test subject",
+    "description": "test description",
     "componentId": "MD-22003.R01.00",
     "raiResponses": [],
     "lastEventTimestamp": 1674141288737,
@@ -20689,6 +19837,8 @@
     "GSI1pk": "OneMAC#waiver",
     "submitterEmail": "mdstateonemac@gmail.com",
     "sk": "Package",
+    "subject": "test subject",
+    "description": "test description",
     "componentId": "MD-22005.R01.00",
     "raiResponses": [],
     "lastEventTimestamp": 1674141390750,
@@ -20958,6 +20108,8 @@
     "GSI1pk": "OneMAC#waiver",
     "submitterEmail": "mdstateonemac@gmail.com",
     "sk": "Package",
+    "subject": "test subject",
+    "description": "test description",
     "componentId": "MD-22006.R01.00",
     "raiResponses": [],
     "lastEventTimestamp": 1674141495920,
@@ -21421,6 +20573,8 @@
     "GSI1pk": "OneMAC#waiver",
     "submitterEmail": "mdstateonemac@gmail.com",
     "sk": "Package",
+    "subject": "test subject",
+    "description": "test description",
     "componentId": "MD-22004.R01.00",
     "raiResponses": [],
     "lastEventTimestamp": 1674244533133,
@@ -23826,6 +22980,8 @@
     "GSI1pk": "OneMAC#waiver",
     "submitterEmail": "statesubmitter@nightwatch.test",
     "sk": "Package",
+    "subject": "test subject",
+    "description": "test description",
     "componentId": "MD-22008.R01.00",
     "raiResponses": [],
     "lastEventTimestamp": 1674655457190,
@@ -24762,6 +23918,8 @@
     "GSI1pk": "OneMAC#waiver",
     "submitterEmail": "mdstateonemac@gmail.com",
     "sk": "Package",
+    "subject": "test subject",
+    "description": "test description",
     "componentId": "MD-12958.R01.00",
     "raiResponses": [
       {
@@ -27129,6 +26287,8 @@
     "GSI1pk": "OneMAC#waiver",
     "submitterEmail": "mdstateonemac@gmail.com",
     "sk": "Package",
+    "subject": "test subject",
+    "description": "test description",
     "componentId": "MD-22001.R00.01",
     "raiResponses": [],
     "lastEventTimestamp": 1674224830653,
@@ -27581,6 +26741,8 @@
     "GSI1pk": "OneMAC#waiver",
     "submitterEmail": "mdstateonemac@gmail.com",
     "sk": "Package",
+    "subject": "test subject",
+    "description": "test description",
     "componentId": "MD-22006.R00.01",
     "raiResponses": [],
     "lastEventTimestamp": 1674225014557,
@@ -28044,6 +27206,8 @@
     "GSI1pk": "OneMAC#waiver",
     "submitterEmail": "mdstateonemac@gmail.com",
     "sk": "Package",
+    "subject": "test subject",
+    "description": "test description",
     "componentId": "MD-22005.R00.01",
     "raiResponses": [],
     "lastEventTimestamp": 1674244460090,
@@ -30147,6 +29311,8 @@
     "GSI1pk": "OneMAC#waiver",
     "submitterEmail": "mdstateonemac@gmail.com",
     "sk": "Package",
+    "subject": "test subject",
+    "description": "test description",
     "componentId": "MD-22001.R01.01",
     "raiResponses": [],
     "lastEventTimestamp": 1674225171163,
@@ -30603,6 +29769,8 @@
     "GSI1pk": "OneMAC#waiver",
     "submitterEmail": "statesubmitter@nightwatch.test",
     "sk": "Package",
+    "subject": "test subject",
+    "description": "test description",
     "componentId": "MD-22003.R01.01",
     "raiResponses": [],
     "lastEventTimestamp": 1674225774200,
@@ -31059,6 +30227,8 @@
     "GSI1pk": "OneMAC#waiver",
     "submitterEmail": "statesubmitter@nightwatch.test",
     "sk": "Package",
+    "subject": "test subject",
+    "description": "test description",
     "componentId": "MD-22005.R01.02",
     "raiResponses": [],
     "lastEventTimestamp": 1674225853030,
@@ -31521,6 +30691,8 @@
     "GSI1pk": "OneMAC#waiver",
     "submitterEmail": "statesubmitter@nightwatch.test",
     "sk": "Package",
+    "subject": "test subject",
+    "description": "test description",
     "componentId": "MD-22007.R00.01",
     "raiResponses": [],
     "lastEventTimestamp": 1674225948690,
@@ -32042,6 +31214,8 @@
     "GSI1pk": "OneMAC#waiver",
     "submitterEmail": "statesubmitter@nightwatch.test",
     "sk": "Package",
+    "subject": "test subject",
+    "description": "test description",
     "componentId": "MD-22008.R01.01",
     "raiResponses": [],
     "lastEventTimestamp": 1674656700248,
@@ -32492,6 +31666,8 @@
     "GSI1pk": "OneMAC#waiver",
     "submitterEmail": "mdstateonemac@gmail.com",
     "sk": "Package",
+    "subject": "test subject",
+    "description": "test description",
     "componentId": "MD-22100.R01.01",
     "raiResponses": [],
     "lastEventTimestamp": 1673566133010,
@@ -32766,6 +31942,8 @@
     "GSI1pk": "OneMAC#waiver",
     "submitterEmail": "statesubmitter@nightwatch.test",
     "sk": "Package",
+    "subject": "test subject",
+    "description": "test description",
     "componentId": "MD-22100.R00.01",
     "raiResponses": [],
     "lastEventTimestamp": 1674147387493,
@@ -33060,6 +32238,8 @@
     "GSI1pk": "OneMAC#waiver",
     "submitterEmail": "statesubmitter@nightwatch.test",
     "sk": "Package",
+    "subject": "test subject",
+    "description": "test description",
     "componentId": "MD-22103.R00.01",
     "raiResponses": [],
     "lastEventTimestamp": 1674244460090,
@@ -34032,6 +33212,8 @@
     "GSI1pk": "OneMAC#waiver",
     "submitterEmail": "statesubmitter@nightwatch.test",
     "sk": "Package",
+    "subject": "test subject",
+    "description": "test description",
     "componentId": "MD-22101.R00.01",
     "raiResponses": [],
     "lastEventTimestamp": 1674226106857,
@@ -34513,6 +33695,8 @@
     "GSI1pk": "OneMAC#waiver",
     "submitterEmail": "statesubmitter@nightwatch.test",
     "sk": "Package",
+    "subject": "test subject",
+    "description": "test description",
     "componentId": "MD-22102.R01.01",
     "raiResponses": [],
     "lastEventTimestamp": 1674226188617,
@@ -35422,6 +34606,8 @@
     "GSI1pk": "OneMAC#waiver",
     "submitterEmail": "statesubmitter@nightwatch.test",
     "sk": "Package",
+    "subject": "test subject",
+    "description": "test description",
     "componentId": "MD-22102.R00.01",
     "raiResponses": [],
     "lastEventTimestamp": 1674226356523,
@@ -35903,6 +35089,8 @@
     "GSI1pk": "OneMAC#waiver",
     "submitterEmail": "statesubmitter@nightwatch.test",
     "sk": "Package",
+    "subject": "test subject",
+    "description": "test description",
     "componentId": "MD-22101.R01.01",
     "raiResponses": [],
     "lastEventTimestamp": 1674226779320,
@@ -37144,6 +36332,8 @@
     "GSI1pk": "OneMAC#waiver",
     "submitterEmail": "statesubmitter@nightwatch.test",
     "sk": "Package",
+    "subject": "test subject",
+    "description": "test description",
     "componentId": "MD-22103.R01.01",
     "raiResponses": [],
     "lastEventTimestamp": 1677001123370,
@@ -37596,6 +36786,8 @@
     "GSI1pk": "OneMAC#waiver",
     "submitterEmail": "mdstateonemac@gmail.com",
     "sk": "Package",
+    "subject": "test subject",
+    "description": "test description",
     "componentId": "MD-0909.R00.00",
     "raiResponses": [],
     "lastEventTimestamp": 1673565420973,
@@ -37719,7 +36911,7 @@
     "ACTIONTYPES": [
       {
         "PLAN_TYPE_ID": 123,
-        "ACTION_NAME": "Amend",
+        "ACTION_NAME": "New",
         "ACTION_ID": 76
       }
     ],
@@ -40477,5 +39669,286 @@
      }
     ],
     "STOP_RESUME_DATES": null
-   }
+   },
+   {
+    "pk": "MD-10330.R01.00",
+    "sk": "Package",
+    "attachments": [
+     {
+      "contentType": "application/pdf",
+      "filename": "Attachment 3.1-A, #4b, Page 3f Clean.pdf",
+      "s3Key": "1652815530531/Attachment 3.1-A, #4b, Page 3f Clean.pdf",
+      "title": "1915(b)(4) FFS Selective Contracting (Streamlined) and 1915(b) Comprehensive (Capitated) Waiver Independent Assessment (first two renewals only)",
+      "url": "https://uploads-oy2-17509-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Ac84c445b-a748-47dc-b39a-b06c3075b5a5/1652815530531/Attachment%203.1-A%2C%20%234b%2C%20Page%203f%20Clean.pdf"
+     }
+    ],
+    "clockEndTimestamp": 1660591531339,
+    "componentId": "MD-10330.R01.00",
+    "componentType": "waiverrenewal",
+    "currentStatus": "Submitted",
+    "GSI1pk": "OneMAC#waiver",
+    "GSI1sk": "MD-10330.R01.00",
+    "lastEventTimestamp": 1673472581869,
+    "proposedEffectiveDate": "none",
+    "raiResponses": [
+     {
+      "additionalInformation": "Testing the RAI Response connections to Waivers",
+      "attachments": [
+       {
+        "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        "filename": "OneMACInactivated.xlsx",
+        "s3Key": "1673472581115/OneMACInactivated.xlsx",
+        "title": "Waiver RAI Response",
+        "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1673472581115/OneMACInactivated.xlsx"
+       }
+      ],
+      "submissionTimestamp": 1673472581869
+     }
+    ],
+    "submissionTimestamp": 1652815531339,
+    "submitterEmail": "statesubmitter@nightwatch.test",
+    "submitterName": "StateSubmitter Nightwatch",
+    "waiverAuthority": "1915(b)(4)",
+    "waiverExtensions": [
+    ]
+   },
+   {
+    "clockEndTimestamp": 1667843096578,
+    "componentType": "waiveramendment",
+    "eventTimestamp": 1660063496578,
+    "currentStatus": "Submitted",
+    "originallyFrom": "cms-spa-form-develop-change-requests",
+    "attachments": [
+      {
+        "s3Key": "1660063495180/Attachment 3.1-A, #4b, Page 3f Track.pdf",
+        "filename": "Attachment 3.1-A, #4b, Page 3f Track.pdf",
+        "title": "1915(b)(4) FFS Selective Contracting (Streamlined) waiver application pre-print (Initial, Renewal, Amendment)",
+        "contentType": "application/pdf",
+        "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1660063495180/Attachment%203.1-A%2C%20%234b%2C%20Page%203f%20Track.pdf"
+      }
+    ],
+    "proposedEffectiveDate": "none",
+    "GSI1sk": "MD-3425.R02.03",
+    "additionalInformation": "",
+    "submissionTimestamp": 1660063496578,
+    "waiverAuthority": "1915(b)(4)",
+    "GSI1pk": "OneMAC#submitwaiveramendment",
+    "convertTimestamp": 1673973224962,
+    "submitterEmail": "statesubmitter@nightwatch.test",
+    "sk": "OneMAC#1660063496578",
+    "componentId": "MD-3425.R02.03",
+    "pk": "MD-3425.R02.03",
+    "submitterName": "Statesubmitter Nightwatch"
+  },
+  {
+    "clockEndTimestamp": 1667843096578,
+    "componentType": "waiveramendment",
+    "currentStatus": "Submitted",
+    "waiverExtensions": [],
+    "attachments": [
+      {
+        "s3Key": "1660063495180/Attachment 3.1-A, #4b, Page 3f Track.pdf",
+        "filename": "Attachment 3.1-A, #4b, Page 3f Track.pdf",
+        "title": "1915(b)(4) FFS Selective Contracting (Streamlined) waiver application pre-print (Initial, Renewal, Amendment)",
+        "contentType": "application/pdf",
+        "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1660063495180/Attachment%203.1-A%2C%20%234b%2C%20Page%203f%20Track.pdf"
+      }
+    ],
+    "proposedEffectiveDate": "none",
+    "GSI1sk": "MD-3425.R02.03",
+    "submissionTimestamp": 1660063496578,
+    "waiverAuthority": "1915(b)(4)",
+    "GSI1pk": "OneMAC#waiver",
+    "submitterEmail": "statesubmitter@nightwatch.test",
+    "sk": "Package",
+    "componentId": "MD-3425.R02.03",
+    "raiResponses": [],
+    "lastEventTimestamp": 1660063496578,
+    "pk": "MD-3425.R02.03",
+    "subject": "-- --",
+    "description": "-- --",
+    "submitterName": "Statesubmitter Nightwatch"
+  },
+  {
+    "clockEndTimestamp": 1691929169711,
+    "componentType": "waiveramendment",
+    "eventTimestamp": 1684153169711,
+    "transmittalNumberWarningMessage": "",
+    "currentStatus": "Submitted",
+    "parentId": "MD-4432.R00.00",
+    "attachments": [
+      {
+        "s3Key": "1684153168200/Screenshot 2023-03-31 at 4.46.08 PM.png",
+        "filename": "Screenshot 2023-03-31 at 4.46.08 PM.png",
+        "title": "1915(b)(4) FFS Selective Contracting (Streamlined) waiver application pre-print (Initial, Renewal, Amendment)",
+        "contentType": "image/png",
+        "url": "https://uploads-oy2-23424-2-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A29bcc0cd-2084-45d2-a111-76c0ecd6daa6/1684153168200/Screenshot%202023-03-31%20at%204.46.08%20PM.png"
+      }
+    ],
+    "parentType": "waivernew",
+    "proposedEffectiveDate": "2023-06-10",
+    "GSI1sk": "MD-4432.R00.01",
+    "additionalInformation": "New amendment for seed data",
+    "submissionTimestamp": 1684153169711,
+    "waiverAuthority": "1915(b)",
+    "GSI1pk": "OneMAC#submitwaiveramendment",
+    "submitterEmail": "statesubmitter@nightwatch.test",
+    "territory": "MD",
+    "sk": "OneMAC#1684153169711",
+    "componentId": "MD-4432.R00.01",
+    "pk": "MD-4432.R00.01",
+    "submitterName": "StateSubmitter Nightwatch"
+  },
+  {
+    "subject": "-- --",
+    "clockEndTimestamp": 1691929169711,
+    "withdrawalRequests": [],
+    "waiverExtensions": [],
+    "parentType": "waivernew",
+    "proposedEffectiveDate": "2023-06-10",
+    "GSI1sk": "MD-4432.R00.01",
+    "additionalInformation": "New amendment for seed data",
+    "submissionTimestamp": 1684153169711,
+    "GSI2sk": "waiveramendment",
+    "waiverAuthority": "1915(b)",
+    "submitterEmail": "statesubmitter@nightwatch.test",
+    "sk": "Package",
+    "raiResponses": [],
+    "lastEventTimestamp": 1684153169711,
+    "componentType": "waiveramendment",
+    "currentStatus": "Submitted",
+    "parentId": "MD-4432.R00.00",
+    "attachments": [
+      {
+        "s3Key": "1684153168200/Screenshot 2023-03-31 at 4.46.08 PM.png",
+        "filename": "Screenshot 2023-03-31 at 4.46.08 PM.png",
+        "title": "1915(b)(4) FFS Selective Contracting (Streamlined) waiver application pre-print (Initial, Renewal, Amendment)",
+        "contentType": "image/png",
+        "url": "https://uploads-oy2-23424-2-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A29bcc0cd-2084-45d2-a111-76c0ecd6daa6/1684153168200/Screenshot%202023-03-31%20at%204.46.08%20PM.png"
+      }
+    ],
+    "GSI2pk": "MD-4432.R00.00",
+    "GSI1pk": "OneMAC#waiver",
+    "componentId": "MD-4432.R00.01",
+    "description": "-- --",
+    "pk": "MD-4432.R00.01",
+    "submitterName": "StateSubmitter Nightwatch"
+  },
+  {
+    "componentType": "waiveramendment",
+    "eventTimestamp": 1650870000000,
+    "currentStatus": "Submitted",
+    "originallyFrom": "createOneMacPackage Lambda",
+    "attachments": [],
+    "GSI1sk": "MD-0801.R00.01",
+    "additionalInformation": "This package was created outside the OneMAC application.",
+    "submissionTimestamp": 1650870000000,
+    "waiverAuthority": "1915(b)",
+    "GSI1pk": "OneMAC#createwaiveramendment",
+    "convertTimestamp": 1684154035362,
+    "territory": "MD",
+    "sk": "OneMAC#1650870000000",
+    "componentId": "MD-0801.R00.01",
+    "pk": "MD-0801.R00.01"
+  },
+  {
+    "clockEndTimestamp": 1691930089598,
+    "componentType": "waiveramendmentwithdraw",
+    "eventTimestamp": 1684154089598,
+    "transmittalNumberWarningMessage": "",
+    "currentStatus": "Submitted",
+    "parentId": "MD-0801.R00.01",
+    "attachments": [
+      {
+        "s3Key": "1684154088090/Screenshot 2023-03-31 at 4.46.08 PM.png",
+        "filename": "Screenshot 2023-03-31 at 4.46.08 PM.png",
+        "title": "Supporting Documentation",
+        "contentType": "image/png",
+        "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1684154088090/Screenshot%202023-03-31%20at%204.46.08%20PM.png"
+      }
+    ],
+    "parentType": "waiveramendment",
+    "GSI1sk": "MD-0801.R00.01",
+    "additionalInformation": "Withdrawing package to add to seed data.",
+    "submissionTimestamp": 1684154089598,
+    "GSI1pk": "OneMAC#submitwaiveramendmentwithdraw",
+    "submitterEmail": "statesubmitter@nightwatch.test",
+    "territory": "MD",
+    "sk": "OneMAC#1684154089598",
+    "componentId": "MD-0801.R00.01",
+    "pk": "MD-0801.R00.01",
+    "submitterName": "Statesubmitter Nightwatch"
+  },
+  {
+    "subject": "-- --",
+    "componentType": "waiveramendment",
+    "withdrawalRequests": [
+      {
+        "additionalInformation": "Withdrawing package to add to seed data.",
+        "submissionTimestamp": 1684154089598,
+        "attachments": [
+          {
+            "s3Key": "1684154088090/Screenshot 2023-03-31 at 4.46.08 PM.png",
+            "filename": "Screenshot 2023-03-31 at 4.46.08 PM.png",
+            "title": "Supporting Documentation",
+            "contentType": "image/png",
+            "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1684154088090/Screenshot%202023-03-31%20at%204.46.08%20PM.png"
+          }
+        ]
+      }
+    ],
+    "currentStatus": "Withdrawal Requested",
+    "waiverExtensions": [],
+    "attachments": [],
+    "proposedEffectiveDate": "none",
+    "GSI1sk": "MD-0801.R00.01",
+    "additionalInformation": "This package was created outside the OneMAC application.",
+    "submissionTimestamp": 1650870000000,
+    "waiverAuthority": "1915(b)",
+    "GSI1pk": "OneMAC#waiver",
+    "submitterEmail": "-- --",
+    "sk": "Package",
+    "componentId": "MD-0801.R00.01",
+    "raiResponses": [],
+    "lastEventTimestamp": 1684154089598,
+    "pk": "MD-0801.R00.01",
+    "description": "-- --",
+    "submitterName": "-- --"
+  },
+  {
+    "GSI1pk": "SEATool#1915b_waivers",
+    "PLAN_TYPES": [
+      {
+        "PLAN_TYPE_NAME": "1915(b)"
+      }
+    ],
+    "SPW_STATUS": [
+      {
+        "SPW_STATUS_DESC": "Pending-RAI",
+        "SPW_STATUS_ID": 2
+      }
+    ],
+    "ACTIONTYPES": [
+      {
+        "ACTION_NAME": "Amend"
+      }
+    ],
+    "STATE_PLAN": {
+      "ID_NUMBER": "MD-0801.R00.01",
+      "STATUS_DATE": 1650917395996,
+      "CHANGED_DATE": 1650917395996,
+      "SPW_STATUS_ID": 2
+    },
+    "RAI": [
+      {
+        "RAI_WITHDRAWN_DATE": null,
+        "ID_NUMBER": "MD-0801.R00.01",
+        "RAI_RECEIVED_DATE": null,
+        "RAI_REQUESTED_DATE": 1650917395996
+      }
+    ],
+    "sk": "SEATool#1650917395996",
+    "GSI1sk": "MD-0801.R00.01",
+    "pk": "MD-0801.R00.01"
+  }
 ]
