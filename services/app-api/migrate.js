@@ -9,11 +9,10 @@ import { temporaryExtensions } from "./migrateData";
 
 const tableName = process.env.oneMacTableName;
 
-// Define the constructUpdateParams function first to avoid the error
-function constructUpdateParams(pk, value) {
+function constructUpdateParams(pk, sk, value) {
   const params = {
     TableName: tableName,
-    Key: { pk: pk },
+    Key: { pk: pk, sk: sk },
     UpdateExpression: "set temporaryExtensionType = :t",
     ExpressionAttributeValues: {
       ":t": value,
@@ -22,69 +21,86 @@ function constructUpdateParams(pk, value) {
   };
 
   if (value === "1915(b)") {
-    params.UpdateExpression += ", componentType = :c";
+    params.UpdateExpression += ", componentType = :c, GSI1pk = :gsi1pk";
     params.ExpressionAttributeValues[":c"] = "waiverextensionb";
+    params.ExpressionAttributeValues[":gsi1pk"] =
+      "OneMAC#submitwaiverextensionb";
   } else if (value === "1915(c)") {
-    params.UpdateExpression += ", componentType = :c";
+    params.UpdateExpression += ", componentType = :c, GSI1pk = :gsi1pk";
     params.ExpressionAttributeValues[":c"] = "waiverextensionc";
+    params.ExpressionAttributeValues[":gsi1pk"] =
+      "OneMAC#submitwaiverextensionc";
   }
 
   return params;
 }
 
-async function updateItemsBasedOnScan() {
+async function updateItemsBasedOnQuery() {
+  console.log("Updating items based on query");
   const params = {
     TableName: tableName,
-    FilterExpression:
-      "componentType = :ct and attribute_exists(temporaryExtensionType)",
+    IndexName: "GSI1",
+    KeyConditionExpression: "GSI1pk = :gsi1pk",
+    FilterExpression: "attribute_exists(temporaryExtensionType)",
     ExpressionAttributeValues: {
-      ":ct": "waiverextension",
+      ":gsi1pk": "OneMAC#submitwaiverextension",
     },
   };
 
   try {
-    const result = await dynamoDb.scan(params).promise();
-    console.log("Scan result:", result.Items);
+    const result = await dynamoDb.query(params);
+    console.log("Query result:", result.Items);
 
     for (const item of result.Items) {
       const value = item.temporaryExtensionType;
-      const updateParams = constructUpdateParams(item.pk, value);
+      const updateParams = constructUpdateParams(item.pk, item.sk, value);
 
       try {
-        const updateResult = await dynamoDb.update(updateParams).promise();
+        const updateResult = await dynamoDb.update(updateParams);
         console.log("Update result:", updateResult);
       } catch (err) {
-        console.error(
-          "Unable to update item. Error JSON:",
-          JSON.stringify(err, null, 2)
-        );
+        console.log("Error:", err);
       }
     }
   } catch (err) {
-    console.error(
-      "Unable to scan the table. Error JSON:",
-      JSON.stringify(err, null, 2)
-    );
+    console.log("Error:", err);
   }
 }
 
-async function updateItemsBasedOnTemporaryExtensions() {
+async function updateItemsBasedOnMappedList() {
   for (const [pk, value] of Object.entries(temporaryExtensions)) {
-    const params = constructUpdateParams(pk, value);
+    const queryParams = {
+      TableName: tableName,
+      IndexName: "GSI1",
+      KeyConditionExpression: "GSI1pk = :gsi1pk and GSI1sk = :gsi1sk",
+      ExpressionAttributeValues: {
+        ":gsi1pk": "OneMAC#submitwaiverextension",
+        ":gsi1sk": pk,
+      },
+    };
 
     try {
-      const result = await dynamoDb.update(params).promise();
+      const queryResult = await dynamoDb.query(queryParams);
+      console.log("Query result:", queryResult.Items);
+      if (queryResult.Items.length === 0) {
+        console.log("No items found for pk:", pk);
+        continue;
+      }
+      const sk = queryResult.Items[0].sk;
+      const params = constructUpdateParams(pk, sk, value);
+
+      console.log("Update params:", params);
+      const result = await dynamoDb.update(params);
       console.log("Update result:", result);
     } catch (err) {
-      console.error(
-        "Unable to update item. Error JSON:",
-        JSON.stringify(err, null, 2)
-      );
+      console.log("Error:", err);
     }
   }
 }
 
 export const main = handler(async () => {
-  await updateItemsBasedOnTemporaryExtensions();
-  await updateItemsBasedOnScan();
+  //update the list of known mapped items first
+  await updateItemsBasedOnMappedList();
+  //then update any TEs that have a temporaryExtensionType attribute
+  await updateItemsBasedOnQuery();
 });
