@@ -21,7 +21,9 @@ export const waiverRenewalFormConfig = {
     "For renewals, the “R##” starts with ‘01’ and ascends.",
   ],
   proposedEffectiveDate: true,
-  attachmentIntroJSX: defaultAttachmentInstructionsJSX(),
+  attachmentIntroJSX: defaultAttachmentInstructionsJSX(
+    ROUTES.FAQ_ATTACHMENTS_WAIVER_B
+  ),
   landingPage: ONEMAC_ROUTES.PACKAGE_LIST_WAIVER,
   parentLabel: "Existing Waiver Number to Renew",
   parentFieldHint: [
