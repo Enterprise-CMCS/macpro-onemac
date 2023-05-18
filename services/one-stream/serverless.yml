@@ -83,7 +83,7 @@ processPackages:
           rate: rate(2 minutes)
     timeout: 600
 
-  rebuildPackages:
+rebuildPackages:
     handler: rebuildPackages.main
     role: LambdaOneStreamRole
     environment:
