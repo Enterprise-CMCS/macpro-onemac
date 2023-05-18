@@ -64,9 +64,9 @@ export const DefaultFileTypesInfo = () => (
 
 export const DefaultFileSizeInfo = ({ route }: { route: string }) => (
   <p className="req-message">
-    Maximum file size of {config.MAX_ATTACHMENT_SIZE_MB} MB. You can add
-    multiple files per attachment type. Read the description for each of the
-    attachment types on the{" "}
+    Maximum file size of {config.MAX_ATTACHMENT_SIZE_MB} MB per attachment.{" "}
+    <b>You can add multiple files per attachment type.</b> Read the description
+    for each of the attachment types on the{" "}
     <Link to={route} target="_blank">
       FAQ Page
     </Link>
@@ -76,7 +76,7 @@ export const DefaultFileSizeInfo = ({ route }: { route: string }) => (
 
 export const RequiredAttachmentSpan = () => (
   <p className="req-message">
-    <span className="required-mark">*</span> At least one attachment is
+    <span className="required-mark">*</span> indicates an attachment is
     required.
   </p>
 );
