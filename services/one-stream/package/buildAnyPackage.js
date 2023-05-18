@@ -164,13 +164,16 @@ export const buildAnyPackage = async (packageId, config) => {
           anEvent.STATE_PLAN.LEAD_ANALYST_ID &&
           typeof anEvent.STATE_PLAN.LEAD_ANALYST_ID === "number" &&
           anEvent.LEAD_ANALYST
-        )
+        ) {
           putParams.Item.cpocName = anEvent.LEAD_ANALYST.map((officer) => {
             console.log("one officer is: ", officer);
+            console.log("Looking for: ", anEvent.STATE_PLAN.LEAD_ANALYST_ID);
             anEvent.STATE_PLAN.LEAD_ANALYST_ID === officer.OFFICER_ID
               ? officer.FIRST_NAME + " " + officer.LAST_NAME
               : null;
           }).filter(Boolean)[0];
+        }
+        console.log("CPOC: ", putParams.Item.cpocName);
 
         putParams.Item.subject = anEvent.STATE_PLAN.TITLE_NAME;
         putParams.Item.description = anEvent.STATE_PLAN.SUMMARY_MEMO;
