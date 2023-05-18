@@ -58,6 +58,7 @@ export const buildAnyPackage = async (packageId, config) => {
         submitterEmail: "-- --",
         subject: "-- --",
         description: "-- --",
+        cpocName: "-- --",
       },
     };
     let currentPackage;
@@ -157,6 +158,18 @@ export const buildAnyPackage = async (packageId, config) => {
           ).toFormat("yyyy-LL-dd");
         else putParams.Item.proposedEffectiveDate = "none";
 
+        putParams.Item.subject = anEvent.STATE_PLAN.TITLE_NAME;
+        putParams.Item.description = anEvent.STATE_PLAN.SUMMARY_MEMO;
+
+        const leadAnalyst = anEvent.LEAD_ANALYST.map((oneAnalyst) =>
+          anEvent.STATE_PLAN.LEAD_ANALYST_ID === oneAnalyst.OFFICER_ID
+            ? oneAnalyst
+            : null
+        ).filter(Boolean)[0];
+        console.log("the lead analsyt is: ", leadAnalyst);
+
+        putParams.Item.cpocName = `${leadAnalyst.FIRST_NAME} ${leadAnalyst.LAST_NAME}`;
+
         if (timestamp < lmTimestamp) return;
 
         const seaToolStatus = anEvent.SPW_STATUS.map((oneStatus) =>
@@ -175,8 +188,6 @@ export const buildAnyPackage = async (packageId, config) => {
           (putParams.Item.currentStatus =
             SEATOOL_TO_ONEMAC_STATUS[seaToolStatus]);
 
-        putParams.Item.subject = anEvent.STATE_PLAN.TITLE_NAME;
-        putParams.Item.description = anEvent.STATE_PLAN.SUMMARY_MEMO;
         return;
       }
 

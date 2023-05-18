@@ -60,6 +60,11 @@ export const descriptionDefault: AttributeDetail = {
   fieldName: "description",
 };
 
+export const cpocDefault: AttributeDetail = {
+  heading: "CPOC",
+  fieldName: "cpocName",
+};
+
 export enum DetailViewTab {
   MAIN = "main",
   DETAIL = "component-details",
@@ -110,6 +115,7 @@ export const defaultDetailSectionItems = [
   proposedEffectiveDateDefault,
   subjectDefault,
   descriptionDefault,
+  cpocDefault,
 ];
 
 export const defaultWaiverDetailSectionItems = [

@@ -226,6 +226,12 @@ const PackageList = () => {
           filter: CustomFilterTypes.DateRange,
           Filter: CustomFilterUi.DateRangeInPast,
         },
+        {
+          Header: "CPOC Name",
+          accessor: "cpocName",
+          id: "cpocName",
+          disableFilters: false,
+        },
         userRoleObj.isCMSUser
           ? {
               Header: "Formal RAI Received",
