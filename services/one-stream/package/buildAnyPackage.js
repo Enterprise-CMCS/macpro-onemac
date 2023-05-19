@@ -172,6 +172,14 @@ export const buildAnyPackage = async (packageId, config) => {
           putParams.Item.cpocName = `${leadAnalyst.FIRST_NAME} ${leadAnalyst.LAST_NAME}`;
         }
 
+        if (anEvent.ACTION_OFFICERS && _.isArray(anEvent.ACTION_OFFICERS)) {
+          putParams.Item.reviewTeam = anEvent.ACTION_OFFICERS.map(
+            (oneReviewer) =>
+              `${oneReviewer.FIRST_NAME} ${oneReviewer.LAST_NAME}`
+          );
+          console.log("the review team is: ", putParams.Item.reviewTeam);
+        }
+
         if (timestamp < lmTimestamp) return;
 
         const seaToolStatus = anEvent?.SPW_STATUS.map((oneStatus) =>

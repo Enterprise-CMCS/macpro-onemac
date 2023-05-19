@@ -52,6 +52,7 @@ export type ComponentDetail = {
   withdrawalRequests: any[];
   temporaryExtensionType: string;
   cpocName: string;
+  reviewTeam: string[];
 } & Record<string, any>;
 
 /**
