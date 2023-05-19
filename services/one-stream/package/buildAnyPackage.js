@@ -161,14 +161,16 @@ export const buildAnyPackage = async (packageId, config) => {
         putParams.Item.subject = anEvent.STATE_PLAN.TITLE_NAME;
         putParams.Item.description = anEvent.STATE_PLAN.SUMMARY_MEMO;
 
-        const leadAnalyst = anEvent?.LEAD_ANALYST.map((oneAnalyst) =>
-          anEvent.STATE_PLAN.LEAD_ANALYST_ID === oneAnalyst.OFFICER_ID
-            ? oneAnalyst
-            : null
-        ).filter(Boolean)[0];
-        console.log("the lead analsyt is: ", leadAnalyst);
+        if (anEvent.LEAD_ANALYST && _.isArray(anEvent.LEAD_ANALYST)) {
+          const leadAnalyst = anEvent.LEAD_ANALYST.map((oneAnalyst) =>
+            anEvent.STATE_PLAN.LEAD_ANALYST_ID === oneAnalyst.OFFICER_ID
+              ? oneAnalyst
+              : null
+          ).filter(Boolean)[0];
+          console.log("the lead analsyt is: ", leadAnalyst);
 
-        putParams.Item.cpocName = `${leadAnalyst.FIRST_NAME} ${leadAnalyst.LAST_NAME}`;
+          putParams.Item.cpocName = `${leadAnalyst.FIRST_NAME} ${leadAnalyst.LAST_NAME}`;
+        }
 
         if (timestamp < lmTimestamp) return;
 
