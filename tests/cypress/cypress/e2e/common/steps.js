@@ -2574,9 +2574,6 @@ Then(
     OneMacFAQPage.verifyAttachmentsFor1915cRequestTempExtBody();
   }
 );
-Then("Verify blue eerror message says user can submit in package view", () => {
-  OneMacDefaultForms.verifyBlueErrorSaysUserCanSubmit();
-});
 Then(
   "Type {string} into Approved Initial or Renewal Waiver Number field",
   (n) => {
@@ -2904,4 +2901,10 @@ Then(
 );
 Then("verify description is not visible in the details section", () => {
   OneMacPackageDetailsPage.verifyDescrptionDoesNotExists();
+});
+Then("verify the attachment info descriptiion", () => {
+  OneMacDefaultForms.verifyAttachmentInfoDecription();
+});
+Then("verify the attachment info link is for {string}", (packageType) => {
+  OneMacDefaultForms.verifyAttachmentInfoLinkFor(packageType);
 });
