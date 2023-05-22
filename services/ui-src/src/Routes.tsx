@@ -56,6 +56,7 @@ import WaiverRenewalB4Form from "./page/waiver-renewal/WaiverRenewalB4Form";
 import WaiverRenewalBForm from "./page/waiver-renewal/WaiverRenewalBForm";
 import WaiverAmendmentB4Form from "./page/waiver-amendment/WaiverAmendmentB4Form";
 import WaiverAmendmentBForm from "./page/waiver-amendment/WaiverAmendmentBForm";
+import { clearTableStateStorageKeys } from "./utils/StorageKeys";
 
 type RouteSpec = {
   path: string;
@@ -87,12 +88,14 @@ const RouteListRenderer: FC<{ routes: RouteSpec[] }> = ({ routes }) => (
 
 const AuthenticatedRouteListRenderer: FC<{ routes: RouteSpec[] }> = ({
   routes,
-}) =>
-  useAppContext()?.isAuthenticated ? (
-    <RouteListRenderer routes={routes} />
-  ) : (
-    <Redirect to={ROUTES.HOME} />
-  );
+}) => {
+  if (useAppContext()?.isAuthenticated) {
+    return <RouteListRenderer routes={routes} />;
+  } else {
+    clearTableStateStorageKeys();
+    return <Redirect to={ROUTES.HOME} />;
+  }
+};
 
 const SignupGuardRouteListRenderer: FC<{ routes: RouteSpec[] }> = ({
   routes,
