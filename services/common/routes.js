@@ -35,6 +35,8 @@ export const ONEMAC_ROUTES = {
   PACKAGE_LIST_WAIVER: "/dashboard?startTab=waiver",
   TRIAGE_GROUP: "/choices",
   TRIAGE_SPA: "/choices/spa",
+  TRIAGE_MEDICAID_SPA: "/choices/spa/medicaid",
+  TRIAGE_CHIP_SPA: "/choices/spa/chip",
   TRIAGE_WAIVER: "/choices/waiver",
   TRIAGE_WAIVER_B: "/choices/waiver-b",
   TRIAGE_WAIVER_B_4: "/choices/waiver-b-4",
