@@ -59,6 +59,7 @@ export const buildAnyPackage = async (packageId, config) => {
         subject: "-- --",
         description: "-- --",
         cpocName: "-- --",
+        reviewTeam: [],
       },
     };
     let currentPackage;
