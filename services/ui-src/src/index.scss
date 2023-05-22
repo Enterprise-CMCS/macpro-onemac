@@ -2779,3 +2779,17 @@ ul.choice-list {
   font-weight: 600;
   font-style: italic;
 }
+
+.landing-container {
+  margin: 2rem;
+  padding: 2rem 0 8rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.landing-description {
+  max-width: 540px;
+  margin: 3rem 0;
+}
