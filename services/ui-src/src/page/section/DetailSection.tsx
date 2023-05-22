@@ -1,4 +1,9 @@
-import { Accordion, AccordionItem, Review } from "@cmsgov/design-system";
+import {
+  Accordion,
+  AccordionItem,
+  Review,
+  Button,
+} from "@cmsgov/design-system";
 import { Workflow, getUserRoleObj } from "cmscommonlib";
 import React from "react";
 import { useAppContext } from "../../libs/contextLib";
@@ -9,6 +14,9 @@ import FileList from "../../components/FileList";
 import { actionComponent } from "../../libs/actionLib";
 import { AdditionalInfoSection } from "./AdditionalInfoSection";
 import { FORM_SOURCE } from "../../domain-types";
+import { useToggle } from "../../libs/hooksLib";
+
+export const NUM_REVIEWERS_TO_SHOW = 3;
 
 export const DetailSection = ({
   pageConfig,
@@ -22,6 +30,7 @@ export const DetailSection = ({
   setAlertCode: (code: string) => void;
 }) => {
   const { userProfile } = useAppContext() ?? {};
+  const [showReviewTeam, toggleReviewTeam] = useToggle(false);
 
   const downloadInfoText =
     "Documents available on this page may not reflect the actual documents that were approved by CMS. Please refer to your CMS Point of Contact for the approved documents.";
@@ -115,6 +124,32 @@ export const DetailSection = ({
                   {detail[item.fieldName] ?? item.default}
                 </Review>
               )
+          )}
+          {detail.reviewTeam && (
+            <Review key="srt" heading="Review Team (SRT)">
+              {showReviewTeam
+                ? detail.reviewTeam.map((reviewer) => (
+                    <>
+                      {reviewer}
+                      <br />
+                    </>
+                  ))
+                : detail.reviewTeam.slice(0, 3).map((reviewer) => (
+                    <>
+                      {reviewer}
+                      <br />
+                    </>
+                  ))}
+              {detail.reviewTeam.length > NUM_REVIEWERS_TO_SHOW && (
+                <Button
+                  className="review-team"
+                  aria-expanded="false"
+                  onClick={toggleReviewTeam}
+                >
+                  {showReviewTeam ? "View Less Names" : "View All Names"}
+                </Button>
+              )}
+            </Review>
           )}
         </section>
         <section className="detail-section ds-u-margin-bottom--7">

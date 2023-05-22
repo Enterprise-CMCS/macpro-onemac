@@ -65,11 +65,6 @@ export const cpocDefault: AttributeDetail = {
   fieldName: "cpocName",
 };
 
-export const reviewTeamDefault: AttributeDetail = {
-  heading: "Review Team (SRT)",
-  fieldName: "reviewTeam",
-};
-
 export enum DetailViewTab {
   MAIN = "main",
   DETAIL = "component-details",
@@ -121,7 +116,6 @@ export const defaultDetailSectionItems = [
   subjectDefault,
   descriptionDefault,
   cpocDefault,
-  reviewTeamDefault,
 ];
 
 export const defaultWaiverDetailSectionItems = [
