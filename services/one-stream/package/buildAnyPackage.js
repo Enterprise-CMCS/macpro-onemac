@@ -170,7 +170,8 @@ export const buildAnyPackage = async (packageId, config) => {
           ).filter(Boolean)[0];
           console.log("the lead analsyt is: ", leadAnalyst);
 
-          putParams.Item.cpocName = `${leadAnalyst.FIRST_NAME} ${leadAnalyst.LAST_NAME}`;
+          if (leadAnalyst)
+            putParams.Item.cpocName = `${leadAnalyst.FIRST_NAME} ${leadAnalyst.LAST_NAME}`;
         }
 
         if (anEvent.ACTION_OFFICERS && _.isArray(anEvent.ACTION_OFFICERS)) {
