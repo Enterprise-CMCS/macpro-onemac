@@ -63,6 +63,7 @@ export const descriptionDefault: AttributeDetail = {
 export const cpocDefault: AttributeDetail = {
   heading: "CPOC",
   fieldName: "cpocName",
+  default: "-- --",
 };
 
 export enum DetailViewTab {

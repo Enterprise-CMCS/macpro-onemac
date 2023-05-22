@@ -127,7 +127,9 @@ export const DetailSection = ({
           )}
           {detail.reviewTeam && (
             <Review key="srt" heading="Review Team (SRT)">
-              {showReviewTeam
+              {detail.reviewTeam.length === 0
+                ? "-- --"
+                : showReviewTeam
                 ? detail.reviewTeam.map((reviewer) => (
                     <>
                       {reviewer}
