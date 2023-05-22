@@ -24,6 +24,9 @@ export const ROUTES = {
   STATE_SIGNUP: "/signup/state",
   REVIEWER_SIGNUP: "/signup/cmsreviewer",
   ATTACHMENT_LANDING: "/legacy-attachments",
+  ABP_LANDING: "/medicaid-abp",
+  MEDICAID_ELIGIBILITY_LANDING: "/medicaid-eligibility",
+  CHIP_ELIGIBILITY_LANDING: "/chip-eligibility",
 };
 
 export const ONEMAC_ROUTES = {
