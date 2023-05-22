@@ -1327,10 +1327,10 @@ Then("verify 1915b Waiver Amendment check box exists", () => {
 Then("verify 1915c Appendix K Amendment check box exists", () => {
   OneMacPackagePage.verify1915cAppendixKAmendmentCheckBox();
 });
-Then("verify Temporary Extension exists", () => {
+Then("verify 1915b Temporary Extension exists", () => {
   OneMacPackagePage.verify1915bTemporaryExtensionCheckBoxExists();
 });
-Then("verify Temporary Extension exists", () => {
+Then("verify 1915c Temporary Extension exists", () => {
   OneMacPackagePage.verify1915cTemporaryExtensionCheckBoxExists();
 });
 Then("verify CHIP SPA Exists", () => {
