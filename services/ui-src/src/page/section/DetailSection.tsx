@@ -18,6 +18,46 @@ import { useToggle } from "../../libs/hooksLib";
 
 export const NUM_REVIEWERS_TO_SHOW = 3;
 
+const ExpandableList = ({
+  heading,
+  list,
+  numToShow,
+  className = "expandable-list",
+}: {
+  heading: string;
+  list: string[];
+  numToShow: number;
+  className: string;
+}) => {
+  const [showExpanded, toggleExpanded] = useToggle(false);
+
+  if (!list) return <></>;
+
+  const realNumToShow = showExpanded ? list.length : numToShow;
+
+  return (
+    <Review key="expanded-list" heading={heading}>
+      {realNumToShow === 0
+        ? "-- --"
+        : list.slice(0, realNumToShow).map((line) => (
+            <>
+              {line}
+              <br />
+            </>
+          ))}
+      {realNumToShow > numToShow && (
+        <Button
+          className={className}
+          aria-expanded="false"
+          onClick={toggleExpanded}
+        >
+          {showExpanded ? "View Less Names" : "View All Names"}
+        </Button>
+      )}
+    </Review>
+  );
+};
+
 export const DetailSection = ({
   pageConfig,
   detail,
@@ -30,7 +70,6 @@ export const DetailSection = ({
   setAlertCode: (code: string) => void;
 }) => {
   const { userProfile } = useAppContext() ?? {};
-  const [showReviewTeam, toggleReviewTeam] = useToggle(false);
 
   const downloadInfoText =
     "Documents available on this page may not reflect the actual documents that were approved by CMS. Please refer to your CMS Point of Contact for the approved documents.";
@@ -125,34 +164,12 @@ export const DetailSection = ({
                 </Review>
               )
           )}
-          {detail.reviewTeam && (
-            <Review key="srt" heading="Review Team (SRT)">
-              {detail.reviewTeam.length === 0
-                ? "-- --"
-                : showReviewTeam
-                ? detail.reviewTeam.map((reviewer) => (
-                    <>
-                      {reviewer}
-                      <br />
-                    </>
-                  ))
-                : detail.reviewTeam.slice(0, 3).map((reviewer) => (
-                    <>
-                      {reviewer}
-                      <br />
-                    </>
-                  ))}
-              {detail.reviewTeam.length > NUM_REVIEWERS_TO_SHOW && (
-                <Button
-                  className="review-team"
-                  aria-expanded="false"
-                  onClick={toggleReviewTeam}
-                >
-                  {showReviewTeam ? "View Less Names" : "View All Names"}
-                </Button>
-              )}
-            </Review>
-          )}
+          <ExpandableList
+            heading="Review Team (SRT)"
+            list={detail.reviewTeam}
+            numToShow={NUM_REVIEWERS_TO_SHOW}
+            className="review-team"
+          ></ExpandableList>
         </section>
         <section className="detail-section ds-u-margin-bottom--7">
           {detail.attachments?.length > 0 ? (
