@@ -92,8 +92,10 @@ const appendixKAmendmentCheckBox =
   "//label[contains(@for,'checkbox_componentType-1915(c) Appendix K Amendment')]";
 const waiverAmendment1915bCheckbox =
   "//label[contains(@for,'checkbox_componentType-1915(b) Waiver Amendment')]";
-const temporaryExtensionCheckBox =
-  "//label[contains(@for,'checkbox_componentType-Temporary Extension')]";
+const temporaryExtension1915bCheckBox =
+  "//label[contains(@for,'checkbox_componentType-1915(b) Temporary Extension')]";
+const temporaryExtension1915cCheckBox =
+  "//label[contains(@for,'checkbox_componentType-1915(c) Temporary Extension')]";
 //Element is Xpath use cy.xpath instead of cy.get
 const CHIPSPACheckBox =
   "//label[contains(@for,'checkbox_componentType-CHIP SPA')]";
@@ -532,11 +534,17 @@ export class oneMacPackagePage {
   click1915bWaiverAmendmentCheckBox() {
     cy.xpath(waiverAmendment1915bCheckbox).click();
   }
-  verifyTemporaryExtensionCheckBoxExists() {
-    cy.xpath(temporaryExtensionCheckBox).should("be.visible");
+  verify1915bTemporaryExtensionCheckBoxExists() {
+    cy.xpath(temporaryExtension1915bCheckBox).should("be.visible");
   }
-  clickTemporaryExtensionCheckBox() {
-    cy.xpath(temporaryExtensionCheckBox).click();
+  verify1915cTemporaryExtensionCheckBoxExists() {
+    cy.xpath(temporaryExtension1915cCheckBox).should("be.visible");
+  }
+  click1915bTemporaryExtensionCheckBox() {
+    cy.xpath(temporaryExtension1915bCheckBox).click();
+  }
+  click1915cTemporaryExtensionCheckBox() {
+    cy.xpath(temporaryExtension1915cCheckBox).click();
   }
   clickCHIPSPACheckBox() {
     cy.xpath(CHIPSPACheckBox).click();
