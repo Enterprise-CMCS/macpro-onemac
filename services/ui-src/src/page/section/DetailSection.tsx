@@ -33,19 +33,17 @@ const ExpandableList = ({
 
   if (!list) return <></>;
 
-  const realNumToShow = showExpanded ? list.length : numToShow;
-
   return (
     <Review key="expanded-list" heading={heading}>
       {list.length === 0
         ? "-- --"
-        : list.slice(0, realNumToShow).map((line) => (
+        : list.slice(0, showExpanded ? list.length : numToShow).map((line) => (
             <>
               {line}
               <br />
             </>
           ))}
-      {realNumToShow > numToShow && (
+      {list.length > numToShow && (
         <Button
           className={className}
           aria-expanded="false"
