@@ -208,7 +208,6 @@ export const defaultWithdrawConfig = {
         Upload your supporting documentation for withdrawal or explain your need
         for withdrawal in the <i>Additional Information</i> box.
       </p>
-      {defaultAttachmentInstructionsJSX()}
     </>
   ),
   addlInfoText:
