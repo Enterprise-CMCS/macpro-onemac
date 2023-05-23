@@ -208,6 +208,11 @@ export const defaultWithdrawConfig = {
         Upload your supporting documentation for withdrawal or explain your need
         for withdrawal in the <i>Additional Information</i> box.
       </p>
+      <p>
+        Maximum file size of {config.MAX_ATTACHMENT_SIZE_MB} MB.{" "}
+        <b>You can add multiple files</b>. We accept the following file types:{" "}
+        <b>.pdf, .docx, .jpg, .png</b>.
+      </p>
     </>
   ),
   addlInfoText:
