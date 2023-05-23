@@ -76,8 +76,7 @@ export const DefaultFileSizeInfo = ({ route }: { route: string }) => (
 
 export const RequiredAttachmentSpan = () => (
   <p className="req-message">
-    <span className="required-mark">*</span> indicates an attachment is
-    required.
+    <span className="required-mark">*</span> indicates required attachment
   </p>
 );
 
