@@ -104,8 +104,10 @@ const SignupGuardRouteListRenderer: FC<{ routes: RouteSpec[] }> = ({
     isAuthenticated,
     userProfile: { cmsRoles = "", userData: { roleList = [] } = {} } = {},
   } = useAppContext() ?? {};
-
-  if (!isAuthenticated) return <Redirect to={ROUTES.HOME} />;
+  if (!isAuthenticated) {
+    clearTableStateStorageKeys();
+    return <Redirect to={ROUTES.HOME} />;
+  }
   if (effectiveRoleForUser(roleList) === null && cmsRoles)
     return <Redirect to={ROUTES.SIGNUP} />;
 
