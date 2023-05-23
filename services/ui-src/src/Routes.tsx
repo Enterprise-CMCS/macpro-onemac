@@ -74,17 +74,22 @@ const RouteWithSubRoutes: FC<RouteSpec> = (route) => (
   />
 );
 
-const RouteListRenderer: FC<{ routes: RouteSpec[] }> = ({ routes }) => (
-  <Switch>
-    {routes.map((routeSpec) => (
-      <RouteWithSubRoutes
-        key={routeSpec.key ?? routeSpec.path}
-        {...routeSpec}
-      />
-    ))}
-    <Route component={NotFound} />
-  </Switch>
-);
+const RouteListRenderer: FC<{ routes: RouteSpec[] }> = ({ routes }) => {
+  if (!useAppContext()?.isAuthenticated) {
+    clearTableStateStorageKeys();
+  }
+  return (
+    <Switch>
+      {routes.map((routeSpec) => (
+        <RouteWithSubRoutes
+          key={routeSpec.key ?? routeSpec.path}
+          {...routeSpec}
+        />
+      ))}
+      <Route component={NotFound} />
+    </Switch>
+  );
+};
 
 const AuthenticatedRouteListRenderer: FC<{ routes: RouteSpec[] }> = ({
   routes,
@@ -92,7 +97,6 @@ const AuthenticatedRouteListRenderer: FC<{ routes: RouteSpec[] }> = ({
   if (useAppContext()?.isAuthenticated) {
     return <RouteListRenderer routes={routes} />;
   } else {
-    clearTableStateStorageKeys();
     return <Redirect to={ROUTES.HOME} />;
   }
 };
@@ -105,7 +109,6 @@ const SignupGuardRouteListRenderer: FC<{ routes: RouteSpec[] }> = ({
     userProfile: { cmsRoles = "", userData: { roleList = [] } = {} } = {},
   } = useAppContext() ?? {};
   if (!isAuthenticated) {
-    clearTableStateStorageKeys();
     return <Redirect to={ROUTES.HOME} />;
   }
   if (effectiveRoleForUser(roleList) === null && cmsRoles)
