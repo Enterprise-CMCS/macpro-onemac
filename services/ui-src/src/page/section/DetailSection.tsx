@@ -37,7 +37,7 @@ const ExpandableList = ({
 
   return (
     <Review key="expanded-list" heading={heading}>
-      {realNumToShow === 0
+      {list.length === 0
         ? "-- --"
         : list.slice(0, realNumToShow).map((line) => (
             <>
