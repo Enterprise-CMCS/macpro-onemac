@@ -93,13 +93,12 @@ const RouteListRenderer: FC<{ routes: RouteSpec[] }> = ({ routes }) => {
 
 const AuthenticatedRouteListRenderer: FC<{ routes: RouteSpec[] }> = ({
   routes,
-}) => {
-  if (useAppContext()?.isAuthenticated) {
-    return <RouteListRenderer routes={routes} />;
-  } else {
-    return <Redirect to={ROUTES.HOME} />;
-  }
-};
+}) =>
+  useAppContext()?.isAuthenticated ? (
+    <RouteListRenderer routes={routes} />
+  ) : (
+    <Redirect to={ROUTES.HOME} />
+  );
 
 const SignupGuardRouteListRenderer: FC<{ routes: RouteSpec[] }> = ({
   routes,
