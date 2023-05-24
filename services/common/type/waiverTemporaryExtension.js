@@ -1,3 +1,5 @@
+import { ONEMAC_TYPE } from "../workflow.js";
+
 export const waiverTemporaryExtension = {
   whichTab: "waiver",
   componentType: "waiverextension",
@@ -29,4 +31,18 @@ export const waiverTemporaryExtension = {
     "parentType",
     "temporaryExtensionType",
   ],
+};
+
+export const waiverTemporaryExtension1915b = {
+  ...waiverTemporaryExtension,
+  componentType: ONEMAC_TYPE.WAIVER_EXTENSION_B,
+  typeLabel: "1915(b) Waiver Extension",
+  temporaryExtensionType: "1915(b)",
+};
+
+export const waiverTemporaryExtension1915c = {
+  ...waiverTemporaryExtension,
+  componentType: ONEMAC_TYPE.WAIVER_EXTENSION_C,
+  typeLabel: "1915(c) Waiver Extension",
+  temporaryExtensionType: "1915(c)",
 };
