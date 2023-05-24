@@ -38,6 +38,7 @@ const closeButton = "//header/button[1]";
 const typeDropDownFilter = "//button[text()='Type']";
 const typeDropDown = "#componentType-button";
 const statusDropDown = "#packageStatus-button";
+const cPOCNameDropDown = "#cpocName-button";
 const statusFilterCheckboxes = "#packageStatus input";
 const typeFilterCheckboxes = "#componentType input";
 //Element is Xpath use cy.xpath instead of cy.get
@@ -134,6 +135,7 @@ const checkBoxStatus = "//span[contains(text(),'Status')]";
 const checkBoxSubmittedBy = "//span[contains(text(),'Submitted By')]";
 //Element is Xpath use cy.xpath instead of cy.get
 const checkBoxType = "//span[contains(text(),'Type')]";
+const checkboxCPOCName = "//span[contains(text(),'CPOC Name')]";
 const IDNumberColumn = "#componentIdColHeader";
 const typeColumn = "#componentTypeColHeader";
 const stateColumn = "#territoryColHeader";
@@ -143,6 +145,7 @@ const initialSubmissionDateColumn = "#submissionTimestampColHeader";
 const submittedByColumn = "#submitterColHeader";
 const actionsColumn = "#packageActionsColHeader";
 const formalRAIReceivedColumn = "#latestRaiResponseTimestampColHeader";
+const cPOCNameColumn = "#cpocNameColHeader";
 const packageRowOneType = "#componentType-0";
 const packageRowOneState = "#territory-0";
 //first obj is a header and second obj is row if there are results
@@ -457,6 +460,9 @@ export class oneMacPackagePage {
   verifystatusDropDownExists() {
     cy.get(statusDropDown).should("be.visible");
   }
+  verifyCPOCNameDropDownExists() {
+    cy.get(cPOCNameDropDown).should("be.visible");
+  }
   verifyresetButtonExists() {
     cy.xpath(resetButton).should("be.visible");
   }
@@ -604,6 +610,12 @@ export class oneMacPackagePage {
   clickCheckBoxType() {
     cy.xpath(checkBoxType).click();
   }
+  verifycheckBoxCPOCNameExists() {
+    cy.xpath(checkboxCPOCName).should("be.visible");
+  }
+  clickCPOCNameCheckBox() {
+    cy.xpath(checkboxCPOCName).click();
+  }
   verifyIDNumberColumnExists() {
     cy.get(IDNumberColumn).should("be.visible");
   }
@@ -659,6 +671,12 @@ export class oneMacPackagePage {
   }
   verifysubmittedByColumnDoesNotExist() {
     cy.get(submittedByColumn).should("not.exist");
+  }
+  verifyCPOCNameColumnExists() {
+    cy.get(cPOCNameColumn).should("be.visible");
+  }
+  verifyCPOCNameColumnDoesNotExist() {
+    cy.get(cPOCNameColumn).should("not.exist");
   }
   verifyactionsColumnDoesNotExist() {
     cy.get(actionsColumn).should("not.exist");

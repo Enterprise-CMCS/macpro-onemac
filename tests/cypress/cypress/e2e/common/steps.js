@@ -1306,6 +1306,9 @@ Then("verify Type Exists", () => {
 Then("verify Status Exists", () => {
   OneMacPackagePage.verifystatusDropDownExists();
 });
+Then("verify CPOC Name dropdown button exists", () => {
+  OneMacPackagePage.verifyCPOCNameDropDownExists();
+});
 Then("verify reset Exists", () => {
   OneMacPackagePage.verifyresetButtonExists();
 });
@@ -1426,6 +1429,9 @@ Then("verify submitted by exists", () => {
 Then("verify type exists", () => {
   OneMacPackagePage.verifycheckBoxTypeExists();
 });
+Then("verify CPOC Name exists", () => {
+  OneMacPackagePage.verifycheckBoxCPOCNameExists();
+});
 Then("verify Formal RAI Received checkbox exists", () => {
   OneMacPackagePage.verifyFormalRAIReceivedCheckboxExists();
 });
@@ -1465,8 +1471,11 @@ Then("verify Formal RAI Received column exists", () => {
 Then("verify Formal RAI Received column does not exist", () => {
   OneMacPackagePage.verifyFormalRAIReceivedColumnDoesNotExist();
 });
-Then("click 90th day checkbox", () => {
-  OneMacPackagePage.clickCheckBox90thDay();
+Then("verify CPOC Name column exists", () => {
+  OneMacPackagePage.verifyCPOCNameColumnExists();
+});
+Then("verify CPOC Name column does not exist", () => {
+  OneMacPackagePage.verifyCPOCNameColumnDoesNotExist();
 });
 Then("click Initial Submission Date checkbox", () => {
   OneMacPackagePage.clickCheckBoxInitialSubmissionDate();
@@ -1486,6 +1495,9 @@ Then("click submitted by checkbox", () => {
 Then("click type checkbox", () => {
   OneMacPackagePage.clickCheckBoxType();
 });
+Then("click CPOC Name checkbox", () => {
+  OneMacPackagePage.clickCPOCNameCheckBox();
+});
 Then("click Formal RAI Received checkbox", () => {
   OneMacPackagePage.clickFormalRAIReceivedCheckbox();
 });
@@ -1494,9 +1506,6 @@ Then("verify type column does not exist", () => {
 });
 Then("verify state column does not exist", () => {
   OneMacPackagePage.verifystateColumnDoesNotExist();
-});
-Then("verify 90th day column does not exist", () => {
-  OneMacPackagePage.verify90thDayColumnDoesNotExist();
 });
 Then("verify expiration date column does not exist", () => {
   OneMacPackagePage.verifyexpirationDateColumnDoesNotExist();
@@ -2904,4 +2913,25 @@ Then(
 );
 Then("verify description is not visible in the details section", () => {
   OneMacPackageDetailsPage.verifyDescrptionDoesNotExists();
+});
+Then("verify there is a CPOC header in the details section", () => {
+  OneMacPackageDetailsPage.verifyCPOCNameHeaderExists();
+});
+Then("verify the CPOC has a value displayed in the details section", () => {
+  OneMacPackageDetailsPage.verifyCPOCNameValueExists();
+});
+Then("verify CPOC is not visible in the details section", () => {
+  OneMacPackageDetailsPage.verifyCPOCNameDoesNotExists();
+});
+Then("verify there is a Review Team SRT header in the details section", () => {
+  OneMacPackageDetailsPage.verifyReviewTeamSRTHeaderExists();
+});
+Then(
+  "verify the Review Team SRT has a value displayed in the details section",
+  () => {
+    OneMacPackageDetailsPage.verifyReviewTeamSRTValueExists();
+  }
+);
+Then("verify Review Team SRT is not visible in the details section", () => {
+  OneMacPackageDetailsPage.verifyReviewTeamSRTDoesNotExists();
 });

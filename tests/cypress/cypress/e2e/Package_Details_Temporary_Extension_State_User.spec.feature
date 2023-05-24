@@ -30,6 +30,8 @@ Feature: Waiver Package Details View:  Temporary Extension for a State User
         Then verify the additional information section exists
         Then verify subject is not visible in the details section
         Then verify description is not visible in the details section
+        Then verify CPOC is not visible in the details section
+        Then verify Review Team SRT is not visible in the details section
 
         #This scenario isn't testable since submitted state temporary extensions
         #can not be withdrawn and these are not in seatool so status can not change
