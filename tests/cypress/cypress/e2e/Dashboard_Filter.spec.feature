@@ -13,7 +13,6 @@ Feature: Package Dashboard - Filter
         Then verify state dropdown filter exists
         Then verify Type Exists
         Then verify status DropDown Filter exists
-        Then verify CPOC Name dropdown button exists
         Then verify Initial Submission Date filter dropdown exists
         Then click on Initial Submission Date filter dropdown
         Then verify Initial Submission Date date picker filter exists
@@ -35,7 +34,6 @@ Feature: Package Dashboard - Filter
         Then click on Initial Submission Date filter dropdown
         Then verify Initial Submission Date date picker filter exists
         Then verify Formal RAI Received dropdown filter exists
-        Then verify CPOC Name dropdown button exists
         Then Click on My Account
         Then click the logout button
 

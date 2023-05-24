@@ -15,7 +15,6 @@ Feature: Package Dashboard - Filter
         Then verify status DropDown Filter exists
         Then verify Initial Submission Date filter dropdown exists
         Then verify Formal RAI Received dropdown filter exists
-        Then verify CPOC Name dropdown button exists
         Then Click on My Account
         Then click the logout button
 
@@ -31,7 +30,6 @@ Feature: Package Dashboard - Filter
         Then verify status DropDown Filter exists
         Then verify Initial Submission Date filter dropdown exists
         Then verify Formal RAI Received dropdown filter exists
-        Then verify CPOC Name dropdown button exists
         Then Click on My Account
         Then click the logout button
 

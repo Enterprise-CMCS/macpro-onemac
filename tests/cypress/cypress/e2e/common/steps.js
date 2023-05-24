@@ -1268,7 +1268,7 @@ Then("verify search bar exists", () => {
   OneMacPackagePage.verifySearchBarExists();
 });
 Then(
-  "verify search by package id or submitter name is displayed ontop of search bar",
+  "verify Search by Package ID, CPOC Name, or Submitter Name is displayed on top of search bar",
   () => {
     OneMacPackagePage.verifySearchisDisplayed();
   }
@@ -1894,6 +1894,10 @@ Then("search for {string}", (part) => {
   OneMacPackagePage.searchFor(part);
   cy.wait(1000);
 });
+Then("search for CPOC named Chester Tester", () => {
+  OneMacPackagePage.searchFor("Chester Tester");
+  cy.wait(1000);
+});
 Then("search for Appendix K number", () => {
   OneMacPackagePage.searchFor("MD-10330.R00.12");
   cy.wait(1000);
@@ -2452,6 +2456,13 @@ Then("verify the ID searched for is the ID in the first result", () => {
   });
   cy.wait(1000);
 });
+Then(
+  "verify the CPOC searched for is Chester Tester in the first result",
+  () => {
+    OneMacPackagePage.verifyCPOCInFirstRow();
+    cy.wait(1000);
+  }
+);
 Then("reset EUA CMS Read Only User state if needed", () => {
   cy.wait(1000)
     .then(() => {

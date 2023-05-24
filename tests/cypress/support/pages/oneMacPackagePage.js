@@ -15,8 +15,7 @@ const MD32560hrefValue =
   '//a[contains(@href,"/detail/waivernew/1633642209858/MD.32560")]';
 const searchbar = "#search-bar-input";
 //Element is Xpath use cy.xpath instead of cy.get
-const searchbarHeader =
-  "//label[text()='Search by Package ID or Submitter Name']";
+const searchbarHeader = "//label[@for='search-bar-input']";
 //Element is Xpath use cy.xpath instead of cy.get
 const searchBarXBTN = "//button[@aria-label='Clear Search']";
 //Element is Xpath use cy.xpath instead of cy.get
@@ -222,6 +221,7 @@ const successMessage = "#alert-bar";
 //Element is Xpath use cy.xpath instead of cy.get
 const packageRowOneIDLink = "//td[@id='componentId-0']//a";
 const packageRowOneActionsBtn = "//td[@id='packageActions-0']//button";
+const packageRowOneCPOC = "#cpocName-0";
 const respondToRAIBtn =
   "//*[@data-testid='action-popup']//a[text()= 'Respond to RAI']";
 const RequestTempExtensionBtn = "//a[text()='Request Temporary Extension']";
@@ -291,7 +291,9 @@ export class oneMacPackagePage {
     cy.get(searchbar).should("be.visible");
   }
   verifySearchisDisplayed() {
-    cy.xpath(searchbarHeader).should("be.visible");
+    cy.xpath(searchbarHeader).contains(
+      "Search by Package ID, CPOC Name, or Submitter Name"
+    );
   }
   verifyxexistsandClickIt() {
     cy.xpath(searchBarXBTN).click();
@@ -1035,6 +1037,9 @@ export class oneMacPackagePage {
   }
   compareSearchIDToFirstLinkID(searchedID) {
     cy.xpath(packageRowOneIDLink).should("have.text", searchedID);
+  }
+  verifyCPOCInFirstRow() {
+    cy.get(packageRowOneCPOC).should("have.text", "Chester Tester");
   }
   copyTheIDFromLinkInFirstRow() {
     cy.xpath(packageRowOneIDLink)
