@@ -16,6 +16,7 @@ export type OneMACDetail = {
   actionsByStatus: Record<string, Workflow.PACKAGE_ACTION[]>;
   detailHeader?: string;
   detailSection: AttributeDetail[];
+  showReviewTeam: boolean;
   allowWaiverExtension: boolean;
   attachmentsHeading: string;
 } & Partial<PackageType>;
@@ -131,6 +132,7 @@ export const defaultDetail: OneMACDetail = {
   actionsByStatus: Workflow.defaultActionsByStatus,
   show90thDayInfo: false,
   showEffectiveDate: false,
+  showReviewTeam: true,
   detailHeader: "Package",
   allowWaiverExtension: false,
   detailSection: [...defaultDetailSectionItems],
