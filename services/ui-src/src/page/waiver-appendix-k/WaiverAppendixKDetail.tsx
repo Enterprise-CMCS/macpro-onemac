@@ -9,6 +9,7 @@ import {
   submissionDateDefault,
   territoryDefault,
   waiverAuthorityDefault,
+  cpocDefault,
 } from "../../libs/detailLib";
 import { waiverAppendixK } from "cmscommonlib";
 
@@ -34,6 +35,7 @@ export const waiverAppendixKDetail: OneMACDetail = {
     proposedEffectiveDateDefault,
     subjectDefault,
     descriptionDefault,
+    cpocDefault,
   ],
 };
 
