@@ -58,6 +58,8 @@ export const buildAnyPackage = async (packageId, config) => {
         submitterEmail: "-- --",
         subject: "-- --",
         description: "-- --",
+        cpocName: "-- --",
+        reviewTeam: [],
       },
     };
     let currentPackage;
@@ -157,9 +159,32 @@ export const buildAnyPackage = async (packageId, config) => {
           ).toFormat("yyyy-LL-dd");
         else putParams.Item.proposedEffectiveDate = "none";
 
+        putParams.Item.subject = anEvent.STATE_PLAN.TITLE_NAME;
+        putParams.Item.description = anEvent.STATE_PLAN.SUMMARY_MEMO;
+
+        if (anEvent.LEAD_ANALYST && _.isArray(anEvent.LEAD_ANALYST)) {
+          const leadAnalyst = anEvent.LEAD_ANALYST.map((oneAnalyst) =>
+            anEvent.STATE_PLAN.LEAD_ANALYST_ID === oneAnalyst.OFFICER_ID
+              ? oneAnalyst
+              : null
+          ).filter(Boolean)[0];
+          console.log("the lead analsyt is: ", leadAnalyst);
+
+          if (leadAnalyst)
+            putParams.Item.cpocName = `${leadAnalyst.FIRST_NAME} ${leadAnalyst.LAST_NAME}`;
+        }
+
+        if (anEvent.ACTION_OFFICERS && _.isArray(anEvent.ACTION_OFFICERS)) {
+          putParams.Item.reviewTeam = anEvent.ACTION_OFFICERS.map(
+            (oneReviewer) =>
+              `${oneReviewer.FIRST_NAME} ${oneReviewer.LAST_NAME}`
+          );
+          console.log("the review team is: ", putParams.Item.reviewTeam);
+        }
+
         if (timestamp < lmTimestamp) return;
 
-        const seaToolStatus = anEvent.SPW_STATUS.map((oneStatus) =>
+        const seaToolStatus = anEvent?.SPW_STATUS.map((oneStatus) =>
           anEvent.STATE_PLAN.SPW_STATUS_ID === oneStatus.SPW_STATUS_ID
             ? oneStatus.SPW_STATUS_DESC
             : null
@@ -175,8 +200,6 @@ export const buildAnyPackage = async (packageId, config) => {
           (putParams.Item.currentStatus =
             SEATOOL_TO_ONEMAC_STATUS[seaToolStatus]);
 
-        putParams.Item.subject = anEvent.STATE_PLAN.TITLE_NAME;
-        putParams.Item.description = anEvent.STATE_PLAN.SUMMARY_MEMO;
         return;
       }
 
@@ -211,23 +234,6 @@ export const buildAnyPackage = async (packageId, config) => {
       putParams.Item.GSI1sk = packageId;
     } else {
       console.log("%s is not a OneMAC package: ", packageId, putParams.Item);
-      // if there was a package, and should not be now, delete the package item
-      if (currentPackage) {
-        const deleteParams = {
-          TableName: oneMacTableName,
-          Key: {
-            pk: packageId,
-            sk: packageSk,
-          },
-        };
-        await dynamoDb.delete(deleteParams).promise();
-        console.log(
-          "%s had a package, now does not: ",
-          packageId,
-          deleteParams
-        );
-      }
-      return; // don't bother creating packages not on dashboard
     }
 
     putParams.Item.raiResponses.sort(

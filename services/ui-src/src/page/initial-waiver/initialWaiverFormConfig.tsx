@@ -1,4 +1,5 @@
 import { ROUTES, ONEMAC_ROUTES } from "cmscommonlib";
+import { defaultAttachmentInstructionsJSX } from "../../libs/formLib";
 
 const initialWaiverIdFormat: string = "SS-####.R00.00 or SS-#####.R00.00";
 
@@ -14,5 +15,8 @@ export const initialWaiverFormConfig = {
     },
   ],
   proposedEffectiveDate: true,
+  attachmentIntroJSX: defaultAttachmentInstructionsJSX(
+    ROUTES.FAQ_ATTACHMENTS_WAIVER_B
+  ),
   landingPage: ONEMAC_ROUTES.PACKAGE_LIST_WAIVER,
 };

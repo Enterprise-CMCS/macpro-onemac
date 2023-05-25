@@ -1268,7 +1268,7 @@ Then("verify search bar exists", () => {
   OneMacPackagePage.verifySearchBarExists();
 });
 Then(
-  "verify search by package id or submitter name is displayed ontop of search bar",
+  "verify Search by Package ID, CPOC Name, or Submitter Name is displayed on top of search bar",
   () => {
     OneMacPackagePage.verifySearchisDisplayed();
   }
@@ -1306,6 +1306,9 @@ Then("verify Type Exists", () => {
 Then("verify Status Exists", () => {
   OneMacPackagePage.verifystatusDropDownExists();
 });
+Then("verify CPOC Name dropdown button exists", () => {
+  OneMacPackagePage.verifyCPOCNameDropDownExists();
+});
 Then("verify reset Exists", () => {
   OneMacPackagePage.verifyresetButtonExists();
 });
@@ -1327,8 +1330,11 @@ Then("verify 1915b Waiver Amendment check box exists", () => {
 Then("verify 1915c Appendix K Amendment check box exists", () => {
   OneMacPackagePage.verify1915cAppendixKAmendmentCheckBox();
 });
-Then("verify Temporary Extension exists", () => {
-  OneMacPackagePage.verifyTemporaryExtensionCheckBoxExists();
+Then("verify 1915b Temporary Extension exists", () => {
+  OneMacPackagePage.verify1915bTemporaryExtensionCheckBoxExists();
+});
+Then("verify 1915c Temporary Extension exists", () => {
+  OneMacPackagePage.verify1915cTemporaryExtensionCheckBoxExists();
 });
 Then("verify CHIP SPA Exists", () => {
   OneMacPackagePage.verifyCHIPSPACheckBoxExists();
@@ -1387,8 +1393,11 @@ Then("click 1915c Appendix K Amendment check box", () => {
 Then("click 1915b Waiver Amendment check box", () => {
   OneMacPackagePage.click1915bWaiverAmendmentCheckBox();
 });
-Then("click Temporary Extension check box", () => {
-  OneMacPackagePage.clickTemporaryExtensionCheckBox();
+Then("click 1915b Temporary Extension check box", () => {
+  OneMacPackagePage.click1915bTemporaryExtensionCheckBox();
+});
+Then("click 1915c Temporary Extension check box", () => {
+  OneMacPackagePage.click1915cTemporaryExtensionCheckBox();
 });
 Then("click CHIP SPA check box", () => {
   OneMacPackagePage.clickCHIPSPACheckBox();
@@ -1425,6 +1434,9 @@ Then("verify submitted by exists", () => {
 });
 Then("verify type exists", () => {
   OneMacPackagePage.verifycheckBoxTypeExists();
+});
+Then("verify CPOC Name exists", () => {
+  OneMacPackagePage.verifycheckBoxCPOCNameExists();
 });
 Then("verify Formal RAI Received checkbox exists", () => {
   OneMacPackagePage.verifyFormalRAIReceivedCheckboxExists();
@@ -1465,8 +1477,11 @@ Then("verify Formal RAI Received column exists", () => {
 Then("verify Formal RAI Received column does not exist", () => {
   OneMacPackagePage.verifyFormalRAIReceivedColumnDoesNotExist();
 });
-Then("click 90th day checkbox", () => {
-  OneMacPackagePage.clickCheckBox90thDay();
+Then("verify CPOC Name column exists", () => {
+  OneMacPackagePage.verifyCPOCNameColumnExists();
+});
+Then("verify CPOC Name column does not exist", () => {
+  OneMacPackagePage.verifyCPOCNameColumnDoesNotExist();
 });
 Then("click Initial Submission Date checkbox", () => {
   OneMacPackagePage.clickCheckBoxInitialSubmissionDate();
@@ -1486,6 +1501,9 @@ Then("click submitted by checkbox", () => {
 Then("click type checkbox", () => {
   OneMacPackagePage.clickCheckBoxType();
 });
+Then("click CPOC Name checkbox", () => {
+  OneMacPackagePage.clickCPOCNameCheckBox();
+});
 Then("click Formal RAI Received checkbox", () => {
   OneMacPackagePage.clickFormalRAIReceivedCheckbox();
 });
@@ -1494,9 +1512,6 @@ Then("verify type column does not exist", () => {
 });
 Then("verify state column does not exist", () => {
   OneMacPackagePage.verifystateColumnDoesNotExist();
-});
-Then("verify 90th day column does not exist", () => {
-  OneMacPackagePage.verify90thDayColumnDoesNotExist();
 });
 Then("verify expiration date column does not exist", () => {
   OneMacPackagePage.verifyexpirationDateColumnDoesNotExist();
@@ -1885,6 +1900,10 @@ Then("search for {string}", (part) => {
   OneMacPackagePage.searchFor(part);
   cy.wait(1000);
 });
+Then("search for CPOC named Chester Tester", () => {
+  OneMacPackagePage.searchFor("Chester Tester");
+  cy.wait(1000);
+});
 Then("search for Appendix K number", () => {
   OneMacPackagePage.searchFor("MD-10330.R00.12");
   cy.wait(1000);
@@ -2074,11 +2093,11 @@ Then("verify the type is Initial Waiver", () => {
 Then("verify the type is Waiver Renewal", () => {
   OneMacPackageDetailsPage.verifyTypeContainsWaiverRenewal();
 });
-Then("verify the type is Temporary Extension", () => {
-  OneMacPackageDetailsPage.verifyTypeContainsTempExtension();
+Then("verify the type is 1915c Temporary Extension", () => {
+  OneMacPackageDetailsPage.verifyTypeContains1915cTempExtension();
 });
 Then("verify the type is 1915b Temporary Extension", () => {
-  OneMacPackageDetailsPage.verifyTypeContainsTempExtension();
+  OneMacPackageDetailsPage.verifyTypeContains1915bTempExtension();
 });
 Then("verify the type is 1915b Waiver Amendment", () => {
   OneMacPackageDetailsPage.verifyTypeContains1915bWaiverAmendment();
@@ -2342,7 +2361,7 @@ Then("verify success message for denied role", () => {
 Then("select proposed effective date 3 months from today", () => {
   OneMacSubmitNewWaiverActionPage.setProposedEffectiveDateThreeMonthsAway();
 });
-Then("Type Temporary Extension Number 1 With 5 Characters", () => {
+Then("Type Temporary Extension Number 1", () => {
   cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
     OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
       data.newTemporaryExtensionNumber1
@@ -2356,14 +2375,14 @@ Then("click on the link for temporary extension number 1", () => {
     );
   });
 });
-Then("Type Temporary Extension Number 2 With 5 Characters", () => {
+Then("Type Temporary Extension Number 2", () => {
   cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
     OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
       data.newTemporaryExtensionNumber2
     );
   });
 });
-Then("Type Temporary Extension Number 3 With 5 Characters", () => {
+Then("Type Temporary Extension Number 3", () => {
   cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
     OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
       data.newTemporaryExtensionNumber3
@@ -2395,6 +2414,27 @@ Then("Type Temporary Extension Number 7", () => {
   cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
     OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
       data.newTemporaryExtensionNumber7
+    );
+  });
+});
+Then("Type Temporary Extension Number 8", () => {
+  cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
+    OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
+      data.newTemporaryExtensionNumber8
+    );
+  });
+});
+Then("Type Temporary Extension Number 9", () => {
+  cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
+    OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
+      data.newTemporaryExtensionNumber9
+    );
+  });
+});
+Then("Type Temporary Extension Number 10", () => {
+  cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
+    OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
+      data.newTemporaryExtensionNumber10
     );
   });
 });
@@ -2443,6 +2483,13 @@ Then("verify the ID searched for is the ID in the first result", () => {
   });
   cy.wait(1000);
 });
+Then(
+  "verify the CPOC searched for is Chester Tester in the first result",
+  () => {
+    OneMacPackagePage.verifyCPOCInFirstRow();
+    cy.wait(1000);
+  }
+);
 Then("reset EUA CMS Read Only User state if needed", () => {
   cy.wait(1000)
     .then(() => {
@@ -2574,9 +2621,6 @@ Then(
     OneMacFAQPage.verifyAttachmentsFor1915cRequestTempExtBody();
   }
 );
-Then("Verify blue eerror message says user can submit in package view", () => {
-  OneMacDefaultForms.verifyBlueErrorSaysUserCanSubmit();
-});
 Then(
   "Type {string} into Approved Initial or Renewal Waiver Number field",
   (n) => {
@@ -2904,4 +2948,31 @@ Then(
 );
 Then("verify description is not visible in the details section", () => {
   OneMacPackageDetailsPage.verifyDescrptionDoesNotExists();
+});
+Then("verify the attachment info descriptiion", () => {
+  OneMacDefaultForms.verifyAttachmentInfoDecription();
+});
+Then("verify the attachment info link is for {string}", (packageType) => {
+  OneMacDefaultForms.verifyAttachmentInfoLinkFor(packageType);
+});
+Then("verify there is a CPOC header in the details section", () => {
+  OneMacPackageDetailsPage.verifyCPOCNameHeaderExists();
+});
+Then("verify the CPOC has a value displayed in the details section", () => {
+  OneMacPackageDetailsPage.verifyCPOCNameValueExists();
+});
+Then("verify CPOC is not visible in the details section", () => {
+  OneMacPackageDetailsPage.verifyCPOCNameDoesNotExists();
+});
+Then("verify there is a Review Team SRT header in the details section", () => {
+  OneMacPackageDetailsPage.verifyReviewTeamSRTHeaderExists();
+});
+Then(
+  "verify the Review Team SRT has a value displayed in the details section",
+  () => {
+    OneMacPackageDetailsPage.verifyReviewTeamSRTValueExists();
+  }
+);
+Then("verify Review Team SRT is not visible in the details section", () => {
+  OneMacPackageDetailsPage.verifyReviewTeamSRTDoesNotExists();
 });

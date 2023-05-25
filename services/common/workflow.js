@@ -14,6 +14,8 @@ export const ONEMAC_TYPE = {
   WAIVER_RENEWAL_WITHDRAW: "waiverrenewalwithdraw",
   WAIVER_RAI: "waiverrai",
   WAIVER_EXTENSION: "waiverextension",
+  WAIVER_EXTENSION_B: "waiverextensionb",
+  WAIVER_EXTENSION_C: "waiverextensionc",
   WAIVER_APP_K: "waiverappk",
   WAIVER_APP_K_RAI: "waiverappkrai",
   WAIVER_APP_K_WITHDRAW: "waiverappkwithdraw",
@@ -26,6 +28,8 @@ export const ONEMAC_LABEL = {
   [ONEMAC_TYPE.WAIVER_RENEWAL]: "1915(b) Waiver Renewal",
   [ONEMAC_TYPE.WAIVER_APP_K]: "1915(c) Appendix K Amendment",
   [ONEMAC_TYPE.WAIVER_EXTENSION]: "Temporary Extension",
+  [ONEMAC_TYPE.WAIVER_EXTENSION_B]: "1915(b) Temporary Extension",
+  [ONEMAC_TYPE.WAIVER_EXTENSION_C]: "1915(c) Temporary Extension",
   [ONEMAC_TYPE.WAIVER_AMENDMENT]: "1915(b) Waiver Amendment",
   [ONEMAC_TYPE.WAIVER_RAI]: "1915(b) RAI Response",
 };
@@ -122,6 +126,8 @@ export const ACTIONS = {
   [ONEMAC_TYPE.WAIVER_RENEWAL]: renewalWaiverActionsByStatus,
   [ONEMAC_TYPE.WAIVER_AMENDMENT]: defaultActionsByStatus,
   [ONEMAC_TYPE.WAIVER_EXTENSION]: waiverExtensionActionsByStatus,
+  [ONEMAC_TYPE.WAIVER_EXTENSION_B]: waiverExtensionActionsByStatus,
+  [ONEMAC_TYPE.WAIVER_EXTENSION_C]: waiverExtensionActionsByStatus,
   [ONEMAC_TYPE.WAIVER_APP_K]: defaultActionsByStatus,
 };
 

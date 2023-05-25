@@ -7,6 +7,8 @@ import { buildWaiverRenewal } from "./package/buildWaiverRenewal";
 import { buildWaiverAmendment } from "./package/buildWaiverAmendment";
 import { buildWaiverAppendixK } from "./package/buildWaiverAppendixK";
 import { buildWaiverExtension } from "./package/buildWaiverExtension";
+import { buildWaiverExtension1915b } from "./package/buildWaiverExtension1915b";
+import { buildWaiverExtension1915c } from "./package/buildWaiverExtension1915c";
 
 export const main = async (eventBatch) => {
   console.log("One Stream event: ", eventBatch);
@@ -134,6 +136,12 @@ export const main = async (eventBatch) => {
             break;
           case Workflow.ONEMAC_TYPE.WAIVER_EXTENSION:
             await buildWaiverExtension(packageToBuild.id);
+            break;
+          case Workflow.ONEMAC_TYPE.WAIVER_EXTENSION_B:
+            await buildWaiverExtension1915b(packageToBuild.id);
+            break;
+          case Workflow.ONEMAC_TYPE.WAIVER_EXTENSION_C:
+            await buildWaiverExtension1915c(packageToBuild.id);
             break;
           case Workflow.ONEMAC_TYPE.WAIVER_AMENDMENT:
           case Workflow.ONEMAC_TYPE.WAIVER_AMENDMENT_WITHDRAW:

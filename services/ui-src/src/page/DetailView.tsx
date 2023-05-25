@@ -51,6 +51,8 @@ export type ComponentDetail = {
   waiverExtensions: any[];
   withdrawalRequests: any[];
   temporaryExtensionType: string;
+  cpocName: string;
+  reviewTeam: string[];
 } & Record<string, any>;
 
 /**

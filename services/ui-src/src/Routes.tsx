@@ -50,6 +50,9 @@ import WaiverAppendixKRAIForm from "./page/waiver-appendix-k/WaiverAppendixKRAIF
 import DescribeForms from "./page/DescribeForms";
 import EventList from "./page/event/EventList";
 import EventDetail from "./page/event/EventDetail";
+import MedicaidABPLandingPage from "./page/landing/MedicaidABPLandingPage";
+import MedicaidEligibilityLandingPage from "./page/landing/MedicaidEligibilityLandingPage";
+import CHIPEligibilityLandingPage from "./page/landing/CHIPEligibilityLandingPage";
 import InitialWaiverB4Form from "./page/initial-waiver/InitialWaiverB4Form";
 import InitialWaiverBForm from "./page/initial-waiver/InitialWaiverBForm";
 import WaiverRenewalB4Form from "./page/waiver-renewal/WaiverRenewalB4Form";
@@ -353,6 +356,21 @@ const ROUTE_LIST: RouteSpec[] = [
     path: ROUTES.ATTACHMENT_LANDING,
     exact: true,
     component: AttachmentLanding,
+  },
+  {
+    path: ROUTES.ABP_LANDING,
+    exact: true,
+    component: MedicaidABPLandingPage,
+  },
+  {
+    path: ROUTES.MEDICAID_ELIGIBILITY_LANDING,
+    exact: true,
+    component: MedicaidEligibilityLandingPage,
+  },
+  {
+    path: ROUTES.CHIP_ELIGIBILITY_LANDING,
+    exact: true,
+    component: CHIPEligibilityLandingPage,
   },
   {
     path: ONEMAC_ROUTES.FORMS_DESCRIBE,
