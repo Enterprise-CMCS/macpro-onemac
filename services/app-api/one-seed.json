@@ -13395,7 +13395,7 @@
       "OCD_REVIEW_ID": 2,
       "ACTUAL_EFFECTIVE_DATE": null,
       "FISCAL_YEAR": null,
-      "PLAN_TYPE": 122,
+      "PLAN_TYPE": 123,
       "GAP_NA": null,
       "SUBMISSION_TYPE": null,
       "REGION_ID": "3",
@@ -13624,7 +13624,7 @@
       "OCD_REVIEW_ID": 2,
       "ACTUAL_EFFECTIVE_DATE": null,
       "FISCAL_YEAR": null,
-      "PLAN_TYPE": 122,
+      "PLAN_TYPE": 123,
       "GAP_NA": null,
       "SUBMISSION_TYPE": null,
       "REGION_ID": "3",
@@ -13704,7 +13704,7 @@
     ],
     "ACTIONTYPES": [
       {
-        "PLAN_TYPE_ID": 122,
+        "PLAN_TYPE_ID": 123,
         "ACTION_NAME": "Amend",
         "ACTION_ID": 73
       }
@@ -13750,8 +13750,8 @@
     "COMPONENTS_SP": null,
     "PLAN_TYPES": [
       {
-        "PLAN_TYPE_ID": 122,
-        "PLAN_TYPE_NAME": "1915(b)"
+        "PLAN_TYPE_ID": 123,
+        "PLAN_TYPE_NAME": "1915(c)"
       }
     ],
     "PRIORITY_CODES": null,
@@ -13863,7 +13863,7 @@
       "OCD_REVIEW_ID": 2,
       "ACTUAL_EFFECTIVE_DATE": null,
       "FISCAL_YEAR": null,
-      "PLAN_TYPE": 122,
+      "PLAN_TYPE": 123,
       "GAP_NA": null,
       "SUBMISSION_TYPE": null,
       "REGION_ID": "3",
@@ -13943,14 +13943,14 @@
     ],
     "ACTIONTYPES": [
       {
-        "PLAN_TYPE_ID": 122,
+        "PLAN_TYPE_ID": 123,
         "ACTION_NAME": "Amend",
-        "ACTION_ID": 73
+        "ACTION_ID": 74
       },
       {
         "PLAN_TYPE_ID": 122,
         "ACTION_NAME": "New",
-        "ACTION_ID": 74
+        "ACTION_ID": 71
       }
     ],
     "SP_TYPE": null,
@@ -13994,8 +13994,8 @@
     "COMPONENTS_SP": null,
     "PLAN_TYPES": [
       {
-        "PLAN_TYPE_ID": 122,
-        "PLAN_TYPE_NAME": "1915(b)"
+        "PLAN_TYPE_ID": 123,
+        "PLAN_TYPE_NAME": "1915(c)"
       }
     ],
     "PRIORITY_CODES": null,
