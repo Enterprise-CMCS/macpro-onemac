@@ -162,12 +162,14 @@ export const DetailSection = ({
                 </Review>
               )
           )}
-          <ExpandableList
-            heading="Review Team (SRT)"
-            list={detail.reviewTeam}
-            numToShow={NUM_REVIEWERS_TO_SHOW}
-            className="review-team"
-          ></ExpandableList>
+          {pageConfig.showReviewTeam && (
+            <ExpandableList
+              heading="Review Team (SRT)"
+              list={detail.reviewTeam}
+              numToShow={NUM_REVIEWERS_TO_SHOW}
+              className="review-team"
+            ></ExpandableList>
+          )}
         </section>
         <section className="detail-section ds-u-margin-bottom--7">
           {detail.attachments?.length > 0 ? (
