@@ -2791,6 +2791,13 @@ ul.choice-list {
   font-weight: 600;
   font-style: italic;
 }
+.review-team {
+  @extend .ds-c-button--transparent;
+  @extend .ds-c-button--small;
+  @extend .ds-u-padding--0;
+  text-align: left;
+  border: none;
+}
 
 .landing-container {
   margin: 2rem;

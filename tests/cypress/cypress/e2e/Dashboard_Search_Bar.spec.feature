@@ -65,26 +65,33 @@ Feature: OY2-11149 Submission Dashboard - Search bar
         When Login with state submitter user
         Then search existing user with dash
         Then verify user exists with id number searched
+@focus 
+    Scenario: Search CPOC
+        Given I am on Login Page
+        When Clicking on Development Login
+        When Login with state submitter user
+        Then search for CPOC named Chester Tester
+        Then verify the CPOC searched for is Chester Tester in the first result
 
     Scenario: Log in with help desk user
         Given I am on Login Page
         When Clicking on Development Login
         When Login with cms Help Desk User
         Then verify search bar exists
-        Then verify search by package id or submitter name is displayed ontop of search bar
+        Then verify Search by Package ID, CPOC Name, or Submitter Name is displayed on top of search bar
 
     Scenario: Log in with system admin user
         Given I am on Login Page
         When Clicking on Development Login
         When Login with cms System Admin
         Then verify search bar exists
-        Then verify search by package id or submitter name is displayed ontop of search bar
+        Then verify Search by Package ID, CPOC Name, or Submitter Name is displayed on top of search bar
 
     Scenario: Screen Enhancement
         Given I am on Login Page
         When Clicking on Development Login
         When Login with state submitter user
         Then verify search bar exists
-        Then verify search by package id or submitter name is displayed ontop of search bar
+        Then verify Search by Package ID, CPOC Name, or Submitter Name is displayed on top of search bar
         Then search existing user with all upper case
         Then verify x in search bar exists to clear search and click it

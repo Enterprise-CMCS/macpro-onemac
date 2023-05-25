@@ -32,6 +32,7 @@ export const waiverTemporaryExtensionDetail: OneMACDetail = {
   detailHeader: "Temporary Extension Request",
   actionsByStatus: Workflow.waiverExtensionActionsByStatus,
   show90thDayInfo: false,
+  showReviewTeam: false,
   detailSection: [
     componentIdDetail,
     parentIdDetail,

@@ -1268,7 +1268,7 @@ Then("verify search bar exists", () => {
   OneMacPackagePage.verifySearchBarExists();
 });
 Then(
-  "verify search by package id or submitter name is displayed ontop of search bar",
+  "verify Search by Package ID, CPOC Name, or Submitter Name is displayed on top of search bar",
   () => {
     OneMacPackagePage.verifySearchisDisplayed();
   }
@@ -1305,6 +1305,9 @@ Then("verify Type Exists", () => {
 });
 Then("verify Status Exists", () => {
   OneMacPackagePage.verifystatusDropDownExists();
+});
+Then("verify CPOC Name dropdown button exists", () => {
+  OneMacPackagePage.verifyCPOCNameDropDownExists();
 });
 Then("verify reset Exists", () => {
   OneMacPackagePage.verifyresetButtonExists();
@@ -1432,6 +1435,9 @@ Then("verify submitted by exists", () => {
 Then("verify type exists", () => {
   OneMacPackagePage.verifycheckBoxTypeExists();
 });
+Then("verify CPOC Name exists", () => {
+  OneMacPackagePage.verifycheckBoxCPOCNameExists();
+});
 Then("verify Formal RAI Received checkbox exists", () => {
   OneMacPackagePage.verifyFormalRAIReceivedCheckboxExists();
 });
@@ -1471,8 +1477,11 @@ Then("verify Formal RAI Received column exists", () => {
 Then("verify Formal RAI Received column does not exist", () => {
   OneMacPackagePage.verifyFormalRAIReceivedColumnDoesNotExist();
 });
-Then("click 90th day checkbox", () => {
-  OneMacPackagePage.clickCheckBox90thDay();
+Then("verify CPOC Name column exists", () => {
+  OneMacPackagePage.verifyCPOCNameColumnExists();
+});
+Then("verify CPOC Name column does not exist", () => {
+  OneMacPackagePage.verifyCPOCNameColumnDoesNotExist();
 });
 Then("click Initial Submission Date checkbox", () => {
   OneMacPackagePage.clickCheckBoxInitialSubmissionDate();
@@ -1492,6 +1501,9 @@ Then("click submitted by checkbox", () => {
 Then("click type checkbox", () => {
   OneMacPackagePage.clickCheckBoxType();
 });
+Then("click CPOC Name checkbox", () => {
+  OneMacPackagePage.clickCPOCNameCheckBox();
+});
 Then("click Formal RAI Received checkbox", () => {
   OneMacPackagePage.clickFormalRAIReceivedCheckbox();
 });
@@ -1500,9 +1512,6 @@ Then("verify type column does not exist", () => {
 });
 Then("verify state column does not exist", () => {
   OneMacPackagePage.verifystateColumnDoesNotExist();
-});
-Then("verify 90th day column does not exist", () => {
-  OneMacPackagePage.verify90thDayColumnDoesNotExist();
 });
 Then("verify expiration date column does not exist", () => {
   OneMacPackagePage.verifyexpirationDateColumnDoesNotExist();
@@ -1889,6 +1898,10 @@ Then("verify ID field is empty and not disabled", () => {
 
 Then("search for {string}", (part) => {
   OneMacPackagePage.searchFor(part);
+  cy.wait(1000);
+});
+Then("search for CPOC named Chester Tester", () => {
+  OneMacPackagePage.searchFor("Chester Tester");
   cy.wait(1000);
 });
 Then("search for Appendix K number", () => {
@@ -2470,6 +2483,13 @@ Then("verify the ID searched for is the ID in the first result", () => {
   });
   cy.wait(1000);
 });
+Then(
+  "verify the CPOC searched for is Chester Tester in the first result",
+  () => {
+    OneMacPackagePage.verifyCPOCInFirstRow();
+    cy.wait(1000);
+  }
+);
 Then("reset EUA CMS Read Only User state if needed", () => {
   cy.wait(1000)
     .then(() => {
@@ -2934,4 +2954,25 @@ Then("verify the attachment info descriptiion", () => {
 });
 Then("verify the attachment info link is for {string}", (packageType) => {
   OneMacDefaultForms.verifyAttachmentInfoLinkFor(packageType);
+});
+Then("verify there is a CPOC header in the details section", () => {
+  OneMacPackageDetailsPage.verifyCPOCNameHeaderExists();
+});
+Then("verify the CPOC has a value displayed in the details section", () => {
+  OneMacPackageDetailsPage.verifyCPOCNameValueExists();
+});
+Then("verify CPOC is not visible in the details section", () => {
+  OneMacPackageDetailsPage.verifyCPOCNameDoesNotExists();
+});
+Then("verify there is a Review Team SRT header in the details section", () => {
+  OneMacPackageDetailsPage.verifyReviewTeamSRTHeaderExists();
+});
+Then(
+  "verify the Review Team SRT has a value displayed in the details section",
+  () => {
+    OneMacPackageDetailsPage.verifyReviewTeamSRTValueExists();
+  }
+);
+Then("verify Review Team SRT is not visible in the details section", () => {
+  OneMacPackageDetailsPage.verifyReviewTeamSRTDoesNotExists();
 });
