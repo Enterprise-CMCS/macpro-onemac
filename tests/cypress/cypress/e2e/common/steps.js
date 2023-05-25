@@ -494,7 +494,48 @@ Then("verify CHIP SPA is a clickable option", () => {
 Then("verify Medicaid SPA is a clickable option", () => {
   OneMacSubmissionTypePage.verifyMedicaidSPAIsClickable();
 });
-
+Then(
+  "verify Medicaid Eligibility, Enrollment, Administration, and Health Homes is a clickable option",
+  () => {
+    OneMacSubmissionTypePage.verifyMedicaidEligibilityIsClickable();
+  }
+);
+Then(
+  "click Medicaid Eligibility, Enrollment, Administration, and Health Homes",
+  () => {
+    OneMacSubmissionTypePage.clickMedicaidEligibility();
+  }
+);
+Then(
+  "verify Medicaid Alternative Benefits Plans ABP, and Medicaid Premiums and Cost Sharing is a clickable option",
+  () => {
+    OneMacSubmissionTypePage.verifyMedicaidAlternativeIsClickable();
+  }
+);
+Then(
+  "click Medicaid Alternative Benefits Plans ABP, and Medicaid Premiums and Cost Sharing",
+  () => {
+    OneMacSubmissionTypePage.clickMedicaidAlternative();
+  }
+);
+Then("verify All Other Medicaid SPA Submissions is a clickable option", () => {
+  OneMacSubmissionTypePage.verifyAllOtherMedicaidIsClickable();
+});
+Then("click All Other Medicaid SPA Submissions", () => {
+  OneMacSubmissionTypePage.clickAllOtherMedicaid();
+});
+Then("verify CHIP Eligibility is a clickable option", () => {
+  OneMacSubmissionTypePage.verifyChipEligibilityIsClickable();
+});
+Then("click CHIP Eligibility", () => {
+  OneMacSubmissionTypePage.clickChipEligibility();
+});
+Then("verify All Other CHIP SPA Submissions is a clickable option", () => {
+  OneMacSubmissionTypePage.verifyAllOtherChip();
+});
+Then("click All Other CHIP SPA Submissions", () => {
+  OneMacSubmissionTypePage.clickAllOtherChip();
+});
 Then("select Action Type New Waiver", () => {
   OneMacSubmitNewWaiverActionPage.selectNewWaiverUnderActionType();
 });
@@ -2156,8 +2197,32 @@ Then("verify user is on new waiver amendment page", () => {
 Then("verify user is on new Medicaid SPA page", () => {
   OneMacSubmitNewMedicaidSpaPage.verifyNewMedicaidSPAPage();
 });
+Then(
+  "verify user is on Medicaid Eligibility, Enrollment, Administration, and Health Homes page",
+  () => {
+    OneMacSubmitNewMedicaidSpaPage.verifyMedicaidEligibilityPage();
+  }
+);
+Then(
+  "verify user is on Medicaid Alternative Benefits Plans ABP, and Medicaid Premiums and Cost Sharing page",
+  () => {
+    OneMacSubmitNewMedicaidSpaPage.verifyMedicaidAlternativePage();
+  }
+);
 Then("verify user is on new CHIP SPA page", () => {
   OneMacCHIPSPAPage.verifyNewChipSPAPage();
+});
+Then("verify user is on CHIP Eligibility page", () => {
+  OneMacCHIPSPAPage.verifyChipEligibilityPage();
+});
+Then("verify the page header is {string}", (string) => {
+  OneMacCHIPSPAPage.verifyPageH1Is(string);
+});
+Then("verify Enter the MMDL System button is visible and clickable", () => {
+  OneMacCHIPSPAPage.verifyMmdlSystenBtn();
+});
+Then("verify Enter the MACPro system button is visible and clickable", () => {
+  OneMacSubmitNewMedicaidSpaPage.verifyMacProSystenBtn();
 });
 Then("verify RAI Responses header exists", () => {
   OneMacPackageDetailsPage.verifyRaiResponseHeaderExists();
