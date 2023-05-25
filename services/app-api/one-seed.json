@@ -18492,37 +18492,45 @@
     "submitterName": "MDSTATE SUBMITTERNK"
   },
   {
-    "clockEndTimestamp": 1680042316722,
-    "componentType": "waivernew",
-    "currentStatus": "Pending - Approval",
-    "waiverExtensions": [],
-    "attachments": [
-      {
-        "s3Key": "1672269911500/15MB.pdf",
-        "filename": "15MB.pdf",
-        "title": "1915(b)(4) FFS Selective Contracting (Streamlined) waiver application pre-print (Initial, Renewal, Amendment)",
-        "contentType": "application/pdf",
-        "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A30413432-e223-4a6d-bfe1-7ed87236ff55/1672269911500/15MB.pdf"
-      }
-    ],
-    "proposedEffectiveDate": "2023-03-16",
-    "GSI1sk": "MD-22005.R00.00",
-    "additionalInformation": "test",
-    "submissionTimestamp": 1672269916722,
-    "waiverAuthority": "1915(b)",
-    "GSI1pk": "OneMAC#waiver",
-    "submitterEmail": "mdstateonemac@gmail.com",
-    "sk": "Package",
-    "cpocName": "Chester Tester",
-    "reviewTeam": ["Lester Tester", "Super Tester", "Jimmy Tester"],
-    "subject": "test subject",
-    "description": "test description",
-    "componentId": "MD-22005.R00.00",
-    "raiResponses": [],
-    "lastEventTimestamp": 1674140031527,
     "pk": "MD-22005.R00.00",
-    "submitterName": "MDSTATE SUBMITTERNK"
-  },
+    "sk": "Package",
+    "additionalInformation": "test",
+    "attachments": [
+     {
+      "contentType": "application/pdf",
+      "filename": "15MB.pdf",
+      "s3Key": "1672269911500/15MB.pdf",
+      "title": "1915(b)(4) FFS Selective Contracting (Streamlined) waiver application pre-print (Initial, Renewal, Amendment)",
+      "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A30413432-e223-4a6d-bfe1-7ed87236ff55/1672269911500/15MB.pdf"
+     }
+    ],
+    "clockEndTimestamp": 1680042316722,
+    "componentId": "MD-22005.R00.00",
+    "componentType": "waivernew",
+    "cpocName": "Chester Tester",
+    "currentStatus": "Pending - Concurrence",
+    "description": "pending-concurrence",
+    "GSI1pk": "OneMAC#waiver",
+    "GSI1sk": "MD-22005.R00.00",
+    "lastEventTimestamp": 1674140031527,
+    "proposedEffectiveDate": "2023-03-16",
+    "raiResponses": [
+    ],
+    "reviewTeam": [
+     "Lester Tester",
+     "Superba Tester",
+     "Jimmy Tester"
+    ],
+    "subject": "OneMac Connection test",
+    "submissionTimestamp": 1672269916722,
+    "submitterEmail": "mdstateonemac@gmail.com",
+    "submitterName": "MDSTATE SUBMITTERNK",
+    "waiverAuthority": "1915(b)",
+    "waiverExtensions": [
+    ],
+    "withdrawalRequests": [
+    ]
+   },
   {
     "PRIORITY_COMPLEXITY": null,
     "STATES": [
