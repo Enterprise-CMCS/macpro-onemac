@@ -1,4 +1,9 @@
-import { Accordion, AccordionItem, Review } from "@cmsgov/design-system";
+import {
+  Accordion,
+  AccordionItem,
+  Review,
+  Button,
+} from "@cmsgov/design-system";
 import { Workflow, getUserRoleObj } from "cmscommonlib";
 import React from "react";
 import { useAppContext } from "../../libs/contextLib";
@@ -9,6 +14,47 @@ import FileList from "../../components/FileList";
 import { actionComponent } from "../../libs/actionLib";
 import { AdditionalInfoSection } from "./AdditionalInfoSection";
 import { FORM_SOURCE } from "../../domain-types";
+import { useToggle } from "../../libs/hooksLib";
+
+export const NUM_REVIEWERS_TO_SHOW = 3;
+
+const ExpandableList = ({
+  heading,
+  list,
+  numToShow,
+  className = "expandable-list",
+}: {
+  heading: string;
+  list: string[];
+  numToShow: number;
+  className: string;
+}) => {
+  const [showExpanded, toggleExpanded] = useToggle(false);
+
+  if (!list) return <></>;
+
+  return (
+    <Review key="expanded-list" heading={heading}>
+      {list.length === 0
+        ? "-- --"
+        : list.slice(0, showExpanded ? list.length : numToShow).map((line) => (
+            <>
+              {line}
+              <br />
+            </>
+          ))}
+      {list.length > numToShow && (
+        <Button
+          className={className}
+          aria-expanded="false"
+          onClick={toggleExpanded}
+        >
+          {showExpanded ? "View Less Names" : "View All Names"}
+        </Button>
+      )}
+    </Review>
+  );
+};
 
 export const DetailSection = ({
   pageConfig,
@@ -115,6 +161,14 @@ export const DetailSection = ({
                   {detail[item.fieldName] ?? item.default}
                 </Review>
               )
+          )}
+          {pageConfig.showReviewTeam && (
+            <ExpandableList
+              heading="Review Team (SRT)"
+              list={detail.reviewTeam}
+              numToShow={NUM_REVIEWERS_TO_SHOW}
+              className="review-team"
+            ></ExpandableList>
           )}
         </section>
         <section className="detail-section ds-u-margin-bottom--7">

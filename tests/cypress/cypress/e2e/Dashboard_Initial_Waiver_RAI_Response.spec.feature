@@ -20,6 +20,8 @@ Feature: RAI Response for Initial Waiver - Package View
         Then click the actions button in row one
         Then click the Respond to RAI button
         Then verify the package ID is prefilled in the form
+        Then verify the attachment info descriptiion
+        Then verify the attachment info link is for "Waiver RAI"
         Then Add file for Waiver RAI Response
         Then verify the submit button is enabled 
 

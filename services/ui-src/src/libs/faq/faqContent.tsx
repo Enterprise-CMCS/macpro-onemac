@@ -2,6 +2,8 @@ import React from "react";
 import { VideoContent } from "../../components/VideoWithTranscript";
 import { helpDeskContact } from "../helpDeskContact";
 import { stateSystemOverviewTranscript } from "./stateSystemOverviewTranscript";
+import { FILE_TYPES, FileTypesFAQListItem } from "../../utils/fileTypes";
+import config from "../../utils/config";
 
 interface QuestionAnswer {
   anchorText: string;
@@ -105,6 +107,29 @@ export const oneMACFAQContent: FAQContent[] = [
               </tr>
             </tbody>
           </table>
+        ),
+      },
+      {
+        anchorText: "acceptable-file-formats",
+        question: "What are the kinds of file formats I can upload into OneMAC",
+        answerJSX: (
+          <section>
+            <p>
+              We accept the following file formats under{" "}
+              {config.MAX_ATTACHMENT_SIZE_MB}MB in size.{" "}
+              <i>
+                Unfortunately, we are unable to accept .zip or compressed files.
+              </i>
+            </p>
+            <h3>Acceptable File Formats</h3>
+            <ul className="file-type-list">
+              {FILE_TYPES.map((info) => (
+                <li>
+                  <FileTypesFAQListItem info={info} />
+                </li>
+              ))}
+            </ul>
+          </section>
         ),
       },
       {

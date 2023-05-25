@@ -4,8 +4,10 @@ import {
   SelectOption,
   FileUploadProps,
   ONEMAC_ROUTES,
+  ROUTES,
 } from "cmscommonlib";
 import config from "../utils/config";
+import { Link } from "react-router-dom";
 
 export type OneMACFormConfig = {
   idFormat?: string;
@@ -45,24 +47,56 @@ type ConfirmSubmitType = {
   confirmSubmitYesButton?: string;
 };
 
+export const DefaultFileTypesInfo = () => (
+  <p>
+    We accept the following file types:{" "}
+    <b>
+      .doc, .docx, .jpg, .odp, .ods, .odt, .png, .pdf, .ppt, .pptx, .rtf, .txt,
+      .xls, .xlsx, and a few others.
+    </b>{" "}
+    See the full list on the{" "}
+    <Link to={ROUTES.FAQ_ACCEPTED_FILE_TYPES} target="_blank">
+      FAQ Page
+    </Link>
+    .
+  </p>
+);
+
+export const DefaultFileSizeInfo = ({ route }: { route: string }) => (
+  <p className="req-message">
+    Maximum file size of {config.MAX_ATTACHMENT_SIZE_MB} MB per attachment.{" "}
+    <b>You can add multiple files per attachment type.</b> Read the description
+    for each of the attachment types on the{" "}
+    <Link to={route} target="_blank">
+      FAQ Page
+    </Link>
+    .
+  </p>
+);
+
+export const RequiredAttachmentSpan = () => (
+  <p className="req-message">
+    <span className="required-mark">*</span> indicates required attachment
+  </p>
+);
+
+export const defaultAttachmentInstructionsJSX = (
+  anchoredFAQRoute: string = ROUTES.FAQ
+) => (
+  <>
+    <DefaultFileSizeInfo route={anchoredFAQRoute} />
+    <DefaultFileTypesInfo />
+    <RequiredAttachmentSpan />
+  </>
+);
+
 export const defaultOneMACFormConfig = {
   idFormat: "",
   idFieldHint: [],
   idFAQLink: "",
   landingPage: ONEMAC_ROUTES.PACKAGE_LIST,
   proposedEffectiveDate: false,
-  attachmentIntroJSX: (
-    <>
-      <p className="req-message">
-        Maximum file size of {config.MAX_ATTACHMENT_SIZE_MB} MB. You can add
-        multiple files per attachment type. Read the description for each of the
-        attachment types on the FAQ Page.
-      </p>
-      <p className="req-message">
-        <span className="required-mark">*</span> indicates required attachment.
-      </p>
-    </>
-  ),
+  attachmentIntroJSX: defaultAttachmentInstructionsJSX(),
 };
 
 export const defaultWaiverAuthority = [

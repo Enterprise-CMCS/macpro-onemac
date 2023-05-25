@@ -15,8 +15,7 @@ const MD32560hrefValue =
   '//a[contains(@href,"/detail/waivernew/1633642209858/MD.32560")]';
 const searchbar = "#search-bar-input";
 //Element is Xpath use cy.xpath instead of cy.get
-const searchbarHeader =
-  "//label[text()='Search by Package ID or Submitter Name']";
+const searchbarHeader = "//label[@for='search-bar-input']";
 //Element is Xpath use cy.xpath instead of cy.get
 const searchBarXBTN = "//button[@aria-label='Clear Search']";
 //Element is Xpath use cy.xpath instead of cy.get
@@ -38,6 +37,7 @@ const closeButton = "//header/button[1]";
 const typeDropDownFilter = "//button[text()='Type']";
 const typeDropDown = "#componentType-button";
 const statusDropDown = "#packageStatus-button";
+const cPOCNameDropDown = "#cpocName-button";
 const statusFilterCheckboxes = "#packageStatus input";
 const typeFilterCheckboxes = "#componentType input";
 //Element is Xpath use cy.xpath instead of cy.get
@@ -92,8 +92,10 @@ const appendixKAmendmentCheckBox =
   "//label[contains(@for,'checkbox_componentType-1915(c) Appendix K Amendment')]";
 const waiverAmendment1915bCheckbox =
   "//label[contains(@for,'checkbox_componentType-1915(b) Waiver Amendment')]";
-const temporaryExtensionCheckBox =
-  "//label[contains(@for,'checkbox_componentType-Temporary Extension')]";
+const temporaryExtension1915bCheckBox =
+  "//label[contains(@for,'checkbox_componentType-1915(b) Temporary Extension')]";
+const temporaryExtension1915cCheckBox =
+  "//label[contains(@for,'checkbox_componentType-1915(c) Temporary Extension')]";
 //Element is Xpath use cy.xpath instead of cy.get
 const CHIPSPACheckBox =
   "//label[contains(@for,'checkbox_componentType-CHIP SPA')]";
@@ -134,6 +136,7 @@ const checkBoxStatus = "//span[contains(text(),'Status')]";
 const checkBoxSubmittedBy = "//span[contains(text(),'Submitted By')]";
 //Element is Xpath use cy.xpath instead of cy.get
 const checkBoxType = "//span[contains(text(),'Type')]";
+const checkboxCPOCName = "//span[contains(text(),'CPOC Name')]";
 const IDNumberColumn = "#componentIdColHeader";
 const typeColumn = "#componentTypeColHeader";
 const stateColumn = "#territoryColHeader";
@@ -143,6 +146,7 @@ const initialSubmissionDateColumn = "#submissionTimestampColHeader";
 const submittedByColumn = "#submitterColHeader";
 const actionsColumn = "#packageActionsColHeader";
 const formalRAIReceivedColumn = "#latestRaiResponseTimestampColHeader";
+const cPOCNameColumn = "#cpocNameColHeader";
 const packageRowOneType = "#componentType-0";
 const packageRowOneState = "#territory-0";
 //first obj is a header and second obj is row if there are results
@@ -219,6 +223,7 @@ const successMessage = "#alert-bar";
 //Element is Xpath use cy.xpath instead of cy.get
 const packageRowOneIDLink = "//td[@id='componentId-0']//a";
 const packageRowOneActionsBtn = "//td[@id='packageActions-0']//button";
+const packageRowOneCPOC = "#cpocName-0";
 const respondToRAIBtn =
   "//*[@data-testid='action-popup']//a[text()= 'Respond to RAI']";
 const RequestTempExtensionBtn = "//a[text()='Request Temporary Extension']";
@@ -288,7 +293,9 @@ export class oneMacPackagePage {
     cy.get(searchbar).should("be.visible");
   }
   verifySearchisDisplayed() {
-    cy.xpath(searchbarHeader).should("be.visible");
+    cy.xpath(searchbarHeader).contains(
+      "Search by Package ID, CPOC Name, or Submitter Name"
+    );
   }
   verifyxexistsandClickIt() {
     cy.xpath(searchBarXBTN).click();
@@ -457,6 +464,9 @@ export class oneMacPackagePage {
   verifystatusDropDownExists() {
     cy.get(statusDropDown).should("be.visible");
   }
+  verifyCPOCNameDropDownExists() {
+    cy.get(cPOCNameDropDown).should("be.visible");
+  }
   verifyresetButtonExists() {
     cy.xpath(resetButton).should("be.visible");
   }
@@ -532,11 +542,17 @@ export class oneMacPackagePage {
   click1915bWaiverAmendmentCheckBox() {
     cy.xpath(waiverAmendment1915bCheckbox).click();
   }
-  verifyTemporaryExtensionCheckBoxExists() {
-    cy.xpath(temporaryExtensionCheckBox).should("be.visible");
+  verify1915bTemporaryExtensionCheckBoxExists() {
+    cy.xpath(temporaryExtension1915bCheckBox).should("be.visible");
   }
-  clickTemporaryExtensionCheckBox() {
-    cy.xpath(temporaryExtensionCheckBox).click();
+  verify1915cTemporaryExtensionCheckBoxExists() {
+    cy.xpath(temporaryExtension1915cCheckBox).should("be.visible");
+  }
+  click1915bTemporaryExtensionCheckBox() {
+    cy.xpath(temporaryExtension1915bCheckBox).click();
+  }
+  click1915cTemporaryExtensionCheckBox() {
+    cy.xpath(temporaryExtension1915cCheckBox).click();
   }
   clickCHIPSPACheckBox() {
     cy.xpath(CHIPSPACheckBox).click();
@@ -604,6 +620,12 @@ export class oneMacPackagePage {
   clickCheckBoxType() {
     cy.xpath(checkBoxType).click();
   }
+  verifycheckBoxCPOCNameExists() {
+    cy.xpath(checkboxCPOCName).should("be.visible");
+  }
+  clickCPOCNameCheckBox() {
+    cy.xpath(checkboxCPOCName).click();
+  }
   verifyIDNumberColumnExists() {
     cy.get(IDNumberColumn).should("be.visible");
   }
@@ -659,6 +681,12 @@ export class oneMacPackagePage {
   }
   verifysubmittedByColumnDoesNotExist() {
     cy.get(submittedByColumn).should("not.exist");
+  }
+  verifyCPOCNameColumnExists() {
+    cy.get(cPOCNameColumn).should("be.visible");
+  }
+  verifyCPOCNameColumnDoesNotExist() {
+    cy.get(cPOCNameColumn).should("not.exist");
   }
   verifyactionsColumnDoesNotExist() {
     cy.get(actionsColumn).should("not.exist");
@@ -1017,6 +1045,9 @@ export class oneMacPackagePage {
   }
   compareSearchIDToFirstLinkID(searchedID) {
     cy.xpath(packageRowOneIDLink).should("have.text", searchedID);
+  }
+  verifyCPOCInFirstRow() {
+    cy.get(packageRowOneCPOC).should("have.text", "Chester Tester");
   }
   copyTheIDFromLinkInFirstRow() {
     cy.xpath(packageRowOneIDLink)

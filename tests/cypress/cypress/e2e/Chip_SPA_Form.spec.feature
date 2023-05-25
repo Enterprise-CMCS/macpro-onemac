@@ -12,6 +12,8 @@ Feature: Package Dashboard: CHIP SPA Forms
         Then verify All Other CHIP SPA Submissions is a clickable option
         Then click All Other CHIP SPA Submissions
         Then verify user is on new CHIP SPA page
+        Then verify the attachment info descriptiion
+        Then verify the attachment info link is for "CHIP SPA"
 
     Scenario: Screen Enhance - CHIP Eligibility
         Then verify CHIP SPA is a clickable option

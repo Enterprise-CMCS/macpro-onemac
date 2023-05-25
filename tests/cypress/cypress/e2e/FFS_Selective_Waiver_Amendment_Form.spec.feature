@@ -12,6 +12,8 @@ Feature: Create a waiver Amendment
         Then verify 1915b 4 FFS Selective Contracting Waiver Amendment is a clickable option
         Then click on 1915b 4 FFS Selective Contracting Waiver Amendment
         Then verify user is on new waiver amendment page
+        Then verify the attachment info descriptiion
+        Then verify the attachment info link is for "1915b Waiver"
 
     Scenario: Existing Waiver Number to Amend Input Field format
         Then click on New Submission
