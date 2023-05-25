@@ -419,33 +419,75 @@ Then(
 Then("Click on Waiver Action", () => {
   OneMacSubmissionTypePage.clickwaiverAction();
 });
+Then("click on 1915b Waiver Actions", () => {
+  OneMacSubmissionTypePage.click1915bWaiverActions();
+});
+Then("click on 1915b 4 FFS Selective Contracting waivers", () => {
+  OneMacSubmissionTypePage.clickFssSelectiveAuthority();
+});
+Then("click on 1915b Comprehensive Capitated Waiver Authority", () => {
+  OneMacSubmissionTypePage.click1915bComprehensiveCapitatedWaiverAuthority();
+});
 
 Then("click on Waiver Action on Waiver Action Type page", () => {
   OneMacSubmissionTypePage.clickWaiverActionUnderWaiverAction();
 });
 
-Then("click on Initial Waiver", () => {
+Then("click on 1915b 4 FFS Selective Contracting New Initial Waiver", () => {
   OneMacSubmissionTypePage.clickInitialWaiver();
 });
-Then("click on Waiver Renewal", () => {
-  OneMacSubmissionTypePage.clickWaiverRenewal();
+Then("click on 1915b Comprehensive Capitated New Initial Waiver", () => {
+  OneMacSubmissionTypePage.clickComprehensiveInitialWaiver();
 });
-Then("click on Waiver Amendment", () => {
-  OneMacSubmissionTypePage.clickWaiverAmendment();
+Then("1915b 4 FFS Selective Contracting Renewal Waiver", () => {
+  OneMacSubmissionTypePage.click1915b4WaiverRenewal();
+});
+Then("click on 1915b Comprehensive Capitated Renewal Waiver", () => {
+  OneMacSubmissionTypePage.clickComprehensiveRenewalWaiver();
+});
+Then("click on 1915b 4 FFS Selective Contracting Waiver Amendment", () => {
+  OneMacSubmissionTypePage.clickWaiverAmendment1915b4();
+});
+Then("click on 1915b Comprehensive Capitated Waiver Amendment", () => {
+  OneMacSubmissionTypePage.clickComprehensiveWaiverAmendmentWaiverAmendment();
 });
 
-Then("verify Initial Waiver is a clickable option", () => {
-  OneMacSubmissionTypePage.verifyInitialWaiverIsClickable();
-});
+Then(
+  "verify 1915b 4 FFS Selective Contracting New Initial Waiver is a clickable option",
+  () => {
+    OneMacSubmissionTypePage.verifyFFSNewInitialWaiverIsClickable();
+  }
+);
+Then(
+  "verify 1915b Comprehensive Capitated New Initial Waiver is a clickable option",
+  () => {
+    OneMacSubmissionTypePage.verifyComprehensiveNewInitialWaiverIsClickable();
+  }
+);
 Then("verify Appendix K is a clickable option", () => {
   OneMacSubmissionTypePage.verifyAppendixKIsClickable();
 });
-Then("verify Waiver Renewal is a clickable option", () => {
-  OneMacSubmissionTypePage.verifyWaiverRenewalIsClickable();
+Then("verify 1915b 4 Renewal Waiver is a clickable option", () => {
+  OneMacSubmissionTypePage.verify1915b4WaiverRenewalIsClickable();
 });
-Then("verify Waiver Amendment is a clickable option", () => {
-  OneMacSubmissionTypePage.verifyAmendmentIsClickable();
-});
+Then(
+  "verify 1915b Comprehensive Capitated Renewal Waiver is a clickable option",
+  () => {
+    OneMacSubmissionTypePage.verifyCompreheniveCapitatedRenewalWaiverIsClickable();
+  }
+);
+Then(
+  "verify 1915b 4 FFS Selective Contracting Waiver Amendment is a clickable option",
+  () => {
+    OneMacSubmissionTypePage.verifyFFSWaiverAmendmentIsClickable();
+  }
+);
+Then(
+  "verify 1915b Comprehensive Capitated Waiver Amendment is a clickable option",
+  () => {
+    OneMacSubmissionTypePage.verifyComprehensiveWaiverAmendmentIsClickable();
+  }
+);
 Then("verify CHIP SPA is a clickable option", () => {
   OneMacSubmissionTypePage.verifyChipSPAIsClickable();
 });
@@ -464,7 +506,7 @@ Then("select 1915b 4 FFS Selective Contracting waivers", () => {
 Then(
   "Add file for 1915b 4 FFS Selective Contracting waiver application pre-print",
   () => {
-    OneMacSubmitNewWaiverActionPage.upload1915B4File();
+    OneMacSubmitNewWaiverActionPage.upload1915BFFSPrePrintFile();
   }
 );
 
@@ -583,15 +625,36 @@ Then(
 
 //this is for oy2_4807
 Then(
-  "Click on 1915 b 4 FFS Selective Contracting waivers under Waiver Authority",
+  "verify 1915 b 4 FFS Selective Contracting waivers is displayed under Waiver Authority",
   () => {
-    OneMacSubmitNewWaiverActionPage.select1915b4FFSSelectiveContractingwaiversUnderWaiverAuthority();
+    OneMacSubmitNewWaiverActionPage.verify1915b4FFSSelectiveContractingwaiversUnderWaiverAuthority();
   }
 );
 
-Then("Upload 1915 b 4 file", () => {
-  OneMacSubmitNewWaiverActionPage.upload1915B4File();
-});
+Then(
+  "Add file for 1915b Comprehensive Capitated Waiver Application Pre-print",
+  () => {
+    OneMacSubmitNewWaiverActionPage.upload1915BComprehensivePrePrintFile();
+  }
+);
+Then(
+  "Add file for 1915b Comprehensive Capitated Waiver Cost Effectiveness Spreadsheets",
+  () => {
+    OneMacSubmitNewWaiverActionPage.upload1915BComprehensiveSpreadsheetFile();
+  }
+);
+Then(
+  "Remove file for 1915b Comprehensive Capitated Waiver Application Pre-print",
+  () => {
+    OneMacSubmitNewWaiverActionPage.remove1915BComprehensivePrePrintFile();
+  }
+);
+Then(
+  "Remove file for 1915b Comprehensive Capitated Waiver Cost Effectiveness Spreadsheets",
+  () => {
+    OneMacSubmitNewWaiverActionPage.remove1915BComprehensiveSpreadsheetFile();
+  }
+);
 
 Then("upload Waiver Extension Request", () => {
   OneMacRequestWaiverTemporaryExtension.uploadWaiverExtensionRequest();
@@ -604,9 +667,12 @@ Then("type {string} in additional info textarea", (Comments) => {
   OneMacSubmitNewWaiverActionPage.inputAdditionalInfoText(Comments);
 });
 
-Then("Click on All other 1915 b Waivers under Waiver Authority", () => {
-  OneMacSubmitNewWaiverActionPage.selectAllOther1915bWaiversUnderWaiverAuthority();
-});
+Then(
+  "verify All other 1915 b Waivers is displayed under Waiver Authority",
+  () => {
+    OneMacSubmitNewWaiverActionPage.verifyAllOther1915bWaiversUnderWaiverAuthority();
+  }
+);
 
 Then("Click on Waiver Amendment under Action type", () => {
   OneMacSubmitNewWaiverActionPage.selectWaiverAmendmentUnderActionType();
@@ -626,6 +692,13 @@ Then("Type Initial Waiver Number in format SS-#####.R00.00", () => {
     );
   });
 });
+Then("Type Initial Waiver Number 3 in format SS-#####.R00.00", () => {
+  cy.fixture("packageDashboardWaiverNumbers.json").then((d) => {
+    OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
+      d.newInitialWaiverNumber3
+    );
+  });
+});
 Then(
   "Type a valid and unused Initial Waiver Number in format SS-#####.R00.00",
   () => {
@@ -642,6 +715,12 @@ Then("Type Initial Waiver Number 2 in format SS-#####.R00.00", () => {
 Then("search for Initial Waiver Number 1 with 12 Characters", () => {
   cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
     OneMacPackagePage.searchFor(data.newInitialWaiverNumber1);
+  });
+  cy.wait(1000);
+});
+Then("search for Initial Waiver Number 3 with 12 Characters", () => {
+  cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
+    OneMacPackagePage.searchFor(data.newInitialWaiverNumber3);
   });
   cy.wait(1000);
 });
@@ -675,6 +754,16 @@ Then(
     cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
       OneMacPackagePage.verifyIDNumberInFirstRowIs(
         data.newInitialWaiverNumber1
+      );
+    });
+  }
+);
+Then(
+  "verify id number in the first row matches Initial Waiver Number 3",
+  () => {
+    cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
+      OneMacPackagePage.verifyIDNumberInFirstRowIs(
+        data.newInitialWaiverNumber3
       );
     });
   }
@@ -2567,6 +2656,14 @@ Then(
   }
 );
 Then(
+  "type new waiver renewal number 3 in 1915b Waiver Renewal Number field",
+  () => {
+    cy.fixture("packageDashboardWaiverNumbers.json").then((d) => {
+      OneMacSubmitNewWaiverActionPage.inputWaiverNumber(d.newWaiverRenewalNum3);
+    });
+  }
+);
+Then(
   "type new waiver amendment number 1 in 1915b Waiver Amendment Number field",
   () => {
     cy.fixture("packageDashboardWaiverNumbers.json").then((d) => {
@@ -2617,6 +2714,12 @@ Then(
 Then("search for new waiver renewal number 1", () => {
   cy.fixture("packageDashboardWaiverNumbers.json").then((d) => {
     OneMacPackagePage.searchFor(d.newWaiverRenewalNum1);
+  });
+  cy.wait(1000);
+});
+Then("search for new waiver renewal number 3", () => {
+  cy.fixture("packageDashboardWaiverNumbers.json").then((d) => {
+    OneMacPackagePage.searchFor(d.newWaiverRenewalNum3);
   });
   cy.wait(1000);
 });
@@ -2685,6 +2788,14 @@ Then(
   () => {
     cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
       OneMacPackagePage.verifyIDNumberInFirstRowIs(data.newWaiverRenewalNum1);
+    });
+  }
+);
+Then(
+  "verify id number in the first row matches new waiver renewal number 3",
+  () => {
+    cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
+      OneMacPackagePage.verifyIDNumberInFirstRowIs(data.newWaiverRenewalNum3);
     });
   }
 );

@@ -9,7 +9,7 @@ import React, {
 import { useHistory, useLocation } from "react-router-dom";
 import { Input } from "rsuite";
 
-import { TextField, Button, Dropdown, Review } from "@cmsgov/design-system";
+import { TextField, Button, Review } from "@cmsgov/design-system";
 
 import {
   FORM_SUCCESS_RESPONSE_CODES,
@@ -23,7 +23,6 @@ import {
   OneMACFormConfig,
   OneMacFormData,
   Message,
-  defaultWaiverAuthority,
   stateAccessMessage,
   buildWrongFormatMessage,
   buildMustExistMessage,
@@ -89,10 +88,7 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
   formConfig.landingPage = getLandingPage(location, formConfig);
 
   // if only one waiver Authority choice, it is the default
-  const presetWaiverAuthority =
-    formConfig.waiverAuthorities && formConfig.waiverAuthorities.length === 1
-      ? formConfig.waiverAuthorities[0].value
-      : undefined;
+  const presetWaiverAuthority = formConfig.waiverAuthority?.value;
 
   // The record we are using for the form.
   const [oneMacFormData, setOneMacFormData] = useState<OneMacFormData>({
@@ -279,9 +275,6 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
     const isTitleReady: boolean = Boolean(
       !formConfig.titleLabel || oneMacFormData.title
     );
-    const isWaiverAuthorityReady: boolean = Boolean(
-      !formConfig.waiverAuthorities || oneMacFormData.waiverAuthority
-    );
     const isTemporaryExtensionTypeReady: boolean = Boolean(
       !formConfig.temporaryExtensionTypes ||
         oneMacFormData.temporaryExtensionType
@@ -308,7 +301,6 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
 
     setIsSubmissionReady(
       isTitleReady &&
-        isWaiverAuthorityReady &&
         isTemporaryExtensionTypeReady &&
         isParentIdReady &&
         isIdReady &&
@@ -453,22 +445,11 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
               maxLength={config.MAX_PACKAGE_TITLE_LENGTH}
             ></TextField>
           )}
-          {formConfig.waiverAuthorities &&
-            formConfig.waiverAuthorities.length > 1 && (
-              <Dropdown
-                options={[
-                  ...defaultWaiverAuthority,
-                  ...formConfig.waiverAuthorities,
-                ]}
-                defaultValue={oneMacFormData.waiverAuthority}
-                label="Waiver Authority"
-                labelClassName="ds-u-margin-top--0 required"
-                fieldClassName="field"
-                name="waiverAuthority"
-                id="waiver-authority"
-                onChange={handleInputChange}
-              />
-            )}
+          {formConfig.waiverAuthority && (
+            <Review heading="Waiver Authority">
+              {formConfig.waiverAuthority.label}
+            </Review>
+          )}
           {formConfig.temporaryExtensionTypes && (
             <TemporaryExtensionTypeInput
               temporaryExtensionTypes={[...formConfig.temporaryExtensionTypes]}

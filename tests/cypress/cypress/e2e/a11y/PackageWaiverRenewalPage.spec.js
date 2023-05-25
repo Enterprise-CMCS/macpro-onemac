@@ -1,4 +1,4 @@
-describe("Request Temporary Extension Page 508 test", () => {
+describe("New Waiver Renewal Page 508 test", () => {
   beforeEach(() => {
     cy.visit("/");
     cy.get("#devloginBtn").click();
@@ -9,12 +9,25 @@ describe("Request Temporary Extension Page 508 test", () => {
     cy.xpath(
       "//p[contains(text(),'Submit Waivers, Amendments, Renewals, or Temp. Extension')]"
     ).click();
-    cy.xpath(
-      "//p[contains(text(),'Renew an existing 1915(b) waiver')]"
-    ).click();
+    cy.xpath("//div[contains(text(), '1915(b) Waiver Actions')]").click();
   });
 
-  it("Check a11y on Waiver Renewal Page", () => {
+  it("Check a11y on FFS Selective Waiver Renewal Page", () => {
+    cy.xpath(
+      "//div[contains(text(), '1915(b)(4) FFS Selective Contracting Waivers')]"
+    ).click();
+    cy.xpath(
+      "//div[contains(text(), '1915(b)(4) FFS Selective Contracting Renewal Waiver')]"
+    ).click();
+    cy.checkA11yOfPage();
+  });
+  it("Check a11y on all other 1915b Waiver Renewal Page", () => {
+    cy.xpath(
+      "//div[contains(text(), '1915(b) Comprehensive (Capitated) Waiver Authority')]"
+    ).click();
+    cy.xpath(
+      "//div[contains(text(), '1915(b) Comprehensive (Capitated) Renewal Waiver')]"
+    ).click();
     cy.checkA11yOfPage();
   });
 });

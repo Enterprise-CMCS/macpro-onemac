@@ -1,3 +1,14 @@
+import {
+  other,
+  tribalConsultation,
+  waiverB4ApplicationPrePrint,
+  waiverB4IndependentAssessment,
+  waiverBApplicationPrePrint,
+  waiverBCostEffectivenessSpreadsheets,
+  waiverBIndependentAssessment,
+} from "../attachmentTypes.js";
+import { waiverAuthorityB, waiverAuthorityB4 } from "../waiverAuthorities.js";
+
 export const waiverRenewal = {
   componentType: "waiverrenewal",
   whichTab: "waiver",
@@ -6,22 +17,6 @@ export const waiverRenewal = {
   idRegex: "^[A-Z]{2}[-][0-9]{4,5}[.]R(0[1-9]|[1-9][0-9])[.]00$",
   idMustExist: false,
   allowMultiplesWithSameId: false,
-  requiredAttachments: [],
-  optionalAttachments: [
-    "1915(b)(4) FFS Selective Contracting (Streamlined) waiver application pre-print (Initial, Renewal, Amendment)",
-    "1915(b) Comprehensive (Capitated) Waiver Application Pre-print (Initial, Renewal, Amendment)",
-    "1915(b) Comprehensive (Capitated) Waiver Cost effectiveness spreadsheets (Initial, Renewal, Amendment)",
-    "1915(b)(4) FFS Selective Contracting (Streamlined) and 1915(b) Comprehensive (Capitated) Waiver Independent Assessment (first two renewals only)",
-    "Tribal Consultation (Initial, Renewal, Amendment)",
-    "Other",
-  ],
-  waiverAuthorities: [
-    {
-      label: "1915(b)(4) FFS Selective Contracting waivers",
-      value: "1915(b)(4)",
-    },
-    { label: "All other 1915(b) Waivers", value: "1915(b)" },
-  ],
   allowedParentTypes: [
     "waivernew",
     "waiverrenewal",
@@ -42,5 +37,30 @@ export const waiverRenewal = {
     "waiverAuthority",
     "parentId",
     "parentType",
+  ],
+};
+
+export const waiverRenewalB4 = {
+  ...waiverRenewal,
+  waiverAuthority: waiverAuthorityB4,
+  requiredAttachments: [waiverB4ApplicationPrePrint],
+  optionalAttachments: [
+    waiverB4IndependentAssessment,
+    tribalConsultation,
+    other,
+  ],
+};
+
+export const waiverRenewalB = {
+  ...waiverRenewal,
+  waiverAuthority: waiverAuthorityB,
+  requiredAttachments: [
+    waiverBApplicationPrePrint,
+    waiverBCostEffectivenessSpreadsheets,
+  ],
+  optionalAttachments: [
+    waiverBIndependentAssessment,
+    tribalConsultation,
+    other,
   ],
 };

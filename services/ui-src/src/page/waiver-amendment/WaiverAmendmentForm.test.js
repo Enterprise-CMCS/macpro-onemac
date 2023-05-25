@@ -6,7 +6,8 @@ import { Router } from "react-router-dom";
 import { stateSubmitterInitialAuthState } from "../../libs/testDataAppContext";
 
 import { ONEMAC_ROUTES } from "cmscommonlib";
-import WaiverAmendmentForm from "./WaiverAmendmentForm";
+import WaiverAmendmentB4Form from "./WaiverAmendmentB4Form";
+import WaiverAmendmentBForm from "./WaiverAmendmentBForm";
 import PackageApi from "../../utils/PackageApi";
 import { AppContext } from "../../libs/contextLib";
 
@@ -20,7 +21,7 @@ describe("1915(b) Waiver Amendment Form", () => {
 
   beforeEach(() => {
     history = createMemoryHistory();
-    history.push(ONEMAC_ROUTES.WAIVER_AMENDMENT);
+    history.push(ONEMAC_ROUTES.WAIVER_AMENDMENT_B4);
   });
 
   it("has the submit button disabled on initial load", async () => {
@@ -33,7 +34,7 @@ describe("1915(b) Waiver Amendment Form", () => {
         }}
       >
         <Router history={history}>
-          <WaiverAmendmentForm />
+          <WaiverAmendmentB4Form />
         </Router>
       </AppContext.Provider>
     );
@@ -54,7 +55,7 @@ describe("1915(b) Waiver Amendment Form", () => {
         }}
       >
         <Router history={history}>
-          <WaiverAmendmentForm />
+          <WaiverAmendmentBForm />
         </Router>
       </AppContext.Provider>
     );
@@ -84,7 +85,7 @@ describe("1915(b) Waiver Amendment Form", () => {
         }}
       >
         <Router history={history}>
-          <WaiverAmendmentForm />
+          <WaiverAmendmentB4Form />
         </Router>
       </AppContext.Provider>
     );
@@ -111,7 +112,7 @@ describe("1915(b) Waiver Amendment Form", () => {
         }}
       >
         <Router history={history}>
-          <WaiverAmendmentForm />
+          <WaiverAmendmentB4Form />
         </Router>
       </AppContext.Provider>
     );
