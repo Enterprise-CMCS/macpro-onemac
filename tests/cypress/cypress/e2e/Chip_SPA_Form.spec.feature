@@ -9,6 +9,8 @@ Feature: Package Dashboard: CHIP SPA Form
         Then verify CHIP SPA is a clickable option
         Then click on CHIP SPA
         Then verify user is on new CHIP SPA page
+        Then verify the attachment info descriptiion
+        Then verify the attachment info link is for "CHIP SPA"
 
     Scenario: Create CHIP SPA from package dashboard and search it
         Given I am on Login Page

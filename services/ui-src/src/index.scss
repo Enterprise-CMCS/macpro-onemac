@@ -2112,6 +2112,18 @@ aside#faq-contact-info-box {
   }
 }
 
+.file-type-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.file-type-list-item {
+  display: flex;
+  b {
+    min-width: 8rem;
+  }
+}
+
 .vert-line-svg {
   position: absolute;
   left: 6.17%;

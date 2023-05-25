@@ -1,6 +1,10 @@
 import React, { FC } from "react";
 import OneMACForm from "../OneMACForm";
-import { defaultOneMACFormConfig, OneMACFormConfig } from "../../libs/formLib";
+import {
+  defaultAttachmentInstructionsJSX,
+  defaultOneMACFormConfig,
+  OneMACFormConfig,
+} from "../../libs/formLib";
 import {
   ROUTES,
   waiverTemporaryExtension,
@@ -38,6 +42,9 @@ export const temporaryExtensionFormInfo: OneMACFormConfig = {
     "The waiver number entered does not appear to match our records. Please enter an approved initial or renewal waiver number, using a dash after the two character state abbreviation.",
   validateParentAPI: "validateParentOfTemporaryExtension",
   temporaryExtensionTypes: temporaryExtensionTypes,
+  attachmentIntroJSX: defaultAttachmentInstructionsJSX(
+    ROUTES.FAQ_ATTACHMENTS_WAIVER_B_EXT
+  ),
 };
 
 const TemporaryExtensionForm: FC = () => {

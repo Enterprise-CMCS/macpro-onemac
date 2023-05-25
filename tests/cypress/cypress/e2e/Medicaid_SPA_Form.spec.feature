@@ -10,6 +10,8 @@ Feature: Package Dashboard: Medicaid SPA Form
         Then verify Medicaid SPA is a clickable option
         Then click on Medicaid SPA
         Then verify user is on new Medicaid SPA page
+        Then verify the attachment info descriptiion
+        Then verify the attachment info link is for "Medicaid SPA"
 
     Scenario: Create Medicaid SPA from package dashboard and search it
         Then click on New Submission
