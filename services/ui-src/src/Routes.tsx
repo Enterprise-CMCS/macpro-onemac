@@ -59,6 +59,7 @@ import WaiverRenewalB4Form from "./page/waiver-renewal/WaiverRenewalB4Form";
 import WaiverRenewalBForm from "./page/waiver-renewal/WaiverRenewalBForm";
 import WaiverAmendmentB4Form from "./page/waiver-amendment/WaiverAmendmentB4Form";
 import WaiverAmendmentBForm from "./page/waiver-amendment/WaiverAmendmentBForm";
+import { clearTableStateStorageKeys } from "./utils/StorageKeys";
 
 type RouteSpec = {
   path: string;
@@ -76,17 +77,22 @@ const RouteWithSubRoutes: FC<RouteSpec> = (route) => (
   />
 );
 
-const RouteListRenderer: FC<{ routes: RouteSpec[] }> = ({ routes }) => (
-  <Switch>
-    {routes.map((routeSpec) => (
-      <RouteWithSubRoutes
-        key={routeSpec.key ?? routeSpec.path}
-        {...routeSpec}
-      />
-    ))}
-    <Route component={NotFound} />
-  </Switch>
-);
+const RouteListRenderer: FC<{ routes: RouteSpec[] }> = ({ routes }) => {
+  if (!useAppContext()?.isAuthenticated) {
+    clearTableStateStorageKeys();
+  }
+  return (
+    <Switch>
+      {routes.map((routeSpec) => (
+        <RouteWithSubRoutes
+          key={routeSpec.key ?? routeSpec.path}
+          {...routeSpec}
+        />
+      ))}
+      <Route component={NotFound} />
+    </Switch>
+  );
+};
 
 const AuthenticatedRouteListRenderer: FC<{ routes: RouteSpec[] }> = ({
   routes,
