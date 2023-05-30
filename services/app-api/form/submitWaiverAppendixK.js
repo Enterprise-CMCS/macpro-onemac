@@ -11,6 +11,7 @@ import {
 export const waiverAppendixKFormConfig = {
   ...defaultFormConfig,
   ...waiverAppendixK,
+  CMSCCAddresses: process.env.ccEmail?.split(";")?.filter((s) => s.trim()),
   appendToSchema: {
     ...defaultWaiverSchema,
     title: defaultTitleSchema,
