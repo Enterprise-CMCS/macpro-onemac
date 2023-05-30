@@ -51,6 +51,12 @@ export function getTerritoryFromComponentId(componentId: string): string {
   return componentId?.toString().substring(0, 2) ?? "";
 }
 
+function getPrefillFromParent(parentId: string): string {
+  const parts = parentId.split(".");
+
+  return parts[1] ? `${parts[0]}.${parts[1]}.` : `${parts[0]}`;
+}
+
 /**
  * Submisstion Form template to allow rendering for different types of Submissions.
  */
@@ -99,6 +105,7 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
     temporaryExtensionType: undefined,
     proposedEffectiveDate: undefined,
     parentId: presetParentId,
+    prefillId: "",
     parentType: location.state?.parentType,
   });
 
@@ -181,6 +188,7 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
     let updatedRecord = { ...oneMacFormData } as OneMacFormData; // You need a new object to be able to update the state
 
     updatedRecord.parentId = parentId;
+    updatedRecord.prefillId = getPrefillFromParent(parentId);
     setOneMacFormData(updatedRecord);
   }
 
@@ -475,6 +483,8 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
             idFAQLink={formConfig.idFAQLink}
             statusMessages={componentIdStatusMessages}
             disabled={!!presetComponentId}
+            prefill={oneMacFormData.prefillId}
+            postPendId={formConfig.postPendId}
             value={oneMacFormData.componentId}
             onChange={(event: ChangeEvent<HTMLInputElement>) =>
               handleComponentIdChange(event.target.value.toUpperCase())

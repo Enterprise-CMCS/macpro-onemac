@@ -2812,3 +2812,14 @@ ul.choice-list {
   max-width: 540px;
   margin: 3rem 0;
 }
+
+.all-id {
+  display: flex;
+  flex-direction: row;
+  align-items: first baseline;
+}
+
+#componentId {
+  max-width: 5rem;
+  margin: 5px;
+}

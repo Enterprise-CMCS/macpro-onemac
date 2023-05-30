@@ -12,6 +12,7 @@ import { Link } from "react-router-dom";
 export type OneMACFormConfig = {
   idFormat?: string;
   idFieldHint?: FieldHint[];
+  postPendId?: string;
   idAdditionalErrorMessage?: string[];
   idFAQLink?: string;
   pageTitle?: string;
@@ -168,6 +169,7 @@ export type OneMacFormData = {
   temporaryExtensionType?: string;
   proposedEffectiveDate?: string;
   title?: string;
+  prefillId?: string;
   parentId?: string;
   parentType?: string;
 };
