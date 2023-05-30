@@ -9,10 +9,15 @@ const addFileBTNCoverLetterInnerBTN = "#uploader-input-2";
 //Element is Xpath use cy.xpath instead of cy.get
 const addFileBTNAmendedStatePlanLanguage = "//tbody/tr[2]/td[2]/label[1]";
 const addFileBTNAmendedStatePlanLanguageInnerBTN = "#uploader-input-1";
+const header1 = "h1";
+const enterMmdlBtn = "//button[contains(text(),'Enter the MMDL system')]";
 
 export class oneMacCHIPSPAPage {
   verifyNewChipSPAPage() {
     cy.url().should("include", "/chip-spa");
+  }
+  verifyChipEligibilityPage() {
+    cy.url().should("include", "/chip-eligibility");
   }
   inputSpaID(s) {
     cy.get(SPAIDInputBox).type(s);
@@ -45,6 +50,19 @@ export class oneMacCHIPSPAPage {
     cy.xpath(addFileBTNAmendedStatePlanLanguage).click();
     const filePath = "/files/adobe.pdf";
     cy.get(addFileBTNAmendedStatePlanLanguageInnerBTN).attachFile(filePath);
+  }
+  verifyPageH1Is(s) {
+    cy.get(header1).contains(s);
+  }
+  verifyMmdlSystenBtn() {
+    cy.xpath(enterMmdlBtn).should("be.visible");
+    cy.xpath(enterMmdlBtn)
+      .parent("a")
+      .should(
+        "have.attr",
+        "href",
+        "https://wms-mmdl.cms.gov/MMDL/faces/portal.jsp"
+      );
   }
 }
 export default oneMacCHIPSPAPage;

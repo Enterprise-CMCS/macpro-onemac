@@ -8,7 +8,19 @@ const waiverActions1915b =
 //Element is Xpath use cy.xpath instead of cy.get
 const MedicalSPA = '//div[text()="Medicaid SPA"]';
 //Element is Xpath use cy.xpath instead of cy.get
+const medicaidEligibility =
+  '//div[text()="Medicaid Eligibility, Enrollment, Administration, and Health Homes"]';
+//Element is Xpath use cy.xpath instead of cy.get
+const medicaidAlternative =
+  '//div[text()="Medicaid Alternative Benefits Plans (ABP), and Medicaid Premiums and Cost Sharing"]';
+//Element is Xpath use cy.xpath instead of cy.get
+const allOtherMedicaid = '//div[text()="All Other Medicaid SPA Submissions"]';
+//Element is Xpath use cy.xpath instead of cy.get
 const ChipSPA = '//div[text()="CHIP SPA"]';
+//Element is Xpath use cy.xpath instead of cy.get
+const chipEligibility = '//div[text()="CHIP Eligibility"]';
+//Element is Xpath use cy.xpath instead of cy.get
+const allOtherChip = '//div[text()="All Other CHIP SPA Submissions"]';
 //Element is Xpath use cy.xpath instead of cy.get
 const waiverActionWaiverAction =
   '//p[contains(text(),"Submit 1915(b) waivers, amendments, and renewals")]';
@@ -182,13 +194,58 @@ export class oneMacSubmissionTypePage {
     cy.xpath(ChipSPA)
       .parent()
       .parent()
-      .should("have.attr", "href", "/chip-spa");
+      .should("have.attr", "href", "/choices/spa/chip");
   }
   verifyMedicaidSPAIsClickable() {
     cy.xpath(MedicalSPA)
       .parent()
       .parent()
+      .should("have.attr", "href", "/choices/spa/medicaid");
+  }
+  verifyMedicaidEligibilityIsClickable() {
+    cy.xpath(medicaidEligibility)
+      .parent()
+      .parent()
+      .should("have.attr", "href", "/medicaid-eligibility");
+  }
+  clickMedicaidEligibility() {
+    cy.xpath(medicaidEligibility).click();
+  }
+  verifyMedicaidAlternativeIsClickable() {
+    cy.xpath(medicaidAlternative)
+      .parent()
+      .parent()
+      .should("have.attr", "href", "/medicaid-abp");
+  }
+  clickMedicaidAlternative() {
+    cy.xpath(medicaidAlternative).click();
+  }
+  verifyAllOtherMedicaidIsClickable() {
+    cy.xpath(allOtherMedicaid)
+      .parent()
+      .parent()
       .should("have.attr", "href", "/medicaid-spa");
+  }
+  clickAllOtherMedicaid() {
+    cy.xpath(allOtherMedicaid).click();
+  }
+  verifyChipEligibilityIsClickable() {
+    cy.xpath(chipEligibility)
+      .parent()
+      .parent()
+      .should("have.attr", "href", "/chip-eligibility");
+  }
+  clickChipEligibility() {
+    cy.xpath(chipEligibility).click();
+  }
+  verifyAllOtherChip() {
+    cy.xpath(allOtherChip)
+      .parent()
+      .parent()
+      .should("have.attr", "href", "/chip-spa");
+  }
+  clickAllOtherChip() {
+    cy.xpath(allOtherChip).click();
   }
 }
 export default oneMacSubmissionTypePage;
