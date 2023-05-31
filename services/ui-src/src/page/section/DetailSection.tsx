@@ -29,11 +29,6 @@ const TwoColumnDetails = ({
   detailSection: AttributeDetail[];
   attributes: ComponentDetail;
 }) => {
-  {
-    /* TODO: TWO COLUMN WORK
-     *  - Figure out sorting/sort list of items in detailSection
-     *  - Ensure scaling properly stacks each row */
-  }
   /** Sorting the incoming `detailSection` into groups of two so each
    * single array item is an array where index 0 is column 1, and index
    * 1 is column 2.
