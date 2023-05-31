@@ -1,4 +1,4 @@
-import { ONEMAC_ROUTES } from "cmscommonlib";
+import { ONEMAC_ROUTES, ROUTES } from "cmscommonlib";
 
 export const choicesFromRoute = {
   [ONEMAC_ROUTES.TRIAGE_GROUP]: {
@@ -25,11 +25,50 @@ export const choicesFromRoute = {
       {
         title: "Medicaid SPA",
         description: "Submit a new Medicaid State Plan Amendment",
-        linkTo: ONEMAC_ROUTES.MEDICAID_SPA,
+        linkTo: ONEMAC_ROUTES.TRIAGE_MEDICAID_SPA,
       },
       {
         title: "CHIP SPA",
         description: "Submit a new CHIP State Plan Amendment",
+        linkTo: ONEMAC_ROUTES.TRIAGE_CHIP_SPA,
+      },
+    ],
+  },
+  [ONEMAC_ROUTES.TRIAGE_MEDICAID_SPA]: {
+    heading: "Medicaid SPA Type",
+    intro: "Select a Medicaid SPA type to create your submission",
+    choices: [
+      {
+        title:
+          "Medicaid Eligibility, Enrollment, Administration, and Health Homes",
+        description: "Redirects to the MACPro Appian submission system",
+        linkTo: ROUTES.MEDICAID_ELIGIBILITY_LANDING,
+      },
+      {
+        title:
+          "Medicaid Alternative Benefits Plans (ABP), and Medicaid Premiums and Cost Sharing",
+        description: "Redirects to MMDL submission system",
+        linkTo: ROUTES.ABP_LANDING,
+      },
+      {
+        title: "All Other Medicaid SPA Submissions",
+        description: "Create a new Medicaid State Plan Amendment",
+        linkTo: ONEMAC_ROUTES.MEDICAID_SPA,
+      },
+    ],
+  },
+  [ONEMAC_ROUTES.TRIAGE_CHIP_SPA]: {
+    heading: "CHIP SPA Type",
+    intro: "Select a CHIP SPA type to create your submission",
+    choices: [
+      {
+        title: "CHIP Eligibility",
+        description: "Redirects to MMDL submission system",
+        linkTo: ROUTES.CHIP_ELIGIBILITY_LANDING,
+      },
+      {
+        title: "All Other CHIP SPA Submissions",
+        description: "Create a new Medicaid State Plan Amendment",
         linkTo: ONEMAC_ROUTES.CHIP_SPA,
       },
     ],
