@@ -5,18 +5,98 @@ import {
   Button,
 } from "@cmsgov/design-system";
 import { Workflow, getUserRoleObj } from "cmscommonlib";
-import React from "react";
+import React, { useCallback, useMemo } from "react";
 import { useAppContext } from "../../libs/contextLib";
 import { formatDateOnly, formatDate } from "../../utils/date-utils";
 import { ComponentDetail } from "../DetailView";
-import { OneMACDetail } from "../../libs/detailLib";
+import { AttributeDetail, OneMACDetail } from "../../libs/detailLib";
 import FileList from "../../components/FileList";
 import { actionComponent } from "../../libs/actionLib";
 import { AdditionalInfoSection } from "./AdditionalInfoSection";
 import { FORM_SOURCE } from "../../domain-types";
 import { useToggle } from "../../libs/hooksLib";
+import { Grid } from "@material-ui/core";
 
 export const NUM_REVIEWERS_TO_SHOW = 3;
+
+const TwoColumnDetails = ({
+  detailSection,
+  attributes,
+}: {
+  detailSection: AttributeDetail[];
+  attributes: ComponentDetail;
+}) => {
+  {
+    /* TODO: TWO COLUMN WORK
+     *  - Figure out sorting/sort list of items in detailSection
+     *  - Ensure scaling properly stacks each row */
+  }
+  const DetailItem = ({ item }: { item: AttributeDetail }) => (
+    <Review heading={item.heading}>
+      {attributes[item.fieldName] ?? item.default ?? "-- --"}
+    </Review>
+  );
+  const DetailRow = ({
+    firstColumn,
+    secondColumn,
+  }: {
+    firstColumn?: AttributeDetail;
+    secondColumn?: AttributeDetail;
+  }) => {
+    const { userProfile } = useAppContext() ?? {};
+    const userRoleObj = getUserRoleObj(userProfile?.userData?.roleList);
+    const hasPermission = useCallback((item: AttributeDetail) => {
+      return item.rolePrivilege ? userRoleObj[item.rolePrivilege] : true;
+    }, []);
+    return (
+      <Grid container item direction="row" className="detail-grid-item">
+        {firstColumn && hasPermission(firstColumn) && (
+          <Grid item className="detail-grid-item">
+            <DetailItem item={firstColumn} />
+          </Grid>
+        )}
+        {secondColumn && hasPermission(secondColumn) && (
+          <Grid item className="detail-grid-item">
+            <DetailItem item={secondColumn} />
+          </Grid>
+        )}
+      </Grid>
+    );
+  };
+  const twoColumnArray = useMemo(() => {
+    const twoColArray: Array<Array<AttributeDetail>> = [];
+    for (let i = 0; i <= detailSection.length; i += 2) {
+      twoColArray.push([detailSection[i], detailSection[i + 1]]);
+    }
+    return twoColArray;
+  }, []);
+  const getItem = (fieldName: string): AttributeDetail | undefined => {
+    return detailSection.find((item) => item.fieldName === fieldName);
+  };
+  return (
+    <div>
+      <Grid container>
+        {/*<DetailRow firstColumn={getItem("componentId")} />*/}
+        {/*<DetailRow*/}
+        {/*  firstColumn={getItem("territoryNice")}*/}
+        {/*  secondColumn={getItem("typeNice")} />*/}
+        {/*<DetailRow*/}
+        {/*  firstColumn={getItem("submissionDateNice")}*/}
+        {/*  secondColumn={getItem("proposedEffectiveDateNice")} />*/}
+        {/*<DetailRow firstColumn={getItem("latestRaiResponseDateNice")} />*/}
+        {twoColumnArray.map((row, index) => (
+          <DetailRow key={index} firstColumn={row[0]} secondColumn={row[1]} />
+        ))}
+      </Grid>
+      {/*{detailSection?.map(*/}
+      {/*  (item, index) =>*/}
+      {/*    <Review key={index} heading={item.heading}>*/}
+      {/*      {attributes[item.fieldName] ?? item.default}*/}
+      {/*    </Review>*/}
+      {/*  )}*/}
+    </div>
+  );
+};
 
 const ExpandableList = ({
   heading,
@@ -153,15 +233,10 @@ export const DetailSection = ({
       <div className="read-only-submission">
         <section className="detail-section">
           <h2>{pageConfig.detailHeader} Details</h2>
-          {pageConfig.detailSection?.map(
-            (item, index) =>
-              (detail[item.fieldName] || item.default) &&
-              (item.rolePrivilege ? userRoleObj[item.rolePrivilege] : true) && (
-                <Review key={index} heading={item.heading}>
-                  {detail[item.fieldName] ?? item.default}
-                </Review>
-              )
-          )}
+          <TwoColumnDetails
+            detailSection={pageConfig.detailSection}
+            attributes={detail}
+          />
           {pageConfig.showReviewTeam && (
             <ExpandableList
               heading="Review Team (SRT)"
