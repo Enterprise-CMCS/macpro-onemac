@@ -9,7 +9,6 @@ import {
 export const medicaidSPAFormConfig = {
   ...defaultFormConfig,
   ...medicaidSPA,
-  CMSCcAddresses: process.env.ccEmail?.split(";")?.filter((s) => s.trim()),
   appendToSchema: {
     proposedEffectiveDate: defaultProposedEffectiveDateSchema,
   },

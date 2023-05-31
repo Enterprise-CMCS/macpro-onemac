@@ -8,7 +8,8 @@ export const defaultFormConfig = {
   CMSToAddresses: [process.env.reviewerEmail, process.env.testingEmail].filter(
     Boolean
   ),
-  CMSCcAddresses: [],
+  CMSCcAddresses:
+    process.env.ccEmail?.split(";")?.filter((s) => s.trim()) ?? [],
   newStatus: Workflow.ONEMAC_STATUS.SUBMITTED,
   successResponseCode: RESPONSE_CODE.SUCCESSFULLY_SUBMITTED,
 };
