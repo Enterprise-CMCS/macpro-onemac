@@ -85,12 +85,6 @@ const TwoColumnDetails = ({
           <DetailRow key={index} firstColumn={row[0]} secondColumn={row[1]} />
         ))}
       </Grid>
-      {/*{detailSection?.map(*/}
-      {/*  (item, index) =>*/}
-      {/*    <Review key={index} heading={item.heading}>*/}
-      {/*      {attributes[item.fieldName] ?? item.default}*/}
-      {/*    </Review>*/}
-      {/*  )}*/}
     </div>
   );
 };
