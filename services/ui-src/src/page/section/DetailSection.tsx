@@ -63,14 +63,20 @@ const TwoColumnDetails = ({
       return item.rolePrivilege ? userRoleObj[item.rolePrivilege] : true;
     }, []);
     return (
-      <Grid container item direction="row" className="detail-grid-item">
+      <Grid
+        justifyContent="space-between"
+        container
+        item
+        direction="row"
+        className="detail-grid-item"
+      >
         {firstColumn && hasPermission(firstColumn) && (
-          <Grid xs={12} sm={6} item className="detail-grid-item">
+          <Grid xs={12} sm={5} item className="detail-grid-item">
             <DetailItem item={firstColumn} />
           </Grid>
         )}
         {secondColumn && hasPermission(secondColumn) && (
-          <Grid xs={12} sm={6} item className="detail-grid-item">
+          <Grid xs={12} sm={5} item className="detail-grid-item">
             <DetailItem item={secondColumn} />
           </Grid>
         )}
