@@ -31,7 +31,6 @@ export const defaultWaiverSchema = {
 export const defaultWithdrawConfig = {
   ...defaultFormConfig,
   successResponseCode: RESPONSE_CODE.WITHDRAW_REQUESTED,
-  CMSCcAddresses: process.env.ccEmail?.split(";")?.filter((s) => s.trim()),
   buildCMSNotice: CMSWithdrawalNotice,
   buildStateReceipt: stateWithdrawalReceipt,
   appendToSchema: {
