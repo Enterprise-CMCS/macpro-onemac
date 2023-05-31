@@ -19,6 +19,9 @@ import { Grid } from "@material-ui/core";
 
 export const NUM_REVIEWERS_TO_SHOW = 3;
 
+/** The detail section you know and love, now sporting a brand new second
+ * column! Uses Material-UI {@link Grid} and the CMS {@link Review} components.
+ * */
 const TwoColumnDetails = ({
   detailSection,
   attributes,
@@ -31,11 +34,26 @@ const TwoColumnDetails = ({
      *  - Figure out sorting/sort list of items in detailSection
      *  - Ensure scaling properly stacks each row */
   }
+  /** Sorting the incoming `detailSection` into groups of two so each
+   * single array item is an array where index 0 is column 1, and index
+   * 1 is column 2.
+   * @example [1, 2, 3, 4] => [[1, 2], [3, 4]]*/
+  const twoColumnArray = useMemo(() => {
+    const twoColArray: Array<Array<AttributeDetail>> = [];
+    for (let i = 0; i <= detailSection.length; i += 2) {
+      twoColArray.push([detailSection[i], detailSection[i + 1]]);
+    }
+    return twoColArray;
+  }, []);
+  /** A single detail item using {@link Review} for styles and handling
+   * defaults. */
   const DetailItem = ({ item }: { item: AttributeDetail }) => (
     <Review heading={item.heading}>
       {attributes[item.fieldName] ?? item.default ?? "-- --"}
     </Review>
   );
+  /** A single row of TWO {@link DetailItem}s and {@link Grid} styles from
+   * Material-UI. Handles validating a user's level of access for a field. */
   const DetailRow = ({
     firstColumn,
     secondColumn,
@@ -45,6 +63,7 @@ const TwoColumnDetails = ({
   }) => {
     const { userProfile } = useAppContext() ?? {};
     const userRoleObj = getUserRoleObj(userProfile?.userData?.roleList);
+    // Can be invoked to check permission to view
     const hasPermission = useCallback((item: AttributeDetail) => {
       return item.rolePrivilege ? userRoleObj[item.rolePrivilege] : true;
     }, []);
@@ -63,27 +82,10 @@ const TwoColumnDetails = ({
       </Grid>
     );
   };
-  const twoColumnArray = useMemo(() => {
-    const twoColArray: Array<Array<AttributeDetail>> = [];
-    for (let i = 0; i <= detailSection.length; i += 2) {
-      twoColArray.push([detailSection[i], detailSection[i + 1]]);
-    }
-    return twoColArray;
-  }, []);
-  const getItem = (fieldName: string): AttributeDetail | undefined => {
-    return detailSection.find((item) => item.fieldName === fieldName);
-  };
+
   return (
     <div>
       <Grid container>
-        {/*<DetailRow firstColumn={getItem("componentId")} />*/}
-        {/*<DetailRow*/}
-        {/*  firstColumn={getItem("territoryNice")}*/}
-        {/*  secondColumn={getItem("typeNice")} />*/}
-        {/*<DetailRow*/}
-        {/*  firstColumn={getItem("submissionDateNice")}*/}
-        {/*  secondColumn={getItem("proposedEffectiveDateNice")} />*/}
-        {/*<DetailRow firstColumn={getItem("latestRaiResponseDateNice")} />*/}
         {twoColumnArray.map((row, index) => (
           <DetailRow key={index} firstColumn={row[0]} secondColumn={row[1]} />
         ))}
