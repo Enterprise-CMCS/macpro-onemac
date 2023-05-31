@@ -12,6 +12,8 @@ Feature: Waiver Renewal in Package Dashboard
         Then verify 1915b 4 Renewal Waiver is a clickable option
         Then 1915b 4 FFS Selective Contracting Renewal Waiver
         Then verify user is on new waiver renewal page
+        Then verify the attachment info descriptiion
+        Then verify the attachment info link is for "1915b Waiver"
 
     Scenario: Existing Waiver Number Input Field format
         Then 1915b 4 FFS Selective Contracting Renewal Waiver

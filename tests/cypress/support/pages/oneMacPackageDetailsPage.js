@@ -55,6 +55,8 @@ const withdrawBtnOnTempExt = "//li[text()='Withdraw Package']";
 const packageAction = "//td[contains(@id,'packageActions-')]";
 const subjectHeader = "//h3[contains(text(),'Subject')]";
 const descriptionHeader = "//h3[contains(text(),'Description')]";
+const cPOCNameHeader = "//h3[contains(text(),'CPOC')]";
+const reviewTeamSRTHeader = "//h3[contains(text(),'Review Team (SRT)')]";
 
 export class oneMacPackageDetailsPage {
   verifyPackageDetailsPageIsVisible() {
@@ -125,8 +127,8 @@ export class oneMacPackageDetailsPage {
   verifyTypeContainsWaiverRenewal() {
     cy.xpath(typeHeader).next().contains("1915(b) Waiver Renewal");
   }
-  verifyTypeContainsTempExtension() {
-    cy.xpath(typeHeader).next().contains("Temporary Extension");
+  verifyTypeContains1915cTempExtension() {
+    cy.xpath(typeHeader).next().contains("1915(c) Temporary Extension");
   }
   verifyTypeContains1915bTempExtension() {
     cy.xpath(typeHeader).next().contains("1915(b) Temporary Extension");
@@ -338,6 +340,28 @@ export class oneMacPackageDetailsPage {
   }
   verifyDescrptionDoesNotExists() {
     cy.xpath(descriptionHeader).should("not.exist");
+  }
+  verifyCPOCNameHeaderExists() {
+    cy.xpath(cPOCNameHeader).should("be.visible");
+  }
+  verifyCPOCNameValueExists() {
+    cy.xpath(cPOCNameHeader)
+      .next("div")
+      .contains(/^(?!\s*$).+/);
+  }
+  verifyCPOCNameDoesNotExists() {
+    cy.xpath(cPOCNameHeader).should("not.exist");
+  }
+  verifyReviewTeamSRTHeaderExists() {
+    cy.xpath(reviewTeamSRTHeader).should("be.visible");
+  }
+  verifyReviewTeamSRTValueExists() {
+    cy.xpath(reviewTeamSRTHeader)
+      .next("div")
+      .contains(/^(?!\s*$).+/);
+  }
+  verifyReviewTeamSRTDoesNotExists() {
+    cy.xpath(reviewTeamSRTHeader).should("not.exist");
   }
 }
 export default oneMacPackageDetailsPage;

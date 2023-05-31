@@ -2112,6 +2112,18 @@ aside#faq-contact-info-box {
   }
 }
 
+.file-type-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.file-type-list-item {
+  display: flex;
+  b {
+    min-width: 8rem;
+  }
+}
+
 .vert-line-svg {
   position: absolute;
   left: 6.17%;
@@ -2778,4 +2790,25 @@ ul.choice-list {
 .strong-text {
   font-weight: 600;
   font-style: italic;
+}
+.review-team {
+  @extend .ds-c-button--transparent;
+  @extend .ds-c-button--small;
+  @extend .ds-u-padding--0;
+  text-align: left;
+  border: none;
+}
+
+.landing-container {
+  margin: 2rem;
+  padding: 2rem 0 8rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.landing-description {
+  max-width: 540px;
+  margin: 3rem 0;
 }

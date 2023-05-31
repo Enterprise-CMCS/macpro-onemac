@@ -12,6 +12,7 @@ Feature: Package Dashboard - SPA Tab Column Picker
         Then verify status column exists
         Then verify Initial Submission Date column exists
         Then verify submitted by column exists
+        Then verify CPOC Name column exists
         Then verify actions column exists
         Then verify Formal RAI Received column exists
         Then click show hide columns button
@@ -22,6 +23,7 @@ Feature: Package Dashboard - SPA Tab Column Picker
         Then verify submitted by exists
         Then verify type exists
         Then verify Formal RAI Received checkbox exists
+        Then verify CPOC Name exists
         Then click show hide columns button
 
     Scenario: SPAs Tab - Uncheck all and verify SPA ID and actions exists
@@ -31,6 +33,7 @@ Feature: Package Dashboard - SPA Tab Column Picker
         Then click status checkbox
         Then click submitted by checkbox
         Then click type checkbox
+        Then click CPOC Name checkbox
         Then click show hide columns button
         Then verify SPA ID column exists
         Then verify actions column exists
@@ -40,6 +43,7 @@ Feature: Package Dashboard - SPA Tab Column Picker
         Then verify Initial Submission Date column does not exist
         Then verify submitted by column does not exist
         Then verify Formal RAI Received column does not exist
+        Then verify CPOC Name column does not exist
         Then Click on My Account
         Then click the logout button
 
@@ -80,6 +84,7 @@ Feature: Package Dashboard - SPA Tab Column Picker
         Then click state checkbox
         Then click status checkbox
         Then click submitted by checkbox
+        Then click CPOC Name checkbox
         Then click show hide columns button
         Then verify the type on row one exists
         Then verify the type on row one is Medicaid SPA
@@ -107,6 +112,7 @@ Feature: Package Dashboard - SPA Tab Column Picker
         Then click Formal RAI Received checkbox
         Then click submitted by checkbox
         Then click state checkbox
+        Then click CPOC Name checkbox
         Then click show hide columns button
         Then verify type column exists
         Then verify state column exists

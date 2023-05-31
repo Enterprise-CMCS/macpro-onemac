@@ -226,6 +226,12 @@ const PackageList = () => {
           filter: CustomFilterTypes.DateRange,
           Filter: CustomFilterUi.DateRangeInPast,
         },
+        {
+          Header: "CPOC Name",
+          accessor: "cpocName",
+          id: "cpocName",
+          disableGlobalFilter: false,
+        },
         userRoleObj.isCMSUser
           ? {
               Header: "Formal RAI Received",
@@ -388,7 +394,7 @@ const PackageList = () => {
             data={packageList}
             initialState={initialTableState}
             pageContentRef={dashboardRef}
-            searchBarTitle="Search by Package ID or Submitter Name"
+            searchBarTitle="Search by Package ID, CPOC Name, or Submitter Name"
             withSearchBar
             onVisibleDataChange={setVisibleRows}
           />

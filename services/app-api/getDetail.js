@@ -73,6 +73,9 @@ export const getDetails = async (event) => {
       if (result.Item.description) delete result.Item.description;
     }
 
+    if (!userRoleObj.isCMSUser && result.Item.reviewTeam)
+      delete result.Item.reviewTeam;
+
     return { ...result.Item };
   } catch (e) {
     console.log("Error is: ", e);

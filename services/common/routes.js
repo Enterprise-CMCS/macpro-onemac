@@ -9,6 +9,15 @@ export const ROUTES = {
   DETAIL: "/detail",
   USER_MANAGEMENT: "/usermanagement",
   FAQ: "/FAQ",
+  FAQ_ACCEPTED_FILE_TYPES: "/FAQ#acceptable-file-formats",
+  FAQ_ATTACHMENTS_MED_SPA: "/FAQ#medicaid-spa-attachments",
+  FAQ_ATTACHMENTS_MED_SPA_RAI: "/FAQ#medicaid-spa-rai-attachments",
+  FAQ_ATTACHMENTS_CHIP_SPA: "/FAQ#chip-spa-attachments",
+  FAQ_ATTACHMENTS_CHIP_SPA_RAI: "/FAQ#chip-spa-rai-attachments",
+  FAQ_ATTACHMENTS_WAIVER_B: "/FAQ#waiverb-attachments",
+  FAQ_ATTACHMENTS_WAIVER_B_RAI: "/FAQ#waiverb-rai-attachments",
+  FAQ_ATTACHMENTS_WAIVER_B_EXT: "/FAQ#waiverb-extension-attachments",
+  FAQ_ATTACHMENTS_APPK: "/FAQ#appk-attachments",
   FAQ_TOP: "/FAQ/#top",
   FAQ_SPA_ID: "/FAQ#spa-id-format",
   FAQ_INITIAL_1915B_WAIVER_ID: "/FAQ#initial-waiver-id-format",
@@ -24,6 +33,9 @@ export const ROUTES = {
   STATE_SIGNUP: "/signup/state",
   REVIEWER_SIGNUP: "/signup/cmsreviewer",
   ATTACHMENT_LANDING: "/legacy-attachments",
+  ABP_LANDING: "/medicaid-abp",
+  MEDICAID_ELIGIBILITY_LANDING: "/medicaid-eligibility",
+  CHIP_ELIGIBILITY_LANDING: "/chip-eligibility",
 };
 
 export const ONEMAC_ROUTES = {
@@ -32,6 +44,8 @@ export const ONEMAC_ROUTES = {
   PACKAGE_LIST_WAIVER: "/dashboard?startTab=waiver",
   TRIAGE_GROUP: "/choices",
   TRIAGE_SPA: "/choices/spa",
+  TRIAGE_MEDICAID_SPA: "/choices/spa/medicaid",
+  TRIAGE_CHIP_SPA: "/choices/spa/chip",
   TRIAGE_WAIVER: "/choices/waiver",
   TRIAGE_WAIVER_B: "/choices/waiver-b",
   TRIAGE_WAIVER_B_4: "/choices/waiver-b-4",
@@ -80,5 +94,7 @@ export const TYPE_TO_DETAIL_ROUTE = {
   [ONEMAC_TYPE.WAIVER_RENEWAL]: ONEMAC_ROUTES.WAIVER_RENEWAL_DETAIL,
   [ONEMAC_TYPE.WAIVER_AMENDMENT]: ONEMAC_ROUTES.WAIVER_AMENDMENT_DETAIL,
   [ONEMAC_TYPE.WAIVER_EXTENSION]: ONEMAC_ROUTES.TEMPORARY_EXTENSION_DETAIL,
+  [ONEMAC_TYPE.WAIVER_EXTENSION_B]: ONEMAC_ROUTES.TEMPORARY_EXTENSION_DETAIL,
+  [ONEMAC_TYPE.WAIVER_EXTENSION_C]: ONEMAC_ROUTES.TEMPORARY_EXTENSION_DETAIL,
   [ONEMAC_TYPE.WAIVER_APP_K]: ONEMAC_ROUTES.WAIVER_APP_K_DETAIL,
 };
