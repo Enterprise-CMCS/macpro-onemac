@@ -70,12 +70,12 @@ const TwoColumnDetails = ({
     return (
       <Grid container item direction="row" className="detail-grid-item">
         {firstColumn && hasPermission(firstColumn) && (
-          <Grid item className="detail-grid-item">
+          <Grid xs={12} sm={6} item className="detail-grid-item">
             <DetailItem item={firstColumn} />
           </Grid>
         )}
         {secondColumn && hasPermission(secondColumn) && (
-          <Grid item className="detail-grid-item">
+          <Grid xs={12} sm={6} item className="detail-grid-item">
             <DetailItem item={secondColumn} />
           </Grid>
         )}
