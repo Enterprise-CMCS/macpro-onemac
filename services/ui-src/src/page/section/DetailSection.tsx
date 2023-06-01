@@ -39,14 +39,17 @@ const TwoColumnDetails = ({
       twoColArray.push([detailSection[i], detailSection[i + 1]]);
     }
     return twoColArray;
-  }, []);
+  }, [detailSection]);
   /** A single detail item using {@link Review} for styles and handling
    * defaults. */
-  const DetailItem = ({ item }: { item: AttributeDetail }) => (
-    <Review heading={item.heading}>
-      {attributes[item.fieldName] ?? item.default ?? "-- --"}
-    </Review>
-  );
+  const DetailItem = ({ item }: { item?: AttributeDetail }) =>
+    item !== undefined ? (
+      <Review heading={item.heading}>
+        {attributes[item.fieldName] ?? item.default ?? <></>}
+      </Review>
+    ) : (
+      <div className="detail-grid-item"></div>
+    );
   /** A single row of TWO {@link DetailItem}s and {@link Grid} styles from
    * Material-UI. Handles validating a user's level of access for a field. */
   const DetailRow = ({
@@ -59,9 +62,12 @@ const TwoColumnDetails = ({
     const { userProfile } = useAppContext() ?? {};
     const userRoleObj = getUserRoleObj(userProfile?.userData?.roleList);
     // Can be invoked to check permission to view
-    const hasPermission = useCallback((item: AttributeDetail) => {
-      return item.rolePrivilege ? userRoleObj[item.rolePrivilege] : true;
-    }, []);
+    const hasPermission = useCallback(
+      (item: AttributeDetail) => {
+        return item.rolePrivilege ? userRoleObj[item.rolePrivilege] : true;
+      },
+      [userRoleObj]
+    );
     return (
       <Grid
         justifyContent="space-between"
