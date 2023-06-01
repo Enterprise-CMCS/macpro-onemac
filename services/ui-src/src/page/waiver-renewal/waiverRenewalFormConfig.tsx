@@ -20,6 +20,7 @@ export const waiverRenewalFormConfig = {
   idAdditionalErrorMessage: [
     "For renewals, the “R##” starts with ‘01’ and ascends.",
   ],
+  userProvidedIdSection: 1,
   postPendId: ".00",
   proposedEffectiveDate: true,
   attachmentIntroJSX: defaultAttachmentInstructionsJSX(

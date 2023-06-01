@@ -14,6 +14,7 @@ export const initialWaiverFormConfig = {
         "Must be a new initial number with the format " + initialWaiverIdFormat,
     },
   ],
+  userProvidedIdSection: 0,
   postPendId: ".R00.00",
   proposedEffectiveDate: true,
   attachmentIntroJSX: defaultAttachmentInstructionsJSX(
