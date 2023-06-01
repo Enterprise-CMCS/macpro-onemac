@@ -346,10 +346,17 @@ ul {
 
 .alert-bar:not(:empty) {
   padding-top: 2rem;
-  padding-left: 14rem;
-  padding-right: 14rem;
+  padding-left: 7.2rem;
+  padding-right: 7.2rem;
   padding-bottom: 2rem;
 }
+
+.ds-c-alert {
+  @extend .ds-u-margin-left--auto;
+  @extend .ds-u-margin-right--auto;
+  @include max-width-ultra-wide;
+}
+
 .alert-bar button {
   position: absolute;
   background: inherit;
