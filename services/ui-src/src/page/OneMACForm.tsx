@@ -204,14 +204,14 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
   }
 
   const handleParentIdChange = useCallback(
-    (parentId: string) => {
+    (parentId: string | undefined) => {
       let updatedRecord = { ...oneMacFormData } as OneMacFormData; // You need a new object to be able to update the state
       let updatedIdHelperData = { ...idHelperData } as IDHelperData;
 
-      updatedRecord.parentId = parentId;
+      if (parentId) updatedRecord.parentId = parentId;
 
       if (formConfig.userProvidedIdSection) {
-        const parts = parentId.split(".");
+        const parts = parentId ? parentId.split(".") : [];
         console.log("parts is: ", parts);
 
         updatedIdHelperData.prefillId = parts
@@ -238,7 +238,7 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
   );
 
   useEffect(() => {
-    handleParentIdChange(presetParentId ?? "");
+    handleParentIdChange(presetParentId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
