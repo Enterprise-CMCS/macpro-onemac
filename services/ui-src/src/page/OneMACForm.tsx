@@ -239,6 +239,7 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
 
   useEffect(() => {
     handleParentIdChange(presetParentId ?? "");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
