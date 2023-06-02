@@ -1,6 +1,7 @@
 import React from "react";
 import { Button } from "@cmsgov/design-system";
 import PageTitleBar from "./PageTitleBar";
+import { ROUTES } from "cmscommonlib";
 
 export enum ExternalSystem {
   MAC_PRO = "https://www.medicaid.gov/resources-for-states/medicaid-and-chip-program-macpro-portal/index.html#MACPro",
@@ -21,8 +22,11 @@ export interface TriageLandingPageConfig {
 const FAQHelperText = () => (
   <span className="landing-description">
     <i>
-      For additional information on where to submit, refer to the Crosswalk from
-      Paper-based State Plan to MACPro and MMDL document in our FAQ section.
+      For additional information on where to submit, refer to the{" "}
+      <a href={ROUTES.FAQ_SYSTEM} target="new">
+        Crosswalk from Paper-based State Plan to MACPro and MMDL
+      </a>{" "}
+      document in our FAQ section.
     </i>
   </span>
 );
