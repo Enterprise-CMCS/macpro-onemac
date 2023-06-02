@@ -13,9 +13,11 @@ export type OneMACFormConfig = {
   idFormat?: string;
   idFieldHint?: FieldHint[];
   userProvidedIdSection?: number;
+  userProvidedIdRegex: string;
   postPendId?: string;
   idAdditionalErrorMessage?: string[];
   idFAQLink?: string;
+  idSize?: string;
   pageTitle?: string;
   introJSX?: JSX.Element;
   addlIntroJSX?: JSX.Element;
@@ -96,7 +98,9 @@ export const defaultOneMACFormConfig = {
   idFormat: "",
   idFieldHint: [],
   idFAQLink: "",
+  idSize: "full",
   landingPage: ONEMAC_ROUTES.PACKAGE_LIST,
+  userProvidedIdRegex: "",
   proposedEffectiveDate: false,
   attachmentIntroJSX: defaultAttachmentInstructionsJSX(),
 };
@@ -226,5 +230,6 @@ export const defaultWithdrawConfig = {
   addlInfoText:
     "Explain your need for withdrawal or upload supporting documentation.",
   landingPage: ONEMAC_ROUTES.PACKAGE_LIST,
+  userProvidedIdRegex: "",
   proposedEffectiveDate: false,
 };

@@ -31,7 +31,9 @@ export const temporaryExtensionFormInfo: OneMACFormConfig = {
     },
   ],
   idFormat: idFormat,
+  idSize: "small",
   userProvidedIdSection: 2,
+  userProvidedIdRegex: "TE[0-9]{2}$",
   landingPage: ONEMAC_ROUTES.PACKAGE_LIST_WAIVER,
   parentLabel: "Approved Initial or Renewal Waiver Number",
   parentFieldHint: [

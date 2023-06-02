@@ -12,6 +12,7 @@ const ComponentId: React.FC<{
   idLabel: string;
   idFieldHint: FieldHint[];
   idFAQLink?: string;
+  idSize?: string;
   statusMessages: Message[];
   prefill?: string;
   postPendId?: string;
@@ -23,6 +24,7 @@ const ComponentId: React.FC<{
   idLabel,
   idFieldHint,
   idFAQLink,
+  idSize = "full",
   statusMessages,
   prefill,
   postPendId,
@@ -71,7 +73,7 @@ const ComponentId: React.FC<{
           <div className="all-id">
             {prefill && <span className="prefill-id">{prefill}</span>}
             <input
-              className="field"
+              className={"field-" + idSize}
               type="text"
               id={idPrefix + "componentId"}
               name="componentId"

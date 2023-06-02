@@ -159,8 +159,14 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
       }
       // must match the associated Regex string for format
       else if (
-        formConfig.idRegex &&
-        !matchesRegex(componentId, formConfig.idRegex)
+        (formConfig.userProvidedIdRegex &&
+          !matchesRegex(
+            idHelperData.userEnteredId,
+            formConfig.userProvidedIdRegex
+          )) ||
+        (!formConfig.userProvidedIdRegex &&
+          formConfig.idRegex &&
+          !matchesRegex(idHelperData.userEnteredId, formConfig.idRegex))
       ) {
         errorMessages.push(buildWrongFormatMessage(formConfig));
         if (formConfig.idAdditionalErrorMessage) {
@@ -175,7 +181,7 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
 
       return errorMessages;
     },
-    [activeTerritories, formConfig]
+    [activeTerritories, formConfig, idHelperData.userEnteredId]
   );
 
   async function handleComponentIdChange(userEnteredId: string) {
@@ -208,12 +214,15 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
         const parts = parentId.split(".");
         console.log("parts is: ", parts);
 
-        updatedIdHelperData.prefillId =
-          parts.slice(0, formConfig.userProvidedIdSection).join(".") + ".";
+        updatedIdHelperData.prefillId = parts
+          .slice(0, formConfig.userProvidedIdSection)
+          .join(".");
+        if (parts.length > formConfig.userProvidedIdSection)
+          updatedIdHelperData.prefillId += ".";
         updatedIdHelperData.postPendId =
-          (formConfig.userProvidedIdSection < 2 ? "." : "") +
-            parts.slice(formConfig.userProvidedIdSection + 1).join(".") ??
-          formConfig.postPendId;
+          formConfig.postPendId ??
+          parts.slice(formConfig.userProvidedIdSection + 1).join(".") ??
+          "";
       }
       console.log("parent updated Record: ", updatedRecord);
       console.log("parent id helper Record: ", updatedIdHelperData);
@@ -227,6 +236,10 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
       formConfig.postPendId,
     ]
   );
+
+  useEffect(() => {
+    handleParentIdChange(presetParentId ?? "");
+  }, []);
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (!event || !event.target) return;
@@ -517,6 +530,7 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
             idLabel={formConfig.idLabel}
             idFieldHint={formConfig.idFieldHint ?? [{ text: "" }]}
             idFAQLink={formConfig.idFAQLink}
+            idSize={formConfig.idSize}
             statusMessages={componentIdStatusMessages}
             disabled={!!presetComponentId}
             prefill={idHelperData.prefillId}
