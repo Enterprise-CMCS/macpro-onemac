@@ -24,6 +24,7 @@ export const waiverAmendmentFormConfig = {
   ],
   idSize: "small",
   userProvidedIdSection: 2,
+  userProvidedIdRegex: "[0-9]{2}$",
   proposedEffectiveDate: true,
   attachmentIntroJSX: defaultAttachmentInstructionsJSX(
     ROUTES.FAQ_ATTACHMENTS_WAIVER_B

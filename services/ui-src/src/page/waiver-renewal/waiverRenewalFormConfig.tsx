@@ -22,6 +22,7 @@ export const waiverRenewalFormConfig = {
   ],
   idSize: "small",
   userProvidedIdSection: 1,
+  userProvidedIdRegex: "R[0-9]{2}$",
   postPendId: ".00",
   proposedEffectiveDate: true,
   attachmentIntroJSX: defaultAttachmentInstructionsJSX(

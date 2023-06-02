@@ -217,7 +217,7 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
         updatedIdHelperData.prefillId = parts
           .slice(0, formConfig.userProvidedIdSection)
           .join(".");
-        if (parts.length > formConfig.userProvidedIdSection)
+        if (parts.length >= formConfig.userProvidedIdSection)
           updatedIdHelperData.prefillId += ".";
         updatedIdHelperData.postPendId =
           formConfig.postPendId ??

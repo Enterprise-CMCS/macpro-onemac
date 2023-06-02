@@ -44740,7 +44740,7 @@
     "pk": "MD-0801.R00.01"
   },
   {
-    "pk": "MD-02.R02",
+    "pk": "MD-0002.R02",
     "sk": "SEATool#1671659922810",
     "ACTIONTYPES": [
      {
@@ -44762,7 +44762,7 @@
     "COMPONENTS_SP": null,
     "FM_ANALYST": null,
     "GSI1pk": "SEATool#1915b_waivers",
-    "GSI1sk": "MD-02.R02",
+    "GSI1sk": "MD-0002.R02",
     "LEAD_ANALYST": [
      {
       "EMAIL": "TestPerson@cmstest.hhs.gov",
@@ -44801,7 +44801,7 @@
     "PROGRAM_ANALYST": null,
     "RAI": [
      {
-      "ID_NUMBER": "MD-02.R02",
+      "ID_NUMBER": "MD-0002.R02",
       "RAI_RECEIVED_DATE": 1668643200000,
       "RAI_REQUESTED_DATE": 1647907200000,
       "RAI_WITHDRAWN_DATE": null
@@ -44873,14 +44873,14 @@
       {
        "EA_FIELD_ID": 24,
        "EMAIL_SENT": null,
-       "ID_NUMBER": "MD-02.R02",
+       "ID_NUMBER": "MD-0002.R02",
        "TEXT_DD_VAL": null,
        "YES_NO_VAL": true
       },
       {
        "EA_FIELD_ID": 25,
        "EMAIL_SENT": null,
-       "ID_NUMBER": "MD-02.R02",
+       "ID_NUMBER": "MD-0002.R02",
        "TEXT_DD_VAL": null,
        "YES_NO_VAL": false
       }
@@ -44948,7 +44948,7 @@
      "GAP3_NA": null,
      "GAP_NA": null,
      "GUIDANCE_DOCS_SUBMITTED": null,
-     "ID_NUMBER": "MD-02.R02",
+     "ID_NUMBER": "MD-0002.R02",
      "INITIAL_SUBMISSION_COMPLETE": null,
      "LEAD_ANALYST_ID": 3815,
      "MISSING_INFORMATION": null,
@@ -44988,22 +44988,22 @@
     },
     "STATE_PLAN_SERVICETYPES": [
      {
-      "ID_NUMBER": "MD-02.R02",
+      "ID_NUMBER": "MD-0002.R02",
       "SERVICE_TYPE_ID": 4
      }
     ],
     "STATE_PLAN_SERVICE_SUBTYPES": [
      {
-      "ID_NUMBER": "MD-02.R02",
+      "ID_NUMBER": "MD-0002.R02",
       "SERVICE_SUBTYPE_ID": 24
      }
     ],
     "STOP_RESUME_DATES": null
    },
   {
-    "pk": "MD-02.R02",
+    "pk": "MD-0002.R02",
     "sk": "Package",
-    "componentId": "MD-02.R02",
+    "componentId": "MD-0002.R02",
     "componentType": "waiverrenewal",
     "cpocName": "Person Testy",
     "currentStatus": "Approved",
