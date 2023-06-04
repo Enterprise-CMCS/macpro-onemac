@@ -177,7 +177,7 @@ export const oneMACFAQContent: FAQContent[] = [
               ].map(([filename, label]) => (
                 <li key={filename}>
                   <a
-                    href={`${process.env.PUBLIC_URL}assets/onboarding/${filename}`}
+                    href={`${process.env.PUBLIC_URL}/assets/onboarding/${filename}`}
                     rel="noopener noreferrer"
                     target="_blank"
                   >
