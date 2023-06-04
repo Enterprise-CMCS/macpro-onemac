@@ -35,7 +35,7 @@ export const oneMACFAQContent: FAQContent[] = [
             <ul>
               <li>
                 <a
-                  href={`${process.env.PUBLIC_URL}assets/onboarding/eligibility-crosswalk-paper-based-state-plan-macpro.pdf`}
+                  href={`${process.env.PUBLIC_URL}/assets/onboarding/eligibility-crosswalk-paper-based-state-plan-macpro.pdf`}
                   rel="noopener noreferrer"
                   target="_blank"
                 >
