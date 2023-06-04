@@ -9,6 +9,7 @@ Feature: SPA Form Logic
 
     Scenario: Verify the SPA ID format check on Medicaid SPA
         Then click on Medicaid SPA
+        Then click All Other Medicaid SPA Submissions
         Then type in Medicaid SPA ID 2
         Then select proposed effective date 3 months from today
         Then Add "15MB.pdf" file to form 179
@@ -26,6 +27,7 @@ Feature: SPA Form Logic
 
     Scenario: Verify the SPA ID format check on CHIP SPA
         Then click on CHIP SPA
+        Then click All Other CHIP SPA Submissions
         Then type in Chip SPA ID 2
         Then select proposed effective date 3 months from today
         Then Add file for Current State Plan
