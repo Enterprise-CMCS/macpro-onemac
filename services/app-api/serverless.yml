@@ -26,6 +26,9 @@ custom:
   reviewerEmail: ${ssm:/configuration/${self:custom.stage}/email/cms_spa_form_cms_email, ssm:/configuration/default/email/cms_spa_form_cms_email, file(resources/ssm-params.yml):Resources.CmsSpaFormCmsEmail.Properties.Value}
   reviewerCHIPEmail: ${ssm:/configuration/${self:custom.stage}/email/cms_spa_form_chip_email, ssm:/configuration/default/email/cms_spa_form_chip_email, file(resources/ssm-params.yml):Resources.CmsSpaFormChipEmail.Properties.Value}
   chipCcEmail: ${ssm:/configuration/${self:custom.stage}/email/cms_chip_form_cc_email, ssm:/configuration/default/email/cms_chip_form_cc_email, file(resources/ssm-params.yml):Resources.CmsSpaFormChipCcEmail.Properties.Value}
+  dmcoEmail: ${ssm:/configuration/${self:custom.stage}/email/cms_dmco_email, file(resources/ssm-params.yml):Resources.CmsDmcoEmail.Properties.Value}
+  dhcbsooEmail: ${ssm:/configuration/${self:custom.stage}/email/cms_dhcbsoo_email, file(resources/ssm-params.yml):Resources.CmsDhcbsooEmail.Properties.Value}
+  dpoEmail: ${ssm:/configuration/${self:custom.stage}/email/cms_dpo_email, file(resources/ssm-params.yml):Resources.CmsDpoEmail.Properties.Value}
   testingEmail: ${ssm:/configuration/${self:custom.stage}/email/testing_team_email, ssm:/configuration/default/email/testing_team_email, ""}
   applicationEndpoint: ${cf:ui-${self:custom.stage}.ApplicationEndpointUrl, "onemac.cms.gov"}
   attachmentsBucket: ${cf:uploads-${self:custom.stage}.AttachmentsBucketName}
@@ -78,10 +81,7 @@ provider:
     NODE_OPTIONS: "--enable-source-maps"
     oneMacTableName: ${self:custom.oneMacTableName}
     emailSource: ${self:custom.emailSource}
-    userAccessEmailSource: ${self:custom.userAccessEmailSource}
     reviewerEmail: ${self:custom.reviewerEmail}
-    reviewerCHIPEmail: ${self:custom.reviewerCHIPEmail}
-    chipCcEmail: ${self:custom.chipCcEmail}
     testingEmail: ${self:custom.testingEmail}
     applicationEndpoint: ${self:custom.applicationEndpoint}
     attachmentsBucket: ${self:custom.attachmentsBucket}
@@ -132,6 +132,9 @@ functions:
     handler: form/submitCHIPSPA.main
     role: LambdaApiRole
     timeout: 30
+    environment:
+      reviewerEmail: ${self:custom.reviewerCHIPEmail}
+      ccEmail: ${self:custom.chipCcEmail}
     events:
       - http:
           path: submitCHIPSPA
@@ -143,6 +146,9 @@ functions:
     handler: form/submitCHIPSPARAIResponse.main
     role: LambdaApiRole
     timeout: 30
+    environment:
+      reviewerEmail: ${self:custom.reviewerCHIPEmail}
+      ccEmail: ${self:custom.chipCcEmail}
     events:
       - http:
           path: submitCHIPSPARAIResponse
@@ -330,6 +336,8 @@ functions:
     handler: form/withdrawInitialWaiver.main
     role: LambdaApiRole
     timeout: 30
+    environment:
+      ccEmail: ${self:custom.dmcoEmail}
     events:
       - http:
           path: withdrawInitialWaiver
@@ -341,6 +349,8 @@ functions:
     handler: form/withdrawMedicaidSPA.main
     role: LambdaApiRole
     timeout: 30
+    environment:
+      ccEmail: ${self:custom.dpoEmail}
     events:
       - http:
           path: withdrawMedicaidSPA
@@ -352,6 +362,9 @@ functions:
     handler: form/withdrawCHIPSPA.main
     role: LambdaApiRole
     timeout: 30
+    environment:
+      reviewerEmail: ${self:custom.reviewerCHIPEmail}
+      ccEmail: ${self:custom.chipCcEmail}
     events:
       - http:
           path: withdrawCHIPSPA
@@ -363,6 +376,8 @@ functions:
     handler: form/withdrawWaiverRenewal.main
     role: LambdaApiRole
     timeout: 30
+    environment:
+      ccEmail: ${self:custom.dmcoEmail}
     events:
       - http:
           path: withdrawWaiverRenewal
@@ -374,6 +389,8 @@ functions:
     handler: form/withdrawWaiverAmendment.main
     role: LambdaApiRole
     timeout: 30
+    environment:
+      ccEmail: ${self:custom.dmcoEmail}
     events:
       - http:
           path: withdrawWaiverAmendment
@@ -385,6 +402,8 @@ functions:
     handler: form/withdrawWaiverAppendixK.main
     role: LambdaApiRole
     timeout: 30
+    environment:
+      ccEmail: ${self:custom.dhcbsooEmail}
     events:
       - http:
           path: withdrawWaiverAppendixK
@@ -475,6 +494,8 @@ functions:
   requestAccess:
     handler: requestAccess.main
     role: LambdaApiRole
+    environment:
+      userAccessEmailSource: ${self:custom.userAccessEmailSource}
     events:
       - http:
           path: requestAccess
@@ -486,6 +507,8 @@ functions:
     handler: updateUserStatus.main
     role: LambdaApiRole
     timeout: 30
+    environment:
+      userAccessEmailSource: ${self:custom.userAccessEmailSource}
     events:
       - http:
           path: updateUserStatus
