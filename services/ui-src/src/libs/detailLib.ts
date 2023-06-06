@@ -64,11 +64,13 @@ export const subjectDefault: AttributeDetail = {
   heading: "Subject",
   fieldName: "subject",
   default: "-- --",
+  rolePrivilege: "isCMSUser",
 };
 export const descriptionDefault: AttributeDetail = {
   heading: "Description",
   fieldName: "description",
   default: "-- --",
+  rolePrivilege: "isCMSUser",
 };
 export const cpocDefault: AttributeDetail = {
   heading: "CPOC",
@@ -125,7 +127,7 @@ export const defaultDetailSectionItems = [
   submissionDateDefault,
   proposedEffectiveDateDefault,
   latestRaiResponseDateDefault,
-  blankBox, // empty space
+  blankBox, // empty space -- TODO: separator
   subjectDefault,
   descriptionDefault,
   cpocDefault,
@@ -139,7 +141,7 @@ export const defaultWaiverDetailSectionItems = [
   submissionDateDefault,
   proposedEffectiveDateDefault,
   latestRaiResponseDateDefault,
-  blankBox, // empty space
+  blankBox, // empty space -- TODO: separator
   subjectDefault,
   descriptionDefault,
   cpocDefault,

@@ -63,7 +63,8 @@ const TwoColumnDetails = ({
     const userRoleObj = getUserRoleObj(userProfile?.userData?.roleList);
     // Can be invoked to check permission to view
     const hasPermission = useCallback(
-      (item: AttributeDetail) => {
+      (item?: AttributeDetail) => {
+        if (item === undefined || item === null) return false;
         return item.rolePrivilege ? userRoleObj[item.rolePrivilege] : true;
       },
       [userRoleObj]
@@ -76,16 +77,12 @@ const TwoColumnDetails = ({
         direction="row"
         className="detail-grid-item"
       >
-        {firstColumn && hasPermission(firstColumn) && (
-          <Grid xs={12} sm={5} item className="detail-grid-item">
-            <DetailItem item={firstColumn} />
-          </Grid>
-        )}
-        {secondColumn && hasPermission(secondColumn) && (
-          <Grid xs={12} sm={5} item className="detail-grid-item">
-            <DetailItem item={secondColumn} />
-          </Grid>
-        )}
+        <Grid xs={12} sm={5} item className="detail-grid-item">
+          {hasPermission(firstColumn) && <DetailItem item={firstColumn} />}
+        </Grid>
+        <Grid xs={12} sm={5} item className="detail-grid-item">
+          {hasPermission(secondColumn) && <DetailItem item={secondColumn} />}
+        </Grid>
       </Grid>
     );
   };
