@@ -38,3 +38,27 @@ Resources:
       Description: Branch specific email addresses of recipients for CC on cms chip spa form submission emails
       Name: !Sub /configuration/${self:custom.stage}/email/cms_chip_form_cc_email
       Value: "OneMAC@cms.hhs.gov"
+
+  CmsDpoEmail:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Type: String
+      Description: Branch specific email addresses of the DPO group for CMS
+      Name: !Sub /configuration/${self:custom.stage}/email/cms_dpo_email
+      Value: "OneMAC@cms.hhs.gov"
+
+  CmsDmcoEmail:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Type: String
+      Description: Branch specific email addresses of the DMCO group for CMS
+      Name: !Sub /configuration/${self:custom.stage}/email/cms_dmco_email
+      Value: "OneMAC@cms.hhs.gov"
+
+  CmsDhcbsooEmail:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Type: String
+      Description: Branch specific email addresses of the DHCBSOO group for CMS
+      Name: !Sub /configuration/${self:custom.stage}/email/cms_dhcbsoo_email
+      Value: "OneMAC@cms.hhs.gov"
