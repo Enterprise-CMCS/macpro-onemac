@@ -205,10 +205,11 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
 
   const handleParentIdChange = useCallback(
     (parentId: string | undefined) => {
+      console.log("Parent ID is: ", parentId);
       let updatedRecord = { ...oneMacFormData } as OneMacFormData; // You need a new object to be able to update the state
       let updatedIdHelperData = { ...idHelperData } as IDHelperData;
 
-      if (parentId) updatedRecord.parentId = parentId;
+      if (parentId !== undefined) updatedRecord.parentId = parentId;
 
       if (formConfig.userProvidedIdSection) {
         const parts = parentId ? parentId.split(".") : [];
