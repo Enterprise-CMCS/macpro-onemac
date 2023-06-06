@@ -197,15 +197,12 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
       updatedRecord.componentId
     );
 
-    console.log("component updated Record: ", updatedRecord);
-    console.log("component id helper Record: ", updatedIdHelperData);
     setOneMacFormData(updatedRecord);
     setIdHelperData(updatedIdHelperData);
   }
 
   const handleParentIdChange = useCallback(
     (parentId: string | undefined) => {
-      console.log("Parent ID is: ", parentId);
       let updatedRecord = { ...oneMacFormData } as OneMacFormData; // You need a new object to be able to update the state
       let updatedIdHelperData = { ...idHelperData } as IDHelperData;
 
@@ -213,7 +210,6 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
 
       if (formConfig.userProvidedIdSection) {
         const parts = parentId ? parentId.split(".") : [];
-        console.log("parts is: ", parts);
 
         updatedIdHelperData.prefillId = parts
           .slice(0, formConfig.userProvidedIdSection)
@@ -225,8 +221,6 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
           parts.slice(formConfig.userProvidedIdSection + 1).join(".") ??
           "";
       }
-      console.log("parent updated Record: ", updatedRecord);
-      console.log("parent id helper Record: ", updatedIdHelperData);
       setOneMacFormData(updatedRecord);
       setIdHelperData(updatedIdHelperData);
     },
