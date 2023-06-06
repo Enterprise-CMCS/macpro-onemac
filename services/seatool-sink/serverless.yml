@@ -48,6 +48,13 @@ provider:
   runtime: nodejs14.x
   region: us-east-1
   stage: dev
+  disableRollback: true
+
+
+
+
+
+
 
 functions:
   seaToolEvent:
