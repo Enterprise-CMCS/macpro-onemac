@@ -21,7 +21,7 @@ custom:
   bootstrapBrokerStringTls: ${ssm:/configuration/${self:custom.stage}/bigmac/bootstrapBrokerStringTls, ssm:/configuration/default/bigmac/bootstrapBrokerStringTls}
   vpcId: ${ssm:/configuration/${self:custom.stage}/vpc/id, ssm:/configuration/default/vpc/id}
   connectGroup: mgmt.connect.${self:service}-${self:custom.stage}
-  bigmacRoleArn: ${ssm:/aws/reference/secretsmanager/${self:custom.project}/${sls:stage}/bigmacRoleArn, ssm:/aws/reference/secretsmanager/${self:custom.project}/default/bigmacRoleArn}
+  bigmacRoleArn: ${ssm:/aws/reference/secretsmanager/onemac/${sls:stage}/bigmacRoleArn, ssm:/aws/reference/secretsmanager/onemac/default/bigmacRoleArn}
   dataSubnets:
     - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/data/a/id, ssm:/configuration/default/vpc/subnets/data/a/id}
     - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/data/b/id, ssm:/configuration/default/vpc/subnets/data/b/id}
