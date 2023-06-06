@@ -154,7 +154,7 @@ export const oneMACFAQContent: FAQContent[] = [
               ].map(([filename, label]) => (
                 <li key={filename}>
                   <a
-                    href={`${process.env.PUBLIC_URL}assets/onboarding/${filename}`}
+                    href={`${process.env.PUBLIC_URL}/assets/onboarding/${filename}`}
                     rel="noopener noreferrer"
                     target="_blank"
                   >
@@ -166,7 +166,7 @@ export const oneMACFAQContent: FAQContent[] = [
             <VideoContent
               title="OneMAC State System Overview"
               introText="Watch this video for an overview on Package View."
-              src={`${process.env.PUBLIC_URL}assets/onboarding/OneMACPackageViewStateDemo.mp4`}
+              src={`${process.env.PUBLIC_URL}/assets/onboarding/OneMACPackageViewStateDemo.mp4`}
               transcript={stateSystemOverviewTranscript}
             />
           </>
