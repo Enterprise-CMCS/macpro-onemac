@@ -11,8 +11,6 @@ import {
 export const chipSPARAIResponseFormConfig = {
   ...defaultFormConfig,
   ...chipSPARAIResponse,
-  CMSToAddresses: [process.env.reviewerCHIPEmail],
-  CMSCcAddresses: process.env.chipCcEmail?.split(";")?.filter((s) => s.trim()),
   appendToSchema: {
     parentId: defaultParentId,
     parentType: defaultParentType,
