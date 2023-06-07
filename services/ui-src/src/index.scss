@@ -191,8 +191,6 @@ p.field-hint {
 }
 .app-bar {
   @extend .ds-l-row;
-  padding-left: 7.2rem;
-  padding-right: 7.2rem;
   @extend .ds-u-padding-top--1;
   @extend .ds-u-padding-bottom--1;
   @extend .ds-u-margin-left--0;
@@ -357,10 +355,17 @@ ul {
 
 .alert-bar:not(:empty) {
   padding-top: 2rem;
-  padding-left: 14rem;
-  padding-right: 14rem;
   padding-bottom: 2rem;
+  @include max-width-ultra-wide();
+  @extend .ds-u-margin-left--auto;
+  @extend .ds-u-margin-right--auto;
+
+  @media only screen and (max-width: 1024px) {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
 }
+
 .alert-bar button {
   position: absolute;
   background: inherit;
@@ -602,9 +607,11 @@ input[type="file"] {
 }
 
 .onemac-form {
-  @extend .app-bar;
   @extend .ds-u-padding-top--5;
   @extend .ds-u-justify-content--center;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  @extend .ds-l-row;
   flex-direction: column;
   align-items: center;
 
@@ -1346,10 +1353,11 @@ article.form-container {
   text-decoration-skip-ink: none;
 }
 .usa-bar {
-  @extend .app-bar;
   background-color: $color-gray-lightest;
   font-size: 14px;
   min-height: 20px;
+  margin-left: 1rem;
+  margin-right: 1rem;
 
   img {
     height: 20px;
@@ -1511,17 +1519,16 @@ article.form-container {
 .footer-bottom-container {
   @extend .ds-u-display--flex;
   @extend .ds-u-justify-content--around;
-  padding-left: 7.2rem;
-  padding-right: 7.2rem;
 
   .header-wrapper,
   .footer-wrapper {
+    margin-left: 1rem;
+    margin-right: 1rem;
     @include max-width-ultra-wide;
     @extend .ds-u-display--flex;
     @extend .ds-u-align-items--center;
     @extend .ds-u-justify-content--between;
-    gap: 1rem;
-    width: 100%;
+    width: 100vw;
   }
 
   @media only screen and (max-width: $width-lg) {
@@ -1595,8 +1602,6 @@ article.form-container {
   @extend .ds-u-display--flex;
   @extend .ds-u-justify-content--around;
   background-color: #f0f0f0;
-  padding-left: 7.2rem;
-  padding-right: 7.2rem;
 
   .ds-c-usa-banner {
     @include max-width-ultra-wide;
