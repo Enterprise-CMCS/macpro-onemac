@@ -189,7 +189,7 @@ export const oneMACFAQContent: FAQContent[] = [
             <VideoContent
               title="OneMAC State System Overview"
               introText="Watch this video for an overview on Package View."
-              src={`${process.env.PUBLIC_URL}assets/onboarding/OneMACPackageViewStateDemo.mp4`}
+              src={`${process.env.PUBLIC_URL}/assets/onboarding/OneMACPackageViewStateDemo.mp4`}
               transcript={stateSystemOverviewTranscript}
             />
           </>
