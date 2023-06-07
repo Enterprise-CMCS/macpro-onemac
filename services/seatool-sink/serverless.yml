@@ -157,19 +157,27 @@ resources:
       Properties:
         ContainerDefinitions:
           - Name: ${self:service}-${self:custom.stage}-worker
-            Image: 'confluentinc/cp-kafka-connect:5.2.4'
+            Image: 'confluentinc/cp-kafka-connect:6.0.9'
             Memory: 4096
             Cpu: 2048
+            User: "root"
             Command:
               - bash
               - "-c"
               - |
-                  mkdir -p /usr/share/java/cp-base-new
-                  export CONNECT_REST_HOST_NAME=`curl $ECS_CONTAINER_METADATA_URI_V4 | sed -e 's/.*IPv4Addresses":\["\(.*\)"\],"AttachmentIndex.*/\1/'` &&
-                  export CONNECT_REST_ADVERTISED_HOST_NAME=$CONNECT_REST_HOST_NAME &&
+                export ENI_IP=`curl $ECS_CONTAINER_METADATA_URI_V4 | sed -e 's/.*IPv4Addresses":\["\(.*\)"\],"AttachmentIndex.*/\1/'` &&
+                echo "$ENI_IP localhost" > /etc/hosts &&
+                echo "export ENI_IP=$ENI_IP" >> /home/appuser/.bashrc
+                runuser -p appuser -c '''
+                  export HOME=/home/appuser &&
+                  source /home/appuser/.bashrc
+                  export CONNECT_REST_HOST_NAME=$ENI_IP &&
+                  export CONNECT_REST_ADVERTISED_HOST_NAME=$ENI_IP &&
                   curl -k -SL -o /usr/share/java/cp-base-new/aws-msk-iam-auth-1.1.3-all.jar "https://github.com/aws/aws-msk-iam-auth/releases/download/v1.1.3/aws-msk-iam-auth-1.1.3-all.jar" &&
                   curl -k -SL -o /etc/kafka-connect/jars/kafka-connect-lambda-1.2.2.jar "https://github.com/Nordstrom/kafka-connect-lambda/releases/download/v1.2.2/kafka-connect-lambda-1.2.2.jar" &&
+                  chmod +x /etc/kafka-connect/jaras/kafka-connect-lambda-1.2.2.jar
                   /etc/confluent/docker/run
+                '''
             Environment:
               - Name: CONNECT_BOOTSTRAP_SERVERS
                 Value: >-
@@ -195,7 +203,7 @@ resources:
               - Name: CONNECT_INTERNAL_VALUE_CONVERTER
                 Value: org.apache.kafka.connect.json.JsonConverter
               - Name: CONNECT_PLUGIN_PATH
-                Value: /usr/share/java,/etc/kafka-connect/jars,/usr/local/share/kafka/plugins
+                Value: /usr/share/java,/usr/local/share/kafka/plugins
               - Name: CLASSPATH
                 Value: /etc/kafka-connect/jars/*:/usr/share/java/cp-base-new/aws-msk-iam-auth-1.1.3-all.jar
               - Name: CONNECT_SECURITY_PROTOCOL
