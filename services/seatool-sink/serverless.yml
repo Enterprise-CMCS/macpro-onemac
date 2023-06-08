@@ -72,7 +72,7 @@ functions:
         - KafkaConnectWorkerRole
         - Arn
       sessionName: ${self:custom.stage}-sink-role
-      topics: aws.ksqldb.seatool.agg.StatePlan_Medicaid_SPA,aws.ksqldb.seatool.agg.StatePlan_CHIP_SPA,aws.ksqldb.seatool.agg.StatePlan_1915b_waivers,aws.ksqldb.seatool.agg.StatePlan_1915c_waivers,aws.ksqldb.seatool.agg.StatePlan_1915c_Indep_Plus,aws.ksqldb.seatool.agg.StatePlan_1115,aws.ksqldb.seatool.agg.StatePlan_UPL
+      topics: --seatool--iam--aws.ksqldb.seatool.agg.StatePlan_Medicaid_SPA,--seatool--iam--aws.ksqldb.seatool.agg.StatePlan_CHIP_SPA,--seatool--iam--aws.ksqldb.seatool.agg.StatePlan_1915b_waivers,--seatool--iam--aws.ksqldb.seatool.agg.StatePlan_1915c_waivers,--seatool--iam--aws.ksqldb.seatool.agg.StatePlan_1915c_Indep_Plus,--seatool--iam--aws.ksqldb.seatool.agg.StatePlan_1115,--seatool--iam--aws.ksqldb.seatool.agg.StatePlan_UPL
       sinkPrefix: onemac-${self:custom.stage}-v4
     maximumRetryAttempts: 2
     timeout: 120
