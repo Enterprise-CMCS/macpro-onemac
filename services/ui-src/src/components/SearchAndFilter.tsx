@@ -219,6 +219,8 @@ const filterFromDateRange = <
   [dateA, dateB]: [Date, Date]
 ) => {
   if (!dateA && !dateB) return rows;
+  if (dateA && typeof dateA === "string") dateA = new Date(dateA);
+  if (dateB && typeof dateB === "string") dateB = new Date(dateB);
 
   return rows.filter(({ values: { [columnId]: cellValue } }) =>
     betweenDates(dateA, dateB, cellValue)
@@ -348,16 +350,25 @@ function DateFilter({
     [inThePast]
   );
 
+  const theValues: [Date, Date] = useMemo(() => {
+    if (filterValue && typeof filterValue[0] === "string") {
+      console.log("filterValue[0] is a string: ", filterValue);
+      filterValue[0] = new Date(filterValue[0]);
+      filterValue[1] = new Date(filterValue[1]);
+    }
+    return filterValue?.slice(0, 2);
+  }, [filterValue]);
+
   return (
     <DateRangePicker
       block
-      disabledDate={inThePast ? afterToday!() : undefined}
+      shouldDisableDate={inThePast ? afterToday!() : undefined}
       id={`${id}-date-filter`}
       onChange={onChangeSelection}
       placeholder="Select Date Range"
       ranges={ranges}
       showOneCalendar
-      value={filterValue?.slice(0, 2)}
+      value={theValues}
     />
   );
 }
