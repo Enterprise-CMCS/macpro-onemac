@@ -52,7 +52,7 @@ Feature: Create a waiver Amendment
         Then verify error message is present on package dashboard New Waiver Page
         Then verify the submit button is disabled
         Then clear 1915b Waiver Amendment Number field
-        Then type new waiver amendment number 1 in 1915b Waiver Amendment Number field
+        Then type new waiver amendment number 2 in 1915b Waiver Amendment Number field
         Then verify error message is not present on New Waiver Page
         Then verify the submit button is not disabled
         Then clear 1915b Waiver Amendment Number field
@@ -68,15 +68,15 @@ Feature: Create a waiver Amendment
         Then click on 1915b 4 FFS Selective Contracting waivers
         Then click on 1915b 4 FFS Selective Contracting Waiver Amendment
         Then verify 1915 b 4 FFS Selective Contracting waivers is displayed under Waiver Authority
-        Then type new waiver amendment number 1 in 1915b Waiver Amendment Number field
-        Then type new waiver amendment number 2 in 1915b Waiver Amendment Number field
+        Then type approved Initial Waiver 2 number into Existing Waiver Number to Amend field
+        Then type new waiver amendment number 3 in 1915b Waiver Amendment Number field
         Then select proposed effective date 3 months from today
         Then Add file for 1915b 4 FFS Selective Contracting waiver application pre-print
         Then Type Additonal Info Comments in new form
         Then Click on Submit Button
         Then verify submission successful message in the alert bar
         Then verify the Waivers tab is selected
-        Then search for "MD-5533.R00.01"
+        Then search for "MD-5533.R00.03"
         Then verify id number in the first row matches new waiver amendment number 1
 
     #need more time to consider hwo to test with different authority parent
