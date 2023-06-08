@@ -1,6 +1,10 @@
 import React, { FC } from "react";
 import OneMACForm from "../OneMACForm";
-import { defaultOneMACFormConfig, OneMACFormConfig } from "../../libs/formLib";
+import {
+  defaultAttachmentInstructionsJSX,
+  defaultOneMACFormConfig,
+  OneMACFormConfig,
+} from "../../libs/formLib";
 import { ROUTES, ONEMAC_ROUTES, waiverAppendixK } from "cmscommonlib";
 
 const waiverAmendmentIdFormat: string = "SS-####.R##.## or SS-#####.R##.##";
@@ -39,6 +43,9 @@ export const waiverAppendixKFormInfo: OneMACFormConfig = {
   ],
   proposedEffectiveDate: true,
   landingPage: ONEMAC_ROUTES.PACKAGE_LIST_WAIVER,
+  attachmentIntroJSX: defaultAttachmentInstructionsJSX(
+    ROUTES.FAQ_ATTACHMENTS_APPK
+  ),
 };
 
 const WaiverAppendixKForm: FC = () => {

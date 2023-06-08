@@ -12,6 +12,8 @@ Feature: FFS Selective Initial Waiver
         Then verify 1915b 4 FFS Selective Contracting New Initial Waiver is a clickable option
         Then click on 1915b 4 FFS Selective Contracting New Initial Waiver
         Then verify user is on new initial waiver page
+        Then verify the attachment info descriptiion
+        Then verify the attachment info link is for "1915b Waiver"
 
     Scenario: Initial Waiver number format
         Then click on 1915b 4 FFS Selective Contracting New Initial Waiver

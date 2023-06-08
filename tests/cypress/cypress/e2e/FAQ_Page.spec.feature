@@ -85,6 +85,7 @@ Feature: OY2_Update_Text_on_FAQ_Page
         Then click on New Submission
         Then Click on State Plan Amendment SPA
         Then click on Medicaid SPA
+        Then click All Other Medicaid SPA Submissions
         Then Click on What is my SPA ID link
         Then Verify text contains Enter the State Plan Amendment transmittal number Assign consecutive numbers on a calendar year basis
 

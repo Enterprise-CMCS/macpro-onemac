@@ -115,7 +115,11 @@ export {
   initialWaiverB,
 } from "./type/initialWaiver.js";
 export { initialWaiverWithdraw } from "./type/initialWaiverWithdraw.js";
-export { waiverTemporaryExtension } from "./type/waiverTemporaryExtension.js";
+export {
+  waiverTemporaryExtension,
+  waiverTemporaryExtension1915b,
+  waiverTemporaryExtension1915c,
+} from "./type/waiverTemporaryExtension.js";
 export {
   waiverRenewal,
   waiverRenewalB4,

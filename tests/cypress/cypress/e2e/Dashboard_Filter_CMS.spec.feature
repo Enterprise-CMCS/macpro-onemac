@@ -57,7 +57,8 @@ Feature: Package Dashboard - Filter
         Then verify 1915b Waiver Renewal exists
         Then verify 1915b Waiver Amendment check box exists
         Then verify 1915c Appendix K Amendment check box exists
-        Then verify Temporary Extension exists
+        Then verify 1915b Temporary Extension exists
+        Then verify 1915c Temporary Extension exists
         Then click on Status
         Then verify Submitted - Intake Needed status checkbox exists
         Then verify Package Withdrawn status checkbox exists

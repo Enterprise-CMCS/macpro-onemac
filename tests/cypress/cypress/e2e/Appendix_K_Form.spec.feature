@@ -10,6 +10,8 @@ Feature: Appendix K Waiver Type Selection
         Then verify Appendix K is a clickable option
         Then Click on Appendix K Amendment
         Then verify user is on new Appendix K page
+        Then verify the attachment info descriptiion
+        Then verify the attachment info link is for "Appendix K"
     
     Scenario: Verify the Waiver Number format on Appendix K Form
         Then Click on Appendix K Amendment

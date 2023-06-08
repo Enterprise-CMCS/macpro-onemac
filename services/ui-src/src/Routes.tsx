@@ -50,12 +50,16 @@ import WaiverAppendixKRAIForm from "./page/waiver-appendix-k/WaiverAppendixKRAIF
 import DescribeForms from "./page/DescribeForms";
 import EventList from "./page/event/EventList";
 import EventDetail from "./page/event/EventDetail";
+import MedicaidABPLandingPage from "./page/landing/MedicaidABPLandingPage";
+import MedicaidEligibilityLandingPage from "./page/landing/MedicaidEligibilityLandingPage";
+import CHIPEligibilityLandingPage from "./page/landing/CHIPEligibilityLandingPage";
 import InitialWaiverB4Form from "./page/initial-waiver/InitialWaiverB4Form";
 import InitialWaiverBForm from "./page/initial-waiver/InitialWaiverBForm";
 import WaiverRenewalB4Form from "./page/waiver-renewal/WaiverRenewalB4Form";
 import WaiverRenewalBForm from "./page/waiver-renewal/WaiverRenewalBForm";
 import WaiverAmendmentB4Form from "./page/waiver-amendment/WaiverAmendmentB4Form";
 import WaiverAmendmentBForm from "./page/waiver-amendment/WaiverAmendmentBForm";
+import { clearTableStateStorageKeys } from "./utils/StorageKeys";
 
 type RouteSpec = {
   path: string;
@@ -73,17 +77,22 @@ const RouteWithSubRoutes: FC<RouteSpec> = (route) => (
   />
 );
 
-const RouteListRenderer: FC<{ routes: RouteSpec[] }> = ({ routes }) => (
-  <Switch>
-    {routes.map((routeSpec) => (
-      <RouteWithSubRoutes
-        key={routeSpec.key ?? routeSpec.path}
-        {...routeSpec}
-      />
-    ))}
-    <Route component={NotFound} />
-  </Switch>
-);
+const RouteListRenderer: FC<{ routes: RouteSpec[] }> = ({ routes }) => {
+  if (!useAppContext()?.isAuthenticated) {
+    clearTableStateStorageKeys();
+  }
+  return (
+    <Switch>
+      {routes.map((routeSpec) => (
+        <RouteWithSubRoutes
+          key={routeSpec.key ?? routeSpec.path}
+          {...routeSpec}
+        />
+      ))}
+      <Route component={NotFound} />
+    </Switch>
+  );
+};
 
 const AuthenticatedRouteListRenderer: FC<{ routes: RouteSpec[] }> = ({
   routes,
@@ -269,6 +278,16 @@ const ROUTE_LIST: RouteSpec[] = [
         routes: [
           { path: ONEMAC_ROUTES.TRIAGE_GROUP, exact: true, component: Triage },
           { path: ONEMAC_ROUTES.TRIAGE_SPA, exact: true, component: Triage },
+          {
+            path: ONEMAC_ROUTES.TRIAGE_MEDICAID_SPA,
+            exact: true,
+            component: Triage,
+          },
+          {
+            path: ONEMAC_ROUTES.TRIAGE_CHIP_SPA,
+            exact: true,
+            component: Triage,
+          },
           { path: ONEMAC_ROUTES.TRIAGE_WAIVER, exact: true, component: Triage },
           {
             path: ONEMAC_ROUTES.TRIAGE_WAIVER_B,
@@ -347,6 +366,21 @@ const ROUTE_LIST: RouteSpec[] = [
     path: ROUTES.ATTACHMENT_LANDING,
     exact: true,
     component: AttachmentLanding,
+  },
+  {
+    path: ROUTES.ABP_LANDING,
+    exact: true,
+    component: MedicaidABPLandingPage,
+  },
+  {
+    path: ROUTES.MEDICAID_ELIGIBILITY_LANDING,
+    exact: true,
+    component: MedicaidEligibilityLandingPage,
+  },
+  {
+    path: ROUTES.CHIP_ELIGIBILITY_LANDING,
+    exact: true,
+    component: CHIPEligibilityLandingPage,
   },
   {
     path: ONEMAC_ROUTES.FORMS_DESCRIBE,

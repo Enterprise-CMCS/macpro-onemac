@@ -1,3 +1,4 @@
+import { defaultAttachmentInstructionsJSX } from "../../libs/formLib";
 import { ROUTES, ONEMAC_ROUTES } from "cmscommonlib";
 
 export const waiverRenewalIdFormat: string =
@@ -20,6 +21,9 @@ export const waiverRenewalFormConfig = {
     "For renewals, the “R##” starts with ‘01’ and ascends.",
   ],
   proposedEffectiveDate: true,
+  attachmentIntroJSX: defaultAttachmentInstructionsJSX(
+    ROUTES.FAQ_ATTACHMENTS_WAIVER_B
+  ),
   landingPage: ONEMAC_ROUTES.PACKAGE_LIST_WAIVER,
   parentLabel: "Existing Waiver Number to Renew",
   parentFieldHint: [

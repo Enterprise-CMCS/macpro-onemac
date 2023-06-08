@@ -1,6 +1,10 @@
 import React, { FC } from "react";
 import OneMACForm from "../OneMACForm";
-import { defaultOneMACFormConfig, OneMACFormConfig } from "../../libs/formLib";
+import {
+  defaultAttachmentInstructionsJSX,
+  defaultOneMACFormConfig,
+  OneMACFormConfig,
+} from "../../libs/formLib";
 import { ROUTES, ONEMAC_ROUTES, chipSPA } from "cmscommonlib";
 
 const idFormat: string = "SS-YY-NNNN-xxxx";
@@ -15,6 +19,9 @@ export const chipSpaFormInfo: OneMACFormConfig = {
   idFAQLink: ROUTES.FAQ_SPA_ID,
   idFormat: idFormat,
   landingPage: ONEMAC_ROUTES.PACKAGE_LIST_SPA,
+  attachmentIntroJSX: defaultAttachmentInstructionsJSX(
+    ROUTES.FAQ_ATTACHMENTS_CHIP_SPA
+  ),
 };
 
 const ChipSpaForm: FC = () => {

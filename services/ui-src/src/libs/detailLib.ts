@@ -16,6 +16,7 @@ export type OneMACDetail = {
   actionsByStatus: Record<string, Workflow.PACKAGE_ACTION[]>;
   detailHeader?: string;
   detailSection: AttributeDetail[];
+  showReviewTeam: boolean;
   allowWaiverExtension: boolean;
   attachmentsHeading: string;
 } & Partial<PackageType>;
@@ -58,6 +59,12 @@ export const subjectDefault: AttributeDetail = {
 export const descriptionDefault: AttributeDetail = {
   heading: "Description",
   fieldName: "description",
+};
+
+export const cpocDefault: AttributeDetail = {
+  heading: "CPOC",
+  fieldName: "cpocName",
+  default: "-- --",
 };
 
 export enum DetailViewTab {
@@ -110,6 +117,7 @@ export const defaultDetailSectionItems = [
   proposedEffectiveDateDefault,
   subjectDefault,
   descriptionDefault,
+  cpocDefault,
 ];
 
 export const defaultWaiverDetailSectionItems = [
@@ -124,6 +132,7 @@ export const defaultDetail: OneMACDetail = {
   actionsByStatus: Workflow.defaultActionsByStatus,
   show90thDayInfo: false,
   showEffectiveDate: false,
+  showReviewTeam: true,
   detailHeader: "Package",
   allowWaiverExtension: false,
   detailSection: [...defaultDetailSectionItems],

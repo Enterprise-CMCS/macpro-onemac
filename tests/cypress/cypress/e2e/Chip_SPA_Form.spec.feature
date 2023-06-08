@@ -1,22 +1,32 @@
-Feature: Package Dashboard: CHIP SPA Form
-
-    Scenario: Screen Enhance - CHIP SPA
+Feature: Package Dashboard: CHIP SPA Forms
+    Background: Reoccurring steps
         Given I am on Login Page
         When Clicking on Development Login
         When Login with state submitter user
         Then click on New Submission
         Then Click on State Plan Amendment SPA
+
+    Scenario: Screen Enhance - All Other CHIP SPA
         Then verify CHIP SPA is a clickable option
         Then click on CHIP SPA
+        Then verify All Other CHIP SPA Submissions is a clickable option
+        Then click All Other CHIP SPA Submissions
         Then verify user is on new CHIP SPA page
+        Then verify the attachment info descriptiion
+        Then verify the attachment info link is for "CHIP SPA"
 
-    Scenario: Create CHIP SPA from package dashboard and search it
-        Given I am on Login Page
-        When Clicking on Development Login
-        When Login with state submitter user
-        Then click on New Submission
-        Then Click on State Plan Amendment SPA
+    Scenario: Screen Enhance - CHIP Eligibility
+        Then verify CHIP SPA is a clickable option
         Then click on CHIP SPA
+        Then verify CHIP Eligibility is a clickable option
+        Then click CHIP Eligibility
+        Then verify user is on CHIP Eligibility page
+        Then verify the page header is "CHIP Eligibility SPAs"
+        Then verify Enter the MMDL System button is visible and clickable
+
+    Scenario: Create All Other CHIP SPA Submission from package dashboard and search it
+        Then click on CHIP SPA
+        Then click All Other CHIP SPA Submissions
         Then type in Chip SPA ID
         Then select proposed effective date 3 months from today
         Then Add file for Current State Plan
