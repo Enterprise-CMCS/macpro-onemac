@@ -576,7 +576,9 @@ Then("clear Waiver Number Input box in new form", () => {
 Then("type in invalid Waiver Number", () => {
   OneMacSubmitNewWaiverActionPage.inputWaiverNumber("MD.123456");
 });
-
+Then("type in invalid Waiver Number {string}", (s) => {
+  OneMacSubmitNewWaiverActionPage.inputWaiverNumber(s);
+});
 Then("Click on Request Temporary Extension", () => {
   OneMacSubmissionTypePage.clickRequestTemporaryExtension();
 });
@@ -743,7 +745,7 @@ Then("Type Initial Waiver Number 3 in format SS-#####.R00.00", () => {
 Then(
   "Type a valid and unused Initial Waiver Number in format SS-#####.R00.00",
   () => {
-    OneMacSubmitNewWaiverActionPage.inputWaiverNumber("MD-99331.R00.00");
+    OneMacSubmitNewWaiverActionPage.inputWaiverNumber("MD-99331");
   }
 );
 Then("Type Initial Waiver Number 2 in format SS-#####.R00.00", () => {
@@ -2630,13 +2632,13 @@ Then("verify the submit button is disabled", () => {
   OneMacDefaultForms.verifySubmitBtnIsDisabled();
 });
 Then("type in valid waiver amendment number", () => {
-  OneMacSubmitNewWaiverActionPage.inputWaiverNumber("MD-12323.R01.01");
+  OneMacSubmitNewWaiverActionPage.inputWaiverNumber("07");
 });
 Then("type initial waiver number in old format SS.####.R00.00", () => {
-  OneMacSubmitNewWaiverActionPage.inputWaiverNumber("MD.1055.R00.00");
+  OneMacSubmitNewWaiverActionPage.inputWaiverNumber("MD.1055");
 });
 Then("type initial waiver number in old format SS.#####.R00.00", () => {
-  OneMacSubmitNewWaiverActionPage.inputWaiverNumber("MD.10555.R00.00");
+  OneMacSubmitNewWaiverActionPage.inputWaiverNumber("MD.10555");
 });
 Then(
   "verify error message is present on package dashboard New Waiver Page",
@@ -2854,6 +2856,16 @@ Then(
     cy.fixture("packageDashboardWaiverNumbers.json").then((d) => {
       OneMacSubmitNewWaiverActionPage.inputWaiverParentNumber(
         d.approvedInitialWaiverNum1
+      );
+    });
+  }
+);
+Then(
+  "type approved Initial Waiver 2 number into Existing Waiver Number to Amend field",
+  () => {
+    cy.fixture("packageDashboardWaiverNumbers.json").then((d) => {
+      OneMacSubmitNewWaiverActionPage.inputWaiverParentNumber(
+        d.approvedInitialWaiverNum2
       );
     });
   }
