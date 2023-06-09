@@ -369,6 +369,11 @@ resources:
                   Action:
                     - lambda:InvokeFunction
                   Resource: '*'
+    SeaToolEventLogGroup:
+      Type: AWS::Logs::LogGroup
+      DependsOn: [ seaToolEvent ]
+      Properties:
+        LogGroupName: !Sub /aws/lambda/${seaToolEvent}
     ConnectorMonitorTopic:
       Type: AWS::SNS::Topic
       Properties:
@@ -376,7 +381,7 @@ resources:
     ConnectorEventReceivedCount:
       Type: AWS::Logs::MetricFilter
       Properties:
-        LogGroupName: !Sub '/aws/lambda/${self:service}-${self:custom.stage}-seaToolEvent'
+        LogGroupName: !Ref SeaToolEventLogGroup
         FilterName: ConnectorEventReceivedCount
         FilterPattern: "Received event"
         MetricTransformations:
