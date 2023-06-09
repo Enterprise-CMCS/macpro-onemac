@@ -212,7 +212,6 @@ export function Header() {
         href={ROUTES.FAQ}
         className={getActiveClass(currentRoute, RouteList.FAQ_TOP)}
         target={FAQ_TARGET}
-        rel="noreferrer noopener"
       >
         FAQ
       </a>
