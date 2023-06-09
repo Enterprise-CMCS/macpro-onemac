@@ -352,7 +352,6 @@ function DateFilter({
 
   const theValues: [Date, Date] = useMemo(() => {
     if (filterValue && typeof filterValue[0] === "string") {
-      console.log("filterValue[0] is a string: ", filterValue);
       filterValue[0] = new Date(filterValue[0]);
       filterValue[1] = new Date(filterValue[1]);
     }
