@@ -13,6 +13,7 @@ import {
   USER_ROLE,
   getUserRoleObj,
   inFlightRoleRequestForUser,
+  FAQ_TARGET,
 } from "cmscommonlib";
 import { getRegisterUrl, getSignInUrl, logout } from "../libs/logoutLib";
 import { getCurrentRoute } from "../utils/routeUtils";
@@ -210,7 +211,7 @@ export function Header() {
         id="faqLink"
         href={ROUTES.FAQ}
         className={getActiveClass(currentRoute, RouteList.FAQ_TOP)}
-        target="_blank"
+        target={FAQ_TARGET}
         rel="noreferrer noopener"
       >
         FAQ
