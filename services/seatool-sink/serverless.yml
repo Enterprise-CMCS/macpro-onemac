@@ -371,7 +371,6 @@ resources:
                   Resource: '*'
     SeaToolEventLogGroup:
       Type: AWS::Logs::LogGroup
-      DependsOn: [ seaToolEvent ]
       Properties:
         LogGroupName: !Sub /aws/lambda/${seaToolEvent}
     ConnectorMonitorTopic:
