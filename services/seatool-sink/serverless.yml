@@ -376,11 +376,11 @@ resources:
     seaToolEventsLogGroup:
       Type: AWS::Logs::LogGroup
       Properties:
-        LogGroupName: !Sub '/aws/lambda/${seaToolEvents}'
+        LogGroupName: !Sub '/aws/lambda/${self:service}-${self:custom.stage}-seaToolEvents'
     ConnectorEventReceivedCount:
       Type: AWS::Logs::MetricFilter
       Properties:
-        LogGroupName: !Sub '/aws/lambda/${seaToolEvents}'
+        LogGroupName: !Sub '/aws/lambda/${self:service}-${self:custom.stage}-seaToolEvents'
         FilterName: ConnectorEventReceivedCount
         FilterPattern: "Received event"
         MetricTransformations:
