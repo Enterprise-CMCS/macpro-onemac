@@ -376,11 +376,11 @@ resources:
     seaToolEventProcessorLogGroup:
       Type: AWS::Logs::LogGroup
       Properties:
-        LogGroupName: !Sub /aws/lambda/${seaToolEventProcessor}
+        LogGroupName: !Sub '/aws/lambda/${seaToolEventProcessor}'
     ConnectorEventReceivedCount:
       Type: AWS::Logs::MetricFilter
       Properties:
-        LogGroupName: !Sub /aws/lambda/${seaToolEventProcessor}
+        LogGroupName: !Sub '/aws/lambda/${seaToolEventProcessor}'
         FilterName: ConnectorEventReceivedCount
         FilterPattern: "Received event"
         MetricTransformations:
