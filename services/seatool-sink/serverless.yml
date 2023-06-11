@@ -383,7 +383,6 @@ resources:
         DisplayName: SNS Topic for Monitoring Kafka Connector Events
     ConnectorEventReceivedCount:
       Type: AWS::Logs::MetricFilter
-      DependsOn: SeaToolEventLambdaFunction
       Properties:
         LogGroupName:
           Ref: SeaToolEventLogGroup
