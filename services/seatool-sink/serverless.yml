@@ -63,9 +63,7 @@ functions:
     environment:
       cluster: !Ref KafkaConnectCluster
       bootstrapBrokerStringTls: ${self:custom.bootstrapBrokerStringTls}
-      functionArn: !GetAtt
-        - seaToolEventProcessorLambdaFunction
-        - Arn
+      functionArn: !GetAtt seaToolEventProcessor.Arn
       connectorRoleArn: !GetAtt
         - KafkaConnectWorkerRole
         - Arn
@@ -135,9 +133,7 @@ resources:
               - Effect: 'Allow'
                 Action:
                 - 'lambda:*'
-                Resource: !GetAtt
-                  - seaToolEventProcessorLambdaFunction
-                  - Arn
+                Resource: !GetAtt seaToolEventProcessor.Arn
     KafkaConnectWorkerTaskDefinition:
       Type: 'AWS::ECS::TaskDefinition'
       Properties:
