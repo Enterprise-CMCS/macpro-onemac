@@ -135,7 +135,9 @@ resources:
               - Effect: 'Allow'
                 Action:
                 - 'lambda:*'
-                Resource: ${myLambdaFunctionArn}
+                Resource: !GetAtt
+                  - SeaToolEventProcessorLambdaFunction
+                  - Arn
     KafkaConnectWorkerTaskDefinition:
       Type: 'AWS::ECS::TaskDefinition'
       Properties:
