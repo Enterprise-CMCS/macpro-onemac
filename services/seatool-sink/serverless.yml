@@ -63,7 +63,7 @@ functions:
     environment:
       cluster: !Ref KafkaConnectCluster
       bootstrapBrokerStringTls: ${self:custom.bootstrapBrokerStringTls}
-      functionArn: !GetAtt seaToolEventProcessor.Arn
+      functionArn: ${seaToolEventProcessorArn}
       connectorRoleArn: !GetAtt
         - KafkaConnectWorkerRole
         - Arn
@@ -85,6 +85,11 @@ resources:
           - ""
           - ${self:custom.iamPermissionsBoundaryPolicy}
   Resources:
+    seaToolEventProcessorArn:
+      Value:
+        Fn::GetAtt:
+          - seaToolEventProcessor
+          - Arn
     KafkaConnectWorkerLogGroup:
       Type: 'AWS::Logs::LogGroup'
       Properties:
@@ -133,7 +138,7 @@ resources:
               - Effect: 'Allow'
                 Action:
                 - 'lambda:*'
-                Resource: !GetAtt seaToolEventProcessor.Arn
+                Resource: ${myLambdaFunctionArn}
     KafkaConnectWorkerTaskDefinition:
       Type: 'AWS::ECS::TaskDefinition'
       Properties:
