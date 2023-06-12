@@ -10,6 +10,8 @@ import { buildWaiverExtension } from "./package/buildWaiverExtension";
 import { buildWaiverExtension1915b } from "./package/buildWaiverExtension1915b";
 import { buildWaiverExtension1915c } from "./package/buildWaiverExtension1915c";
 
+import { deletePackage } from "./package/deletePackage";
+
 export const main = async (eventBatch) => {
   console.log("One Stream event: ", eventBatch);
 
@@ -53,6 +55,11 @@ export const main = async (eventBatch) => {
             break;
           case "SEATool": {
             const [, topic] = newEventData.GSI1pk.S.split("#");
+            if (newEventData?.seaToolDelete?.S === "true") {
+              packageToBuild.type = "delete";
+              break;
+            }
+
             let actionType;
             console.log("%s ACTIONTYPES: ", inPK, newEventData.ACTIONTYPES);
             if (!newEventData.ACTIONTYPES.NULL)
@@ -111,6 +118,10 @@ export const main = async (eventBatch) => {
           return;
         }
         switch (packageToBuild.type) {
+          case "delete":
+            console.log("%s got a delete for package", inPK, packageToBuild);
+            await deletePackage(packageToBuild.id);
+            break;
           case Workflow.ONEMAC_TYPE.CHIP_SPA:
           case Workflow.ONEMAC_TYPE.CHIP_SPA_RAI:
           case Workflow.ONEMAC_TYPE.CHIP_SPA_WITHDRAW:

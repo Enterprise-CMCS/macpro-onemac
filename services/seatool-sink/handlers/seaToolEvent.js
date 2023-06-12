@@ -11,18 +11,19 @@ function myHandler(event) {
   }
   console.log("Received event:", JSON.stringify(event, null, 2));
   const topicName = event.topic.replace(topicPrefix, "");
-  const value = JSON.parse(event.value);
+  const value = event?.value ? JSON.parse(event.value) : event;
+  if (!event?.value) value.seaToolDelete = "true";
   console.log(`Type: ${topicName} Topic: ${event.topic}`);
 
-  const pk = value.STATE_PLAN.ID_NUMBER.toUpperCase();
-  const changedDate = value.STATE_PLAN.CHANGED_DATE;
+  const pk = JSON.parse(event.key).toUpperCase();
+  const changedDate = value?.STATE_PLAN?.CHANGED_DATE || value.timestamp;
   if (!pk || !changedDate) return;
 
   // use the offset as a version number/event tracker... highest id is most recent
   const sk = `SEATool#${changedDate}`;
 
   const GSI1pk = `SEATool#${topicName}`;
-  const GSI1sk = value.STATE_PLAN.ID_NUMBER.toUpperCase();
+  const GSI1sk = pk;
 
   // put the SEATool Entry - don't bother if already exists
   const updateSEAToolParams = {
