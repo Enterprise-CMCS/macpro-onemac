@@ -147,7 +147,7 @@ const DetailView: React.FC<{ pageConfig: OneMACDetail }> = ({ pageConfig }) => {
       if (!ctrlr?.signal.aborted) setDetail(fetchedDetail);
       if (!ctrlr?.signal.aborted) setIsLoading(stillLoading);
     },
-    [history, componentId, componentType, componentTimestamp]
+    [goBackLink, history, componentId, componentType, componentTimestamp]
   );
 
   useEffect(() => {
