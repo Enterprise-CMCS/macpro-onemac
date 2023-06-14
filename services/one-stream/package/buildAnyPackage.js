@@ -23,7 +23,7 @@ const oneMacTableName = process.env.IS_OFFLINE
   ? process.env.localTableName
   : process.env.oneMacTableName;
 
-const emptyField = emptyField;
+const emptyField = "-- --";
 
 export const buildAnyPackage = async (packageId, config) => {
   console.log("Building package: ", packageId);
