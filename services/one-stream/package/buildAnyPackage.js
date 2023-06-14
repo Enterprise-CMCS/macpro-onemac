@@ -23,6 +23,8 @@ const oneMacTableName = process.env.IS_OFFLINE
   ? process.env.localTableName
   : process.env.oneMacTableName;
 
+const emptyField = emptyField;
+
 export const buildAnyPackage = async (packageId, config) => {
   console.log("Building package: ", packageId);
   const queryParams = {
@@ -52,13 +54,12 @@ export const buildAnyPackage = async (packageId, config) => {
         raiResponses: [],
         waiverExtensions: [],
         withdrawalRequests: [],
-        currentStatus: "-- --", // include for ophans
-        submissionTimestamp: 0,
-        submitterName: "-- --",
-        submitterEmail: "-- --",
-        subject: "-- --",
-        description: "-- --",
-        cpocName: "-- --",
+        currentStatus: emptyField,
+        submitterName: emptyField,
+        submitterEmail: emptyField,
+        subject: emptyField,
+        description: emptyField,
+        cpocName: emptyField,
         reviewTeam: [],
       },
     };
@@ -181,6 +182,22 @@ export const buildAnyPackage = async (packageId, config) => {
           );
           console.log("the review team is: ", putParams.Item.reviewTeam);
         }
+
+        let approvedEffectiveDate = emptyField;
+        if (
+          anEvent.STATE_PLAN.APPROVED_EFFECTIVE_DATE &&
+          typeof anEvent.STATE_PLAN.APPROVED_EFFECTIVE_DATE === "number"
+        ) {
+          approvedEffectiveDate = anEvent.STATE_PLAN.APPROVED_EFFECTIVE_DATE;
+        } else if (
+          anEvent.STATE_PLAN.ACTUAL_EFFECTIVE_DATE &&
+          typeof anEvent.STATE_PLAN.ACTUAL_EFFECTIVE_DATE === "number"
+        ) {
+          approvedEffectiveDate = anEvent.STATE_PLAN.ACTUAL_EFFECTIVE_DATE;
+        }
+        putParams.Item.approvedEffectiveDate = DateTime.fromMillis(
+          approvedEffectiveDate
+        ).toFormat("yyyy-LL-dd");
 
         if (timestamp < lmTimestamp) return;
 

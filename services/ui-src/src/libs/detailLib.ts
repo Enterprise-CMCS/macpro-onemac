@@ -52,6 +52,16 @@ export const proposedEffectiveDateDefault: AttributeDetail = {
   fieldName: "proposedEffectiveDateNice",
   default: "N/A",
 };
+export const approvedEffectiveDateDefault: AttributeDetail = {
+  heading: "Approved Effective Date",
+  fieldName: "approvedEffectiveDateNice",
+  default: "-- --",
+};
+export const finalDispositionDateDefault: AttributeDetail = {
+  heading: "Final Disposition Date",
+  fieldName: "finalDispositionDateNice",
+  default: "-- --",
+};
 export const subjectDefault: AttributeDetail = {
   heading: "Subject",
   fieldName: "subject",
@@ -115,6 +125,8 @@ export const defaultDetailSectionItems = [
   submissionDateDefault,
   latestRaiResponseDateDefault,
   proposedEffectiveDateDefault,
+  approvedEffectiveDateDefault,
+  finalDispositionDateDefault,
   subjectDefault,
   descriptionDefault,
   cpocDefault,
