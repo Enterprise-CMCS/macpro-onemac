@@ -12,7 +12,10 @@ const ComponentId: React.FC<{
   idLabel: string;
   idFieldHint: FieldHint[];
   idFAQLink?: string;
+  idSize?: string;
   statusMessages: Message[];
+  prefill?: string;
+  postPendId?: string;
   value: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   disabled: boolean;
@@ -21,7 +24,10 @@ const ComponentId: React.FC<{
   idLabel,
   idFieldHint,
   idFAQLink,
+  idSize = "full",
   statusMessages,
+  prefill,
+  postPendId,
   value,
   onChange,
   disabled,
@@ -64,21 +70,25 @@ const ComponentId: React.FC<{
                 {message.statusMessage}
               </div>
             ))}
-          <input
-            className="field"
-            type="text"
-            id={idPrefix + "componentId"}
-            name="componentId"
-            aria-describedby={idFieldHint
-              ?.map(function (idFieldHint, idx) {
-                return idPrefix + "fieldHint" + idx;
-              })
-              .join(" ")}
-            value={value}
-            onChange={onChange}
-            required
-            disabled={disabled}
-          ></input>
+          <div className="all-id">
+            {prefill && <span className="prefill-id">{prefill}</span>}
+            <input
+              className={"field-" + idSize}
+              type="text"
+              id={idPrefix + "componentId"}
+              name="componentId"
+              aria-describedby={idFieldHint
+                ?.map(function (idFieldHint, idx) {
+                  return idPrefix + "fieldHint" + idx;
+                })
+                .join(" ")}
+              value={value}
+              onChange={onChange}
+              required
+              disabled={disabled}
+            ></input>
+            {postPendId && <span className="post-pend-id">{postPendId}</span>}
+          </div>
         </>
       )}
       {disabled && <Review heading={idLabel}>{value}</Review>}

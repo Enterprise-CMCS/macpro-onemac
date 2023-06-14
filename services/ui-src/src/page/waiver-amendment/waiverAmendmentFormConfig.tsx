@@ -22,6 +22,9 @@ export const waiverAmendmentFormConfig = {
   idAdditionalErrorMessage: [
     "For amendments, the last two digits start with ‘01’ and ascends.",
   ],
+  idSize: "small",
+  userProvidedIdSection: 2,
+  userProvidedIdRegex: "[0-9]{2}$",
   proposedEffectiveDate: true,
   attachmentIntroJSX: defaultAttachmentInstructionsJSX(
     ROUTES.FAQ_ATTACHMENTS_WAIVER_B

@@ -32,7 +32,7 @@ Feature: Validate Waiver Form is checking ID format without period
         Then click on 1915b Comprehensive Capitated Waiver Amendment
         Then verify All other 1915 b Waivers is displayed under Waiver Authority
         Then type approved Initial Waiver number into Existing Waiver Number to Amend field
-        Then type in invalid Waiver Number
+        Then type in invalid Waiver Number "-3"
         Then select proposed effective date 3 months from today
         Then verify error message is present on package dashboard New Waiver Page
         Then verify error message contains "For amendments, the last two digits start with"
@@ -40,14 +40,11 @@ Feature: Validate Waiver Form is checking ID format without period
         Then Add file for 1915b Comprehensive Capitated Waiver Cost Effectiveness Spreadsheets
         Then verify the submit button is disabled
         Then clear Waiver Number Input box in new form
-        Then type in Existing Waiver Number in new form
-        Then verify error message is present on package dashboard New Waiver Page
         Then verify the submit button is disabled
         Then clear Waiver Number Input box in new form
         Then type in valid waiver amendment number
         Then verify error message is not present on New Waiver Page
         Then verify the submit button is not disabled 
-
 
     Scenario: Validate Waiver Form Logic for Waiver Renewal and All other
         Then click on 1915b Comprehensive Capitated Renewal Waiver

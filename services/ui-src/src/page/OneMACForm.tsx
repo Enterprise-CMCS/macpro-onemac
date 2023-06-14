@@ -27,6 +27,7 @@ import {
   buildWrongFormatMessage,
   buildMustExistMessage,
   buildMustNotExistMessage,
+  IDHelperData,
 } from "../libs/formLib";
 import config from "../utils/config";
 
@@ -90,16 +91,25 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
   // if only one waiver Authority choice, it is the default
   const presetWaiverAuthority = formConfig.waiverAuthority?.value;
 
+  // some Id's have a forced postPend on the id
+  const presetPostPendId = formConfig?.postPendId ?? "";
+
   // The record we are using for the form.
   const [oneMacFormData, setOneMacFormData] = useState<OneMacFormData>({
     territory: getTerritoryFromComponentId(presetComponentId),
     additionalInformation: "",
     componentId: presetComponentId,
+    parentId: presetParentId,
     waiverAuthority: presetWaiverAuthority,
     temporaryExtensionType: undefined,
     proposedEffectiveDate: undefined,
-    parentId: presetParentId,
     parentType: location.state?.parentType,
+  });
+
+  const [idHelperData, setIdHelperData] = useState<IDHelperData>({
+    prefillId: "",
+    userEnteredId: presetComponentId,
+    postPendId: presetPostPendId,
   });
 
   function getLandingPage(
@@ -149,8 +159,14 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
       }
       // must match the associated Regex string for format
       else if (
-        formConfig.idRegex &&
-        !matchesRegex(componentId, formConfig.idRegex)
+        (formConfig.userProvidedIdRegex &&
+          !matchesRegex(
+            idHelperData.userEnteredId,
+            formConfig.userProvidedIdRegex
+          )) ||
+        (!formConfig.userProvidedIdRegex &&
+          formConfig.idRegex &&
+          !matchesRegex(idHelperData.userEnteredId, formConfig.idRegex))
       ) {
         errorMessages.push(buildWrongFormatMessage(formConfig));
         if (formConfig.idAdditionalErrorMessage) {
@@ -165,24 +181,61 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
 
       return errorMessages;
     },
-    [activeTerritories, formConfig]
+    [activeTerritories, formConfig, idHelperData.userEnteredId]
   );
 
-  async function handleComponentIdChange(componentId: string) {
+  async function handleComponentIdChange(userEnteredId: string) {
     let updatedRecord = { ...oneMacFormData } as OneMacFormData; // You need a new object to be able to update the state
+    let updatedIdHelperData = { ...idHelperData } as IDHelperData;
 
-    updatedRecord.componentId = componentId;
-    updatedRecord.territory = getTerritoryFromComponentId(componentId);
+    updatedRecord.componentId =
+      updatedIdHelperData.prefillId +
+      userEnteredId +
+      updatedIdHelperData.postPendId;
+    updatedIdHelperData.userEnteredId = userEnteredId;
+    updatedRecord.territory = getTerritoryFromComponentId(
+      updatedRecord.componentId
+    );
 
     setOneMacFormData(updatedRecord);
+    setIdHelperData(updatedIdHelperData);
   }
 
-  async function handleParentIdChange(parentId: string) {
-    let updatedRecord = { ...oneMacFormData } as OneMacFormData; // You need a new object to be able to update the state
+  const handleParentIdChange = useCallback(
+    (parentId: string | undefined) => {
+      let updatedRecord = { ...oneMacFormData } as OneMacFormData; // You need a new object to be able to update the state
+      let updatedIdHelperData = { ...idHelperData } as IDHelperData;
 
-    updatedRecord.parentId = parentId;
-    setOneMacFormData(updatedRecord);
-  }
+      if (parentId !== undefined) updatedRecord.parentId = parentId;
+
+      if (formConfig.userProvidedIdSection) {
+        const parts = parentId ? parentId.split(".") : [];
+
+        updatedIdHelperData.prefillId = parts
+          .slice(0, formConfig.userProvidedIdSection)
+          .join(".");
+        if (parts.length >= formConfig.userProvidedIdSection)
+          updatedIdHelperData.prefillId += ".";
+        updatedIdHelperData.postPendId =
+          formConfig.postPendId ??
+          parts.slice(formConfig.userProvidedIdSection + 1).join(".") ??
+          "";
+      }
+      setOneMacFormData(updatedRecord);
+      setIdHelperData(updatedIdHelperData);
+    },
+    [
+      oneMacFormData,
+      idHelperData,
+      formConfig.userProvidedIdSection,
+      formConfig.postPendId,
+    ]
+  );
+
+  useEffect(() => {
+    handleParentIdChange(presetParentId);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (!event || !event.target) return;
@@ -473,9 +526,12 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
             idLabel={formConfig.idLabel}
             idFieldHint={formConfig.idFieldHint ?? [{ text: "" }]}
             idFAQLink={formConfig.idFAQLink}
+            idSize={formConfig.idSize}
             statusMessages={componentIdStatusMessages}
             disabled={!!presetComponentId}
-            value={oneMacFormData.componentId}
+            prefill={idHelperData.prefillId}
+            postPendId={idHelperData.postPendId}
+            value={idHelperData.userEnteredId}
             onChange={(event: ChangeEvent<HTMLInputElement>) =>
               handleComponentIdChange(event.target.value.toUpperCase())
             }

@@ -149,9 +149,20 @@ legend {
 }
 
 select,
+.field-full,
+.field-small,
+.field-medium,
 .field {
   @extend .ds-c-field;
   border-color: $color-gray-light;
+}
+.field-small {
+  max-width: 6rem;
+  margin: 5px;
+}
+.field-medium {
+  max-width: 10rem;
+  margin: 5px;
 }
 
 label {
@@ -2816,4 +2827,10 @@ ul.choice-list {
 .landing-description {
   max-width: 540px;
   margin: 3rem 0;
+}
+
+.all-id {
+  display: flex;
+  flex-direction: row;
+  align-items: first baseline;
 }

@@ -12,8 +12,12 @@ import { Link } from "react-router-dom";
 export type OneMACFormConfig = {
   idFormat?: string;
   idFieldHint?: FieldHint[];
+  userProvidedIdSection?: number;
+  userProvidedIdRegex: string;
+  postPendId?: string;
   idAdditionalErrorMessage?: string[];
   idFAQLink?: string;
+  idSize?: string;
   pageTitle?: string;
   introJSX?: JSX.Element;
   addlIntroJSX?: JSX.Element;
@@ -94,7 +98,9 @@ export const defaultOneMACFormConfig = {
   idFormat: "",
   idFieldHint: [],
   idFAQLink: "",
+  idSize: "full",
   landingPage: ONEMAC_ROUTES.PACKAGE_LIST,
+  userProvidedIdRegex: "",
   proposedEffectiveDate: false,
   attachmentIntroJSX: defaultAttachmentInstructionsJSX(),
 };
@@ -172,6 +178,12 @@ export type OneMacFormData = {
   parentType?: string;
 };
 
+export type IDHelperData = {
+  prefillId?: string;
+  userEnteredId: string;
+  postPendId?: string;
+};
+
 export const stateAccessMessage: Message = {
   statusLevel: "error",
   statusMessage: `You can only submit for a state you have access to. If you need to add another state, visit your user profile to request access.`,
@@ -218,5 +230,6 @@ export const defaultWithdrawConfig = {
   addlInfoText:
     "Explain your need for withdrawal or upload supporting documentation.",
   landingPage: ONEMAC_ROUTES.PACKAGE_LIST,
+  userProvidedIdRegex: "",
   proposedEffectiveDate: false,
 };

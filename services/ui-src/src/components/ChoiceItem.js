@@ -15,7 +15,7 @@ const ChoiceItem = ({ linkTo, title, description, onclick, strongText }) => {
             {strongText && (
               <>
                 <br />
-                <span class="strong-text">{strongText}</span>
+                <span className="strong-text">{strongText}</span>
               </>
             )}
           </p>

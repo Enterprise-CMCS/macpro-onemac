@@ -44738,5 +44738,289 @@
     "sk": "SEATool#1650917395996",
     "GSI1sk": "MD-0801.R00.01",
     "pk": "MD-0801.R00.01"
-  }
+  },
+  {
+    "pk": "MD-0002.R02",
+    "sk": "SEATool#1671659922810",
+    "ACTIONTYPES": [
+     {
+      "ACTION_ID": 75,
+      "ACTION_NAME": "Renew",
+      "PLAN_TYPE_ID": 122
+     }
+    ],
+    "ACTION_OFFICERS": null,
+    "CALLHELDREASONS": null,
+    "CODEAFTERINITACCESS": null,
+    "COMPONENTS": [
+     {
+      "ALERTS_INBOX_ADDRESS": null,
+      "COMPONENT_ID": 110,
+      "COMPONENT_NAME": "MCOG-DMCO"
+     }
+    ],
+    "COMPONENTS_SP": null,
+    "FM_ANALYST": null,
+    "GSI1pk": "SEATool#1915b_waivers",
+    "GSI1sk": "MD-0002.R02",
+    "LEAD_ANALYST": [
+     {
+      "EMAIL": "TestPerson@cmstest.hhs.gov",
+      "FIRST_NAME": "Person",
+      "INITIALS": null,
+      "LAST_NAME": "Testy",
+      "OFFICER_ID": 3815,
+      "POSITION_ID": 538,
+      "TELEPHONE": "555-767-1212"
+     }
+    ],
+    "OCD_REVIEW": [
+     {
+      "OCD_REVIEW_DESCRIPTION": "No",
+      "OCD_REVIEW_ID": 2
+     },
+     {
+      "OCD_REVIEW_DESCRIPTION": "Yes",
+      "OCD_REVIEW_ID": 1
+     }
+    ],
+    "PLAN_TYPES": [
+     {
+      "PLAN_TYPE_ID": 122,
+      "PLAN_TYPE_NAME": "1915(b)"
+     }
+    ],
+    "PRIORITY_CODES": [
+     {
+      "PRIORITY_CODE": "P3",
+      "PRIORITY_CODE_DESCRIPTION": "Expedited action",
+      "PRIORITY_CODE_ID": 3
+     }
+    ],
+    "PRIORITY_COMPLEXITY": null,
+    "PROGRAM_ANALYST": null,
+    "RAI": [
+     {
+      "ID_NUMBER": "MD-0002.R02",
+      "RAI_RECEIVED_DATE": 1668643200000,
+      "RAI_REQUESTED_DATE": 1647907200000,
+      "RAI_WITHDRAWN_DATE": null
+     }
+    ],
+    "REGION": [
+     {
+      "ALERTS_INBOX_ADDRESS": "MCOG_DPO_Action@cms.hhs.gov",
+      "REGION_ID": "3",
+      "REGION_NAME": "Philadelphia"
+     }
+    ],
+    "REVIEW_POSITION": null,
+    "RO_ANALYST": null,
+    "SP1115": null,
+    "SPA_TYPE": [
+     {
+      "PLAN_TYPE_ID": 122,
+      "SPA_TYPE_ID": 4,
+      "SPA_TYPE_NAME": "1915(b) Waivers Do Not Use"
+     }
+    ],
+    "SPW_STATUS": [
+     {
+      "SPW_STATUS_DESC": "Pending-RAI",
+      "SPW_STATUS_ID": 2
+     },
+     {
+      "SPW_STATUS_DESC": "Pending",
+      "SPW_STATUS_ID": 1
+     },
+     {
+      "SPW_STATUS_DESC": "Pending-Approval",
+      "SPW_STATUS_ID": 11
+     },
+     {
+      "SPW_STATUS_DESC": "Approved",
+      "SPW_STATUS_ID": 4
+     }
+    ],
+    "SP_APD": null,
+    "SP_APD_SUB_TYPE": null,
+    "SP_EARLY_ALERTS": {
+     "ALERTFIELD": [
+      {
+       "ACTIVE": true,
+       "EA_DROP_DOWN_VALUES": null,
+       "EA_FIELD_ID": 24,
+       "EA_LABEL": "Meets expedited criteria",
+       "EA_TYPE_ID": 1,
+       "IS_APD": null,
+       "PRIORITY_CODE_ID": 3,
+       "PRIORITY_OPERATOR": null,
+       "PRIORITY_VALUE": "true"
+      },
+      {
+       "ACTIVE": true,
+       "EA_DROP_DOWN_VALUES": null,
+       "EA_FIELD_ID": 25,
+       "EA_LABEL": "Customary action",
+       "EA_TYPE_ID": 1,
+       "IS_APD": null,
+       "PRIORITY_CODE_ID": 2,
+       "PRIORITY_OPERATOR": null,
+       "PRIORITY_VALUE": "true"
+      }
+     ],
+     "EARLYALERT": [
+      {
+       "EA_FIELD_ID": 24,
+       "EMAIL_SENT": null,
+       "ID_NUMBER": "MD-0002.R02",
+       "TEXT_DD_VAL": null,
+       "YES_NO_VAL": true
+      },
+      {
+       "EA_FIELD_ID": 25,
+       "EMAIL_SENT": null,
+       "ID_NUMBER": "MD-0002.R02",
+       "TEXT_DD_VAL": null,
+       "YES_NO_VAL": false
+      }
+     ]
+    },
+    "SP_IMPACT_FUNDING": null,
+    "SP_TYPE": [
+     {
+      "PLAN_TYPE_ID": 122,
+      "TYPE_CLASS": 4,
+      "TYPE_ID": 24,
+      "TYPE_NAME": "1915 (b) (4) Do Not Use"
+     }
+    ],
+    "STATES": [
+     {
+      "PRIORITY_FLAG": false,
+      "REGION_ID": "3",
+      "STATE_CODE": "MD",
+      "STATE_NAME": "Maryland"
+     }
+    ],
+    "STATE_PLAN": {
+     "ACTION_TYPE": 75,
+     "ACTUAL_EFFECTIVE_DATE": null,
+     "ADDED_COST": null,
+     "ALERT_90_DAYS_DATE": 1676505600000,
+     "ALERT_MILESTONE1_DAYS": null,
+     "ALERT_MILESTONE2_DAYS": null,
+     "ALERT_MILESTONE3_DAYS": null,
+     "ALERT_MILESTONE4_DAYS": null,
+     "APPROVAL_DOCS_RECEIVED": false,
+     "APPROVAL_STATUS_TYPE": null,
+     "APPROVED_EFFECTIVE_DATE": null,
+     "ATTACHED_SPA": null,
+     "BACKUP_FM_ANALYST_ID": null,
+     "BACKUP_PROGRAM_ANALYST_ID": null,
+     "BLOCKING_SPAS_MEMO": null,
+     "BUDGET_IMPACT": null,
+     "BUDGET_IMPACT_VALUE": null,
+     "BUDGET_NEUTRALITY_ESTABLISHED_FLAG": false,
+     "BUDGET_NEUTRALITY_STATUS_MEMO": null,
+     "CALL_HELD": true,
+     "CALL_HELD_REASON_ID": null,
+     "CHANGED_DATE": 1671659922810,
+     "CODE_AFTER_INIT_ASSESS_ID": null,
+     "COMPANION_LETTER_RECEIVED_DATE": null,
+     "COMPANION_LETTER_REQUESTED_DATE": null,
+     "COMPONENT_ID": 110,
+     "CO_SUBMISSION_DATE": null,
+     "CURRENT_WAIVER_EXPIRES_DATE": null,
+     "CURRENT_WAIVER_TE": null,
+     "DATE_OF_CODING_CHANGE": null,
+     "DATE_SENT_PSCCAS": null,
+     "DAYS_EXTENSION_NUMBER": 90,
+     "ELIMINATED_COST": null,
+     "END_DATE": null,
+     "FISCAL_QUARTER": null,
+     "FISCAL_YEAR": null,
+     "FRT_DATE": null,
+     "GAP": null,
+     "GAP2": null,
+     "GAP2_NA": null,
+     "GAP3": null,
+     "GAP3_NA": null,
+     "GAP_NA": null,
+     "GUIDANCE_DOCS_SUBMITTED": null,
+     "ID_NUMBER": "MD-0002.R02",
+     "INITIAL_SUBMISSION_COMPLETE": null,
+     "LEAD_ANALYST_ID": 3815,
+     "MISSING_INFORMATION": null,
+     "MMDL_IMPORT": null,
+     "OCD_REVIEW_COMMENTS_MEMO": null,
+     "OCD_REVIEW_ID": 1,
+     "ORGANIZATION_CHANGE": null,
+     "PENDING_CONCURRENCE_DATE": null,
+     "PLAN_TYPE": 122,
+     "PRIORITY_CODE_ID": 3,
+     "PRIORITY_COMMENTS_MEMO": "There is a bunch of text in the sample.\r\n\r\nWith specific formatting in the text.\r\nincluding a final line break.\r\n",
+     "PRIORITY_COMPLEXITY_ID": null,
+     "PROPOSED_DATE": 1648771200000,
+     "PUBLICHEALTH_STATEEMERGENCY": null,
+     "REGION_ID": "3",
+     "REMARKS_MEMO": "03/17/2022: This field contains dates and line breaks \r\n\r\nLots of explanatory text.\r\n\r\nends with a line break.\r\n\r\n",
+     "REVIEW_POSITION_ID": null,
+     "RO_ANALYST_ID": null,
+     "SPA_TYPE_ID": null,
+     "SPW_IMPORT": false,
+     "SPW_STATUS_ID": 4,
+     "START_CLOCK_DATE": 1668729600000,
+     "STATE_CODE": "MD",
+     "STATUS_DATE": 1671641922627,
+     "STATUS_MEMO": "11/18/22: more dates and text, formatted \r\nMD.02.R02.00 1915(B)(4) FFS Selective -1915(b)(4) Sea Tool Input/Summary\r\nDescription \r\n\r\nMD.02.R02.00 1915(B)(4) FFS Selective -1915(b)(4) Sea Tool Input/Summary\r\nDescription \r\n\r\nThis text explains the purpose of this renewal. \r\n\r\nOn March 16, 2022, Maryland submitted another test to see what is going on.\r\n\r\nOn March 17, 2022, CMS did some stuff, too.\r\n\r\nCMS requested additional information (RAI) regarding this waiver action on March 23, 2022, and The RAI stopped the 90-day clock. A new 90-day review clock will begin once CMS receives your response to this RAI.\r\n\r\nthis is a really huge block of text removed for privacy from the original\r\n",
+     "SUBMISSION_DATE": 1640217600000,
+     "SUBMISSION_TYPE": null,
+     "SUMMARY_MEMO": "12/28/21 KCT: The State of Maryland requests a renewal and talks about it here.\r\n\r\nUnder the 1915(b)(4) authority, the State currently waives some things.\r\nThe waiver renewal is requested for a 3 year period effective  4/1/2022 to 6/30/2026.\r\n Even more support text is in the sample.",
+     "TEMPLATE_ISSUES": null,
+     "TEMPLATE_ISSUES_MEMO": null,
+     "TEMPLATE_ISSUES_RESOLVED": null,
+     "TE_END_DATE": null,
+     "TITLE_NAME": " 1915(b)(4) FFS Selective Contracting, Maryland’s Test Waiver Renewal (MD-02)",
+     "TYPE_ID": null,
+     "UPL_ACCEPTED": null,
+     "UUID": null
+    },
+    "STATE_PLAN_SERVICETYPES": [
+     {
+      "ID_NUMBER": "MD-0002.R02",
+      "SERVICE_TYPE_ID": 4
+     }
+    ],
+    "STATE_PLAN_SERVICE_SUBTYPES": [
+     {
+      "ID_NUMBER": "MD-0002.R02",
+      "SERVICE_SUBTYPE_ID": 24
+     }
+    ],
+    "STOP_RESUME_DATES": null
+   },
+  {
+    "pk": "MD-0002.R02",
+    "sk": "Package",
+    "componentId": "MD-0002.R02",
+    "componentType": "waiverrenewal",
+    "cpocName": "Person Testy",
+    "currentStatus": "Approved",
+    "description": "12/28/21 KCT: The State of Maryland requests a renewal and talks about it here.\r\n\r\nUnder the 1915(b)(4) authority, the State currently waives some things.\r\nThe waiver renewal is requested for a 3 year period effective  4/1/2022 to 6/30/2026.\r\n Even more support text is in the sample.",
+    "lastEventTimestamp": 1671659922810,
+    "proposedEffectiveDate": "2022-04-01",
+    "raiResponses": [
+    ],
+    "reviewTeam": [
+    ],
+    "subject": " 1915(b)(4) FFS Selective Contracting, Maryland’s Test Waiver Renewal (MD-02)",
+    "submissionTimestamp": 0,
+    "submitterEmail": "-- --",
+    "submitterName": "-- --",
+    "waiverExtensions": [
+    ],
+    "withdrawalRequests": [
+    ]
+   }
 ]

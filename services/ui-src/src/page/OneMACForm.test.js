@@ -10,11 +10,11 @@ import { createMemoryHistory } from "history";
 import { Router } from "react-router-dom";
 import { stateSubmitterInitialAuthState } from "../libs/testDataAppContext";
 
-import { ROUTES, ONEMAC_ROUTES, initialWaiver } from "cmscommonlib";
+import { ONEMAC_ROUTES } from "cmscommonlib";
 import OneMACForm from "./OneMACForm";
 import PackageApi from "../utils/PackageApi";
 import { AppContext } from "../libs/contextLib";
-import { initialWaiverB4FormInfo } from "./initial-waiver/InitialWaiverB4Form";
+import { medicaidSpaFormInfo } from "./medicaid-spa/MedicaidSpaForm";
 
 jest.mock("../utils/PackageApi");
 
@@ -26,7 +26,7 @@ describe("OneMAC Form", () => {
 
   beforeEach(() => {
     history = createMemoryHistory();
-    history.push(ROUTES.INITIAL_WAIVER);
+    history.push(ONEMAC_ROUTES.MEDICAID_SPA);
   });
 
   it("Additional Information Section does not exceed character limit", async () => {
@@ -42,7 +42,7 @@ describe("OneMAC Form", () => {
         }}
       >
         <Router history={history}>
-          <OneMACForm formConfig={initialWaiverB4FormInfo} />
+          <OneMACForm formConfig={medicaidSpaFormInfo} />
         </Router>
       </AppContext.Provider>
     );
@@ -67,7 +67,7 @@ describe("OneMAC Form", () => {
         }}
       >
         <Router history={history}>
-          <OneMACForm formConfig={initialWaiverB4FormInfo} />
+          <OneMACForm formConfig={medicaidSpaFormInfo} />
         </Router>
       </AppContext.Provider>
     );
@@ -79,7 +79,7 @@ describe("OneMAC Form", () => {
   });
 
   it("stays disabled even with valid ID", async () => {
-    const testID = "MI-2222";
+    const testID = "MI-22-0088";
 
     render(
       <AppContext.Provider
@@ -88,7 +88,7 @@ describe("OneMAC Form", () => {
         }}
       >
         <Router history={history}>
-          <OneMACForm formConfig={initialWaiverB4FormInfo} />
+          <OneMACForm formConfig={medicaidSpaFormInfo} />
         </Router>
       </AppContext.Provider>
     );
@@ -96,7 +96,7 @@ describe("OneMAC Form", () => {
     const submitButtonEl = screen.getByText("Submit");
     expect(submitButtonEl).toBeDisabled();
 
-    const transmittalNumberEl = screen.getByLabelText("Initial Waiver Number");
+    const transmittalNumberEl = screen.getByLabelText("SPA ID");
 
     PackageApi.packageExists.mockResolvedValue(false);
 
@@ -108,8 +108,7 @@ describe("OneMAC Form", () => {
 
   it("does not clear already completed form fields if submit fails.", async () => {
     const testValues = {
-      transmittalNumber: "MI-17234.R00.00",
-      waiverAuthority: "1915(b)",
+      transmittalNumber: "MI-17-2340",
     };
 
     render(
@@ -119,27 +118,22 @@ describe("OneMAC Form", () => {
         }}
       >
         <Router history={history}>
-          <OneMACForm formConfig={initialWaiverB4FormInfo} />
+          <OneMACForm formConfig={medicaidSpaFormInfo} />
         </Router>
       </AppContext.Provider>
     );
 
-    const transmittalNumberEl = screen.getByLabelText("Initial Waiver Number");
-    // const waiverAuthorityEl = screen.getByLabelText("Waiver Authority");
+    const transmittalNumberEl = screen.getByLabelText("SPA ID");
     const submitButtonEl = screen.getByText("Submit");
 
     // values start out empty
     expect(transmittalNumberEl.value).toBe("");
-    //expect(waiverAuthorityEl.value).toBe("");
-
-    // userEvent.selectOptions(waiverAuthorityEl, testValues.waiverAuthority);
-    // await screen.findByText("All other 1915(b) Waivers");
 
     // Find the package
     PackageApi.packageExists.mockResolvedValue(true);
     userEvent.type(transmittalNumberEl, testValues.transmittalNumber);
     await screen.findByText(
-      `According to our records, this Initial Waiver Number already exists. Please check the Initial Waiver Number and try entering it again.`
+      `According to our records, this SPA ID already exists. Please check the SPA ID and try entering it again.`
     );
     expect(transmittalNumberEl.value).toBe(testValues.transmittalNumber);
 
@@ -149,7 +143,6 @@ describe("OneMAC Form", () => {
 
     // the transmittal number still contains the value
     expect(transmittalNumberEl.value).toBe(testValues.transmittalNumber);
-    // expect(waiverAuthorityEl.value).toBe(testValues.waiverAuthority);
   });
 });
 
@@ -158,15 +151,15 @@ describe("Component Id Section", () => {
 
   beforeEach(() => {
     history = createMemoryHistory();
-    history.push(ROUTES.INITIAL_WAIVER);
+    history.push(ONEMAC_ROUTES.MEDICAID_SPA);
   });
 
   it("populates the component id as a display only value when passed in as a state variable", async () => {
-    const testComponentId = "MI-1122.R00.00";
+    const testComponentId = "MI-11-0099";
     PackageApi.packageExists.mockResolvedValue(false);
 
     history.push({
-      pathname: ROUTES.INITIAL_WAIVER,
+      pathname: ONEMAC_ROUTES.MEDICAID_SPA,
       state: { componentId: testComponentId },
     });
 
@@ -177,7 +170,7 @@ describe("Component Id Section", () => {
         }}
       >
         <Router history={history}>
-          <OneMACForm formConfig={initialWaiverB4FormInfo} />
+          <OneMACForm formConfig={medicaidSpaFormInfo} />
         </Router>
       </AppContext.Provider>
     );
@@ -187,7 +180,7 @@ describe("Component Id Section", () => {
 
   it("informs user that they cannot submit for an unauthorized territory", async () => {
     const territoryMessage = `You can only submit for a state you have access to. If you need to add another state, visit your user profile to request access.`;
-    const invalidFormatId = "SS-3242.R00.00";
+    const invalidFormatId = "SS-32-0010";
 
     render(
       <AppContext.Provider
@@ -196,21 +189,21 @@ describe("Component Id Section", () => {
         }}
       >
         <Router history={history}>
-          <OneMACForm formConfig={initialWaiverB4FormInfo} />
+          <OneMACForm formConfig={medicaidSpaFormInfo} />
         </Router>
       </AppContext.Provider>
     );
 
-    const transmittalNumberEl = screen.getByLabelText("Initial Waiver Number");
+    const transmittalNumberEl = screen.getByLabelText("SPA ID");
 
     userEvent.type(transmittalNumberEl, invalidFormatId);
     await waitFor(() => screen.getByText(territoryMessage));
   });
 
   it("displays error message when the format id is invalid (but not when it's valid)", async () => {
-    const formatMessage = `The Initial Waiver Number must be in the format of SS-####.R00.00 or SS-#####.R00.00`;
+    const formatMessage = `The SPA ID must be in the format of SS-YY-NNNN or SS-YY-NNNN-xxxx`;
     const invalidFormatId = "MI-12";
-    const validFormatId = "MI-11122.R00.00";
+    const validFormatId = "MI-11-8900";
 
     PackageApi.packageExists.mockResolvedValue(false);
 
@@ -221,12 +214,12 @@ describe("Component Id Section", () => {
         }}
       >
         <Router history={history}>
-          <OneMACForm formConfig={initialWaiverB4FormInfo} />
+          <OneMACForm formConfig={medicaidSpaFormInfo} />
         </Router>
       </AppContext.Provider>
     );
 
-    const transmittalNumberEl = screen.getByLabelText("Initial Waiver Number");
+    const transmittalNumberEl = screen.getByLabelText("SPA ID");
 
     // status message shows when INVALID id format is put in
     userEvent.type(transmittalNumberEl, invalidFormatId);
@@ -239,8 +232,8 @@ describe("Component Id Section", () => {
   });
 
   it("displays error message when id SHOULD NOT exist but DOES", async () => {
-    const testId = "MI-1122.R00.00";
-    const existErrorMessage = `According to our records, this Initial Waiver Number already exists. Please check the Initial Waiver Number and try entering it again.`;
+    const testId = "MI-11-2200";
+    const existErrorMessage = `According to our records, this SPA ID already exists. Please check the SPA ID and try entering it again.`;
 
     // id will exist
     PackageApi.packageExists.mockResolvedValue(true);
@@ -252,12 +245,12 @@ describe("Component Id Section", () => {
         }}
       >
         <Router history={history}>
-          <OneMACForm formConfig={initialWaiverB4FormInfo} />
+          <OneMACForm formConfig={medicaidSpaFormInfo} />
         </Router>
       </AppContext.Provider>
     );
 
-    const transmittalNumberEl = screen.getByLabelText("Initial Waiver Number");
+    const transmittalNumberEl = screen.getByLabelText("SPA ID");
 
     userEvent.type(transmittalNumberEl, testId);
     await waitFor(() => screen.getByText(existErrorMessage));
@@ -269,13 +262,12 @@ describe("cancelling the form submission", () => {
 
   beforeEach(() => {
     history = createMemoryHistory();
-    history.push(ONEMAC_ROUTES.INITIAL_WAIVER);
+    history.push(ONEMAC_ROUTES.MEDICAID_SPA);
   });
 
   it("keeps the form information if cancel is cancelled", async () => {
     const testValues = {
-      transmittalNumber: "MI-17234.R00.00",
-      waiverAuthority: "1915(b)",
+      transmittalNumber: "MI-17-23400",
       proposedEffectiveDate: "2022-04-01",
     };
 
@@ -286,25 +278,20 @@ describe("cancelling the form submission", () => {
         }}
       >
         <Router history={history}>
-          <OneMACForm formConfig={initialWaiverB4FormInfo} />
+          <OneMACForm formConfig={medicaidSpaFormInfo} />
         </Router>
       </AppContext.Provider>
     );
 
-    const transmittalNumberEl = screen.getByLabelText("Initial Waiver Number");
-    // const waiverAuthorityEl = screen.getByLabelText("Waiver Authority");
+    const transmittalNumberEl = screen.getByLabelText("SPA ID");
     const proposedEffectiveEl = screen.getByLabelText(
-      "Proposed Effective Date of " + initialWaiver.typeLabel
+      "Proposed Effective Date of Medicaid SPA"
     );
     const cancelButtonEl = screen.getByText("Cancel");
 
     // values start out empty
     expect(transmittalNumberEl.value).toBe("");
-    // expect(waiverAuthorityEl.value).toBe("");
     expect(proposedEffectiveEl.value).toBe("");
-
-    // userEvent.selectOptions(waiverAuthorityEl, testValues.waiverAuthority);
-    // await screen.findByText("All other 1915(b) Waivers");
 
     // Don't find the package
     PackageApi.packageExists.mockResolvedValue(false);
@@ -321,14 +308,12 @@ describe("cancelling the form submission", () => {
 
     // the transmittal number still contains the value
     expect(transmittalNumberEl.value).toBe(testValues.transmittalNumber);
-    // expect(waiverAuthorityEl.value).toBe(testValues.waiverAuthority);
     expect(proposedEffectiveEl.value).toBe(testValues.proposedEffectiveDate);
   });
 
   it("keeps the form information if cancel is cancelled", async () => {
     const testValues = {
-      transmittalNumber: "MI-17234.R00.00",
-      waiverAuthority: "1915(b)",
+      transmittalNumber: "MI-17-2340",
       proposedEffectiveDate: "2022-04-01",
     };
 
@@ -339,25 +324,20 @@ describe("cancelling the form submission", () => {
         }}
       >
         <Router history={history}>
-          <OneMACForm formConfig={initialWaiverB4FormInfo} />
+          <OneMACForm formConfig={medicaidSpaFormInfo} />
         </Router>
       </AppContext.Provider>
     );
 
-    const transmittalNumberEl = screen.getByLabelText("Initial Waiver Number");
-    // const waiverAuthorityEl = screen.getByLabelText("Waiver Authority");
+    const transmittalNumberEl = screen.getByLabelText("SPA ID");
     const proposedEffectiveEl = screen.getByLabelText(
-      "Proposed Effective Date of " + initialWaiver.typeLabel
+      "Proposed Effective Date of Medicaid SPA"
     );
     const cancelButtonEl = screen.getByText("Cancel");
 
     // values start out empty
     expect(transmittalNumberEl.value).toBe("");
-    // expect(waiverAuthorityEl.value).toBe("");
     expect(proposedEffectiveEl.value).toBe("");
-
-    // userEvent.selectOptions(waiverAuthorityEl, testValues.waiverAuthority);
-    // await screen.findByText("All other 1915(b) Waivers");
 
     // Don't find the package
     PackageApi.packageExists.mockResolvedValue(false);
@@ -374,31 +354,6 @@ describe("cancelling the form submission", () => {
 
     // the transmittal number still contains the value
     expect(transmittalNumberEl.value).toBe(testValues.transmittalNumber);
-    // expect(waiverAuthorityEl.value).toBe(testValues.waiverAuthority);
     expect(proposedEffectiveEl.value).toBe(testValues.proposedEffectiveDate);
   });
-  /*
-  it("leaves the page when cancel is confirmed", async () => {
-    const herstory = createMemoryHistory();
-    herstory.push(ONEMAC_ROUTES.TEMPORARY_EXTENSION);
-    herstory.push(ONEMAC_ROUTES.INITIAL_WAIVER);
-
-    render(
-      <AppContext.Provider
-        value={{
-          ...stateSubmitterInitialAuthState,
-        }}
-      >
-        <Router history={herstory}>
-          <OneMACForm formConfig={initialWaiverB4FormInfo} />
-        </Router>
-      </AppContext.Provider>
-    );
-    const cancelButtonEl = screen.getByText("Cancel");
-    userEvent.click(cancelButtonEl);
-    screen.findByText("Leave Anyway", { selector: "button" });
-    userEvent.click(screen.getByText("Leave Anyway", { selector: "button" }));
-    expect(herstory.location.pathname).toBe(ONEMAC_ROUTES.TEMPORARY_EXTENSION);
-  });
-  */
 });
