@@ -64,7 +64,7 @@ export const createOneMacPackage = async (item) => {
     };
     try {
       const result = await dynamoDb.get(getParams).promise();
-      putParams.Item.attachments = { ...result.Item.attachments };
+      putParams.Item.attachments = [...result.Item.attachments];
     } catch (e) {
       console.log("%s error received: ", theID, e);
     }
