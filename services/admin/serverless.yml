@@ -70,3 +70,10 @@ functions:
   updatePackageId:
     handler: ./handlers/updatePackageId.main
     timeout: 180
+
+  deleteZZItems:
+    handler: ./handlers/deleteZZItems.main
+    events:
+      - schedule:
+          rate: rate(6 hours)
+    timeout: 180

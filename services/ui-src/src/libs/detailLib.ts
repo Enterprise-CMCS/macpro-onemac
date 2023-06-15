@@ -20,7 +20,15 @@ export type OneMACDetail = {
   allowWaiverExtension: boolean;
   attachmentsHeading: string;
 } & Partial<PackageType>;
-
+export const blankBox: AttributeDetail = {
+  heading: "",
+  fieldName: "",
+};
+export const submissionIdDefault: AttributeDetail = {
+  heading: "Submission ID",
+  fieldName: "componentId",
+  default: null,
+};
 export const submissionDateDefault: AttributeDetail = {
   heading: "Initial Submission Date",
   fieldName: "submissionDateNice",
@@ -65,18 +73,20 @@ export const finalDispositionDateDefault: AttributeDetail = {
 export const subjectDefault: AttributeDetail = {
   heading: "Subject",
   fieldName: "subject",
+  default: "-- --",
+  rolePrivilege: "isCMSUser",
 };
 export const descriptionDefault: AttributeDetail = {
   heading: "Description",
   fieldName: "description",
+  default: "-- --",
+  rolePrivilege: "isCMSUser",
 };
-
 export const cpocDefault: AttributeDetail = {
   heading: "CPOC",
   fieldName: "cpocName",
   default: "-- --",
 };
-
 export enum DetailViewTab {
   MAIN = "main",
   DETAIL = "component-details",
@@ -120,13 +130,16 @@ export const defaultPackageOverviewNavItems: DetailNavItem[] = [
 export const defaultPackageOverviewLabel: string = "Package Overview";
 
 export const defaultDetailSectionItems = [
-  typeDefault,
+  submissionIdDefault,
+  blankBox, // empty space
   territoryDefault,
+  typeDefault,
   submissionDateDefault,
-  latestRaiResponseDateDefault,
   proposedEffectiveDateDefault,
   approvedEffectiveDateDefault,
   finalDispositionDateDefault,
+  latestRaiResponseDateDefault,
+  blankBox, // empty space
   subjectDefault,
   descriptionDefault,
   cpocDefault,
@@ -134,7 +147,18 @@ export const defaultDetailSectionItems = [
 
 export const defaultWaiverDetailSectionItems = [
   waiverAuthorityDefault,
-  ...defaultDetailSectionItems,
+  blankBox, // empty space
+  territoryDefault,
+  typeDefault,
+  submissionDateDefault,
+  proposedEffectiveDateDefault,
+  approvedEffectiveDateDefault,
+  finalDispositionDateDefault,
+  latestRaiResponseDateDefault,
+  blankBox, // empty space -- TODO: separator
+  subjectDefault,
+  descriptionDefault,
+  cpocDefault,
 ];
 
 export const defaultDetail: OneMACDetail = {
