@@ -1,5 +1,5 @@
 import React from "react";
-import { ROUTES } from "cmscommonlib";
+import { FAQ_TARGET, ROUTES } from "cmscommonlib";
 
 function HomeFooter() {
   return (
@@ -12,7 +12,7 @@ function HomeFooter() {
           </div>
           <div className="ds-l-col--3 ds-u-margin-left--auto">
             <a
-              target="new"
+              target={FAQ_TARGET}
               href={ROUTES.FAQ_TOP}
               className="ds-c-button ds-c-button--primary ds-u-text-decoration--none"
             >
