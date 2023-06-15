@@ -20,6 +20,11 @@ const SEATOOL_TO_ONEMAC_STATUS = {
     Workflow.ONEMAC_STATUS.PENDING_APPROVAL,
   [Workflow.SEATOOL_STATUS.UNKNOWN]: Workflow.ONEMAC_STATUS.SUBMITTED,
 };
+const finalDispositionStatuses = [
+  Workflow.ONEMAC_STATUS.APPROVED,
+  Workflow.ONEMAC_STATUS.DISAPPROVED,
+  Workflow.ONEMAC_STATUS.WITHDRAWN,
+];
 const oneMacTableName = process.env.IS_OFFLINE
   ? process.env.localTableName
   : process.env.oneMacTableName;
@@ -216,15 +221,17 @@ export const buildAnyPackage = async (packageId, config) => {
         if (seaToolStatus && SEATOOL_TO_ONEMAC_STATUS[seaToolStatus]) {
           const oneMacStatus = SEATOOL_TO_ONEMAC_STATUS[seaToolStatus];
           putParams.Item.currentStatus = oneMacStatus;
-          if (
-            oneMacStatus in
-            [
-              ONEMAC_STATUS.APPROVED,
-              ONEMAC_STATUS.DISAPPROVED,
-              ONEMAC_STATUS.WITHDRAWN,
-            ]
-          ) {
-            putParams.Item.finalDispostionDate = DateTime.fromMillis(
+          console.log("onemac status is: ", oneMacStatus);
+          console.log(
+            "onemac status date is: ",
+            anEvent.STATE_PLAN.STATUS_DATE
+          );
+          console.log(
+            "onemac status is final:",
+            oneMacStatus in finalDispositionStatuses
+          );
+          if (oneMacStatus in finalDispositionStatuses) {
+            putParams.Item.finalDispositionDate = DateTime.fromMillis(
               anEvent.STATE_PLAN.STATUS_DATE
             ).toFormat("yyyy-LL-dd");
           }

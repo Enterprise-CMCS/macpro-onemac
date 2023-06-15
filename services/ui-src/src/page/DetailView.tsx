@@ -133,14 +133,14 @@ const DetailView: React.FC<{ pageConfig: OneMACDetail }> = ({ pageConfig }) => {
           }
         }
         if (fetchedDetail.approvedEffectiveDate) {
-          fetchedDetail.proposedEffectiveDateNice = format(
-            parseISO(fetchedDetail.proposedEffectiveDate),
+          fetchedDetail.approvedEffectiveDateNice = format(
+            parseISO(fetchedDetail.approvedEffectiveDate),
             "MMM d yyyy"
           );
         }
         if (fetchedDetail.finalDispostionDate) {
-          fetchedDetail.finalDispostionDate = format(
-            parseISO(fetchedDetail.proposedEffectiveDate),
+          fetchedDetail.finalDispostionDateNice = format(
+            parseISO(fetchedDetail.finalDispositionDate),
             "MMM d yyyy"
           );
         }
