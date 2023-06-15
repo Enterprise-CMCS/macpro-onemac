@@ -3,6 +3,7 @@ import AWS from "aws-sdk";
 import { DateTime } from "luxon";
 
 import { dynamoConfig, Workflow } from "cmscommonlib";
+import { ONEMAC_STATUS } from "cmscommonlib/workflow";
 
 const dynamoDb = new AWS.DynamoDB.DocumentClient(dynamoConfig);
 
@@ -212,12 +213,22 @@ export const buildAnyPackage = async (packageId, config) => {
           anEvent.STATE_PLAN.SPW_STATUS_ID,
           seaToolStatus
         );
-        seaToolStatus &&
-          SEATOOL_TO_ONEMAC_STATUS[seaToolStatus] &&
-          (putParams.Item.currentStatus =
-            SEATOOL_TO_ONEMAC_STATUS[seaToolStatus]);
-
-        return;
+        if (seaToolStatus && SEATOOL_TO_ONEMAC_STATUS[seaToolStatus]) {
+          const oneMacStatus = SEATOOL_TO_ONEMAC_STATUS[seaToolStatus];
+          putParams.Item.currentStatus = oneMacStatus;
+          if (
+            oneMacStatus in
+            [
+              ONEMAC_STATUS.APPROVED,
+              ONEMAC_STATUS.DISAPPROVED,
+              ONEMAC_STATUS.WITHDRAWN,
+            ]
+          ) {
+            putParams.Item.finalDispostionDate = DateTime.fromMillis(
+              anEvent.STATE_PLAN.STATUS_DATE
+            ).toFormat("yyyy-LL-dd");
+          }
+        }
       }
 
       // assume OneMAC event if got here
