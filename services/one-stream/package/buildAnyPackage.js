@@ -200,9 +200,11 @@ export const buildAnyPackage = async (packageId, config) => {
         ) {
           approvedEffectiveDate = anEvent.STATE_PLAN.ACTUAL_EFFECTIVE_DATE;
         }
-        putParams.Item.approvedEffectiveDate = DateTime.fromMillis(
-          approvedEffectiveDate
-        ).toFormat("yyyy-LL-dd");
+        if (typeof approvedEffectiveDate === "number") {
+          putParams.Item.approvedEffectiveDate = DateTime.fromMillis(
+            approvedEffectiveDate
+          ).toFormat("yyyy-LL-dd");
+        }
 
         if (timestamp < lmTimestamp) return;
 
