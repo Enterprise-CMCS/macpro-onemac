@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "@material-ui/core";
-import { FieldHint } from "cmscommonlib";
+import { FAQ_TARGET, FieldHint } from "cmscommonlib";
 import { Review } from "@cmsgov/design-system";
 import { Message } from "../libs/formLib";
 
@@ -36,7 +36,7 @@ const ComponentId: React.FC<{
             </label>
             {idFAQLink && (
               <div className="label-rcol">
-                <Link target="new" href={idFAQLink}>
+                <Link target={FAQ_TARGET} href={idFAQLink}>
                   What is my {idLabel}?
                 </Link>
               </div>

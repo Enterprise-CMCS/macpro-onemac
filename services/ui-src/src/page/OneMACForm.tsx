@@ -12,6 +12,7 @@ import { Input } from "rsuite";
 import { TextField, Button, Review } from "@cmsgov/design-system";
 
 import {
+  FAQ_TARGET,
   FORM_SUCCESS_RESPONSE_CODES,
   RESPONSE_CODE,
   ROUTES,
@@ -568,7 +569,7 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
         <div className="faq-container">
           <span>Do you have questions or need support?</span>
           <a
-            target="new"
+            target={FAQ_TARGET}
             href={ROUTES.FAQ_TOP}
             className="ds-c-button ds-c-button--primary ds-u-text-decoration--none"
           >
