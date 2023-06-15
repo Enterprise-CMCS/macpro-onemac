@@ -80,10 +80,12 @@ export const main = async (eventBatch) => {
                   packageToBuild.type = Workflow.ONEMAC_TYPE.WAIVER_INITIAL;
                 break;
               case "1915c_waivers":
-                console.log("actionType is: ", actionType);
                 if (actionType === "Amend")
                   packageToBuild.type = Workflow.ONEMAC_TYPE.WAIVER_APP_K;
-                else console.log("newEventData is: ", newEventData);
+                else if (actionType === "Renew")
+                  packageToBuild.type = Workflow.ONEMAC_TYPE.WAIVER_RENEWAL;
+                else if (actionType === "New")
+                  packageToBuild.type = Workflow.ONEMAC_TYPE.WAIVER_INITIAL;
                 break;
               default:
                 break;
