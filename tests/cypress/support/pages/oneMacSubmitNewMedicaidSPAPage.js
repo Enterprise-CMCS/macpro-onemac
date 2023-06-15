@@ -16,7 +16,6 @@ const SPAPagesMainElement =
 
 const deleteForm179File = "//tbody/tr[1]/td[3]/div[1]/button[1]/*[1]";
 const deleteSpaPagesFile = "//tbody/tr[2]/td[3]/div[1]/button[1]/*[1]";
-
 //Element is Xpath use cy.xpath instead of cy.get
 const CMSForm179AddFileBTN =
   "//label[@aria-label='Add file of type CMS Form 179']";
@@ -25,12 +24,17 @@ const CMSForm179AddFileUpload = "#uploader-input-0";
 const SPAPagesAddFileBTN = "//label[@aria-label='Add files of type SPA Pages']";
 const SPAPAgesAddFileUpload = "#uploader-input-1";
 const dashboardTabBTN = "#dashboardLink";
-const whatIsMySPAIDLink = "//a[text()='What is my SPA ID?']";
-const page = "//div[@class='dashboard-container']";
+const enterMacProBtn = "//button[contains(text(),'Enter the MACPro system')]";
 
 export class oneMacSubmitNewMedicaidSPAPage {
   verifyNewMedicaidSPAPage() {
     cy.url().should("include", "/medicaid-spa");
+  }
+  verifyMedicaidEligibilityPage() {
+    cy.url().should("include", "/medicaid-eligibility");
+  }
+  verifyMedicaidAlternativePage() {
+    cy.url().should("include", "medicaid-abp");
   }
   inputSpaID(s) {
     cy.get(SpaIDInput).type(s);
@@ -138,6 +142,16 @@ export class oneMacSubmitNewMedicaidSPAPage {
       .then((href) => {
         cy.visit(href);
       });
+  }
+  verifyMacProSystenBtn() {
+    cy.xpath(enterMacProBtn).should("be.visible");
+    cy.xpath(enterMacProBtn)
+      .parent("a")
+      .should(
+        "have.attr",
+        "href",
+        "https://www.medicaid.gov/resources-for-states/medicaid-and-chip-program-macpro-portal/index.html#MACPro"
+      );
   }
 }
 export default oneMacSubmitNewMedicaidSPAPage;

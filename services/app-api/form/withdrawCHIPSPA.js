@@ -6,8 +6,6 @@ import { defaultWithdrawConfig } from "./defaultFormConfig";
 export const withdrawCHIPSPAFormConfig = {
   ...defaultWithdrawConfig,
   ...chipSPAWithdraw,
-  CMSToAddresses: [process.env.reviewerCHIPEmail],
-  CMSCcAddresses: process.env.chipCcEmail?.split(";")?.filter((s) => s.trim()),
 };
 
 export const main = handler(async (event) =>

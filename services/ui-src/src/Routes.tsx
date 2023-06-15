@@ -278,6 +278,16 @@ const ROUTE_LIST: RouteSpec[] = [
         routes: [
           { path: ONEMAC_ROUTES.TRIAGE_GROUP, exact: true, component: Triage },
           { path: ONEMAC_ROUTES.TRIAGE_SPA, exact: true, component: Triage },
+          {
+            path: ONEMAC_ROUTES.TRIAGE_MEDICAID_SPA,
+            exact: true,
+            component: Triage,
+          },
+          {
+            path: ONEMAC_ROUTES.TRIAGE_CHIP_SPA,
+            exact: true,
+            component: Triage,
+          },
           { path: ONEMAC_ROUTES.TRIAGE_WAIVER, exact: true, component: Triage },
           {
             path: ONEMAC_ROUTES.TRIAGE_WAIVER_B,
