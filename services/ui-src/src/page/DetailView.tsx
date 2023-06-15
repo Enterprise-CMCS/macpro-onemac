@@ -138,7 +138,7 @@ const DetailView: React.FC<{ pageConfig: OneMACDetail }> = ({ pageConfig }) => {
             "MMM d yyyy"
           );
         }
-        if (fetchedDetail.finalDispostionDate) {
+        if (fetchedDetail.finalDispositionDate) {
           fetchedDetail.finalDispostionDateNice = format(
             parseISO(fetchedDetail.finalDispositionDate),
             "MMM d yyyy"

@@ -227,9 +227,9 @@ export const buildAnyPackage = async (packageId, config) => {
           );
           console.log(
             "onemac status is final:",
-            oneMacStatus in finalDispositionStatuses
+            finalDispositionStatuses.includes(oneMacStatus)
           );
-          if (oneMacStatus in finalDispositionStatuses) {
+          if (finalDispositionStatuses.includes(oneMacStatus)) {
             putParams.Item.finalDispositionDate = DateTime.fromMillis(
               anEvent.STATE_PLAN.STATUS_DATE
             ).toFormat("yyyy-LL-dd");
