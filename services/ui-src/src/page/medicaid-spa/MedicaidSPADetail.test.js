@@ -92,7 +92,7 @@ const testDetail = {
   ],
   submitterName: "StateSubmitter Nightwatch",
   approvedEffectiveDate: "2022-01-02",
-  finalDispositionDate: "2022-01-0",
+  finalDispositionDate: "2022-01-03",
 };
 
 const ContextWrapper = ({ children }) => {
