@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "@cmsgov/design-system";
 import PageTitleBar from "./PageTitleBar";
-import { ROUTES } from "cmscommonlib";
+import { FAQ_TARGET, ROUTES } from "cmscommonlib";
 import { Link } from "@material-ui/core";
 
 export enum ExternalSystem {
@@ -24,7 +24,7 @@ const FAQHelperText = () => (
   <span className="landing-description">
     <i>
       For additional information on where to submit, refer to the{" "}
-      <Link target="new" href={ROUTES.FAQ_SYSTEM}>
+      <Link target={FAQ_TARGET} href={ROUTES.FAQ_SYSTEM}>
         Crosswalk from Paper-based State Plan to MACPro and MMDL
       </Link>{" "}
       document in our FAQ section.
