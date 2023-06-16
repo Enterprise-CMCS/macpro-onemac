@@ -15,6 +15,7 @@ import PackageApi from "../utils/PackageApi";
 import { formatDate } from "../utils/date-utils";
 import PageTitleBar from "../components/PageTitleBar";
 import AlertBar from "../components/AlertBar";
+import NotFound from "../containers/NotFound";
 import { OneMACDetail } from "../libs/detailLib";
 import { DetailSection } from "./section/DetailSection";
 import { temporaryExtensionTypes } from "./temporary-extension/TemporaryExtensionForm";
@@ -137,7 +138,7 @@ const DetailView: React.FC<{ pageConfig: OneMACDetail }> = ({ pageConfig }) => {
       } catch (e) {
         console.log("error in getDetail call?? ", e);
         history.push({
-          pathname: ONEMAC_ROUTES.PACKAGE_LIST,
+          pathname: goBackLink,
           state: {
             passCode: RESPONSE_CODE.SYSTEM_ERROR,
           },
@@ -146,7 +147,7 @@ const DetailView: React.FC<{ pageConfig: OneMACDetail }> = ({ pageConfig }) => {
       if (!ctrlr?.signal.aborted) setDetail(fetchedDetail);
       if (!ctrlr?.signal.aborted) setIsLoading(stillLoading);
     },
-    [history, componentId, componentType, componentTimestamp]
+    [goBackLink, history, componentId, componentType, componentTimestamp]
   );
 
   useEffect(() => {
@@ -161,25 +162,29 @@ const DetailView: React.FC<{ pageConfig: OneMACDetail }> = ({ pageConfig }) => {
 
   return (
     <LoadingScreen isLoading={isLoading}>
-      <PageTitleBar
-        backTo={goBackLink}
-        heading={detail && detail.componentId}
-        enableBackNav
-      />
-      <AlertBar alertCode={alertCode} closeCallback={closedAlert} />
-      {detail && (
-        <div className="form-container">
-          <div className="component-detail-wrapper">
-            <article className="component-detail">
-              <DetailSection
-                pageConfig={pageConfig}
-                detail={detail}
-                loadDetail={loadDetail}
-                setAlertCode={setAlertCode}
-              />
-            </article>
+      {detail?.componentId ? (
+        <>
+          <PageTitleBar
+            backTo={goBackLink}
+            heading={detail && detail.componentId}
+            enableBackNav
+          />
+          <AlertBar alertCode={alertCode} closeCallback={closedAlert} />
+          <div className="form-container">
+            <div className="component-detail-wrapper">
+              <article className="component-detail">
+                <DetailSection
+                  pageConfig={pageConfig}
+                  detail={detail}
+                  loadDetail={loadDetail}
+                  setAlertCode={setAlertCode}
+                />
+              </article>
+            </div>
           </div>
-        </div>
+        </>
+      ) : (
+        <NotFound />
       )}
     </LoadingScreen>
   );
