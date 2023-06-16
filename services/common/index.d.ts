@@ -1,6 +1,11 @@
 export const RESPONSE_CODE: Record<string, string>;
 export const FORM_SUCCESS_RESPONSE_CODES: string[];
-export { ROUTES, ONEMAC_ROUTES, TYPE_TO_DETAIL_ROUTE } from "./routes.js";
+export {
+  ROUTES,
+  ONEMAC_ROUTES,
+  TYPE_TO_DETAIL_ROUTE,
+  FAQ_TARGET,
+} from "./routes.js";
 
 export const approvedBlueWarningMessage: string;
 
