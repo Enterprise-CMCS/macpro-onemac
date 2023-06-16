@@ -24,6 +24,12 @@ async function assignAttachmentUrls(item) {
       item.attachments[idx].url = url;
     });
   }
+
+  for (const child in item) {
+    if (child?.attachments) {
+      await assignAttachmentUrls(child);
+    }
+  }
 }
 export const getDetails = async (event) => {
   const componentId = event?.pathParameters?.id;
@@ -58,11 +64,17 @@ export const getDetails = async (event) => {
 
     await assignAttachmentUrls(result.Item);
 
-    if (result.Item?.raiResponses.length > 0) {
-      for (const child of result.Item?.raiResponses) {
-        await assignAttachmentUrls(child);
-      }
-    }
+    // if (result.Item?.raiResponses.length > 0) {
+    //   for (const child of result.Item?.raiResponses) {
+    //     await assignAttachmentUrls(child);
+    //   }
+    // }
+
+    // if (result.Item?.withdrawalRequests.length > 0) {
+    //   for (const child of result.Item?.raiResponses) {
+    //     await assignAttachmentUrls(child);
+    //   }
+    // }
 
     result.Item.currentStatus = userRoleObj.isCMSUser
       ? cmsStatusUIMap[result.Item.currentStatus]
