@@ -60,6 +60,7 @@ export const buildAnyPackage = async (packageId, config) => {
         waiverExtensions: [],
         withdrawalRequests: [],
         currentStatus: emptyField,
+        submissionTimestamp: 0,
         submitterName: emptyField,
         submitterEmail: emptyField,
         subject: emptyField,
