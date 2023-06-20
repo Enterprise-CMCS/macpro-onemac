@@ -78,7 +78,7 @@ it("helpdesk user renders with an Export button", async () => {
   render(<PackageList />, { wrapper: helpDeskContextWrapper });
   await waitForElementToBeRemoved(() => screen.getByTestId(LOADER_TEST_ID));
 
-  const exportButton = await screen.findByText("Export to Excel(CSV)");
+  const exportButton = await screen.findByText("Export to Excel (CSV)");
   userEvent.click(exportButton);
   expect(portalTableExportToCSV).toBeCalled();
 });
