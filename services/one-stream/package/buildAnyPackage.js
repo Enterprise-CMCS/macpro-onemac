@@ -60,6 +60,7 @@ export const buildAnyPackage = async (packageId, config) => {
         description: "-- --",
         cpocName: "-- --",
         reviewTeam: [],
+        adminChanges: [],
       },
     };
     let currentPackage;
@@ -204,6 +205,11 @@ export const buildAnyPackage = async (packageId, config) => {
       }
 
       // assume OneMAC event if got here
+
+      // admin changes are consolidated across all OneMAC events
+      if (anEvent?.adminChanges && _.isArray(anEvent.adminChanges))
+        putParams.Item.adminChanges.push(anEvent.adminChanges);
+
       config.theAttributes.forEach((attributeName) => {
         if (anEvent[attributeName]) {
           if (attributeName === "parentId") {
@@ -238,6 +244,10 @@ export const buildAnyPackage = async (packageId, config) => {
 
     putParams.Item.raiResponses.sort(
       (a, b) => b.submissionTimestamp - a.submissionTimestamp
+    );
+
+    putParams.Item.adminChanges.sort(
+      (a, b) => b.changeTimestamp - a.changeTimestamp
     );
 
     putParams.Item.latestRaiResponseTimestamp =
