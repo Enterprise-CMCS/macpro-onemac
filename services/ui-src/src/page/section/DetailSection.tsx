@@ -273,6 +273,35 @@ export const DetailSection = ({
 
         <AdditionalInfoSection additionalInfo={detail.additionalInformation} />
 
+        {detail.adminChanges?.length > 0 && (
+          <section className="detail-section">
+            <h2>Administrative Package Changes</h2>
+            <Accordion>
+              {detail.adminChanges?.map((adminChange, index) => {
+                return (
+                  <AccordionItem
+                    buttonClassName="accordion-button"
+                    contentClassName="accordion-content"
+                    heading={
+                      "Submitted on " + formatDate(adminChange.changeTimestamp)
+                    }
+                    headingLevel="6"
+                    id={"admin_change_" + index + "_caret"}
+                    key={"admin_change_" + index}
+                    defaultOpen={index === 0}
+                  >
+                    <Review heading="Change Made">
+                      {adminChange.changeMade}
+                    </Review>
+                    <Review heading="Change Reason">
+                      {adminChange.changeReason}
+                    </Review>
+                  </AccordionItem>
+                );
+              })}
+            </Accordion>
+          </section>
+        )}
         {detail.raiResponses?.length > 0 && (
           <section className="detail-section">
             <h2>Formal RAI Responses</h2>

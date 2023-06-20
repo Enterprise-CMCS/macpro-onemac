@@ -1986,6 +1986,11 @@
     "GSI1pk": "OneMAC#submitmedicaidspa",
     "convertTimestamp": 1673973224526,
     "submitterEmail": "statesubmitter@nightwatch.test",
+    "adminChanges": [{
+      "adminChangeTimestamp": 1675987200000,
+      "changeMade": "ID changed from MD-21-2205-VM to MD-22-2205-VM",
+      "changeReason": "Per request from Charlie Tester in Help Desk ticket INC34224"
+    }],
     "sk": "OneMAC#1672290821990",
     "componentId": "MD-22-2205-VM",
     "pk": "MD-22-2205-VM",
@@ -2052,6 +2057,11 @@
     "componentId": "MD-22-2205-VM",
     "subject": "OneMac Connection test",
     "description": "pending-rai",
+    "adminChanges": [{
+      "changeTimestamp": 1675987200000,
+      "changeMade": "ID changed from MD-21-2205-VM to MD-22-2205-VM",
+      "changeReason": "Per request from Charlie Tester in Help Desk ticket INC34224"
+    }],
     "raiResponses": [
       {
         "additionalInformation": "",
@@ -2919,6 +2929,11 @@
     ],
     "proposedEffectiveDate": "none",
     "GSI1sk": "MD-22004.R01.01",
+    "adminChanges": [{
+      "changeTimestamp": 1675929600000,
+      "changeMade": "ID changed from MD-2200.R01.01 to MD-22004.R01.01",
+      "changeReason": "Per request from Mister Tester in Help Desk ticket INC324"
+    }],
     "additionalInformation": "test",
     "submissionTimestamp": 1672415096128,
     "waiverAuthority": "1915(b)",
@@ -2952,6 +2967,11 @@
     "GSI1pk": "OneMAC#waiver",
     "submitterEmail": "statesubmitter@nightwatch.test",
     "sk": "Package",
+    "adminChanges": [{
+      "changeTimestamp": 1675929600000,
+      "changeMade": "ID changed from MD-2200.R01.01 to MD-22004.R01.01",
+      "changeReason": "Per request from Mister Tester in Help Desk ticket INC324"
+    }],
     "cpocName": "Chester Tester",
     "reviewTeam": ["Lester Tester", "Super Tester", "Jimmy Tester"],
     "componentId": "MD-22004.R01.01",
@@ -3453,6 +3473,11 @@
     "submissionTimestamp": 1674574190176,
     "waiverAuthority": "1915(b)(4)",
     "GSI1pk": "OneMAC#submitwaivernew",
+    "adminChanges": [{
+      "changeTimestamp": 1674637174000,
+      "changeMade": "Type changed from Waiver Renewal to Waiver Amendment",
+      "changeReason": "Per request from Bester Tester in Help Desk ticket INC354"
+    }],
     "convertTimestamp": 1674574260442,
     "submitterEmail": "statesubmitter@nightwatch.test",
     "sk": "OneMAC#1674574190176",
@@ -3482,6 +3507,11 @@
     "GSI1pk": "OneMAC#waiver",
     "submitterEmail": "statesubmitter@nightwatch.test",
     "sk": "Package",
+    "adminChanges": [{
+      "changeTimestamp": 1674637174000,
+      "changeMade": "Type changed from Waiver Renewal to Waiver Amendment",
+      "changeReason": "Per request from Bester Tester in Help Desk ticket INC354"
+    }],
     "cpocName": "Chester Tester",
     "reviewTeam": ["Lester Tester", "Super Tester", "Jimmy Tester"],
     "componentId": "MD-12989.R00.00",
@@ -3546,6 +3576,11 @@
     "proposedEffectiveDate": "none",
     "GSI1sk": "MD-4444.R22.01",
     "additionalInformation": "hi",
+    "adminChanges": [{
+      "changeTimestamp": 1674637174000,
+      "changeMade": "Type changed from Waiver App K to App K RAI",
+      "changeReason": "Per request from Lester Tester in Help Desk ticket INC35445"
+    }],
     "submissionTimestamp": 1669755714638,
     "GSI1pk": "OneMAC#submitwaiverappkrai",
     "convertTimestamp": 1673973214366,
@@ -3631,6 +3666,11 @@
     "waiverAuthority": "1915(b)",
     "GSI1pk": "OneMAC#waiver",
     "submitterEmail": "statesubmitter@nightwatch.test",
+    "adminChanges": [{
+      "changeTimestamp": 1674637174000,
+      "changeMade": "Type changed from Waiver App K to App K RAI",
+      "changeReason": "Per request from Lester Tester in Help Desk ticket INC35445"
+    }],
     "sk": "Package",
     "cpocName": "Chester Tester",
     "reviewTeam": ["Lester Tester", "Super Tester", "Jimmy Tester"],
@@ -3663,6 +3703,11 @@
     "additionalInformation": "",
     "submissionTimestamp": 1660229287407,
     "GSI1pk": "OneMAC#submitwaiverextension",
+    "adminChanges": [{
+      "changeTimestamp": 1674637174000,
+      "changeMade": "ID changed from MD-0093.R00.03 to MD-0093.R00.TE03",
+      "changeReason": "Per request from Valerie Tester in Help Desk ticket INC354045"
+    }],
     "convertTimestamp": 1673973225066,
     "submitterEmail": "statesubmitter@nightwatch.test",
     "sk": "OneMAC#1660229287407",
@@ -3691,6 +3736,11 @@
     "GSI1pk": "OneMAC#waiver",
     "submitterEmail": "statesubmitter@nightwatch.test",
     "sk": "Package",
+    "adminChanges": [{
+      "changeTimestamp": 1674637174000,
+      "changeMade": "ID changed from MD-0093.R00.03 to MD-0093.R00.TE03",
+      "changeReason": "Per request from Valerie Tester in Help Desk ticket INC354045"
+    }],
     "cpocName": "Chester Tester",
     "reviewTeam": ["Lester Tester", "Super Tester", "Jimmy Tester"],
     "componentId": "MD-0093.R00.TE03",
@@ -3735,6 +3785,11 @@
     "additionalInformation": "test",
     "submissionTimestamp": 1672335536125,
     "GSI1pk": "OneMAC#submitchipspa",
+    "adminChanges": [{
+      "changeTimestamp": 1673513974000,
+      "changeMade": "Type changed from Medicaid SPA to CHIP SPA",
+      "changeReason": "Per request from Samson Tester in Help Desk ticket INC32245"
+    }],
     "convertTimestamp": 1674854066881,
     "submitterEmail": "mdstateonemac@gmail.com",
     "sk": "OneMAC#1672335536125",
@@ -3777,6 +3832,11 @@
     "GSI1pk": "OneMAC#spa",
     "submitterEmail": "mdstateonemac@gmail.com",
     "sk": "Package",
+    "adminChanges": [{
+      "changeTimestamp": 1673513974000,
+      "changeMade": "Type changed from Medicaid SPA to CHIP SPA",
+      "changeReason": "Per request from Samson Tester in Help Desk ticket INC32245"
+    }],
     "cpocName": "Chester Tester",
     "reviewTeam": ["Lester Tester", "Super Tester", "Jimmy Tester"],
     "componentId": "MD-22-2300-VM",
@@ -14080,6 +14140,11 @@
     "convertTimestamp": 1674854066866,
     "submitterEmail": "mdstateonemac@gmail.com",
     "sk": "OneMAC#1672269819116",
+    "adminChanges": [{
+      "changeTimestamp": 1672674634000,
+      "changeMade": "ID changed from MD-22000.R00.00 to MD-22002.R00.00",
+      "changeReason": "Per request from Olivia Tester in Help Desk ticket INC245"
+    }],
     "componentId": "MD-22002.R00.00",
     "pk": "MD-22002.R00.00",
     "submitterName": "MDSTATE SUBMITTERNK"
@@ -14106,6 +14171,11 @@
     "GSI1pk": "OneMAC#waiver",
     "submitterEmail": "mdstateonemac@gmail.com",
     "sk": "Package",
+    "adminChanges": [{
+      "changeTimestamp": 1672674634000,
+      "changeMade": "ID changed from MD-22000.R00.00 to MD-22002.R00.00",
+      "changeReason": "Per request from Olivia Tester in Help Desk ticket INC245"
+    }],
     "cpocName": "Chester Tester",
     "reviewTeam": ["Lester Tester", "Super Tester", "Jimmy Tester"],
     "componentId": "MD-22002.R00.00",
