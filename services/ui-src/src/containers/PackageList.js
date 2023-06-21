@@ -42,8 +42,8 @@ import {
 import { portalTableExportToCSV } from "../utils/portalTableExportToCSV";
 import { FORM_SOURCE } from "../domain-types";
 
-const defaultStateHiddenCols = ["territory"];
-const defaultCMSHiddenCols = ["submitter"];
+const defaultStateHiddenCols = ["territory", "cpocName"];
+const defaultCMSHiddenCols = ["submitter", "cpocName"];
 
 const DEFAULT_COLUMNS = {
   [USER_ROLE.STATE_SUBMITTER]: defaultStateHiddenCols,
@@ -226,12 +226,6 @@ const PackageList = () => {
           filter: CustomFilterTypes.DateRange,
           Filter: CustomFilterUi.DateRangeInPast,
         },
-        {
-          Header: "CPOC Name",
-          accessor: "cpocName",
-          id: "cpocName",
-          disableGlobalFilter: false,
-        },
         userRoleObj.isCMSUser
           ? {
               Header: "Formal RAI Received",
@@ -249,6 +243,13 @@ const PackageList = () => {
               filter: CustomFilterTypes.DateRange,
               Filter: CustomFilterUi.DateRangeInPast,
             },
+
+        {
+          Header: "CPOC Name",
+          accessor: "cpocName",
+          id: "cpocName",
+          disableGlobalFilter: false,
+        },
         {
           Header: "Submitted By",
           accessor: "submitterName",
