@@ -208,7 +208,7 @@ export const buildAnyPackage = async (packageId, config) => {
 
       // admin changes are consolidated across all OneMAC events
       if (anEvent?.adminChanges && _.isArray(anEvent.adminChanges))
-        putParams.Item.adminChanges.push(anEvent.adminChanges);
+        putParams.Item.adminChanges.push(...anEvent.adminChanges);
 
       config.theAttributes.forEach((attributeName) => {
         if (anEvent[attributeName]) {
