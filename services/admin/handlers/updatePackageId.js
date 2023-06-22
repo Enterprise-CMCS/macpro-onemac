@@ -47,24 +47,24 @@ async function getOneMacEventRecords(fromPackageId) {
 }
 
 function formatPutRequests(toPackageId, addlInfo, records) {
+  const changeTimestamp = Date.now();
   const putRequests = records.map((item) => {
-    const auditArray = item.auditArray
-      ? [addlInfo, ...item.auditArray]
-      : [addlInfo];
+    const thisChange = {
+      changeTimestamp,
+      changeMade: `ID changed from ${item.pk} to ${toPackageId}`,
+      changeReason: addlInfo,
+    };
+    const adminChanges = result.Item.adminChanges
+      ? [thisChange, ...result.Item?.adminChanges]
+      : [thisChange];
+
     const requestItem = {
       ...item,
       pk: toPackageId,
       componentId: toPackageId,
       GSI1sk: toPackageId,
-      auditArray: auditArray,
+      adminChanges,
     };
-    if (
-      item.GSI1pk.startsWith("OneMAC#submit") &&
-      !item.GSI1pk.includes("rai")
-    ) {
-      requestItem.additionalInformation =
-        addlInfo + "\n\n" + item.additionalInformation;
-    }
     return {
       TableName: oneMacTableName,
       Item: requestItem,
