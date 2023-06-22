@@ -35,38 +35,6 @@ function constructUpdateParams(pk, sk, value) {
   return params;
 }
 
-async function updateItemsBasedOnQuery() {
-  console.log("Updating items based on query");
-  const params = {
-    TableName: tableName,
-    IndexName: "GSI1",
-    KeyConditionExpression: "GSI1pk = :gsi1pk",
-    FilterExpression: "attribute_exists(temporaryExtensionType)",
-    ExpressionAttributeValues: {
-      ":gsi1pk": "OneMAC#submitwaiverextension",
-    },
-  };
-
-  try {
-    const result = await dynamoDb.query(params);
-    console.log("Query result:", result.Items);
-
-    for (const item of result.Items) {
-      const value = item.temporaryExtensionType;
-      const updateParams = constructUpdateParams(item.pk, item.sk, value);
-
-      try {
-        const updateResult = await dynamoDb.update(updateParams);
-        console.log("Update result:", updateResult);
-      } catch (err) {
-        console.log("Error:", err);
-      }
-    }
-  } catch (err) {
-    console.log("Error:", err);
-  }
-}
-
 async function updateItemsBasedOnMappedList() {
   for (const [pk, value] of Object.entries(temporaryExtensions)) {
     const queryParams = {
@@ -101,6 +69,4 @@ async function updateItemsBasedOnMappedList() {
 export const main = handler(async () => {
   //update the list of known mapped items first
   await updateItemsBasedOnMappedList();
-  //then update any TEs that have a temporaryExtensionType attribute
-  await updateItemsBasedOnQuery();
 });
