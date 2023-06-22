@@ -66,7 +66,7 @@ exports.main = async function (event) {
   const thisChange = {
     changeTimestamp: Date.now(),
     changeMade: "Submission Inactivated",
-    changeReason: prependAdditionalInfo,
+    changeReason: event.prependAdditionalInfo,
   };
   const adminChanges = result.Item.adminChanges
     ? [thisChange, ...result.Item?.adminChanges]

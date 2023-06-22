@@ -54,8 +54,8 @@ function formatPutRequests(toPackageId, addlInfo, records) {
       changeMade: `ID changed from ${item.pk} to ${toPackageId}`,
       changeReason: addlInfo,
     };
-    const adminChanges = result.Item.adminChanges
-      ? [thisChange, ...result.Item?.adminChanges]
+    const adminChanges = item.adminChanges
+      ? [thisChange, ...item?.adminChanges]
       : [thisChange];
 
     const requestItem = {
