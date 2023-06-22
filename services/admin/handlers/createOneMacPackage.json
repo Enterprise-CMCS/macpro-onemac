@@ -4,5 +4,6 @@
     "componentType": "Medicaid SPA",
     "waiverAuthority": null,
     "submissionDate": "04/14/2022",
-    "additionalInformation": "This package was created outside the OneMAC application."
+    "additionalInformation": "This package was created outside the OneMAC application.",
+    "copyAttachmentsFrom": ""
 }

@@ -12,7 +12,7 @@ Feature: Package Dashboard - SPA Tab Column Picker
         Then verify status column exists
         Then verify Initial Submission Date column exists
         Then verify submitted by column exists
-        Then verify CPOC Name column exists
+        Then verify CPOC Name column does not exist
         Then verify actions column exists
         Then verify Formal RAI Received column exists
         Then click show hide columns button
@@ -43,7 +43,7 @@ Feature: Package Dashboard - SPA Tab Column Picker
         Then verify Initial Submission Date column does not exist
         Then verify submitted by column does not exist
         Then verify Formal RAI Received column does not exist
-        Then verify CPOC Name column does not exist
+        Then verify CPOC Name column exists
         Then Click on My Account
         Then click the logout button
 
@@ -84,7 +84,6 @@ Feature: Package Dashboard - SPA Tab Column Picker
         Then click state checkbox
         Then click status checkbox
         Then click submitted by checkbox
-        Then click CPOC Name checkbox
         Then click show hide columns button
         Then verify the type on row one exists
         Then verify the type on row one is Medicaid SPA
@@ -112,7 +111,6 @@ Feature: Package Dashboard - SPA Tab Column Picker
         Then click Formal RAI Received checkbox
         Then click submitted by checkbox
         Then click state checkbox
-        Then click CPOC Name checkbox
         Then click show hide columns button
         Then verify type column exists
         Then verify state column exists
