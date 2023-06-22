@@ -76,7 +76,7 @@ Feature: Create a waiver Amendment
         Then Click on Submit Button
         Then verify submission successful message in the alert bar
         Then verify the Waivers tab is selected
-        Then search for "MD-5533.R00.01"
+        Then search for "MD-5533.R00.03"
         Then verify id number in the first row matches new waiver amendment number 1
 
     #need more time to consider hwo to test with different authority parent
