@@ -2384,6 +2384,60 @@ Then(
     OneMacPackageDetailsPage.verifyproposedEffectiveDateHeaderContainsDate();
   }
 );
+Then(
+  "verify there is a Final Disposition Date header in the details section",
+  () => {
+    OneMacPackageDetailsPage.verifyFinalDispositionDateHeaderExists();
+  }
+);
+Then(
+  "verify there not is a Final Disposition Date header in the details section",
+  () => {
+    OneMacPackageDetailsPage.verifyFinalDispositionDateHeaderDoesNotExists();
+  }
+);
+Then(
+  "verify the Final Disposition Date is a date formated like Mon dd yyyy",
+  () => {
+    OneMacPackageDetailsPage.verifyFinalDispositionDateHeaderContainsDate();
+  }
+);
+Then(
+  "verify there is an Approved Effective Date in the details section",
+  () => {
+    OneMacPackageDetailsPage.verifyApprovedEffectiveDateHeaderExists();
+  }
+);
+Then(
+  "verify there is not an Approved Effective Date header in the details section",
+  () => {
+    OneMacPackageDetailsPage.verifyApprovedEffectiveDateHeaderDoesNotExists();
+  }
+);
+Then(
+  "verify the Approved Effective Date is a date formated like Mon dd yyyy",
+  () => {
+    OneMacPackageDetailsPage.verifyApprovedEffectiveDateHeaderContainsDate();
+  }
+);
+Then(
+  "verify there is an Actual Effective Date header in the details section",
+  () => {
+    OneMacPackageDetailsPage.verifyActualEffectiveDateHeaderExists();
+  }
+);
+Then(
+  "verify there is not an Actual Effective Date header in the details section",
+  () => {
+    OneMacPackageDetailsPage.verifyActualEffectiveDateHeaderDoesNotExists();
+  }
+);
+Then(
+  "verify the Actual Effective Date is a date formated like Mon dd yyyy",
+  () => {
+    OneMacPackageDetailsPage.verifyActualEffectiveDateHeaderContainsDate();
+  }
+);
 Then("verify the Amendment Number header exists", () => {
   OneMacPackageDetailsPage.verifyAmendmentNumberHeaderExists();
 });

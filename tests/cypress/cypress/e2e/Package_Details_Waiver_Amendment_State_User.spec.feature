@@ -33,6 +33,8 @@ Feature: Waiver Package Details View: 1915 b Waiver Amendment for a State User
         Then verify there is a CPOC header in the details section
         Then verify the CPOC has a value displayed in the details section
         Then verify Review Team SRT is not visible in the details section
+        Then verify there is a Final Disposition Date header in the details section
+        Then verify there is an Approved Effective Date in the details section
         Then verify the attachments section exists
         Then verify the download all button exists
         Then verify the additional information section exists
@@ -58,6 +60,8 @@ Feature: Waiver Package Details View: 1915 b Waiver Amendment for a State User
         Then verify there is a CPOC header in the details section
         Then verify the CPOC has a value displayed in the details section
         Then verify Review Team SRT is not visible in the details section
+        Then verify there is a Final Disposition Date header in the details section
+        Then verify there is an Approved Effective Date in the details section
         Then verify the attachments section exists
         Then verify the download all button exists
         Then verify the additional information section exists
@@ -84,6 +88,8 @@ Feature: Waiver Package Details View: 1915 b Waiver Amendment for a State User
         Then verify there is a CPOC header in the details section
         Then verify the CPOC has a value displayed in the details section
         Then verify Review Team SRT is not visible in the details section
+        Then verify there is a Final Disposition Date header in the details section
+        Then verify there is an Approved Effective Date in the details section
         Then verify the attachments section exists
         Then verify the download all button exists
         Then verify the additional information section exists
@@ -109,6 +115,8 @@ Feature: Waiver Package Details View: 1915 b Waiver Amendment for a State User
         Then verify there is a CPOC header in the details section
         Then verify the CPOC has a value displayed in the details section
         Then verify Review Team SRT is not visible in the details section
+        Then verify there is a Final Disposition Date header in the details section
+        Then verify there is an Approved Effective Date in the details section
         Then verify the Proposed Effective Date is a date formated like Mon dd yyyy
         Then verify the attachments section exists
         Then verify the download all button exists
@@ -135,6 +143,8 @@ Feature: Waiver Package Details View: 1915 b Waiver Amendment for a State User
         Then verify there is a CPOC header in the details section
         Then verify the CPOC has a value displayed in the details section
         Then verify Review Team SRT is not visible in the details section
+        Then verify there is a Final Disposition Date header in the details section
+        Then verify there is an Approved Effective Date in the details section
         Then verify the attachments section exists
         Then verify the download all button exists
         Then verify the additional information section exists
@@ -160,6 +170,8 @@ Feature: Waiver Package Details View: 1915 b Waiver Amendment for a State User
                 Then verify there is a CPOC header in the details section
         Then verify the CPOC has a value displayed in the details section
         Then verify Review Team SRT is not visible in the details section
+        Then verify there is a Final Disposition Date header in the details section
+        Then verify there is an Approved Effective Date in the details section
         Then verify the attachments section exists
         Then verify the download all button exists
         Then verify the additional information section exists
@@ -182,9 +194,11 @@ Feature: Waiver Package Details View: 1915 b Waiver Amendment for a State User
         Then verify there is a Proposed Effective Date header in the details section
         Then verify subject is not visible in the details section
         Then verify description is not visible in the details section
-                Then verify there is a CPOC header in the details section
+        Then verify there is a CPOC header in the details section
         Then verify the CPOC has a value displayed in the details section
         Then verify Review Team SRT is not visible in the details section
+        Then verify there is a Final Disposition Date header in the details section
+        Then verify there is an Approved Effective Date in the details section
         Then verify the attachments section exists
         Then verify the download all button exists
         Then verify the additional information section exists
