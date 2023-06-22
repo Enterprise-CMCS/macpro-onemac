@@ -526,7 +526,19 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
             onChange={handleInputChange}
             value={oneMacFormData.additionalInformation}
             maxLength={config.MAX_ADDITIONAL_INFO_LENGTH}
+            aria-describedby="character-count"
+            aria-live="off"
+            aria-multiline={true}
+            //todo: aria-busy logic
           ></TextField>
+          <span
+            tabIndex={0}
+            aria-label="character-count"
+            aria-live="polite"
+            //todo: aria-busy logic
+          >
+            {oneMacFormData.additionalInformation.length}/4000
+          </span>
           <p id="form-submit-instructions">
             <i>
               Once you submit this form, a confirmation email is sent to you and
