@@ -2854,8 +2854,10 @@ Then("search for new waiver renewal number {string}", (s) => {
     switch (parseInt(s)) {
       case 1:
         OneMacPackagePage.searchFor(d.newWaiverRenewalNum1);
+        break;
       case 3:
         OneMacPackagePage.searchFor(d.newWaiverRenewalNum3);
+        break;
     }
   });
   cy.wait(1000);
@@ -2916,8 +2918,8 @@ Then("type bad format into 1915b Waiver Amendment Number field", () => {
   OneMacSubmitNewWaiverActionPage.inputWaiverNumber("MD");
 });
 Then(
-  "verify id number in the first row matches new waiver renewal number 1",
-  () => {
+  "verify id number in the first row matches new waiver renewal number {string}",
+  (s) => {
     cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
       switch (parseInt(s)) {
         case 1:
