@@ -34,8 +34,13 @@ services=(
   'ui-auth'
   'ui-src'
   'admin'
-  'source'
 )
+
+# Only deploy source service for higher envs
+if [[ "$stage" == "develop" || "$stage" == "master" || "$stage" == "production" ]]; then
+  services+=('source')
+fi
+
 
 set -e
 for i in "${services[@]}"; do

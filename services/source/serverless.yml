@@ -50,7 +50,7 @@ provider:
 params:
   develop:
     topicNamespace: ""
-  val:
+  master:
     topicNamespace: ""
   production:
     topicNamespace: ""
