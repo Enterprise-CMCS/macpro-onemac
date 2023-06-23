@@ -24,7 +24,7 @@ Feature: Create a waiver Amendment
         Then click on 1915b Comprehensive Capitated Waiver Amendment
         Then verify All other 1915 b Waivers is displayed under Waiver Authority
         Then type bad format into Existing Waiver Number to Amend field
-        Then type new waiver amendment number 2 in 1915b Waiver Amendment Number field
+        Then type new waiver amendment number "2" in 1915b Waiver Amendment Number field
         Then select proposed effective date 3 months from today
         Then Add file for 1915b Comprehensive Capitated Waiver Application Pre-print
         Then Add file for 1915b Comprehensive Capitated Waiver Cost Effectiveness Spreadsheets
@@ -55,7 +55,7 @@ Feature: Create a waiver Amendment
         Then verify error message is present on package dashboard New Waiver Page
         Then verify the submit button is disabled
         Then clear 1915b Waiver Amendment Number field
-        Then type new waiver amendment number 2 in 1915b Waiver Amendment Number field
+        Then type new waiver amendment number "2" in 1915b Waiver Amendment Number field
         Then verify error message is not present on New Waiver Page
         Then verify the submit button is not disabled
         Then clear 1915b Waiver Amendment Number field
@@ -72,7 +72,7 @@ Feature: Create a waiver Amendment
         Then click on 1915b Comprehensive Capitated Waiver Amendment
         Then verify All other 1915 b Waivers is displayed under Waiver Authority
         Then type approved Initial Waiver number into Existing Waiver Number to Amend field
-        Then type new waiver amendment number 2 in 1915b Waiver Amendment Number field
+        Then type new waiver amendment number "2" in 1915b Waiver Amendment Number field
         Then select proposed effective date 3 months from today
         Then Add file for 1915b Comprehensive Capitated Waiver Cost Effectiveness Spreadsheets
         Then verify the submit button is disabled
@@ -90,7 +90,7 @@ Feature: Create a waiver Amendment
         Then click on 1915b Comprehensive Capitated Waiver Amendment
         Then verify All other 1915 b Waivers is displayed under Waiver Authority
         Then type approved Initial Waiver number into Existing Waiver Number to Amend field
-        Then type new waiver amendment number 1 in 1915b Waiver Amendment Number field
+        Then type new waiver amendment number "1" in 1915b Waiver Amendment Number field
         Then select proposed effective date 3 months from today
         Then Add file for 1915b Comprehensive Capitated Waiver Application Pre-print
         Then Add file for 1915b Comprehensive Capitated Waiver Cost Effectiveness Spreadsheets
@@ -99,7 +99,7 @@ Feature: Create a waiver Amendment
         Then verify submission successful message in the alert bar
         Then verify the Waivers tab is selected
         Then search for "MD-5533.R00.01"
-        Then verify id number in the first row matches new waiver amendment number 1
+        Then verify id number in the first row matches new waiver amendment number "1"
 
     #need more time to consider hwo to test with different authority parent
     # Scenario: Verify user can create an amendment from the package details Mini-Dashboard
@@ -109,7 +109,7 @@ Feature: Create a waiver Amendment
     #     Then verify Add Amendment package action exists
     #     Then click Add Amendment package action
     #     Then verify All other 1915 b Waivers is displayed under Waiver Authority
-    #     Then type new waiver amendment number 3 in 1915b Waiver Amendment Number field
+    #     Then type new waiver amendment number 5 in 1915b Waiver Amendment Number field
     #     Then select proposed effective date 3 months from today
     #     Then Add file for 1915b Comprehensive Capitated Waiver Application Pre-print
     #     Then Add file for 1915b Comprehensive Capitated Waiver Cost Effectiveness Spreadsheets
@@ -124,7 +124,7 @@ Feature: Create a waiver Amendment
     #     Then verify the Add Amendment button is displayed
     #     Then click the Add Amendment button
     #     Then verify All other 1915 b Waivers is displayed under Waiver Authority
-    #     Then type new waiver amendment number 4 in 1915b Waiver Amendment Number field
+    #     Then type new waiver amendment number 6 in 1915b Waiver Amendment Number field
     #     Then select proposed effective date 3 months from today
     #     Then Add file for 1915b Comprehensive Capitated Waiver Application Pre-print
     #     Then Add file for 1915b Comprehensive Capitated Waiver Cost Effectiveness Spreadsheets
