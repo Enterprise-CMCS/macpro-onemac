@@ -1987,9 +1987,9 @@
     "convertTimestamp": 1673973224526,
     "submitterEmail": "statesubmitter@nightwatch.test",
     "adminChanges": [{
-      "adminChangeTimestamp": 1675987200000,
+      "changeTimestamp": 1675987200000,
       "changeMade": "ID changed from MD-21-2205-VM to MD-22-2205-VM",
-      "changeReason": "Per request from Charlie Tester in Help Desk ticket INC34224"
+      "changeReason": "Per request from Charlie Tester in Help Desk ticket INC34224\n\nThis ID should be for year 2022."
     }],
     "sk": "OneMAC#1672290821990",
     "componentId": "MD-22-2205-VM",
@@ -2022,6 +2022,13 @@
     "sk": "OneMAC#1673973536912",
     "componentId": "MD-22-2205-VM",
     "pk": "MD-22-2205-VM",
+    "adminChanges": [
+    {
+      "changeReason": "Per request from Susan Jester in Help Desk ticket INC324\n\nThis RAI Repsonse is for MD-22-2205-VM, not MD-22-2205-KG.",
+      "changeTimestamp": 1675989200000,
+      "changeMade": "ID changed from MD-22-2205-KG to MD-22-2205-VM"
+    }
+    ],
     "submitterName": "Statesubmitter Nightwatch"
   },
   {
@@ -2060,7 +2067,7 @@
     "adminChanges": [{
       "changeTimestamp": 1675987200000,
       "changeMade": "ID changed from MD-21-2205-VM to MD-22-2205-VM",
-      "changeReason": "Per request from Charlie Tester in Help Desk ticket INC34224"
+      "changeReason": "Per request from Charlie Tester in Help Desk ticket INC34224\n\nThis ID should be for year 2022."
     }],
     "raiResponses": [
       {

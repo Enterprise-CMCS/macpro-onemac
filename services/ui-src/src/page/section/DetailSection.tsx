@@ -276,6 +276,10 @@ export const DetailSection = ({
         {detail.adminChanges?.length > 0 && (
           <section className="detail-section">
             <h2>Administrative Package Changes</h2>
+            <div className="choice-info">
+              Administrative changes reflect updates to specific data fields. If
+              you have additional questions, please contact the assigned CPOC.
+            </div>
             <Accordion>
               {detail.adminChanges?.map((adminChange, index) => {
                 return (
@@ -283,17 +287,25 @@ export const DetailSection = ({
                     buttonClassName="accordion-button"
                     contentClassName="accordion-content"
                     heading={
-                      "Submitted on " + formatDate(adminChange.changeTimestamp)
+                      "Submitted on " +
+                      formatDate(adminChange.changeTimestamp) +
+                      " - Manual Update"
                     }
                     headingLevel="6"
                     id={"admin_change_" + index + "_caret"}
                     key={"admin_change_" + index}
                     defaultOpen={index === 0}
                   >
-                    <Review heading="Change Made">
+                    <Review
+                      className="original-review-component preserve-spacing"
+                      heading="Change Made"
+                    >
                       {adminChange.changeMade}
                     </Review>
-                    <Review heading="Change Reason">
+                    <Review
+                      className="original-review-component preserve-spacing"
+                      heading="Change Reason"
+                    >
                       {adminChange.changeReason}
                     </Review>
                   </AccordionItem>

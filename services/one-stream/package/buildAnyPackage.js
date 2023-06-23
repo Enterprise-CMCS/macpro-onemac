@@ -96,6 +96,14 @@ export const buildAnyPackage = async (packageId, config) => {
         if (anEvent?.currentStatus === Workflow.ONEMAC_STATUS.INACTIVATED)
           return;
         showPackageOnDashboard = true;
+
+        // admin changes are consolidated across all OneMAC events
+        if (anEvent?.adminChanges && _.isArray(anEvent.adminChanges))
+          putParams.Item.adminChanges = [
+            ...anEvent.adminChanges,
+            ...putParams.Item.adminChanges,
+          ];
+        console.log("admin changes: ", putParams.Item.adminChanges);
       }
 
       if (timestamp > lmTimestamp) {
@@ -205,11 +213,6 @@ export const buildAnyPackage = async (packageId, config) => {
       }
 
       // assume OneMAC event if got here
-
-      // admin changes are consolidated across all OneMAC events
-      if (anEvent?.adminChanges && _.isArray(anEvent.adminChanges))
-        putParams.Item.adminChanges.push(...anEvent.adminChanges);
-
       config.theAttributes.forEach((attributeName) => {
         if (anEvent[attributeName]) {
           if (attributeName === "parentId") {
