@@ -276,10 +276,10 @@ export const DetailSection = ({
         {detail.adminChanges?.length > 0 && (
           <section className="detail-section">
             <h2>Administrative Package Changes</h2>
-            <div className="choice-info">
+            <p>
               Administrative changes reflect updates to specific data fields. If
               you have additional questions, please contact the assigned CPOC.
-            </div>
+            </p>
             <Accordion>
               {detail.adminChanges?.map((adminChange, index) => {
                 return (
@@ -296,14 +296,11 @@ export const DetailSection = ({
                     key={"admin_change_" + index}
                     defaultOpen={index === 0}
                   >
-                    <Review
-                      className="original-review-component preserve-spacing"
-                      heading="Change Made"
-                    >
+                    <Review className="preserve-spacing" heading="Change Made">
                       {adminChange.changeMade}
                     </Review>
                     <Review
-                      className="original-review-component preserve-spacing"
+                      className="preserve-spacing"
                       heading="Change Reason"
                     >
                       {adminChange.changeReason}
