@@ -1,0 +1,231 @@
+
+service: source
+
+frameworkVersion: "3"
+
+package:
+  individually: true
+
+plugins:
+  - serverless-bundle
+  - serverless-plugin-scripts
+
+custom:
+  stage: ${opt:stage, self:provider.stage}
+  iamPath: ${ssm:/configuration/${self:custom.stage}/iam/path, ssm:/configuration/default/iam/path}
+  iamPermissionsBoundaryPolicy: ${ssm:/configuration/${self:custom.stage}/iam/permissionsBoundaryPolicy, ssm:/configuration/default/iam/permissionsBoundaryPolicy, ""}
+  infrastructureType: ${ssm:/configuration/${self:custom.stage}/infrastucture/type, ssm:/configuration/default/infrastucture/type, "development"}
+  tableStreamArn: ${cf:app-api-${self:custom.stage}.OneMacTableStreamArn}
+  oneMacTableName: ${cf:app-api-${self:custom.stage}.OneMacTableName}
+  oneMacTableArn: ${cf:app-api-${self:custom.stage}.OneMacTableArn}
+  migrationTableName: onemac-${self:service}-${self:custom.stage}-migration
+  bootstrapBrokerStringTls: ${ssm:/configuration/${self:custom.stage}/bigmac/bootstrapBrokerStringTls, ssm:/configuration/default/bigmac/bootstrapBrokerStringTls}
+  vpcId: ${ssm:/configuration/${self:custom.stage}/vpc/id, ssm:/configuration/default/vpc/id}
+  dataSubnets:
+    - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/data/a/id, ssm:/configuration/default/vpc/subnets/data/a/id}
+    - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/data/b/id, ssm:/configuration/default/vpc/subnets/data/b/id}
+    - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/data/c/id, ssm:/configuration/default/vpc/subnets/data/c/id}
+  privateSubnets:
+    - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/private/a/id, ssm:/configuration/default/vpc/subnets/private/a/id}
+    - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/private/b/id, ssm:/configuration/default/vpc/subnets/private/b/id}
+    - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/private/c/id, ssm:/configuration/default/vpc/subnets/private/c/id}
+  scripts:
+    commands:
+      sync: |
+        echo """
+        This is a helper, for copying one table to another.  Please be careful.
+        One/source table:  ${self:custom.oneMacTableName}
+        Migration/target table:  ${self:custom.migrationTableName}
+        
+        If you need to copy source to target for a one time migration, and you know what you're doing, you can try the following:
+        
+        sh migrate.sh ${self:custom.oneMacTableName} ${self:custom.migrationTableName}
+        """
+provider:
+  name: aws
+  runtime: nodejs14.x
+  region: us-east-1
+  stage: dev
+
+params:
+  develop:
+    topicNamespace: ""
+  val:
+    topicNamespace: ""
+  production:
+    topicNamespace: ""
+  default:
+    topicNamespace: --onemac--${self:custom.stage}--
+
+functions:
+  createTopics:
+    handler: handlers/createTopics.handler
+    vpc:
+      securityGroupIds:
+        - Ref: LambdaSecurityGroup
+      subnetIds: >-
+        ${self:custom.privateSubnets}
+    timeout: 300
+    role: LamdaSourceDynamoToMskRole
+  cleanupKafka:
+    handler: handlers/cleanupKafka.handler
+    vpc:
+      securityGroupIds:
+        - Ref: LambdaSecurityGroup
+      subnetIds: >-
+        ${self:custom.privateSubnets}
+    timeout: 300
+    role: LamdaSourceDynamoToMskRole
+  sourceDynamoToMsk:
+    handler: handlers/source.handler
+    events:
+      - stream:
+          type: dynamodb
+          arn: ${self:custom.tableStreamArn}
+          startingPosition: TRIM_HORIZON
+          maximumRetryAttempts: 2
+          enabled: true
+      # - stream:
+      #     type: dynamodb
+      #     arn: !GetAtt MigrationTable.StreamArn
+      #     startingPosition: TRIM_HORIZON
+      #     maximumRetryAttempts: 2
+      #     enabled: true
+    role: LamdaSourceDynamoToMskRole
+    environment:
+      brokerString: ${self:custom.bootstrapBrokerStringTls}
+      topic: ${param:topicNamespace}aws.onemac.migration.cdc
+    maximumRetryAttempts: 2
+    vpc:
+      securityGroupIds:
+        - Ref: LambdaSecurityGroup
+      subnetIds: ${self:custom.privateSubnets}
+
+resources:
+  Conditions:
+    CreatePermissionsBoundary:
+      Fn::Not:
+        - Fn::Equals:
+          - ""
+          - ${self:custom.iamPermissionsBoundaryPolicy}
+    isDev:
+      Fn::Not:
+        - Fn::Equals:
+            - ${param:topicNamespace}
+            - ""
+  Resources:
+    CreateTopics:
+      Type: AWS::CloudFormation::CustomResource
+      Properties:
+        ServiceToken: !GetAtt CreateTopicsLambdaFunction.Arn
+        BrokerString: ${self:custom.bootstrapBrokerStringTls}
+        TopicsToCreate:
+          - name: ${param:topicNamespace}aws.onemac.migration.cdc
+
+    CleanupTopics:
+      Type: AWS::CloudFormation::CustomResource
+      Condition: isDev # We only clean up topics in lower environments where isDev is true
+      Properties:
+        ServiceToken: !GetAtt CleanupKafkaLambdaFunction.Arn
+        BrokerString: ${self:custom.bootstrapBrokerStringTls}
+        TopicPatternsToDelete:
+          - name: ${param:topicNamespace}aws.onemac.migration.*
+    LambdaSecurityGroup:
+      Type: AWS::EC2::SecurityGroup
+      Properties:
+        GroupDescription: Security Group for streaming functions.  Egress all is set by default.
+        VpcId: ${self:custom.vpcId}
+    LamdaSourceDynamoToMskRole: # Why isn't this with the function as an iamRoleStatements?  https://github.com/serverless/serverless/issues/6485
+      Type: 'AWS::IAM::Role'
+      Properties:
+        RoleName: onemac-${self:service}-${self:custom.stage}-lambda-role
+        AssumeRolePolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+          - Effect: 'Allow'
+            Principal:
+              Service: 'lambda.amazonaws.com'
+            Action: 'sts:AssumeRole'
+        Path: ${self:custom.iamPath}
+        PermissionsBoundary:
+          Fn::If:
+            - CreatePermissionsBoundary
+            - Fn::Join:
+              - ''
+              -
+                - 'arn:aws:iam::'
+                - Ref: AWS::AccountId
+                - ':policy'
+                - '${self:custom.iamPermissionsBoundaryPolicy}'
+            - Ref: AWS::NoValue
+        Policies:
+          - PolicyName: 'LambdaRolePolicy'
+            PolicyDocument:
+              Version: '2012-10-17'
+              Statement:
+              - Effect: 'Allow'
+                Action:
+                - logs:CreateLogGroup
+                - logs:CreateLogStream
+                - logs:PutLogEvents
+                Resource: 'arn:aws:logs:*:*:*'
+              - Effect: 'Allow'
+                Action:
+                - dynamodb:DescribeStream
+                - dynamodb:GetRecords
+                - dynamodb:GetShardIterator
+                - dynamodb:ListStreams
+                Resource: 
+                  - ${self:custom.tableStreamArn}
+                  # - !GetAtt MigrationTable.StreamArn
+              - Effect: 'Allow'
+                Action:
+                - "ec2:CreateNetworkInterface"
+                - "ec2:DescribeNetworkInterfaces"
+                - "ec2:DetachNetworkInterface"
+                - "ec2:DeleteNetworkInterface"
+                Resource: "*"
+      
+    # MigrationTable:
+    #   Type: AWS::DynamoDB::Table
+    #   Properties:
+    #     TableName: ${self:custom.migrationTableName}
+    #     StreamSpecification:
+    #       StreamViewType: NEW_AND_OLD_IMAGES
+    #     AttributeDefinitions:
+    #       - AttributeName: pk
+    #         AttributeType: S
+    #       - AttributeName: sk
+    #         AttributeType: S
+    #       - AttributeName: GSI1pk
+    #         AttributeType: S
+    #       - AttributeName: GSI1sk
+    #         AttributeType: S
+    #       - AttributeName: GSI2pk
+    #         AttributeType: S
+    #       - AttributeName: GSI2sk
+    #         AttributeType: S
+    #     KeySchema:
+    #       - AttributeName: pk
+    #         KeyType: HASH
+    #       - AttributeName: sk
+    #         KeyType: RANGE
+    #     GlobalSecondaryIndexes:
+    #       - IndexName: GSI1
+    #         KeySchema:
+    #           - AttributeName: GSI1pk
+    #             KeyType: HASH
+    #           - AttributeName: GSI1sk
+    #             KeyType: RANGE
+    #         Projection:
+    #           ProjectionType: ALL
+    #       - IndexName: GSI2
+    #         KeySchema:
+    #           - AttributeName: GSI2pk
+    #             KeyType: HASH
+    #           - AttributeName: GSI2sk
+    #             KeyType: RANGE
+    #         Projection:
+    #           ProjectionType: ALL
+    #     # Set the capacity to auto-scale
+    #     BillingMode: PAY_PER_REQUEST

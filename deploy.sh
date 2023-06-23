@@ -34,6 +34,7 @@ services=(
   'ui-auth'
   'ui-src'
   'admin'
+  'source'
 )
 
 set -e
