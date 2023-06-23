@@ -10,7 +10,7 @@ Feature: Package Dashboard Temporary Extension
         Then Click on Request Temporary Extension in Package dashboard
         Then select the 1915c Temporary Extension Type button
         Then type approved Initial Waiver number into Existing Waiver Number to Renew field
-        Then Type Temporary Extension Number 2
+        Then Type Temporary Extension Number "2"
         Then upload Waiver Extension Request
         Then type "This is just a test" in additional info textarea
         Then Click on Submit Button
@@ -40,7 +40,7 @@ Feature: Package Dashboard Temporary Extension
         Then click Request a Temporary Extension package action
         Then select the 1915c Temporary Extension Type button
         Then verify the initial waiver parent ID is prefilled in the form
-        Then Type Temporary Extension Number 3
+        Then Type Temporary Extension Number "3"
         Then upload Waiver Extension Request
         Then Type Additonal Info Comments in new form
         Then Click on Submit Button
@@ -61,7 +61,7 @@ Feature: Package Dashboard Temporary Extension
         Then click Request a Temporary Extension package action
         Then select the 1915c Temporary Extension Type button
         Then verify the renewal waiver parent ID is prefilled in the form
-        Then Type Temporary Extension Number 8
+        Then Type Temporary Extension Number "8"
         Then upload Waiver Extension Request
         Then Type Additonal Info Comments in new form
         Then Click on Submit Button
@@ -82,7 +82,7 @@ Feature: Package Dashboard Temporary Extension
         Then click the Request Temporary Extension button
         Then select the 1915c Temporary Extension Type button
         Then verify the initial waiver parent ID is prefilled in the form
-        Then Type Temporary Extension Number 9
+        Then Type Temporary Extension Number "9"
         Then upload Waiver Extension Request
         Then Type Additonal Info Comments in new form
         Then Click on Submit Button
@@ -103,7 +103,7 @@ Feature: Package Dashboard Temporary Extension
         Then click the Request Temporary Extension button
         Then select the 1915c Temporary Extension Type button
         Then verify the renewal waiver parent ID is prefilled in the form
-        Then Type Temporary Extension Number 10
+        Then Type Temporary Extension Number "10"
         Then upload Waiver Extension Request
         Then Type Additonal Info Comments in new form
         Then Click on Submit Button
