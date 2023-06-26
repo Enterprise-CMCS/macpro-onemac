@@ -20,7 +20,7 @@ Feature: Waiver Renewal in Package Dashboard
         Then verify All other 1915 b Waivers is displayed under Waiver Authority
         Then verify help text under Existing Waiver Number to Renew field
         Then type bad format into Existing Waiver Number to Renew field
-        Then type new waiver renewal number 2 in 1915b Waiver Renewal Number field
+        Then type new waiver renewal number "2" in 1915b Waiver Renewal Number field
         Then select proposed effective date 3 months from today
         Then Add file for 1915b Comprehensive Capitated Waiver Application Pre-print
         Then Add file for 1915b Comprehensive Capitated Waiver Cost Effectiveness Spreadsheets
@@ -48,7 +48,7 @@ Feature: Waiver Renewal in Package Dashboard
         Then verify the error message for renewals includes For renewals, the “R##” starts with ‘01’ and ascends.
         Then verify the submit button is disabled
         Then clear 1915b Waiver Renewal Number field
-        Then type new waiver renewal number 2 in 1915b Waiver Renewal Number field
+        Then type new waiver renewal number "2" in 1915b Waiver Renewal Number field
         Then verify error message is not present on New Waiver Page
         Then verify the submit button is not disabled
         Then clear 1915b Waiver Renewal Number field
@@ -62,7 +62,7 @@ Feature: Waiver Renewal in Package Dashboard
         Then click on 1915b Comprehensive Capitated Renewal Waiver
         Then verify All other 1915 b Waivers is displayed under Waiver Authority
         Then type approved Initial Waiver number into Existing Waiver Number to Renew field
-        Then type new waiver renewal number 2 in 1915b Waiver Renewal Number field
+        Then type new waiver renewal number "2" in 1915b Waiver Renewal Number field
         Then select proposed effective date 3 months from today
         Then Add file for 1915b Comprehensive Capitated Waiver Cost Effectiveness Spreadsheets
         Then verify the submit button is disabled
@@ -76,7 +76,7 @@ Feature: Waiver Renewal in Package Dashboard
         Then click on 1915b Comprehensive Capitated Renewal Waiver
         Then verify All other 1915 b Waivers is displayed under Waiver Authority
         Then type approved Initial Waiver number into Existing Waiver Number to Renew field
-        Then type new waiver renewal number 3 in 1915b Waiver Renewal Number field
+        Then type new waiver renewal number "3" in 1915b Waiver Renewal Number field
         Then select proposed effective date 3 months from today
         Then Add file for 1915b Comprehensive Capitated Waiver Application Pre-print
         Then Add file for 1915b Comprehensive Capitated Waiver Cost Effectiveness Spreadsheets
@@ -84,5 +84,5 @@ Feature: Waiver Renewal in Package Dashboard
         Then Click on Submit Button
         Then verify submission successful message in the alert bar
         Then verify the Waivers tab is selected
-        Then search for new waiver renewal number 3
-        Then verify id number in the first row matches new waiver renewal number 3
+        Then search for new waiver renewal number "3"
+        Then verify id number in the first row matches new waiver renewal number "3"

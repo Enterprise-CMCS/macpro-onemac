@@ -205,7 +205,6 @@ p.field-hint {
     @extend .ds-u-flex-direction--row;
     @extend .ds-u-align-items--center;
     flex-direction: row;
-    white-space: nowrap;
   }
 
   &.title-bar-dark-theme {
@@ -2673,6 +2672,10 @@ ul.choice-list {
       color: $color-gray-lightest;
     }
   }
+}
+
+.detail-grid-item {
+  width: 50%;
 }
 
 .detail-card-section {

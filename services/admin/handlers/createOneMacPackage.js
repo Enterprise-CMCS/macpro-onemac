@@ -34,6 +34,7 @@ export const createOneMacPackage = async (item) => {
   const theID = item.componentId.toUpperCase();
   if (!item.territory)
     item.territory = item.componentId.toString().substring(0, 2);
+
   const putParams = {
     TableName: process.env.oneMacTableName,
     Item: {
@@ -52,6 +53,22 @@ export const createOneMacPackage = async (item) => {
       convertTimestamp: Date.now(),
     },
   };
+
+  if (item.copyAttachmentsFrom) {
+    const getParams = {
+      TableName: process.env.oneMacTableName,
+      Key: {
+        pk: item.copyAttachmentsFrom,
+        sk: "Package",
+      },
+    };
+    try {
+      const result = await dynamoDb.get(getParams).promise();
+      putParams.Item.attachments = [...result.Item.attachments];
+    } catch (e) {
+      console.log("%s error received: ", theID, e);
+    }
+  }
 
   if (item.waiverAuthority)
     putParams.Item.waiverAuthority = item.waiverAuthority;

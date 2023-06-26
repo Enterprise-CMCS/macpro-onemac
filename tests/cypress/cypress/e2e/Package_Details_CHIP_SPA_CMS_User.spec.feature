@@ -33,6 +33,8 @@ Feature: CHIP SPA CMS Details View - Card View with Actions
         Then verify the CPOC has a value displayed in the details section
         Then verify there is a Review Team SRT header in the details section
         Then verify the Review Team SRT has a value displayed in the details section
+        Then verify there is a Final Disposition Date header in the details section
+        Then verify there is an Approved Effective Date in the details section
         Then verify the attachments section exists
         Then verify the download all button exists
         Then verify the additional information section exists
@@ -60,6 +62,8 @@ Feature: CHIP SPA CMS Details View - Card View with Actions
         Then verify the CPOC has a value displayed in the details section
         Then verify there is a Review Team SRT header in the details section
         Then verify the Review Team SRT has a value displayed in the details section
+        Then verify there is a Final Disposition Date header in the details section
+        Then verify there is an Approved Effective Date in the details section
         Then verify the description has a value displayed in the details section
         Then verify the attachments section exists
         Then verify the download all button exists
@@ -88,6 +92,8 @@ Feature: CHIP SPA CMS Details View - Card View with Actions
         Then verify the CPOC has a value displayed in the details section
         Then verify there is a Review Team SRT header in the details section
         Then verify the Review Team SRT has a value displayed in the details section
+        Then verify there is a Final Disposition Date header in the details section
+        Then verify there is an Approved Effective Date in the details section
         Then verify the description has a value displayed in the details section
         Then verify the attachments section exists
         Then verify the download all button exists
@@ -117,6 +123,8 @@ Feature: CHIP SPA CMS Details View - Card View with Actions
         Then verify the CPOC has a value displayed in the details section
         Then verify there is a Review Team SRT header in the details section
         Then verify the Review Team SRT has a value displayed in the details section
+        Then verify there is a Final Disposition Date header in the details section
+        Then verify there is an Approved Effective Date in the details section
         Then verify the description has a value displayed in the details section
         Then verify the attachments section exists
         Then verify the download all button exists
@@ -146,6 +154,8 @@ Feature: CHIP SPA CMS Details View - Card View with Actions
         Then verify the CPOC has a value displayed in the details section
         Then verify there is a Review Team SRT header in the details section
         Then verify the Review Team SRT has a value displayed in the details section
+        Then verify there is a Final Disposition Date header in the details section
+        Then verify there is an Approved Effective Date in the details section
         Then verify the description has a value displayed in the details section
         Then verify the attachments section exists
         #Then verify the download all button exists
@@ -175,6 +185,8 @@ Feature: CHIP SPA CMS Details View - Card View with Actions
         Then verify the CPOC has a value displayed in the details section
         Then verify there is a Review Team SRT header in the details section
         Then verify the Review Team SRT has a value displayed in the details section
+        Then verify there is a Final Disposition Date header in the details section
+        Then verify there is an Approved Effective Date in the details section
         Then verify the description has a value displayed in the details section
         Then verify the Proposed Effective Date is a date formated like Mon dd yyyy
         Then verify the attachments section exists
@@ -205,6 +217,8 @@ Feature: CHIP SPA CMS Details View - Card View with Actions
         Then verify the CPOC has a value displayed in the details section
         Then verify there is a Review Team SRT header in the details section
         Then verify the Review Team SRT has a value displayed in the details section
+        Then verify there is a Final Disposition Date header in the details section
+        Then verify there is an Approved Effective Date in the details section
         Then verify the description has a value displayed in the details section
         Then verify the attachments section exists
         Then verify the download all button exists
@@ -234,6 +248,8 @@ Feature: CHIP SPA CMS Details View - Card View with Actions
         Then verify the CPOC has a value displayed in the details section
         Then verify there is a Review Team SRT header in the details section
         Then verify the Review Team SRT has a value displayed in the details section
+        Then verify there is a Final Disposition Date header in the details section
+        Then verify there is an Approved Effective Date in the details section
         Then verify the description has a value displayed in the details section
         Then verify the attachments section exists
         Then verify the download all button exists

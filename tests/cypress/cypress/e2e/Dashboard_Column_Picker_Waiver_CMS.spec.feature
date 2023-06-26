@@ -15,7 +15,7 @@ Feature: Package Dashboard - Waiver Tab Column Picker for CMS User
         Then verify Initial Submission Date column exists
         Then verify Formal RAI Received column exists
         Then verify submitted by column does not exist
-        Then verify CPOC Name column exists
+        Then verify CPOC Name column does not exist
         Then click show hide columns button
         Then verify Formal RAI Received checkbox exists
         Then verify state exists
@@ -45,7 +45,7 @@ Feature: Package Dashboard - Waiver Tab Column Picker for CMS User
         Then verify Initial Submission Date column does not exist
         Then verify submitted by column does not exist
         Then verify Formal RAI Received column does not exist
-        Then verify CPOC Name column does not exist
+        Then verify CPOC Name column exists
         Then Click on My Account
         Then click the logout button
 

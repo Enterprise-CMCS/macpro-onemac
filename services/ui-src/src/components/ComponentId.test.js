@@ -16,7 +16,7 @@ describe("ComponentId", () => {
       selector: "a",
     });
 
-    expect(FAQLinkEl.getAttribute("target")).toBe("new");
+    expect(FAQLinkEl.getAttribute("target")).toBe("tab-faq");
     expect(FAQLinkEl.getAttribute("href")).toBe(testLink);
   });
 
