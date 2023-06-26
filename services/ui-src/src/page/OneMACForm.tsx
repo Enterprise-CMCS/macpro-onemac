@@ -64,7 +64,7 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
   const location = useLocation<FormLocationState>();
 
   // Boolean controlling aria-busy for Additional Info section
-  const [isTyping, setIsTyping] = useState<boolean>();
+  const [isTyping, setIsTyping] = useState<boolean>(false);
   // Effect to timeout and swap isTyping back to false
   useEffect(() => {
     const timeTilInactive = setTimeout(() => setIsTyping(false), 500);
