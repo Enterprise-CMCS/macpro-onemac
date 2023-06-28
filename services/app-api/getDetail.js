@@ -1,4 +1,4 @@
-import AWS from "aws-sdk";
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { RESPONSE_CODE, getUserRoleObj } from "cmscommonlib";
 import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
@@ -6,12 +6,10 @@ import { getUser } from "./getUser";
 import { cmsStatusUIMap, stateStatusUIMap } from "./libs/status-lib";
 import { validateUserReadOnly } from "./utils/validateUser";
 
-const s3 = new AWS.S3();
-
 async function generateSignedUrl(item) {
   const attachmentURLs = await Promise.all(
     item.attachments.map(({ url }) =>
-      s3.getSignedUrlPromise("getObject", {
+      getSignedUrl("getObject", {
         Bucket: process.env.attachmentsBucket,
         Key: decodeURIComponent(url.split("amazonaws.com/")[1]),
         Expires: 3600,

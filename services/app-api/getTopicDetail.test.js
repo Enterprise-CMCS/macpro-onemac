@@ -1,5 +1,4 @@
 import dynamoDb from "./libs/dynamodb-lib";
-import AWS from "aws-sdk";
 import { main, getTopicDetail } from "./getTopicDetail";
 import { getUser } from "./getUser";
 import { RESPONSE_CODE, getUserRoleObj } from "cmscommonlib";

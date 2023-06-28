@@ -1,6 +1,6 @@
-import AWS from "aws-sdk";
+import { SES } from "@aws-sdk/client-ses";
 
-const sender = new AWS.SES({ region: "us-east-1" });
+const sender = new SES({ region: "us-east-1" });
 
 /**
  * Transforms generic email details into the SES email parameter structure.
@@ -46,7 +46,7 @@ export default function sendEmail(email) {
       console.log("IN OFFLINE MODE: Will not send email.");
       return Promise.resolve("ok");
     } else {
-      return sender.sendEmail(emailParams).promise();
+      return sender.sendEmail(emailParams);
     }
   } catch (er) {
     console.log(`Warning: Erro occured while sending the confirmation email: 
