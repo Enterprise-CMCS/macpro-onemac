@@ -543,12 +543,7 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
             aria-multiline={true}
             aria-busy={isTyping}
           ></TextField>
-          <span
-            tabIndex={0}
-            aria-label="character-count"
-            aria-live="polite"
-            aria-busy={isTyping}
-          >
+          <span tabIndex={0} aria-label="character-count" aria-live="polite">
             {oneMacFormData.additionalInformation.length}/4000
           </span>
           <p id="form-submit-instructions">
