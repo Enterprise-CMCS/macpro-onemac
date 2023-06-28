@@ -2480,80 +2480,66 @@ Then("verify success message for denied role", () => {
 Then("select proposed effective date 3 months from today", () => {
   OneMacSubmitNewWaiverActionPage.setProposedEffectiveDateThreeMonthsAway();
 });
-Then("Type Temporary Extension Number 1", () => {
+Then("Type Temporary Extension Number {string}", (s) => {
   cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
-    OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
-      data.newTemporaryExtensionNumber1
-    );
+    switch (parseInt(s)) {
+      case 1:
+        OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
+          data.newTemporaryExtensionNumber1
+        );
+        break;
+      case 2:
+        OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
+          data.newTemporaryExtensionNumber2
+        );
+        break;
+      case 3:
+        OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
+          data.newTemporaryExtensionNumber3
+        );
+        break;
+      case 4:
+        OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
+          data.newTemporaryExtensionNumber4
+        );
+        break;
+      case 5:
+        OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
+          data.newTemporaryExtensionNumber5
+        );
+        break;
+      case 6:
+        OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
+          data.newTemporaryExtensionNumber6
+        );
+        break;
+      case 7:
+        OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
+          data.newTemporaryExtensionNumber7
+        );
+        break;
+      case 8:
+        OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
+          data.newTemporaryExtensionNumber8
+        );
+        break;
+      case 9:
+        OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
+          data.newTemporaryExtensionNumber9
+        );
+        break;
+      case 10:
+        OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
+          data.newTemporaryExtensionNumber10
+        );
+        break;
+    }
   });
 });
 Then("click on the link for temporary extension number 1", () => {
   cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
     OneMacPackageDetailsPage.clickTempExtensionID(
       data.newTemporaryExtensionNumber1
-    );
-  });
-});
-Then("Type Temporary Extension Number 2", () => {
-  cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
-    OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
-      data.newTemporaryExtensionNumber2
-    );
-  });
-});
-Then("Type Temporary Extension Number 3", () => {
-  cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
-    OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
-      data.newTemporaryExtensionNumber3
-    );
-  });
-});
-Then("Type Temporary Extension Number 4", () => {
-  cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
-    OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
-      data.newTemporaryExtensionNumber4
-    );
-  });
-});
-Then("Type Temporary Extension Number 5", () => {
-  cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
-    OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
-      data.newTemporaryExtensionNumber5
-    );
-  });
-});
-Then("Type Temporary Extension Number 6", () => {
-  cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
-    OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
-      data.newTemporaryExtensionNumber6
-    );
-  });
-});
-Then("Type Temporary Extension Number 7", () => {
-  cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
-    OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
-      data.newTemporaryExtensionNumber7
-    );
-  });
-});
-Then("Type Temporary Extension Number 8", () => {
-  cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
-    OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
-      data.newTemporaryExtensionNumber8
-    );
-  });
-});
-Then("Type Temporary Extension Number 9", () => {
-  cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
-    OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
-      data.newTemporaryExtensionNumber9
-    );
-  });
-});
-Then("Type Temporary Extension Number 10", () => {
-  cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
-    OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
-      data.newTemporaryExtensionNumber10
     );
   });
 });
@@ -2811,81 +2797,72 @@ Then(
   }
 );
 Then(
-  "type new waiver renewal number 1 in 1915b Waiver Renewal Number field",
-  () => {
+  "type new waiver renewal number {string} in 1915b Waiver Renewal Number field",
+  (s) => {
     cy.fixture("packageDashboardWaiverNumbers.json").then((d) => {
-      OneMacSubmitNewWaiverActionPage.inputWaiverNumber(d.newWaiverRenewalNum1);
+      switch (parseInt(s)) {
+        case 1:
+          OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
+            d.newWaiverRenewalNum1
+          );
+          break;
+        case 2:
+          OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
+            d.newWaiverRenewalNum2
+          );
+          break;
+        case 3:
+          OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
+            d.newWaiverRenewalNum3
+          );
+          break;
+      }
     });
   }
 );
 Then(
-  "type new waiver renewal number 3 in 1915b Waiver Renewal Number field",
-  () => {
+  "type new waiver amendment number {string} in 1915b Waiver Amendment Number field",
+  (s) => {
     cy.fixture("packageDashboardWaiverNumbers.json").then((d) => {
-      OneMacSubmitNewWaiverActionPage.inputWaiverNumber(d.newWaiverRenewalNum3);
+      switch (parseInt(s)) {
+        case 1:
+          OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
+            d.newWaiverAmendmentNum1
+          );
+          break;
+        case 2:
+          OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
+            d.newWaiverAmendmentNum2
+          );
+          break;
+        case 3:
+          OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
+            d.newWaiverAmendmentNum3
+          );
+          break;
+        case 4:
+          OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
+            d.newWaiverAmendmentNum4
+          );
+          break;
+      }
     });
   }
 );
-Then(
-  "type new waiver amendment number 1 in 1915b Waiver Amendment Number field",
-  () => {
-    cy.fixture("packageDashboardWaiverNumbers.json").then((d) => {
-      OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
-        d.newWaiverAmendmentNum1
-      );
-    });
-  }
-);
-Then(
-  "type new waiver amendment number 2 in 1915b Waiver Amendment Number field",
-  () => {
-    cy.fixture("packageDashboardWaiverNumbers.json").then((d) => {
-      OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
-        d.newWaiverAmendmentNum2
-      );
-    });
-  }
-);
-Then(
-  "type new waiver amendment number 3 in 1915b Waiver Amendment Number field",
-  () => {
-    cy.fixture("packageDashboardWaiverNumbers.json").then((d) => {
-      OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
-        d.newWaiverAmendmentNum3
-      );
-    });
-  }
-);
-Then(
-  "type new waiver amendment number 4 in 1915b Waiver Amendment Number field",
-  () => {
-    cy.fixture("packageDashboardWaiverNumbers.json").then((d) => {
-      OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
-        d.newWaiverAmendmentNum4
-      );
-    });
-  }
-);
-Then(
-  "type new waiver renewal number 2 in 1915b Waiver Renewal Number field",
-  () => {
-    cy.fixture("packageDashboardWaiverNumbers.json").then((d) => {
-      OneMacSubmitNewWaiverActionPage.inputWaiverNumber(d.newWaiverRenewalNum2);
-    });
-  }
-);
-Then("search for new waiver renewal number 1", () => {
+Then("search for new waiver renewal number {string}", (s) => {
   cy.fixture("packageDashboardWaiverNumbers.json").then((d) => {
-    OneMacPackagePage.searchFor(d.newWaiverRenewalNum1);
+    switch (parseInt(s)) {
+      case 1:
+        OneMacPackagePage.searchFor(d.newWaiverRenewalNum1);
+        break;
+      case 3:
+        OneMacPackagePage.searchFor(d.newWaiverRenewalNum3);
+        break;
+    }
   });
   cy.wait(1000);
 });
-Then("search for new waiver renewal number 3", () => {
-  cy.fixture("packageDashboardWaiverNumbers.json").then((d) => {
-    OneMacPackagePage.searchFor(d.newWaiverRenewalNum3);
-  });
-  cy.wait(1000);
-});
+
 Then("search for new waiver amendment number 1", () => {
   cy.fixture("packageDashboardWaiverNumbers.json").then((d) => {
     OneMacPackagePage.searchFor(d.newWaiverAmendmentNum1);
@@ -2934,12 +2911,6 @@ Then("type bad format into Existing Waiver Number to Renew field", () => {
 Then("type bad format into Existing Waiver Number to Amend field", () => {
   OneMacSubmitNewWaiverActionPage.inputWaiverParentNumber("MD");
 });
-Then("search for new waiver renewal number 2", () => {
-  cy.fixture("packageDashboardWaiverNumbers.json").then((d) => {
-    OneMacPackagePage.searchFor(d.newWaiverRenewalNum2);
-  });
-  cy.wait(1000);
-});
 Then("type bad format into 1915b Waiver Renewal Number field", () => {
   OneMacSubmitNewWaiverActionPage.inputWaiverNumber("MD");
 });
@@ -2947,26 +2918,40 @@ Then("type bad format into 1915b Waiver Amendment Number field", () => {
   OneMacSubmitNewWaiverActionPage.inputWaiverNumber("MD");
 });
 Then(
-  "verify id number in the first row matches new waiver renewal number 1",
-  () => {
+  "verify id number in the first row matches new waiver renewal number {string}",
+  (s) => {
     cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
-      OneMacPackagePage.verifyIDNumberInFirstRowIs(data.newWaiverRenewalNum1);
+      switch (parseInt(s)) {
+        case 1:
+          OneMacPackagePage.verifyIDNumberInFirstRowIs(
+            data.newWaiverRenewalNum1
+          );
+          break;
+        case 3:
+          OneMacPackagePage.verifyIDNumberInFirstRowIs(
+            data.newWaiverRenewalNum3
+          );
+          break;
+      }
     });
   }
 );
 Then(
-  "verify id number in the first row matches new waiver renewal number 3",
-  () => {
+  "verify id number in the first row matches new waiver amendment number {string}",
+  (s) => {
     cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
-      OneMacPackagePage.verifyIDNumberInFirstRowIs(data.newWaiverRenewalNum3);
-    });
-  }
-);
-Then(
-  "verify id number in the first row matches new waiver amendment number 1",
-  () => {
-    cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
-      OneMacPackagePage.verifyIDNumberInFirstRowIs(data.newWaiverAmendmentNum1);
+      switch (parseInt(s)) {
+        case 1:
+          OneMacPackagePage.verifyIDNumberInFirstRowIs(
+            data.newWaiverAmendmentNum1
+          );
+          break;
+        case 3:
+          OneMacPackagePage.verifyIDNumberInFirstRowIs(
+            data.newWaiverAmendmentNum3
+          );
+          break;
+      }
     });
   }
 );
