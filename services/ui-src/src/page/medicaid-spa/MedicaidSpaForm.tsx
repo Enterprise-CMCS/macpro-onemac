@@ -31,8 +31,11 @@ export const medicaidSpaFormInfo: OneMACFormConfig = {
     <>
       <p className="req-message">
         Maximum file size of {config.MAX_ATTACHMENT_SIZE_MB} MB per attachment.
-        You can add multiple files per attachment type, except for the CMS Form
-        179. Read the description for each of the attachment types on the{" "}
+        <b>
+          You can add multiple files per attachment type, except for the CMS
+          Form 179
+        </b>
+        . Read the description for each of the attachment types on the{" "}
         <Link to={ROUTES.FAQ_ATTACHMENTS_MED_SPA} target={FAQ_TARGET}>
           FAQ Page
         </Link>
