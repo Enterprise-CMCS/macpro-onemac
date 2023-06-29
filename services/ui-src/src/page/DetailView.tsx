@@ -133,6 +133,18 @@ const DetailView: React.FC<{ pageConfig: OneMACDetail }> = ({ pageConfig }) => {
             );
           }
         }
+        if (fetchedDetail.approvedEffectiveDate) {
+          fetchedDetail.approvedEffectiveDateNice = format(
+            parseISO(fetchedDetail.approvedEffectiveDate),
+            "MMM d yyyy"
+          );
+        }
+        if (fetchedDetail.finalDispositionDate) {
+          fetchedDetail.finalDispositionDateNice = format(
+            parseISO(fetchedDetail.finalDispositionDate),
+            "MMM d yyyy"
+          );
+        }
         console.log("got the package: ", fetchedDetail);
         stillLoading = false;
       } catch (e) {

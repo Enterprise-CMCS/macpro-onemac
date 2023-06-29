@@ -38,6 +38,8 @@ Feature: CHIP SPA State Details View - Card View with Actions
         Then verify there is a CPOC header in the details section
         Then verify the CPOC has a value displayed in the details section
         Then verify Review Team SRT is not visible in the details section
+        Then verify there is a Final Disposition Date header in the details section
+        Then verify there is an Approved Effective Date in the details section
 
     # Need seed data / reset data update
     # Scenario: Screen Enhance - Withdrawal Requested SPA
@@ -65,6 +67,8 @@ Feature: CHIP SPA State Details View - Card View with Actions
         # Then verify there is a CPOC header in the details section
         # Then verify the CPOC has a value displayed in the details section
         # Then verify Review Team SRT is not visible in the details section
+        Then verify there is a Final Disposition Date header in the details section
+        Then verify there is an Approved Effective Date in the details section
 
     Scenario: Screen Enhance - Withdrawn SPA
         Then click the Package Withdrawn checkbox
@@ -91,6 +95,8 @@ Feature: CHIP SPA State Details View - Card View with Actions
         Then verify there is a CPOC header in the details section
         Then verify the CPOC has a value displayed in the details section
         Then verify Review Team SRT is not visible in the details section
+        Then verify there is a Final Disposition Date header in the details section
+        Then verify there is an Approved Effective Date in the details section
 
     Scenario: Screen Enhance - Disapproved SPA
         Then click Disapproved checkbox
@@ -117,6 +123,8 @@ Feature: CHIP SPA State Details View - Card View with Actions
         Then verify there is a CPOC header in the details section
         Then verify the CPOC has a value displayed in the details section
         Then verify Review Team SRT is not visible in the details section
+        Then verify there is a Final Disposition Date header in the details section
+        Then verify there is an Approved Effective Date in the details section
 
 
     Scenario: Screen Enhance - Under Review SPA
@@ -144,6 +152,8 @@ Feature: CHIP SPA State Details View - Card View with Actions
         Then verify there is a CPOC header in the details section
         Then verify the CPOC has a value displayed in the details section
         Then verify Review Team SRT is not visible in the details section
+        Then verify there is a Final Disposition Date header in the details section
+        Then verify there is an Approved Effective Date in the details section
 
     Scenario: Screen Enhance - Submitted SPA
         Then click Submitted checkbox
@@ -170,6 +180,8 @@ Feature: CHIP SPA State Details View - Card View with Actions
         Then verify there is a CPOC header in the details section
         Then verify the CPOC has a value displayed in the details section
         Then verify Review Team SRT is not visible in the details section
+        Then verify there is a Final Disposition Date header in the details section
+        Then verify there is an Approved Effective Date in the details section
 
     Scenario: Screen Enhance - RAI Issued SPA
         Then click RAI Issued checkbox
@@ -198,3 +210,5 @@ Feature: CHIP SPA State Details View - Card View with Actions
         Then verify there is a CPOC header in the details section
         Then verify the CPOC has a value displayed in the details section
         Then verify Review Team SRT is not visible in the details section
+        Then verify there is a Final Disposition Date header in the details section
+        Then verify there is an Approved Effective Date in the details section

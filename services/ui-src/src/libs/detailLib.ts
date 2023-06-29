@@ -60,6 +60,16 @@ export const proposedEffectiveDateDefault: AttributeDetail = {
   fieldName: "proposedEffectiveDateNice",
   default: "N/A",
 };
+export const approvedEffectiveDateDefault: AttributeDetail = {
+  heading: "Approved Effective Date",
+  fieldName: "approvedEffectiveDateNice",
+  default: "-- --",
+};
+export const finalDispositionDateDefault: AttributeDetail = {
+  heading: "Final Disposition Date",
+  fieldName: "finalDispositionDateNice",
+  default: "-- --",
+};
 export const subjectDefault: AttributeDetail = {
   heading: "Subject",
   fieldName: "subject",
@@ -126,8 +136,10 @@ export const defaultDetailSectionItems = [
   typeDefault,
   submissionDateDefault,
   proposedEffectiveDateDefault,
+  approvedEffectiveDateDefault,
+  finalDispositionDateDefault,
   latestRaiResponseDateDefault,
-  blankBox, // empty space -- TODO: separator
+  blankBox, // empty space
   subjectDefault,
   descriptionDefault,
   cpocDefault,
@@ -140,6 +152,8 @@ export const defaultWaiverDetailSectionItems = [
   typeDefault,
   submissionDateDefault,
   proposedEffectiveDateDefault,
+  approvedEffectiveDateDefault,
+  finalDispositionDateDefault,
   latestRaiResponseDateDefault,
   blankBox, // empty space -- TODO: separator
   subjectDefault,

@@ -47,3 +47,5 @@ Feature: Waiver Package Details View: Temporary Extension for a CMS User
         Then verify description is not visible in the details section
         Then verify CPOC is not visible in the details section
         Then verify Review Team SRT is not visible in the details section
+        Then verify there not is a Final Disposition Date header in the details section
+        Then verify there is not an Approved Effective Date header in the details section

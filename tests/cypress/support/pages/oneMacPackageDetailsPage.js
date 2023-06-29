@@ -36,6 +36,12 @@ const packageDetailsNavBtn =
   "//li[contains(@class, 'nav')]//a[text()='Package Details']";
 const proposedEffectiveDateHeader =
   "//h3[contains(text(),'Proposed Effective Date')]";
+const finalDispositionDateHeader =
+  "//h3[contains(text(),'Final Disposition Date')]";
+const approvedEffectiveDateHeader =
+  "//h3[contains(text(),'Approved Effective Date')]";
+const actualEffectiveDateHeader =
+  "//h3[contains(text(),'Actual Effective Date')]";
 const ninetieththDayHeader = "//h3[text()='90th Day']";
 const additionalInfoSection =
   "//section[@id='addl-info-base']//h2[text()='Additional Information']";
@@ -242,6 +248,39 @@ export class oneMacPackageDetailsPage {
   }
   verifyproposedEffectiveDateHeaderContainsDate() {
     cy.xpath(proposedEffectiveDateHeader)
+      .next()
+      .contains(/^[a-zA-Z]{3}.\d{2}.\d{4}||^[a-zA-Z]{3}.\d{1}.\d{4}/);
+  }
+  verifyFinalDispositionDateHeaderExists() {
+    cy.xpath(finalDispositionDateHeader).should("be.visible");
+  }
+  verifyFinalDispositionDateHeaderDoesNotExists() {
+    cy.xpath(finalDispositionDateHeader).should("not.exist");
+  }
+  verifyFinalDispositionDateHeaderContainsDate() {
+    cy.xpath(finalDispositionDateHeader)
+      .next()
+      .contains(/^[a-zA-Z]{3}.\d{2}.\d{4}||^[a-zA-Z]{3}.\d{1}.\d{4}/);
+  }
+  verifyApprovedEffectiveDateHeaderExists() {
+    cy.xpath(approvedEffectiveDateHeader).should("be.visible");
+  }
+  verifyApprovedEffectiveDateHeaderDoesNotExists() {
+    cy.xpath(approvedEffectiveDateHeader).should("not.exist");
+  }
+  verifyApprovedEffectiveDateHeaderContainsDate() {
+    cy.xpath(approvedEffectiveDateHeader)
+      .next()
+      .contains(/^[a-zA-Z]{3}.\d{2}.\d{4}||^[a-zA-Z]{3}.\d{1}.\d{4}/);
+  }
+  verifyActualEffectiveDateHeaderExists() {
+    cy.xpath(actualEffectiveDateHeader).should("be.visible");
+  }
+  verifyActualEffectiveDateHeaderDoesNotExists() {
+    cy.xpath(actualEffectiveDateHeader).should("not.exist");
+  }
+  verifyActualEffectiveDateHeaderContainsDate() {
+    cy.xpath(actualEffectiveDateHeader)
       .next()
       .contains(/^[a-zA-Z]{3}.\d{2}.\d{4}||^[a-zA-Z]{3}.\d{1}.\d{4}/);
   }
