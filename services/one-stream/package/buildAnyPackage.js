@@ -105,7 +105,12 @@ export const buildAnyPackage = async (packageId, config) => {
         showPackageOnDashboard = true;
 
         // admin changes are consolidated across all OneMAC events
-        if (anEvent?.adminChanges && _.isArray(anEvent.adminChanges))
+        // but don't bring in the Package ones
+        if (
+          anEvent.sk !== "Package" &&
+          anEvent?.adminChanges &&
+          _.isArray(anEvent.adminChanges)
+        )
           putParams.Item.adminChanges = [
             ...anEvent.adminChanges,
             ...putParams.Item.adminChanges,
