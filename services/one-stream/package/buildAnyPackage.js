@@ -73,6 +73,7 @@ export const buildAnyPackage = async (packageId, config) => {
     let currentPackage;
     let showPackageOnDashboard = false;
     let lmTimestamp = 0;
+    let adminChanges = [];
 
     result.Items.forEach((anEvent) => {
       // we ignore all other v's (for now)
@@ -105,17 +106,8 @@ export const buildAnyPackage = async (packageId, config) => {
         showPackageOnDashboard = true;
 
         // admin changes are consolidated across all OneMAC events
-        // but don't bring in the Package ones
-        if (
-          anEvent.sk !== "Package" &&
-          anEvent?.adminChanges &&
-          _.isArray(anEvent.adminChanges)
-        )
-          putParams.Item.adminChanges = [
-            ...anEvent.adminChanges,
-            ...putParams.Item.adminChanges,
-          ];
-        console.log("admin changes: ", putParams.Item.adminChanges);
+        if (anEvent?.adminChanges && _.isArray(anEvent.adminChanges))
+          adminChanges = [...anEvent.adminChanges, ...adminChanges];
       }
 
       if (timestamp > lmTimestamp) {
@@ -291,9 +283,14 @@ export const buildAnyPackage = async (packageId, config) => {
       (a, b) => b.submissionTimestamp - a.submissionTimestamp
     );
 
-    putParams.Item.adminChanges.sort(
-      (a, b) => b.changeTimestamp - a.changeTimestamp
-    );
+    adminChanges.sort((a, b) => b.changeTimestamp - a.changeTimestamp);
+    let lastTime = 0;
+    adminChanges.forEach((oneChange) => {
+      if (oneChange.changeTimestamp != lastTime) {
+        lastTime = oneChange.changeTimestamp;
+        putParams.Item.adminChanges.push(oneChange);
+      }
+    });
 
     putParams.Item.latestRaiResponseTimestamp =
       putParams.Item.raiResponses[0]?.submissionTimestamp;
