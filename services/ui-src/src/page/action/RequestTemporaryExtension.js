@@ -12,6 +12,7 @@ export default function RequestTemporaryExtension({ theComponent }) {
         state: {
           parentId: theComponent.componentId,
           parentType: theComponent.componentType,
+          waiverAuthority: theComponent.waiverAuthority,
         },
       }}
       id={"request-temporary-extension-action-" + theComponent.componentId}

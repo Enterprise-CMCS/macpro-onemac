@@ -1,17 +1,26 @@
 import React from "react";
-import { Dropdown } from "@cmsgov/design-system";
+import { Dropdown, Review } from "@cmsgov/design-system";
 import { SelectOption } from "cmscommonlib";
 
 const TemporaryExtensionTypeInput: React.FC<{
   temporaryExtensionTypes: SelectOption[];
   handleOnChange: any;
-}> = ({ temporaryExtensionTypes, handleOnChange }) => {
+  waiverAuthority?: string;
+  disabled?: boolean;
+}> = ({
+  temporaryExtensionTypes,
+  handleOnChange,
+  waiverAuthority,
+  disabled,
+}) => {
   const defaultType: SelectOption = {
     label: "-- select a temporary extension type --",
     value: "",
   };
 
-  return (
+  return disabled ? (
+    <Review heading="Temporary Extension Type">{waiverAuthority}</Review>
+  ) : (
     <Dropdown
       options={[defaultType, ...(temporaryExtensionTypes ?? [])]}
       defaultValue={defaultType.value}

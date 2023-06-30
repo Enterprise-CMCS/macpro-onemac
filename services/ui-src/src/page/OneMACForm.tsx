@@ -89,7 +89,8 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
   formConfig.landingPage = getLandingPage(location, formConfig);
 
   // if only one waiver Authority choice, it is the default
-  const presetWaiverAuthority = formConfig.waiverAuthority?.value;
+  const presetWaiverAuthority =
+    location.state?.waiverAuthority ?? formConfig.waiverAuthority?.value;
 
   // The record we are using for the form.
   const [oneMacFormData, setOneMacFormData] = useState<OneMacFormData>({
@@ -451,10 +452,13 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
               {formConfig.waiverAuthority.label}
             </Review>
           )}
+
           {formConfig.temporaryExtensionTypes && (
             <TemporaryExtensionTypeInput
               temporaryExtensionTypes={[...formConfig.temporaryExtensionTypes]}
               handleOnChange={handleInputChange}
+              waiverAuthority={oneMacFormData.waiverAuthority}
+              disabled={!!presetWaiverAuthority}
             />
           )}
           {formConfig.parentLabel && (
