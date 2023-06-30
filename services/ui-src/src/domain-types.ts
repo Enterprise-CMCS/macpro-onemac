@@ -72,4 +72,5 @@ export type FormLocationState = {
   componentId?: string;
   formSource?: FORM_SOURCE;
   waiverAuthority?: string;
+  temporaryExtensionType?: string;
 };

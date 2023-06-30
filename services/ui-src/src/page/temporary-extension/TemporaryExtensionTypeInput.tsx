@@ -5,12 +5,12 @@ import { SelectOption } from "cmscommonlib";
 const TemporaryExtensionTypeInput: React.FC<{
   temporaryExtensionTypes: SelectOption[];
   handleOnChange: any;
-  waiverAuthority?: string;
+  temporaryExtensionType?: string;
   disabled?: boolean;
 }> = ({
   temporaryExtensionTypes,
   handleOnChange,
-  waiverAuthority,
+  temporaryExtensionType,
   disabled,
 }) => {
   const defaultType: SelectOption = {
@@ -19,7 +19,7 @@ const TemporaryExtensionTypeInput: React.FC<{
   };
 
   return disabled ? (
-    <Review heading="Temporary Extension Type">{waiverAuthority}</Review>
+    <Review heading="Temporary Extension Type">{temporaryExtensionType}</Review>
   ) : (
     <Dropdown
       options={[defaultType, ...(temporaryExtensionTypes ?? [])]}

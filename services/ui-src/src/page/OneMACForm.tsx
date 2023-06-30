@@ -92,13 +92,15 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
   const presetWaiverAuthority =
     location.state?.waiverAuthority ?? formConfig.waiverAuthority?.value;
 
+  const presetTemporaryExtensionType = location.state?.temporaryExtensionType;
+
   // The record we are using for the form.
   const [oneMacFormData, setOneMacFormData] = useState<OneMacFormData>({
     territory: getTerritoryFromComponentId(presetComponentId),
     additionalInformation: "",
     componentId: presetComponentId,
     waiverAuthority: presetWaiverAuthority,
-    temporaryExtensionType: undefined,
+    temporaryExtensionType: presetTemporaryExtensionType,
     proposedEffectiveDate: undefined,
     parentId: presetParentId,
     parentType: location.state?.parentType,
@@ -457,8 +459,8 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
             <TemporaryExtensionTypeInput
               temporaryExtensionTypes={[...formConfig.temporaryExtensionTypes]}
               handleOnChange={handleInputChange}
-              waiverAuthority={oneMacFormData.waiverAuthority}
-              disabled={!!presetWaiverAuthority}
+              temporaryExtensionType={oneMacFormData.temporaryExtensionType}
+              disabled={!!presetTemporaryExtensionType}
             />
           )}
           {formConfig.parentLabel && (
