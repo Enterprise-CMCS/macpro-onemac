@@ -89,8 +89,7 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
   formConfig.landingPage = getLandingPage(location, formConfig);
 
   // if only one waiver Authority choice, it is the default
-  const presetWaiverAuthority =
-    location.state?.waiverAuthority ?? formConfig.waiverAuthority?.value;
+  const presetWaiverAuthority = formConfig.waiverAuthority?.value;
 
   const presetTemporaryExtensionType = location.state?.temporaryExtensionType;
 
