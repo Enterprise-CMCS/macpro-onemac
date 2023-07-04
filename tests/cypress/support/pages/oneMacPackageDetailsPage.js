@@ -42,7 +42,7 @@ const approvedEffectiveDateHeader =
   "//h3[contains(text(),'Approved Effective Date')]";
 const actualEffectiveDateHeader =
   "//h3[contains(text(),'Actual Effective Date')]";
-const ninetieththDayHeader = "//h3[text()='90th Day']";
+const adminPkgChangeSection = "//h2[text()='Administrative Package Changes']";
 const additionalInfoSection =
   "//section[@id='addl-info-base']//h2[text()='Additional Information']";
 const waiverAuthorityHeader = "//h3[text()='Waiver Authority']";
@@ -318,11 +318,8 @@ export class oneMacPackageDetailsPage {
   verifyAdditionalInfoSectionExists() {
     cy.xpath(additionalInfoSection).should("be.visible");
   }
-  verify90thDayHeaderExists() {
-    cy.xpath(ninetieththDayHeader).should("be.visible");
-  }
-  verify90thDayHeaderContainsNA() {
-    cy.xpath(ninetieththDayHeader).next().contains("N/A");
+  verifyAdministrativePackageChangesSectionExists() {
+    cy.xpath(adminPkgChangeSection).should("be.visible");
   }
   clickWithdrawBtn() {
     cy.xpath(withdrawBtn).click();
