@@ -123,7 +123,10 @@ const DetailView: React.FC<{ pageConfig: OneMACDetail }> = ({ pageConfig }) => {
           );
         }
         if (fetchedDetail.proposedEffectiveDate) {
-          if (fetchedDetail.proposedEffectiveDate === "-- --") {
+          if (
+            fetchedDetail.proposedEffectiveDate === "-- --" ||
+            fetchedDetail.proposedEffectiveDate === "none"
+          ) {
             fetchedDetail.proposedEffectiveDateNice = "Pending";
           } else {
             const effDate = parseISO(fetchedDetail.proposedEffectiveDate);
