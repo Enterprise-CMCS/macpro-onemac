@@ -35,6 +35,8 @@ export const createOneMacPackage = async (item) => {
   if (!item.territory)
     item.territory = item.componentId.toString().substring(0, 2);
 
+  const normalizedNow = Date.now();
+
   const putParams = {
     TableName: process.env.oneMacTableName,
     Item: {
@@ -50,7 +52,15 @@ export const createOneMacPackage = async (item) => {
       attachments: [],
       currentStatus: "Submitted",
       originallyFrom: `createOneMacPackage Lambda`,
-      convertTimestamp: Date.now(),
+      convertTimestamp: normalizedNow,
+      adminChanges: [
+        {
+          changeTimestamp: normalizedNow,
+          changeMade: "OneMAC submission created from SEA Tool entry",
+          changeReason:
+            "This is a Not Originally Submitted in OneMAC (NOSO) package that users need to see in OneMAC.",
+        },
+      ],
     },
   };
 
@@ -65,6 +75,8 @@ export const createOneMacPackage = async (item) => {
     try {
       const result = await dynamoDb.get(getParams).promise();
       putParams.Item.attachments = [...result.Item.attachments];
+      putParams.Item.adminChanges.changeMade +=
+        " - with attachments copied from " + item.copyAttachmentsFrom;
     } catch (e) {
       console.log("%s error received: ", theID, e);
     }
