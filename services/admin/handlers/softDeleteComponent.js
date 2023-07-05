@@ -63,9 +63,14 @@ exports.main = async function (event) {
   if (!result || !result.Item) {
     throw new Error(pk + " not found with sk: " + sk);
   }
-  const auditArray = result.Item.auditArray
-    ? [event.prependAdditionalInfo, ...result.Item?.auditArray]
-    : [event.prependAdditionalInfo];
+  const thisChange = {
+    changeTimestamp: Date.now(),
+    changeMade: "Submission Inactivated",
+    changeReason: event.prependAdditionalInfo,
+  };
+  const adminChanges = result.Item.adminChanges
+    ? [thisChange, ...result.Item?.adminChanges]
+    : [thisChange];
 
   //update the status to inactivated and prepend the additional info
   await dynamoDb
@@ -75,8 +80,8 @@ exports.main = async function (event) {
       Item: {
         ...result.Item,
         currentStatus,
-        additionalInformation: `${event.prependAdditionalInfo}\n\n${result.Item.additionalInformation}`,
-        auditArray,
+        additionalInformation: `${result.Item.additionalInformation}`,
+        adminChanges,
       },
     })
     .promise();

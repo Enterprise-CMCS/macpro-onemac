@@ -67,11 +67,13 @@ export const buildAnyPackage = async (packageId, config) => {
         description: emptyField,
         cpocName: emptyField,
         reviewTeam: [],
+        adminChanges: [],
       },
     };
     let currentPackage;
     let showPackageOnDashboard = false;
     let lmTimestamp = 0;
+    let adminChanges = [];
 
     result.Items.forEach((anEvent) => {
       // we ignore all other v's (for now)
@@ -102,6 +104,10 @@ export const buildAnyPackage = async (packageId, config) => {
         if (anEvent?.currentStatus === Workflow.ONEMAC_STATUS.INACTIVATED)
           return;
         showPackageOnDashboard = true;
+
+        // admin changes are consolidated across all OneMAC events
+        if (anEvent?.adminChanges && _.isArray(anEvent.adminChanges))
+          adminChanges = [...anEvent.adminChanges, ...adminChanges];
       }
 
       if (timestamp > lmTimestamp) {
@@ -276,6 +282,15 @@ export const buildAnyPackage = async (packageId, config) => {
     putParams.Item.raiResponses.sort(
       (a, b) => b.submissionTimestamp - a.submissionTimestamp
     );
+
+    adminChanges.sort((a, b) => b.changeTimestamp - a.changeTimestamp);
+    let lastTime = 0;
+    adminChanges.forEach((oneChange) => {
+      if (oneChange.changeTimestamp != lastTime) {
+        lastTime = oneChange.changeTimestamp;
+        putParams.Item.adminChanges.push(oneChange);
+      }
+    });
 
     putParams.Item.latestRaiResponseTimestamp =
       putParams.Item.raiResponses[0]?.submissionTimestamp;
