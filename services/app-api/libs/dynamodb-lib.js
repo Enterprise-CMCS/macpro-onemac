@@ -1,4 +1,8 @@
-import { DynamoDBDocument } from "@aws-sdk/lib-dynamodb";
+import {
+  DynamoDBDocument,
+  GetCommand,
+  QueryCommand,
+} from "@aws-sdk/lib-dynamodb";
 import { DynamoDB } from "@aws-sdk/client-dynamodb";
 
 const client = DynamoDBDocument.from(
@@ -12,9 +16,9 @@ const client = DynamoDBDocument.from(
 );
 
 export default {
-  get: (params) => client.get(params),
+  get: (params) => client.send(new GetCommand(params)),
   put: (params) => client.put(params),
-  query: (params) => client.query(params),
+  query: (params) => client.send(new QueryCommand(params)),
   update: (params) => client.update(params),
   delete: (params) => client.delete(params),
   scan: (params) => client.scan(params),

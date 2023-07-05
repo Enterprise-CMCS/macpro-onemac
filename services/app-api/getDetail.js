@@ -1,4 +1,5 @@
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3";
 import { RESPONSE_CODE, getUserRoleObj } from "cmscommonlib";
 import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
@@ -6,15 +7,20 @@ import { getUser } from "./getUser";
 import { cmsStatusUIMap, stateStatusUIMap } from "./libs/status-lib";
 import { validateUserReadOnly } from "./utils/validateUser";
 
+const s3 = new S3Client();
+
 async function generateSignedUrl(item) {
   const attachmentURLs = await Promise.all(
-    item.attachments.map(({ url }) =>
-      getSignedUrl("getObject", {
+    item.attachments.map(({ url }) => {
+      const paths = url.split("/");
+      const s3Key = paths[paths.length - 2] + "/" + paths[paths.length - 1];
+      const command = new GetObjectCommand({
         Bucket: process.env.attachmentsBucket,
-        Key: decodeURIComponent(url.split("amazonaws.com/")[1]),
-        Expires: 3600,
-      })
-    )
+        Key: decodeURIComponent(s3Key),
+      });
+      console.log("command: ", command);
+      return getSignedUrl(s3, command, { expiresIn: 3600 });
+    })
   );
 
   attachmentURLs.forEach((url, idx) => {

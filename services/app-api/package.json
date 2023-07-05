@@ -13,7 +13,6 @@
     "url": "https://github.com/AnomalyInnovations/serverless-nodejs-starter.git"
   },
   "devDependencies": {
-    "aws-sdk": "^2.752.0",
     "aws-sdk-client-mock": "^0.5.6",
     "serverless-associate-waf": "^1.2.1",
     "serverless-bundle": "^5.3.0",
@@ -24,7 +23,7 @@
     "xstate": "^4.26.0"
   },
   "dependencies": {
-    "@aws-sdk/client-dynamodb": "^3.360.0",
+    "@aws-sdk/client-dynamodb": "^3.363.0",
     "@aws-sdk/client-s3": "^3.360.0",
     "@aws-sdk/client-ses": "^3.360.0",
     "@aws-sdk/lib-dynamodb": "^3.360.0",

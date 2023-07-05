@@ -68,8 +68,10 @@ export const getMyPackages = async (email, group) => {
       return Promise.all(
         paramList.map(async (params) => {
           const promiseItems = [];
+          console.log("params are: ", params);
           do {
             const results = await dynamoDb.query(params);
+            console.log("results are: ", results);
             results.Items.map((oneItem) => {
               if (!statusMap[oneItem.currentStatus])
                 console.log(
