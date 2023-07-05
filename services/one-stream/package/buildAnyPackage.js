@@ -170,7 +170,7 @@ export const buildAnyPackage = async (packageId, config) => {
           putParams.Item.proposedEffectiveDate = DateTime.fromMillis(
             anEvent.STATE_PLAN.PROPOSED_DATE
           ).toFormat("yyyy-LL-dd");
-        else putParams.Item.proposedEffectiveDate = "none";
+        else putParams.Item.proposedEffectiveDate = emptyField;
 
         putParams.Item.subject = anEvent.STATE_PLAN.TITLE_NAME;
         putParams.Item.description = anEvent.STATE_PLAN.SUMMARY_MEMO;
