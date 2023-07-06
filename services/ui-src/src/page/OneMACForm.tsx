@@ -541,10 +541,17 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
             aria-describedby="character-count"
             aria-live="off"
             aria-multiline={true}
-            aria-busy={isTyping}
+            // aria-busy={isTyping}
           ></TextField>
-          <span tabIndex={0} aria-label="character-count" aria-live="polite">
-            {oneMacFormData.additionalInformation.length}/4000
+          <span
+            tabIndex={0}
+            id="character-count"
+            aria-label="character-count"
+            aria-live="polite"
+          >
+            {`${
+              4000 - oneMacFormData.additionalInformation.length
+            } characters remaining`}
           </span>
           <p id="form-submit-instructions">
             <i>
