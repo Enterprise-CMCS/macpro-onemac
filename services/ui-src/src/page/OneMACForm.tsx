@@ -63,15 +63,6 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
   const { activeTerritories, confirmAction } = useAppContext() ?? {};
   const location = useLocation<FormLocationState>();
 
-  // Boolean controlling aria-busy for Additional Info section
-  const [isTyping, setIsTyping] = useState<boolean>(false);
-  // Effect to timeout and swap isTyping back to false
-  useEffect(() => {
-    const timeTilInactive = setTimeout(() => setIsTyping(false), 500);
-    return () => {
-      clearTimeout(timeTilInactive);
-    };
-  }, [isTyping]);
   //Reference to the File Uploader.
   const uploader = useRef<FileUploader>(null);
   // True when the required attachments have been selected.
@@ -534,14 +525,12 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
             multiline
             onChange={(e) => {
               handleInputChange(e);
-              setIsTyping(true);
             }}
             value={oneMacFormData.additionalInformation}
             maxLength={config.MAX_ADDITIONAL_INFO_LENGTH}
             aria-describedby="character-count"
             aria-live="off"
             aria-multiline={true}
-            // aria-busy={isTyping}
           ></TextField>
           <span
             tabIndex={0}
