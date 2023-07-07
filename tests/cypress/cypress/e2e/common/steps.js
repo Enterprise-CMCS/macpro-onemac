@@ -2983,7 +2983,9 @@ Then(
     OneMacSubmitNewWaiverActionPage.verifyRenewalWaiverErrorMsgPt2();
   }
 );
-
+Then("verify the 1915b Temporary Extension is prefilled under type", () => {
+  OneMacRequestWaiverTemporaryExtension.selectOption1915bInTempExtensionType();
+});
 Then("select the 1915b Temporary Extension Type button", () => {
   OneMacRequestWaiverTemporaryExtension.selectOption1915bInTempExtensionType();
 });
