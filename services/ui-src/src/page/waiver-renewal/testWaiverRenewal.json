@@ -26,5 +26,10 @@
     "territoryNice": "Maryland",
     "typeNice": "1915(b) Waiver Renewal",
     "waiverAuthorityNice": "1915(b)(4) FFS Selective Contracting waivers",
-    "submissionDateNice": "Dec 14 2021"
+    "submissionDateNice": "Dec 14 2021",
+    "adminChanges": [{
+      "adminChangeTimestamp": 1675987200000,
+      "changeMade": "ID changed from MD-8340.R01.00 to MD-83420.R01.00",
+      "changeReason": "Per request from Charlie Tester in Help Desk ticket INC34224"
+    }]
   }  

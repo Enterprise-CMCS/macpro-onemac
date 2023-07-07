@@ -49,6 +49,7 @@ export type ComponentDetail = {
   territory: string;
   territoryNice: string;
   raiResponses: any[];
+  adminChanges: any[];
   waiverExtensions: any[];
   withdrawalRequests: any[];
   temporaryExtensionType: string;

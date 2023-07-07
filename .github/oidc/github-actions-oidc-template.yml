@@ -7,7 +7,7 @@ Description: >
 Parameters:
   GithubActionsThumbprint:
     Type: CommaDelimitedList
-    Default: 6938fd4d98bab03faadb97b34396831e3780aea1
+    Default: 6938fd4d98bab03faadb97b34396831e3780aea1,1c58a3a8518e8759bf075b76b750d4f2df264fcd
     Description: >
       Comma seperated list of thumbprints for GitHub Actions tokens.
       Default comes from https://github.blog/changelog/2022-01-13-github-actions-update-on-oidc-based-deployments-to-aws/
