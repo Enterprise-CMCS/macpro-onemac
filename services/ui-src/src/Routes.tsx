@@ -59,6 +59,7 @@ import WaiverRenewalB4Form from "./page/waiver-renewal/WaiverRenewalB4Form";
 import WaiverRenewalBForm from "./page/waiver-renewal/WaiverRenewalBForm";
 import WaiverAmendmentB4Form from "./page/waiver-amendment/WaiverAmendmentB4Form";
 import WaiverAmendmentBForm from "./page/waiver-amendment/WaiverAmendmentBForm";
+import WithdrawRAIForm from "./page/withdraw-rai/WithdrawRAIForm";
 import { clearTableStateStorageKeys } from "./utils/StorageKeys";
 
 type RouteSpec = {
@@ -256,6 +257,10 @@ const ROUTE_LIST: RouteSpec[] = [
     {
       path: ONEMAC_ROUTES.TEMPORARY_EXTENSION,
       component: TemporaryExtensionForm,
+    },
+    {
+      path: ONEMAC_ROUTES.WITHDRAW_RAI,
+      component: WithdrawRAIForm,
     },
   ].map(({ path, ...rest }) => ({
     path,

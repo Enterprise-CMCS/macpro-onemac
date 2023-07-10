@@ -19,6 +19,7 @@ export const ONEMAC_TYPE = {
   WAIVER_APP_K: "waiverappk",
   WAIVER_APP_K_RAI: "waiverappkrai",
   WAIVER_APP_K_WITHDRAW: "waiverappkwithdraw",
+  RAI_RESPONSE_WITHDRAW: "rairesponsewithdraw",
 };
 
 export const ONEMAC_LABEL = {
@@ -47,6 +48,7 @@ export const ONEMAC_STATUS = {
   WITHDRAWAL_REQUESTED: "Withdrawal Requested",
   TE_REQUESTED: "TE Requested",
   TERMINATED: "Waiver Terminated",
+  WITHDRAW_RAI_ENABLED: "RAI Response Withdraw Enabled",
   UNKNOWN: "-- --",
 };
 
@@ -66,6 +68,7 @@ export const SEATOOL_STATUS = {
 export const PACKAGE_ACTION = {
   RESPOND_TO_RAI: "Respond to RAI",
   WITHDRAW: "Withdraw Package",
+  WITHDRAW_RAI: "Withdraw Formal RAI Response",
   REQUEST_TEMPORARY_EXTENSION: "Request a Temporary Extension",
   ADD_AMENDMENT: "Add Amendment",
 };
@@ -91,6 +94,7 @@ export const defaultActionsByStatus = {
   [ONEMAC_STATUS.WITHDRAWN]: [],
   [ONEMAC_STATUS.TERMINATED]: [],
   [ONEMAC_STATUS.UNKNOWN]: [],
+  [ONEMAC_STATUS.WITHDRAW_RAI_ENABLED]: [PACKAGE_ACTION.WITHDRAW_RAI],
 };
 
 export const initialWaiverActionsByStatus = {

@@ -147,3 +147,4 @@ export { medicaidSPAWithdraw } from "./type/medicaidSPAWithdraw.js";
 export { chipSPA } from "./type/chipSPA.js";
 export { chipSPARAIResponse } from "./type/chipSPARAIResponse.js";
 export { chipSPAWithdraw } from "./type/chipSPAWithdraw.js";
+export { withdrawRAIResponse } from "./type/withdrawRAIResponse.js";
