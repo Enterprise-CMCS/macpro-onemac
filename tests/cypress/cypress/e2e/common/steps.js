@@ -2947,7 +2947,7 @@ Then(
   }
 );
 Then("verify the 1915b Temporary Extension is prefilled under type", () => {
-  OneMacRequestWaiverTemporaryExtension.selectOption1915bInTempExtensionType();
+  OneMacRequestWaiverTemporaryExtension.option1915bIsPrefilled();
 });
 Then("select the 1915b Temporary Extension Type button", () => {
   OneMacRequestWaiverTemporaryExtension.selectOption1915bInTempExtensionType();
