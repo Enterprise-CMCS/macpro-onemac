@@ -33,6 +33,7 @@ import {
   faSearch,
   faTimes,
   faChevronDown,
+  faWindowClose,
 } from "@fortawesome/free-solid-svg-icons";
 import { AccordionItem, Button, Choice } from "@cmsgov/design-system";
 
@@ -522,6 +523,26 @@ function FilterPane<V extends {}>({
   );
 }
 
+const FilterChipTray = () => {
+  const Chip = () => {
+    return (
+      <div className="filter-chip-container">
+        <span className="filter-chip-text">Filter Title</span>
+        <button className="filter-chip-close">
+          <FontAwesomeIcon icon={faWindowClose} size={"sm"} />
+        </button>
+      </div>
+    );
+  };
+  return (
+    <div className="filter-chip-tray">
+      <Chip />
+      <Chip />
+      <Chip />
+    </div>
+  );
+};
+
 export type SearchFilterProps<V extends {}> = {
   internalName: string;
   onSearch: (keyword: string) => void;
@@ -560,44 +581,49 @@ export function SearchAndFilter<V extends {} = {}>({
   );
 
   return (
-    <div className="search-and-filter" role="search">
-      <div className="search-bar">
-        <label htmlFor="search-bar-input">{searchBarTitle || "Search"}</label>
-        <div className="field" onClick={clickInsideBar}>
-          <FontAwesomeIcon icon={faSearch} />
-          <input
-            autoComplete="off"
-            id="search-bar-input"
-            onChange={onKeywordChange}
-            ref={inputRef}
-            value={searchTerm}
-          />
-          {!!searchTerm && (
-            <button
-              aria-label="Clear Search"
-              className="clear-button"
-              onClick={onKeywordChange}
-              type="button"
-              value=""
-            >
-              <FontAwesomeIcon icon={faTimes} />
-            </button>
-          )}
+    <>
+      <div className="search-and-filter" role="search">
+        <div className="search-bar">
+          <label htmlFor="search-bar-input">{searchBarTitle || "Search"}</label>
+          <div className="field" onClick={clickInsideBar}>
+            <FontAwesomeIcon icon={faSearch} />
+            <input
+              autoComplete="off"
+              id="search-bar-input"
+              onChange={onKeywordChange}
+              ref={inputRef}
+              value={searchTerm}
+            />
+            {!!searchTerm && (
+              <button
+                aria-label="Clear Search"
+                className="clear-button"
+                onClick={onKeywordChange}
+                type="button"
+                value=""
+              >
+                <FontAwesomeIcon icon={faTimes} />
+              </button>
+            )}
+          </div>
         </div>
-      </div>
-      <div className="picker-filter-wrapper">
-        <ColumnPicker
-          columnsInternal={columnsInternal}
-          internalName={internalName}
-        />
-        <div className="filter-buttons">
-          <FilterPane
+        <div className="picker-filter-wrapper">
+          <ColumnPicker
             columnsInternal={columnsInternal}
-            pageContentRef={pageContentRef}
-            setAllFilters={setAllFilters}
+            internalName={internalName}
           />
+          <div className="filter-buttons">
+            <FilterPane
+              columnsInternal={columnsInternal}
+              pageContentRef={pageContentRef}
+              setAllFilters={setAllFilters}
+            />
+          </div>
         </div>
       </div>
-    </div>
+      <div className="filter-chip-tray-container">
+        <FilterChipTray />
+      </div>
+    </>
   );
 }

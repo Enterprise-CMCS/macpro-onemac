@@ -2392,7 +2392,7 @@ ul.choice-list {
   margin-left: 1rem;
   margin-right: 1rem;
   justify-content: space-between;
-  @extend .ds-u-margin-bottom--4;
+  @extend .ds-u-margin-bottom--2;
   @extend .ds-u-display--flex;
   @extend .ds-u-align-items--center;
   @include max-width-ultra-wide;
@@ -2474,6 +2474,36 @@ ul.choice-list {
     gap: 16px;
     flex-wrap: wrap;
   }
+}
+
+.filter-chip-tray-container {
+  display: flex;
+  width: 100%;
+  max-width: 1024px;
+  padding: 0 1rem;
+  margin-bottom: 2rem;
+  justify-content: flex-end;
+}
+
+.filter-chip-tray {
+  display: flex;
+  flex-direction: row;
+  gap: 0.75rem;
+  align-items: end;
+}
+
+.filter-chip-container {
+  background: #eaf8fc;
+  border: 1.5px solid #3070b6;
+  border-radius: 100px;
+  padding-left: 1rem;
+  padding-right: 0.5rem; // Icon on the right has built-in padding, so we subtract it from this
+  display: flex;
+  align-items: center;
+}
+
+.filter-chip-close {
+  background: none;
 }
 
 .no-results {
