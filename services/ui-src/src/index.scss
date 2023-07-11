@@ -2478,9 +2478,11 @@ ul.choice-list {
 
 .filter-chip-tray-container {
   display: flex;
-  width: 100%;
-  max-width: 1024px;
-  padding: 0 1rem;
+  @include max-width-ultra-wide;
+  width: -webkit-fill-available;
+  width: -moz-available;
+  margin-right: 1rem;
+  margin-left: 1rem;
   margin-bottom: 2rem;
   justify-content: flex-end;
 }
