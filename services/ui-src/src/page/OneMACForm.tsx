@@ -17,6 +17,7 @@ import {
   RESPONSE_CODE,
   ROUTES,
   TYPE_TO_DETAIL_ROUTE,
+  Workflow,
 } from "cmscommonlib";
 
 import { useAppContext } from "../libs/contextLib";
@@ -84,6 +85,9 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
 
   const presetComponentId = location.state?.componentId ?? "";
   const presetParentId = location.state?.parentId ?? undefined;
+  const presetParentType = location.state?.parentType ?? "";
+  const presetParentTypeNice =
+    formConfig.parentTypeNice ?? Workflow.ONEMAC_LABEL[presetParentType];
 
   //if location contains parentType and formSource was detail page then override landingpage to type specific detail page
   formConfig.landingPage = getLandingPage(location, formConfig);
@@ -498,9 +502,9 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
               />
             </>
           )}
-          {formConfig?.parentTypeNice && (
+          {presetParentTypeNice && (
             <Review key="0" heading="Type">
-              {formConfig?.parentTypeNice}
+              {presetParentTypeNice}
             </Review>
           )}
           <h3>{formConfig?.attachmentsTitle ?? "Attachments"}</h3>
@@ -513,6 +517,9 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
           ></FileUploader>
           <TextField
             name="additionalInformation"
+            labelClassName={
+              formConfig.addlInfoRequired ? "addl-info-required" : ""
+            }
             label="Additional Information"
             labelId="additional-information-label"
             id="additional-information"

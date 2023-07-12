@@ -24,6 +24,7 @@ export type OneMACFormConfig = {
   attachmentsTitle?: string;
   attachmentIntroJSX: JSX.Element;
   addlInfoText?: string;
+  addlInfoRequired?: boolean;
   landingPage: string;
   confirmSubmit?: ConfirmSubmitType;
   proposedEffectiveDate?: boolean;

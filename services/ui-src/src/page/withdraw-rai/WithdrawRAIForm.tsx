@@ -1,28 +1,25 @@
 import React, { FC } from "react";
 import OneMACForm from "../OneMACForm";
-import {
-  defaultAttachmentInstructionsJSX,
-  defaultConfirmSubmitRAI,
-  defaultOneMACFormConfig,
-  OneMACFormConfig,
-} from "../../libs/formLib";
-import { ROUTES, ONEMAC_ROUTES, withdrawRAIResponse } from "cmscommonlib";
+import { defaultOneMACFormConfig, OneMACFormConfig } from "../../libs/formLib";
+import { withdrawRAIResponse } from "cmscommonlib";
 
-export const waiverRAIFormInfo: OneMACFormConfig = {
+export const withdrawRAIFormInfo: OneMACFormConfig = {
   ...defaultOneMACFormConfig,
   ...withdrawRAIResponse,
-  pageTitle: "Respond to 1915(b) Waiver RAI",
-  detailsHeader: "1915(b) Waiver RAI Response",
-  landingPage: ONEMAC_ROUTES.PACKAGE_LIST_WAIVER,
-  confirmSubmit: defaultConfirmSubmitRAI,
-  validateParentAPI: "validateParentOfWaiverRaiResponse",
-  attachmentIntroJSX: defaultAttachmentInstructionsJSX(
-    ROUTES.FAQ_ATTACHMENTS_WAIVER_B_RAI
+  pageTitle: "Withdraw Formal RAI Response",
+  introJSX: (
+    <p id="form-intro">
+      Complete this form to withdraw the Formal RAI response. Once complete, you
+      and CMS will receive an email confirmation.
+    </p>
   ),
+  detailsHeader: "Withdraw Formal RAI Response",
+  addlInfoText: "Explain your need for withdrawal.",
+  addlInfoRequired: true,
 };
 
 const WithdrawRAIForm: FC = () => {
-  return <OneMACForm formConfig={waiverRAIFormInfo} />;
+  return <OneMACForm formConfig={withdrawRAIFormInfo} />;
 };
 
 export default WithdrawRAIForm;
