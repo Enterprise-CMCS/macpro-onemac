@@ -25,6 +25,7 @@ export type OneMACFormConfig = {
   attachmentIntroJSX: JSX.Element;
   addlInfoText?: string;
   addlInfoRequired?: boolean;
+  requireUploadOrAdditionalInformation?: boolean;
   landingPage: string;
   confirmSubmit?: ConfirmSubmitType;
   proposedEffectiveDate?: boolean;
@@ -44,7 +45,7 @@ type ParentPackageType = {
 
 type ConfirmSubmitType = {
   confirmSubmitHeading: string;
-  confirmSubmitMessage: JSX.Element | string;
+  confirmSubmitMessage?: JSX.Element | string;
   buildMessage?: (toConfirm: string) => JSX.Element;
   confirmSubmitYesButton?: string;
 };

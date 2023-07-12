@@ -1,9 +1,8 @@
 export const withdrawRAIResponse = {
-  componentType: "raiwithdraw",
+  componentType: "rairesponsewithdraw",
   typeLabel: "Withdraw Formal RAI Response",
   idLabel: "Package ID",
-  idRegex:
-    "(^[A-Z]{2}[.-][0-9]{4,5}$)|(^[A-Z]{2}[.-][0-9]{4,5}[.]R[0-9]{2}$)|(^[A-Z]{2}[.-][0-9]{4,5}[.]R[0-9]{2}[.]M?[0-9]{2}$)",
+  idRegex: "(^[A-Z]{2}[.-])",
   idMustExist: true,
   allowMultiplesWithSameId: true,
   requiredAttachments: [],

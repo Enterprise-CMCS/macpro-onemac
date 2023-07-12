@@ -298,10 +298,13 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
     );
 
     const isSupportInfoReady: boolean = Boolean(
-      formConfig.componentType.includes("withdraw") &&
-        !formConfig.componentType.includes("chip")
+      formConfig.requireUploadOrAdditionalInformation
         ? areUploadsReady || oneMacFormData.additionalInformation
         : areUploadsReady
+    );
+
+    const isAdditionalInformationReady: boolean = Boolean(
+      formConfig.addlInfoRequired ? oneMacFormData.additionalInformation : true
     );
 
     setIsSubmissionReady(
@@ -310,7 +313,8 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
         isParentIdReady &&
         isIdReady &&
         isSupportInfoReady &&
-        isProposedEffecitveDateReady
+        isProposedEffecitveDateReady &&
+        isAdditionalInformationReady
     );
   }, [
     areUploadsReady,
@@ -375,7 +379,8 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
           const confirmMessage: JSX.Element | string = formConfig.confirmSubmit
             .buildMessage
             ? formConfig.confirmSubmit.buildMessage(oneMacFormData.componentId)
-            : formConfig.confirmSubmit.confirmSubmitMessage;
+            : formConfig.confirmSubmit.confirmSubmitMessage ??
+              "Placeholder message";
 
           confirmAction &&
             confirmAction(

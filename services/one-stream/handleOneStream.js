@@ -44,9 +44,12 @@ export const main = async (eventBatch) => {
             packageToBuild.id = newEventData?.parentId?.S;
             break;
           case "OneMAC":
-            // RAIs build parent type, all else build themselves
+            // RAIs and RAI withdraws build parent type, all else build themselves
             if (
-              newEventData.componentType.S === Workflow.ONEMAC_TYPE.WAIVER_RAI
+              newEventData.componentType.S ===
+                Workflow.ONEMAC_TYPE.WAIVER_RAI ||
+              newEventData.componentType.S ===
+                Workflow.ONEMAC_TYPE.RAI_RESPONSE_WITHDRAW
             )
               packageToBuild.type = newEventData?.parentType?.S;
             else packageToBuild.type = newEventData.componentType.S;
