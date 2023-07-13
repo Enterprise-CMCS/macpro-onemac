@@ -518,6 +518,9 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
             ref={uploader}
             requiredUploads={formConfig.requiredAttachments}
             optionalUploads={formConfig.optionalAttachments}
+            numRequired={
+              formConfig.requireUploadOrAdditionalInformation ? 1 : 0
+            }
             readyCallback={setAreUploadsReady}
           ></FileUploader>
           <TextField
