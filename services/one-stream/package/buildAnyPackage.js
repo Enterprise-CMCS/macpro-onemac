@@ -126,7 +126,10 @@ export const buildAnyPackage = async (packageId, config) => {
           additionalInformation: anEvent.additionalInformation,
           currentStatus: anEvent.currentStatus,
         });
-        putParams.Item.currentStatus = Workflow.ONEMAC_STATUS.SUBMITTED;
+        if (anEvent.componentType === `rairesponsewithdraw`)
+          putParams.Item.currentStatus =
+            Workflow.ONEMAC_STATUS.WITHDRAW_RAI_REQUESTED;
+        else putParams.Item.currentStatus = Workflow.ONEMAC_STATUS.SUBMITTED;
 
         return;
       }

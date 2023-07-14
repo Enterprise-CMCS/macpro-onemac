@@ -49,6 +49,7 @@ export const ONEMAC_STATUS = {
   TE_REQUESTED: "TE Requested",
   TERMINATED: "Waiver Terminated",
   WITHDRAW_RAI_ENABLED: "RAI Response Withdraw Enabled",
+  WITHDRAW_RAI_REQUESTED: "Formal RAI Response - Withdrawal Requested",
   UNKNOWN: "-- --",
 };
 
@@ -91,6 +92,7 @@ export const defaultActionsByStatus = {
   [ONEMAC_STATUS.APPROVED]: [],
   [ONEMAC_STATUS.DISAPPROVED]: [],
   [ONEMAC_STATUS.WITHDRAWAL_REQUESTED]: [],
+  [ONEMAC_STATUS.WITHDRAW_RAI_REQUESTED]: [],
   [ONEMAC_STATUS.WITHDRAWN]: [],
   [ONEMAC_STATUS.TERMINATED]: [],
   [ONEMAC_STATUS.UNKNOWN]: [],
