@@ -137,6 +137,7 @@ export const buildAnyPackage = async (packageId, config) => {
           submissionTimestamp: anEvent.submissionTimestamp,
           attachments: anEvent.attachments,
           additionalInformation: anEvent.additionalInformation,
+          currentStatus: anEvent.currentStatus,
         });
         putParams.Item.currentStatus =
           Workflow.ONEMAC_STATUS.WITHDRAWAL_REQUESTED;
@@ -285,7 +286,7 @@ export const buildAnyPackage = async (packageId, config) => {
       (a, b) => b.submissionTimestamp - a.submissionTimestamp
     );
 
-    if (putParams.Item.raiResponses[0].currentStatus === "Submitted") {
+    if (putParams.Item.raiResponses[0]?.currentStatus === "Submitted") {
       putParams.Item.latestRaiResponseTimestamp =
         putParams.Item.raiResponses[0]?.submissionTimestamp;
     }
