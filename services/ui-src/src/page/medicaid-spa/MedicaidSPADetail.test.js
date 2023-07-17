@@ -162,4 +162,22 @@ describe("Detail View Tests", () => {
 
     fireEvent.click(screen.getByText("Respond to RAI"));
   });
+
+  it("allows withdraw RAI action", async () => {
+    let history;
+    history = createMemoryHistory();
+    history.push("/detail/medicaid-spa/MI-12-1133");
+
+    PackageApi.getDetail.mockResolvedValue({
+      ...testDetail,
+      currentStatus: "RAI Response Withdraw Enabled",
+    });
+
+    render(<MedicaidSPADetail />, { wrapper: ContextWrapper });
+
+    // wait for loading screen to disappear so package table displays
+    await waitForElementToBeRemoved(() => screen.getByTestId(LOADER_TEST_ID));
+
+    fireEvent.click(screen.getByText("Withdraw Formal RAI Response"));
+  });
 });

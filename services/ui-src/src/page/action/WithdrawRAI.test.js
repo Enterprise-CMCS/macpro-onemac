@@ -11,6 +11,8 @@ import { stateSubmitterInitialAuthState } from "../../libs/testDataAppContext";
 const testComponent = {
   componentId: "ComponentID",
   componentType: "ComponentType",
+  parentId: "parentId",
+  parentType: "parentType",
 };
 
 let history;
