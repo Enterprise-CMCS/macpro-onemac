@@ -176,7 +176,7 @@ export const buildAnyPackage = async (packageId, config) => {
           putParams.Item.proposedEffectiveDate = DateTime.fromMillis(
             anEvent.STATE_PLAN.PROPOSED_DATE
           ).toFormat("yyyy-LL-dd");
-        else putParams.Item.proposedEffectiveDate = "none";
+        else putParams.Item.proposedEffectiveDate = emptyField;
 
         putParams.Item.subject = anEvent.STATE_PLAN.TITLE_NAME;
         putParams.Item.description = anEvent.STATE_PLAN.SUMMARY_MEMO;
@@ -213,11 +213,11 @@ export const buildAnyPackage = async (packageId, config) => {
         ) {
           approvedEffectiveDate = anEvent.STATE_PLAN.ACTUAL_EFFECTIVE_DATE;
         }
-        if (typeof approvedEffectiveDate === "number") {
-          putParams.Item.approvedEffectiveDate = DateTime.fromMillis(
-            approvedEffectiveDate
-          ).toFormat("yyyy-LL-dd");
-        }
+
+        putParams.Item.approvedEffectiveDate =
+          typeof approvedEffectiveDate === "number"
+            ? DateTime.fromMillis(approvedEffectiveDate).toFormat("yyyy-LL-dd")
+            : emptyField;
 
         if (timestamp < lmTimestamp) return;
 
@@ -244,11 +244,12 @@ export const buildAnyPackage = async (packageId, config) => {
             "onemac status is final:",
             finalDispositionStatuses.includes(oneMacStatus)
           );
-          if (finalDispositionStatuses.includes(oneMacStatus)) {
-            putParams.Item.finalDispositionDate = DateTime.fromMillis(
-              anEvent.STATE_PLAN.STATUS_DATE
-            ).toFormat("yyyy-LL-dd");
-          }
+          putParams.Item.finalDispositionDate =
+            finalDispositionStatuses.includes(oneMacStatus)
+              ? DateTime.fromMillis(anEvent.STATE_PLAN.STATUS_DATE).toFormat(
+                  "yyyy-LL-dd"
+                )
+              : emptyField;
         }
       }
 

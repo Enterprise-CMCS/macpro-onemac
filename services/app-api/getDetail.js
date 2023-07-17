@@ -74,6 +74,12 @@ export const getDetails = async (event) => {
 
     await assignAttachmentUrls(result.Item);
 
+    if (result.Item.waiverAuthority)
+      result.Item.temporaryExtensionType = result.Item.waiverAuthority.slice(
+        0,
+        7
+      );
+
     result.Item.currentStatus = userRoleObj.isCMSUser
       ? cmsStatusUIMap[result.Item.currentStatus]
       : stateStatusUIMap[result.Item.currentStatus];
