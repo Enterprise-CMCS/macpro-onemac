@@ -67,11 +67,13 @@ export const buildAnyPackage = async (packageId, config) => {
         description: emptyField,
         cpocName: emptyField,
         reviewTeam: [],
+        adminChanges: [],
       },
     };
     let currentPackage;
     let showPackageOnDashboard = false;
     let lmTimestamp = 0;
+    let adminChanges = [];
 
     result.Items.forEach((anEvent) => {
       // we ignore all other v's (for now)
@@ -102,6 +104,10 @@ export const buildAnyPackage = async (packageId, config) => {
         if (anEvent?.currentStatus === Workflow.ONEMAC_STATUS.INACTIVATED)
           return;
         showPackageOnDashboard = true;
+
+        // admin changes are consolidated across all OneMAC events
+        if (anEvent?.adminChanges && _.isArray(anEvent.adminChanges))
+          adminChanges = [...anEvent.adminChanges, ...adminChanges];
       }
 
       if (timestamp > lmTimestamp) {
@@ -164,7 +170,7 @@ export const buildAnyPackage = async (packageId, config) => {
           putParams.Item.proposedEffectiveDate = DateTime.fromMillis(
             anEvent.STATE_PLAN.PROPOSED_DATE
           ).toFormat("yyyy-LL-dd");
-        else putParams.Item.proposedEffectiveDate = "none";
+        else putParams.Item.proposedEffectiveDate = emptyField;
 
         putParams.Item.subject = anEvent.STATE_PLAN.TITLE_NAME;
         putParams.Item.description = anEvent.STATE_PLAN.SUMMARY_MEMO;
@@ -201,11 +207,11 @@ export const buildAnyPackage = async (packageId, config) => {
         ) {
           approvedEffectiveDate = anEvent.STATE_PLAN.ACTUAL_EFFECTIVE_DATE;
         }
-        if (typeof approvedEffectiveDate === "number") {
-          putParams.Item.approvedEffectiveDate = DateTime.fromMillis(
-            approvedEffectiveDate
-          ).toFormat("yyyy-LL-dd");
-        }
+
+        putParams.Item.approvedEffectiveDate =
+          typeof approvedEffectiveDate === "number"
+            ? DateTime.fromMillis(approvedEffectiveDate).toFormat("yyyy-LL-dd")
+            : emptyField;
 
         if (timestamp < lmTimestamp) return;
 
@@ -232,11 +238,12 @@ export const buildAnyPackage = async (packageId, config) => {
             "onemac status is final:",
             finalDispositionStatuses.includes(oneMacStatus)
           );
-          if (finalDispositionStatuses.includes(oneMacStatus)) {
-            putParams.Item.finalDispositionDate = DateTime.fromMillis(
-              anEvent.STATE_PLAN.STATUS_DATE
-            ).toFormat("yyyy-LL-dd");
-          }
+          putParams.Item.finalDispositionDate =
+            finalDispositionStatuses.includes(oneMacStatus)
+              ? DateTime.fromMillis(anEvent.STATE_PLAN.STATUS_DATE).toFormat(
+                  "yyyy-LL-dd"
+                )
+              : emptyField;
         }
       }
 
@@ -276,6 +283,15 @@ export const buildAnyPackage = async (packageId, config) => {
     putParams.Item.raiResponses.sort(
       (a, b) => b.submissionTimestamp - a.submissionTimestamp
     );
+
+    adminChanges.sort((a, b) => b.changeTimestamp - a.changeTimestamp);
+    let lastTime = 0;
+    adminChanges.forEach((oneChange) => {
+      if (oneChange.changeTimestamp != lastTime) {
+        lastTime = oneChange.changeTimestamp;
+        putParams.Item.adminChanges.push(oneChange);
+      }
+    });
 
     putParams.Item.latestRaiResponseTimestamp =
       putParams.Item.raiResponses[0]?.submissionTimestamp;
