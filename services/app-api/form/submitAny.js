@@ -25,17 +25,9 @@ import { stateSubmissionReceipt } from "../email/stateSubmissionReceipt";
  *  - save the data
  *  - send emails
  */
-
-export const submitAny = async (event, config) => {
-  let data, doneBy;
+export const submitAnyWithData = async (data, config) => {
+  let doneBy;
   const warningsInCMSNotice = [];
-
-  try {
-    data = JSON.parse(event.body);
-  } catch (error) {
-    console.log("event couldn't parse: ", error);
-    throw error;
-  }
 
   // errors here are application level: returned as codes to front end for handling
   try {
@@ -95,9 +87,10 @@ export const submitAny = async (event, config) => {
 
   try {
     // Add the details from this submission action
-    const rightNowNormalized = Date.now();
-    data.submissionTimestamp = rightNowNormalized;
-    data.eventTimestamp = rightNowNormalized;
+    if (!data.submissionTimestamp) {
+      data.submissionTimestamp = Date.now();
+    }
+    data.eventTimestamp = data.submissionTimestamp;
     data.currentStatus = config.newStatus;
     data.componentType = config.componentType;
 
@@ -144,5 +137,27 @@ export const submitAny = async (event, config) => {
       error
     );
   }
+  console.log("returning success code: ", config.successResponseCode);
   return config.successResponseCode;
+};
+
+/**
+ * Submitting a Form uses the configs from each form type to do the following:
+ *  - parse the event
+ *  - validate the submission data
+ *  - authenticate the user
+ *  - save the data
+ *  - send emails
+ */
+
+export const submitAny = async (event, config) => {
+  let data;
+
+  try {
+    data = JSON.parse(event.body);
+  } catch (error) {
+    console.log("event couldn't parse: ", error);
+    throw error;
+  }
+  return submitAnyWithData(data, config);
 };

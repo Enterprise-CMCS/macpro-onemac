@@ -20,6 +20,7 @@ const SUBMIT_API_CALL = {
   [Workflow.ONEMAC_TYPE.WAIVER_AMENDMENT]: "submitWaiverAmendment",
   [Workflow.ONEMAC_TYPE.WAIVER_AMENDMENT_WITHDRAW]: "withdrawWaiverAmendment",
   [Workflow.ONEMAC_TYPE.WAIVER_RAI]: "submitWaiverRAIResponse",
+  [Workflow.ONEMAC_TYPE.ENABLE_RAI_WITHDRAW]: "enableRaiWithdraw",
 };
 
 /**

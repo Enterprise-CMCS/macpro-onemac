@@ -410,6 +410,17 @@ functions:
           method: post
           cors: true
           authorizer: aws_iam
+  
+  enableRaiWithdraw:
+    handler: form/enableRaiWithdraw.main
+    role: LambdaApiRole
+    timeout: 30
+    events:
+      - http:
+          path: enableRaiWithdraw
+          method: post
+          cors: true
+          authorizer: aws_iam
 
   getDetail:
     handler: getDetail.main

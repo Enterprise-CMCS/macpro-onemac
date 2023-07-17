@@ -10,6 +10,10 @@ import { buildWaiverExtension } from "./package/buildWaiverExtension";
 import { buildWaiverExtension1915b } from "./package/buildWaiverExtension1915b";
 import { buildWaiverExtension1915c } from "./package/buildWaiverExtension1915c";
 
+const buildParentPackageTypes = [
+  Workflow.ONEMAC_TYPE.WAIVER_RAI,
+  Workflow.ONEMAC_TYPE.ENABLE_RAI_WITHDRAW,
+];
 export const main = async (eventBatch) => {
   console.log("One Stream event: ", eventBatch);
 
@@ -44,10 +48,8 @@ export const main = async (eventBatch) => {
             packageToBuild.id = newEventData?.parentId?.S;
             break;
           case "OneMAC":
-            // RAIs build parent type, all else build themselves
-            if (
-              newEventData.componentType.S === Workflow.ONEMAC_TYPE.WAIVER_RAI
-            )
+            console.log("OneMAC event: ", newEventData);
+            if (buildParentPackageTypes.includes(newEventData.componentType.S))
               packageToBuild.type = newEventData?.parentType?.S;
             else packageToBuild.type = newEventData.componentType.S;
             break;

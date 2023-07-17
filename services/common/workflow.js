@@ -19,6 +19,7 @@ export const ONEMAC_TYPE = {
   WAIVER_APP_K: "waiverappk",
   WAIVER_APP_K_RAI: "waiverappkrai",
   WAIVER_APP_K_WITHDRAW: "waiverappkwithdraw",
+  ENABLE_RAI_WITHDRAW: "enableraiwithdraw",
 };
 
 export const ONEMAC_LABEL = {
@@ -47,6 +48,7 @@ export const ONEMAC_STATUS = {
   WITHDRAWAL_REQUESTED: "Withdrawal Requested",
   TE_REQUESTED: "TE Requested",
   TERMINATED: "Waiver Terminated",
+  WITHDRAW_RAI_ENABLED: "RAI Response Withdraw Enabled",
   UNKNOWN: "-- --",
 };
 
@@ -68,6 +70,7 @@ export const PACKAGE_ACTION = {
   WITHDRAW: "Withdraw Package",
   REQUEST_TEMPORARY_EXTENSION: "Request a Temporary Extension",
   ADD_AMENDMENT: "Add Amendment",
+  ENABLE_RAI_WITHDRAWAL: "Enable Formal RAI Response Withdraw",
 };
 
 export const PACKAGE_GROUP = {
@@ -78,7 +81,10 @@ export const PACKAGE_GROUP = {
 export const defaultActionsByStatus = {
   [ONEMAC_STATUS.INACTIVATED]: [],
   [ONEMAC_STATUS.SUBMITTED]: [],
-  [ONEMAC_STATUS.PENDING]: [PACKAGE_ACTION.WITHDRAW],
+  [ONEMAC_STATUS.PENDING]: [
+    PACKAGE_ACTION.WITHDRAW,
+    PACKAGE_ACTION.ENABLE_RAI_WITHDRAWAL,
+  ],
   [ONEMAC_STATUS.PENDING_CONCURRENCE]: [PACKAGE_ACTION.WITHDRAW],
   [ONEMAC_STATUS.PENDING_APPROVAL]: [PACKAGE_ACTION.WITHDRAW],
   [ONEMAC_STATUS.RAI_ISSUED]: [

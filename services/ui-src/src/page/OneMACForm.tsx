@@ -17,6 +17,7 @@ import {
   RESPONSE_CODE,
   ROUTES,
   TYPE_TO_DETAIL_ROUTE,
+  Workflow,
 } from "cmscommonlib";
 
 import { useAppContext } from "../libs/contextLib";
@@ -295,12 +296,23 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
         !componentIdStatusMessages.some((m) => m.statusLevel === "error")
     );
 
-    const isSupportInfoReady: boolean = Boolean(
-      formConfig.componentType.includes("withdraw") &&
-        !formConfig.componentType.includes("chip")
-        ? areUploadsReady || oneMacFormData.additionalInformation
-        : areUploadsReady
-    );
+    let isSupportInfoReady: boolean = false;
+    switch (formConfig.componentType) {
+      case Workflow.ONEMAC_TYPE.MEDICAID_SPA_WITHDRAW:
+      case Workflow.ONEMAC_TYPE.WAIVER_INITIAL_WITHDRAW:
+      case Workflow.ONEMAC_TYPE.WAIVER_AMENDMENT_WITHDRAW:
+      case Workflow.ONEMAC_TYPE.WAIVER_RENEWAL_WITHDRAW:
+      case Workflow.ONEMAC_TYPE.WAIVER_APP_K_WITHDRAW:
+        isSupportInfoReady = Boolean(
+          areUploadsReady || oneMacFormData.additionalInformation
+        );
+        break;
+      case Workflow.ONEMAC_TYPE.ENABLE_RAI_WITHDRAW:
+        isSupportInfoReady = Boolean(oneMacFormData.additionalInformation);
+        break;
+      default:
+        isSupportInfoReady = areUploadsReady;
+    }
 
     setIsSubmissionReady(
       isTitleReady &&
@@ -335,39 +347,41 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
     const componentIdWarningMessageCode = componentIdWarningMessage
       ? componentIdWarningMessage.warningMessageCode
       : "";
+    console.log("in dosubmit");
+    try {
+      console.log("in try");
+      const uploadedList = uploader.current
+        ? await uploader.current.uploadFiles()
+        : undefined;
+      console.log("uploadedList is: ", uploadedList);
+      const returnCode = await PackageApi.submitToAPI(
+        {
+          ...oneMacFormData,
+          transmittalNumberWarningMessage: componentIdWarningMessageCode,
+        },
+        uploadedList,
+        formConfig.componentType
+      );
+      console.log("return code is: ", returnCode);
+      if (returnCode in FORM_SUCCESS_RESPONSE_CODES)
+        throw new Error(returnCode);
 
-    if (uploader.current) {
-      try {
-        const uploadedList = await uploader.current.uploadFiles();
-        const returnCode = await PackageApi.submitToAPI(
-          {
-            ...oneMacFormData,
-            transmittalNumberWarningMessage: componentIdWarningMessageCode,
-          },
-          uploadedList,
-          formConfig.componentType
-        );
-        console.log("return code is: ", returnCode);
-        if (returnCode in FORM_SUCCESS_RESPONSE_CODES)
-          throw new Error(returnCode);
-
-        history.push(formConfig.landingPage, {
-          passCode: returnCode,
-        });
-      } catch (err) {
-        console.log("error is: ", err);
-        setAlertCode((err as Error).message);
-        setIsSubmitting(false);
-        setIsSubmissionReady(false);
-        limitSubmit.current = false;
-      }
+      history.push(formConfig.landingPage, {
+        passCode: returnCode,
+      });
+    } catch (err) {
+      console.log("error is: ", err);
+      setAlertCode((err as Error).message);
+      setIsSubmitting(false);
+      setIsSubmissionReady(false);
+      limitSubmit.current = false;
     }
   }, [formConfig, history, oneMacFormData, componentIdStatusMessages]);
 
   const handleSubmit = useCallback(
     async (event: SyntheticEvent) => {
       event.preventDefault();
-
+      console.log("handleSubmit called");
       if (isSubmissionReady && !limitSubmit.current) {
         if (formConfig.confirmSubmit) {
           const confirmMessage: JSX.Element | string = formConfig.confirmSubmit
@@ -384,8 +398,11 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
               doSubmit
             );
         } else {
+          console.log("calling doSubmit");
           doSubmit();
         }
+      } else {
+        console.log("handleSubmit not ready");
       }
     },
     [
@@ -508,17 +525,22 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
               {formConfig?.parentTypeNice}
             </Review>
           )}
-          <h3>{formConfig?.attachmentsTitle ?? "Attachments"}</h3>
-          {formConfig.attachmentIntroJSX}
-          <FileUploader
-            ref={uploader}
-            requiredUploads={formConfig.requiredAttachments}
-            optionalUploads={formConfig.optionalAttachments}
-            readyCallback={setAreUploadsReady}
-          ></FileUploader>
+          {(formConfig?.requiredAttachments.length > 0 ||
+            formConfig.optionalAttachments.length > 0) && (
+            <>
+              <h3>{formConfig?.attachmentsTitle ?? "Attachments"}</h3>
+              {formConfig.attachmentIntroJSX}
+              <FileUploader
+                ref={uploader}
+                requiredUploads={formConfig.requiredAttachments}
+                optionalUploads={formConfig.optionalAttachments}
+                readyCallback={setAreUploadsReady}
+              ></FileUploader>
+            </>
+          )}
           <TextField
             name="additionalInformation"
-            label="Additional Information"
+            label={formConfig.addlInfoTitle}
             labelId="additional-information-label"
             id="additional-information"
             hint={
@@ -526,7 +548,7 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
               "Add anything else that you would like to share with CMS."
             }
             disabled={isSubmitting}
-            fieldClassName="summary-field"
+            fieldClassName="summary-field required"
             multiline
             onChange={(e) => {
               handleInputChange(e);
@@ -547,15 +569,9 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
               4000 - oneMacFormData.additionalInformation.length
             } characters remaining`}
           </span>
-          <p id="form-submit-instructions">
-            <i>
-              Once you submit this form, a confirmation email is sent to you and
-              to CMS. CMS will use this content to review your package, and you
-              will not be able to edit this form. If CMS needs any additional
-              information, they will follow up by email. If you leave this page,
-              you will lose your progress on this form.
-            </i>
-          </p>
+
+          {formConfig.submitInstructionsJSX ?? ""}
+
           <div className="form-buttons">
             <Button
               id="form-submission-button"

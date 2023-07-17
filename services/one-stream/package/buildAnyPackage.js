@@ -105,9 +105,10 @@ export const buildAnyPackage = async (packageId, config) => {
           return;
         showPackageOnDashboard = true;
 
-        // admin changes are consolidated across all OneMAC events
-        if (anEvent?.adminChanges && _.isArray(anEvent.adminChanges))
-          adminChanges = [...anEvent.adminChanges, ...adminChanges];
+        if (anEvent?.componentType)
+          if (anEvent?.adminChanges && _.isArray(anEvent.adminChanges))
+            // admin changes are consolidated across all OneMAC events
+            adminChanges = [...anEvent.adminChanges, ...adminChanges];
       }
 
       if (timestamp > lmTimestamp) {
@@ -140,6 +141,15 @@ export const buildAnyPackage = async (packageId, config) => {
           Workflow.ONEMAC_STATUS.WITHDRAWAL_REQUESTED;
 
         return;
+      }
+
+      // set latest rai response to pending if withdraw is enabled
+      if (anEvent.componentType === Workflow.ONEMAC_TYPE.ENABLE_RAI_WITHDRAW) {
+        putParams.Item.raiResponses.sort(
+          (a, b) => b.submissionTimestamp - a.submissionTimestamp
+        );
+        putParams.Item.raiResponses[0].currentStatus =
+          Workflow.ONEMAC_STATUS.PENDING;
       }
 
       // SEATool "events" are actually a complete representation of the package state,
