@@ -2511,6 +2511,10 @@ ul.choice-list {
 
 .filter-chip-close {
   background: none;
+  img {
+    width: 1rem;
+    margin-bottom: 2px;
+  }
 }
 
 .no-results {

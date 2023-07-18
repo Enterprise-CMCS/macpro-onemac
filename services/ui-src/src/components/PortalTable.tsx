@@ -24,6 +24,7 @@ import {
   faWindowClose,
 } from "@fortawesome/free-solid-svg-icons";
 import { constant } from "lodash";
+import closeIcon from "../assets/images/close.png";
 
 import {
   SearchAndFilter,
@@ -78,30 +79,25 @@ const FilterChipTray = ({ filters }: { filters: Filters<any> }) => {
       [COLUMN_ID.SUBMISSION_TIMESTAMP]: "Initial Submission",
       [COLUMN_ID.LATEST_RAI_TIMESTAMP]: "Formal RAI Response",
     };
+    const Template = ({ label, value }: { label: string; value: any }) => (
+      <div className="filter-chip-container">
+        <span className="filter-chip-text ds-u-font-size--sm">
+          {`${label}: ${value}`}
+        </span>
+        <button className="filter-chip-close">
+          <img alt="close button" src={closeIcon} />
+        </button>
+      </div>
+    );
     return (
       <>
+        {/*{value.map((v) => (<Template label={columnNames[id]} value={v} />))}*/}
         {columnNames[id] === "State"
-          ? value.map((v) => (
-              <div className="filter-chip-container">
-                <span className="filter-chip-text ds-u-font-size--sm">
-                  {`${columnNames[id]}: ${v}`}
-                </span>
-                <button className="filter-chip-close">
-                  <FontAwesomeIcon icon={faWindowClose} size={"sm"} />
-                </button>
-              </div>
-            ))
+          ? value.map((v) => <Template label={columnNames[id]} value={v} />)
           : defaultFilterState[id]
               .filter((f) => !value.includes(f))
               .map((v) => (
-                <div className="filter-chip-container">
-                  <span className="filter-chip-text ds-u-font-size--sm">
-                    {`Hidden ${columnNames[id]}: ${v}`}
-                  </span>
-                  <button className="filter-chip-close">
-                    <FontAwesomeIcon icon={faWindowClose} size={"sm"} />
-                  </button>
-                </div>
+                <Template label={`Hidden ${columnNames[id]}`} value={v} />
               ))}
       </>
     );
