@@ -14,6 +14,7 @@ import {
   useSortBy,
   useTable,
   Filters,
+  IdType,
 } from "react-table";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -21,7 +22,6 @@ import {
   faSort,
   faSortDown,
   faSortUp,
-  faWindowClose,
 } from "@fortawesome/free-solid-svg-icons";
 import { constant } from "lodash";
 import closeIcon from "../assets/images/close.png";
@@ -54,11 +54,16 @@ const defaultColumn = {
   disableGlobalFilter: true,
 };
 
-const FilterChipTray = ({ filters }: { filters: Filters<any> }) => {
+const FilterChipTray = ({
+  filters,
+  setFilter,
+}: {
+  filters: Filters<any>;
+  setFilter: (columnId: IdType<any>, updater: any) => void;
+}) => {
   const Chip = ({ id, value }: { id: string; value: any[] }) => {
     if (!value || !value.length) return null;
     const defaultFilterState: { [index: string]: any[] } = {
-      [COLUMN_ID.TERRITORY]: [],
       [COLUMN_ID.TYPE]: ["Medicaid SPA", "CHIP SPA"],
       [COLUMN_ID.STATUS]: [
         "Disapproved",
@@ -69,8 +74,6 @@ const FilterChipTray = ({ filters }: { filters: Filters<any> }) => {
         "Withdrawal Requested",
         "Approved",
       ],
-      [COLUMN_ID.SUBMISSION_TIMESTAMP]: [],
-      [COLUMN_ID.LATEST_RAI_TIMESTAMP]: [],
     };
     const columnNames: { [index: string]: string } = {
       [COLUMN_ID.TERRITORY]: "State",
@@ -79,25 +82,55 @@ const FilterChipTray = ({ filters }: { filters: Filters<any> }) => {
       [COLUMN_ID.SUBMISSION_TIMESTAMP]: "Initial Submission",
       [COLUMN_ID.LATEST_RAI_TIMESTAMP]: "Formal RAI Response",
     };
-    const Template = ({ label, value }: { label: string; value: any }) => (
+    const stateAndTimeFilters = [
+      columnNames[COLUMN_ID.TERRITORY],
+      columnNames[COLUMN_ID.SUBMISSION_TIMESTAMP],
+      columnNames[COLUMN_ID.LATEST_RAI_TIMESTAMP],
+    ];
+    const resetFilter = (value: any) => {
+      setFilter(id, value);
+    };
+    const clearFilter = () => {
+      setFilter(id, []);
+    };
+    const Template = ({
+      label,
+      value,
+      onClick,
+    }: {
+      label: string;
+      value: any;
+      onClick: (v: any) => void;
+    }) => (
       <div className="filter-chip-container">
         <span className="filter-chip-text ds-u-font-size--sm">
           {`${label}: ${value}`}
         </span>
-        <button className="filter-chip-close">
+        <button className="filter-chip-close" onClick={onClick}>
           <img alt="close button" src={closeIcon} />
         </button>
       </div>
     );
     return (
       <>
-        {/*{value.map((v) => (<Template label={columnNames[id]} value={v} />))}*/}
-        {columnNames[id] === "State"
-          ? value.map((v) => <Template label={columnNames[id]} value={v} />)
+        {stateAndTimeFilters.includes(columnNames[id])
+          ? value.map((v, idx) => (
+              <Template
+                key={`${columnNames[id]}-${idx}`}
+                label={columnNames[id]}
+                value={v}
+                onClick={() => clearFilter()}
+              />
+            ))
           : defaultFilterState[id]
               .filter((f) => !value.includes(f))
-              .map((v) => (
-                <Template label={`Hidden ${columnNames[id]}`} value={v} />
+              .map((v, idx) => (
+                <Template
+                  key={`${columnNames[id]}-${idx}`}
+                  label={`Hidden ${columnNames[id]}`}
+                  value={v}
+                  onClick={() => resetFilter(v)}
+                />
               ))}
       </>
     );
@@ -105,7 +138,11 @@ const FilterChipTray = ({ filters }: { filters: Filters<any> }) => {
   return (
     <div className="filter-chip-tray">
       {filters.map((filter) => (
-        <Chip id={filter.id} value={filter.value} />
+        <Chip
+          key={`${filter.id}-${filter.value}`}
+          id={filter.id}
+          value={filter.value}
+        />
       ))}
     </div>
   );
@@ -129,6 +166,7 @@ export default function PortalTable<V extends {} = {}>({
     rows,
     state,
     setAllFilters,
+    setFilter,
     setGlobalFilter,
     prepareRow,
   } = useTable<V>(
@@ -189,7 +227,7 @@ export default function PortalTable<V extends {} = {}>({
             setAllFilters={setAllFilters}
           />
           <div className="filter-chip-tray-container">
-            <FilterChipTray filters={filters} />
+            <FilterChipTray filters={filters} setFilter={setFilter} />
           </div>
         </>
       )}
