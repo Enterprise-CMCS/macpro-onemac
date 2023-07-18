@@ -56,30 +56,54 @@ const defaultColumn = {
 
 const FilterChipTray = ({ filters }: { filters: Filters<any> }) => {
   const Chip = ({ id, value }: { id: string; value: any[] }) => {
+    if (!value || !value.length) return null;
+    const defaultFilterState: { [index: string]: any[] } = {
+      [COLUMN_ID.TERRITORY]: [],
+      [COLUMN_ID.TYPE]: ["Medicaid SPA", "CHIP SPA"],
+      [COLUMN_ID.STATUS]: [
+        "Disapproved",
+        "Package Withdrawn",
+        "RAI Issued",
+        "Submitted",
+        "Under Review",
+        "Withdrawal Requested",
+        "Approved",
+      ],
+      [COLUMN_ID.SUBMISSION_TIMESTAMP]: [],
+      [COLUMN_ID.LATEST_RAI_TIMESTAMP]: [],
+    };
     const columnNames: { [index: string]: string } = {
-      [COLUMN_ID.ID]: "ID",
       [COLUMN_ID.TERRITORY]: "State",
       [COLUMN_ID.TYPE]: "Type",
       [COLUMN_ID.STATUS]: "Status",
       [COLUMN_ID.SUBMISSION_TIMESTAMP]: "Initial Submission",
       [COLUMN_ID.LATEST_RAI_TIMESTAMP]: "Formal RAI Response",
-      [COLUMN_ID.CPOC_NAME]: "CPOC Name",
-      [COLUMN_ID.SUBMITTER]: "Submitted By",
-      [COLUMN_ID.ACTIONS]: "packageActions",
     };
-    if (!value || !value.length) return null;
     return (
       <>
-        {value.map((v) => (
-          <div className="filter-chip-container">
-            <span className="filter-chip-text ds-u-font-size--sm">
-              {`${columnNames[id]}: ${v}`}
-            </span>
-            <button className="filter-chip-close">
-              <FontAwesomeIcon icon={faWindowClose} size={"sm"} />
-            </button>
-          </div>
-        ))}
+        {columnNames[id] === "State"
+          ? value.map((v) => (
+              <div className="filter-chip-container">
+                <span className="filter-chip-text ds-u-font-size--sm">
+                  {`${columnNames[id]}: ${v}`}
+                </span>
+                <button className="filter-chip-close">
+                  <FontAwesomeIcon icon={faWindowClose} size={"sm"} />
+                </button>
+              </div>
+            ))
+          : defaultFilterState[id]
+              .filter((f) => !value.includes(f))
+              .map((v) => (
+                <div className="filter-chip-container">
+                  <span className="filter-chip-text ds-u-font-size--sm">
+                    {`Hidden ${columnNames[id]}: ${v}`}
+                  </span>
+                  <button className="filter-chip-close">
+                    <FontAwesomeIcon icon={faWindowClose} size={"sm"} />
+                  </button>
+                </div>
+              ))}
       </>
     );
   };
