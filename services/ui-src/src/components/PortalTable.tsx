@@ -56,9 +56,7 @@ const defaultColumn = {
 
 const FilterChipTray = ({ filters }: { filters: Filters<any> }) => {
   const Chip = ({ id, value }: { id: string; value: any[] }) => {
-    // This is used by FilterChipTray to map a columns ID, provided by the Filter
-    // to a user-friendly name to render.
-    const MAPPED_COLUMN_ID_NAME: { [index: string]: string } = {
+    const columnNames: { [index: string]: string } = {
       [COLUMN_ID.ID]: "ID",
       [COLUMN_ID.TERRITORY]: "State",
       [COLUMN_ID.TYPE]: "Type",
@@ -74,10 +72,9 @@ const FilterChipTray = ({ filters }: { filters: Filters<any> }) => {
       <>
         {value.map((v) => (
           <div className="filter-chip-container">
-            {/* (COLUMN_ID as {[index: string]: string})[id] is a type cast. We export
-         the object from a JS file, and have to cast it here so we can use [id] as
-         an index accessor and map the */}
-            <span className="filter-chip-text ds-u-font-size--sm">{`${MAPPED_COLUMN_ID_NAME[id]}: ${v}`}</span>
+            <span className="filter-chip-text ds-u-font-size--sm">
+              {`${columnNames[id]}: ${v}`}
+            </span>
             <button className="filter-chip-close">
               <FontAwesomeIcon icon={faWindowClose} size={"sm"} />
             </button>
