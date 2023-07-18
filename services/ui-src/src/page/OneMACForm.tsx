@@ -67,7 +67,7 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
   //Reference to the File Uploader.
   const uploader = useRef<FileUploader>(null);
   // True when the required attachments have been selected.
-  const [areUploadsReady, setAreUploadsReady] = useState(false);
+  const [areUploadsReady, setAreUploadsReady] = useState(true);
   const [isSubmissionReady, setIsSubmissionReady] = useState(false);
   // True if we are currently submitting the form
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -85,6 +85,9 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
 
   const presetComponentId = location.state?.componentId ?? "";
   const presetParentId = location.state?.parentId ?? undefined;
+  const presetParentType = location.state?.parentType ?? "";
+  const presetParentTypeNice =
+    formConfig.parentTypeNice ?? Workflow.ONEMAC_LABEL[presetParentType];
 
   //if location contains parentType and formSource was detail page then override landingpage to type specific detail page
   formConfig.landingPage = getLandingPage(location, formConfig);
@@ -296,23 +299,15 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
         !componentIdStatusMessages.some((m) => m.statusLevel === "error")
     );
 
-    let isSupportInfoReady: boolean = false;
-    switch (formConfig.componentType) {
-      case Workflow.ONEMAC_TYPE.MEDICAID_SPA_WITHDRAW:
-      case Workflow.ONEMAC_TYPE.WAIVER_INITIAL_WITHDRAW:
-      case Workflow.ONEMAC_TYPE.WAIVER_AMENDMENT_WITHDRAW:
-      case Workflow.ONEMAC_TYPE.WAIVER_RENEWAL_WITHDRAW:
-      case Workflow.ONEMAC_TYPE.WAIVER_APP_K_WITHDRAW:
-        isSupportInfoReady = Boolean(
-          areUploadsReady || oneMacFormData.additionalInformation
-        );
-        break;
-      case Workflow.ONEMAC_TYPE.ENABLE_RAI_WITHDRAW:
-        isSupportInfoReady = Boolean(oneMacFormData.additionalInformation);
-        break;
-      default:
-        isSupportInfoReady = areUploadsReady;
-    }
+    const isSupportInfoReady: boolean = Boolean(
+      formConfig.requireUploadOrAdditionalInformation
+        ? areUploadsReady || oneMacFormData.additionalInformation
+        : areUploadsReady
+    );
+
+    const isAdditionalInformationReady: boolean = Boolean(
+      formConfig.addlInfoRequired ? oneMacFormData.additionalInformation : true
+    );
 
     setIsSubmissionReady(
       isTitleReady &&
@@ -320,7 +315,8 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
         isParentIdReady &&
         isIdReady &&
         isSupportInfoReady &&
-        isProposedEffecitveDateReady
+        isProposedEffecitveDateReady &&
+        isAdditionalInformationReady
     );
   }, [
     areUploadsReady,
@@ -387,7 +383,8 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
           const confirmMessage: JSX.Element | string = formConfig.confirmSubmit
             .buildMessage
             ? formConfig.confirmSubmit.buildMessage(oneMacFormData.componentId)
-            : formConfig.confirmSubmit.confirmSubmitMessage;
+            : formConfig.confirmSubmit.confirmSubmitMessage ??
+              "Placeholder message";
 
           confirmAction &&
             confirmAction(
@@ -520,9 +517,9 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
               />
             </>
           )}
-          {formConfig?.parentTypeNice && (
+          {presetParentTypeNice && (
             <Review key="0" heading="Type">
-              {formConfig?.parentTypeNice}
+              {presetParentTypeNice}
             </Review>
           )}
           {(formConfig?.requiredAttachments.length > 0 ||
@@ -534,12 +531,18 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
                 ref={uploader}
                 requiredUploads={formConfig.requiredAttachments}
                 optionalUploads={formConfig.optionalAttachments}
+                numRequired={
+                  formConfig.requireUploadOrAdditionalInformation ? 1 : 0
+                }
                 readyCallback={setAreUploadsReady}
               ></FileUploader>
             </>
           )}
           <TextField
             name="additionalInformation"
+            labelClassName={
+              formConfig.addlInfoRequired ? "addl-info-required" : ""
+            }
             label={formConfig.addlInfoTitle}
             labelId="additional-information-label"
             id="additional-information"

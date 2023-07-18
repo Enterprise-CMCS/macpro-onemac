@@ -115,27 +115,33 @@ export const buildAnyPackage = async (packageId, config) => {
         lmTimestamp = timestamp;
       }
 
-      // include ALL rai events in package details
+      // collect ALL rai events in one array (parsed later)
       if (
         anEvent.componentType === `${config.componentType}rai` ||
-        anEvent.componentType === `waiverrai`
+        anEvent.componentType === `waiverrai` ||
+        anEvent.componentType === `rairesponsewithdraw`
       ) {
         putParams.Item.raiResponses.push({
           submissionTimestamp: anEvent.submissionTimestamp,
           attachments: anEvent.attachments,
           additionalInformation: anEvent.additionalInformation,
+          currentStatus: anEvent.currentStatus,
         });
-        putParams.Item.currentStatus = Workflow.ONEMAC_STATUS.SUBMITTED;
+        if (anEvent.componentType === `rairesponsewithdraw`)
+          putParams.Item.currentStatus =
+            Workflow.ONEMAC_STATUS.WITHDRAW_RAI_REQUESTED;
+        else putParams.Item.currentStatus = Workflow.ONEMAC_STATUS.SUBMITTED;
 
         return;
       }
 
-      // include ALL withdraw request events in package details
+      // include ALL package withdraw request events in package details
       if (anEvent.componentType === `${config.componentType}withdraw`) {
         putParams.Item.withdrawalRequests.push({
           submissionTimestamp: anEvent.submissionTimestamp,
           attachments: anEvent.attachments,
           additionalInformation: anEvent.additionalInformation,
+          currentStatus: anEvent.currentStatus,
         });
         putParams.Item.currentStatus =
           Workflow.ONEMAC_STATUS.WITHDRAWAL_REQUESTED;
@@ -180,7 +186,7 @@ export const buildAnyPackage = async (packageId, config) => {
           putParams.Item.proposedEffectiveDate = DateTime.fromMillis(
             anEvent.STATE_PLAN.PROPOSED_DATE
           ).toFormat("yyyy-LL-dd");
-        else putParams.Item.proposedEffectiveDate = "none";
+        else putParams.Item.proposedEffectiveDate = emptyField;
 
         putParams.Item.subject = anEvent.STATE_PLAN.TITLE_NAME;
         putParams.Item.description = anEvent.STATE_PLAN.SUMMARY_MEMO;
@@ -217,11 +223,11 @@ export const buildAnyPackage = async (packageId, config) => {
         ) {
           approvedEffectiveDate = anEvent.STATE_PLAN.ACTUAL_EFFECTIVE_DATE;
         }
-        if (typeof approvedEffectiveDate === "number") {
-          putParams.Item.approvedEffectiveDate = DateTime.fromMillis(
-            approvedEffectiveDate
-          ).toFormat("yyyy-LL-dd");
-        }
+
+        putParams.Item.approvedEffectiveDate =
+          typeof approvedEffectiveDate === "number"
+            ? DateTime.fromMillis(approvedEffectiveDate).toFormat("yyyy-LL-dd")
+            : emptyField;
 
         if (timestamp < lmTimestamp) return;
 
@@ -248,11 +254,12 @@ export const buildAnyPackage = async (packageId, config) => {
             "onemac status is final:",
             finalDispositionStatuses.includes(oneMacStatus)
           );
-          if (finalDispositionStatuses.includes(oneMacStatus)) {
-            putParams.Item.finalDispositionDate = DateTime.fromMillis(
-              anEvent.STATE_PLAN.STATUS_DATE
-            ).toFormat("yyyy-LL-dd");
-          }
+          putParams.Item.finalDispositionDate =
+            finalDispositionStatuses.includes(oneMacStatus)
+              ? DateTime.fromMillis(anEvent.STATE_PLAN.STATUS_DATE).toFormat(
+                  "yyyy-LL-dd"
+                )
+              : emptyField;
         }
       }
 
@@ -293,6 +300,11 @@ export const buildAnyPackage = async (packageId, config) => {
       (a, b) => b.submissionTimestamp - a.submissionTimestamp
     );
 
+    if (putParams.Item.raiResponses[0]?.currentStatus === "Submitted") {
+      putParams.Item.latestRaiResponseTimestamp =
+        putParams.Item.raiResponses[0]?.submissionTimestamp;
+    }
+
     adminChanges.sort((a, b) => b.changeTimestamp - a.changeTimestamp);
     let lastTime = 0;
     adminChanges.forEach((oneChange) => {
@@ -301,9 +313,6 @@ export const buildAnyPackage = async (packageId, config) => {
         putParams.Item.adminChanges.push(oneChange);
       }
     });
-
-    putParams.Item.latestRaiResponseTimestamp =
-      putParams.Item.raiResponses[0]?.submissionTimestamp;
 
     console.log("%s currentPackage: ", packageId, currentPackage);
     console.log("%s newItem: ", packageId, putParams.Item);

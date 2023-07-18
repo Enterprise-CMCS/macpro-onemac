@@ -59,6 +59,7 @@ import WaiverRenewalB4Form from "./page/waiver-renewal/WaiverRenewalB4Form";
 import WaiverRenewalBForm from "./page/waiver-renewal/WaiverRenewalBForm";
 import WaiverAmendmentB4Form from "./page/waiver-amendment/WaiverAmendmentB4Form";
 import WaiverAmendmentBForm from "./page/waiver-amendment/WaiverAmendmentBForm";
+import WithdrawRAIForm from "./page/withdraw-rai/WithdrawRAIForm";
 import { clearTableStateStorageKeys } from "./utils/StorageKeys";
 import EnableRaiWithdrawForm from "./page/enable-rai-withdraw/EnableRaiWithdrawForm";
 
@@ -261,6 +262,10 @@ const ROUTE_LIST: RouteSpec[] = [
     {
       path: ONEMAC_ROUTES.ENABLE_RAI_WITHDRAW,
       component: EnableRaiWithdrawForm,
+    },
+    {
+      path: ONEMAC_ROUTES.WITHDRAW_RAI,
+      component: WithdrawRAIForm,
     },
   ].map(({ path, ...rest }) => ({
     path,

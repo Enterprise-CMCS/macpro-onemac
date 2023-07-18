@@ -19,6 +19,7 @@ export const enableRaiWithdrawFormInfo: OneMACFormConfig = {
   ),
   addlInfoTitle: "Change Reason",
   addlInfoText: "Please be descriptive about why this action is being enabled.",
+  addlInfoRequired: true,
   landingPage: ONEMAC_ROUTES.PACKAGE_LIST,
   submitInstructionsJSX: <></>,
 };

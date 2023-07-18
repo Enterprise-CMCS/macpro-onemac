@@ -13,6 +13,7 @@ import { buildWaiverExtension1915c } from "./package/buildWaiverExtension1915c";
 const buildParentPackageTypes = [
   Workflow.ONEMAC_TYPE.WAIVER_RAI,
   Workflow.ONEMAC_TYPE.ENABLE_RAI_WITHDRAW,
+  Workflow.ONEMAC_TYPE.RAI_RESPONSE_WITHDRAW,
 ];
 export const main = async (eventBatch) => {
   console.log("One Stream event: ", eventBatch);

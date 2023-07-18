@@ -149,3 +149,4 @@ export { chipSPA } from "./type/chipSPA.js";
 export { chipSPARAIResponse } from "./type/chipSPARAIResponse.js";
 export { chipSPAWithdraw } from "./type/chipSPAWithdraw.js";
 export { enableRaiWithdraw } from "./type/enableRaiWithdraw.js";
+export { withdrawRAIResponse } from "./type/withdrawRAIResponse.js";

@@ -321,7 +321,10 @@ export const DetailSection = ({
                     buttonClassName="accordion-button"
                     contentClassName="accordion-content"
                     heading={
-                      "Submitted on " +
+                      (raiResponse.currentStatus === "Submitted"
+                        ? "Submitted"
+                        : "Withdrawn") +
+                      " on " +
                       formatDate(raiResponse.submissionTimestamp)
                     }
                     headingLevel="6"
@@ -329,12 +332,14 @@ export const DetailSection = ({
                     key={raiResponse.componentType + index}
                     defaultOpen={index === 0}
                   >
-                    <FileList
-                      heading={"RAI Response Documentation"}
-                      infoText={downloadInfoText}
-                      uploadList={raiResponse.attachments}
-                      zipId={raiResponse.componentType + index}
-                    />
+                    {raiResponse.attachments && (
+                      <FileList
+                        heading={"RAI Response Documentation"}
+                        infoText={downloadInfoText}
+                        uploadList={raiResponse.attachments}
+                        zipId={raiResponse.componentType + index}
+                      />
+                    )}
                     <AdditionalInfoSection
                       additionalInfo={raiResponse.additionalInformation}
                       id={"addl-info-rai-" + index}
