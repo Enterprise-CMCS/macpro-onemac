@@ -33,7 +33,6 @@ import {
   faSearch,
   faTimes,
   faChevronDown,
-  faWindowClose,
 } from "@fortawesome/free-solid-svg-icons";
 import { AccordionItem, Button, Choice } from "@cmsgov/design-system";
 

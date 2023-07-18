@@ -14,7 +14,6 @@ import {
   useSortBy,
   useTable,
   Filters,
-  FilterValue,
 } from "react-table";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
