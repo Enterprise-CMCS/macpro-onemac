@@ -42,8 +42,20 @@ import {
 import { portalTableExportToCSV } from "../utils/portalTableExportToCSV";
 import { FORM_SOURCE } from "../domain-types";
 
-const defaultStateHiddenCols = ["territory", "cpocName"];
-const defaultCMSHiddenCols = ["submitter", "cpocName"];
+export const COLUMN_ID = {
+  ID: "componentId",
+  TERRITORY: "territory",
+  TYPE: "componentType",
+  STATUS: "currentStatus",
+  SUBMISSION_TIMESTAMP: "submissionTimestamp",
+  LATEST_RAI_TIMESTAMP: "latestRaiResponseTimestamp",
+  CPOC_NAME: "cpocName",
+  SUBMITTER: "submitter",
+  ACTIONS: "packageActions",
+};
+
+const defaultStateHiddenCols = [COLUMN_ID.TERRITORY, COLUMN_ID.CPOC_NAME];
+const defaultCMSHiddenCols = [COLUMN_ID.SUBMITTER, COLUMN_ID.CPOC_NAME];
 
 const DEFAULT_COLUMNS = {
   [USER_ROLE.STATE_SUBMITTER]: defaultStateHiddenCols,
@@ -188,7 +200,7 @@ const PackageList = () => {
         {
           Header:
             tab === Workflow.PACKAGE_GROUP.SPA ? "SPA ID" : "Waiver Number",
-          accessor: "componentId",
+          accessor: COLUMN_ID.ID,
           disableGlobalFilter: false,
           disableSortBy: true,
           Cell: renderId,
@@ -196,7 +208,7 @@ const PackageList = () => {
         {
           Header: "State",
           accessor: getState,
-          id: "territory",
+          id: COLUMN_ID.TERRITORY,
           disableFilters: false,
           filter: "includesValue",
           Filter: CustomFilterUi.TerritorySelect,
@@ -204,7 +216,7 @@ const PackageList = () => {
         {
           Header: "Type",
           accessor: getType,
-          id: "componentType",
+          id: COLUMN_ID.TYPE,
           Cell: renderType,
           disableFilters: false,
           filter: CustomFilterTypes.MultiCheckbox,
@@ -220,7 +232,7 @@ const PackageList = () => {
         },
         {
           Header: "Initial Submission",
-          accessor: "submissionTimestamp",
+          accessor: COLUMN_ID.SUBMISSION_TIMESTAMP,
           Cell: renderDate,
           disableFilters: false,
           filter: CustomFilterTypes.DateRange,
@@ -229,7 +241,7 @@ const PackageList = () => {
         userRoleObj.isCMSUser
           ? {
               Header: "Formal RAI Received",
-              accessor: "latestRaiResponseTimestamp",
+              accessor: COLUMN_ID.LATEST_RAI_TIMESTAMP,
               Cell: renderDate,
               disableFilters: false,
               filter: CustomFilterTypes.DateRange,
@@ -237,7 +249,7 @@ const PackageList = () => {
             }
           : {
               Header: "Formal RAI Response",
-              accessor: "latestRaiResponseTimestamp",
+              accessor: COLUMN_ID.LATEST_RAI_TIMESTAMP,
               Cell: renderDate,
               disableFilters: false,
               filter: CustomFilterTypes.DateRange,
@@ -246,22 +258,22 @@ const PackageList = () => {
 
         {
           Header: "CPOC Name",
-          accessor: "cpocName",
-          id: "cpocName",
+          accessor: COLUMN_ID.CPOC_NAME,
+          id: COLUMN_ID.CPOC_NAME,
           disableGlobalFilter: false,
         },
         {
           Header: "Submitted By",
           accessor: "submitterName",
           disableGlobalFilter: false,
-          id: "submitter",
+          id: COLUMN_ID.SUBMITTER,
           Cell: renderName,
         },
         userRoleObj.canAccessForms && {
           Header: "Actions",
           accessor: "actions",
           disableSortBy: true,
-          id: "packageActions",
+          id: COLUMN_ID.ACTIONS,
           Cell: renderActions,
         },
       ].filter(Boolean),

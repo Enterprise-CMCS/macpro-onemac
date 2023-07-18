@@ -523,26 +523,6 @@ function FilterPane<V extends {}>({
   );
 }
 
-const FilterChipTray = () => {
-  const Chip = () => {
-    return (
-      <div className="filter-chip-container">
-        <span className="filter-chip-text">Filter Title</span>
-        <button className="filter-chip-close">
-          <FontAwesomeIcon icon={faWindowClose} size={"sm"} />
-        </button>
-      </div>
-    );
-  };
-  return (
-    <div className="filter-chip-tray">
-      <Chip />
-      <Chip />
-      <Chip />
-    </div>
-  );
-};
-
 export type SearchFilterProps<V extends {}> = {
   internalName: string;
   onSearch: (keyword: string) => void;
@@ -620,9 +600,6 @@ export function SearchAndFilter<V extends {} = {}>({
             />
           </div>
         </div>
-      </div>
-      <div className="filter-chip-tray-container">
-        <FilterChipTray />
       </div>
     </>
   );

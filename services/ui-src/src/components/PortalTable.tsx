@@ -13,6 +13,8 @@ import {
   useGlobalFilter,
   useSortBy,
   useTable,
+  Filters,
+  FilterValue,
 } from "react-table";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -20,6 +22,7 @@ import {
   faSort,
   faSortDown,
   faSortUp,
+  faWindowClose,
 } from "@fortawesome/free-solid-svg-icons";
 import { constant } from "lodash";
 
@@ -33,6 +36,7 @@ import {
   LOCAL_STORAGE_TABLE_FILTERS_SPA,
   LOCAL_STORAGE_TABLE_FILTERS_WAIVER,
 } from "../utils/StorageKeys";
+import { COLUMN_ID } from "../containers/PackageList";
 export { CustomFilterTypes, CustomFilterUi } from "./SearchAndFilter";
 
 export type TableProps<V extends {}> = {
@@ -48,6 +52,42 @@ const defaultColumn = {
   Filter: constant(null),
   disableFilters: true,
   disableGlobalFilter: true,
+};
+
+const MAPPED_COLUMN_ID_NAME: { [index: string]: string } = {
+  [COLUMN_ID.ID]: "ID",
+  [COLUMN_ID.TERRITORY]: "State(s)",
+  [COLUMN_ID.TYPE]: "Type",
+  [COLUMN_ID.STATUS]: "Status",
+  [COLUMN_ID.SUBMISSION_TIMESTAMP]: "Initial Submission",
+  [COLUMN_ID.LATEST_RAI_TIMESTAMP]: "Formal RAI Response",
+  [COLUMN_ID.CPOC_NAME]: "CPOC Name",
+  [COLUMN_ID.SUBMITTER]: "Submitted By",
+  [COLUMN_ID.ACTIONS]: "packageActions",
+};
+
+const FilterChipTray = ({ filters }: { filters: Filters<any> }) => {
+  const Chip = ({ id, value }: { id: string; value: any }) => {
+    if (!value || !value.length) return null;
+    return (
+      <div className="filter-chip-container">
+        {/* (COLUMN_ID as {[index: string]: string})[id] is a type cast. We export
+         the object from a JS file, and have to cast it here so we can use [id] as
+         an index accessor and map the */}
+        <span className="filter-chip-text">{`${MAPPED_COLUMN_ID_NAME[id]}: ${value}`}</span>
+        <button className="filter-chip-close">
+          <FontAwesomeIcon icon={faWindowClose} size={"sm"} />
+        </button>
+      </div>
+    );
+  };
+  return (
+    <div className="filter-chip-tray">
+      {filters.map((filter) => (
+        <Chip id={filter.id} value={filter.value} />
+      ))}
+    </div>
+  );
 };
 
 export default function PortalTable<V extends {} = {}>({
@@ -116,16 +156,21 @@ export default function PortalTable<V extends {} = {}>({
   return (
     <>
       {withSearchBar && (
-        <SearchAndFilter
-          internalName={internalName}
-          allRows={preGlobalFilteredRows}
-          // @ts-ignore FIXME remove when react-table types are improved
-          columnsInternal={columns}
-          onSearch={setGlobalFilter}
-          pageContentRef={pageContentRef}
-          searchBarTitle={searchBarTitle}
-          setAllFilters={setAllFilters}
-        />
+        <>
+          <SearchAndFilter
+            internalName={internalName}
+            allRows={preGlobalFilteredRows}
+            // @ts-ignore FIXME remove when react-table types are improved
+            columnsInternal={columns}
+            onSearch={setGlobalFilter}
+            pageContentRef={pageContentRef}
+            searchBarTitle={searchBarTitle}
+            setAllFilters={setAllFilters}
+          />
+          <div className="filter-chip-tray-container">
+            <FilterChipTray filters={filters} />
+          </div>
+        </>
       )}
       <div className="table-wrapper">
         <table className={props.className} {...getTableProps()}>
