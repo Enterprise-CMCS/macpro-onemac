@@ -2491,7 +2491,8 @@ ul.choice-list {
   display: flex;
   flex-direction: row;
   gap: 0.75rem;
-  align-items: end;
+  justify-content: flex-end;
+  flex-wrap: wrap;
 }
 
 .filter-chip-container {
@@ -2502,6 +2503,10 @@ ul.choice-list {
   padding-right: 0.5rem; // Icon on the right has built-in padding, so we subtract it from this
   display: flex;
   align-items: center;
+}
+
+.filter-chip-text {
+  white-space: nowrap;
 }
 
 .filter-chip-close {

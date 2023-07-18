@@ -46,7 +46,7 @@ export const COLUMN_ID = {
   ID: "componentId",
   TERRITORY: "territory",
   TYPE: "componentType",
-  STATUS: "currentStatus",
+  STATUS: "packageStatus",
   SUBMISSION_TIMESTAMP: "submissionTimestamp",
   LATEST_RAI_TIMESTAMP: "latestRaiResponseTimestamp",
   CPOC_NAME: "cpocName",

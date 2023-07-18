@@ -54,31 +54,36 @@ const defaultColumn = {
   disableGlobalFilter: true,
 };
 
-const MAPPED_COLUMN_ID_NAME: { [index: string]: string } = {
-  [COLUMN_ID.ID]: "ID",
-  [COLUMN_ID.TERRITORY]: "State(s)",
-  [COLUMN_ID.TYPE]: "Type",
-  [COLUMN_ID.STATUS]: "Status",
-  [COLUMN_ID.SUBMISSION_TIMESTAMP]: "Initial Submission",
-  [COLUMN_ID.LATEST_RAI_TIMESTAMP]: "Formal RAI Response",
-  [COLUMN_ID.CPOC_NAME]: "CPOC Name",
-  [COLUMN_ID.SUBMITTER]: "Submitted By",
-  [COLUMN_ID.ACTIONS]: "packageActions",
-};
-
 const FilterChipTray = ({ filters }: { filters: Filters<any> }) => {
-  const Chip = ({ id, value }: { id: string; value: any }) => {
+  const Chip = ({ id, value }: { id: string; value: any[] }) => {
+    // This is used by FilterChipTray to map a columns ID, provided by the Filter
+    // to a user-friendly name to render.
+    const MAPPED_COLUMN_ID_NAME: { [index: string]: string } = {
+      [COLUMN_ID.ID]: "ID",
+      [COLUMN_ID.TERRITORY]: "State",
+      [COLUMN_ID.TYPE]: "Type",
+      [COLUMN_ID.STATUS]: "Status",
+      [COLUMN_ID.SUBMISSION_TIMESTAMP]: "Initial Submission",
+      [COLUMN_ID.LATEST_RAI_TIMESTAMP]: "Formal RAI Response",
+      [COLUMN_ID.CPOC_NAME]: "CPOC Name",
+      [COLUMN_ID.SUBMITTER]: "Submitted By",
+      [COLUMN_ID.ACTIONS]: "packageActions",
+    };
     if (!value || !value.length) return null;
     return (
-      <div className="filter-chip-container">
-        {/* (COLUMN_ID as {[index: string]: string})[id] is a type cast. We export
+      <>
+        {value.map((v) => (
+          <div className="filter-chip-container">
+            {/* (COLUMN_ID as {[index: string]: string})[id] is a type cast. We export
          the object from a JS file, and have to cast it here so we can use [id] as
          an index accessor and map the */}
-        <span className="filter-chip-text">{`${MAPPED_COLUMN_ID_NAME[id]}: ${value}`}</span>
-        <button className="filter-chip-close">
-          <FontAwesomeIcon icon={faWindowClose} size={"sm"} />
-        </button>
-      </div>
+            <span className="filter-chip-text ds-u-font-size--sm">{`${MAPPED_COLUMN_ID_NAME[id]}: ${v}`}</span>
+            <button className="filter-chip-close">
+              <FontAwesomeIcon icon={faWindowClose} size={"sm"} />
+            </button>
+          </div>
+        ))}
+      </>
     );
   };
   return (
