@@ -117,7 +117,7 @@ Feature: Waiver Package Details View: 1915 b Waiver Amendment for a State User
         Then verify Review Team SRT is not visible in the details section
         Then verify there is a Final Disposition Date header in the details section
         Then verify there is an Approved Effective Date in the details section
-        Then verify the Proposed Effective Date is a date formated like Mon dd yyyy
+        Then verify the Proposed Effective Date is a date formatted like Mon dd yyyy
         Then verify the attachments section exists
         Then verify the download all button exists
         Then verify the additional information section exists

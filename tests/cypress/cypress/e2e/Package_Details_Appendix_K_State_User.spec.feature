@@ -122,7 +122,7 @@ Feature: Waiver Package Details View: Appendix K Amendment for a State User
         Then verify there is an Initial Submission Date header in the details section
         Then verify a date exists for the Initial Submission Date
         Then verify there is a Proposed Effective Date header in the details section
-        Then verify the Proposed Effective Date is a date formated like Mon dd yyyy
+        Then verify the Proposed Effective Date is a date formatted like Mon dd yyyy
         Then verify the attachments section exists
         Then verify the download all button exists
         Then verify the additional information section exists
@@ -153,7 +153,7 @@ Feature: Waiver Package Details View: Appendix K Amendment for a State User
         Then verify there is an Initial Submission Date header in the details section
         Then verify a date exists for the Initial Submission Date
         Then verify there is a Proposed Effective Date header in the details section
-        Then verify the Proposed Effective Date is a date formated like Mon dd yyyy
+        Then verify the Proposed Effective Date is a date formatted like Mon dd yyyy
         Then verify the attachments section exists
         Then verify the download all button exists
         Then verify the additional information section exists
@@ -184,7 +184,7 @@ Feature: Waiver Package Details View: Appendix K Amendment for a State User
         Then verify there is an Initial Submission Date header in the details section
         Then verify a date exists for the Initial Submission Date
         Then verify there is a Proposed Effective Date header in the details section
-        Then verify the Proposed Effective Date is a date formated like Mon dd yyyy
+        Then verify the Proposed Effective Date is a date formatted like Mon dd yyyy
         Then verify the attachments section exists
         Then verify the download all button exists
         Then verify the additional information section exists
@@ -215,7 +215,7 @@ Feature: Waiver Package Details View: Appendix K Amendment for a State User
         Then verify there is an Initial Submission Date header in the details section
         Then verify a date exists for the Initial Submission Date
         Then verify there is a Proposed Effective Date header in the details section
-        Then verify the Proposed Effective Date is a date formated like Mon dd yyyy
+        Then verify the Proposed Effective Date is a date formatted like Mon dd yyyy
         Then verify the attachments section exists
         Then verify the download all button exists
         Then verify the additional information section exists
