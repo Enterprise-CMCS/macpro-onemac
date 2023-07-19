@@ -71,6 +71,11 @@ export const getMyPackages = async (email, group) => {
           do {
             const results = await dynamoDb.query(params);
             results.Items.map((oneItem) => {
+              if (oneItem.waiverAuthority)
+                oneItem.temporaryExtensionType = oneItem.waiverAuthority.slice(
+                  0,
+                  7
+                );
               if (!statusMap[oneItem.currentStatus])
                 console.log(
                   "%s status of %s not mapped!",
