@@ -123,7 +123,7 @@ const FilterChipTray = ({
               />
             ))
           : defaultFilterState[id]
-              .filter((f) => !value.includes(f))
+              ?.filter((f) => !value?.includes(f))
               .map((v, idx) => (
                 <Template
                   key={`${columnNames[id]}-${idx}`}
@@ -137,13 +137,17 @@ const FilterChipTray = ({
   };
   return (
     <div className="filter-chip-tray">
-      {filters.map((filter) => (
-        <Chip
-          key={`${filter.id}-${filter.value}`}
-          id={filter.id}
-          value={filter.value}
-        />
-      ))}
+      {filters.map((filter) => {
+        return (
+          filter && (
+            <Chip
+              key={`${filter.id}-${filter.value}`}
+              id={filter.id}
+              value={filter.value}
+            />
+          )
+        );
+      })}
     </div>
   );
 };
