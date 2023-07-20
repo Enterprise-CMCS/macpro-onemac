@@ -147,20 +147,22 @@ const FilterChipTray = ({
     [COLUMN_ID.STATUS]: getOriginalStatuses(),
   };
   const Chip = ({ id, value }: { id: string; value: any[] }) => {
+    // Early return if no value present - Hooks must go above the return so that
+    // they are not conditional per React's guidelines
+    if (!value?.length && additiveFilters.includes(columnNames[id]))
+      return null;
     // Re-adds a filter to subtractive filters such as status and type.
-    const resetFilter = (value: any) => {
+    const resetFilterValueState = (value: any) => {
       const newValue = filters?.find((f) => f.id === id)?.value as string[];
       newValue.push(value);
       setFilter(id, newValue);
     };
-    // Clears all options from additive filters such as times and states.
-    const clearFilter = () => {
-      setFilter(id, []);
+    const prepareDates = (dateArray: string[]) => {
+      const adjustedValues = dateArray.map((date) =>
+        new Date(date).toDateString()
+      );
+      return `${adjustedValues[0]} to ${adjustedValues[1]}`;
     };
-    // Early return if no value present - Hooks must go above the return so that
-    // they are not conditional per React's guidelines
-    if (!value || (!value.length && additiveFilters.includes(columnNames[id])))
-      return null;
     // Consolidated JSX for the <Chip/> visual component
     const Template = ({
       label,
@@ -182,25 +184,41 @@ const FilterChipTray = ({
     );
     return (
       <>
-        {additiveFilters.includes(id)
-          ? value.map((v, idx) => (
+        {additiveFilters.includes(id) ? (
+          id === COLUMN_ID.TERRITORY ? (
+            value.map((v, idx) => (
               <Template
                 key={`${columnNames[id]}-${idx}`}
                 label={columnNames[id]}
                 value={v}
-                onClick={() => clearFilter()}
+                onClick={() =>
+                  setFilter(
+                    id,
+                    value.filter((val) => val !== v)
+                  )
+                }
               />
             ))
-          : subtractiveFilterDefaults[id]
-              ?.filter((f) => !value?.includes(f))
-              .map((v, idx) => (
-                <Template
-                  key={`${columnNames[id]}-${idx}`}
-                  label={`Hidden ${columnNames[id]}`}
-                  value={v}
-                  onClick={() => resetFilter(v)}
-                />
-              ))}
+          ) : (
+            <Template
+              key={`${columnNames[id]}`}
+              label={columnNames[id]}
+              value={prepareDates(value)}
+              onClick={() => setFilter(id, [])}
+            />
+          )
+        ) : (
+          subtractiveFilterDefaults[id]
+            ?.filter((f) => !value?.includes(f))
+            .map((v, idx) => (
+              <Template
+                key={`${columnNames[id]}-${idx}`}
+                label={`Hidden ${columnNames[id]}`}
+                value={v}
+                onClick={() => resetFilterValueState(v)}
+              />
+            ))
+        )}
       </>
     );
   };
@@ -209,15 +227,13 @@ const FilterChipTray = ({
       <span>{recordCount} records</span>
       <div className="filter-chip-tray">
         {filters.map((filter) => {
-          return (
-            filter && (
-              <Chip
-                key={`${filter.id}-${filter.value}`}
-                id={filter.id}
-                value={filter.value}
-              />
-            )
-          );
+          return filter.value.length ? (
+            <Chip
+              key={`${filter.id}-${filter.value}`}
+              id={filter.id}
+              value={filter.value}
+            />
+          ) : null;
         })}
       </div>
     </div>
