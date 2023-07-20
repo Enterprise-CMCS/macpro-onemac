@@ -3,7 +3,6 @@ import { Button } from "@cmsgov/design-system";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEllipsisV } from "@fortawesome/free-solid-svg-icons";
 
-import { Workflow } from "cmscommonlib";
 import { actionComponent } from "../libs/actionLib";
 
 /**
