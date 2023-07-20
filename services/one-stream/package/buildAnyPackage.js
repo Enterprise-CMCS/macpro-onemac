@@ -189,8 +189,13 @@ export const buildAnyPackage = async (packageId, config) => {
           ).filter(Boolean)[0];
           console.log("the lead analsyt is: ", leadAnalyst);
 
-          if (leadAnalyst)
+          if (leadAnalyst) {
             putParams.Item.cpocName = `${leadAnalyst.FIRST_NAME} ${leadAnalyst.LAST_NAME}`;
+            putParams.Item.cpoc = {
+              name: `${leadAnalyst.FIRST_NAME} ${leadAnalyst.LAST_NAME}`,
+              email: leadAnalyst.EMAIL,
+            };
+          }
         }
 
         if (anEvent.ACTION_OFFICERS && _.isArray(anEvent.ACTION_OFFICERS)) {
@@ -199,6 +204,11 @@ export const buildAnyPackage = async (packageId, config) => {
               `${oneReviewer.FIRST_NAME} ${oneReviewer.LAST_NAME}`
           );
           console.log("the review team is: ", putParams.Item.reviewTeam);
+          putParams.Item.srt = anEvent.ACTION_OFFICERS.map((oneReviewer) => ({
+            name: `${oneReviewer.FIRST_NAME} ${oneReviewer.LAST_NAME}`,
+            email: oneReviewer.EMAIL,
+          }));
+          console.log("the srt is: ", putParams.Item.srt);
         }
 
         let approvedEffectiveDate = emptyField;

@@ -41,20 +41,22 @@ export const getAllActiveStateUserEmailAddresses = async (territory) => {
 };
 
 /**
- * Package withdrawal email to state user(s)
+ * RAI Response withdrawal email to state user(s)
  * @param {Object} data from the package.
  * @param {Object} config for the package.
  * @returns {Object} email parameters in generic format.
  */
-export const stateWithdrawalReceipt = async (data, config, user) => {
+export const stateWithdrawRaiReceipt = async (data, config, user) => {
   const stateReceipt = {
     ToAddresses: [],
     CcAddresses: [],
-    Subject: `${config.typeLabel} ${data.componentId} Withdraw Request`,
-    HTML: `<>The OneMAC submission portal received a request to withdraw the Formal RAI Response. You are receiving this email notification as the Formal RAI for 
-       ${data.componentId} was withdrawn by ${user.fullName} (${
+    Subject: `${config.typeLabel} Package ${data.componentId} Withdraw Request`,
+    HTML: `
+        <p>The OneMAC submission portal received a request to withdraw a package. You are receiving this email notification as ${
+          data.componentId
+        } was withdrawn by ${user.fullName} (${
       user.email
-    }). The package will revert to the “RAI Issued” status.</p>
+    }). The package will no longer be considered for CMS review.</p>
         ${formatPackageDetails(data, config)}
         <p>Thank you!</p>
         `,
