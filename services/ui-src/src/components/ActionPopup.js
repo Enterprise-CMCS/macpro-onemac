@@ -32,11 +32,12 @@ function useOutsideAlerter(ref, setShowMenu) {
 export default function ActionPopup({
   theComponent,
   formSource,
+  userRole,
   alertCallback,
 }) {
   const [showMenu, setShowMenu] = useState(false);
-  const availableActions =
-    Workflow.ACTIONS[theComponent.componentType][theComponent.currentStatus];
+  console.log("actions: ", theComponent.actions);
+  const availableActions = theComponent.actions;
 
   const wrapperRef = useRef(null);
   useOutsideAlerter(wrapperRef, setShowMenu);

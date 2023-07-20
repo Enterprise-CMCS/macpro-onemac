@@ -159,6 +159,25 @@ export const DetailSection = ({
 
   const userRoleObj = getUserRoleObj(userProfile?.userData?.roleList);
 
+  console.log(
+    "params",
+    detail.componentType,
+    detail.oneMacStatus,
+    detail.latestRaiResponseTimestamp ? true : false,
+    userRoleObj,
+    FORM_SOURCE.DETAIL
+  );
+  // const actions = Workflow.getActionsForPackage(
+  //   detail.componentType,
+  //   detail.oneMacStatus,
+  //   detail.latestRaiResponseTimestamp ? true : false,
+  //   userRoleObj,
+  //   FORM_SOURCE.DETAIL
+  // );
+  const actions = detail.actions;
+
+  console.log("actions", actions);
+
   return (
     <>
       <section className="detail-card-section">
@@ -189,44 +208,29 @@ export const DetailSection = ({
         <div className="detail-card-container">
           <div className="detail-card-top"></div>
           <div className="detail-card">
-            {userRoleObj.canAccessForms ? (
-              <section className="package-actions">
-                <Review heading={pageConfig.actionLabel}>
-                  <ul className="action-list">
-                    {pageConfig.actionsByStatus[detail.currentStatus]?.length >
-                    0 ? (
-                      pageConfig.actionsByStatus[detail.currentStatus]?.map(
-                        (actionName, i) => (
-                          <li key={i}>
-                            {actionComponent[actionName](
-                              detail,
-                              FORM_SOURCE.DETAIL
-                            )}
-                          </li>
-                        )
-                      )
-                    ) : (
-                      <li>
-                        <p>
-                          No actions are currently available for this
-                          submission.
-                        </p>
+            <section className="package-actions">
+              <Review heading={pageConfig.actionLabel}>
+                <ul className="action-list">
+                  {}
+                  {actions?.length > 0 ? (
+                    actions?.map((actionName, i) => (
+                      <li key={i}>
+                        {actionComponent[actionName](
+                          detail,
+                          FORM_SOURCE.DETAIL
+                        )}
                       </li>
-                    )}
-                  </ul>
-                </Review>
-              </section>
-            ) : (
-              <section className="package-actions">
-                <div className="column-spacer">
-                  <Review heading={pageConfig.actionLabel}>
-                    <p>
-                      No actions are currently available for this submission.
-                    </p>
-                  </Review>
-                </div>
-              </section>
-            )}
+                    ))
+                  ) : (
+                    <li>
+                      <p>
+                        No actions are currently available for this submission.
+                      </p>
+                    </li>
+                  )}
+                </ul>
+              </Review>
+            </section>
           </div>
         </div>
       </section>

@@ -259,6 +259,19 @@ const ROUTE_LIST: RouteSpec[] = [
       path: ONEMAC_ROUTES.TEMPORARY_EXTENSION,
       component: TemporaryExtensionForm,
     },
+  ].map(({ path, ...rest }) => ({
+    path,
+    component: AuthenticatedRouteListRenderer,
+    routes: [
+      {
+        path,
+        component: accessGuardRouteListRenderer("canAccessForms"),
+        routes: [{ path, exact: true, ...rest }],
+      },
+    ],
+  })),
+  // cms forms
+  ...[
     {
       path: ONEMAC_ROUTES.ENABLE_RAI_WITHDRAW,
       component: EnableRaiWithdrawForm,
@@ -273,7 +286,7 @@ const ROUTE_LIST: RouteSpec[] = [
     routes: [
       {
         path,
-        component: accessGuardRouteListRenderer("canAccessForms"),
+        component: accessGuardRouteListRenderer("isCMSUser"),
         routes: [{ path, exact: true, ...rest }],
       },
     ],

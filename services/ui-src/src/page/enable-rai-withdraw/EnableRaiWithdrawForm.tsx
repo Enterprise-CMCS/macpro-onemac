@@ -22,6 +22,7 @@ export const enableRaiWithdrawFormInfo: OneMACFormConfig = {
   addlInfoRequired: true,
   landingPage: ONEMAC_ROUTES.PACKAGE_LIST,
   submitInstructionsJSX: <></>,
+  idMustExist: true,
 };
 
 const EnableRaiWithdrawForm: FC = () => {

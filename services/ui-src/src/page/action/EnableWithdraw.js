@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { ONEMAC_ROUTES } from "cmscommonlib";
 
 export default function EnableWithdraw({ theComponent }) {
-  return theComponent.latestRaiResponseTimestamp ? (
+  return (
     <Link
       key={`popup-action-${theComponent.componentId}`}
       to={{
@@ -18,7 +18,5 @@ export default function EnableWithdraw({ theComponent }) {
     >
       Enable Formal RAI Response Withdraw
     </Link>
-  ) : (
-    <></>
   );
 }

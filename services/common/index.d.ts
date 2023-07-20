@@ -101,14 +101,21 @@ export namespace Workflow {
     NA = "N/A",
   }
 
-  export const defaultActionsByStatus: Record<string, PACKAGE_ACTION[]>;
-  export const initialWaiverActionsByStatus: Record<string, PACKAGE_ACTION[]>;
-  export const renewalWaiverActionsByStatus: Record<string, PACKAGE_ACTION[]>;
-  export const waiverExtensionActionsByStatus: Record<string, PACKAGE_ACTION[]>;
+  export const defaultActions: Record<string, PACKAGE_ACTION[]>;
+  export const initialWaiverActions: Record<string, PACKAGE_ACTION[]>;
+  export const renewalWaiverActions: Record<string, PACKAGE_ACTION[]>;
+  export const waiverExtensionActions: Record<string, PACKAGE_ACTION[]>;
   export const get90thDayText: (
     currentStatus: string,
     clockEndTimestamp: date
   ) => string;
+  export const getActionsForPackage: (
+    packageType: string,
+    packageStatus: string,
+    hasRaiResponse: boolean,
+    userRole: UserRole,
+    formSource: string
+  ) => PACKAGE_ACTION[];
 }
 
 export * as Validate from "./idValidation.js";

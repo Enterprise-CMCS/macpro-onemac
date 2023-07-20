@@ -255,9 +255,11 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
 
   useEffect(() => {
     const checkId = async () => {
+      if (presetComponentId === oneMacFormData.componentId) return;
       let validationMessages: Message[] = validateComponentId(
         oneMacFormData.componentId
       );
+      console.log("validationMessages: ", validationMessages);
       if (validationMessages.length === 0 && oneMacFormData.componentId) {
         try {
           const isADup = await PackageApi.packageExists(

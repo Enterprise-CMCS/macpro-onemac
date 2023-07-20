@@ -81,67 +81,6 @@ export const PACKAGE_GROUP = {
   WAIVER: "waiver",
 };
 
-export const defaultActionsByStatus = {
-  [ONEMAC_STATUS.INACTIVATED]: [],
-  [ONEMAC_STATUS.SUBMITTED]: [PACKAGE_ACTION.ENABLE_RAI_WITHDRAWAL],
-  [ONEMAC_STATUS.PENDING]: [
-    PACKAGE_ACTION.WITHDRAW,
-    PACKAGE_ACTION.ENABLE_RAI_WITHDRAWAL,
-  ],
-  [ONEMAC_STATUS.PENDING_CONCURRENCE]: [PACKAGE_ACTION.WITHDRAW],
-  [ONEMAC_STATUS.PENDING_APPROVAL]: [PACKAGE_ACTION.WITHDRAW],
-  [ONEMAC_STATUS.RAI_ISSUED]: [
-    PACKAGE_ACTION.WITHDRAW,
-    PACKAGE_ACTION.RESPOND_TO_RAI,
-  ],
-  [ONEMAC_STATUS.APPROVED]: [],
-  [ONEMAC_STATUS.DISAPPROVED]: [],
-  [ONEMAC_STATUS.WITHDRAWAL_REQUESTED]: [],
-  [ONEMAC_STATUS.WITHDRAW_RAI_REQUESTED]: [],
-  [ONEMAC_STATUS.WITHDRAWN]: [],
-  [ONEMAC_STATUS.TERMINATED]: [],
-  [ONEMAC_STATUS.UNKNOWN]: [],
-  [ONEMAC_STATUS.WITHDRAW_RAI_ENABLED]: [PACKAGE_ACTION.WITHDRAW_RAI],
-};
-
-export const initialWaiverActionsByStatus = {
-  ...defaultActionsByStatus,
-  [ONEMAC_STATUS.APPROVED]: [
-    PACKAGE_ACTION.REQUEST_TEMPORARY_EXTENSION,
-    PACKAGE_ACTION.ADD_AMENDMENT,
-  ],
-};
-
-export const renewalWaiverActionsByStatus = initialWaiverActionsByStatus;
-
-export const waiverExtensionActionsByStatus = {
-  ...defaultActionsByStatus,
-  [ONEMAC_STATUS.RAI_ISSUED]: [PACKAGE_ACTION.WITHDRAW],
-  [ONEMAC_STATUS.PAUSED]: [PACKAGE_ACTION.WITHDRAW],
-};
-
-export const raiActionsByStatus = {
-  ...defaultActionsByStatus,
-  [ONEMAC_STATUS.PENDING]: [],
-  [ONEMAC_STATUS.RAI_ISSUED]: [],
-};
-
-export const ACTIONS = {
-  [ONEMAC_TYPE.CHIP_SPA]: defaultActionsByStatus,
-  [ONEMAC_TYPE.CHIP_SPA_RAI]: raiActionsByStatus,
-  [ONEMAC_TYPE.MEDICAID_SPA]: defaultActionsByStatus,
-  [ONEMAC_TYPE.MEDICAID_SPA_RAI]: raiActionsByStatus,
-  [ONEMAC_TYPE.WAIVER]: initialWaiverActionsByStatus,
-  [ONEMAC_TYPE.WAIVER_RAI]: raiActionsByStatus,
-  [ONEMAC_TYPE.WAIVER_INITIAL]: initialWaiverActionsByStatus,
-  [ONEMAC_TYPE.WAIVER_RENEWAL]: renewalWaiverActionsByStatus,
-  [ONEMAC_TYPE.WAIVER_AMENDMENT]: defaultActionsByStatus,
-  [ONEMAC_TYPE.WAIVER_EXTENSION]: waiverExtensionActionsByStatus,
-  [ONEMAC_TYPE.WAIVER_EXTENSION_B]: waiverExtensionActionsByStatus,
-  [ONEMAC_TYPE.WAIVER_EXTENSION_C]: waiverExtensionActionsByStatus,
-  [ONEMAC_TYPE.WAIVER_APP_K]: defaultActionsByStatus,
-};
-
 export const ALLOW_WAIVER_EXTENSION_TYPE = [
   ONEMAC_TYPE.WAIVER_INITIAL,
   ONEMAC_TYPE.WAIVER_RENEWAL,

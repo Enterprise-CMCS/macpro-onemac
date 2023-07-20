@@ -49,9 +49,11 @@ export const submitAnyWithData = async (data, config) => {
 
       const activeTerritories = getActiveTerritories(doneBy?.roleList);
       if (
-        !userRoleObj.canAccessForms ||
-        activeTerritories === [] ||
-        !activeTerritories.includes(data.territory)
+        typeof config.hasAuthorizationToSubmit === "function" &&
+        config.hasAuthorizationToSubmit(userRoleObj) === false &&
+        (!userRoleObj.canAccessForms ||
+          activeTerritories === [] ||
+          !activeTerritories.includes(data.territory))
       ) {
         throw RESPONSE_CODE.USER_NOT_AUTHORIZED;
       }

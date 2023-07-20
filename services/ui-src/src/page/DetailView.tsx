@@ -55,6 +55,7 @@ export type ComponentDetail = {
   temporaryExtensionType: string;
   cpocName: string;
   reviewTeam: string[];
+  actions: Workflow.PACKAGE_ACTION[];
 } & Record<string, any>;
 
 /**
