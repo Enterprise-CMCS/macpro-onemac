@@ -65,7 +65,6 @@ async function getRecordsByGSI1Keys(gsi1pk, gsi1sk) {
     const sortedRecords = result.Items.sort((a, b) =>
       a.submissionTimestamp.localeCompare(b.submissionTimestamp)
     );
-    console.log("Records retrieved successfully:", sortedRecords);
     return sortedRecords;
   } catch (error) {
     console.error("Error retrieving records:", error);
@@ -81,8 +80,6 @@ async function updateRecord(record) {
 
   try {
     await dynamoDb.put(params);
-
-    console.log("Record updated successfully:", record);
   } catch (error) {
     console.error("Error updating record:", error);
     throw error;
@@ -125,7 +122,7 @@ export const main = handler(async (event) => {
     const gsi1pk = `OneMAC#submit${data.parentType}rai`;
     const gsi1sk = data.componentId;
     const records = await getRecordsByGSI1Keys(gsi1pk, gsi1sk);
-    console.log("records:", records);
+
     if (records.length > 0) {
       // the first record is the most recent as they were sorted by submissionTimestamp
       const mostRecentRecord = records[0];
@@ -143,9 +140,11 @@ export const main = handler(async (event) => {
         data.componentId,
         mostRecentRecord.eventTimestamp
       );
-      console.log("Status updated successfully.");
     } else {
-      console.log("No records found.");
+      throw new Error(
+        "No RAI found when attempting to enable rai withdraw for ",
+        data.componentId
+      );
     }
   } catch (error) {
     console.error("Error enabling withraw rai:", error);

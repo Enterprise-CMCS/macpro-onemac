@@ -5,13 +5,6 @@ function getDefaultActions(
   userRole,
   formSource
 ) {
-  console.log(
-    "getDefaultActions: ",
-    packageStatus,
-    hasRaiResponse,
-    userRole,
-    formSource
-  );
   const actions = [];
   switch (packageStatus) {
     case Workflow.ONEMAC_STATUS.PENDING:
@@ -32,6 +25,10 @@ function getDefaultActions(
           Workflow.PACKAGE_ACTION.WITHDRAW,
           Workflow.PACKAGE_ACTION.RESPOND_TO_RAI
         );
+      break;
+    case Workflow.ONEMAC_STATUS.RAI_RESPONSE_WITHDRAW_ENABLED:
+      if (userRole.canAccessForms)
+        actions.push(Workflow.PACKAGE_ACTION.WITHDRAW_RAI_RESPONSE);
       break;
   }
   return actions;

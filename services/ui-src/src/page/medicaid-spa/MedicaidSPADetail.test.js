@@ -93,6 +93,7 @@ const testDetail = {
   submitterName: "StateSubmitter Nightwatch",
   approvedEffectiveDate: "2022-01-02",
   finalDispositionDate: "2022-01-03",
+  actions: ["Withdraw Package", "Respond to RAI"],
 };
 
 const ContextWrapper = ({ children }) => {
@@ -171,6 +172,7 @@ describe("Detail View Tests", () => {
     PackageApi.getDetail.mockResolvedValue({
       ...testDetail,
       currentStatus: "RAI Response Withdraw Enabled",
+      actions: ["Withdraw Formal RAI Response"],
     });
 
     render(<MedicaidSPADetail />, { wrapper: ContextWrapper });
