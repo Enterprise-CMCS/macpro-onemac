@@ -560,46 +560,44 @@ export function SearchAndFilter<V extends {} = {}>({
   );
 
   return (
-    <>
-      <div className="search-and-filter" role="search">
-        <div className="search-bar">
-          <label htmlFor="search-bar-input">{searchBarTitle || "Search"}</label>
-          <div className="field" onClick={clickInsideBar}>
-            <FontAwesomeIcon icon={faSearch} />
-            <input
-              autoComplete="off"
-              id="search-bar-input"
-              onChange={onKeywordChange}
-              ref={inputRef}
-              value={searchTerm}
-            />
-            {!!searchTerm && (
-              <button
-                aria-label="Clear Search"
-                className="clear-button"
-                onClick={onKeywordChange}
-                type="button"
-                value=""
-              >
-                <FontAwesomeIcon icon={faTimes} />
-              </button>
-            )}
-          </div>
-        </div>
-        <div className="picker-filter-wrapper">
-          <ColumnPicker
-            columnsInternal={columnsInternal}
-            internalName={internalName}
+    <div className="search-and-filter" role="search">
+      <div className="search-bar">
+        <label htmlFor="search-bar-input">{searchBarTitle || "Search"}</label>
+        <div className="field" onClick={clickInsideBar}>
+          <FontAwesomeIcon icon={faSearch} />
+          <input
+            autoComplete="off"
+            id="search-bar-input"
+            onChange={onKeywordChange}
+            ref={inputRef}
+            value={searchTerm}
           />
-          <div className="filter-buttons">
-            <FilterPane
-              columnsInternal={columnsInternal}
-              pageContentRef={pageContentRef}
-              setAllFilters={setAllFilters}
-            />
-          </div>
+          {!!searchTerm && (
+            <button
+              aria-label="Clear Search"
+              className="clear-button"
+              onClick={onKeywordChange}
+              type="button"
+              value=""
+            >
+              <FontAwesomeIcon icon={faTimes} />
+            </button>
+          )}
         </div>
       </div>
-    </>
+      <div className="picker-filter-wrapper">
+        <ColumnPicker
+          columnsInternal={columnsInternal}
+          internalName={internalName}
+        />
+        <div className="filter-buttons">
+          <FilterPane
+            columnsInternal={columnsInternal}
+            pageContentRef={pageContentRef}
+            setAllFilters={setAllFilters}
+          />
+        </div>
+      </div>
+    </div>
   );
 }

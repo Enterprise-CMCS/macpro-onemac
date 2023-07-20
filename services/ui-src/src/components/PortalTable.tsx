@@ -203,18 +203,20 @@ const FilterChipTray = ({
     );
   };
   return (
-    <div className="filter-chip-tray">
-      {filters.map((filter) => {
-        return (
-          filter && (
-            <Chip
-              key={`${filter.id}-${filter.value}`}
-              id={filter.id}
-              value={filter.value}
-            />
-          )
-        );
-      })}
+    <div className="filter-chip-tray-container">
+      <div className="filter-chip-tray">
+        {filters.map((filter) => {
+          return (
+            filter && (
+              <Chip
+                key={`${filter.id}-${filter.value}`}
+                id={filter.id}
+                value={filter.value}
+              />
+            )
+          );
+        })}
+      </div>
     </div>
   );
 };
@@ -297,13 +299,11 @@ export default function PortalTable<V extends {} = {}>({
             searchBarTitle={searchBarTitle}
             setAllFilters={setAllFilters}
           />
-          <div className="filter-chip-tray-container">
-            <FilterChipTray
-              internalName={internalName}
-              filters={filters}
-              setFilter={setFilter}
-            />
-          </div>
+          <FilterChipTray
+            internalName={internalName}
+            filters={filters}
+            setFilter={setFilter}
+          />
         </>
       )}
       <div className="table-wrapper">
