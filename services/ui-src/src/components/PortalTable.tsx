@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect } from "react";
+import React, { ReactNode, useCallback, useEffect } from "react";
 import {
   HeaderGroup,
   TableInstance,
@@ -37,6 +37,7 @@ import {
   LOCAL_STORAGE_TABLE_FILTERS_WAIVER,
 } from "../utils/StorageKeys";
 import { COLUMN_ID } from "../containers/PackageList";
+import { useAppContext } from "../libs/contextLib";
 export { CustomFilterTypes, CustomFilterUi } from "./SearchAndFilter";
 
 export type TableProps<V extends {}> = {
@@ -54,27 +55,78 @@ const defaultColumn = {
   disableGlobalFilter: true,
 };
 
+// Convenient type for casting JS objects to string-indexed accessible TS object
+type StringIndexedObject = { [key: string]: string[] };
+// String-accessible object with types for each "internalName" value (spa, waiver)
+const commonTypes: StringIndexedObject = {
+  waiver: [
+    "1915(b) Initial Waiver",
+    "1915(b) Waiver Amendment",
+    "1915(b) Waiver Renewal",
+    "1915(c) Appendix K Amendment",
+    "Temporary Extension",
+  ],
+  spa: ["Medicaid SPA", "CHIP SPA"],
+};
+/* TODO: This could be better handled by moving app-api/libs/status-lib.js to
+ *   the cmscommonlib, however that touches code outside the purview of the task
+ *   at hand. It could be handled as a tech debt item. */
+// Statuses shared by CMS and States
+const commonStatuses = ["Approved", "Disapproved", "Package Withdrawn"];
+// Statuses exclusive to CMS
+const commonCMSStatuses = [
+  ...commonStatuses,
+  "Pending",
+  "Pending - RAI",
+  "Pending - Approval",
+  "Pending - Concurrence",
+  "Submitted - Intake Needed",
+];
+// Statuses exclusive to States
+const commonStateStatuses = [
+  ...commonStatuses,
+  "RAI Issued",
+  "Submitted",
+  "Under Review",
+  "Withdrawal Requested",
+];
+const CMS_STATUSES: StringIndexedObject = {
+  waiver: [...commonCMSStatuses, "Waiver Terminated"],
+  spa: commonCMSStatuses,
+};
+const STATE_STATUSES: StringIndexedObject = {
+  waiver: [...commonStateStatuses, "Waiver Terminated"],
+  spa: commonStateStatuses,
+};
+
 const FilterChipTray = ({
+  internalName,
   filters,
   setFilter,
 }: {
+  internalName: string;
   filters: Filters<any>;
   setFilter: (columnId: IdType<any>, updater: any) => void;
 }) => {
   const Chip = ({ id, value }: { id: string; value: any[] }) => {
+    // @ts-ignore
+    // TODO: "userRole" not recognized as part of AppContext despite being defined
+    const { userRole } = useAppContext();
+    // Returns the proper array of statuses for each tab and for each user
+    const getOriginalStatuses = useCallback(() => {
+      if (userRole.includes("state")) {
+        // Returns for statesubmitter, statesystemadmin
+        return (STATE_STATUSES as StringIndexedObject)[internalName];
+      } else {
+        // Returns for defaulcmsuser, cmsreviewer, cmsroleapprover, stytemadmin,
+        // and helpdesk
+        return (CMS_STATUSES as StringIndexedObject)[internalName];
+      }
+    }, [userRole, internalName]);
+    // Early return if no value present - Hooks must go above the return so that
+    // they are not conditional per React's guidelines
     if (!value || !value.length) return null;
-    const defaultFilterState: { [index: string]: any[] } = {
-      [COLUMN_ID.TYPE]: ["Medicaid SPA", "CHIP SPA"],
-      [COLUMN_ID.STATUS]: [
-        "Disapproved",
-        "Package Withdrawn",
-        "RAI Issued",
-        "Submitted",
-        "Under Review",
-        "Withdrawal Requested",
-        "Approved",
-      ],
-    };
+    // Easy map for column ids to display names
     const columnNames: { [index: string]: string } = {
       [COLUMN_ID.TERRITORY]: "State",
       [COLUMN_ID.TYPE]: "Type",
@@ -82,17 +134,29 @@ const FilterChipTray = ({
       [COLUMN_ID.SUBMISSION_TIMESTAMP]: "Initial Submission",
       [COLUMN_ID.LATEST_RAI_TIMESTAMP]: "Formal RAI Response",
     };
-    const stateAndTimeFilters = [
+    // String-accessible object containing the original state for subtractive
+    // filters. (Subtractive referring to how those are all-on at the start, and
+    // only removed one-by-one)
+    const subtractiveFilterDefaults: { [index: string]: any[] } = {
+      [COLUMN_ID.TYPE]: commonTypes[internalName],
+      [COLUMN_ID.STATUS]: getOriginalStatuses(),
+    };
+    // Filters that do not have an "all-on" default state. (Ex: time-based and
+    // State-based filters)
+    const additiveFilters = [
       columnNames[COLUMN_ID.TERRITORY],
       columnNames[COLUMN_ID.SUBMISSION_TIMESTAMP],
       columnNames[COLUMN_ID.LATEST_RAI_TIMESTAMP],
     ];
+    // Re-adds a filter to subtractive filters such as status and type.
     const resetFilter = (value: any) => {
-      setFilter(id, value);
+      const newValue = setFilter(id, value);
     };
+    // Clears all options from additive filters such as times and states.
     const clearFilter = () => {
       setFilter(id, []);
     };
+    // Consolidated JSX for the <Chip/> visual component
     const Template = ({
       label,
       value,
@@ -113,7 +177,7 @@ const FilterChipTray = ({
     );
     return (
       <>
-        {stateAndTimeFilters.includes(columnNames[id])
+        {additiveFilters.includes(columnNames[id])
           ? value.map((v, idx) => (
               <Template
                 key={`${columnNames[id]}-${idx}`}
@@ -122,7 +186,7 @@ const FilterChipTray = ({
                 onClick={() => clearFilter()}
               />
             ))
-          : defaultFilterState[id]
+          : subtractiveFilterDefaults[id]
               ?.filter((f) => !value?.includes(f))
               .map((v, idx) => (
                 <Template
@@ -231,7 +295,11 @@ export default function PortalTable<V extends {} = {}>({
             setAllFilters={setAllFilters}
           />
           <div className="filter-chip-tray-container">
-            <FilterChipTray filters={filters} setFilter={setFilter} />
+            <FilterChipTray
+              internalName={internalName}
+              filters={filters}
+              setFilter={setFilter}
+            />
           </div>
         </>
       )}
