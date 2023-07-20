@@ -31,7 +31,6 @@ function useOutsideAlerter(ref, setShowMenu) {
 export default function ActionPopup({
   theComponent,
   formSource,
-  userRole,
   alertCallback,
 }) {
   const [showMenu, setShowMenu] = useState(false);

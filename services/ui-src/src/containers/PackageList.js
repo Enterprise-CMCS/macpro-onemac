@@ -170,12 +170,11 @@ const PackageList = () => {
         <ActionPopup
           theComponent={row.original}
           formSource={FORM_SOURCE.PACKAGE_LIST}
-          userRole={userRoleObj}
           alertCallback={tellPackageListAboutAction}
         />
       );
     },
-    [tellPackageListAboutAction, userRoleObj]
+    [tellPackageListAboutAction]
   );
 
   const exportTransformMap = {
