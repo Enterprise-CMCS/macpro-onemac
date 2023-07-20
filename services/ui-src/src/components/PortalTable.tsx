@@ -1,4 +1,4 @@
-import React, { ReactNode, useCallback, useEffect, useState } from "react";
+import React, { ReactNode, useCallback, useEffect } from "react";
 import {
   HeaderGroup,
   TableInstance,
@@ -108,9 +108,6 @@ const FilterChipTray = ({
   filters: Filters<any>;
   setFilter: (columnId: IdType<any>, updater: any) => void;
 }) => {
-  const [subtractedFilters, setSubtractedFilters] = useState<
-    Array<{ id: string; value: any[] }>
-  >([]);
   // @ts-ignore
   // TODO: "userRole" not recognized as part of AppContext despite being defined
   const { userRole } = useAppContext();
