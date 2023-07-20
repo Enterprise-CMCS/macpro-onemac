@@ -1,4 +1,4 @@
-import React, { ReactNode, useCallback, useEffect } from "react";
+import React, { ReactNode, useCallback, useEffect, useState } from "react";
 import {
   HeaderGroup,
   TableInstance,
@@ -108,54 +108,60 @@ const FilterChipTray = ({
   filters: Filters<any>;
   setFilter: (columnId: IdType<any>, updater: any) => void;
 }) => {
+  const [subtractedFilters, setSubtractedFilters] = useState<
+    Array<{ id: string; value: any[] }>
+  >([]);
+  // @ts-ignore
+  // TODO: "userRole" not recognized as part of AppContext despite being defined
+  const { userRole } = useAppContext();
+  // Returns the proper array of statuses for each tab and for each user
+  const getOriginalStatuses = useCallback(() => {
+    if (userRole.includes("state")) {
+      // Returns for statesubmitter, statesystemadmin
+      return (STATE_STATUSES as StringIndexedObject)[internalName];
+    } else {
+      // Returns for defaulcmsuser, cmsreviewer, cmsroleapprover, stytemadmin,
+      // and helpdesk
+      return (CMS_STATUSES as StringIndexedObject)[internalName];
+    }
+  }, [userRole, internalName]);
+  // Easy map for column ids to display names
+  const columnNames: { [index: string]: string } = {
+    [COLUMN_ID.TERRITORY]: "State",
+    [COLUMN_ID.TYPE]: "Type",
+    [COLUMN_ID.STATUS]: "Status",
+    [COLUMN_ID.SUBMISSION_TIMESTAMP]: "Initial Submission",
+    [COLUMN_ID.LATEST_RAI_TIMESTAMP]: "Formal RAI Response",
+  };
+  // String-accessible object containing the original state for subtractive
+  // filters. (Subtractive referring to how those are all-on at the start, and
+  // only removed one-by-one)
+  const subtractiveFilterDefaults: { [index: string]: any[] } = {
+    [COLUMN_ID.TYPE]: commonTypes[internalName],
+    [COLUMN_ID.STATUS]: getOriginalStatuses(),
+  };
+  // Filters that do not have an "all-on" default state. (Ex: time-based and
+  // State-based filters)
+  const additiveFilters = [
+    columnNames[COLUMN_ID.TERRITORY],
+    columnNames[COLUMN_ID.SUBMISSION_TIMESTAMP],
+    columnNames[COLUMN_ID.LATEST_RAI_TIMESTAMP],
+  ];
   const Chip = ({ id, value }: { id: string; value: any[] }) => {
-    // @ts-ignore
-    // TODO: "userRole" not recognized as part of AppContext despite being defined
-    const { userRole } = useAppContext();
-    // Returns the proper array of statuses for each tab and for each user
-    const getOriginalStatuses = useCallback(() => {
-      if (userRole.includes("state")) {
-        // Returns for statesubmitter, statesystemadmin
-        return (STATE_STATUSES as StringIndexedObject)[internalName];
-      } else {
-        // Returns for defaulcmsuser, cmsreviewer, cmsroleapprover, stytemadmin,
-        // and helpdesk
-        return (CMS_STATUSES as StringIndexedObject)[internalName];
-      }
-    }, [userRole, internalName]);
-    // Early return if no value present - Hooks must go above the return so that
-    // they are not conditional per React's guidelines
-    if (!value || !value.length) return null;
-    // Easy map for column ids to display names
-    const columnNames: { [index: string]: string } = {
-      [COLUMN_ID.TERRITORY]: "State",
-      [COLUMN_ID.TYPE]: "Type",
-      [COLUMN_ID.STATUS]: "Status",
-      [COLUMN_ID.SUBMISSION_TIMESTAMP]: "Initial Submission",
-      [COLUMN_ID.LATEST_RAI_TIMESTAMP]: "Formal RAI Response",
-    };
-    // String-accessible object containing the original state for subtractive
-    // filters. (Subtractive referring to how those are all-on at the start, and
-    // only removed one-by-one)
-    const subtractiveFilterDefaults: { [index: string]: any[] } = {
-      [COLUMN_ID.TYPE]: commonTypes[internalName],
-      [COLUMN_ID.STATUS]: getOriginalStatuses(),
-    };
-    // Filters that do not have an "all-on" default state. (Ex: time-based and
-    // State-based filters)
-    const additiveFilters = [
-      columnNames[COLUMN_ID.TERRITORY],
-      columnNames[COLUMN_ID.SUBMISSION_TIMESTAMP],
-      columnNames[COLUMN_ID.LATEST_RAI_TIMESTAMP],
-    ];
     // Re-adds a filter to subtractive filters such as status and type.
     const resetFilter = (value: any) => {
-      setFilter(id, value);
+      const newValue = filters?.find((f) => f.id === id)?.value as string[];
+      newValue.push(value);
+      setFilter(id, newValue);
     };
     // Clears all options from additive filters such as times and states.
     const clearFilter = () => {
       setFilter(id, []);
     };
+    // Early return if no value present - Hooks must go above the return so that
+    // they are not conditional per React's guidelines
+    if (!value || (!value.length && additiveFilters.includes(columnNames[id])))
+      return null;
     // Consolidated JSX for the <Chip/> visual component
     const Template = ({
       label,
