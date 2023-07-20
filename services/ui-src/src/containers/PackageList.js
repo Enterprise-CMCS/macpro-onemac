@@ -175,7 +175,7 @@ const PackageList = () => {
         />
       );
     },
-    [tellPackageListAboutAction]
+    [tellPackageListAboutAction, userRoleObj]
   );
 
   const exportTransformMap = {

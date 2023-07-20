@@ -278,7 +278,13 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
       setComponentIdStatusMessages(validationMessages);
     };
     checkId();
-  }, [formConfig, validateComponentId, alertCode, oneMacFormData.componentId]);
+  }, [
+    formConfig,
+    validateComponentId,
+    alertCode,
+    oneMacFormData.componentId,
+    presetComponentId,
+  ]);
 
   useEffect(() => {
     const isTitleReady: boolean = Boolean(
