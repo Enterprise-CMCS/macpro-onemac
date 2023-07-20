@@ -65,11 +65,13 @@ Feature: OY2-11149 Submission Dashboard - Search bar
         When Login with state submitter user
         Then search existing user with dash
         Then verify user exists with id number searched
-@focus 
+
     Scenario: Search CPOC
         Given I am on Login Page
         When Clicking on Development Login
         When Login with state submitter user
+        Then click show hide columns button
+        Then click CPOC Name checkbox
         Then search for CPOC named Chester Tester
         Then verify the CPOC searched for is Chester Tester in the first result
 

@@ -5,6 +5,7 @@
 
 import { ONEMAC_TYPE } from "./workflow.js";
 
+export const FAQ_TARGET = "tab-faq";
 export const ROUTES = {
   DETAIL: "/detail",
   USER_MANAGEMENT: "/usermanagement",

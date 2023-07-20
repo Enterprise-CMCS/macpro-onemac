@@ -19,9 +19,16 @@ const SEATOOL_TO_ONEMAC_STATUS = {
     Workflow.ONEMAC_STATUS.PENDING_APPROVAL,
   [Workflow.SEATOOL_STATUS.UNKNOWN]: Workflow.ONEMAC_STATUS.SUBMITTED,
 };
+const finalDispositionStatuses = [
+  Workflow.ONEMAC_STATUS.APPROVED,
+  Workflow.ONEMAC_STATUS.DISAPPROVED,
+  Workflow.ONEMAC_STATUS.WITHDRAWN,
+];
 const oneMacTableName = process.env.IS_OFFLINE
   ? process.env.localTableName
   : process.env.oneMacTableName;
+
+const emptyField = "-- --";
 
 export const buildAnyPackage = async (packageId, config) => {
   console.log("Building package: ", packageId);
@@ -52,19 +59,21 @@ export const buildAnyPackage = async (packageId, config) => {
         raiResponses: [],
         waiverExtensions: [],
         withdrawalRequests: [],
-        currentStatus: "-- --", // include for ophans
+        currentStatus: emptyField,
         submissionTimestamp: 0,
-        submitterName: "-- --",
-        submitterEmail: "-- --",
-        subject: "-- --",
-        description: "-- --",
-        cpocName: "-- --",
+        submitterName: emptyField,
+        submitterEmail: emptyField,
+        subject: emptyField,
+        description: emptyField,
+        cpocName: emptyField,
         reviewTeam: [],
+        adminChanges: [],
       },
     };
     let currentPackage;
     let showPackageOnDashboard = false;
     let lmTimestamp = 0;
+    let adminChanges = [];
 
     result.Items.forEach((anEvent) => {
       // we ignore all other v's (for now)
@@ -95,6 +104,10 @@ export const buildAnyPackage = async (packageId, config) => {
         if (anEvent?.currentStatus === Workflow.ONEMAC_STATUS.INACTIVATED)
           return;
         showPackageOnDashboard = true;
+
+        // admin changes are consolidated across all OneMAC events
+        if (anEvent?.adminChanges && _.isArray(anEvent.adminChanges))
+          adminChanges = [...anEvent.adminChanges, ...adminChanges];
       }
 
       if (timestamp > lmTimestamp) {
@@ -182,6 +195,24 @@ export const buildAnyPackage = async (packageId, config) => {
           console.log("the review team is: ", putParams.Item.reviewTeam);
         }
 
+        let approvedEffectiveDate = emptyField;
+        if (
+          anEvent.STATE_PLAN.APPROVED_EFFECTIVE_DATE &&
+          typeof anEvent.STATE_PLAN.APPROVED_EFFECTIVE_DATE === "number"
+        ) {
+          approvedEffectiveDate = anEvent.STATE_PLAN.APPROVED_EFFECTIVE_DATE;
+        } else if (
+          anEvent.STATE_PLAN.ACTUAL_EFFECTIVE_DATE &&
+          typeof anEvent.STATE_PLAN.ACTUAL_EFFECTIVE_DATE === "number"
+        ) {
+          approvedEffectiveDate = anEvent.STATE_PLAN.ACTUAL_EFFECTIVE_DATE;
+        }
+        if (typeof approvedEffectiveDate === "number") {
+          putParams.Item.approvedEffectiveDate = DateTime.fromMillis(
+            approvedEffectiveDate
+          ).toFormat("yyyy-LL-dd");
+        }
+
         if (timestamp < lmTimestamp) return;
 
         const seaToolStatus = anEvent?.SPW_STATUS.map((oneStatus) =>
@@ -195,12 +226,24 @@ export const buildAnyPackage = async (packageId, config) => {
           anEvent.STATE_PLAN.SPW_STATUS_ID,
           seaToolStatus
         );
-        seaToolStatus &&
-          SEATOOL_TO_ONEMAC_STATUS[seaToolStatus] &&
-          (putParams.Item.currentStatus =
-            SEATOOL_TO_ONEMAC_STATUS[seaToolStatus]);
-
-        return;
+        if (seaToolStatus && SEATOOL_TO_ONEMAC_STATUS[seaToolStatus]) {
+          const oneMacStatus = SEATOOL_TO_ONEMAC_STATUS[seaToolStatus];
+          putParams.Item.currentStatus = oneMacStatus;
+          console.log("onemac status is: ", oneMacStatus);
+          console.log(
+            "onemac status date is: ",
+            anEvent.STATE_PLAN.STATUS_DATE
+          );
+          console.log(
+            "onemac status is final:",
+            finalDispositionStatuses.includes(oneMacStatus)
+          );
+          if (finalDispositionStatuses.includes(oneMacStatus)) {
+            putParams.Item.finalDispositionDate = DateTime.fromMillis(
+              anEvent.STATE_PLAN.STATUS_DATE
+            ).toFormat("yyyy-LL-dd");
+          }
+        }
       }
 
       // assume OneMAC event if got here
@@ -239,6 +282,15 @@ export const buildAnyPackage = async (packageId, config) => {
     putParams.Item.raiResponses.sort(
       (a, b) => b.submissionTimestamp - a.submissionTimestamp
     );
+
+    adminChanges.sort((a, b) => b.changeTimestamp - a.changeTimestamp);
+    let lastTime = 0;
+    adminChanges.forEach((oneChange) => {
+      if (oneChange.changeTimestamp != lastTime) {
+        lastTime = oneChange.changeTimestamp;
+        putParams.Item.adminChanges.push(oneChange);
+      }
+    });
 
     putParams.Item.latestRaiResponseTimestamp =
       putParams.Item.raiResponses[0]?.submissionTimestamp;

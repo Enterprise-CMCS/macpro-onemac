@@ -12,6 +12,7 @@ import { Input } from "rsuite";
 import { TextField, Button, Review } from "@cmsgov/design-system";
 
 import {
+  FAQ_TARGET,
   FORM_SUCCESS_RESPONSE_CODES,
   RESPONSE_CODE,
   ROUTES,
@@ -90,13 +91,15 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
   // if only one waiver Authority choice, it is the default
   const presetWaiverAuthority = formConfig.waiverAuthority?.value;
 
+  const presetTemporaryExtensionType = location.state?.temporaryExtensionType;
+
   // The record we are using for the form.
   const [oneMacFormData, setOneMacFormData] = useState<OneMacFormData>({
     territory: getTerritoryFromComponentId(presetComponentId),
     additionalInformation: "",
     componentId: presetComponentId,
     waiverAuthority: presetWaiverAuthority,
-    temporaryExtensionType: undefined,
+    temporaryExtensionType: presetTemporaryExtensionType,
     proposedEffectiveDate: undefined,
     parentId: presetParentId,
     parentType: location.state?.parentType,
@@ -450,10 +453,13 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
               {formConfig.waiverAuthority.label}
             </Review>
           )}
+
           {formConfig.temporaryExtensionTypes && (
             <TemporaryExtensionTypeInput
               temporaryExtensionTypes={[...formConfig.temporaryExtensionTypes]}
               handleOnChange={handleInputChange}
+              temporaryExtensionType={oneMacFormData.temporaryExtensionType}
+              disabled={!!presetTemporaryExtensionType}
             />
           )}
           {formConfig.parentLabel && (
@@ -522,10 +528,25 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
             disabled={isSubmitting}
             fieldClassName="summary-field"
             multiline
-            onChange={handleInputChange}
+            onChange={(e) => {
+              handleInputChange(e);
+            }}
             value={oneMacFormData.additionalInformation}
             maxLength={config.MAX_ADDITIONAL_INFO_LENGTH}
+            aria-describedby="character-count"
+            aria-live="off"
+            aria-multiline={true}
           ></TextField>
+          <span
+            tabIndex={0}
+            id="character-count"
+            aria-label="character-count"
+            aria-live="polite"
+          >
+            {`${
+              4000 - oneMacFormData.additionalInformation.length
+            } characters remaining`}
+          </span>
           <p id="form-submit-instructions">
             <i>
               Once you submit this form, a confirmation email is sent to you and
@@ -568,7 +589,7 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
         <div className="faq-container">
           <span>Do you have questions or need support?</span>
           <a
-            target="new"
+            target={FAQ_TARGET}
             href={ROUTES.FAQ_TOP}
             className="ds-c-button ds-c-button--primary ds-u-text-decoration--none"
           >

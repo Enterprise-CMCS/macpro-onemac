@@ -8,21 +8,37 @@ import { validateUserReadOnly } from "./utils/validateUser";
 
 const s3 = new AWS.S3();
 
+async function generateSignedUrl(item) {
+  const attachmentURLs = await Promise.all(
+    item.attachments.map(({ url }) =>
+      s3.getSignedUrlPromise("getObject", {
+        Bucket: process.env.attachmentsBucket,
+        Key: decodeURIComponent(url.split("amazonaws.com/")[1]),
+        Expires: 3600,
+      })
+    )
+  );
+
+  attachmentURLs.forEach((url, idx) => {
+    item.attachments[idx].url = url;
+  });
+}
+
 async function assignAttachmentUrls(item) {
   if (Array.isArray(item.attachments)) {
-    const attachmentURLs = await Promise.all(
-      item.attachments.map(({ url }) =>
-        s3.getSignedUrlPromise("getObject", {
-          Bucket: process.env.attachmentsBucket,
-          Key: decodeURIComponent(url.split("amazonaws.com/")[1]),
-          Expires: 3600,
-        })
-      )
-    );
+    await generateSignedUrl(item);
+  }
 
-    attachmentURLs.forEach((url, idx) => {
-      item.attachments[idx].url = url;
-    });
+  if (item?.raiResponses?.length > 0) {
+    for (const child of item.raiResponses) {
+      await generateSignedUrl(child);
+    }
+  }
+
+  if (item?.withdrawalRequests?.length > 0) {
+    for (const child of item.withdrawalRequests) {
+      await generateSignedUrl(child);
+    }
   }
 }
 export const getDetails = async (event) => {
@@ -58,11 +74,11 @@ export const getDetails = async (event) => {
 
     await assignAttachmentUrls(result.Item);
 
-    if (result.Item?.raiResponses.length > 0) {
-      for (const child of result.Item?.raiResponses) {
-        await assignAttachmentUrls(child);
-      }
-    }
+    if (result.Item.waiverAuthority)
+      result.Item.temporaryExtensionType = result.Item.waiverAuthority.slice(
+        0,
+        7
+      );
 
     result.Item.currentStatus = userRoleObj.isCMSUser
       ? cmsStatusUIMap[result.Item.currentStatus]

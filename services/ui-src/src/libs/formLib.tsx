@@ -5,6 +5,7 @@ import {
   FileUploadProps,
   ONEMAC_ROUTES,
   ROUTES,
+  FAQ_TARGET,
 } from "cmscommonlib";
 import config from "../utils/config";
 import { Link } from "react-router-dom";
@@ -55,7 +56,7 @@ export const DefaultFileTypesInfo = () => (
       .xls, .xlsx, and a few others.
     </b>{" "}
     See the full list on the{" "}
-    <Link to={ROUTES.FAQ_ACCEPTED_FILE_TYPES} target="_blank">
+    <Link to={ROUTES.FAQ_ACCEPTED_FILE_TYPES} target={FAQ_TARGET}>
       FAQ Page
     </Link>
     .
@@ -67,7 +68,7 @@ export const DefaultFileSizeInfo = ({ route }: { route: string }) => (
     Maximum file size of {config.MAX_ATTACHMENT_SIZE_MB} MB per attachment.{" "}
     <b>You can add multiple files per attachment type.</b> Read the description
     for each of the attachment types on the{" "}
-    <Link to={route} target="_blank">
+    <Link to={route} target={FAQ_TARGET}>
       FAQ Page
     </Link>
     .

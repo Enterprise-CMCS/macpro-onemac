@@ -5,18 +5,98 @@ import {
   Button,
 } from "@cmsgov/design-system";
 import { Workflow, getUserRoleObj } from "cmscommonlib";
-import React from "react";
+import React, { useCallback, useMemo } from "react";
 import { useAppContext } from "../../libs/contextLib";
 import { formatDateOnly, formatDate } from "../../utils/date-utils";
 import { ComponentDetail } from "../DetailView";
-import { OneMACDetail } from "../../libs/detailLib";
+import { AttributeDetail, OneMACDetail } from "../../libs/detailLib";
 import FileList from "../../components/FileList";
 import { actionComponent } from "../../libs/actionLib";
 import { AdditionalInfoSection } from "./AdditionalInfoSection";
 import { FORM_SOURCE } from "../../domain-types";
 import { useToggle } from "../../libs/hooksLib";
+import { Grid } from "@material-ui/core";
 
 export const NUM_REVIEWERS_TO_SHOW = 3;
+
+/** The detail section you know and love, now sporting a brand new second
+ * column! Uses Material-UI {@link Grid} and the CMS {@link Review} components.
+ * */
+const TwoColumnDetails = ({
+  detailSection,
+  attributes,
+}: {
+  detailSection: AttributeDetail[];
+  attributes: ComponentDetail;
+}) => {
+  /** Sorting the incoming `detailSection` into groups of two so each
+   * single array item is an array where index 0 is column 1, and index
+   * 1 is column 2.
+   * @example [1, 2, 3, 4] => [[1, 2], [3, 4]]*/
+  const twoColumnArray = useMemo(() => {
+    const twoColArray: Array<Array<AttributeDetail>> = [];
+    for (let i = 0; i <= detailSection.length; i += 2) {
+      twoColArray.push([detailSection[i], detailSection[i + 1]]);
+    }
+    return twoColArray;
+  }, [detailSection]);
+  /** A single detail item using {@link Review} for styles and handling
+   * defaults. */
+  const DetailItem = ({ item }: { item?: AttributeDetail }) =>
+    item !== undefined ? (
+      <Review heading={item.heading}>
+        {attributes[item.fieldName] ?? item.default ?? <></>}
+      </Review>
+    ) : (
+      <div className="detail-grid-item"></div>
+    );
+  /** A single row of TWO {@link DetailItem}s and {@link Grid} styles from
+   * Material-UI. Handles validating a user's level of access for a field. */
+  const DetailRow = ({
+    firstColumn,
+    secondColumn,
+  }: {
+    firstColumn?: AttributeDetail;
+    secondColumn?: AttributeDetail;
+  }) => {
+    const { userProfile } = useAppContext() ?? {};
+    const userRoleObj = getUserRoleObj(userProfile?.userData?.roleList);
+    // Can be invoked to check permission to view
+    const hasPermission = useCallback(
+      (item?: AttributeDetail) => {
+        if (item === undefined || item === null) return false;
+        return item.rolePrivilege ? userRoleObj[item.rolePrivilege] : true;
+      },
+      [userRoleObj]
+    );
+    return (
+      <Grid
+        justifyContent="space-between"
+        container
+        item
+        direction="row"
+        className="detail-grid-item"
+      >
+        <Grid xs={12} sm={5} item className="detail-grid-item">
+          {hasPermission(firstColumn) && <DetailItem item={firstColumn} />}
+        </Grid>
+        <Grid xs={12} sm={5} item className="detail-grid-item">
+          {hasPermission(secondColumn) && <DetailItem item={secondColumn} />}
+        </Grid>
+      </Grid>
+    );
+  };
+
+  return (
+    <div>
+      <Grid container>
+        {twoColumnArray.map((row, index) => (
+          <DetailRow key={index} firstColumn={row[0]} secondColumn={row[1]} />
+        ))}
+      </Grid>
+    </div>
+  );
+};
 
 const ExpandableList = ({
   heading,
@@ -153,15 +233,10 @@ export const DetailSection = ({
       <div className="read-only-submission">
         <section className="detail-section">
           <h2>{pageConfig.detailHeader} Details</h2>
-          {pageConfig.detailSection?.map(
-            (item, index) =>
-              (detail[item.fieldName] || item.default) &&
-              (item.rolePrivilege ? userRoleObj[item.rolePrivilege] : true) && (
-                <Review key={index} heading={item.heading}>
-                  {detail[item.fieldName] ?? item.default}
-                </Review>
-              )
-          )}
+          <TwoColumnDetails
+            detailSection={pageConfig.detailSection}
+            attributes={detail}
+          />
           {pageConfig.showReviewTeam && (
             <ExpandableList
               heading="Review Team (SRT)"
@@ -198,6 +273,44 @@ export const DetailSection = ({
 
         <AdditionalInfoSection additionalInfo={detail.additionalInformation} />
 
+        {detail.adminChanges?.length > 0 && (
+          <section className="detail-section">
+            <h2>Administrative Package Changes</h2>
+            <p>
+              Administrative changes reflect updates to specific data fields. If
+              you have additional questions, please contact the assigned CPOC.
+            </p>
+            <Accordion>
+              {detail.adminChanges?.map((adminChange, index) => {
+                return (
+                  <AccordionItem
+                    buttonClassName="accordion-button"
+                    contentClassName="accordion-content"
+                    heading={
+                      "Submitted on " +
+                      formatDate(adminChange.changeTimestamp) +
+                      " - Manual Update"
+                    }
+                    headingLevel="6"
+                    id={"admin_change_" + index + "_caret"}
+                    key={"admin_change_" + index}
+                    defaultOpen={index === 0}
+                  >
+                    <Review className="preserve-spacing" heading="Change Made">
+                      {adminChange.changeMade}
+                    </Review>
+                    <Review
+                      className="preserve-spacing"
+                      heading="Change Reason"
+                    >
+                      {adminChange.changeReason}
+                    </Review>
+                  </AccordionItem>
+                );
+              })}
+            </Accordion>
+          </section>
+        )}
         {detail.raiResponses?.length > 0 && (
           <section className="detail-section">
             <h2>Formal RAI Responses</h2>
