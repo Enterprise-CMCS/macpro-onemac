@@ -150,7 +150,7 @@ const FilterChipTray = ({
     ];
     // Re-adds a filter to subtractive filters such as status and type.
     const resetFilter = (value: any) => {
-      const newValue = setFilter(id, value);
+      setFilter(id, value);
     };
     // Clears all options from additive filters such as times and states.
     const clearFilter = () => {
