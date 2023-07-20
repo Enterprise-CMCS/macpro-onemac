@@ -2488,7 +2488,11 @@ ul.choice-list {
   margin-right: 1rem;
   margin-left: 1rem;
   margin-bottom: 2rem;
-  justify-content: flex-end;
+  justify-content: space-between;
+
+  span {
+    white-space: nowrap;
+  }
 }
 
 .filter-chip-tray {

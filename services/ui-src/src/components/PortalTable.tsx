@@ -55,6 +55,13 @@ const defaultColumn = {
   disableGlobalFilter: true,
 };
 
+// Filters that do not have an "all-on" default state. (Ex: time-based and
+// State-based filters)
+export const additiveFilters = [
+  COLUMN_ID.TERRITORY,
+  COLUMN_ID.SUBMISSION_TIMESTAMP,
+  COLUMN_ID.LATEST_RAI_TIMESTAMP,
+];
 // Convenient type for casting JS objects to string-indexed accessible TS object
 type StringIndexedObject = { [key: string]: string[] };
 // String-accessible object with types for each "internalName" value (spa, waiver)
@@ -100,10 +107,12 @@ const STATE_STATUSES: StringIndexedObject = {
 };
 
 const FilterChipTray = ({
+  recordCount,
   internalName,
   filters,
   setFilter,
 }: {
+  recordCount: number;
   internalName: string;
   filters: Filters<any>;
   setFilter: (columnId: IdType<any>, updater: any) => void;
@@ -137,13 +146,6 @@ const FilterChipTray = ({
     [COLUMN_ID.TYPE]: commonTypes[internalName],
     [COLUMN_ID.STATUS]: getOriginalStatuses(),
   };
-  // Filters that do not have an "all-on" default state. (Ex: time-based and
-  // State-based filters)
-  const additiveFilters = [
-    columnNames[COLUMN_ID.TERRITORY],
-    columnNames[COLUMN_ID.SUBMISSION_TIMESTAMP],
-    columnNames[COLUMN_ID.LATEST_RAI_TIMESTAMP],
-  ];
   const Chip = ({ id, value }: { id: string; value: any[] }) => {
     // Re-adds a filter to subtractive filters such as status and type.
     const resetFilter = (value: any) => {
@@ -180,7 +182,7 @@ const FilterChipTray = ({
     );
     return (
       <>
-        {additiveFilters.includes(columnNames[id])
+        {additiveFilters.includes(id)
           ? value.map((v, idx) => (
               <Template
                 key={`${columnNames[id]}-${idx}`}
@@ -204,6 +206,7 @@ const FilterChipTray = ({
   };
   return (
     <div className="filter-chip-tray-container">
+      <span>{recordCount} records</span>
       <div className="filter-chip-tray">
         {filters.map((filter) => {
           return (
@@ -300,6 +303,7 @@ export default function PortalTable<V extends {} = {}>({
             setAllFilters={setAllFilters}
           />
           <FilterChipTray
+            recordCount={rows.length}
             internalName={internalName}
             filters={filters}
             setFilter={setFilter}
