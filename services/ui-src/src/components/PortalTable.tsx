@@ -55,13 +55,6 @@ const defaultColumn = {
   disableGlobalFilter: true,
 };
 
-// Filters that do not have an "all-on" default state. (Ex: time-based and
-// State-based filters)
-export const additiveFilters = [
-  COLUMN_ID.TERRITORY,
-  COLUMN_ID.SUBMISSION_TIMESTAMP,
-  COLUMN_ID.LATEST_RAI_TIMESTAMP,
-];
 // Convenient type for casting JS objects to string-indexed accessible TS object
 type StringIndexedObject = { [key: string]: string[] };
 // String-accessible object with types for each "internalName" value (spa, waiver)
@@ -131,6 +124,13 @@ const FilterChipTray = ({
       return (CMS_STATUSES as StringIndexedObject)[internalName];
     }
   }, [userRole, internalName]);
+  // Filters that do not have an "all-on" default state. (Ex: time-based and
+  // State-based filters)
+  const additiveFilters = [
+    COLUMN_ID.TERRITORY,
+    COLUMN_ID.SUBMISSION_TIMESTAMP,
+    COLUMN_ID.LATEST_RAI_TIMESTAMP,
+  ];
   // Easy map for column ids to display names
   const columnNames: { [index: string]: string } = {
     [COLUMN_ID.TERRITORY]: "State",
