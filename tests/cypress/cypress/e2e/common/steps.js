@@ -2034,6 +2034,12 @@ Then("verify 2 action cards exist", () => {
 Then("verify the status on the card is {string}", (status) => {
   OneMacPackageDetailsPage.verifyStatusIs(status);
 });
+Then("verify 2nd clock is visible under the status", () => {
+  OneMacPackageDetailsPage.verify2ndClockIsVisible();
+});
+Then("verify 2nd clock is not visible under the status", () => {
+  OneMacPackageDetailsPage.verify2ndClockIsNotVisible();
+});
 Then("verify there is not a 90th day date on the card", () => {
   OneMacPackageDetailsPage.verify90thDayDateDoesntExist();
 });
@@ -2209,6 +2215,9 @@ Then("verify Enter the MACPro system button is visible and clickable", () => {
 Then("verify RAI Responses header exists", () => {
   OneMacPackageDetailsPage.verifyRaiResponseHeaderExists();
 });
+Then("verify RAI Responses header does not exist", () => {
+  OneMacPackageDetailsPage.verifyRaiResponseHeaderDoesNotExist();
+});
 Then(
   "verify the Medicaid RAI Responses caret at the top of the list exists and is enabled",
   () => {
@@ -2342,7 +2351,7 @@ Then("verify the Proposed Effective Date is Pending", () => {
   OneMacPackageDetailsPage.verifyproposedEffectiveDateHeaderContainsPending();
 });
 Then(
-  "verify the Proposed Effective Date is a date formated like Mon dd yyyy",
+  "verify the Proposed Effective Date is a date formatted like Mon dd yyyy",
   () => {
     OneMacPackageDetailsPage.verifyproposedEffectiveDateHeaderContainsDate();
   }
@@ -2360,7 +2369,7 @@ Then(
   }
 );
 Then(
-  "verify the Final Disposition Date is a date formated like Mon dd yyyy",
+  "verify the Final Disposition Date is a date formatted like Mon dd yyyy",
   () => {
     OneMacPackageDetailsPage.verifyFinalDispositionDateHeaderContainsDate();
   }
@@ -2378,7 +2387,7 @@ Then(
   }
 );
 Then(
-  "verify the Approved Effective Date is a date formated like Mon dd yyyy",
+  "verify the Approved Effective Date is a date formatted like Mon dd yyyy",
   () => {
     OneMacPackageDetailsPage.verifyApprovedEffectiveDateHeaderContainsDate();
   }
@@ -2396,9 +2405,27 @@ Then(
   }
 );
 Then(
-  "verify the Actual Effective Date is a date formated like Mon dd yyyy",
+  "verify the Actual Effective Date is a date formatted like Mon dd yyyy",
   () => {
     OneMacPackageDetailsPage.verifyActualEffectiveDateHeaderContainsDate();
+  }
+);
+Then(
+  "verify there is an Formal RAI Received Date header in the details section",
+  () => {
+    OneMacPackageDetailsPage.verifyFormalRAIReceivedDateHeaderExists();
+  }
+);
+Then(
+  "verify there is not an Formal RAI Received Date header in the details section",
+  () => {
+    OneMacPackageDetailsPage.verifyFormalRAIReceivedDateHeaderDoesNotExists();
+  }
+);
+Then(
+  "verify the Formal RAI Received Date is a date formatted like Mon dd yyyy",
+  () => {
+    OneMacPackageDetailsPage.verifyFormalRAIReceivedDateHeaderContainsDate();
   }
 );
 Then("verify the Amendment Number header exists", () => {
