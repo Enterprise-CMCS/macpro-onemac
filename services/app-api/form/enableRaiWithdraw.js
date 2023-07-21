@@ -126,7 +126,8 @@ export const main = handler(async (event) => {
     if (records.length > 0) {
       // the first record is the most recent as they were sorted by submissionTimestamp
       const mostRecentRecord = records[0];
-      mostRecentRecord.status = Workflow.ONEMAC_STATUS.PENDING;
+      mostRecentRecord.currentStatus =
+        Workflow.ONEMAC_STATUS.WITHDRAW_RAI_ENABLED;
       const adminChange = {
         changeTimestamp: Date.now(),
         changeMade: `${data.submitterName} has enabled State package action to withdraw Formal RAI Response`,

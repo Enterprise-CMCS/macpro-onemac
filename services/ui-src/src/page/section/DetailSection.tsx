@@ -325,9 +325,9 @@ export const DetailSection = ({
                     buttonClassName="accordion-button"
                     contentClassName="accordion-content"
                     heading={
-                      (raiResponse.currentStatus === "Submitted"
-                        ? "Submitted"
-                        : "Withdrawn") +
+                      (raiResponse.currentStatus === "Withdrawn"
+                        ? "Withdrawn"
+                        : "Submitted") +
                       " on " +
                       formatDate(raiResponse.submissionTimestamp)
                     }

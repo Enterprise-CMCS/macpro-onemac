@@ -127,10 +127,7 @@ export const buildAnyPackage = async (packageId, config) => {
           additionalInformation: anEvent.additionalInformation,
           currentStatus: anEvent.currentStatus,
         });
-        if (anEvent.componentType === `rairesponsewithdraw`)
-          putParams.Item.currentStatus =
-            Workflow.ONEMAC_STATUS.WITHDRAW_RAI_REQUESTED;
-        else putParams.Item.currentStatus = Workflow.ONEMAC_STATUS.SUBMITTED;
+        putParams.Item.currentStatus = anEvent.currentStatus;
 
         return;
       }
@@ -147,15 +144,6 @@ export const buildAnyPackage = async (packageId, config) => {
           Workflow.ONEMAC_STATUS.WITHDRAWAL_REQUESTED;
 
         return;
-      }
-
-      // set latest rai response to pending if withdraw is enabled
-      if (anEvent.componentType === Workflow.ONEMAC_TYPE.ENABLE_RAI_WITHDRAW) {
-        putParams.Item.raiResponses.sort(
-          (a, b) => b.submissionTimestamp - a.submissionTimestamp
-        );
-        putParams.Item.raiResponses[0].currentStatus =
-          Workflow.ONEMAC_STATUS.PENDING;
       }
 
       // SEATool "events" are actually a complete representation of the package state,
