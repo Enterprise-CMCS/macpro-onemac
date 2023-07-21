@@ -111,5 +111,9 @@ export function getActionsForPackage(
       );
       break;
   }
-  return actions;
+  // Filter out duplicates
+  const uniqueActions = actions.filter(
+    (action, index) => actions.indexOf(action) === index
+  );
+  return uniqueActions;
 }
