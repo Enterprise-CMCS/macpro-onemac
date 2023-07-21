@@ -1,7 +1,11 @@
 import React, { FC } from "react";
 import OneMACForm from "../OneMACForm";
 import { defaultOneMACFormConfig, OneMACFormConfig } from "../../libs/formLib";
-import { ONEMAC_ROUTES, enableRaiWithdraw } from "cmscommonlib";
+import {
+  ONEMAC_ROUTES,
+  TYPE_TO_DETAIL_ROUTE,
+  enableRaiWithdraw,
+} from "cmscommonlib";
 import { FormLocationState } from "../../domain-types";
 import { useLocation } from "react-router-dom";
 
@@ -27,8 +31,10 @@ export const enableRaiWithdrawFormInfo: OneMACFormConfig = {
 
 const EnableRaiWithdrawForm: FC = () => {
   const location = useLocation<FormLocationState>();
-  if (location.state?.componentId)
-    enableRaiWithdrawFormInfo.landingPage = `${ONEMAC_ROUTES.CHIP_SPA_DETAIL}/${location.state?.componentId}`;
+  if (location.state?.componentId && location.state?.parentType) {
+    const detailPath = TYPE_TO_DETAIL_ROUTE[location.state.parentType];
+    enableRaiWithdrawFormInfo.landingPage = `${detailPath}/${location.state?.componentId}`;
+  }
 
   return <OneMACForm formConfig={enableRaiWithdrawFormInfo} />;
 };
