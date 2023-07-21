@@ -259,6 +259,10 @@ const ROUTE_LIST: RouteSpec[] = [
       path: ONEMAC_ROUTES.TEMPORARY_EXTENSION,
       component: TemporaryExtensionForm,
     },
+    {
+      path: ONEMAC_ROUTES.WITHDRAW_RAI,
+      component: WithdrawRAIForm,
+    },
   ].map(({ path, ...rest }) => ({
     path,
     component: AuthenticatedRouteListRenderer,
@@ -275,10 +279,6 @@ const ROUTE_LIST: RouteSpec[] = [
     {
       path: ONEMAC_ROUTES.ENABLE_RAI_WITHDRAW,
       component: EnableRaiWithdrawForm,
-    },
-    {
-      path: ONEMAC_ROUTES.WITHDRAW_RAI,
-      component: WithdrawRAIForm,
     },
   ].map(({ path, ...rest }) => ({
     path,

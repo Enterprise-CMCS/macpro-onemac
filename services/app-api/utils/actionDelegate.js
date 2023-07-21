@@ -28,7 +28,7 @@ function getDefaultActions(
       break;
     case Workflow.ONEMAC_STATUS.WITHDRAW_RAI_ENABLED:
       if (userRole.canAccessForms)
-        actions.push(Workflow.PACKAGE_ACTION.WITHDRAW_RAI_RESPONSE);
+        actions.push(Workflow.PACKAGE_ACTION.WITHDRAW_RAI);
       break;
   }
   return actions;
