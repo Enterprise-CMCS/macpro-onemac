@@ -98,7 +98,9 @@ export const buildAnyPackage = async (packageId, config) => {
 
       // all updates after this influence lmtimestamp
       const [source, timestring] = anEvent.sk.split("#");
-      const timestamp = Number(timestring);
+      const timestamp = anEvent?.eventTimestamp
+        ? anEvent.eventTimestamp
+        : Number(timestring);
 
       if (source === "OneMAC") {
         if (anEvent?.currentStatus === Workflow.ONEMAC_STATUS.INACTIVATED)
@@ -123,6 +125,7 @@ export const buildAnyPackage = async (packageId, config) => {
       ) {
         putParams.Item.raiResponses.push({
           submissionTimestamp: anEvent.submissionTimestamp,
+          eventTimestamp: anEvent.eventTimestamp,
           attachments: anEvent.attachments,
           additionalInformation: anEvent.additionalInformation,
           currentStatus: anEvent.currentStatus,
@@ -136,6 +139,7 @@ export const buildAnyPackage = async (packageId, config) => {
       if (anEvent.componentType === `${config.componentType}withdraw`) {
         putParams.Item.withdrawalRequests.push({
           submissionTimestamp: anEvent.submissionTimestamp,
+          eventTimestamp: anEvent.eventTimestamp,
           attachments: anEvent.attachments,
           additionalInformation: anEvent.additionalInformation,
           currentStatus: anEvent.currentStatus,
@@ -285,7 +289,7 @@ export const buildAnyPackage = async (packageId, config) => {
     }
 
     putParams.Item.raiResponses.sort(
-      (a, b) => b.submissionTimestamp - a.submissionTimestamp
+      (a, b) => b.eventTimestamp - a.eventTimestamp
     );
 
     if (putParams.Item.raiResponses[0]?.currentStatus === "Submitted") {

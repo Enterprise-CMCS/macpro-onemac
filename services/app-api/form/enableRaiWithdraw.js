@@ -117,7 +117,7 @@ export const main = handler(async (event) => {
 
   await validate(data);
 
-  //get latest rai response - update status to Pending and add admin changes
+  //get latest rai response - update status and add admin changes
   try {
     const gsi1pk = `OneMAC#submit${data.parentType}rai`;
     const gsi1sk = data.componentId;
@@ -128,8 +128,9 @@ export const main = handler(async (event) => {
       const mostRecentRecord = records[0];
       mostRecentRecord.currentStatus =
         Workflow.ONEMAC_STATUS.WITHDRAW_RAI_ENABLED;
+      mostRecentRecord.eventTimestamp = Date.now();
       const adminChange = {
-        changeTimestamp: Date.now(),
+        changeTimestamp: mostRecentRecord.eventTimestamp,
         changeMade: `${data.submitterName} has enabled State package action to withdraw Formal RAI Response`,
         changeReason: data.additionalInformation,
       };

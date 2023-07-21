@@ -8437,26 +8437,6 @@
     "RO_ANALYST": null
   },
   {
-    "ID_Number": "MD-23-4441-VM",
-    "replica_id": 2528,
-    "sk": "SEATool#RAI#2519",
-    "RAI_Received_Date": 1676246400000,
-    "replica_timestamp": 1676471000990,
-    "pk": "MD-23-4441-VM",
-    "RAI_Requested_Date": 1675987200000,
-    "RAI_Withdrawn_Date": null
-  },
-  {
-    "ID_Number": "MD-23-4441-VM",
-    "replica_id": 2529,
-    "sk": "SEATool#RAI#2520",
-    "RAI_Received_Date": null,
-    "replica_timestamp": 1676477951817,
-    "pk": "MD-23-4441-VM",
-    "RAI_Requested_Date": 1675987200000,
-    "RAI_Withdrawn_Date": null
-  },
-  {
     "componentType": "medicaidspa",
     "eventTimestamp": 1675753200000,
     "currentStatus": "Submitted",
@@ -11937,26 +11917,6 @@
     },
     "pk": "MD-23-3331-VM",
     "RO_ANALYST": null
-  },
-  {
-    "ID_Number": "MD-23-3331-VM",
-    "replica_id": 2528,
-    "sk": "SEATool#RAI#2519",
-    "RAI_Received_Date": 1676246400000,
-    "replica_timestamp": 1676471000990,
-    "pk": "MD-23-3331-VM",
-    "RAI_Requested_Date": 1675987200000,
-    "RAI_Withdrawn_Date": null
-  },
-  {
-    "ID_Number": "MD-23-3331-VM",
-    "replica_id": 2529,
-    "sk": "SEATool#RAI#2520",
-    "RAI_Received_Date": null,
-    "replica_timestamp": 1676477951817,
-    "pk": "MD-23-3331-VM",
-    "RAI_Requested_Date": 1675987200000,
-    "RAI_Withdrawn_Date": null
   },
   {
     "clockEndTimestamp": 1681911131121,
