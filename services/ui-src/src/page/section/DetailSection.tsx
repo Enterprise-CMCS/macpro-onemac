@@ -333,15 +333,16 @@ export const DetailSection = ({
                     buttonClassName="accordion-button"
                     contentClassName="accordion-content"
                     heading={
-                      (raiResponse.currentStatus === "Withdrawn"
+                      (raiResponse.currentStatus ===
+                      Workflow.ONEMAC_STATUS.WITHDRAW_RAI_REQUESTED
                         ? "Withdrawn"
                         : "Submitted") +
                       " on " +
                       formatDate(raiResponse.submissionTimestamp)
                     }
                     headingLevel="6"
-                    id={raiResponse.componentType + index + "_caret"}
-                    key={raiResponse.componentType + index}
+                    id={`${raiResponse.componentType}-` + index + "_caret"}
+                    key={`${raiResponse.componentType}-` + index}
                     defaultOpen={index === 0}
                   >
                     {raiResponse.attachments && (
@@ -384,7 +385,7 @@ export const DetailSection = ({
                       <FileList
                         heading={"Withdrawal Request Documentation"}
                         uploadList={withdrawalRequest.attachments}
-                        zipId={withdrawalRequest.componentType + index}
+                        zipId={`${withdrawalRequest.componentType}-` + index}
                       />
                     ) : (
                       <>
