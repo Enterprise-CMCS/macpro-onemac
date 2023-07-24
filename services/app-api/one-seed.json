@@ -2417,7 +2417,22 @@
     "cpocName": "Chester Tester",
     "reviewTeam": ["Lester Tester", "Super Tester", "Jimmy Tester"],
     "componentId": "MD-22-2200-VM",
-    "raiResponses": [],
+    "raiResponses": [
+      {
+        "additionalInformation": "Testing the RAI Response connections to Waivers",
+        "attachments": [
+          {
+            "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            "filename": "OneMACInactivated.xlsx",
+            "s3Key": "1673472581115/OneMACInactivated.xlsx",
+            "title": "Waiver RAI Response",
+            "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1673472581115/OneMACInactivated.xlsx"
+          }
+        ],
+        "submissionTimestamp": 1675987200000
+      }
+    ],
+    "latestRaiResponseTimestamp": 1675987200000,
     "lastEventTimestamp": 1672291290683,
     "pk": "MD-22-2200-VM",
     "subject": "test subject",
@@ -5098,7 +5113,22 @@
     "cpocName": "Chester Tester",
     "reviewTeam": ["Lester Tester", "Super Tester", "Jimmy Tester"],
     "componentId": "MD-22-2303-VM",
-    "raiResponses": [],
+    "raiResponses": [
+      {
+        "additionalInformation": "Testing the RAI Response connections to Waivers",
+        "attachments": [
+          {
+            "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            "filename": "OneMACInactivated.xlsx",
+            "s3Key": "1673472581115/OneMACInactivated.xlsx",
+            "title": "Waiver RAI Response",
+            "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1673472581115/OneMACInactivated.xlsx"
+          }
+        ],
+        "submissionTimestamp": 1675987200000
+      }
+    ],
+    "latestRaiResponseTimestamp": 1675987200000,
     "lastEventTimestamp": 1673562102227,
     "pk": "MD-22-2303-VM",
     "subject": "test subject",
@@ -8465,7 +8495,22 @@
     "cpocName": "Chester Tester",
     "reviewTeam": ["Lester Tester", "Super Tester", "Jimmy Tester"],
     "componentId": "MD-23-3333-VM",
-    "raiResponses": [],
+    "raiResponses": [
+      {
+        "additionalInformation": "Testing the RAI Response connections to Waivers",
+        "attachments": [
+          {
+            "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            "filename": "OneMACInactivated.xlsx",
+            "s3Key": "1673472581115/OneMACInactivated.xlsx",
+            "title": "Waiver RAI Response",
+            "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1673472581115/OneMACInactivated.xlsx"
+          }
+        ],
+        "submissionTimestamp": 1675987200000
+      }
+    ],
+    "latestRaiResponseTimestamp": 1675987200000,
     "lastEventTimestamp": 1676387312330,
     "pk": "MD-23-3333-VM",
     "subject": "test subject",
@@ -10103,7 +10148,22 @@
     "cpocName": "Chester Tester",
     "reviewTeam": ["Lester Tester", "Super Tester", "Jimmy Tester"],
     "componentId": "MD-22-2203-VM",
-    "raiResponses": [],
+    "raiResponses": [
+      {
+        "additionalInformation": "Testing the RAI Response connections to Waivers",
+        "attachments": [
+          {
+            "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            "filename": "OneMACInactivated.xlsx",
+            "s3Key": "1673472581115/OneMACInactivated.xlsx",
+            "title": "Waiver RAI Response",
+            "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1673472581115/OneMACInactivated.xlsx"
+          }
+        ],
+        "submissionTimestamp": 1675987200000
+      }
+    ],
+    "latestRaiResponseTimestamp": 1675987200000,
     "lastEventTimestamp": 1673563409727,
     "pk": "MD-22-2203-VM",
     "subject": "test subject",
@@ -10657,7 +10717,22 @@
     "cpocName": "Chester Tester",
     "reviewTeam": ["Lester Tester", "Super Tester", "Jimmy Tester"],
     "componentId": "MD-22-2204-VM",
-    "raiResponses": [],
+    "raiResponses": [
+      {
+        "additionalInformation": "Testing the RAI Response connections to Waivers",
+        "attachments": [
+          {
+            "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            "filename": "OneMACInactivated.xlsx",
+            "s3Key": "1673472581115/OneMACInactivated.xlsx",
+            "title": "Waiver RAI Response",
+            "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1673472581115/OneMACInactivated.xlsx"
+          }
+        ],
+        "submissionTimestamp": 1675987200000
+      }
+    ],
+    "latestRaiResponseTimestamp": 1675987200000,
     "lastEventTimestamp": 1674138322323,
     "pk": "MD-22-2204-VM",
     "subject": "test subject",
@@ -18022,7 +18097,22 @@
     "subject": "test subject",
     "description": "test description",
     "componentId": "MD-22004.R00.00",
-    "raiResponses": [],
+    "raiResponses": [
+      {
+        "additionalInformation": "Testing the RAI Response connections to Waivers",
+        "attachments": [
+          {
+            "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            "filename": "OneMACInactivated.xlsx",
+            "s3Key": "1673472581115/OneMACInactivated.xlsx",
+            "title": "Waiver RAI Response",
+            "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1673472581115/OneMACInactivated.xlsx"
+          }
+        ],
+        "submissionTimestamp": 1675987200000
+      }
+    ],
+    "latestRaiResponseTimestamp": 1675987200000,
     "lastEventTimestamp": 1673560884687,
     "pk": "MD-22004.R00.00",
     "submitterName": "MDSTATE SUBMITTERNK"
