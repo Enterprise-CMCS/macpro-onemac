@@ -18,12 +18,12 @@ async function generateSignedUrl(item) {
           Expires: 3600,
         })
       )
-    }
-  );
+    );
 
-  attachmentURLs.forEach((url, idx) => {
-    item.attachments[idx].url = url;
-  });
+    attachmentURLs.forEach((url, idx) => {
+      item.attachments[idx].url = url;
+    });
+  }
 }
 
 async function assignAttachmentUrls(item) {
