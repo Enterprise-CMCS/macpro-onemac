@@ -11,7 +11,7 @@ custom:
   iamPath: ${ssm:/configuration/${self:custom.stage}/iam/path, ssm:/configuration/default/iam/path, "/"}
   iamPermissionsBoundaryPolicy: ${ssm:/configuration/${self:custom.stage}/iam/permissionsBoundaryPolicy, ssm:/configuration/default/iam/permissionsBoundaryPolicy, ""}
   attachmentsBucketArn: ${cf:uploads-${self:custom.stage}.AttachmentsBucketArn}
-  destinationAcct: ${ssm:/configuration/${self:custom.stage}/migration/destinationAcct, ssm:/configuration/default/migration/destinationAcct}
+  destinationAcct: ${ssm:/configuration/${self:custom.stage}/cross-acct/destinationAcct, ssm:/configuration/default/cross-acct/destinationAcct}
 
 provider:
   name: aws
