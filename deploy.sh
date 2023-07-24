@@ -36,6 +36,11 @@ services=(
   'admin'
 )
 
+# Only deploy for higher envs
+if [[ "$stage" == "develop" || "$stage" == "master" || "$stage" == "production" ]]; then
+  services+=('cross-acct')
+fi
+
 set -e
 for i in "${services[@]}"; do
     deploy $i
