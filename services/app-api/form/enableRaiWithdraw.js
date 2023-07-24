@@ -95,15 +95,15 @@ async function waitForStreamProcessing(componentId, eventTimestamp) {
       sk: `Package`,
     },
   };
-  do {
-    try {
+  try {
+    do {
       await new Promise((resolve) => setTimeout(resolve, 1000));
       const chkResponse = await dynamoDb.get(checkParams);
       packageUpdated = chkResponse?.Item?.lastEventTimestamp >= eventTimestamp;
-    } catch (e) {
-      console.log("%s check error:", componentId, e);
-    }
-  } while (!packageUpdated);
+    } while (!packageUpdated);
+  } catch (e) {
+    console.log("%s check error:", componentId, e);
+  }
 }
 
 export const main = handler(async (event) => {
@@ -114,8 +114,12 @@ export const main = handler(async (event) => {
     console.error("Failed to parse body", e);
     return RESPONSE_CODE.USER_SUBMISSION_FAILED;
   }
-
-  await validate(data);
+  try {
+    await validate(data);
+  } catch (e) {
+    console.error("Failed to validate", e);
+    return e;
+  }
 
   //get latest rai response - update status and add admin changes
   try {
