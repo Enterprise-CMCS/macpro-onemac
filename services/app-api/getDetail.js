@@ -9,39 +9,33 @@ import { validateUserReadOnly } from "./utils/validateUser";
 const s3 = new AWS.S3();
 
 async function generateSignedUrl(item) {
-  const attachmentURLs = await Promise.all(
-    item?.attachments.map(({ url }) =>
-      s3.getSignedUrlPromise("getObject", {
-        Bucket: process.env.attachmentsBucket,
-        Key: decodeURIComponent(url.split("amazonaws.com/")[1]),
-        Expires: 3600,
-      })
-    )
-  );
+  if (Array.isArray(item.attachments)) {
+    const attachmentURLs = await Promise.all(
+      item?.attachments.map(({ url }) =>
+        s3.getSignedUrlPromise("getObject", {
+          Bucket: process.env.attachmentsBucket,
+          Key: decodeURIComponent(url.split("amazonaws.com/")[1]),
+          Expires: 3600,
+        })
+      )
+    );
 
-  attachmentURLs.forEach((url, idx) => {
-    item.attachments[idx].url = url;
-  });
+    attachmentURLs.forEach((url, idx) => {
+      item.attachments[idx].url = url;
+    });
+  }
 }
 
 async function assignAttachmentUrls(item) {
-  if (Array.isArray(item.attachments)) {
-    await generateSignedUrl(item);
-  }
+  await generateSignedUrl(item);
 
-  if (
-    item?.raiResponses?.length > 0 &&
-    Array.isArray(item.raiResponses.attachments)
-  ) {
+  if (item?.raiResponses?.length > 0) {
     for (const child of item.raiResponses) {
       await generateSignedUrl(child);
     }
   }
 
-  if (
-    item?.withdrawalRequests?.length > 0 &&
-    Array.isArray(item.withdrawalRequests.attachments)
-  ) {
+  if (item?.withdrawalRequests?.length > 0) {
     for (const child of item.withdrawalRequests) {
       await generateSignedUrl(child);
     }
