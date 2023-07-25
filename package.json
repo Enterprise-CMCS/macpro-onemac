@@ -13,14 +13,14 @@
   "unsafe-perm": true,
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/CMSgov/onemac.git"
+    "url": "git+https://github.com/Enterprise-CMCS/macpro-onemac.git"
   },
   "author": "",
   "license": "CC0-1.0",
   "bugs": {
-    "url": "https://github.com/CMSgov/onemac/issues"
+    "url": "https://github.com/Enterprise-CMCS/macpro-onemac/issues"
   },
-  "homepage": "https://github.com/CMSgov/onemac#readme",
+  "homepage": "https://github.com/Enterprise-CMCS/macpro-onemac#readme",
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.29.1",
     "@typescript-eslint/parser": "^4.29.1",
@@ -41,7 +41,7 @@
     "prettier": "^2.3.1",
     "selenium-server": "^3.141.59",
     "serverless": "3.12.0",
-    "serverless-s3-bucket-helper": "https://git@github.com/CMSgov/serverless-s3-bucket-helper#0.1.1",
+    "serverless-s3-bucket-helper": "https://git@github.com/Enterprise-CMCS/serverless-s3-bucket-helper#0.1.1",
     "sinon": "^9.2.3",
     "typescript": "^4.3.5"
   },

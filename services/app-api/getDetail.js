@@ -29,13 +29,19 @@ async function generateSignedUrl(item) {
 async function assignAttachmentUrls(item) {
   await generateSignedUrl(item);
 
-  if (item?.raiResponses?.length > 0) {
+  if (
+    item?.raiResponses?.length > 0 &&
+    Array.isArray(item.raiResponses.attachments)
+  ) {
     for (const child of item.raiResponses) {
       await generateSignedUrl(child);
     }
   }
 
-  if (item?.withdrawalRequests?.length > 0) {
+  if (
+    item?.withdrawalRequests?.length > 0 &&
+    Array.isArray(item.withdrawalRequests.attachments)
+  ) {
     for (const child of item.withdrawalRequests) {
       await generateSignedUrl(child);
     }

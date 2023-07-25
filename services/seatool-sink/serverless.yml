@@ -377,6 +377,7 @@ resources:
       Type: AWS::SNS::Topic
       Properties:
         DisplayName: SNS Topic for Monitoring Kafka Connector Events
+        KmsMasterKeyId: ConnectorMonitorTopicKey
     ConnectorEventReceivedCount:
       Type: AWS::Logs::MetricFilter
       Properties:
