@@ -61,8 +61,10 @@ type StringIndexedObject = { [key: string]: string[] };
 const commonTypes: StringIndexedObject = {
   waiver: [
     "1915(b) Initial Waiver",
+    "1915(b) Temporary Extension",
     "1915(b) Waiver Amendment",
     "1915(b) Waiver Renewal",
+    "1915(c) Temporary Extension",
     "1915(c) Appendix K Amendment",
     "Temporary Extension",
   ],
