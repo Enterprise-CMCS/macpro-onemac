@@ -92,11 +92,18 @@ const commonStateStatuses = [
   "Under Review",
   "Withdrawal Requested",
 ];
-const CMS_STATUSES: StringIndexedObject = {
+/* These are used as the "default filter state" for the two main user types,
+ * CMS and State. These are used as a comparison array for the applied filters
+ * to determine which filters have been unchecked since react-table only tells
+ * us which filters remain checked.
+ *
+ * You will have to add new statuses here for the filter chips to show as a
+ * chip when a status is deselected. */
+const CMS_DEFAULTS: StringIndexedObject = {
   waiver: [...commonCMSStatuses, "Waiver Terminated"],
   spa: commonCMSStatuses,
 };
-const STATE_STATUSES: StringIndexedObject = {
+const STATE_DEFAULTS: StringIndexedObject = {
   waiver: [...commonStateStatuses, "Waiver Terminated"],
   spa: commonStateStatuses,
 };
@@ -119,11 +126,11 @@ const FilterChipTray = ({
   const getOriginalStatuses = useCallback(() => {
     if (userRole.includes("state")) {
       // Returns for statesubmitter, statesystemadmin
-      return (STATE_STATUSES as StringIndexedObject)[internalName];
+      return (STATE_DEFAULTS as StringIndexedObject)[internalName];
     } else {
       // Returns for defaulcmsuser, cmsreviewer, cmsroleapprover, stytemadmin,
       // and helpdesk
-      return (CMS_STATUSES as StringIndexedObject)[internalName];
+      return (CMS_DEFAULTS as StringIndexedObject)[internalName];
     }
   }, [userRole, internalName]);
   // Filters that do not have an "all-on" default state. (Ex: time-based and
