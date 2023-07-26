@@ -8,7 +8,7 @@
     "serverless-bundle": "^5.3.0",
     "serverless-dotenv-plugin": "^3.12.2",
     "serverless-offline": "^12.0.4",
-    "serverless-s3-bucket-helper": "git+https://git@github.com/CMSgov/serverless-s3-bucket-helper.git#0.1.1"
+    "serverless-s3-bucket-helper": "git+https://git@github.com/Enterprise-CMCS/serverless-s3-bucket-helper.git#0.1.1"
   },
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.43.0",
