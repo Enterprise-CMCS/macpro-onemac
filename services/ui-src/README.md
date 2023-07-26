@@ -4,7 +4,7 @@ This folder contains the OneMAC UI: a React single-page application generated fr
 
 ## Before you get started
 
-Be sure to follow the setup instructions for the OneMAC API, found [here](https://github.com/CMSgov/onemac/blob/develop/services/app-api/README.md). Also ensure that the build directory (`public`) has a file named `env-config.js` populated with a list of environment variables. These variables are used in the connection between the UI and API.
+Be sure to follow the setup instructions for the OneMAC API, found [here](https://github.com/Enterprise-CMCS/macpro-onemac/blob/develop/services/app-api/README.md). Also ensure that the build directory (`public`) has a file named `env-config.js` populated with a list of environment variables. These variables are used in the connection between the UI and API.
 
 ## Run the UI locally
 
@@ -33,9 +33,9 @@ git log --pretty=format:'%ae' | grep -v github.com | sort -u
 ### Login methods per environment
 
 - Feature branches: static test users, dynamic developer emails
-- [develop](https://github.com/CMSgov/onemac/tree/develop) branch: OKTA authentication, static test users, dynamic developer emails
-- [master](https://github.com/CMSgov/onemac/tree/master) branch: OKTA authentication, static test users, dynamic developer emails
-- [production](https://github.com/CMSgov/onemac/tree/production) branch: OKTA authentication
+- [develop](https://github.com/Enterprise-CMCS/macpro-onemac/tree/develop) branch: OKTA authentication, static test users, dynamic developer emails
+- [master](https://github.com/Enterprise-CMCS/macpro-onemac/tree/master) branch: OKTA authentication, static test users, dynamic developer emails
+- [production](https://github.com/Enterprise-CMCS/macpro-onemac/tree/production) branch: OKTA authentication
 
 ## Building the application
 
