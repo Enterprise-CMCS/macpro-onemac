@@ -226,24 +226,14 @@ const PackageList = () => {
           filter: CustomFilterTypes.DateRange,
           Filter: CustomFilterUi.DateRangeInPast,
         },
-        userRoleObj.isCMSUser
-          ? {
-              Header: "Formal RAI Received",
-              accessor: "latestRaiResponseTimestamp",
-              Cell: renderDate,
-              disableFilters: false,
-              filter: CustomFilterTypes.DateRange,
-              Filter: CustomFilterUi.DateRangeInPast,
-            }
-          : {
-              Header: "Formal RAI Response",
-              accessor: "latestRaiResponseTimestamp",
-              Cell: renderDate,
-              disableFilters: false,
-              filter: CustomFilterTypes.DateRange,
-              Filter: CustomFilterUi.DateRangeInPast,
-            },
-
+        {
+          Header: "Formal RAI Response",
+          accessor: "latestRaiResponseTimestamp",
+          Cell: renderDate,
+          disableFilters: false,
+          filter: CustomFilterTypes.DateRange,
+          Filter: CustomFilterUi.DateRangeInPast,
+        },
         {
           Header: "CPOC Name",
           accessor: "cpocName",
