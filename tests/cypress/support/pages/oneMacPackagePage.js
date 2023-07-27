@@ -107,8 +107,13 @@ const approveCheckBox = "//span[contains(text(),'Approved')]";
 //Element is Xpath use cy.xpath instead of cy.get
 const underReviewCheckBox = "//span[contains(text(),'Under Review')]";
 //Element is Xpath use cy.xpath instead of cy.get
-const withdrawalRequestedCheckBox =
-  "//span[contains(text(),'Withdrawal Requested')]";
+const withdrawalRequestedCheckBox = "//span[text()= 'Withdrawal Requested']";
+//Element is Xpath use cy.xpath instead of cy.get
+const raiResponseWithdrawalRequestedCheckBox =
+  "//span[text()= 'Formal RAI Response - Withdrawal Requested']";
+//Element is Xpath use cy.xpath instead of cy.get
+const raiResponseWithdrawEnabledCheckBox =
+  "//span[text()= 'RAI Response Withdraw Enabled']";
 //Element is Xpath use cy.xpath instead of cy.get
 const terminatedCheckBox = "//span[contains(text(),'Terminated')]";
 //Element is Xpath use cy.xpath instead of cy.get
@@ -509,11 +514,23 @@ export class oneMacPackagePage {
   clickTerminatedCheckBox() {
     cy.xpath(terminatedCheckBox).click();
   }
-  verifyWithdrawalRequestedCheckBoxCheckBox() {
+  verifyWithdrawalRequestedCheckBoxExists() {
     cy.xpath(withdrawalRequestedCheckBox).should("be.visible");
   }
   clickWithdrawalRequestedCheckBox() {
     cy.xpath(withdrawalRequestedCheckBox).click();
+  }
+  verifyRaiResponseWithdrawalRequestedCheckBoxExists() {
+    cy.xpath(raiResponseWithdrawalRequestedCheckBox).should("be.visible");
+  }
+  clickRaiResponseWithdrawalRequestedCheckBox() {
+    cy.xpath(raiResponseWithdrawalRequestedCheckBox).click();
+  }
+  verifyRaiResponseWithdrawEnabledCheckBoxExists() {
+    cy.xpath(raiResponseWithdrawEnabledCheckBox).should("be.visible");
+  }
+  clickRaiResponseWithdrawEnabledCheckBox() {
+    cy.xpath(raiResponseWithdrawEnabledCheckBox).click();
   }
   verifyWithdrawnCheckBoxExists() {
     cy.xpath(withdrawnCheckBox).should("be.visible");

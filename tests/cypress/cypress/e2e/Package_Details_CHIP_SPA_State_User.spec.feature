@@ -41,32 +41,31 @@ Feature: CHIP SPA State Details View - Card View with Actions
         Then verify there is a Final Disposition Date header in the details section
         Then verify there is an Approved Effective Date in the details section
 
-    # Need seed data / reset data update
-    # Scenario: Screen Enhance - Withdrawal Requested SPA
-    #     Then click the Withdrawal Requested checkbox
-    #     Then Click on Filter Button
-    #     Then click the SPA ID link in the first row
-    #     Then verify the package details page is visible
-    #     Then verify 2 action cards exist
-    #     Then verify the status on the card is "Withdrawal Requested"
-    #     Then verify package actions header is visible
-    #     Then verify there are no package actions available
-    #     Then verify the details section exists
-    #     Then verify there is a Type header in the details section
-    #     Then verify a type containing SPA exists for the Type
-    #     Then verify there is a State header in the details section
-    #     Then verify a state exists for the State
-    #     Then verify there is an Initial Submission Date header in the details section
-    #     Then verify a date exists for the Initial Submission Date
-    #     Then verify there is a Proposed Effective Date header in the details section
-    #     Then verify the attachments section exists
-    #     Then verify the download all button exists
-    #     Then verify the additional information section exists
-    #     Then verify subject is not visible in the details section
-    #     Then verify description is not visible in the details section
-        # Then verify there is a CPOC header in the details section
-        # Then verify the CPOC has a value displayed in the details section
-        # Then verify Review Team SRT is not visible in the details section
+    Scenario: Screen Enhance - Withdrawal Requested SPA
+        Then click the Withdrawal Requested checkbox
+        Then Click on Filter Button
+        Then click the SPA ID link in the first row
+        Then verify the package details page is visible
+        Then verify 2 action cards exist
+        Then verify the status on the card is "Withdrawal Requested"
+        Then verify package actions header is visible
+        Then verify there are no package actions available
+        Then verify the details section exists
+        Then verify there is a Type header in the details section
+        Then verify a type containing SPA exists for the Type
+        Then verify there is a State header in the details section
+        Then verify a state exists for the State
+        Then verify there is an Initial Submission Date header in the details section
+        Then verify a date exists for the Initial Submission Date
+        Then verify there is a Proposed Effective Date header in the details section
+        Then verify the attachments section exists
+        Then verify the download all button exists
+        Then verify the additional information section exists
+        Then verify subject is not visible in the details section
+        Then verify description is not visible in the details section
+        Then verify there is a CPOC header in the details section
+        Then verify the CPOC has a value displayed in the details section
+        Then verify Review Team SRT is not visible in the details section
         Then verify there is a Final Disposition Date header in the details section
         Then verify there is an Approved Effective Date in the details section
 
@@ -204,6 +203,60 @@ Feature: CHIP SPA State Details View - Card View with Actions
         Then verify there is a Proposed Effective Date header in the details section
         Then verify the attachments section exists
         #Then verify the download all button exists
+        Then verify the additional information section exists
+        Then verify subject is not visible in the details section
+        Then verify description is not visible in the details section
+        Then verify there is a CPOC header in the details section
+        Then verify the CPOC has a value displayed in the details section
+        Then verify Review Team SRT is not visible in the details section
+        Then verify there is a Final Disposition Date header in the details section
+        Then verify there is an Approved Effective Date in the details section
+
+    Scenario: Screen Enhance - Formal RAI Response - Withdrawal Requested SPA
+        Then click the Formal RAI Response - Withdrawal Requested checkbox
+        Then Click on Filter Button
+        Then click the SPA ID link in the first row
+        Then verify the package details page is visible
+        Then verify 2 action cards exist
+        Then verify the status on the card is "Formal RAI Response - Withdrawal Requested"
+        Then verify package actions header is visible
+        Then verify there are no package actions available
+        Then verify the details section exists
+        Then verify there is a Type header in the details section
+        Then verify a type containing SPA exists for the Type
+        Then verify there is a State header in the details section
+        Then verify a state exists for the State
+        Then verify there is an Initial Submission Date header in the details section
+        Then verify a date exists for the Initial Submission Date
+        Then verify there is a Proposed Effective Date header in the details section
+        Then verify the attachments section exists
+        Then verify the additional information section exists
+        Then verify subject is not visible in the details section
+        Then verify description is not visible in the details section
+        Then verify there is a CPOC header in the details section
+        Then verify the CPOC has a value displayed in the details section
+        Then verify Review Team SRT is not visible in the details section
+        Then verify there is a Final Disposition Date header in the details section
+        Then verify there is an Approved Effective Date in the details section
+
+    Scenario: Screen Enhance - RAI Response Withdraw Enabled SPA
+        Then click the RAI Response Withdraw Enabled checkbox
+        Then Click on Filter Button
+        Then click the SPA ID link in the first row
+        Then verify the package details page is visible
+        Then verify 2 action cards exist
+        Then verify the status on the card is "RAI Response Withdraw Enabled"
+        Then verify package actions header is visible
+        Then verify Withdraw Formal RAI Response package action exists
+        Then verify the details section exists
+        Then verify there is a Type header in the details section
+        Then verify a type containing SPA exists for the Type
+        Then verify there is a State header in the details section
+        Then verify a state exists for the State
+        Then verify there is an Initial Submission Date header in the details section
+        Then verify a date exists for the Initial Submission Date
+        Then verify there is a Proposed Effective Date header in the details section
+        Then verify the attachments section exists
         Then verify the additional information section exists
         Then verify subject is not visible in the details section
         Then verify description is not visible in the details section

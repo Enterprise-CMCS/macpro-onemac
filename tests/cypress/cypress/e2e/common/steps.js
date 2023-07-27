@@ -1406,11 +1406,26 @@ Then("click Under Review checkbox", () => {
 Then("click Waiver Terminated checkbox", () => {
   OneMacPackagePage.clickTerminatedCheckBox();
 });
+Then("verify the Withdrawal Requested checkbox exists", () => {
+  OneMacPackagePage.verifyWithdrawalRequestedCheckBoxExists();
+});
 Then("click the Withdrawal Requested checkbox", () => {
   OneMacPackagePage.clickWithdrawalRequestedCheckBox();
 });
-Then("verify seatool status 1 exists", () => {
-  OneMacPackagePage.verifyseaToolStatus1CheckBoxExists();
+Then(
+  "verify the Formal RAI Response - Withdrawal Requested checkbox exists",
+  () => {
+    OneMacPackagePage.verifyRaiResponseWithdrawalRequestedCheckBoxExists();
+  }
+);
+Then("click the Formal RAI Response - Withdrawal Requested checkbox", () => {
+  OneMacPackagePage.clickRaiResponseWithdrawalRequestedCheckBox();
+});
+Then("verify the RAI Response Withdraw Enabled checkbox exists", () => {
+  OneMacPackagePage.verifyRaiResponseWithdrawEnabledCheckBoxExists();
+});
+Then("click the RAI Response Withdraw Enabled checkbox", () => {
+  OneMacPackagePage.clickRaiResponseWithdrawEnabledCheckBox();
 });
 Then("verify sparai submitted exists", () => {
   OneMacPackagePage.verifysparaiSubmittedExists();
@@ -2069,6 +2084,12 @@ Then("verify Add Amendment package action exists", () => {
 });
 Then("click Add Amendment package action", () => {
   OneMacPackageDetailsPage.clickAddAmendmentPackageAction();
+});
+Then("verify Withdraw Formal RAI Response package action exists", () => {
+  OneMacPackageDetailsPage.verifyWithdrawFormalRAIResponseActionExists();
+});
+Then("click Withdraw Formal RAI Response package action", () => {
+  OneMacPackageDetailsPage.clickWithdrawFormalRAIResponseAction();
 });
 Then("click on Respond to RAI package action", () => {
   OneMacPackageDetailsPage.clickRespondToRAIAction();

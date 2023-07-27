@@ -22,6 +22,8 @@ const withdrawPackageAction = "//a[text()='Withdraw Package']";
 const requestTempExtensionPackageAction =
   "//a[text()='Request Temporary Extension']";
 const addAmendmentPackageAction = "//a[text()='Add Amendment']";
+const withdrawFormalRAIResponseAction =
+  "//a[text()='Withdraw Formal RAI Response']";
 const detailSection =
   "//section[@class='detail-section']//h2[contains(.,'Details')]";
 const CHIPSPAIDHeader = "//h3[contains(text(),'SPA ID')]";
@@ -113,6 +115,14 @@ export class oneMacPackageDetailsPage {
   }
   clickAddAmendmentPackageAction() {
     cy.xpath(addAmendmentPackageAction).click();
+  }
+  verifyWithdrawFormalRAIResponseActionExists() {
+    cy.xpath(withdrawFormalRAIResponseAction)
+      .scrollIntoView()
+      .should("be.visible");
+  }
+  clickWithdrawFormalRAIResponseAction() {
+    cy.xpath(withdrawFormalRAIResponseAction).click();
   }
   clickRespondToRAIAction() {
     cy.xpath(respondToRAIAction).click();
