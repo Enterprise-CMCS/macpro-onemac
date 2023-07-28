@@ -46,7 +46,6 @@ Feature: Waiver Package Details View: Initial Waivers
         Then verify the package details page is visible
         Then verify 2 action cards exist
         Then verify the status on the card is "Pending"
-        Then verify there are no package actions available
         Then verify the details section exists
         Then verify the package details title contains "Initial Waiver Package"
         Then verify there is a Type header in the details section
@@ -281,3 +280,18 @@ Feature: Waiver Package Details View: Initial Waivers
         Then verify the attachments section exists
         Then verify the download all button exists
         Then verify the additional information section exists
+
+    Scenario: Initial Waiver Details View - Enable Formal RAI Response Withdraw
+        Then click the Pending checkbox
+        Then Click on Filter Button
+        Then search for "MD-22204.R00.00 "
+        Then click the Waiver Number link in the first row
+        Then verify the package details page is visible
+        Then verify the status on the card is "Pending"
+        Then verify Enable Formal RAI Response Withdraw package action exists
+        Then click Enable Formal RAI Response Withdraw package action
+        Then type "Automated test to enable an RAI Response withdrawal." in additional info textarea
+        Then Click on Submit Button
+        Then verify the status on the card is "RAI Response Withdraw Enabled"
+        Then verify package actions header is visible
+        Then verify there are no package actions available

@@ -206,8 +206,8 @@ Then("click Leave Anyway form button", () => {
 Then("click Stay on Page", () => {
   OneMacSubmitNewMedicaidSpaPage.clickStayOnPageBtn();
 });
-Then("verify submission Successful message", () => {
-  OneMacDashboardPage.verifySuccessMessageIsDisplayed();
+Then("verify the success message is {string}", (s) => {
+  OneMacDashboardPage.verifySuccessMessageIs(s);
 });
 Then("verify submission successful message in the alert bar", () => {
   OneMacDashboardPage.verifySuccessMessage1IsDisplayed();
@@ -2040,6 +2040,12 @@ Then("click yes, withdraw package button", () => {
 Then("verify yes, withdraw package button exists", () => {
   OneMacPackagePage.verifyConfirmWithdrawPackageBtnExists();
 });
+Then("click Yes, withdraw response button", () => {
+  OneMacPackagePage.clickConfirmWithdrawResponseBtn();
+});
+Then("verify Yes, withdraw response button exists", () => {
+  OneMacPackagePage.verifyConfirmWithdrawResponseBtnExists();
+});
 Then("verify the package details page is visible", () => {
   OneMacPackageDetailsPage.verifyPackageDetailsPageIsVisible();
 });
@@ -2090,6 +2096,12 @@ Then("verify Withdraw Formal RAI Response package action exists", () => {
 });
 Then("click Withdraw Formal RAI Response package action", () => {
   OneMacPackageDetailsPage.clickWithdrawFormalRAIResponseAction();
+});
+Then("verify Enable Formal RAI Response Withdraw package action exists", () => {
+  OneMacPackageDetailsPage.verifyEnableRAIResponseWithdrawActionExists();
+});
+Then("click Enable Formal RAI Response Withdraw package action", () => {
+  OneMacPackageDetailsPage.clickEnableRAIResponseWithdrawAction();
 });
 Then("click on Respond to RAI package action", () => {
   OneMacPackageDetailsPage.clickRespondToRAIAction();

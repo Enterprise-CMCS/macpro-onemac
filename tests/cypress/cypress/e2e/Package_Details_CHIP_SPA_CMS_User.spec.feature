@@ -254,3 +254,18 @@ Feature: CHIP SPA CMS Details View - Card View with Actions
         Then verify the attachments section exists
         Then verify the download all button exists
         Then verify the additional information section exists
+
+        Scenario: CHIP SPA Details View - Enable Formal RAI Response Withdraw
+        Then click the Pending checkbox
+        Then Click on Filter Button
+        Then search for "MD-22-2401-VM"
+        Then click the SPA ID link in the first row
+        Then verify the package details page is visible
+        Then verify the status on the card is "Pending"
+        Then verify Enable Formal RAI Response Withdraw package action exists
+        Then click Enable Formal RAI Response Withdraw package action
+        Then type "Automated test to enable an RAI Response withdrawal." in additional info textarea
+        Then Click on Submit Button
+        Then verify the status on the card is "RAI Response Withdraw Enabled"
+        Then verify package actions header is visible
+        Then verify there are no package actions available
