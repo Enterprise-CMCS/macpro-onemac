@@ -10106,15 +10106,15 @@
       }
     ],
     "proposedEffectiveDate": "-- --",
-    "GSI1sk": "MD-22-2203-VM",
+    "GSI1sk": "MD-22-2213-VM",
     "additionalInformation": "test",
     "submissionTimestamp": 1672290978919,
     "GSI1pk": "OneMAC#submitmedicaidspa",
     "convertTimestamp": 1674854067000,
     "submitterEmail": "mdstateonemac@gmail.com",
     "sk": "OneMAC#1672290978919",
-    "componentId": "MD-22-2203-VM",
-    "pk": "MD-22-2203-VM",
+    "componentId": "MD-22-2213-VM",
+    "pk": "MD-22-2213-VM",
     "submitterName": "MDSTATE SUBMITTERNK"
   },
   {
@@ -10139,7 +10139,7 @@
       }
     ],
     "proposedEffectiveDate": "2023-04-12",
-    "GSI1sk": "MD-22-2203-VM",
+    "GSI1sk": "MD-22-2213-VM",
     "additionalInformation": "test",
     "submissionTimestamp": 1672290978919,
     "GSI1pk": "OneMAC#spa",
@@ -10147,7 +10147,7 @@
     "sk": "Package",
     "cpocName": "Chester Tester",
     "reviewTeam": ["Lester Tester", "Super Tester", "Jimmy Tester"],
-    "componentId": "MD-22-2203-VM",
+    "componentId": "MD-22-2213-VM",
     "raiResponses": [
       {
         "additionalInformation": "Testing the RAI Response connection",
@@ -10165,7 +10165,7 @@
     ],
     "latestRaiResponseTimestamp": 1675987200000,
     "lastEventTimestamp": 1673563409727,
-    "pk": "MD-22-2203-VM",
+    "pk": "MD-22-2213-VM",
     "subject": "test subject",
     "description": "test description",
     "submitterName": "MDSTATE SUBMITTERNK"
@@ -10227,7 +10227,7 @@
       "REGION_ID": "3",
       "BACKUP_PROGRAM_ANALYST_ID": null,
       "DATE_SENT_PSCCAS": null,
-      "ID_NUMBER": "MD-22-2203-VM",
+      "ID_NUMBER": "MD-22-2213-VM",
       "APPROVAL_STATUS_TYPE": null,
       "COMPANION_LETTER_REQUESTED_DATE": null,
       "TITLE_NAME": "Sample Title Name",
@@ -10265,7 +10265,7 @@
     },
     "STATE_PLAN_SERVICETYPES": null,
     "REVIEW_POSITION": null,
-    "GSI1sk": "MD-22-2203-VM",
+    "GSI1sk": "MD-22-2213-VM",
     "FM_ANALYST": null,
     "LEAD_ANALYST": [
   {
@@ -10376,21 +10376,21 @@
       "EARLYALERT": [
         {
           "YES_NO_VAL": null,
-          "ID_NUMBER": "MD-22-2203-VM",
+          "ID_NUMBER": "MD-22-2213-VM",
           "EA_FIELD_ID": 25,
           "EMAIL_SENT": null,
           "TEXT_DD_VAL": null
         },
         {
           "YES_NO_VAL": null,
-          "ID_NUMBER": "MD-22-2203-VM",
+          "ID_NUMBER": "MD-22-2213-VM",
           "EA_FIELD_ID": 26,
           "EMAIL_SENT": null,
           "TEXT_DD_VAL": null
         }
       ]
     },
-    "pk": "MD-22-2203-VM",
+    "pk": "MD-22-2213-VM",
     "RO_ANALYST": null
   },
   {
@@ -10450,7 +10450,7 @@
       "REGION_ID": "3",
       "BACKUP_PROGRAM_ANALYST_ID": null,
       "DATE_SENT_PSCCAS": null,
-      "ID_NUMBER": "MD-22-2203-VM",
+      "ID_NUMBER": "MD-22-2213-VM",
       "APPROVAL_STATUS_TYPE": null,
       "COMPANION_LETTER_REQUESTED_DATE": null,
       "TITLE_NAME": "OneMac Connection test",
@@ -10488,12 +10488,12 @@
     },
     "STATE_PLAN_SERVICETYPES": [
       {
-        "ID_NUMBER": "MD-22-2203-VM",
+        "ID_NUMBER": "MD-22-2213-VM",
         "SERVICE_TYPE_ID": 98
       }
     ],
     "REVIEW_POSITION": null,
-    "GSI1sk": "MD-22-2203-VM",
+    "GSI1sk": "MD-22-2213-VM",
     "FM_ANALYST": null,
     "LEAD_ANALYST": [
   {
@@ -10532,7 +10532,7 @@
     "STATE_PLAN_SERVICE_SUBTYPES": [
       {
         "SERVICE_SUBTYPE_ID": 950,
-        "ID_NUMBER": "MD-22-2203-VM"
+        "ID_NUMBER": "MD-22-2213-VM"
       }
     ],
     "RAI": null,
@@ -10572,7 +10572,7 @@
     "SP_IMPACT_FUNDING": [
       {
         "OTHER": null,
-        "ID_NUMBER": "MD-22-2203-VM",
+        "ID_NUMBER": "MD-22-2213-VM",
         "IMPACT_YEAR_2_VALUE": null,
         "IMPACT_YEAR_3": null,
         "PROVIDER_TAX": null,
@@ -10635,21 +10635,21 @@
       "EARLYALERT": [
         {
           "YES_NO_VAL": true,
-          "ID_NUMBER": "MD-22-2203-VM",
+          "ID_NUMBER": "MD-22-2213-VM",
           "EA_FIELD_ID": 25,
           "EMAIL_SENT": null,
           "TEXT_DD_VAL": null
         },
         {
           "YES_NO_VAL": false,
-          "ID_NUMBER": "MD-22-2203-VM",
+          "ID_NUMBER": "MD-22-2213-VM",
           "EA_FIELD_ID": 26,
           "EMAIL_SENT": null,
           "TEXT_DD_VAL": null
         }
       ]
     },
-    "pk": "MD-22-2203-VM",
+    "pk": "MD-22-2213-VM",
     "RO_ANALYST": null
   },
   {
@@ -48285,7 +48285,6 @@
     "componentType": "waivernew",
     "eventTimestamp": 1672290673531,
     "currentStatus": "Submitted",
-    "originallyFrom": "cms-spa-form-develop-change-requests",
     "attachments": [
         {
             "s3Key": "1672269864615/file.docx",
@@ -48578,13 +48577,13 @@
     "COMPONENTS_SP": null,
     "PLAN_TYPES": [
       {
-        "PLAN_TYPE_ID": 125,
-        "PLAN_TYPE_NAME": "Medicaid SPA"
+        "PLAN_TYPE_ID": 122,
+        "PLAN_TYPE_NAME": "1915(b)"
       }
     ],
     "PRIORITY_CODES": null,
     "SP_IMPACT_FUNDING": null,
-    "GSI1pk": "SEATool#Medicaid_SPA",
+    "GSI1pk": "SEATool#1915b_waivers",
     "CODEAFTERINITACCESS": null,
     "STOP_RESUME_DATES": null,
     "COMPONENTS": null,
@@ -48840,8 +48839,8 @@
     "COMPONENTS_SP": null,
     "PLAN_TYPES": [
       {
-        "PLAN_TYPE_ID": 125,
-        "PLAN_TYPE_NAME": "Medicaid SPA"
+        "PLAN_TYPE_ID": 122,
+        "PLAN_TYPE_NAME": "1915(b)"
       }
     ],
     "PRIORITY_CODES": null,
@@ -48861,7 +48860,7 @@
         "APPROPRIATIONS": null
       }
     ],
-    "GSI1pk": "SEATool#Medicaid_SPA",
+    "GSI1pk": "SEATool#1915b_waivers",
     "CODEAFTERINITACCESS": null,
     "STOP_RESUME_DATES": null,
     "COMPONENTS": null,
@@ -49514,7 +49513,7 @@
 {
   "clockEndTimestamp": 1680063073531,
   "componentType": "waiverrenewal",
-  "eventTimestamp": 1675091977000,
+  "eventTimestamp": 1680063073531,
   "currentStatus": "RAI Response Withdraw Enabled",
   "attachments": [
       {
@@ -49527,7 +49526,7 @@
   ],
   "GSI1sk": "MD-22116.R01.00",
   "additionalInformation": "faking the event to enable the status",
-  "submissionTimestamp": 1675091977000,
+  "submissionTimestamp": 1680063073531,
   "GSI1pk": "OneMAC#enableRAIResponseWithdraw",
   "submitterEmail": "statesubmitter@nightwatch.test",
   "sk": "OneMAC#1675091977000",
@@ -49755,12 +49754,12 @@
   "PLAN_TYPES": [
     {
       "PLAN_TYPE_ID": 125,
-      "PLAN_TYPE_NAME": "Medicaid SPA"
+      "PLAN_TYPE_NAME": "1915(b)"
     }
   ],
   "PRIORITY_CODES": null,
   "SP_IMPACT_FUNDING": null,
-  "GSI1pk": "SEATool#Medicaid_SPA",
+  "GSI1pk": "SEATool#1915b_waivers",
   "CODEAFTERINITACCESS": null,
   "STOP_RESUME_DATES": null,
   "COMPONENTS": null,
@@ -50017,7 +50016,7 @@
   "PLAN_TYPES": [
     {
       "PLAN_TYPE_ID": 125,
-      "PLAN_TYPE_NAME": "Medicaid SPA"
+      "PLAN_TYPE_NAME": "1915(b)"
     }
   ],
   "PRIORITY_CODES": null,
@@ -50037,7 +50036,7 @@
       "APPROPRIATIONS": null
     }
   ],
-  "GSI1pk": "SEATool#Medicaid_SPA",
+  "GSI1pk": "SEATool#1915b_waivers",
   "CODEAFTERINITACCESS": null,
   "STOP_RESUME_DATES": null,
   "COMPONENTS": null,
@@ -51044,6 +51043,7 @@
           "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1673472581115/OneMACInactivated.xlsx"
         }
       ],
+      "currentStatus": "Submitted",
       "submissionTimestamp": 1675987200000
     }
   ],
@@ -51578,7 +51578,7 @@
   "submitterName": "MDSTATE SUBMITTERNK"
 },
 {
-  "clockEndTimestamp": 1680042288263,
+  "clockEndTimestamp": 1681042288263,
   "componentType": "waivernew",
   "currentStatus": "Under Review",
   "waiverExtensions": [],
@@ -51594,7 +51594,7 @@
   "proposedEffectiveDate": "2023-03-02",
   "GSI1sk": "MD-22204.R00.00",
   "additionalInformation": "test",
-  "submissionTimestamp": 1672269888263,
+  "submissionTimestamp": 1681042288263,
   "waiverAuthority": "1915(b)",
   "GSI1pk": "OneMAC#waiver",
   "submitterEmail": "mdstateonemac@gmail.com",
@@ -51616,11 +51616,12 @@
           "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1673472581115/OneMACInactivated.xlsx"
         }
       ],
-      "submissionTimestamp": 1675987200000
+      "currentStatus": "Submitted",
+      "submissionTimestamp": 1680134400000
     }
   ],
-  "latestRaiResponseTimestamp": 1675987200000,
-  "lastEventTimestamp": 1673560884687,
+  "latestRaiResponseTimestamp": 1680134400000,
+  "lastEventTimestamp": 1681042288263,
   "pk": "MD-22204.R00.00",
   "submitterName": "MDSTATE SUBMITTERNK"
 },
@@ -52362,12 +52363,12 @@
   "PLAN_TYPES": [
     {
       "PLAN_TYPE_ID": 125,
-      "PLAN_TYPE_NAME": "Medicaid SPA"
+      "PLAN_TYPE_NAME": "CHIP SPA"
     }
   ],
   "PRIORITY_CODES": null,
   "SP_IMPACT_FUNDING": null,
-  "GSI1pk": "SEATool#Medicaid_SPA",
+  "GSI1pk": "SEATool#CHIP_SPA",
   "CODEAFTERINITACCESS": null,
   "STOP_RESUME_DATES": null,
   "COMPONENTS": null,
@@ -52619,7 +52620,7 @@
   "PLAN_TYPES": [
     {
       "PLAN_TYPE_ID": 125,
-      "PLAN_TYPE_NAME": "Medicaid SPA"
+      "PLAN_TYPE_NAME": "CHIP SPA"
     }
   ],
   "PRIORITY_CODES": null,
@@ -52639,7 +52640,7 @@
       "APPROPRIATIONS": null
     }
   ],
-  "GSI1pk": "SEATool#Medicaid_SPA",
+  "GSI1pk": "SEATool#CHIP_SPA",
   "CODEAFTERINITACCESS": null,
   "STOP_RESUME_DATES": null,
   "COMPONENTS": null,
@@ -52762,6 +52763,7 @@
           "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1673472581115/OneMACInactivated.xlsx"
         }
       ],
+      "currentStatus": "Submitted",
       "submissionTimestamp": 1675987200000
     }
   ],
@@ -53273,7 +53275,7 @@
   "submitterName": "MDSTATE SUBMITTERNK"
 },
 {
-  "clockEndTimestamp": 1680042288263,
+  "clockEndTimestamp": 1680146400000,
   "componentType": "waiveramendment",
   "currentStatus": "Under Review",
   "waiverExtensions": [],
@@ -53289,7 +53291,7 @@
   "proposedEffectiveDate": "2023-03-02",
   "GSI1sk": "MD-22204.R00.01",
   "additionalInformation": "test",
-  "submissionTimestamp": 1672269888263,
+  "submissionTimestamp": 1680146400000,
   "waiverAuthority": "1915(b)",
   "GSI1pk": "OneMAC#waiver",
   "submitterEmail": "mdstateonemac@gmail.com",
@@ -53311,10 +53313,11 @@
           "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1673472581115/OneMACInactivated.xlsx"
         }
       ],
-      "submissionTimestamp": 1675987200000
+      "currentStatus": "Submitted",
+      "submissionTimestamp": 1680134400000
     }
   ],
-  "latestRaiResponseTimestamp": 1675987200000,
+  "latestRaiResponseTimestamp": 1680134400000,
   "lastEventTimestamp": 1673560884687,
   "pk": "MD-22204.R00.01",
   "submitterName": "MDSTATE SUBMITTERNK"
@@ -53888,6 +53891,7 @@
           "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1673472581115/OneMACInactivated.xlsx"
         }
       ],
+      "currentStatus": "Submitted",
       "submissionTimestamp": 1675987200000
     }
   ],

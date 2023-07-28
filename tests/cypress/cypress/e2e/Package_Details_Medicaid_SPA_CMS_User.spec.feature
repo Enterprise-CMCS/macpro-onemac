@@ -18,7 +18,7 @@ Feature: Medicaid SPA CMS Details View - Card View with Actions
         Then verify the package details page is visible
         Then verify 2 action cards exist
         Then verify the status on the card is "Submitted - Intake Needed"
-        Then verify the package actions section is unavailable
+        Then verify there are no package actions available
         Then verify the details section exists
         Then verify there is a Type header in the details section
         Then verify the type is Medicaid SPA
@@ -46,7 +46,7 @@ Feature: Medicaid SPA CMS Details View - Card View with Actions
         Then verify the package details page is visible
         Then verify 2 action cards exist
         Then verify the status on the card is "Pending"
-        Then verify the package actions section is unavailable
+        Then verify there are no package actions available
         Then verify the details section exists
         Then verify there is a Type header in the details section
         Then verify the type is Medicaid SPA
@@ -76,7 +76,7 @@ Feature: Medicaid SPA CMS Details View - Card View with Actions
         Then verify the package details page is visible
         Then verify 2 action cards exist
         Then verify the status on the card is "Withdrawn"
-        Then verify the package actions section is unavailable
+        Then verify there are no package actions available
         Then verify the details section exists
         Then verify there is a Type header in the details section
         Then verify the type is Medicaid SPA
@@ -106,7 +106,7 @@ Feature: Medicaid SPA CMS Details View - Card View with Actions
         Then verify the package details page is visible
         Then verify 2 action cards exist
         Then verify the status on the card is "Disapproved"
-        Then verify the package actions section is unavailable
+        Then verify there are no package actions available
         Then verify the details section exists
         Then verify there is a Type header in the details section
         Then verify the type is Medicaid SPA
@@ -137,7 +137,7 @@ Feature: Medicaid SPA CMS Details View - Card View with Actions
         Then verify the package details page is visible
         Then verify 2 action cards exist
         Then verify the status on the card is "Pending - RAI"
-        Then verify the package actions section is unavailable
+        Then verify there are no package actions available
         Then verify the package details page is visible
         Then verify the details section exists
         Then verify there is a Type header in the details section
@@ -169,7 +169,7 @@ Feature: Medicaid SPA CMS Details View - Card View with Actions
         Then verify 2 action cards exist
         Then verify the status on the card is "Approved"
         Then verify there is not a 90th day date on the card
-        Then verify the package actions section is unavailable
+        Then verify there are no package actions available
         Then verify the details section exists
         Then verify there is a Type header in the details section
         Then verify the type is Medicaid SPA
@@ -200,7 +200,7 @@ Feature: Medicaid SPA CMS Details View - Card View with Actions
         Then verify the package details page is visible
         Then verify 2 action cards exist
         Then verify the status on the card is "Pending - Concurrence"
-        Then verify the package actions section is unavailable
+        Then verify there are no package actions available
         Then verify the package details page is visible
         Then verify the details section exists
         Then verify there is a Type header in the details section
@@ -231,7 +231,7 @@ Feature: Medicaid SPA CMS Details View - Card View with Actions
         Then verify the package details page is visible
         Then verify 2 action cards exist
         Then verify the status on the card is "Pending - Approval"
-        Then verify the package actions section is unavailable
+        Then verify there are no package actions available
         Then verify the package details page is visible
         Then verify the details section exists
         Then verify there is a Type header in the details section

@@ -91,7 +91,9 @@ export class oneMacPackageDetailsPage {
     cy.xpath(packageActionsHeader).should("be.visible");
   }
   verifyNoPackageActionsAvailable() {
-    cy.xpath(packageActionsList).should("be.visible");
+    cy.xpath(packageActionsList)
+      .should("be.visible")
+      .contains("No actions are currently available for this submission");
   }
   verifyPackageActionsSectionDoesNotExist() {
     cy.xpath(packageActionsList).should("not.exist");

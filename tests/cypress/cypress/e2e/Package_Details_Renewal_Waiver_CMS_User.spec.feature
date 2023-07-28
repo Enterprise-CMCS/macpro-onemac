@@ -18,7 +18,7 @@ Feature: Waiver Package Details View: Waiver Renewal for a CMS User
         Then verify the package details page is visible
         Then verify 2 action cards exist
         Then verify the status on the card is "Submitted - Intake Needed"
-        Then verify the package actions section is unavailable
+        Then verify there are no package actions available
         Then verify the details section exists
         Then verify there is a Type header in the details section
         Then verify the type is Waiver Renewal
@@ -45,7 +45,7 @@ Feature: Waiver Package Details View: Waiver Renewal for a CMS User
         Then verify the package details page is visible
         Then verify 2 action cards exist
         Then verify the status on the card is "Pending"
-        Then verify the package actions section is unavailable
+        Then verify there are no package actions available
         Then verify the details section exists
         Then verify there is a Type header in the details section
         Then verify the type is Waiver Renewal
@@ -74,7 +74,7 @@ Feature: Waiver Package Details View: Waiver Renewal for a CMS User
         Then verify the package details page is visible
         Then verify 2 action cards exist
         Then verify the status on the card is "Terminated"
-        Then verify the package actions section is unavailable
+        Then verify there are no package actions available
         Then verify the details section exists
         Then verify there is a Type header in the details section
         Then verify the type is Waiver Renewal
@@ -103,7 +103,7 @@ Feature: Waiver Package Details View: Waiver Renewal for a CMS User
         Then verify the package details page is visible
         Then verify 2 action cards exist
         Then verify the status on the card is "Pending - RAI"
-        Then verify the package actions section is unavailable
+        Then verify there are no package actions available
         Then verify the details section exists
         Then verify there is a Type header in the details section
         Then verify the type is Waiver Renewal
@@ -132,7 +132,7 @@ Feature: Waiver Package Details View: Waiver Renewal for a CMS User
         Then verify the package details page is visible
         Then verify 2 action cards exist
         Then verify the status on the card is "Approved"
-        Then verify the package actions section is unavailable
+        Then verify there are no package actions available
         Then verify the details section exists
         Then verify there is a Type header in the details section
         Then verify the type is Waiver Renewal
@@ -162,7 +162,7 @@ Feature: Waiver Package Details View: Waiver Renewal for a CMS User
         Then verify the package details page is visible
         Then verify 2 action cards exist
         Then verify the status on the card is "Disapproved"
-        Then verify the package actions section is unavailable
+        Then verify there are no package actions available
         Then verify the details section exists
         Then verify there is a Type header in the details section
         Then verify the type is Waiver Renewal
@@ -191,7 +191,7 @@ Feature: Waiver Package Details View: Waiver Renewal for a CMS User
         Then verify the package details page is visible
         Then verify 2 action cards exist
         Then verify the status on the card is "Package Withdrawn"
-        Then verify the package actions section is unavailable
+        Then verify there are no package actions available
         Then verify the details section exists
         Then verify there is a Type header in the details section
         Then verify the type is Waiver Renewal
@@ -220,7 +220,7 @@ Feature: Waiver Package Details View: Waiver Renewal for a CMS User
         Then verify the package details page is visible
         Then verify 2 action cards exist
         Then verify the status on the card is "Pending - Concurrence"
-        Then verify the package actions section is unavailable
+        Then verify there are no package actions available
         Then verify the details section exists
         Then verify there is a Type header in the details section
         Then verify the type is Waiver Renewal
@@ -249,7 +249,7 @@ Feature: Waiver Package Details View: Waiver Renewal for a CMS User
         Then verify the package details page is visible
         Then verify 2 action cards exist
         Then verify the status on the card is "Pending - Approval"
-        Then verify the package actions section is unavailable
+        Then verify there are no package actions available
         Then verify the details section exists
         Then verify there is a Type header in the details section
         Then verify the type is Waiver Renewal

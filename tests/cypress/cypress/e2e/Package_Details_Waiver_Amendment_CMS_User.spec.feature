@@ -18,7 +18,7 @@ Feature: Waiver Package Details View: 1915 b Waiver Amendment for a CMS User
         Then verify the package details page is visible
         Then verify 2 action cards exist
         Then verify the status on the card is "Submitted - Intake Needed"
-        Then verify the package actions section is unavailable
+        Then verify there are no package actions available
         Then verify the details section exists
         Then verify there is a Type header in the details section
         Then verify the type is 1915b Waiver Amendment
@@ -46,7 +46,7 @@ Feature: Waiver Package Details View: 1915 b Waiver Amendment for a CMS User
         Then verify the package details page is visible
         Then verify 2 action cards exist
         Then verify the status on the card is "Pending"
-        Then verify the package actions section is unavailable
+        Then verify there are no package actions available
         Then verify the details section exists
         Then verify there is a Type header in the details section
         Then verify the type is 1915b Waiver Amendment
@@ -75,7 +75,7 @@ Feature: Waiver Package Details View: 1915 b Waiver Amendment for a CMS User
         Then verify the package details page is visible
         Then verify 2 action cards exist
         Then verify the status on the card is "Pending - RAI"
-        Then verify the package actions section is unavailable
+        Then verify there are no package actions available
         Then verify the details section exists
         Then verify there is a Type header in the details section
         Then verify the type is 1915b Waiver Amendment
@@ -104,7 +104,7 @@ Feature: Waiver Package Details View: 1915 b Waiver Amendment for a CMS User
         Then verify the package details page is visible
         Then verify 2 action cards exist
         Then verify the status on the card is "Approved"
-        Then verify the package actions section is unavailable
+        Then verify there are no package actions available
         Then verify the details section exists
         Then verify there is a Type header in the details section
         Then verify the type is 1915b Waiver Amendment
@@ -133,7 +133,7 @@ Feature: Waiver Package Details View: 1915 b Waiver Amendment for a CMS User
         Then verify the package details page is visible
         Then verify 2 action cards exist
         Then verify the status on the card is "Disapproved"
-        Then verify the package actions section is unavailable
+        Then verify there are no package actions available
         Then verify the details section exists
         Then verify there is a Type header in the details section
         Then verify the type is 1915b Waiver Amendment
@@ -163,7 +163,7 @@ Feature: Waiver Package Details View: 1915 b Waiver Amendment for a CMS User
         Then verify the package details page is visible
         Then verify 2 action cards exist
         Then verify the status on the card is "Package Withdrawn"
-        Then verify the package actions section is unavailable
+        Then verify there are no package actions available
         Then verify the details section exists
         Then verify there is a Type header in the details section
         Then verify the type is 1915b Waiver Amendment
@@ -192,7 +192,7 @@ Feature: Waiver Package Details View: 1915 b Waiver Amendment for a CMS User
         Then verify the package details page is visible
         Then verify 2 action cards exist
         Then verify the status on the card is "Pending - Concurrence"
-        Then verify the package actions section is unavailable
+        Then verify there are no package actions available
         Then verify the details section exists
         Then verify there is a Type header in the details section
         Then verify the type is 1915b Waiver Amendment
@@ -222,7 +222,7 @@ Feature: Waiver Package Details View: 1915 b Waiver Amendment for a CMS User
         Then verify the package details page is visible
         Then verify 2 action cards exist
         Then verify the status on the card is "Pending - Approval"
-        Then verify the package actions section is unavailable
+        Then verify there are no package actions available
         Then verify the details section exists
         Then verify there is a Type header in the details section
         Then verify the type is 1915b Waiver Amendment
