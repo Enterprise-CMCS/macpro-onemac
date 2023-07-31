@@ -256,6 +256,37 @@ const undoAdminChanges = [
     submitterName: "undefined undefined",
   },
   {
+    clockEndTimestamp: 1680725910479,
+    componentType: "waiverrai",
+    eventTimestamp: 1672953510479,
+    currentStatus: "Submitted",
+    originallyFrom: "cms-spa-form-master-change-requests",
+    parentId: "MD-22204.R00.01",
+    attachments: [
+      {
+        s3Key: "1672953505887/PackagelistView_ExcelExport_Issues.xlsx",
+        filename: "PackagelistView_ExcelExport_Issues.xlsx",
+        title: "Waiver RAI Response",
+        contentType:
+          "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        url: "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3Ac052f1db-9f55-42aa-9d43-2d957bfc754b/1672953505887/PackagelistView_ExcelExport_Issues.xlsx",
+      },
+    ],
+    parentType: "waiveramendment",
+    proposedEffectiveDate: "-- --",
+    GSI1sk: "MD-22204.R01.01",
+    additionalInformation:
+      "Jan 5 did the rai response for this waiver to verify the migration process.",
+    submissionTimestamp: 1672953510479,
+    GSI1pk: "OneMAC#submitwaiverrai",
+    convertTimestamp: 1674854067202,
+    submitterEmail: "statesystemadmin@nightwatch.test",
+    sk: "OneMAC#1672953510479",
+    componentId: "MD-22204.R01.01",
+    pk: "MD-22204.R01.01",
+    submitterName: "undefined undefined",
+  },
+  {
     pk: "MD-0023.R06.02",
     sk: "OneMAC#1690813644714",
     additionalInformation: "RAI Response Withdrawal Test.",
@@ -313,6 +344,37 @@ const undoAdminChanges = [
     submitterName: "StateSubmitter Nightwatch",
     territory: "MD",
     transmittalNumberWarningMessage: "",
+  },
+  {
+    clockEndTimestamp: 1680725910479,
+    componentType: "waiverappkrai",
+    eventTimestamp: 1672953510479,
+    currentStatus: "Submitted",
+    originallyFrom: "cms-spa-form-master-change-requests",
+    parentId: "MD-22958.R00.01",
+    attachments: [
+      {
+        s3Key: "1672953505887/PackagelistView_ExcelExport_Issues.xlsx",
+        filename: "PackagelistView_ExcelExport_Issues.xlsx",
+        title: "Waiver RAI Response",
+        contentType:
+          "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        url: "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3Ac052f1db-9f55-42aa-9d43-2d957bfc754b/1672953505887/PackagelistView_ExcelExport_Issues.xlsx",
+      },
+    ],
+    parentType: "waiverappk",
+    proposedEffectiveDate: "-- --",
+    GSI1sk: "MD-22958.R00.01",
+    additionalInformation:
+      "Did the rai response for this waiver to verify the migration process.",
+    submissionTimestamp: 1672953510479,
+    GSI1pk: "OneMAC#submitwaiverappkrai",
+    convertTimestamp: 1674854067202,
+    submitterEmail: "statesystemadmin@nightwatch.test",
+    sk: "OneMAC#1672953510479",
+    componentId: "MD-22958.R00.01",
+    pk: "MD-22958.R00.01",
+    submitterName: "undefined undefined",
   },
 ];
 
