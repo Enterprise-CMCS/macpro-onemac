@@ -51001,6 +51001,34 @@
   "submitterName": "Statesubmitter Nightwatch"
 },
 {
+  "clockEndTimestamp": 1697123859496,
+  "componentType": "medicaidsparai",
+  "eventTimestamp": 1675987200000,
+  "transmittalNumberWarningMessage": "",
+  "currentStatus": "Submitted",
+  "parentId": "MD-22-2400-VM",
+  "attachments": [
+    {
+      "filename": "Screenshot 2023-03-31 at 4.46.08 PM.png",
+      "s3Key": "1689347857918/Screenshot 2023-03-31 at 4.46.08 PM.png",
+      "title": "RAI Response",
+      "contentType": "image/png",
+      "url": "https://uploads-oy2-22413-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Abecb694d-f091-42c5-a7b5-d9a974b1c9f6/1689347857918/Screenshot%202023-03-31%20at%204.46.08%20PM.png"
+    }
+  ],
+  "parentType": "medicaidspa",
+  "GSI1sk": "MD-22-2400-VM",
+  "additionalInformation": "Here is the official RAI Response",
+  "submissionTimestamp": 1675987200000,
+  "GSI1pk": "OneMAC#submitmedicaidsparai",
+  "submitterEmail": "statesubmitter@nightwatch.test",
+  "territory": "MD",
+  "sk": "OneMAC#1675987200000",
+  "componentId": "MD-22-2400-VM",
+  "pk": "MD-22-2400-VM",
+  "submitterName": "StateSubmitter Nightwatch"
+},
+{
   "clockEndTimestamp": 1680063073531,
   "componentType": "medicaidspa",
   "currentStatus": "Under Review",
@@ -51039,7 +51067,7 @@
           "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
           "filename": "OneMACInactivated.xlsx",
           "s3Key": "1673472581115/OneMACInactivated.xlsx",
-          "title": "Waiver RAI Response",
+          "title": "SPA RAI Response",
           "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1673472581115/OneMACInactivated.xlsx"
         }
       ],
@@ -51576,6 +51604,35 @@
   "componentId": "MD-22204.R00.00",
   "pk": "MD-22204.R00.00",
   "submitterName": "MDSTATE SUBMITTERNK"
+},
+{
+  "clockEndTimestamp": 1680725910479,
+  "componentType": "waiverrai",
+  "eventTimestamp": 1672953510479,
+  "currentStatus": "Submitted",
+  "originallyFrom": "cms-spa-form-master-change-requests",
+  "parentId": "MD-22204.R00.00",
+  "attachments": [
+    {
+      "s3Key": "1672953505887/PackagelistView_ExcelExport_Issues.xlsx",
+      "filename": "PackagelistView_ExcelExport_Issues.xlsx",
+      "title": "Waiver RAI Response",
+      "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3Ac052f1db-9f55-42aa-9d43-2d957bfc754b/1672953505887/PackagelistView_ExcelExport_Issues.xlsx"
+    }
+  ],
+  "parentType": "waivernew",
+  "proposedEffectiveDate": "-- --",
+  "GSI1sk": "MD-22204.R00.00",
+  "additionalInformation": "Jan 5 did the rai response for this waiver to verify the migration process.",
+  "submissionTimestamp": 1672953510479,
+  "GSI1pk": "OneMAC#submitwaiverrai",
+  "convertTimestamp": 1674854067202,
+  "submitterEmail": "statesystemadmin@nightwatch.test",
+  "sk": "OneMAC#1672953510479",
+  "componentId": "MD-22204.R00.00",
+  "pk": "MD-22204.R00.00",
+  "submitterName": "undefined undefined"
 },
 {
   "clockEndTimestamp": 1681042288263,
@@ -52142,6 +52199,34 @@
   "submitterName": "Statesubmitter Nightwatch"
 },
 {
+  "clockEndTimestamp": 1697123859496,
+  "componentType": "chipsparai",
+  "eventTimestamp": 1673709577000,
+  "transmittalNumberWarningMessage": "",
+  "currentStatus": "Submitted",
+  "parentId": "MD-22-2401-VM",
+  "attachments": [
+    {
+      "filename": "Screenshot 2023-03-31 at 4.46.08 PM.png",
+      "s3Key": "1689347857918/Screenshot 2023-03-31 at 4.46.08 PM.png",
+      "title": "RAI Response",
+      "contentType": "image/png",
+      "url": "https://uploads-oy2-22413-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Abecb694d-f091-42c5-a7b5-d9a974b1c9f6/1689347857918/Screenshot%202023-03-31%20at%204.46.08%20PM.png"
+    }
+  ],
+  "parentType": "chipspa",
+  "GSI1sk": "MD-22-2401-VM",
+  "additionalInformation": "Here is the official RAI Response",
+  "submissionTimestamp": 1673709577000,
+  "GSI1pk": "OneMAC#submitchipsparai",
+  "submitterEmail": "statesubmitter@nightwatch.test",
+  "territory": "MD",
+  "sk": "OneMAC#1673709577000",
+  "componentId": "MD-22-2401-VM",
+  "pk": "MD-22-2401-VM",
+  "submitterName": "StateSubmitter Nightwatch"
+},
+{
   "clockEndTimestamp": 1680063073531,
   "componentType": "chipspa",
   "currentStatus": "Under Review",
@@ -52187,7 +52272,7 @@
           "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
           "filename": "OneMACInactivated.xlsx",
           "s3Key": "1673472581115/OneMACInactivated.xlsx",
-          "title": "Waiver RAI Response",
+          "title": "RAI Response",
           "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1673472581115/OneMACInactivated.xlsx"
         }
       ],
@@ -52724,6 +52809,35 @@
   "componentId": "MD-22204.R01.00",
   "pk": "MD-22204.R01.00",
   "submitterName": "MDSTATE SUBMITTERNK"
+},
+{
+  "clockEndTimestamp": 1680725910479,
+  "componentType": "waiverrai",
+  "eventTimestamp": 1672953510479,
+  "currentStatus": "Submitted",
+  "originallyFrom": "cms-spa-form-master-change-requests",
+  "parentId": "MD-22204.R01.00",
+  "attachments": [
+    {
+      "s3Key": "1672953505887/PackagelistView_ExcelExport_Issues.xlsx",
+      "filename": "PackagelistView_ExcelExport_Issues.xlsx",
+      "title": "Waiver RAI Response",
+      "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3Ac052f1db-9f55-42aa-9d43-2d957bfc754b/1672953505887/PackagelistView_ExcelExport_Issues.xlsx"
+    }
+  ],
+  "parentType": "waiverrenewal",
+  "proposedEffectiveDate": "-- --",
+  "GSI1sk": "MD-22204.R01.00",
+  "additionalInformation": "Jan 5 did the rai response for this waiver to verify the migration process.",
+  "submissionTimestamp": 1672953510479,
+  "GSI1pk": "OneMAC#submitwaiverrai",
+  "convertTimestamp": 1674854067202,
+  "submitterEmail": "statesystemadmin@nightwatch.test",
+  "sk": "OneMAC#1672953510479",
+  "componentId": "MD-22204.R01.00",
+  "pk": "MD-22204.R01.00",
+  "submitterName": "undefined undefined"
 },
 {
   "clockEndTimestamp": 1680042288263,
@@ -53274,6 +53388,35 @@
   "componentId": "MD-22204.R00.01",
   "pk": "MD-22204.R00.01",
   "submitterName": "MDSTATE SUBMITTERNK"
+},
+{
+  "clockEndTimestamp": 1680725910479,
+  "componentType": "waiverrai",
+  "eventTimestamp": 1672953510479,
+  "currentStatus": "Submitted",
+  "originallyFrom": "cms-spa-form-master-change-requests",
+  "parentId": "MD-22204.R00.01",
+  "attachments": [
+    {
+      "s3Key": "1672953505887/PackagelistView_ExcelExport_Issues.xlsx",
+      "filename": "PackagelistView_ExcelExport_Issues.xlsx",
+      "title": "Waiver RAI Response",
+      "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3Ac052f1db-9f55-42aa-9d43-2d957bfc754b/1672953505887/PackagelistView_ExcelExport_Issues.xlsx"
+    }
+  ],
+  "parentType": "waiveramendment",
+  "proposedEffectiveDate": "-- --",
+  "GSI1sk": "MD-22204.R01.01",
+  "additionalInformation": "Jan 5 did the rai response for this waiver to verify the migration process.",
+  "submissionTimestamp": 1672953510479,
+  "GSI1pk": "OneMAC#submitwaiverrai",
+  "convertTimestamp": 1674854067202,
+  "submitterEmail": "statesystemadmin@nightwatch.test",
+  "sk": "OneMAC#1672953510479",
+  "componentId": "MD-22204.R01.01",
+  "pk": "MD-22204.R01.01",
+  "submitterName": "undefined undefined"
 },
 {
   "clockEndTimestamp": 1680146400000,
@@ -53840,6 +53983,35 @@
   "pk": "MD-22958.R00.01",
   "submitterName": "MDSTATE SUBMITTERNK",
   "title": "App K test"
+},
+{
+  "clockEndTimestamp": 1680725910479,
+  "componentType": "waiverrai",
+  "eventTimestamp": 1672953510479,
+  "currentStatus": "Submitted",
+  "originallyFrom": "cms-spa-form-master-change-requests",
+  "parentId": "MD-22958.R00.01",
+  "attachments": [
+    {
+      "s3Key": "1672953505887/PackagelistView_ExcelExport_Issues.xlsx",
+      "filename": "PackagelistView_ExcelExport_Issues.xlsx",
+      "title": "Waiver RAI Response",
+      "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3Ac052f1db-9f55-42aa-9d43-2d957bfc754b/1672953505887/PackagelistView_ExcelExport_Issues.xlsx"
+    }
+  ],
+  "parentType": "waiverappk",
+  "proposedEffectiveDate": "-- --",
+  "GSI1sk": "MD-22958.R00.01",
+  "additionalInformation": "Did the rai response for this waiver to verify the migration process.",
+  "submissionTimestamp": 1672953510479,
+  "GSI1pk": "OneMAC#submitwaiverrai",
+  "convertTimestamp": 1674854067202,
+  "submitterEmail": "statesystemadmin@nightwatch.test",
+  "sk": "OneMAC#1672953510479",
+  "componentId": "MD-22958.R00.01",
+  "pk": "MD-22958.R00.01",
+  "submitterName": "undefined undefined"
 },
 {
   "clockEndTimestamp": 1681930575838,
@@ -54657,6 +54829,35 @@
   "pk": "MD-22958.R00.02",
   "submitterName": "MDSTATE SUBMITTERNK",
   "title": "App K test"
+},
+{
+  "clockEndTimestamp": 1680725910479,
+  "componentType": "waiverrai",
+  "eventTimestamp": 1672953510479,
+  "currentStatus": "Submitted",
+  "originallyFrom": "cms-spa-form-master-change-requests",
+  "parentId": "MD-22958.R00.02",
+  "attachments": [
+    {
+      "s3Key": "1672953505887/PackagelistView_ExcelExport_Issues.xlsx",
+      "filename": "PackagelistView_ExcelExport_Issues.xlsx",
+      "title": "Waiver RAI Response",
+      "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3Ac052f1db-9f55-42aa-9d43-2d957bfc754b/1672953505887/PackagelistView_ExcelExport_Issues.xlsx"
+    }
+  ],
+  "parentType": "waiverappk",
+  "proposedEffectiveDate": "-- --",
+  "GSI1sk": "MD-22958.R00.02",
+  "additionalInformation": "Did the rai response for this waiver to verify the migration process.",
+  "submissionTimestamp": 1672953510479,
+  "GSI1pk": "OneMAC#submitwaiverrai",
+  "convertTimestamp": 1674854067202,
+  "submitterEmail": "statesystemadmin@nightwatch.test",
+  "sk": "OneMAC#1672953510479",
+  "componentId": "MD-22958.R00.02",
+  "pk": "MD-22958.R00.02",
+  "submitterName": "undefined undefined"
 },
 {
   "clockEndTimestamp": 1681930575838,
@@ -55458,6 +55659,35 @@
   "componentId": "MD-22204.R00.02",
   "pk": "MD-22204.R00.02",
   "submitterName": "MDSTATE SUBMITTERNK"
+},
+{
+  "clockEndTimestamp": 1680725910479,
+  "componentType": "waiverrai",
+  "eventTimestamp": 1672953510479,
+  "currentStatus": "Submitted",
+  "originallyFrom": "cms-spa-form-master-change-requests",
+  "parentId": "MD-22204.R00.02",
+  "attachments": [
+    {
+      "s3Key": "1672953505887/PackagelistView_ExcelExport_Issues.xlsx",
+      "filename": "PackagelistView_ExcelExport_Issues.xlsx",
+      "title": "Waiver RAI Response",
+      "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3Ac052f1db-9f55-42aa-9d43-2d957bfc754b/1672953505887/PackagelistView_ExcelExport_Issues.xlsx"
+    }
+  ],
+  "parentType": "waiveramendment",
+  "proposedEffectiveDate": "-- --",
+  "GSI1sk": "MD-22204.R00.02",
+  "additionalInformation": "Did the rai response for this waiver to verify the migration process.",
+  "submissionTimestamp": 1672953510479,
+  "GSI1pk": "OneMAC#submitwaiverrai",
+  "convertTimestamp": 1674854067202,
+  "submitterEmail": "statesystemadmin@nightwatch.test",
+  "sk": "OneMAC#1672953510479",
+  "componentId": "MD-22204.R00.02",
+  "pk": "MD-22204.R00.02",
+  "submitterName": "undefined undefined"
 },
 {
   "clockEndTimestamp": 1680042288263,
