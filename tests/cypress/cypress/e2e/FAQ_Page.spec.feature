@@ -110,9 +110,7 @@ Feature: OY2_Update_Text_on_FAQ_Page
         Then verify IDM Instructions for OneMAC Users is valid
         Then verify OneMAC IDM Guide link exists
         Then verify OneMAC IDM Guide is valid
-        Then verify OneMAC State Submitter Guide link exists
-        Then verify OneMAC State Submitter Guide is valid
-        Then verify OneMAC State Administrator Guide link exists
-        Then verify OneMAC State Administrator Guide is valid
+        Then verify OneMAC State User Guide link exists
+        Then verify OneMAC State User Guide is valid
         Then verify OneMAC CMS User Guide link exists
         Then verify OneMAC CMS User Guide is valid
