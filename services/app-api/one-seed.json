@@ -53407,15 +53407,15 @@
   ],
   "parentType": "waiveramendment",
   "proposedEffectiveDate": "-- --",
-  "GSI1sk": "MD-22204.R01.01",
+  "GSI1sk": "MD-22204.R00.01",
   "additionalInformation": "Jan 5 did the rai response for this waiver to verify the migration process.",
   "submissionTimestamp": 1672953510479,
   "GSI1pk": "OneMAC#submitwaiverrai",
   "convertTimestamp": 1674854067202,
   "submitterEmail": "statesystemadmin@nightwatch.test",
   "sk": "OneMAC#1672953510479",
-  "componentId": "MD-22204.R01.01",
-  "pk": "MD-22204.R01.01",
+  "componentId": "MD-22204.R00.01",
+  "pk": "MD-22204.R00.01",
   "submitterName": "undefined undefined"
 },
 {
