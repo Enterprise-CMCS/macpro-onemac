@@ -284,7 +284,7 @@ Feature: Waiver Package Details View: Initial Waivers
     Scenario: Initial Waiver Details View - Enable Formal RAI Response Withdraw
         Then click the Pending checkbox
         Then Click on Filter Button
-        Then search for "MD-22204.R00.00 "
+        Then search for "MD-22204.R00.00"
         Then click the Waiver Number link in the first row
         Then verify the package details page is visible
         Then verify the status on the card is "Pending"
