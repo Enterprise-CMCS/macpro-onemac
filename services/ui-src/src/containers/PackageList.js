@@ -238,24 +238,14 @@ const PackageList = () => {
           filter: CustomFilterTypes.DateRange,
           Filter: CustomFilterUi.DateRangeInPast,
         },
-        userRoleObj.isCMSUser
-          ? {
-              Header: "Formal RAI Received",
-              accessor: COLUMN_ID.LATEST_RAI_TIMESTAMP,
-              Cell: renderDate,
-              disableFilters: false,
-              filter: CustomFilterTypes.DateRange,
-              Filter: CustomFilterUi.DateRangeInPast,
-            }
-          : {
-              Header: "Formal RAI Response",
-              accessor: COLUMN_ID.LATEST_RAI_TIMESTAMP,
-              Cell: renderDate,
-              disableFilters: false,
-              filter: CustomFilterTypes.DateRange,
-              Filter: CustomFilterUi.DateRangeInPast,
-            },
-
+        {
+          Header: "Formal RAI Response",
+          accessor: COLUMN_ID.LATEST_RAI_TIMESTAMP,
+          Cell: renderDate,
+          disableFilters: false,
+          filter: CustomFilterTypes.DateRange,
+          Filter: CustomFilterUi.DateRangeInPast,
+        },
         {
           Header: "CPOC Name",
           accessor: COLUMN_ID.CPOC_NAME,
@@ -282,7 +272,6 @@ const PackageList = () => {
       renderId,
       getType,
       renderType,
-      userRoleObj.isCMSUser,
       userRoleObj.canAccessForms,
       renderName,
       renderActions,
