@@ -10,6 +10,7 @@ import { defaultFormConfig } from "./defaultFormConfig";
 import Joi from "joi";
 import { validateSubmission } from "./validateSubmission";
 import { getUser } from "../getUser";
+import { ONEMAC_TYPE } from "cmscommonlib/workflow";
 
 export const enableRaiWithdrawFormConfig = {
   ...defaultFormConfig,
@@ -121,9 +122,16 @@ export const main = handler(async (event) => {
     return e;
   }
 
+  const parentType =
+    data.parentType === ONEMAC_TYPE.WAIVER_INITIAL ||
+    data.parentType === ONEMAC_TYPE.WAIVER_RENEWAL ||
+    data.parentType === ONEMAC_TYPE.WAIVER_AMENDMENT
+      ? "waiver"
+      : data.parentType;
+
   //get latest rai response - update status and add admin changes
   try {
-    const gsi1pk = `OneMAC#submit${data.parentType}rai`;
+    const gsi1pk = `OneMAC#submit${parentType}rai`;
     const gsi1sk = data.componentId;
     const records = await getRecordsByGSI1Keys(gsi1pk, gsi1sk);
 
