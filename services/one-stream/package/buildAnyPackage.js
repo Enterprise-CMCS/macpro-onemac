@@ -199,6 +199,8 @@ export const buildAnyPackage = async (packageId, config) => {
         }
 
         if (anEvent.ACTION_OFFICERS && _.isArray(anEvent.ACTION_OFFICERS)) {
+          putParams.Item.reviewTeam = [];
+          putParams.Item.reviewTeamEmailList = [];
           anEvent.ACTION_OFFICERS.forEach((oneReviewer) => {
             putParams.Item.reviewTeam.push(
               `${oneReviewer.FIRST_NAME} ${oneReviewer.LAST_NAME}`
