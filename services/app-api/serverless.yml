@@ -437,19 +437,6 @@ functions:
     role: LambdaApiRole
     timeout: 30
     environment:
-      ccEmail: ${self:custom.dmcoEmail}
-    events:
-      - http:
-          path: withdrawRAIResponse
-          method: post
-          cors: true
-          authorizer: aws_iam
-
-  withdrawRAIResponse:
-    handler: form/withdrawRAIResponse.main
-    role: LambdaApiRole
-    timeout: 30
-    environment:
       osgEmail: ${self:custom.reviewerEmail}
       chipEmail: ${self:custom.reviewerCHIPEmail}
       chippoEmail: ${self:custom.chipCcEmail}
