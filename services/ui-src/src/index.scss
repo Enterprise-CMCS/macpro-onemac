@@ -371,10 +371,12 @@ ul {
 .required-mark {
   color: red;
 }
+form label.addl-info-required span:first-of-type:after,
 form label.required:after {
   color: red;
   content: "*";
 }
+
 select.form-control,
 textarea.form-control,
 input.form-control {
@@ -2792,6 +2794,7 @@ ul.choice-list {
     @extend .ds-c-button--transparent;
     @extend .ds-u-text-decoration--none;
     @extend .ds-u-padding--0;
+    text-align: left;
   }
 }
 .detail-section {

@@ -22,6 +22,10 @@ const withdrawPackageAction = "//a[text()='Withdraw Package']";
 const requestTempExtensionPackageAction =
   "//a[text()='Request Temporary Extension']";
 const addAmendmentPackageAction = "//a[text()='Add Amendment']";
+const withdrawFormalRAIResponseAction =
+  "//a[text()='Withdraw Formal RAI Response']";
+const enableRAIResponseWithdrawAction =
+  "//a[text()='Enable Formal RAI Response Withdraw']";
 const detailSection =
   "//section[@class='detail-section']//h2[contains(.,'Details')]";
 const CHIPSPAIDHeader = "//h3[contains(text(),'SPA ID')]";
@@ -89,7 +93,9 @@ export class oneMacPackageDetailsPage {
     cy.xpath(packageActionsHeader).should("be.visible");
   }
   verifyNoPackageActionsAvailable() {
-    cy.xpath(packageActionsList).should("be.visible");
+    cy.xpath(packageActionsList)
+      .should("be.visible")
+      .contains("No actions are currently available for this submission");
   }
   verifyPackageActionsSectionDoesNotExist() {
     cy.xpath(packageActionsList).should("not.exist");
@@ -113,6 +119,22 @@ export class oneMacPackageDetailsPage {
   }
   clickAddAmendmentPackageAction() {
     cy.xpath(addAmendmentPackageAction).click();
+  }
+  verifyWithdrawFormalRAIResponseActionExists() {
+    cy.xpath(withdrawFormalRAIResponseAction)
+      .scrollIntoView()
+      .should("be.visible");
+  }
+  clickWithdrawFormalRAIResponseAction() {
+    cy.xpath(withdrawFormalRAIResponseAction).click();
+  }
+  verifyEnableRAIResponseWithdrawActionExists() {
+    cy.xpath(enableRAIResponseWithdrawAction)
+      .scrollIntoView()
+      .should("be.visible");
+  }
+  clickEnableRAIResponseWithdrawAction() {
+    cy.xpath(enableRAIResponseWithdrawAction).click();
   }
   clickRespondToRAIAction() {
     cy.xpath(respondToRAIAction).click();

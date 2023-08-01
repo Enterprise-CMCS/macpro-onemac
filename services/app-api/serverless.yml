@@ -332,6 +332,16 @@ functions:
           cors: true
           authorizer: aws_iam
 
+  validateParentOfWithdrawRAI:
+    handler: validation/validateParentOfWithdrawRAI.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: validateParentOfWithdrawRAI/{parentId}
+          method: get
+          cors: true
+          authorizer: aws_iam
+
   withdrawInitialWaiver:
     handler: form/withdrawInitialWaiver.main
     role: LambdaApiRole
@@ -407,6 +417,30 @@ functions:
     events:
       - http:
           path: withdrawWaiverAppendixK
+          method: post
+          cors: true
+          authorizer: aws_iam
+  
+  enableRaiWithdraw:
+    handler: form/enableRaiWithdraw.main
+    role: LambdaApiRole
+    timeout: 30
+    events:
+      - http:
+          path: enableRaiWithdraw
+          method: post
+          cors: true
+          authorizer: aws_iam
+
+  withdrawRAIResponse:
+    handler: form/withdrawRAIResponse.main
+    role: LambdaApiRole
+    timeout: 30
+    environment:
+      ccEmail: ${self:custom.dmcoEmail}
+    events:
+      - http:
+          path: withdrawRAIResponse
           method: post
           cors: true
           authorizer: aws_iam
