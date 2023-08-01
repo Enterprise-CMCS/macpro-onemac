@@ -8,6 +8,7 @@ import {
 } from "cmscommonlib";
 import { cmsStatusUIMap, stateStatusUIMap } from "./libs/status-lib";
 import { getUser } from "./getUser";
+import { getActionsForPackage } from "./utils/actionDelegate";
 
 /**
  * Gets all packages from the DynamoDB one table
@@ -71,6 +72,13 @@ export const getMyPackages = async (email, group) => {
           do {
             const results = await dynamoDb.query(params);
             results.Items.map((oneItem) => {
+              oneItem.actions = getActionsForPackage(
+                oneItem.componentType,
+                oneItem.currentStatus,
+                !!oneItem.latestRaiResponseTimestamp,
+                userRoleObj,
+                "package"
+              );
               if (oneItem.waiverAuthority)
                 oneItem.temporaryExtensionType = oneItem.waiverAuthority.slice(
                   0,

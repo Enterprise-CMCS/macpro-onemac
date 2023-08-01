@@ -5,6 +5,7 @@ import RespondToRAI from "../page/action/RespondToRAI";
 import Withdraw from "../page/action/Withdraw";
 import WithdrawRAI from "../page/action/WithdrawRAI";
 import AddAmendment from "../page/action/AddAmendment";
+import EnableWithdraw from "../page/action/EnableWithdraw";
 
 export const actionComponent = {
   [Workflow.PACKAGE_ACTION.WITHDRAW]: (theComponent, formSource) => (
@@ -21,5 +22,8 @@ export const actionComponent = {
   ),
   [Workflow.PACKAGE_ACTION.ADD_AMENDMENT]: (theComponent) => (
     <AddAmendment theComponent={theComponent} />
+  ),
+  [Workflow.PACKAGE_ACTION.ENABLE_RAI_WITHDRAWAL]: (theComponent) => (
+    <EnableWithdraw theComponent={theComponent} />
   ),
 };

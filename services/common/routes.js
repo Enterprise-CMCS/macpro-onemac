@@ -84,6 +84,7 @@ export const ONEMAC_ROUTES = {
   TEMPORARY_EXTENSION_DETAIL: "/detail/temporary-extension",
   FORMS_DESCRIBE: "/forms-describe",
   EVENT: "/event",
+  ENABLE_RAI_WITHDRAW: "/enable-rai-withdraw",
 };
 
 export const TYPE_TO_DETAIL_ROUTE = {

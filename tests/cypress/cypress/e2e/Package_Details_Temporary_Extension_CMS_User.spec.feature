@@ -15,7 +15,7 @@ Feature: Waiver Package Details View: Temporary Extension for a CMS User
         Then verify the package details page is visible
         Then verify 2 action cards exist
         Then verify the status on the card is "Requested"
-        Then verify the package actions section is unavailable
+        Then verify there are no package actions available
         Then verify the details section exists
         Then verify there is a Type header in the details section
         Then verify the type is 1915b Temporary Extension
@@ -34,7 +34,7 @@ Feature: Waiver Package Details View: Temporary Extension for a CMS User
         Then verify the package details page is visible
         Then verify 2 action cards exist
         Then verify the status on the card is "Requested"
-        Then verify the package actions section is unavailable
+        Then verify there are no package actions available
         Then verify the details section exists
         Then verify there is a Type header in the details section
         Then verify the type is 1915c Temporary Extension
