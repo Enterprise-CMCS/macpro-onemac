@@ -86,7 +86,7 @@ const idmInstructionsLink =
 const idmGuideLink =
   "//div[@id='onboarding-materials']//a[text() = 'OneMAC IDM Guide']";
 const stateSubmitterGuideLink =
-  "//div[@id='onboarding-materials']//a[text() = 'OneMAC State Submitter Guide']";
+  "//div[@id='onboarding-materials']//a[text() = 'OneMAC State User Guide']";
 const stateAdminGuideLink =
   "//div[@id='onboarding-materials']//a[text() = 'OneMAC State Administrator Guide']";
 const cmsUserGuideLink =

@@ -168,11 +168,7 @@ export const oneMACFAQContent: FAQContent[] = [
                   "IDM Instructions for OneMAC Users",
                 ],
                 ["OneMACIDMGuide.pdf", "OneMAC IDM Guide"],
-                ["OneMACStateUserGuide.pdf", "OneMAC State Submitter Guide"],
-                [
-                  "OneMACStateAdministratorGuide.pdf",
-                  "OneMAC State Administrator Guide",
-                ],
+                ["OneMACStateUserGuide.pdf", "OneMAC State User Guide"],
                 ["OneMACCMSUserGuide.pdf", "OneMAC CMS User Guide"],
               ].map(([filename, label]) => (
                 <li key={filename}>

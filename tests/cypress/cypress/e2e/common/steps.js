@@ -1878,7 +1878,7 @@ Then("verify IDM Instructions for OneMAC Users link exists", () => {
 Then("verify OneMAC IDM Guide link exists", () => {
   OneMacFAQPage.verifyIdmGuideLinkExists();
 });
-Then("verify OneMAC State Submitter Guide link exists", () => {
+Then("verify OneMAC State User Guide link exists", () => {
   OneMacFAQPage.verifyStateSubmitterGuideLinkExists();
 });
 Then("verify OneMAC State Administrator Guide link exists", () => {
@@ -1893,7 +1893,7 @@ Then("verify IDM Instructions for OneMAC Users is valid", () => {
 Then("verify OneMAC IDM Guide is valid", () => {
   OneMacFAQPage.verifyIdmGuideLinkIsValid();
 });
-Then("verify OneMAC State Submitter Guide is valid", () => {
+Then("verify OneMAC State User Guide is valid", () => {
   OneMacFAQPage.verifyStateSubmitterGuideLinkIsValid();
 });
 Then("verify OneMAC State Administrator Guide is valid", () => {

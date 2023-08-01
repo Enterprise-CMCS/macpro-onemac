@@ -34,7 +34,7 @@ export const submissionDateDefault: AttributeDetail = {
   default: null,
 };
 export const latestRaiResponseDateDefault: AttributeDetail = {
-  heading: "Formal RAI Received",
+  heading: "Formal RAI Response",
   fieldName: "latestRaiResponseDateNice",
   default: "-- --",
   rolePrivilege: "isCMSUser",
