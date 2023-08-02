@@ -67,6 +67,16 @@ $color-primary-alt-lightest: #f0fafe;
     font-weight: bold;
   }
 
+  .status-bandage {
+    // the min and max allow for minor growing/shrinking
+    // to condense the width of the column when scaled down
+    // At full screen, the extra 25px lets the status breathe
+    max-width: 200px;
+    min-width: 175px;
+    // Responsible for wrapping any column
+    white-space: normal;
+  }
+
   .type-badge {
     @extend .ds-c-badge;
     font-weight: 600;

@@ -373,6 +373,12 @@ export default function PortalTable<V extends {} = {}>({
                     {row.cells.map((cell, index) => {
                       return (
                         <td
+                          className={
+                            headerGroups[0].headers[index].id ===
+                            "packageStatus"
+                              ? "status-bandage"
+                              : ""
+                          }
                           id={
                             headerGroups[0].headers[index].id + "-" + rowIndex
                           }
