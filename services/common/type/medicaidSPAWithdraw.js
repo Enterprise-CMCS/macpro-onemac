@@ -8,6 +8,7 @@ export const medicaidSPAWithdraw = {
   allowMultiplesWithSameId: true,
   requiredAttachments: [],
   optionalAttachments: ["Supporting Documentation"],
+  requireUploadOrAdditionalInformation: true,
   theAttributes: [
     "componentId",
     "submissionTimestamp",

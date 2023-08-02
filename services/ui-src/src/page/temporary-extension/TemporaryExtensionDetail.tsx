@@ -6,7 +6,7 @@ import {
   submissionDateDefault,
   AttributeDetail,
 } from "../../libs/detailLib";
-import { Workflow, waiverTemporaryExtension } from "cmscommonlib";
+import { waiverTemporaryExtension } from "cmscommonlib";
 
 const parentIdDetail: AttributeDetail = {
   heading: "Approved Initial or Renewal Number",
@@ -30,7 +30,6 @@ export const waiverTemporaryExtensionDetail: OneMACDetail = {
   ...defaultDetail,
   ...waiverTemporaryExtension,
   detailHeader: "Temporary Extension Request",
-  actionsByStatus: Workflow.waiverExtensionActionsByStatus,
   show90thDayInfo: false,
   showReviewTeam: false,
   detailSection: [

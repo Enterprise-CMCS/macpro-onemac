@@ -206,8 +206,8 @@ Then("click Leave Anyway form button", () => {
 Then("click Stay on Page", () => {
   OneMacSubmitNewMedicaidSpaPage.clickStayOnPageBtn();
 });
-Then("verify submission Successful message", () => {
-  OneMacDashboardPage.verifySuccessMessageIsDisplayed();
+Then("verify the success message is {string}", (s) => {
+  OneMacDashboardPage.verifySuccessMessageIs(s);
 });
 Then("verify submission successful message in the alert bar", () => {
   OneMacDashboardPage.verifySuccessMessage1IsDisplayed();
@@ -1406,11 +1406,26 @@ Then("click Under Review checkbox", () => {
 Then("click Waiver Terminated checkbox", () => {
   OneMacPackagePage.clickTerminatedCheckBox();
 });
+Then("verify the Withdrawal Requested checkbox exists", () => {
+  OneMacPackagePage.verifyWithdrawalRequestedCheckBoxExists();
+});
 Then("click the Withdrawal Requested checkbox", () => {
   OneMacPackagePage.clickWithdrawalRequestedCheckBox();
 });
-Then("verify seatool status 1 exists", () => {
-  OneMacPackagePage.verifyseaToolStatus1CheckBoxExists();
+Then(
+  "verify the Formal RAI Response - Withdrawal Requested checkbox exists",
+  () => {
+    OneMacPackagePage.verifyRaiResponseWithdrawalRequestedCheckBoxExists();
+  }
+);
+Then("click the Formal RAI Response - Withdrawal Requested checkbox", () => {
+  OneMacPackagePage.clickRaiResponseWithdrawalRequestedCheckBox();
+});
+Then("verify the RAI Response Withdraw Enabled checkbox exists", () => {
+  OneMacPackagePage.verifyRaiResponseWithdrawEnabledCheckBoxExists();
+});
+Then("click the RAI Response Withdraw Enabled checkbox", () => {
+  OneMacPackagePage.clickRaiResponseWithdrawEnabledCheckBox();
 });
 Then("verify sparai submitted exists", () => {
   OneMacPackagePage.verifysparaiSubmittedExists();
@@ -1863,7 +1878,7 @@ Then("verify IDM Instructions for OneMAC Users link exists", () => {
 Then("verify OneMAC IDM Guide link exists", () => {
   OneMacFAQPage.verifyIdmGuideLinkExists();
 });
-Then("verify OneMAC State Submitter Guide link exists", () => {
+Then("verify OneMAC State User Guide link exists", () => {
   OneMacFAQPage.verifyStateSubmitterGuideLinkExists();
 });
 Then("verify OneMAC State Administrator Guide link exists", () => {
@@ -1878,7 +1893,7 @@ Then("verify IDM Instructions for OneMAC Users is valid", () => {
 Then("verify OneMAC IDM Guide is valid", () => {
   OneMacFAQPage.verifyIdmGuideLinkIsValid();
 });
-Then("verify OneMAC State Submitter Guide is valid", () => {
+Then("verify OneMAC State User Guide is valid", () => {
   OneMacFAQPage.verifyStateSubmitterGuideLinkIsValid();
 });
 Then("verify OneMAC State Administrator Guide is valid", () => {
@@ -2025,6 +2040,12 @@ Then("click yes, withdraw package button", () => {
 Then("verify yes, withdraw package button exists", () => {
   OneMacPackagePage.verifyConfirmWithdrawPackageBtnExists();
 });
+Then("click Yes, withdraw response button", () => {
+  OneMacPackagePage.clickConfirmWithdrawResponseBtn();
+});
+Then("verify Yes, withdraw response button exists", () => {
+  OneMacPackagePage.verifyConfirmWithdrawResponseBtnExists();
+});
 Then("verify the package details page is visible", () => {
   OneMacPackageDetailsPage.verifyPackageDetailsPageIsVisible();
 });
@@ -2069,6 +2090,18 @@ Then("verify Add Amendment package action exists", () => {
 });
 Then("click Add Amendment package action", () => {
   OneMacPackageDetailsPage.clickAddAmendmentPackageAction();
+});
+Then("verify Withdraw Formal RAI Response package action exists", () => {
+  OneMacPackageDetailsPage.verifyWithdrawFormalRAIResponseActionExists();
+});
+Then("click Withdraw Formal RAI Response package action", () => {
+  OneMacPackageDetailsPage.clickWithdrawFormalRAIResponseAction();
+});
+Then("verify Enable Formal RAI Response Withdraw package action exists", () => {
+  OneMacPackageDetailsPage.verifyEnableRAIResponseWithdrawActionExists();
+});
+Then("click Enable Formal RAI Response Withdraw package action", () => {
+  OneMacPackageDetailsPage.clickEnableRAIResponseWithdrawAction();
 });
 Then("click on Respond to RAI package action", () => {
   OneMacPackageDetailsPage.clickRespondToRAIAction();
