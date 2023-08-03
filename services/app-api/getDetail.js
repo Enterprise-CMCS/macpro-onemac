@@ -11,7 +11,7 @@ const s3 = new AWS.S3();
 async function generateSignedUrl(item) {
   if (Array.isArray(item.attachments)) {
     const attachmentURLs = await Promise.all(
-      item.attachments.map(({ url }) =>
+      item?.attachments.map(({ url }) =>
         s3.getSignedUrlPromise("getObject", {
           Bucket: process.env.attachmentsBucket,
           Key: decodeURIComponent(url.split("amazonaws.com/")[1]),

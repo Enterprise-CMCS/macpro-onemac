@@ -158,6 +158,10 @@ label {
   @extend .ds-c-label;
 }
 
+.no-bottom-padding {
+  padding-bottom: 0;
+}
+
 .field-hint,
 p.field-hint {
   @extend .ds-c-field__hint;

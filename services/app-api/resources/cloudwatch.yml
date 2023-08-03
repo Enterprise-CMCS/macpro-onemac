@@ -4,6 +4,7 @@ Resources:
     Type: AWS::SNS::Topic
     Properties:
       DisplayName: SNS Topic for Monitoring OneMac API lambda errors
+      KmsMasterKeyId: ApiLambdaErrorTopicKey
   
   # One alarm per lambda function
   submitInitialWaiverErrorAlarm:
