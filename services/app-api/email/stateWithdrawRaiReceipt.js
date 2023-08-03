@@ -52,11 +52,11 @@ export const stateWithdrawRaiReceipt = async (data, config, user) => {
     CcAddresses: [],
     Subject: `${config.typeLabel} Package ${data.componentId} Withdraw Request`,
     HTML: `
-        <p>The OneMAC submission portal received a request to withdraw a package. You are receiving this email notification as ${
+        <p>The OneMAC submission portal received a request to withdraw the Formal RAI Response. You are receiving this email notification as the Formal RAI for ${
           data.componentId
         } was withdrawn by ${user.fullName} (${
       user.email
-    }). The package will no longer be considered for CMS review.</p>
+    }).  The package will revert to the “RAI Issued” status.</p>
         ${formatPackageDetails(data, config)}
         <p>Thank you!</p>
         `,

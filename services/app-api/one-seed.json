@@ -58916,7 +58916,7 @@
   "GSI1sk": "MD-2200.R00.10",
   "additionalInformation": "RAI Response to withdraw.",
   "submissionTimestamp": 1675766233000,
-  "GSI1pk": "OneMAC#submitwaiveramendmentrai",
+  "GSI1pk": "OneMAC#submitwaiverrai",
   "adminChanges": [],
   "submitterEmail": "statesubmitter@nightwatch.test",
   "territory": "MD",
