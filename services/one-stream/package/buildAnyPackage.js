@@ -205,9 +205,10 @@ export const buildAnyPackage = async (packageId, config) => {
             putParams.Item.reviewTeam.push(
               `${oneReviewer.FIRST_NAME} ${oneReviewer.LAST_NAME}`
             );
-            putParams.Item.reviewTeamEmailList.push(
-              `"${oneReviewer.LAST_NAME}, ${oneReviewer.FIRST_NAME}" <${oneReviewer.EMAIL}>`
-            );
+            if (oneReviewer.EMAIL)
+              putParams.Item.reviewTeamEmailList.push(
+                `"${oneReviewer.LAST_NAME}, ${oneReviewer.FIRST_NAME}" <${oneReviewer.EMAIL}>`
+              );
           });
           console.log("the review team is: ", putParams.Item.reviewTeam);
           console.log(

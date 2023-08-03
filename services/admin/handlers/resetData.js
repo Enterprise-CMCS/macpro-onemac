@@ -317,7 +317,7 @@ const undoAdminChanges = [
   },
   {
     pk: "MD-2200.R00.10",
-    sk: "OneMAC#1690811754795",
+    sk: "OneMAC#1675766233000",
     additionalInformation: "RAI Response to withdraw.",
     adminChanges: [],
     attachments: [
@@ -334,12 +334,12 @@ const undoAdminChanges = [
     componentId: "MD-2200.R00.10",
     componentType: "waiverrai",
     currentStatus: "Submitted",
-    eventTimestamp: 1690811754795,
+    eventTimestamp: 1675766233000,
     GSI1pk: "OneMAC#submitwaiveramendmentrai",
     GSI1sk: "MD-2200.R00.10",
     parentId: "MD-2200.R00.10",
     parentType: "waiveramendment",
-    submissionTimestamp: 1690811754795,
+    submissionTimestamp: 1675766233000,
     submitterEmail: "statesubmitter@nightwatch.test",
     submitterName: "StateSubmitter Nightwatch",
     territory: "MD",
