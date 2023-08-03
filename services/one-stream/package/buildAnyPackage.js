@@ -194,7 +194,7 @@ export const buildAnyPackage = async (packageId, config) => {
 
           if (leadAnalyst) {
             putParams.Item.cpocName = `${leadAnalyst.FIRST_NAME} ${leadAnalyst.LAST_NAME}`;
-            putParams.Item.cpocEmail = `"${leadAnalyst.LAST_NAME}, ${leadAnalyst.FIRST_NAME}" <${leadAnalyst.EMAIL}>`;
+            putParams.Item.cpocEmail = `"${leadAnalyst.LAST_NAME}, ${leadAnalyst.FIRST_NAME} (CPOC)" <${leadAnalyst.EMAIL}>`;
           }
         }
 
@@ -207,7 +207,7 @@ export const buildAnyPackage = async (packageId, config) => {
             );
             if (oneReviewer.EMAIL)
               putParams.Item.reviewTeamEmailList.push(
-                `"${oneReviewer.LAST_NAME}, ${oneReviewer.FIRST_NAME}" <${oneReviewer.EMAIL}>`
+                `"${oneReviewer.LAST_NAME}, ${oneReviewer.FIRST_NAME} (SRT)" <${oneReviewer.EMAIL}>`
               );
           });
           console.log("the review team is: ", putParams.Item.reviewTeam);
