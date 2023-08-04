@@ -68,11 +68,12 @@ $color-primary-alt-lightest: #f0fafe;
   }
 
   .status-bandage {
+    margin: 0;
     // the min and max allow for minor growing/shrinking
     // to condense the width of the column when scaled down
     // At full screen, the extra 25px lets the status breathe
-    max-width: 170px;
-    min-width: 145px;
+    max-width: 200px;
+    min-width: 175px;
     // Responsible for wrapping any column
     white-space: normal;
   }
