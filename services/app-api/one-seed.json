@@ -15379,8 +15379,6 @@
     "reviewTeam": ["Lester Tester", "Super Tester", "Jimmy Tester"],
     "subject": "test subject",
     "description": "test description",
-    "subject": "test subject",
-    "description": "test description",
     "componentId": "MD-22003.R00.00",
     "raiResponses": [
       {

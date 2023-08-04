@@ -28,7 +28,7 @@ const oneMacTableName = process.env.IS_OFFLINE
   ? process.env.localTableName
   : process.env.oneMacTableName;
 
-const emptyField = "-- --";
+export const emptyField = "-- --";
 
 export const buildAnyPackage = async (packageId, config) => {
   console.log("Building package: ", packageId);
@@ -56,6 +56,7 @@ export const buildAnyPackage = async (packageId, config) => {
         sk: packageSk,
         componentId: packageId,
         componentType: config.componentType,
+        reverseChrono: [],
         raiResponses: [],
         waiverExtensions: [],
         withdrawalRequests: [],
@@ -106,6 +107,16 @@ export const buildAnyPackage = async (packageId, config) => {
         if (anEvent?.currentStatus === Workflow.ONEMAC_STATUS.INACTIVATED)
           return;
         showPackageOnDashboard = true;
+
+        const eventLabel = anEvent.GSI1pk.replace("OneMAC#", "");
+
+        putParams.Item.reverseChrono.push({
+          type: config.eventTypeMap[eventLabel],
+          action: config.eventActionMap[eventLabel],
+          timestamp: anEvent.submissionTimestamp,
+          attachments: [...anEvent.attachments],
+          additionalInformation: anEvent.additionalInformation,
+        });
 
         if (anEvent?.componentType)
           if (anEvent?.adminChanges && _.isArray(anEvent.adminChanges))
