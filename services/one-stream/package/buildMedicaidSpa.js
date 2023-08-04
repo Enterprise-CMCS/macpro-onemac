@@ -17,9 +17,9 @@ const medicaidSPABuildConfig = {
     withdrawrai: formalRAIResponseType,
   },
   eventActionMap: {
-    submitchipspa: submitAction,
-    submitchipsparai: submitAction,
-    withdrawchipspa: withdrawalRequestedAction,
+    submitmedicaidspa: submitAction,
+    submitmedicaidsparai: submitAction,
+    withdrawmedicaidspa: withdrawalRequestedAction,
     withdrawrai: withdrawalRequestedAction,
   },
 };

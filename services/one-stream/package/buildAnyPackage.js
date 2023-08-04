@@ -109,14 +109,16 @@ export const buildAnyPackage = async (packageId, config) => {
         showPackageOnDashboard = true;
 
         const eventLabel = anEvent.GSI1pk.replace("OneMAC#", "");
+        console.log("this event label is: ", eventLabel);
 
-        putParams.Item.reverseChrono.push({
-          type: config.eventTypeMap[eventLabel],
-          action: config.eventActionMap[eventLabel],
-          timestamp: anEvent.submissionTimestamp,
-          attachments: [...anEvent.attachments],
-          additionalInformation: anEvent.additionalInformation,
-        });
+        config.eventTypeMap[eventLabel] &&
+          putParams.Item.reverseChrono.push({
+            type: config.eventTypeMap[eventLabel],
+            action: config.eventActionMap[eventLabel] || "Submitted",
+            timestamp: anEvent.submissionTimestamp,
+            attachments: [...anEvent.attachments],
+            additionalInformation: anEvent.additionalInformation,
+          });
 
         if (anEvent?.componentType)
           if (anEvent?.adminChanges && _.isArray(anEvent.adminChanges))
