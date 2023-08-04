@@ -4,6 +4,7 @@ import { ONEMAC_TYPE } from "cmscommonlib/workflow.js";
 import { formatPackageDetails } from "./formatPackageDetails.js";
 
 export const getCPOCandSRTEmailAddresses = async (packageId) => {
+  let returnObj = {};
   const qParams = {
     TableName: process.env.oneMacTableName,
     Key: {
@@ -16,10 +17,11 @@ export const getCPOCandSRTEmailAddresses = async (packageId) => {
     const packageItem = await dynamoDb.get(qParams);
 
     console.log("Found this package Item: ", packageItem);
-    return packageItem.Item;
+    returnObj = packageItem.Item;
   } catch (e) {
     console.log("query error: ", e.message);
   }
+  return returnObj;
 };
 
 /**
