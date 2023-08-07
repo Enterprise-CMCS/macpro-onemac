@@ -278,6 +278,7 @@ const PackageList = () => {
       renderId,
       getType,
       renderType,
+      renderStatus,
       userRoleObj.canAccessForms,
       renderName,
       renderActions,
