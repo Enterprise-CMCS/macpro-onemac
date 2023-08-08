@@ -371,10 +371,12 @@ ul {
 .required-mark {
   color: red;
 }
+form label.addl-info-required span:first-of-type:after,
 form label.required:after {
   color: red;
   content: "*";
 }
+
 select.form-control,
 textarea.form-control,
 input.form-control {
@@ -2396,7 +2398,7 @@ ul.choice-list {
   margin-left: 1rem;
   margin-right: 1rem;
   justify-content: space-between;
-  @extend .ds-u-margin-bottom--4;
+  @extend .ds-u-margin-bottom--2;
   @extend .ds-u-display--flex;
   @extend .ds-u-align-items--center;
   @include max-width-ultra-wide;
@@ -2477,6 +2479,51 @@ ul.choice-list {
     padding-top: 24px;
     gap: 16px;
     flex-wrap: wrap;
+  }
+}
+
+.filter-chip-tray-container {
+  display: flex;
+  @include max-width-ultra-wide;
+  width: -webkit-fill-available;
+  width: -moz-available;
+  margin-right: 1rem;
+  margin-left: 1rem;
+  margin-bottom: 2rem;
+  justify-content: space-between;
+
+  span {
+    white-space: nowrap;
+  }
+}
+
+.filter-chip-tray {
+  display: flex;
+  flex-direction: row;
+  gap: 0.75rem;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+
+.filter-chip-container {
+  background: #eaf8fc;
+  border: 1.5px solid #3070b6;
+  border-radius: 100px;
+  padding-left: 1rem;
+  padding-right: 0.5rem; // Icon on the right has built-in padding, so we subtract it from this
+  display: flex;
+  align-items: center;
+}
+
+.filter-chip-text {
+  white-space: nowrap;
+}
+
+.filter-chip-close {
+  background: none;
+  img {
+    width: 1rem;
+    margin-bottom: 2px;
   }
 }
 
@@ -2747,6 +2794,7 @@ ul.choice-list {
     @extend .ds-c-button--transparent;
     @extend .ds-u-text-decoration--none;
     @extend .ds-u-padding--0;
+    text-align: left;
   }
 }
 .detail-section {

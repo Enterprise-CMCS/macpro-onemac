@@ -5,6 +5,7 @@ import dynamoDb from "./libs/dynamodb-lib";
 import { getUser } from "./getUser";
 import { cmsStatusUIMap, stateStatusUIMap } from "./libs/status-lib";
 import { validateUserReadOnly } from "./utils/validateUser";
+import { getActionsForPackage } from "./utils/actionDelegate";
 
 const s3 = new AWS.S3();
 
@@ -80,6 +81,7 @@ export const getDetails = async (event) => {
         7
       );
 
+    const originalStatus = result.Item.currentStatus;
     result.Item.currentStatus = userRoleObj.isCMSUser
       ? cmsStatusUIMap[result.Item.currentStatus]
       : stateStatusUIMap[result.Item.currentStatus];
@@ -91,7 +93,16 @@ export const getDetails = async (event) => {
 
     if (!userRoleObj.isCMSUser && result.Item.reviewTeam)
       delete result.Item.reviewTeam;
-
+    console.log("result.Item: ", result.Item);
+    console.log("latestRaiResponse: ", result.Item.latestRaiResponseTimestamp);
+    result.Item.actions = getActionsForPackage(
+      result.Item.componentType,
+      originalStatus,
+      !!result.Item.latestRaiResponseTimestamp,
+      userRoleObj,
+      "detail"
+    );
+    console.log("actions", result.Item.actions);
     return { ...result.Item };
   } catch (e) {
     console.log("Error is: ", e);
