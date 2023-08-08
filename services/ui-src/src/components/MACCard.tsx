@@ -43,6 +43,8 @@ const MACCardWrapper = ({
 const MACCardTitle = ({ title }: Pick<MACCardProps, "title">) => {
   return <div className="mac-card-title">{title}</div>;
 };
+/** The most basic MACCard to wrap children in a card style element.
+ * Use `withBorder` if you want to include the gradient top border. */
 export const MACCard = ({ title, children, withBorder }: MACCardProps) => {
   return (
     <MACCardWrapper withBorder={withBorder}>
@@ -82,8 +84,10 @@ export const MACTriageCard = ({
   );
 };
 /** A MACCard for use in lists with removable items. Pass in an `onClick`
- * function to perform when the X button is clicked. This component uses the
- * `profileRole` and `status` */
+ * function to perform when the X button is clicked. This component uses
+ * the `isReadOnly`, `hasRoleAccess`, and `renderIf` conditions to gate
+ * access to the X button. It will not render if any of those conditions
+ * are false. */
 export const MACRemovableCard = ({
   title,
   description,
