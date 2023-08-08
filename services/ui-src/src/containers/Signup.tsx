@@ -6,6 +6,7 @@ import { useSignupCallback } from "../libs/hooksLib";
 import { USER_STATUS, USER_ROLE, RESPONSE_CODE } from "cmscommonlib";
 import PageTitleBar from "../components/PageTitleBar";
 import ChoiceList from "../components/ChoiceList";
+import { MACCardFieldsetWrapper } from "../components/MACCard";
 
 const ignoreEventPayload = () => undefined;
 const activeOrPending = new Set([USER_STATUS.ACTIVE, USER_STATUS.PENDING]);
@@ -126,12 +127,9 @@ export function Signup() {
   return (
     <>
       <PageTitleBar heading="Registration: User Role" />
-      <div className="choice-container">
-        <div className="choice-intro">
-          Select the role for which you are registering.
-        </div>
+      <MACCardFieldsetWrapper legend="Select the role for which you are registering.">
         {signupOptions}
-      </div>
+      </MACCardFieldsetWrapper>
     </>
   );
 }

@@ -4,6 +4,7 @@ import { useLocation } from "react-router-dom";
 import PageTitleBar from "../components/PageTitleBar";
 import ChoiceList from "../components/ChoiceList";
 import { choicesFromRoute } from "../libs/triageChoices";
+import { MACCardFieldsetWrapper } from "../components/MACCard";
 
 const Triage = () => {
   const location = useLocation();
@@ -18,12 +19,9 @@ const Triage = () => {
   return (
     <>
       <PageTitleBar heading={triageData.heading} enableBackNav />
-      <section className="choice-container">
-        <fieldset>
-          <legend className="choice-intro">{triageData.intro}</legend>
-          <ChoiceList choices={triageData.choices} />
-        </fieldset>
-      </section>
+      <MACCardFieldsetWrapper legend={triageData.intro}>
+        <ChoiceList choices={triageData.choices} />
+      </MACCardFieldsetWrapper>
     </>
   );
 };

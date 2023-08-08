@@ -4,6 +4,7 @@ import { saveAs } from "file-saver";
 import { Button } from "@cmsgov/design-system";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDownload } from "@fortawesome/free-solid-svg-icons";
+import { MACCard } from "./MACCard";
 
 type FileListProps = {
   heading: ReactNode;
@@ -62,19 +63,20 @@ export default function FileList({
           <FontAwesomeIcon icon={faDownload} /> Download All
         </Button>
       </div>
-      <div className="gradient-box" />
-      {uploadList && (
-        <ul className="choice-list">
-          {uploadList.map((upload, index) => (
-            <li className="choice-list-item" key={index}>
-              <h3>{upload.title}</h3>
-              <a href={upload.url} target="_blank" rel="noopener noreferrer">
-                {upload.filename}
-              </a>
-            </li>
-          ))}
-        </ul>
-      )}
+      <MACCard withBorder>
+        {uploadList && (
+          <ul className="choice-list">
+            {uploadList.map((upload, index) => (
+              <li className="choice-list-item" key={index}>
+                <h3>{upload.title}</h3>
+                <a href={upload.url} target="_blank" rel="noopener noreferrer">
+                  {upload.filename}
+                </a>
+              </li>
+            ))}
+          </ul>
+        )}
+      </MACCard>
     </section>
   );
 }

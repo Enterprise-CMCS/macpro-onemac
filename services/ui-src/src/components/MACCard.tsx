@@ -1,8 +1,7 @@
 import React, { PropsWithChildren } from "react";
-import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import { faChevronRight, faDownload } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
-import { USER_ROLE, USER_STATUS } from "cmscommonlib";
 import closingX from "../images/ClosingX.svg";
 
 export type MACCardProps = PropsWithChildren<{
@@ -21,6 +20,10 @@ export type MACRemovableCardProps = MACCardProps & {
   hasRoleAccess: boolean;
   renderIf?: boolean;
 };
+export type MACCardListProps = PropsWithChildren<{
+  legend: string;
+  additionalContainerClassName?: string;
+}>;
 
 /** Styled wrapper for use in MACCards, consolidates the use of 'mac-card'
  * css class. */
@@ -45,12 +48,36 @@ const MACCardTitle = ({ title }: Pick<MACCardProps, "title">) => {
 };
 /** The most basic MACCard to wrap children in a card style element.
  * Use `withBorder` if you want to include the gradient top border. */
-export const MACCard = ({ title, children, withBorder }: MACCardProps) => {
+export const MACCard = ({
+  title,
+  children,
+  withBorder,
+  childContainerClassName,
+}: MACCardProps) => {
   return (
-    <MACCardWrapper withBorder={withBorder}>
+    <MACCardWrapper
+      withBorder={withBorder}
+      childContainerClassName={childContainerClassName}
+    >
       {title && <MACCardTitle title={title} />}
       {children}
     </MACCardWrapper>
+  );
+};
+/** A styled container for nesting {@link MACTriageCard} with a fieldset and
+ * legend */
+export const MACCardFieldsetWrapper = ({
+  children,
+  legend,
+  additionalContainerClassName,
+}: MACCardListProps) => {
+  return (
+    <section className={`choice-container ${additionalContainerClassName}`}>
+      <fieldset>
+        <legend className="choice-intro">{legend}</legend>
+        {children}
+      </fieldset>
+    </section>
   );
 };
 /** A MACCard for use in options lists that lead to a destination, such as
