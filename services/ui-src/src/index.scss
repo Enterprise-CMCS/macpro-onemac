@@ -2183,6 +2183,32 @@ aside#faq-contact-info-box {
   min-width: 8ch;
 }
 
+.mac-card {
+  width: 100%;
+}
+
+.mac-triage-card-display {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+
+.mac-triage-link {
+  text-decoration: none;
+}
+
+.mac-triage-card-description {
+  color: #5b616b;
+  margin-bottom: 0;
+}
+
+.mac-triage-card-strong-text {
+  font-weight: 600;
+  font-style: italic;
+  color: #5b616b;
+  margin-top: 0;
+}
+
 .choice-container {
   @extend .form-container;
   @extend .ds-u-padding-bottom--7;
@@ -2846,10 +2872,6 @@ ul.choice-list {
     @extend .ds-u-justify-content--center;
     width: 100%;
   }
-}
-.strong-text {
-  font-weight: 600;
-  font-style: italic;
 }
 .review-team {
   @extend .ds-c-button--transparent;

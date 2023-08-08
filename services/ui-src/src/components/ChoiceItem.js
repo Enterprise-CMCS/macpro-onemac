@@ -10,15 +10,10 @@ const ChoiceItem = ({ linkTo, title, description, onclick, strongText }) => {
       <Link to={linkTo}>
         <div>
           <div className="choice-title">{title}</div>
-          <p>
-            {description}
-            {strongText && (
-              <>
-                <br />
-                <span class="strong-text">{strongText}</span>
-              </>
-            )}
-          </p>
+          <p>{description}</p>
+          {strongText && (
+            <span className="mac-triage-card-strong-text">{strongText}</span>
+          )}
         </div>
         <FontAwesomeIcon icon={faChevronRight} className="choice-item-arrow" />
       </Link>
