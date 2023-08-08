@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from "react";
-import { faChevronRight, faDownload } from "@fortawesome/free-solid-svg-icons";
+import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 import closingX from "../images/ClosingX.svg";
