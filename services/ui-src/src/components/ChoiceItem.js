@@ -9,7 +9,7 @@ const ChoiceItem = ({ linkTo, title, description, onclick, strongText }) => {
     <label className="choice" onClick={onclick}>
       <Link to={linkTo}>
         <div>
-          <div className="choice-title">{title}</div>
+          <div className="mac-card-title">{title}</div>
           <p>{description}</p>
           {strongText && (
             <span className="mac-triage-card-strong-text">{strongText}</span>

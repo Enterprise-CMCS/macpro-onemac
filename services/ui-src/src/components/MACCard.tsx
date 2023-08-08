@@ -2,30 +2,54 @@ import React, { PropsWithChildren } from "react";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
+import { USER_ROLE, USER_STATUS } from "cmscommonlib";
+import closingX from "../images/ClosingX.svg";
 
-interface MACCardProps extends PropsWithChildren<any> {
-  title: string;
+export type MACCardProps = PropsWithChildren<{
+  title?: string;
   description?: string;
+  childContainerClassName?: string;
+  withBorder?: boolean;
+}>;
+export type MACTriageCardProps = Omit<MACCardProps, "children"> & {
   linkTo: string;
-  className?: string;
   strongText?: string;
-}
-export type MACTriageCardProps = Omit<MACCardProps, "children">;
+};
+export type MACRemovableCardProps = MACCardProps & {
+  onClick: () => any;
+  isReadOnly: boolean;
+  hasRoleAccess: boolean;
+  renderIf?: boolean;
+};
 
-/** Styled wrapper for use in MACCards */
-export const MACCardWrapper = ({
+/** Styled wrapper for use in MACCards, consolidates the use of 'mac-card'
+ * css class. */
+const MACCardWrapper = ({
   children,
-  className,
-}: PropsWithChildren<Pick<MACCardProps, "className">>) => {
+  childContainerClassName,
+  withBorder,
+}: PropsWithChildren<
+  Pick<MACCardProps, "childContainerClassName" | "withBorder">
+>) => {
   return (
     <div className="mac-card">
-      {children && <div className={className}>{children}</div>}
+      {withBorder && <div className="mac-card-gradient-border" />}
+      {children && <div className={childContainerClassName}>{children}</div>}
     </div>
   );
 };
-/** Styled title for use in MACCards */
-export const MACCardTitle = ({ title }: Pick<MACCardProps, "title">) => {
-  return <div className="choice-title">{title}</div>;
+/** Styled title for use in MACCards. Consolidates the use of 'mac-card-title'
+ * css class. */
+const MACCardTitle = ({ title }: Pick<MACCardProps, "title">) => {
+  return <div className="mac-card-title">{title}</div>;
+};
+export const MACCard = ({ title, children, withBorder }: MACCardProps) => {
+  return (
+    <MACCardWrapper withBorder={withBorder}>
+      {title && <MACCardTitle title={title} />}
+      {children}
+    </MACCardWrapper>
+  );
 };
 /** A MACCard for use in options lists that lead to a destination, such as
  * the triage options found in {@link Triage} */
@@ -38,9 +62,9 @@ export const MACTriageCard = ({
   return (
     <label>
       <Link to={linkTo} className="mac-triage-link">
-        <MACCardWrapper className={"mac-triage-card-display"}>
+        <MACCardWrapper childContainerClassName={"mac-triage-card-display"}>
           <div>
-            <MACCardTitle title={title} />
+            {title && <MACCardTitle title={title} />}
             {description && (
               <p className="mac-triage-card-description">{description}</p>
             )}
@@ -57,4 +81,38 @@ export const MACTriageCard = ({
     </label>
   );
 };
-export const MACRemovableCard = () => {};
+/** A MACCard for use in lists with removable items. Pass in an `onClick`
+ * function to perform when the X button is clicked. This component uses the
+ * `profileRole` and `status` */
+export const MACRemovableCard = ({
+  title,
+  description,
+  onClick,
+  isReadOnly,
+  hasRoleAccess,
+  renderIf = true,
+  children,
+}: MACRemovableCardProps) => {
+  return (
+    <MACCardWrapper
+      withBorder={true}
+      childContainerClassName="mac-card-removable-wrapper"
+    >
+      <div>
+        {title && <MACCardTitle title={title} />}
+        {!isReadOnly && hasRoleAccess && renderIf && (
+          <button
+            aria-label={`Self-revoke access to ${title}`}
+            disabled={isReadOnly}
+            className="close-button"
+            onClick={onClick}
+          >
+            <img alt="" className="closing-x" src={closingX} />
+          </button>
+        )}
+      </div>
+      {description && <span>{description}</span>}
+      {children}
+    </MACCardWrapper>
+  );
+};

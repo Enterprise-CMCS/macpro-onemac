@@ -1967,35 +1967,9 @@ article.form-container {
   &:not(:last-child) {
     @extend .ds-u-margin-bottom--3;
   }
-  .gradient-border {
-    @include gradient-top-border;
-  }
 }
 
-.state-access-card {
-  @extend .ds-u-padding--3;
-  @extend .ds-u-fill--white;
-
-  border: 1px solid $color-gray-lighter;
-  border-top: none;
-  border-radius: 0px 0px 3px 3px;
-  box-shadow: 0px 0px 24px rgba(0, 0, 0, 0.05);
-  position: relative;
-
-  &:not(:last-child) {
-    @extend .ds-u-margin-bottom--3;
-  }
-
-  button {
-    position: absolute;
-    background: inherit;
-    top: 26px;
-    right: 26px;
-    border: none;
-  }
-}
-
-.state-access-card,
+.mac-card-removable-wrapper,
 .cms-group-division-section {
   div {
     @extend .ds-u-font-size--h3;
@@ -2187,6 +2161,20 @@ aside#faq-contact-info-box {
   width: 100%;
 }
 
+.mac-card-gradient-border {
+  @include gradient-top-border;
+}
+
+.mac-card-title {
+  @extend .ds-h4;
+}
+
+.mac-card-spaced-vertical-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
 .mac-triage-card-display {
   align-items: center;
   display: flex;
@@ -2207,6 +2195,29 @@ aside#faq-contact-info-box {
   font-style: italic;
   color: #5b616b;
   margin-top: 0;
+}
+
+.mac-card-removable-wrapper {
+  @extend .ds-u-padding--3;
+  @extend .ds-u-fill--white;
+
+  border: 1px solid $color-gray-lighter;
+  border-top: none;
+  border-radius: 0px 0px 3px 3px;
+  box-shadow: 0px 0px 24px rgba(0, 0, 0, 0.05);
+  position: relative;
+
+  &:not(:last-child) {
+    @extend .ds-u-margin-bottom--3;
+  }
+
+  button {
+    position: absolute;
+    background: inherit;
+    top: 26px;
+    right: 26px;
+    border: none;
+  }
 }
 
 .choice-container {
@@ -2838,10 +2849,6 @@ ul.choice-list {
 
 .detail-title {
   @extend .ds-u-margin-bottom--3;
-}
-
-.choice-title {
-  @extend .ds-h4;
 }
 
 .ds-u-color--warn {
