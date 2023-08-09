@@ -1767,19 +1767,6 @@ article.form-container {
   left: 0;
 }
 
-.home-content-user-header {
-  @extend .ds-u-display--flex;
-  @extend .ds-u-justify-content--center;
-  @extend .ds-u-margin-top--7;
-  @extend .ds-u-padding-top--7;
-
-  h1 {
-    @include max-width-ultra-wide;
-    @extend .ds-u-padding-x--1;
-    flex: 1;
-  }
-}
-
 @media only screen and (max-width: 1024px) {
   .home-content-user-header {
     display: flex;
@@ -1797,12 +1784,12 @@ article.form-container {
   margin-right: -17px;
 }
 
-.home-content-box {
+.home-content-container {
   @extend .ds-u-display--flex;
+  @extend .ds-u-flex-direction--column;
   @extend .ds-u-justify-content--center;
-  @extend .ds-u-margin-top--3;
-  @extend .ds-u-padding-x--7;
-  @extend .ds-u-lg-padding-x--0;
+  @include max-width-ultra-wide;
+  margin: 0 auto;
   background-color: $color-white;
 
   // Reusable styles
@@ -1816,43 +1803,78 @@ article.form-container {
     text-align: left;
   }
 
-  .title-left {
-    @include title-font(24px, 30px, 700);
-    @extend .ds-u-margin-bottom--3;
-    @extend .ds-u-margin-top--3;
-    color: $color-base;
-    width: 100%;
+  // Row titles for home page content
+  h1 {
+    @extend .ds-u-margin-top--7;
+    @extend .ds-u-padding-top--7;
+    @extend .ds-u-padding-x--1;
   }
 
-  .title {
-    @include title-font(24px, 30px, 700);
-    @extend .ds-u-margin-bottom--3;
-    color: $color-base;
+  // Container for each row of home page content
+  section {
+    @extend .ds-u-display--flex;
+    @extend .ds-u-flex-wrap--wrap;
+    @extend .ds-u-justify-content--between;
     width: 100%;
-  }
-  .vertical-line {
-    border-left: 2px solid $color-gray-lighter;
-    margin-left: 11px;
-  }
-  .sub-title {
-    @include title-font(18px, 24px, 700);
-    @extend .ds-u-padding-bottom--1;
-    color: $color-gray;
-  }
-  .text {
-    @include title-font(16px, 24px, 400);
-    width: 352px;
-    padding-bottom: 8px;
-    color: $color-base;
-    width: 100%;
-  }
 
-  .home-content-wrapper {
-    @extend .ds-l-row;
-    @extend .ds-u-align-items--start;
-    @extend .ds-u-justify-content--around;
-    @include max-width-ultra-wide;
-    width: 100%;
+    .title-left {
+      @include title-font(24px, 30px, 700);
+      @extend .ds-u-margin-bottom--3;
+      @extend .ds-u-margin-top--3;
+      color: $color-base;
+      width: 100%;
+    }
+
+    .text {
+      @include title-font(16px, 24px, 400);
+      width: 352px;
+      padding-bottom: 8px;
+      color: $color-base;
+      width: 100%;
+    }
+
+    .mac-card-wrapper {
+      width: 40%;
+
+      .sub-title {
+        @include title-font(18px, 24px, 700);
+        @extend .ds-u-padding-bottom--1;
+        color: $color-gray;
+      }
+
+      .vertical-line {
+        border-left: 2px solid $color-gray-lighter;
+        margin-left: 11px;
+      }
+    }
+
+    // Right column styles
+    #home-content-right-column {
+      @extend .ds-l-col--12;
+      @extend .ds-u-measure--base;
+      .text {
+        @include title-font(16px, 24px, 400);
+        width: 352px;
+        padding-bottom: 8px;
+        color: $color-base;
+        width: 100%;
+      }
+
+      h2 {
+        @include title-font(24px, 30px, 700);
+        @extend .ds-u-margin-bottom--3;
+        color: $color-base;
+        width: 100%;
+      }
+
+      div {
+        padding: 2rem 10rem;
+      }
+
+      li {
+        margin-bottom: 24px;
+      }
+    }
   }
 
   .home-content-left-box,
@@ -1867,8 +1889,6 @@ article.form-container {
     @extend .ds-u-margin-bottom--5;
     @extend .ds-u-lg-margin-bottom--0;
     @extend .ds-u-padding-bottom--5;
-    border: 1px solid $color-gray-lighter;
-    border-radius: 4px;
 
     .vertical-line-64 {
       @extend .vertical-line;
@@ -2157,22 +2177,35 @@ aside#faq-contact-info-box {
   min-width: 8ch;
 }
 
-.mac-card {
+.mac-card-wrapper {
   width: 100%;
 }
 
-.mac-card-gradient-border {
+.mac-card-border {
+  border: 1px solid #d6d7d9;
+  border-radius: 4px;
+}
+
+.mac-card-gradient-top {
   @include gradient-top-border;
 }
 
 .mac-card-title {
-  @extend .ds-h4;
+  @extend .ds-h2;
+  @extend .ds-u-margin-bottom--4;
+  line-height: 30px;
+  text-align: left;
+  width: 100%;
 }
 
 .mac-card-spaced-vertical-list {
   display: flex;
   flex-direction: column;
   gap: 2rem;
+}
+
+.mac-default-card-children {
+  padding: 2rem 8rem;
 }
 
 .mac-triage-card-display {

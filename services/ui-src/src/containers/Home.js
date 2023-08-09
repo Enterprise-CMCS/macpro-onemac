@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import HomeHeader from "../components/HomeHeader";
 import HomeFooter from "../components/HomeFooter";
 import AlertBar from "../components/AlertBar";
+import { MACCard } from "../components/MACCard";
 
 const stateSubmissionTitle = "How to create a submission";
 const stateSubmissionsList = [
@@ -157,41 +158,35 @@ export default function Home() {
       <HomeHeader />
       <AlertBar alertCode={location?.state?.passCode} />
 
-      <div className="home-content-user-header">
-        <h1 className="ds-text-heading--3xl ds-h1">State Users</h1>
-      </div>
-      <div className="home-content-box">
-        <div className="home-content-wrapper">
-          <div className="home-content-left-box">
-            <div className="gradient-border-home" />
-            <div className="ds-l-container ds-u-margin--0">
-              <div className="title-left">{stateSubmissionTitle}</div>
-              {renderSubmissionSteps(stateSubmissionsList)}
-            </div>
-          </div>
+      <div className="home-content-container">
+        <h1>State Users</h1>
+        <section>
+          {/* TODO: Deal with the style problems introduced by convoluted CSS */}
+          <MACCard
+            title={stateSubmissionTitle}
+            childContainerClassName="home-content-left-box"
+          >
+            {renderSubmissionSteps(stateSubmissionsList)}
+          </MACCard>
           <div className="home-content-right-box">
-            <div className="title">{statePaperSubmissionTitle}</div>
+            <h2>{statePaperSubmissionTitle}</h2>
             {renderPaperSubmissionInfo(statePaperSubmissionList)}
           </div>
-        </div>
-      </div>
-      <div className="home-content-user-header">
-        <h1 className="ds-text-heading--3xl ds-h1">CMS Users</h1>
-      </div>
-      <div className="home-content-box">
-        <div className="home-content-wrapper">
-          <div className="home-content-left-box">
-            <div className="gradient-border-home" />
-            <div className="ds-l-container ds-u-margin--0">
-              <div className="title-left">{cmsSubmissionTitle}</div>
-              {renderSubmissionSteps(cmsSubmissionsList)}
-            </div>
-          </div>
+        </section>
+        <h1>CMS Users</h1>
+        <section>
+          {/* TODO: Deal with the style problems introduced by convoluted CSS */}
+          <MACCard
+            title={cmsSubmissionTitle}
+            childContainerClassName="home-content-left-box"
+          >
+            {renderSubmissionSteps(cmsSubmissionsList)}
+          </MACCard>
           <div className="home-content-right-box">
-            <div className="title">{cmsPaperSubmissionTitle}</div>
+            <h2>{cmsPaperSubmissionTitle}</h2>
             {renderPaperSubmissionInfo(cmsPaperSubmissionList)}
           </div>
-        </div>
+        </section>
       </div>
       <HomeFooter />
     </>
