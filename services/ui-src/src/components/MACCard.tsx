@@ -14,6 +14,8 @@ export type MACCardProps = PropsWithChildren<{
 export type MACTriageCardProps = Omit<MACCardProps, "children"> & {
   linkTo: string;
   strongText?: string;
+  /** @deprecated */
+  deprecatedOnClick?: () => any;
 };
 export type MACRemovableCardProps = MACCardProps & {
   onClick: () => any;
@@ -89,9 +91,10 @@ export const MACTriageCard = ({
   description,
   linkTo,
   strongText,
+  deprecatedOnClick,
 }: MACTriageCardProps) => {
   return (
-    <label>
+    <label onClick={deprecatedOnClick}>
       <Link to={linkTo} className="mac-triage-link">
         <MACCardWrapper childContainerClassName={"mac-triage-card-display"}>
           <div>

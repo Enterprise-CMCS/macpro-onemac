@@ -20,7 +20,10 @@ function StateUserSignup() {
       title: "State Submitter",
       description: "Responsible for submitting packages",
       linkTo: "/state",
-      onclick: () => {
+      /* TODO: DEPRECATE THIS PLEASE. Triage cards already link to a url via the
+       *   `linkTo` property which plugs into a `Link` component. This breaks
+       *   the consistency of our navigation pattern. */
+      deprecatedOnClick: () => {
         history.replace("signup/state", { role: USER_ROLE.STATE_SUBMITTER });
       },
     },
@@ -29,7 +32,10 @@ function StateUserSignup() {
       title: "State System Administrator",
       description: "Ability to approve state submitters and submit packages",
       linkTo: "/state",
-      onclick: () => {
+      /* TODO: DEPRECATE THIS PLEASE. Triage cards already link to a url via the
+       *   `linkTo` property which plugs into a `Link` component. This breaks
+       *   the consistency of our navigation pattern. */
+      deprecatedOnClick: () => {
         history.replace("signup/state", {
           role: USER_ROLE.STATE_SYSTEM_ADMIN,
         });
@@ -60,7 +66,7 @@ function CMSSignup() {
       description:
         "Responsible for managing CMS Reviewers and State System Admins",
       linkTo: "/usermanagement",
-      onclick: onClickCMS,
+      deprecatedOnClick: onClickCMS,
     },
   ].filter(Boolean);
   return <ChoiceList choices={CMS_CHOICES} />;

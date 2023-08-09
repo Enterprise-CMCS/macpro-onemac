@@ -334,7 +334,7 @@ describe("access section", () => {
         selector: "div",
       });
       expect(stateLabelEl).toBeVisible();
-      expect(stateLabelEl.nextElementSibling.tagName).toBe("EM");
+      expect(stateLabelEl.nextElementSibling.tagName).toBe("BUTTON");
       expect(stateLabelEl.nextElementSibling).toHaveTextContent(
         ACCESS_LABELS[status]
       );
