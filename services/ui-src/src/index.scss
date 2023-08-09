@@ -1792,6 +1792,14 @@ article.form-container {
   margin: 0 auto;
   background-color: $color-white;
 
+  @media only screen and (max-width: $width-xl) {
+    max-width: 560px;
+    // Centers section titles when on mobile view
+    h1 {
+      margin: 1rem auto;
+    }
+  }
+
   // Reusable styles
   @mixin title-font($size, $lineHeight, $weight) {
     font-family: Open Sans;
@@ -1817,6 +1825,12 @@ article.form-container {
     @extend .ds-u-justify-content--between;
     width: 100%;
 
+    @media only screen and (max-width: $width-xl) {
+      .mac-card-wrapper {
+        width: 100%;
+      }
+    }
+
     .title-left {
       @include title-font(24px, 30px, 700);
       @extend .ds-u-margin-bottom--3;
@@ -1831,21 +1845,6 @@ article.form-container {
       padding-bottom: 8px;
       color: $color-base;
       width: 100%;
-    }
-
-    .mac-card-wrapper {
-      width: 40%;
-
-      .sub-title {
-        @include title-font(18px, 24px, 700);
-        @extend .ds-u-padding-bottom--1;
-        color: $color-gray;
-      }
-
-      .vertical-line {
-        border-left: 2px solid $color-gray-lighter;
-        margin-left: 11px;
-      }
     }
 
     // Right column styles
@@ -1874,6 +1873,50 @@ article.form-container {
       li {
         margin-bottom: 24px;
       }
+    }
+  }
+
+  .mac-card-wrapper {
+    width: 40%;
+  }
+
+  .mac-card-title {
+    @extend .ds-u-padding-left--2;
+    @extend .ds-u-padding-right--2;
+    max-width: 75%;
+  }
+
+  .home-content-card-step {
+    @extend .ds-u-display--flex;
+    @extend .ds-u-padding-left--2;
+    @extend .ds-u-padding-right--2;
+    gap: 1rem;
+
+    h3 {
+      @include title-font(18px, 24px, 700);
+      margin-top: 0;
+      color: $color-gray;
+    }
+
+    .vertical-line {
+      border-left: 2px solid $color-gray-lighter;
+    }
+
+    #icon-and-line,
+    #subtitle-and-text {
+      @extend .ds-u-display--flex;
+      @extend .ds-u-flex-direction--column;
+      gap: 1rem;
+    }
+
+    #icon-and-line {
+      align-items: center !important;
+      gap: 2rem;
+      width: 28px;
+    }
+
+    #subtitle-and-text {
+      @extend .ds-u-padding-left--1;
     }
   }
 

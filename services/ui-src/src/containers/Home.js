@@ -102,32 +102,29 @@ const cmsPaperSubmissionList = [
  * @returns  list of data divs
  */
 const renderSubmissionSteps = (submissionsList) => {
-  return submissionsList.map((item, i) => {
-    return (
-      <div key={i}>
-        <div className="ds-l-row">
-          <div className="ds-l-col--1 ds-u-padding--0">
-            <img
-              src={`/assets/images/icons/${item.image}.svg`}
-              alt={item.subTitle}
-            />
-          </div>
-          <div className="ds-l-col--11 ds-u-padding-left--1 sub-title">
-            {item.subTitle}
-          </div>
-        </div>
-
-        <div className="ds-l-row">
-          <div className="ds-l-col--1 ds-u-padding--0">
-            <div className={item.verticalLineClass}></div>
-          </div>
-          <div className="ds-l-col--11 ds-u-padding-left--1 ds-u-padding-bottom--1 text">
-            {item.text}
-          </div>
-        </div>
+  /** Refactored into reusable component for later extraction and inclusion
+   * in cms-ux-lib */
+  const Step = ({ subTitle, text, icon, verticalLineClass }) => (
+    <div className="home-content-card-step">
+      <div id="icon-and-line">
+        <img src={`/assets/images/icons/${icon}.svg`} alt={subTitle} />
+        <div className={verticalLineClass} />
       </div>
-    );
-  });
+      <div id="subtitle-and-text">
+        <h3>{subTitle}</h3>
+        <p className="text">{text}</p>
+      </div>
+    </div>
+  );
+  return submissionsList.map((item, i) => (
+    <Step
+      subTitle={item.subTitle}
+      text={item.text}
+      icon={item.image}
+      verticalLineClass={item.verticalLineClass}
+      key={i}
+    />
+  ));
 };
 
 /**
@@ -161,7 +158,6 @@ export default function Home() {
       <div className="home-content-container">
         <h1>State Users</h1>
         <section>
-          {/* TODO: Deal with the style problems introduced by convoluted CSS */}
           <MACCard
             title={stateSubmissionTitle}
             childContainerClassName="home-content-left-box"
@@ -175,7 +171,6 @@ export default function Home() {
         </section>
         <h1>CMS Users</h1>
         <section>
-          {/* TODO: Deal with the style problems introduced by convoluted CSS */}
           <MACCard
             title={cmsSubmissionTitle}
             childContainerClassName="home-content-left-box"
