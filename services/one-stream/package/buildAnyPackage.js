@@ -117,7 +117,7 @@ export const buildAnyPackage = async (packageId, config) => {
             type: config.eventTypeMap[eventLabel],
             action: config.eventActionMap[eventLabel] || "Submitted",
             timestamp: anEvent.submissionTimestamp,
-            attachments: [...anEvent?.attachments],
+            attachments: anEvent.attachments ? [...anEvent.attachments] : [],
             additionalInformation: anEvent.additionalInformation,
           });
 
