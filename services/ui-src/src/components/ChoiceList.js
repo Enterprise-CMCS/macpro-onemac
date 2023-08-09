@@ -1,6 +1,5 @@
 import React from "react";
 
-import ChoiceItem from "./ChoiceItem";
 import { MACTriageCard } from "./MACCard";
 
 const ChoiceList = ({ choices }) => {
