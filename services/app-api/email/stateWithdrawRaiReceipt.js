@@ -1,44 +1,5 @@
-import dynamoDb from "../libs/dynamodb-lib";
-import { USER_ROLE, USER_STATUS } from "cmscommonlib";
-
 import { formatPackageDetails } from "./formatPackageDetails.js";
-
-export const getAllActiveStateUserEmailAddresses = async (territory) => {
-  const stateSubmittingUserRoles = [
-    USER_ROLE.STATE_SUBMITTER,
-    USER_ROLE.STATE_SYSTEM_ADMIN,
-  ];
-  const stateSubmittingUsers = [];
-
-  await Promise.all(
-    stateSubmittingUserRoles.map(async (role) => {
-      console.log("Collecting all Role: ", role);
-      const qParams = {
-        TableName: process.env.oneMacTableName,
-        IndexName: "GSI2",
-        KeyConditionExpression: "GSI2pk = :pk and GSI2sk = :sk",
-        ExpressionAttributeValues: {
-          ":pk": `${role}#${territory}`,
-          ":sk": USER_STATUS.ACTIVE,
-        },
-        ProjectionExpression: "email, fullName",
-      };
-      try {
-        const results = await dynamoDb.query(qParams);
-        console.log("Found these results in One Table: ", results);
-        stateSubmittingUsers.push(
-          results.Items.map(({ fullName, email }) => `${fullName} <${email}>`)
-        );
-      } catch (e) {
-        console.log("query error: ", e.message);
-      }
-    })
-  );
-  const returnUsers = stateSubmittingUsers.flat();
-  console.log("return users: ", returnUsers);
-
-  return returnUsers;
-};
+import { getAllActiveStateUserEmailAddresses } from "./stateWithdrawalReceipt.js";
 
 /**
  * RAI Response withdrawal email to state user(s)

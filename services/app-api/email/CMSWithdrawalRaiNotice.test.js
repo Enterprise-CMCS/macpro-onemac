@@ -1,4 +1,6 @@
 import dynamoDb from "../libs/dynamodb-lib";
+import { ONEMAC_TYPE } from "cmscommonlib/workflow.js";
+
 import {
   CMSWithdrawRaiNotice,
   getCPOCandSRTEmailAddresses,
@@ -9,6 +11,7 @@ jest.mock("../libs/dynamodb-lib");
 const testData = {
   submitterName: "name",
   componentId: "MI-11-1111-22",
+  parentType: ONEMAC_TYPE.MEDICAID_SPA,
 };
 const testConfig = {
   typeLabel: "Test Type",
@@ -20,7 +23,7 @@ const user = {
 };
 
 it("builds the CMS Withdraw RAI Response Notice Email", async () => {
-  dynamoDb.get.mockImplementationOnce(() => {
+  dynamoDb.get.mockImplementation(() => {
     return {
       Item: [
         {
@@ -34,7 +37,19 @@ it("builds the CMS Withdraw RAI Response Notice Email", async () => {
     };
   });
   try {
-    const response = await CMSWithdrawRaiNotice(testData, testConfig, user);
+    let response = await CMSWithdrawRaiNotice(testData, testConfig, user);
+    expect(response.HTML.length).toBe(513);
+
+    testData.parentType = ONEMAC_TYPE.CHIP_SPA;
+    response = await CMSWithdrawRaiNotice(testData, testConfig, user);
+    expect(response.HTML.length).toBe(513);
+
+    testData.parentType = ONEMAC_TYPE.WAIVER_INITIAL;
+    response = await CMSWithdrawRaiNotice(testData, testConfig, user);
+    expect(response.HTML.length).toBe(513);
+
+    testData.parentType = ONEMAC_TYPE.WAIVER_APP_K;
+    response = await CMSWithdrawRaiNotice(testData, testConfig, user);
     expect(response.HTML.length).toBe(513);
   } catch (e) {
     console.log("reeived error: ", e);
