@@ -7348,7 +7348,6 @@
     "componentType": "chipspa",
     "eventTimestamp": 1673562408356,
     "currentStatus": "Submitted",
-    "originallyFrom": "cms-spa-form-master-change-requests",
     "attachments": [
       {
         "s3Key": "1673562407449/picture.jpg",
@@ -7374,7 +7373,7 @@
     ],
     "proposedEffectiveDate": "-- --",
     "GSI1sk": "MD-22-2307-VM",
-    "additionalInformation": "withdrawal requested",
+    "additionalInformation": "Initial submission event for the package to test the withdrawal requested status",
     "submissionTimestamp": 1673562408356,
     "GSI1pk": "OneMAC#submitchipspa",
     "convertTimestamp": 1674854066701,
@@ -7389,6 +7388,7 @@
     "eventTimestamp": 1674139607941,
     "submissionTimestamp": 1674139607941,
     "currentStatus": "Withdrawal Requested",
+    "additionalInformation": "The withdrawal requested event.",
     "GSI1sk": "MD-22-2307-VM",
     "GSI1pk": "OneMAC#withdrawchipspa",
     "lastModifiedEmail": "statesubmitter@nightwatch.test",
@@ -8475,7 +8475,7 @@
     "attachments": [],
     "GSI1sk": "MD-23-3333-VM",
     "submissionTimestamp": 1675753200000,
-    "GSI1pk": "OneMAC#createmedicaidspa",
+    "GSI1pk": "OneMAC#submitmedicaidspa",
     "convertTimestamp": 1677005060252,
     "territory": "MD",
     "sk": "OneMAC#1675753200000",

@@ -13,13 +13,13 @@ const waiverAmendmentBuildConfig = {
   eventTypeMap: {
     submitwaiveramendment: initialSubmissionType,
     submitwaiverrai: formalRAIResponseType,
-    withdrawwaiveramendment: packageType,
+    submitwaiveramendmentwithdraw: packageType,
     withdrawrai: formalRAIResponseType,
   },
   eventActionMap: {
     submitwaiveramendment: submitAction,
     submitwaiverrai: submitAction,
-    withdrawwaiveramendment: withdrawalRequestedAction,
+    submitwaiveramendmentwithdraw: withdrawalRequestedAction,
     withdrawrai: withdrawalRequestedAction,
   },
 };

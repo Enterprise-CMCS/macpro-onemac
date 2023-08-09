@@ -52,6 +52,7 @@ export type ComponentDetail = {
   adminChanges: any[];
   waiverExtensions: any[];
   withdrawalRequests: any[];
+  reverseChrono: any[];
   temporaryExtensionType: string;
   cpocName: string;
   reviewTeam: string[];

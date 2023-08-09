@@ -13,13 +13,13 @@ const waiverAppendixKBuildConfig = {
   eventTypeMap: {
     submitwaiverappk: initialSubmissionType,
     submitwaiverappkrai: formalRAIResponseType,
-    withdrawwaiverappk: packageType,
+    submitwaiverappkwithdraw: packageType,
     withdrawrai: formalRAIResponseType,
   },
   eventActionMap: {
     submitwaiverappk: submitAction,
     submitwaiverappkrai: submitAction,
-    withdrawwaiverappk: withdrawalRequestedAction,
+    submitwaiverappkwithdraw: withdrawalRequestedAction,
     withdrawrai: withdrawalRequestedAction,
   },
 };

@@ -13,13 +13,13 @@ const chipSPABuildConfig = {
   eventTypeMap: {
     submitchipspa: initialSubmissionType,
     submitchipsparai: formalRAIResponseType,
-    withdrawchipspa: packageType,
+    submitchipspawithdraw: packageType,
     withdrawrai: formalRAIResponseType,
   },
   eventActionMap: {
     submitchipspa: submitAction,
     submitchipsparai: submitAction,
-    withdrawchipspa: withdrawalRequestedAction,
+    submitchipspawithdraw: withdrawalRequestedAction,
     withdrawrai: withdrawalRequestedAction,
   },
 };

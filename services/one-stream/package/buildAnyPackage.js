@@ -319,6 +319,8 @@ export const buildAnyPackage = async (packageId, config) => {
       (a, b) => b.eventTimestamp - a.eventTimestamp
     );
 
+    putParams.Item.reverseChrono.sort((a, b) => b.timestamp - a.timestamp);
+
     if (putParams.Item.raiResponses[0]?.currentStatus === "Submitted") {
       putParams.Item.latestRaiResponseTimestamp =
         putParams.Item.raiResponses[0]?.submissionTimestamp;
