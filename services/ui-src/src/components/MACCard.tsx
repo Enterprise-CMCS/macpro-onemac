@@ -96,12 +96,8 @@ export const MACTriageCard = ({
         <MACCardWrapper childContainerClassName={"mac-triage-card-display"}>
           <div>
             {title && <MACCardTitle title={title} />}
-            {description && (
-              <p className="mac-triage-card-description">{description}</p>
-            )}
-            {strongText && (
-              <p className="mac-triage-card-strong-text">{strongText}</p>
-            )}
+            {description && <p id="description">{description}</p>}
+            {strongText && <p id="strong">{strongText}</p>}
           </div>
           <FontAwesomeIcon
             icon={faChevronRight}

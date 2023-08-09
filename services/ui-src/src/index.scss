@@ -2208,26 +2208,45 @@ aside#faq-contact-info-box {
   padding: 2rem 8rem;
 }
 
-.mac-triage-card-display {
-  align-items: center;
-  display: flex;
-  justify-content: space-between;
-}
-
 .mac-triage-link {
   text-decoration: none;
 }
 
-.mac-triage-card-description {
-  color: #5b616b;
-  margin-bottom: 0;
-}
+.mac-triage-card-display {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
 
-.mac-triage-card-strong-text {
-  font-weight: 600;
-  font-style: italic;
-  color: #5b616b;
-  margin-top: 0;
+  // Triage cards use h4-like titles, so we override margins and font-size
+  // here for them exclusively.
+  .mac-card-title {
+    font-size: 18px;
+    margin: 0 0 0.5rem 0 !important;
+  }
+
+  .choice-item-arrow {
+    background: inherit;
+    border: none;
+    color: $color-primary;
+    font-size: 24px;
+
+    &:hover {
+      text-decoration: none;
+      color: $color-primary-darker;
+    }
+  }
+
+  #description {
+    color: #5b616b;
+    margin-bottom: 0;
+  }
+
+  #strong {
+    font-weight: 600;
+    font-style: italic;
+    color: #5b616b;
+    margin-top: 0;
+  }
 }
 
 .mac-card-removable-wrapper {
@@ -2370,18 +2389,6 @@ ul.choice-list {
       @extend .ds-u-font-weight--bold;
       display: inline;
     }
-  }
-}
-
-.choice-item-arrow {
-  background: inherit;
-  border: none;
-  color: $color-primary;
-  font-size: 24px;
-
-  &:hover {
-    text-decoration: none;
-    color: $color-primary-darker;
   }
 }
 
