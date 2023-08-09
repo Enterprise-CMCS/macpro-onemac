@@ -23,12 +23,9 @@ import PageTitleBar from "../components/PageTitleBar";
 import { ConfirmationDialog } from "../components/ConfirmationDialog";
 import { PhoneNumber } from "../components/PhoneNumber";
 import { MultiSelectDropDown } from "../components/MultiSelectDropDown";
-import closingX from "../images/ClosingX.svg";
 import addStateButton from "../images/addStateButton.svg";
 import groupData from "cmscommonlib/groupDivision.json";
 import { MACCard, MACRemovableCard } from "../components/MACCard";
-
-const CLOSING_X_IMAGE = <img alt="" className="closing-x" src={closingX} />;
 
 export const ACCESS_LABELS = {
   active: "Access Granted",
