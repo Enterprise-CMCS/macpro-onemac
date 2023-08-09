@@ -7387,6 +7387,7 @@
   {
     "componentType": "chipspa",
     "eventTimestamp": 1674139607941,
+    "submissionTimestamp": 1674139607941,
     "currentStatus": "Withdrawal Requested",
     "GSI1sk": "MD-22-2307-VM",
     "GSI1pk": "OneMAC#withdrawchipspa",
