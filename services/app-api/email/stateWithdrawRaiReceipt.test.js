@@ -1,8 +1,8 @@
 import dynamoDb from "../libs/dynamodb-lib";
 import {
-  stateWithdrawalReceipt,
+  stateWithdrawRaiReceipt,
   getAllActiveStateUserEmailAddresses,
-} from "./stateWithdrawalReceipt";
+} from "./stateWithdrawRaiReceipt";
 
 jest.mock("../libs/dynamodb-lib");
 
@@ -31,8 +31,8 @@ const user = {
 
 it("builds the State Withdrawal Receipt Email", async () => {
   try {
-    const response = await stateWithdrawalReceipt(testData, testConfig, user);
-    expect(response.HTML.length).toBe(507);
+    const response = await stateWithdrawRaiReceipt(testData, testConfig, user);
+    expect(response.HTML.length).toBe(536);
   } catch (e) {
     console.log("reeived error: ", e);
   }
@@ -46,7 +46,7 @@ it("handles a query exception", async () => {
     expect(await getAllActiveStateUserEmailAddresses("TT")).toThrow(
       "this is an error"
     );
-    const response = await stateWithdrawalReceipt(testData, testConfig, user);
+    const response = await stateWithdrawRaiReceipt(testData, testConfig, user);
     expect(response.ToAddresses.length).toBe(0);
   } catch (e) {
     console.log("reeived error: ", e);
