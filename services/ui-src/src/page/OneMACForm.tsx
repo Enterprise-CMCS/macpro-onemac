@@ -259,7 +259,6 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
       let validationMessages: Message[] = validateComponentId(
         oneMacFormData.componentId
       );
-      console.log("validationMessages: ", validationMessages);
       if (validationMessages.length === 0 && oneMacFormData.componentId) {
         try {
           const isADup = await PackageApi.packageExists(
@@ -351,13 +350,10 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
     const componentIdWarningMessageCode = componentIdWarningMessage
       ? componentIdWarningMessage.warningMessageCode
       : "";
-    console.log("in dosubmit");
     try {
-      console.log("in try");
       const uploadedList = uploader.current
         ? await uploader.current.uploadFiles()
         : undefined;
-      console.log("uploadedList is: ", uploadedList);
       const returnCode = await PackageApi.submitToAPI(
         {
           ...oneMacFormData,
@@ -366,7 +362,6 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
         uploadedList,
         formConfig.componentType
       );
-      console.log("return code is: ", returnCode);
       if (returnCode in FORM_SUCCESS_RESPONSE_CODES)
         throw new Error(returnCode);
 
@@ -385,7 +380,6 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
   const handleSubmit = useCallback(
     async (event: SyntheticEvent) => {
       event.preventDefault();
-      console.log("handleSubmit called");
       if (isSubmissionReady && !limitSubmit.current) {
         if (formConfig.confirmSubmit) {
           const confirmMessage: JSX.Element | string = formConfig.confirmSubmit
@@ -403,7 +397,6 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
               doSubmit
             );
         } else {
-          console.log("calling doSubmit");
           doSubmit();
         }
       } else {

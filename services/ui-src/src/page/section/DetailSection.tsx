@@ -147,7 +147,6 @@ export const DetailSection = ({
   loadDetail: () => void;
   setAlertCode: (code: string) => void;
 }) => {
-  const { userProfile } = useAppContext() ?? {};
   const secondClockStatuses = [
     "Pending",
     "Pending - Concurrence",
@@ -161,8 +160,6 @@ export const DetailSection = ({
     detail.currentStatus,
     detail.clockEndTimestamp
   );
-
-  const userRoleObj = getUserRoleObj(userProfile?.userData?.roleList);
 
   const actions = detail.actions;
 
