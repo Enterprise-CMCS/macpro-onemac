@@ -91,7 +91,7 @@ export const AccessDisplay = ({
           .filter(({ role }) => role === profileRole)
           .map(({ territory, status, contacts }) => (
             <MACRemovableCard
-              withBorder
+              withGradientBar
               title={getTitle(territory, territoryMap)}
               onClick={() => selfRevoke(territory)}
               isReadOnly={isReadOnly}
@@ -140,7 +140,7 @@ export const GroupDivisionDisplay = ({ profileData = {} }) => {
   return (
     <>
       <h2 id="accessHeader">Group & Division</h2>
-      <MACCard withBorder>
+      <MACCard withGradientBar>
         <dl className="access-card-container">
           <div className="cms-group-division-section">
             <dt>Group</dt>

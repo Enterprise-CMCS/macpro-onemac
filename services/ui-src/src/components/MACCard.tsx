@@ -8,6 +8,7 @@ export type MACCardProps = PropsWithChildren<{
   title?: string;
   description?: string;
   childContainerClassName?: string;
+  withGradientBar?: boolean;
   withBorder?: boolean;
 }>;
 export type MACTriageCardProps = Omit<MACCardProps, "children"> & {
@@ -30,13 +31,13 @@ export type MACCardListProps = PropsWithChildren<{
 const MACCardWrapper = ({
   children,
   childContainerClassName,
-  withBorder,
+  withGradientBar,
 }: PropsWithChildren<
-  Pick<MACCardProps, "childContainerClassName" | "withBorder">
+  Pick<MACCardProps, "childContainerClassName" | "withGradientBar">
 >) => {
   return (
     <div className="mac-card">
-      {withBorder && <div className="mac-card-gradient-border" />}
+      {withGradientBar && <div className="mac-card-gradient-border" />}
       {children && <div className={childContainerClassName}>{children}</div>}
     </div>
   );
@@ -51,12 +52,12 @@ const MACCardTitle = ({ title }: Pick<MACCardProps, "title">) => {
 export const MACCard = ({
   title,
   children,
-  withBorder,
+  withGradientBar,
   childContainerClassName,
 }: MACCardProps) => {
   return (
     <MACCardWrapper
-      withBorder={withBorder}
+      withGradientBar={withGradientBar}
       childContainerClassName={childContainerClassName}
     >
       {title && <MACCardTitle title={title} />}
@@ -126,7 +127,7 @@ export const MACRemovableCard = ({
 }: MACRemovableCardProps) => {
   return (
     <MACCardWrapper
-      withBorder={true}
+      withGradientBar={true}
       childContainerClassName="mac-card-removable-wrapper"
     >
       <div>

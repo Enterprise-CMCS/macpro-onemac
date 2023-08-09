@@ -63,7 +63,7 @@ export default function FileList({
           <FontAwesomeIcon icon={faDownload} /> Download All
         </Button>
       </div>
-      <MACCard withBorder>
+      <MACCard withGradientBar>
         {uploadList && (
           <ul className="choice-list">
             {uploadList.map((upload, index) => (
