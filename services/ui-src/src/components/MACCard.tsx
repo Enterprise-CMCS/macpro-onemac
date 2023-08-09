@@ -94,6 +94,7 @@ export const MACTriageCard = ({
   deprecatedOnClick,
 }: MACTriageCardProps) => {
   return (
+    /** onClick to be deprecated for triage options */
     <label onClick={deprecatedOnClick}>
       <Link to={linkTo} className="mac-triage-link">
         <MACCardWrapper childContainerClassName={"mac-triage-card-display"}>
