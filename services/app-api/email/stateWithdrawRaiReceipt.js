@@ -29,6 +29,5 @@ export const stateWithdrawRaiReceipt = async (data, config, user) => {
   } catch (e) {
     console.log("Error retrieving the state user addresses ", e);
   }
-  console.log("the state receipt: ", stateReceipt);
   return stateReceipt;
 };

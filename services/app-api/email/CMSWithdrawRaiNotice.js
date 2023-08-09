@@ -16,7 +16,6 @@ export const getCPOCandSRTEmailAddresses = async (packageId) => {
   try {
     const packageItem = await dynamoDb.get(qParams);
 
-    console.log("Found this package Item: ", packageItem);
     returnObj = packageItem.Item;
   } catch (e) {
     console.log("query error: ", e.message);

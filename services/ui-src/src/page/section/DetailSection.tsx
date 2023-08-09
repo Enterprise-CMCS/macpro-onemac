@@ -164,24 +164,7 @@ export const DetailSection = ({
 
   const userRoleObj = getUserRoleObj(userProfile?.userData?.roleList);
 
-  console.log(
-    "params",
-    detail.componentType,
-    detail.oneMacStatus,
-    detail.latestRaiResponseTimestamp ? true : false,
-    userRoleObj,
-    FORM_SOURCE.DETAIL
-  );
-  // const actions = Workflow.getActionsForPackage(
-  //   detail.componentType,
-  //   detail.oneMacStatus,
-  //   detail.latestRaiResponseTimestamp ? true : false,
-  //   userRoleObj,
-  //   FORM_SOURCE.DETAIL
-  // );
   const actions = detail.actions;
-
-  console.log("actions", actions);
 
   return (
     <>

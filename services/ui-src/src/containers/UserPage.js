@@ -210,7 +210,6 @@ const UserPage = () => {
       .then(([newProfileData, newProfileRole, newProfileStatus]) => {
         setProfileData(newProfileData);
         setProfileRole(newProfileRole);
-        console.log("profile status is: ", newProfileStatus);
         setProfileStatus(newProfileStatus);
       })
       .catch((e) => {
@@ -294,7 +293,6 @@ const UserPage = () => {
         if (alertCodeAlerts[returnCode] === ALERTS_MSG.SUBMISSION_SUCCESS) {
           setUserInfo();
         } else {
-          console.log("Returned: ", returnCode);
           setAlertCode(returnCode);
         }
       });
