@@ -22,22 +22,6 @@ export const stateSubmissionReceipt = (data, config) => {
       config.typeLabel
     } to CMS for review:</p>
     ${formatPackageDetails(data, config)}
-    <p>
-        This response confirms the receipt of your ${config.typeLabel} request. 
-        You can expect a formal response to your submittal to be issued within 90 days, before ${
-          data.ninetyDayDate
-        }.
-    </p>
-    <p>
-        This mailbox is for the submittal of ${
-          config.typeLabel
-        } and non-web-based responses to Requests for Additional 
-        Information (RAI) on submitted ${
-          config.typeLabel
-        } only.  Any other correspondence will be disregarded. 
-    </p>
-    <p>If you have any questions, please contact <a href="mailto:spa@cms.hhs.gov">spa@cms.hhs.gov</a> or your state lead.</p>
-    <p>Thank you!</p>
-        `,
+    ${config.closingRemarks.replace("%NINETYDAYS%", data.ninetyDayDate)}`,
   };
 };
