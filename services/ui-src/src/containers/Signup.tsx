@@ -6,7 +6,6 @@ import { useSignupCallback } from "../libs/hooksLib";
 import { USER_STATUS, USER_ROLE, RESPONSE_CODE } from "cmscommonlib";
 import PageTitleBar from "../components/PageTitleBar";
 import ChoiceList from "../components/ChoiceList";
-import { MACFieldsetCard } from "../components/MACCard";
 
 const ignoreEventPayload = () => undefined;
 const activeOrPending = new Set([USER_STATUS.ACTIVE, USER_STATUS.PENDING]);
@@ -20,10 +19,7 @@ function StateUserSignup() {
       title: "State Submitter",
       description: "Responsible for submitting packages",
       linkTo: "/state",
-      /* TODO: DEPRECATE THIS PLEASE. Triage cards already link to a url via the
-       *   `linkTo` property which plugs into a `Link` component. This breaks
-       *   the consistency of our navigation pattern. */
-      deprecatedOnClick: () => {
+      onclick: () => {
         history.replace("signup/state", { role: USER_ROLE.STATE_SUBMITTER });
       },
     },
@@ -32,10 +28,7 @@ function StateUserSignup() {
       title: "State System Administrator",
       description: "Ability to approve state submitters and submit packages",
       linkTo: "/state",
-      /* TODO: DEPRECATE THIS PLEASE. Triage cards already link to a url via the
-       *   `linkTo` property which plugs into a `Link` component. This breaks
-       *   the consistency of our navigation pattern. */
-      deprecatedOnClick: () => {
+      onclick: () => {
         history.replace("signup/state", {
           role: USER_ROLE.STATE_SYSTEM_ADMIN,
         });
@@ -66,7 +59,7 @@ function CMSSignup() {
       description:
         "Responsible for managing CMS Reviewers and State System Admins",
       linkTo: "/usermanagement",
-      deprecatedOnClick: onClickCMS,
+      onclick: onClickCMS,
     },
   ].filter(Boolean);
   return <ChoiceList choices={CMS_CHOICES} />;
@@ -133,9 +126,12 @@ export function Signup() {
   return (
     <>
       <PageTitleBar heading="Registration: User Role" />
-      <MACFieldsetCard legend="Select the role for which you are registering.">
+      <div className="choice-container">
+        <div className="choice-intro">
+          Select the role for which you are registering.
+        </div>
         {signupOptions}
-      </MACFieldsetCard>
+      </div>
     </>
   );
 }
