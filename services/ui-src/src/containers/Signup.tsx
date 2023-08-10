@@ -11,7 +11,6 @@ const ignoreEventPayload = () => undefined;
 const activeOrPending = new Set([USER_STATUS.ACTIVE, USER_STATUS.PENDING]);
 
 function StateUserSignup() {
-  const history = useHistory();
   const { userRole, userStatus } = useAppContext() ?? {};
   const STATE_CHOICES = [
     (userRole !== USER_ROLE.STATE_SUBMITTER ||
