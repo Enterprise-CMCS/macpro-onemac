@@ -7690,11 +7690,18 @@
     "eventTimestamp": 1675926000000,
     "currentStatus": "Submitted",
     "originallyFrom": "createOneMacPackage Lambda",
+    "adminChanges": [
+      {
+       "changeMade": "OneMAC submission created from SEA Tool entry",
+       "changeReason": "This is a Not Originally Submitted in OneMAC (NOSO) package that users need to see in OneMAC.",
+       "changeTimestamp": 1684154035362
+      }
+     ],
+    "convertTimestamp": 1684154035362,
     "attachments": [],
     "GSI1sk": "MD-23-4441-VM",
     "submissionTimestamp": 1675926000000,
     "GSI1pk": "OneMAC#createchipspa",
-    "convertTimestamp": 1677005060312,
     "territory": "MD",
     "sk": "OneMAC#1675926000000",
     "componentId": "MD-23-4441-VM",
@@ -8469,14 +8476,22 @@
   },
   {
     "componentType": "medicaidspa",
+    "additionalInformation": "This package was created outside the OneMAC application.",
+    "adminChanges": [
+      {
+       "changeMade": "OneMAC submission created from SEA Tool entry",
+       "changeReason": "This is a Not Originally Submitted in OneMAC (NOSO) package that users need to see in OneMAC.",
+       "changeTimestamp": 1684154035362
+      }
+     ],
     "eventTimestamp": 1675753200000,
     "currentStatus": "Submitted",
     "originallyFrom": "createOneMacPackage Lambda",
     "attachments": [],
     "GSI1sk": "MD-23-3333-VM",
     "submissionTimestamp": 1675753200000,
-    "GSI1pk": "OneMAC#submitmedicaidspa",
-    "convertTimestamp": 1677005060252,
+    "GSI1pk": "OneMAC#createmedicaidspa",
+    "convertTimestamp": 1684154035362,
     "territory": "MD",
     "sk": "OneMAC#1675753200000",
     "componentId": "MD-23-3333-VM",
@@ -11225,12 +11240,19 @@
     "componentType": "medicaidspa",
     "eventTimestamp": 1675926000000,
     "currentStatus": "Submitted",
+    "adminChanges": [
+      {
+       "changeMade": "OneMAC submission created from SEA Tool entry",
+       "changeReason": "This is a Not Originally Submitted in OneMAC (NOSO) package that users need to see in OneMAC.",
+       "changeTimestamp": 1684154035362
+      }
+     ],
     "originallyFrom": "createOneMacPackage Lambda",
     "attachments": [],
     "GSI1sk": "MD-23-3331-VM",
     "submissionTimestamp": 1675926000000,
     "GSI1pk": "OneMAC#createmedicaidspa",
-    "convertTimestamp": 1677005060312,
+    "convertTimestamp": 1684154035362,
     "territory": "MD",
     "sk": "OneMAC#1675926000000",
     "componentId": "MD-23-3331-VM",
@@ -44768,6 +44790,13 @@
     "submissionTimestamp": 1650870000000,
     "waiverAuthority": "1915(b)",
     "GSI1pk": "OneMAC#createwaiveramendment",
+    "adminChanges": [
+      {
+       "changeMade": "OneMAC submission created from SEA Tool entry",
+       "changeReason": "This is a Not Originally Submitted in OneMAC (NOSO) package that users need to see in OneMAC.",
+       "changeTimestamp": 1684154035362
+      }
+     ],
     "convertTimestamp": 1684154035362,
     "territory": "MD",
     "sk": "OneMAC#1650870000000",
@@ -48458,12 +48487,19 @@
     "componentType": "medicaidspa",
     "eventTimestamp": 1675926000000,
     "currentStatus": "Submitted",
+    "adminChanges": [
+      {
+       "changeMade": "OneMAC submission created from SEA Tool entry",
+       "changeReason": "This is a Not Originally Submitted in OneMAC (NOSO) package that users need to see in OneMAC.",
+       "changeTimestamp": 1684154035362
+      }
+     ],
     "originallyFrom": "createOneMacPackage Lambda",
     "attachments": [],
     "GSI1sk": "MD-23-7653-VM",
     "submissionTimestamp": 1675926000000,
     "GSI1pk": "OneMAC#createmedicaidspa",
-    "convertTimestamp": 1677005060312,
+    "convertTimestamp": 1684154035362,
     "territory": "MD",
     "sk": "OneMAC#1675926000000",
     "componentId": "MD-23-7653-VM",

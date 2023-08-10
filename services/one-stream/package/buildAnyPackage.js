@@ -31,7 +31,6 @@ const oneMacTableName = process.env.IS_OFFLINE
 export const emptyField = "-- --";
 
 export const buildAnyPackage = async (packageId, config) => {
-  console.log("Building package: ", packageId);
   const queryParams = {
     TableName: oneMacTableName,
     KeyConditionExpression: "pk = :pk",
@@ -39,11 +38,9 @@ export const buildAnyPackage = async (packageId, config) => {
       ":pk": packageId,
     },
   };
-  console.log("%s the new query params are: ", packageId, queryParams);
 
   try {
     const result = await dynamoDb.query(queryParams).promise();
-    console.log("%s query result: ", packageId, result);
     if (result?.Items.length <= 0) {
       console.log("%s did not have Items?", packageId);
       return;
@@ -110,8 +107,6 @@ export const buildAnyPackage = async (packageId, config) => {
         showPackageOnDashboard = true;
 
         const eventLabel = anEvent.GSI1pk.replace("OneMAC#", "");
-        console.log("this event label is: ", eventLabel);
-
         config.eventTypeMap[eventLabel] &&
           putParams.Item.reverseChrono.push({
             type: config.eventTypeMap[eventLabel],
@@ -176,13 +171,6 @@ export const buildAnyPackage = async (packageId, config) => {
           );
           return;
         }
-        console.log(
-          "%s SEATool event has timestamp %d and status %s, lmTimestamp is: %d",
-          anEvent.pk,
-          timestamp,
-          JSON.stringify(anEvent.SPW_STATUS, null, 2),
-          lmTimestamp
-        );
 
         //always use seatool data to overwrite -- this will have to change if edit in onemac is allowed
         if (
@@ -203,7 +191,6 @@ export const buildAnyPackage = async (packageId, config) => {
               ? oneAnalyst
               : null
           ).filter(Boolean)[0];
-          console.log("the lead analsyt is: ", leadAnalyst);
 
           if (leadAnalyst) {
             putParams.Item.cpocName = `${leadAnalyst.FIRST_NAME} ${leadAnalyst.LAST_NAME}`;
@@ -223,11 +210,6 @@ export const buildAnyPackage = async (packageId, config) => {
                 `"${oneReviewer.LAST_NAME}, ${oneReviewer.FIRST_NAME} (SRT)" <${oneReviewer.EMAIL}>`
               );
           });
-          console.log("the review team is: ", putParams.Item.reviewTeam);
-          console.log(
-            "the review team email list is: ",
-            putParams.Item.reviewTeamEmailList
-          );
         }
 
         let approvedEffectiveDate = emptyField;
@@ -255,24 +237,10 @@ export const buildAnyPackage = async (packageId, config) => {
             ? oneStatus.SPW_STATUS_DESC
             : null
         ).filter(Boolean)[0];
-        console.log(
-          "%s seaToolStatus %d resolves to: ",
-          anEvent.pk,
-          anEvent.STATE_PLAN.SPW_STATUS_ID,
-          seaToolStatus
-        );
+
         if (seaToolStatus && SEATOOL_TO_ONEMAC_STATUS[seaToolStatus]) {
           const oneMacStatus = SEATOOL_TO_ONEMAC_STATUS[seaToolStatus];
           putParams.Item.currentStatus = oneMacStatus;
-          console.log("onemac status is: ", oneMacStatus);
-          console.log(
-            "onemac status date is: ",
-            anEvent.STATE_PLAN.STATUS_DATE
-          );
-          console.log(
-            "onemac status is final:",
-            finalDispositionStatuses.includes(oneMacStatus)
-          );
           putParams.Item.finalDispositionDate =
             finalDispositionStatuses.includes(oneMacStatus)
               ? DateTime.fromMillis(anEvent.STATE_PLAN.STATUS_DATE).toFormat(
@@ -307,12 +275,10 @@ export const buildAnyPackage = async (packageId, config) => {
       });
     }
 
-    // use GSI1 to show package on dashboard
+    // use GSI1 to show package on OneMAC dashboard
     if (showPackageOnDashboard) {
       putParams.Item.GSI1pk = `OneMAC#${config.whichTab}`;
       putParams.Item.GSI1sk = packageId;
-    } else {
-      console.log("%s is not a OneMAC package: ", packageId, putParams.Item);
     }
 
     putParams.Item.raiResponses.sort(
@@ -335,20 +301,11 @@ export const buildAnyPackage = async (packageId, config) => {
       }
     });
 
-    console.log("%s currentPackage: ", packageId, currentPackage);
-    console.log("%s newItem: ", packageId, putParams.Item);
-    console.log(
-      "%s evaluates to: ",
-      packageId,
-      _.isEqual(currentPackage, putParams.Item)
-    );
     if (_.isEqual(currentPackage, putParams.Item)) return;
 
     putParams.Item.lastEventTimestamp = lmTimestamp;
-    console.log("%s just before put: ", packageId, putParams);
     await dynamoDb.put(putParams).promise();
   } catch (e) {
     console.log("%s buildAnyPackage error: ", packageId, e);
   }
-  console.log("%s the end of things", packageId);
 };
