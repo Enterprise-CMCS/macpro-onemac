@@ -8,9 +8,10 @@ function getDefaultActions(
   const actions = [];
   switch (packageStatus) {
     case Workflow.ONEMAC_STATUS.PENDING:
-      if (userRole.canAccessForms)
+      if (userRole.canAccessForms) {
         actions.push(Workflow.PACKAGE_ACTION.WITHDRAW);
-      actions.push(Workflow.PACKAGE_ACTION.SUBSEQUENT_SUBMISSION);
+        actions.push(Workflow.PACKAGE_ACTION.SUBSEQUENT_SUBMISSION);
+      }
       if (userRole.isCMSUser && hasRaiResponse && formSource === "detail") {
         actions.push(Workflow.PACKAGE_ACTION.ENABLE_RAI_WITHDRAWAL);
       }
