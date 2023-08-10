@@ -49,11 +49,13 @@ export type ComponentDetail = {
   territory: string;
   territoryNice: string;
   raiResponses: any[];
+  adminChanges: any[];
   waiverExtensions: any[];
   withdrawalRequests: any[];
   temporaryExtensionType: string;
   cpocName: string;
   reviewTeam: string[];
+  actions: Workflow.PACKAGE_ACTION[];
 } & Record<string, any>;
 
 /**
@@ -122,7 +124,10 @@ const DetailView: React.FC<{ pageConfig: OneMACDetail }> = ({ pageConfig }) => {
           );
         }
         if (fetchedDetail.proposedEffectiveDate) {
-          if (fetchedDetail.proposedEffectiveDate === "none") {
+          if (
+            fetchedDetail.proposedEffectiveDate === "-- --" ||
+            fetchedDetail.proposedEffectiveDate === "none"
+          ) {
             fetchedDetail.proposedEffectiveDateNice = "Pending";
           } else {
             const effDate = parseISO(fetchedDetail.proposedEffectiveDate);
@@ -133,18 +138,24 @@ const DetailView: React.FC<{ pageConfig: OneMACDetail }> = ({ pageConfig }) => {
             );
           }
         }
-        if (fetchedDetail.approvedEffectiveDate) {
+        if (
+          fetchedDetail.approvedEffectiveDate &&
+          fetchedDetail.approvedEffectiveDate !== "-- --"
+        ) {
           fetchedDetail.approvedEffectiveDateNice = format(
             parseISO(fetchedDetail.approvedEffectiveDate),
             "MMM d yyyy"
           );
-        }
-        if (fetchedDetail.finalDispositionDate) {
+        } else fetchedDetail.approvedEffectiveDateNice = "-- --";
+        if (
+          fetchedDetail.finalDispositionDate &&
+          fetchedDetail.finalDispositionDate !== "-- --"
+        ) {
           fetchedDetail.finalDispositionDateNice = format(
             parseISO(fetchedDetail.finalDispositionDate),
             "MMM d yyyy"
           );
-        }
+        } else fetchedDetail.finalDispositionDateNice = "-- --";
         console.log("got the package: ", fetchedDetail);
         stillLoading = false;
       } catch (e) {

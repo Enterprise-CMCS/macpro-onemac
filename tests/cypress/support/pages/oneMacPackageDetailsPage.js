@@ -22,6 +22,10 @@ const withdrawPackageAction = "//a[text()='Withdraw Package']";
 const requestTempExtensionPackageAction =
   "//a[text()='Request Temporary Extension']";
 const addAmendmentPackageAction = "//a[text()='Add Amendment']";
+const withdrawFormalRAIResponseAction =
+  "//a[text()='Withdraw Formal RAI Response']";
+const enableRAIResponseWithdrawAction =
+  "//a[text()='Enable Formal RAI Response Withdraw']";
 const detailSection =
   "//section[@class='detail-section']//h2[contains(.,'Details')]";
 const CHIPSPAIDHeader = "//h3[contains(text(),'SPA ID')]";
@@ -42,7 +46,9 @@ const approvedEffectiveDateHeader =
   "//h3[contains(text(),'Approved Effective Date')]";
 const actualEffectiveDateHeader =
   "//h3[contains(text(),'Actual Effective Date')]";
-const ninetieththDayHeader = "//h3[text()='90th Day']";
+const formalRAIReceivedDateHeader =
+  "//h3[contains(text(),'Formal RAI Received')]";
+const adminPkgChangeSection = "//h2[text()='Administrative Package Changes']";
 const additionalInfoSection =
   "//section[@id='addl-info-base']//h2[text()='Additional Information']";
 const waiverAuthorityHeader = "//h3[text()='Waiver Authority']";
@@ -74,6 +80,12 @@ export class oneMacPackageDetailsPage {
   verifyStatusIs(status) {
     cy.xpath(statusHeader).next().contains(status);
   }
+  verify2ndClockIsVisible() {
+    cy.xpath(actionCard).first().find("span").should("be.visible");
+  }
+  verify2ndClockIsNotVisible() {
+    cy.xpath(actionCard).first().find("span").should("not.exist");
+  }
   verify90thDayDateDoesntExist() {
     cy.xpath(date90thDay).should("not.exist");
   }
@@ -81,7 +93,9 @@ export class oneMacPackageDetailsPage {
     cy.xpath(packageActionsHeader).should("be.visible");
   }
   verifyNoPackageActionsAvailable() {
-    cy.xpath(packageActionsList).should("be.visible");
+    cy.xpath(packageActionsList)
+      .should("be.visible")
+      .contains("No actions are currently available for this submission");
   }
   verifyPackageActionsSectionDoesNotExist() {
     cy.xpath(packageActionsList).should("not.exist");
@@ -105,6 +119,22 @@ export class oneMacPackageDetailsPage {
   }
   clickAddAmendmentPackageAction() {
     cy.xpath(addAmendmentPackageAction).click();
+  }
+  verifyWithdrawFormalRAIResponseActionExists() {
+    cy.xpath(withdrawFormalRAIResponseAction)
+      .scrollIntoView()
+      .should("be.visible");
+  }
+  clickWithdrawFormalRAIResponseAction() {
+    cy.xpath(withdrawFormalRAIResponseAction).click();
+  }
+  verifyEnableRAIResponseWithdrawActionExists() {
+    cy.xpath(enableRAIResponseWithdrawAction)
+      .scrollIntoView()
+      .should("be.visible");
+  }
+  clickEnableRAIResponseWithdrawAction() {
+    cy.xpath(enableRAIResponseWithdrawAction).click();
   }
   clickRespondToRAIAction() {
     cy.xpath(respondToRAIAction).click();
@@ -168,6 +198,9 @@ export class oneMacPackageDetailsPage {
   }
   verifyRaiResponseHeaderExists() {
     cy.xpath(raiResponsesHeader).scrollIntoView().should("be.visible");
+  }
+  verifyRaiResponseHeaderDoesNotExist() {
+    cy.xpath(raiResponsesHeader).should("not.exist");
   }
   verifyRaiResponseHeaderTitle() {
     cy.xpath(raiResponsesHeader).scrollIntoView().should("be.visible");
@@ -284,6 +317,17 @@ export class oneMacPackageDetailsPage {
       .next()
       .contains(/^[a-zA-Z]{3}.\d{2}.\d{4}||^[a-zA-Z]{3}.\d{1}.\d{4}/);
   }
+  verifyFormalRAIReceivedDateHeaderExists() {
+    cy.xpath(formalRAIReceivedDateHeader).should("be.visible");
+  }
+  verifyFormalRAIReceivedDateHeaderDoesNotExists() {
+    cy.xpath(formalRAIReceivedDateHeader).should("not.exist");
+  }
+  verifyFormalRAIReceivedDateHeaderContainsDate() {
+    cy.xpath(formalRAIReceivedDateHeader)
+      .next()
+      .contains(/^[a-zA-Z]{3}.\d{2}.\d{4}||^[a-zA-Z]{3}.\d{1}.\d{4}/);
+  }
   verifyAmendmentNumberHeaderExists() {
     cy.xpath(amendmentNumberHeader).should("be.visible");
   }
@@ -318,11 +362,8 @@ export class oneMacPackageDetailsPage {
   verifyAdditionalInfoSectionExists() {
     cy.xpath(additionalInfoSection).should("be.visible");
   }
-  verify90thDayHeaderExists() {
-    cy.xpath(ninetieththDayHeader).should("be.visible");
-  }
-  verify90thDayHeaderContainsNA() {
-    cy.xpath(ninetieththDayHeader).next().contains("N/A");
+  verifyAdministrativePackageChangesSectionExists() {
+    cy.xpath(adminPkgChangeSection).should("be.visible");
   }
   clickWithdrawBtn() {
     cy.xpath(withdrawBtn).click();

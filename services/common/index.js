@@ -39,6 +39,8 @@ export { medicaidSPAWithdraw } from "./type/medicaidSPAWithdraw.js";
 export { chipSPA } from "./type/chipSPA.js";
 export { chipSPARAIResponse } from "./type/chipSPARAIResponse.js";
 export { chipSPAWithdraw } from "./type/chipSPAWithdraw.js";
+export { enableRaiWithdraw } from "./type/enableRaiWithdraw.js";
+export { withdrawRAIResponse } from "./type/withdrawRAIResponse.js";
 
 import { ROUTES, ONEMAC_ROUTES } from "./routes.js";
 export {
@@ -65,6 +67,7 @@ export const RESPONSE_CODE = {
   SUBMISSION_SAVE_FAILURE: "SC003",
   ATTACHMENTS_MISSING: "SC002",
   WITHDRAW_REQUESTED: "WP000",
+  WITHDRAW_RAI_REQUESTED: "WR000",
   VALIDATION_ERROR: "VA000",
   ATTACHMENT_ERROR: "AT000",
   UPLOADS_ERROR: "AT001",
@@ -95,6 +98,7 @@ export const RESPONSE_CODE = {
 export const FORM_SUCCESS_RESPONSE_CODES = [
   RESPONSE_CODE.SUCCESSFULLY_SUBMITTED,
   RESPONSE_CODE.WITHDRAW_REQUESTED,
+  RESPONSE_CODE.WITHDRAW_RAI_REQUESTED,
 ];
 
 /**

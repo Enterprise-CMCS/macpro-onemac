@@ -67,11 +67,14 @@ export const buildAnyPackage = async (packageId, config) => {
         description: emptyField,
         cpocName: emptyField,
         reviewTeam: [],
+        reviewTeamEmailList: [],
+        adminChanges: [],
       },
     };
     let currentPackage;
     let showPackageOnDashboard = false;
     let lmTimestamp = 0;
+    let adminChanges = [];
 
     result.Items.forEach((anEvent) => {
       // we ignore all other v's (for now)
@@ -96,39 +99,51 @@ export const buildAnyPackage = async (packageId, config) => {
 
       // all updates after this influence lmtimestamp
       const [source, timestring] = anEvent.sk.split("#");
-      const timestamp = Number(timestring);
+      const timestamp = anEvent?.eventTimestamp
+        ? anEvent.eventTimestamp
+        : Number(timestring);
 
       if (source === "OneMAC") {
         if (anEvent?.currentStatus === Workflow.ONEMAC_STATUS.INACTIVATED)
           return;
         showPackageOnDashboard = true;
+
+        if (anEvent?.componentType)
+          if (anEvent?.adminChanges && _.isArray(anEvent.adminChanges))
+            // admin changes are consolidated across all OneMAC events
+            adminChanges = [...anEvent.adminChanges, ...adminChanges];
       }
 
       if (timestamp > lmTimestamp) {
         lmTimestamp = timestamp;
       }
 
-      // include ALL rai events in package details
+      // collect ALL rai events in one array (parsed later)
       if (
         anEvent.componentType === `${config.componentType}rai` ||
-        anEvent.componentType === `waiverrai`
+        anEvent.componentType === `waiverrai` ||
+        anEvent.componentType === `rairesponsewithdraw`
       ) {
         putParams.Item.raiResponses.push({
           submissionTimestamp: anEvent.submissionTimestamp,
+          eventTimestamp: anEvent.eventTimestamp,
           attachments: anEvent.attachments,
           additionalInformation: anEvent.additionalInformation,
+          currentStatus: anEvent.currentStatus,
         });
-        putParams.Item.currentStatus = Workflow.ONEMAC_STATUS.SUBMITTED;
+        putParams.Item.currentStatus = anEvent.currentStatus;
 
         return;
       }
 
-      // include ALL withdraw request events in package details
+      // include ALL package withdraw request events in package details
       if (anEvent.componentType === `${config.componentType}withdraw`) {
         putParams.Item.withdrawalRequests.push({
           submissionTimestamp: anEvent.submissionTimestamp,
+          eventTimestamp: anEvent.eventTimestamp,
           attachments: anEvent.attachments,
           additionalInformation: anEvent.additionalInformation,
+          currentStatus: anEvent.currentStatus,
         });
         putParams.Item.currentStatus =
           Workflow.ONEMAC_STATUS.WITHDRAWAL_REQUESTED;
@@ -164,7 +179,7 @@ export const buildAnyPackage = async (packageId, config) => {
           putParams.Item.proposedEffectiveDate = DateTime.fromMillis(
             anEvent.STATE_PLAN.PROPOSED_DATE
           ).toFormat("yyyy-LL-dd");
-        else putParams.Item.proposedEffectiveDate = "none";
+        else putParams.Item.proposedEffectiveDate = emptyField;
 
         putParams.Item.subject = anEvent.STATE_PLAN.TITLE_NAME;
         putParams.Item.description = anEvent.STATE_PLAN.SUMMARY_MEMO;
@@ -177,16 +192,29 @@ export const buildAnyPackage = async (packageId, config) => {
           ).filter(Boolean)[0];
           console.log("the lead analsyt is: ", leadAnalyst);
 
-          if (leadAnalyst)
+          if (leadAnalyst) {
             putParams.Item.cpocName = `${leadAnalyst.FIRST_NAME} ${leadAnalyst.LAST_NAME}`;
+            putParams.Item.cpocEmail = `"${leadAnalyst.LAST_NAME}, ${leadAnalyst.FIRST_NAME} (CPOC)" <${leadAnalyst.EMAIL}>`;
+          }
         }
 
         if (anEvent.ACTION_OFFICERS && _.isArray(anEvent.ACTION_OFFICERS)) {
-          putParams.Item.reviewTeam = anEvent.ACTION_OFFICERS.map(
-            (oneReviewer) =>
+          putParams.Item.reviewTeam = [];
+          putParams.Item.reviewTeamEmailList = [];
+          anEvent.ACTION_OFFICERS.forEach((oneReviewer) => {
+            putParams.Item.reviewTeam.push(
               `${oneReviewer.FIRST_NAME} ${oneReviewer.LAST_NAME}`
-          );
+            );
+            if (oneReviewer.EMAIL)
+              putParams.Item.reviewTeamEmailList.push(
+                `"${oneReviewer.LAST_NAME}, ${oneReviewer.FIRST_NAME} (SRT)" <${oneReviewer.EMAIL}>`
+              );
+          });
           console.log("the review team is: ", putParams.Item.reviewTeam);
+          console.log(
+            "the review team email list is: ",
+            putParams.Item.reviewTeamEmailList
+          );
         }
 
         let approvedEffectiveDate = emptyField;
@@ -201,11 +229,11 @@ export const buildAnyPackage = async (packageId, config) => {
         ) {
           approvedEffectiveDate = anEvent.STATE_PLAN.ACTUAL_EFFECTIVE_DATE;
         }
-        if (typeof approvedEffectiveDate === "number") {
-          putParams.Item.approvedEffectiveDate = DateTime.fromMillis(
-            approvedEffectiveDate
-          ).toFormat("yyyy-LL-dd");
-        }
+
+        putParams.Item.approvedEffectiveDate =
+          typeof approvedEffectiveDate === "number"
+            ? DateTime.fromMillis(approvedEffectiveDate).toFormat("yyyy-LL-dd")
+            : emptyField;
 
         if (timestamp < lmTimestamp) return;
 
@@ -232,11 +260,12 @@ export const buildAnyPackage = async (packageId, config) => {
             "onemac status is final:",
             finalDispositionStatuses.includes(oneMacStatus)
           );
-          if (finalDispositionStatuses.includes(oneMacStatus)) {
-            putParams.Item.finalDispositionDate = DateTime.fromMillis(
-              anEvent.STATE_PLAN.STATUS_DATE
-            ).toFormat("yyyy-LL-dd");
-          }
+          putParams.Item.finalDispositionDate =
+            finalDispositionStatuses.includes(oneMacStatus)
+              ? DateTime.fromMillis(anEvent.STATE_PLAN.STATUS_DATE).toFormat(
+                  "yyyy-LL-dd"
+                )
+              : emptyField;
         }
       }
 
@@ -274,11 +303,22 @@ export const buildAnyPackage = async (packageId, config) => {
     }
 
     putParams.Item.raiResponses.sort(
-      (a, b) => b.submissionTimestamp - a.submissionTimestamp
+      (a, b) => b.eventTimestamp - a.eventTimestamp
     );
 
-    putParams.Item.latestRaiResponseTimestamp =
-      putParams.Item.raiResponses[0]?.submissionTimestamp;
+    if (putParams.Item.raiResponses[0]?.currentStatus === "Submitted") {
+      putParams.Item.latestRaiResponseTimestamp =
+        putParams.Item.raiResponses[0]?.submissionTimestamp;
+    }
+
+    adminChanges.sort((a, b) => b.changeTimestamp - a.changeTimestamp);
+    let lastTime = 0;
+    adminChanges.forEach((oneChange) => {
+      if (oneChange.changeTimestamp != lastTime) {
+        lastTime = oneChange.changeTimestamp;
+        putParams.Item.adminChanges.push(oneChange);
+      }
+    });
 
     console.log("%s currentPackage: ", packageId, currentPackage);
     console.log("%s newItem: ", packageId, putParams.Item);

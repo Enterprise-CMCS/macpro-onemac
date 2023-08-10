@@ -8,6 +8,7 @@ import {
 } from "cmscommonlib";
 import { cmsStatusUIMap, stateStatusUIMap } from "./libs/status-lib";
 import { getUser } from "./getUser";
+import { getActionsForPackage } from "./utils/actionDelegate";
 
 /**
  * Gets all packages from the DynamoDB one table
@@ -73,6 +74,18 @@ export const getMyPackages = async (email, group) => {
             const results = await dynamoDb.query(params);
             console.log("results are: ", results);
             results.Items.map((oneItem) => {
+              oneItem.actions = getActionsForPackage(
+                oneItem.componentType,
+                oneItem.currentStatus,
+                !!oneItem.latestRaiResponseTimestamp,
+                userRoleObj,
+                "package"
+              );
+              if (oneItem.waiverAuthority)
+                oneItem.temporaryExtensionType = oneItem.waiverAuthority.slice(
+                  0,
+                  7
+                );
               if (!statusMap[oneItem.currentStatus])
                 console.log(
                   "%s status of %s not mapped!",

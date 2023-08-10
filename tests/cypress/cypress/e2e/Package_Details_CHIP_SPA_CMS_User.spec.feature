@@ -18,7 +18,7 @@ Feature: CHIP SPA CMS Details View - Card View with Actions
         Then verify the package details page is visible
         Then verify 2 action cards exist
         Then verify the status on the card is "Submitted - Intake Needed"
-        Then verify the package actions section is unavailable
+        Then verify there are no package actions available
         Then verify the details section exists
         Then verify there is a Type header in the details section
         Then verify a type containing SPA exists for the Type
@@ -46,7 +46,7 @@ Feature: CHIP SPA CMS Details View - Card View with Actions
         Then verify the package details page is visible
         Then verify 2 action cards exist
         Then verify the status on the card is "Pending"
-        Then verify the package actions section is unavailable
+        Then verify there are no package actions available
         Then verify the details section exists
         Then verify there is a Type header in the details section
         Then verify a type containing SPA exists for the Type
@@ -76,7 +76,7 @@ Feature: CHIP SPA CMS Details View - Card View with Actions
         Then verify the package details page is visible
         Then verify 2 action cards exist
         Then verify the status on the card is "Withdrawn"
-        Then verify the package actions section is unavailable
+        Then verify there are no package actions available
         Then verify the details section exists
         Then verify there is a Type header in the details section
         Then verify a type containing SPA exists for the Type
@@ -106,7 +106,7 @@ Feature: CHIP SPA CMS Details View - Card View with Actions
         Then verify the package details page is visible
         Then verify 2 action cards exist
         Then verify the status on the card is "Disapproved"
-        Then verify the package actions section is unavailable
+        Then verify there are no package actions available
         Then verify the details section exists
         Then verify the package details title contains "CHIP SPA Package"
         Then verify there is a Type header in the details section
@@ -137,7 +137,7 @@ Feature: CHIP SPA CMS Details View - Card View with Actions
         Then verify the package details page is visible
         Then verify 2 action cards exist
         Then verify the status on the card is "Pending - RAI"
-        Then verify the package actions section is unavailable
+        Then verify there are no package actions available
         Then verify the package details page is visible
         Then verify the details section exists
         Then verify there is a Type header in the details section
@@ -169,7 +169,7 @@ Feature: CHIP SPA CMS Details View - Card View with Actions
         Then verify 2 action cards exist
         Then verify the status on the card is "Approved"
         Then verify there is not a 90th day date on the card
-        Then verify the package actions section is unavailable
+        Then verify there are no package actions available
         Then verify the details section exists
         Then verify there is a Type header in the details section
         Then verify a type containing SPA exists for the Type
@@ -188,7 +188,7 @@ Feature: CHIP SPA CMS Details View - Card View with Actions
         Then verify there is a Final Disposition Date header in the details section
         Then verify there is an Approved Effective Date in the details section
         Then verify the description has a value displayed in the details section
-        Then verify the Proposed Effective Date is a date formated like Mon dd yyyy
+        Then verify the Proposed Effective Date is a date formatted like Mon dd yyyy
         Then verify the attachments section exists
         Then verify the download all button exists
         Then verify the additional information section exists
@@ -200,7 +200,7 @@ Feature: CHIP SPA CMS Details View - Card View with Actions
         Then verify the package details page is visible
         Then verify 2 action cards exist
         Then verify the status on the card is "Pending - Concurrence"
-        Then verify the package actions section is unavailable
+        Then verify there are no package actions available
         Then verify the package details page is visible
         Then verify the details section exists
         Then verify there is a Type header in the details section
@@ -231,7 +231,7 @@ Feature: CHIP SPA CMS Details View - Card View with Actions
         Then verify the package details page is visible
         Then verify 2 action cards exist
         Then verify the status on the card is "Pending - Approval"
-        Then verify the package actions section is unavailable
+        Then verify there are no package actions available
         Then verify the package details page is visible
         Then verify the details section exists
         Then verify there is a Type header in the details section
@@ -254,3 +254,18 @@ Feature: CHIP SPA CMS Details View - Card View with Actions
         Then verify the attachments section exists
         Then verify the download all button exists
         Then verify the additional information section exists
+
+        Scenario: CHIP SPA Details View - Enable Formal RAI Response Withdraw
+        Then click the Pending checkbox
+        Then Click on Filter Button
+        Then search for "MD-22-2401-VM"
+        Then click the SPA ID link in the first row
+        Then verify the package details page is visible
+        Then verify the status on the card is "Pending"
+        Then verify Enable Formal RAI Response Withdraw package action exists
+        Then click Enable Formal RAI Response Withdraw package action
+        Then type "Automated test to enable an RAI Response withdrawal." in additional info textarea
+        Then Click on Submit Button
+        Then verify the status on the card is "RAI Response Withdraw Enabled"
+        Then verify package actions header is visible
+        Then verify there are no package actions available

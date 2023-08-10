@@ -206,8 +206,8 @@ Then("click Leave Anyway form button", () => {
 Then("click Stay on Page", () => {
   OneMacSubmitNewMedicaidSpaPage.clickStayOnPageBtn();
 });
-Then("verify submission Successful message", () => {
-  OneMacDashboardPage.verifySuccessMessageIsDisplayed();
+Then("verify the success message is {string}", (s) => {
+  OneMacDashboardPage.verifySuccessMessageIs(s);
 });
 Then("verify submission successful message in the alert bar", () => {
   OneMacDashboardPage.verifySuccessMessage1IsDisplayed();
@@ -832,13 +832,6 @@ When("Login with CMS Reviewer User", () => {
 });
 
 Then(
-  "verify 90th day column is available to the immediate left to the status column",
-  () => {
-    OneMacPackagePage.verify90thDayColumn();
-  }
-);
-
-Then(
   "verify that value of the column for the ID is NA Pending or a date",
   () => {
     OneMacPackagePage.verifyValue();
@@ -1413,11 +1406,26 @@ Then("click Under Review checkbox", () => {
 Then("click Waiver Terminated checkbox", () => {
   OneMacPackagePage.clickTerminatedCheckBox();
 });
+Then("verify the Withdrawal Requested checkbox exists", () => {
+  OneMacPackagePage.verifyWithdrawalRequestedCheckBoxExists();
+});
 Then("click the Withdrawal Requested checkbox", () => {
   OneMacPackagePage.clickWithdrawalRequestedCheckBox();
 });
-Then("verify seatool status 1 exists", () => {
-  OneMacPackagePage.verifyseaToolStatus1CheckBoxExists();
+Then(
+  "verify the Formal RAI Response - Withdrawal Requested checkbox exists",
+  () => {
+    OneMacPackagePage.verifyRaiResponseWithdrawalRequestedCheckBoxExists();
+  }
+);
+Then("click the Formal RAI Response - Withdrawal Requested checkbox", () => {
+  OneMacPackagePage.clickRaiResponseWithdrawalRequestedCheckBox();
+});
+Then("verify the RAI Response Withdraw Enabled checkbox exists", () => {
+  OneMacPackagePage.verifyRaiResponseWithdrawEnabledCheckBoxExists();
+});
+Then("click the RAI Response Withdraw Enabled checkbox", () => {
+  OneMacPackagePage.clickRaiResponseWithdrawEnabledCheckBox();
 });
 Then("verify sparai submitted exists", () => {
   OneMacPackagePage.verifysparaiSubmittedExists();
@@ -1455,9 +1463,6 @@ Then("verify show hide columns button exists", () => {
 Then("click show hide columns button", () => {
   OneMacPackagePage.clickShowHideColumnsBTN();
 });
-Then("verify 90th day exists", () => {
-  OneMacPackagePage.verifycheckBox90thDayExists();
-});
 Then("verify Initial Submission Date exists", () => {
   OneMacPackagePage.verifycheckBoxInitialSubmissionDateExists();
 });
@@ -1484,9 +1489,6 @@ Then("verify Formal RAI Received checkbox exists", () => {
 });
 Then("verify Formal RAI Received checkbox does not exist", () => {
   OneMacPackagePage.verifyFormalRAIReceivedCheckboxDoesNotExist();
-});
-Then("verify 90th day column exists", () => {
-  OneMacPackagePage.verify90thDayColumn();
 });
 Then("verify Initial Submission Date column exists", () => {
   OneMacPackagePage.verifyinitialSubmissionDateColumnExists();
@@ -1603,35 +1605,11 @@ Then(
     OneMacPackagePage.checkforUnsubmittedIsNotClickable();
   }
 );
-Then("verify 90th day filter dropdown exists", () => {
-  OneMacPackagePage.verify90thDayFilterDropDownExists();
-});
 Then("verify expiration date filter dropdown exists", () => {
   OneMacPackagePage.verifyExpirationDateFilterDropDownExists();
 });
 Then("verify Initial Submission Date filter dropdown exists", () => {
   OneMacPackagePage.verifyInitialSubmissionDateFilterDropDownExists();
-});
-Then("click on 90th day filter dropdown", () => {
-  OneMacPackagePage.clickOn90thDayFilterDropDown();
-});
-Then("verify 90th day na checkbox exists", () => {
-  OneMacPackagePage.verifyNinetiethDayNACheckboxExists();
-});
-Then("click on 90th day na checkbox", () => {
-  OneMacPackagePage.clickOnNinetiethDayNACheckbox();
-});
-Then("verify 90th day pending checkbox exists", () => {
-  OneMacPackagePage.verifyNinetiethDayPendingCheckboxExists();
-});
-Then("click on 90th day pending checkbox", () => {
-  OneMacPackagePage.clickOnNinetiethDayPendingCheckbox();
-});
-Then("verify 90th day date picker exists", () => {
-  OneMacPackagePage.verifyNinetiethDayDatePickerFilterExists();
-});
-Then("click on 90th day date picker filter", () => {
-  OneMacPackagePage.clickOnNinetiethDayDatePickerFilter();
 });
 Then("click on expiration date filter dropdown", () => {
   OneMacPackagePage.clickOnExpirationDateFilterDropDown();
@@ -1900,7 +1878,7 @@ Then("verify IDM Instructions for OneMAC Users link exists", () => {
 Then("verify OneMAC IDM Guide link exists", () => {
   OneMacFAQPage.verifyIdmGuideLinkExists();
 });
-Then("verify OneMAC State Submitter Guide link exists", () => {
+Then("verify OneMAC State User Guide link exists", () => {
   OneMacFAQPage.verifyStateSubmitterGuideLinkExists();
 });
 Then("verify OneMAC State Administrator Guide link exists", () => {
@@ -1915,7 +1893,7 @@ Then("verify IDM Instructions for OneMAC Users is valid", () => {
 Then("verify OneMAC IDM Guide is valid", () => {
   OneMacFAQPage.verifyIdmGuideLinkIsValid();
 });
-Then("verify OneMAC State Submitter Guide is valid", () => {
+Then("verify OneMAC State User Guide is valid", () => {
   OneMacFAQPage.verifyStateSubmitterGuideLinkIsValid();
 });
 Then("verify OneMAC State Administrator Guide is valid", () => {
@@ -2062,6 +2040,12 @@ Then("click yes, withdraw package button", () => {
 Then("verify yes, withdraw package button exists", () => {
   OneMacPackagePage.verifyConfirmWithdrawPackageBtnExists();
 });
+Then("click Yes, withdraw response button", () => {
+  OneMacPackagePage.clickConfirmWithdrawResponseBtn();
+});
+Then("verify Yes, withdraw response button exists", () => {
+  OneMacPackagePage.verifyConfirmWithdrawResponseBtnExists();
+});
 Then("verify the package details page is visible", () => {
   OneMacPackageDetailsPage.verifyPackageDetailsPageIsVisible();
 });
@@ -2070,6 +2054,12 @@ Then("verify 2 action cards exist", () => {
 });
 Then("verify the status on the card is {string}", (status) => {
   OneMacPackageDetailsPage.verifyStatusIs(status);
+});
+Then("verify 2nd clock is visible under the status", () => {
+  OneMacPackageDetailsPage.verify2ndClockIsVisible();
+});
+Then("verify 2nd clock is not visible under the status", () => {
+  OneMacPackageDetailsPage.verify2ndClockIsNotVisible();
 });
 Then("verify there is not a 90th day date on the card", () => {
   OneMacPackageDetailsPage.verify90thDayDateDoesntExist();
@@ -2100,6 +2090,18 @@ Then("verify Add Amendment package action exists", () => {
 });
 Then("click Add Amendment package action", () => {
   OneMacPackageDetailsPage.clickAddAmendmentPackageAction();
+});
+Then("verify Withdraw Formal RAI Response package action exists", () => {
+  OneMacPackageDetailsPage.verifyWithdrawFormalRAIResponseActionExists();
+});
+Then("click Withdraw Formal RAI Response package action", () => {
+  OneMacPackageDetailsPage.clickWithdrawFormalRAIResponseAction();
+});
+Then("verify Enable Formal RAI Response Withdraw package action exists", () => {
+  OneMacPackageDetailsPage.verifyEnableRAIResponseWithdrawActionExists();
+});
+Then("click Enable Formal RAI Response Withdraw package action", () => {
+  OneMacPackageDetailsPage.clickEnableRAIResponseWithdrawAction();
 });
 Then("click on Respond to RAI package action", () => {
   OneMacPackageDetailsPage.clickRespondToRAIAction();
@@ -2246,6 +2248,9 @@ Then("verify Enter the MACPro system button is visible and clickable", () => {
 Then("verify RAI Responses header exists", () => {
   OneMacPackageDetailsPage.verifyRaiResponseHeaderExists();
 });
+Then("verify RAI Responses header does not exist", () => {
+  OneMacPackageDetailsPage.verifyRaiResponseHeaderDoesNotExist();
+});
 Then(
   "verify the Medicaid RAI Responses caret at the top of the list exists and is enabled",
   () => {
@@ -2379,7 +2384,7 @@ Then("verify the Proposed Effective Date is Pending", () => {
   OneMacPackageDetailsPage.verifyproposedEffectiveDateHeaderContainsPending();
 });
 Then(
-  "verify the Proposed Effective Date is a date formated like Mon dd yyyy",
+  "verify the Proposed Effective Date is a date formatted like Mon dd yyyy",
   () => {
     OneMacPackageDetailsPage.verifyproposedEffectiveDateHeaderContainsDate();
   }
@@ -2397,7 +2402,7 @@ Then(
   }
 );
 Then(
-  "verify the Final Disposition Date is a date formated like Mon dd yyyy",
+  "verify the Final Disposition Date is a date formatted like Mon dd yyyy",
   () => {
     OneMacPackageDetailsPage.verifyFinalDispositionDateHeaderContainsDate();
   }
@@ -2415,7 +2420,7 @@ Then(
   }
 );
 Then(
-  "verify the Approved Effective Date is a date formated like Mon dd yyyy",
+  "verify the Approved Effective Date is a date formatted like Mon dd yyyy",
   () => {
     OneMacPackageDetailsPage.verifyApprovedEffectiveDateHeaderContainsDate();
   }
@@ -2433,9 +2438,27 @@ Then(
   }
 );
 Then(
-  "verify the Actual Effective Date is a date formated like Mon dd yyyy",
+  "verify the Actual Effective Date is a date formatted like Mon dd yyyy",
   () => {
     OneMacPackageDetailsPage.verifyActualEffectiveDateHeaderContainsDate();
+  }
+);
+Then(
+  "verify there is an Formal RAI Received Date header in the details section",
+  () => {
+    OneMacPackageDetailsPage.verifyFormalRAIReceivedDateHeaderExists();
+  }
+);
+Then(
+  "verify there is not an Formal RAI Received Date header in the details section",
+  () => {
+    OneMacPackageDetailsPage.verifyFormalRAIReceivedDateHeaderDoesNotExists();
+  }
+);
+Then(
+  "verify the Formal RAI Received Date is a date formatted like Mon dd yyyy",
+  () => {
+    OneMacPackageDetailsPage.verifyFormalRAIReceivedDateHeaderContainsDate();
   }
 );
 Then("verify the Amendment Number header exists", () => {
@@ -2456,11 +2479,11 @@ Then("verify the download all button exists", () => {
 Then("verify the additional information section exists", () => {
   OneMacPackageDetailsPage.verifyAdditionalInfoSectionExists();
 });
-Then("verify 90th day header exists", () => {
-  OneMacPackageDetailsPage.verify90thDayHeaderExists();
+Then("verify the Administrative Package Changes section exists", () => {
+  OneMacPackageDetailsPage.verifyAdministrativePackageChangesSectionExists();
 });
-Then("verify 90th day header is NA", () => {
-  OneMacPackageDetailsPage.verify90thDayHeaderContainsNA();
+Then("verify the Formal RAI Responses section exists", () => {
+  OneMacPackageDetailsPage.verifyFormalRAIResponsesSectionExists();
 });
 Then("click withdraw button", () => {
   OneMacPackageDetailsPage.clickWithdrawBtn();
@@ -2983,7 +3006,9 @@ Then(
     OneMacSubmitNewWaiverActionPage.verifyRenewalWaiverErrorMsgPt2();
   }
 );
-
+Then("verify the 1915b Temporary Extension is prefilled under type", () => {
+  OneMacRequestWaiverTemporaryExtension.option1915bIsPrefilled();
+});
 Then("select the 1915b Temporary Extension Type button", () => {
   OneMacRequestWaiverTemporaryExtension.selectOption1915bInTempExtensionType();
 });

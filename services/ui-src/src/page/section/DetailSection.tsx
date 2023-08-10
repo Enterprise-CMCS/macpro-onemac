@@ -148,6 +148,11 @@ export const DetailSection = ({
   setAlertCode: (code: string) => void;
 }) => {
   const { userProfile } = useAppContext() ?? {};
+  const secondClockStatuses = [
+    "Pending",
+    "Pending - Concurrence",
+    "Pending - Approval",
+  ];
 
   const downloadInfoText =
     "Documents available on this page may not reflect the actual documents that were approved by CMS. Please refer to your CMS Point of Contact for the approved documents.";
@@ -159,6 +164,25 @@ export const DetailSection = ({
 
   const userRoleObj = getUserRoleObj(userProfile?.userData?.roleList);
 
+  console.log(
+    "params",
+    detail.componentType,
+    detail.oneMacStatus,
+    detail.latestRaiResponseTimestamp ? true : false,
+    userRoleObj,
+    FORM_SOURCE.DETAIL
+  );
+  // const actions = Workflow.getActionsForPackage(
+  //   detail.componentType,
+  //   detail.oneMacStatus,
+  //   detail.latestRaiResponseTimestamp ? true : false,
+  //   userRoleObj,
+  //   FORM_SOURCE.DETAIL
+  // );
+  const actions = detail.actions;
+
+  console.log("actions", actions);
+
   return (
     <>
       <section className="detail-card-section">
@@ -166,10 +190,13 @@ export const DetailSection = ({
           <div className="detail-card-top"></div>
           <div className="detail-card">
             <section>
-              <Review heading="Status">
+              <Review heading="Status" className="no-bottom-padding">
                 <div className="detail-card-status">{detail.currentStatus}</div>
               </Review>
-
+              {/* Displays 2nd Clock subtitle under status if status is pending (sans Pending - RAI) and
+               latestRaiResponseTimestamp is present */}
+              {secondClockStatuses.includes(detail.currentStatus) &&
+                detail?.latestRaiResponseTimestamp && <span>2nd Clock</span>}
               {pageConfig.show90thDayInfo && ninetyDayText !== "N/A" && (
                 <Review heading="90th Day">
                   {Number(ninetyDayText)
@@ -189,44 +216,29 @@ export const DetailSection = ({
         <div className="detail-card-container">
           <div className="detail-card-top"></div>
           <div className="detail-card">
-            {userRoleObj.canAccessForms ? (
-              <section className="package-actions">
-                <Review heading={pageConfig.actionLabel}>
-                  <ul className="action-list">
-                    {pageConfig.actionsByStatus[detail.currentStatus]?.length >
-                    0 ? (
-                      pageConfig.actionsByStatus[detail.currentStatus]?.map(
-                        (actionName, i) => (
-                          <li key={i}>
-                            {actionComponent[actionName](
-                              detail,
-                              FORM_SOURCE.DETAIL
-                            )}
-                          </li>
-                        )
-                      )
-                    ) : (
-                      <li>
-                        <p>
-                          No actions are currently available for this
-                          submission.
-                        </p>
+            <section className="package-actions">
+              <Review heading={pageConfig.actionLabel}>
+                <ul className="action-list">
+                  {}
+                  {actions?.length > 0 ? (
+                    actions?.map((actionName, i) => (
+                      <li key={i}>
+                        {actionComponent[actionName](
+                          detail,
+                          FORM_SOURCE.DETAIL
+                        )}
                       </li>
-                    )}
-                  </ul>
-                </Review>
-              </section>
-            ) : (
-              <section className="package-actions">
-                <div className="column-spacer">
-                  <Review heading={pageConfig.actionLabel}>
-                    <p>
-                      No actions are currently available for this submission.
-                    </p>
-                  </Review>
-                </div>
-              </section>
-            )}
+                    ))
+                  ) : (
+                    <li>
+                      <p>
+                        No actions are currently available for this submission.
+                      </p>
+                    </li>
+                  )}
+                </ul>
+              </Review>
+            </section>
           </div>
         </div>
       </section>
@@ -273,6 +285,44 @@ export const DetailSection = ({
 
         <AdditionalInfoSection additionalInfo={detail.additionalInformation} />
 
+        {detail.adminChanges?.length > 0 && (
+          <section className="detail-section">
+            <h2>Administrative Package Changes</h2>
+            <p>
+              Administrative changes reflect updates to specific data fields. If
+              you have additional questions, please contact the assigned CPOC.
+            </p>
+            <Accordion>
+              {detail.adminChanges?.map((adminChange, index) => {
+                return (
+                  <AccordionItem
+                    buttonClassName="accordion-button"
+                    contentClassName="accordion-content"
+                    heading={
+                      "Submitted on " +
+                      formatDate(adminChange.changeTimestamp) +
+                      " - Manual Update"
+                    }
+                    headingLevel="6"
+                    id={"admin_change_" + index + "_caret"}
+                    key={"admin_change_" + index}
+                    defaultOpen={index === 0}
+                  >
+                    <Review className="preserve-spacing" heading="Change Made">
+                      {adminChange.changeMade}
+                    </Review>
+                    <Review
+                      className="preserve-spacing"
+                      heading="Change Reason"
+                    >
+                      {adminChange.changeReason}
+                    </Review>
+                  </AccordionItem>
+                );
+              })}
+            </Accordion>
+          </section>
+        )}
         {detail.raiResponses?.length > 0 && (
           <section className="detail-section">
             <h2>Formal RAI Responses</h2>
@@ -283,20 +333,26 @@ export const DetailSection = ({
                     buttonClassName="accordion-button"
                     contentClassName="accordion-content"
                     heading={
-                      "Submitted on " +
+                      (raiResponse.currentStatus ===
+                      Workflow.ONEMAC_STATUS.WITHDRAW_RAI_REQUESTED
+                        ? "Withdrawn"
+                        : "Submitted") +
+                      " on " +
                       formatDate(raiResponse.submissionTimestamp)
                     }
                     headingLevel="6"
-                    id={raiResponse.componentType + index + "_caret"}
-                    key={raiResponse.componentType + index}
+                    id={`${raiResponse.componentType}-` + index + "_caret"}
+                    key={`${raiResponse.componentType}-` + index}
                     defaultOpen={index === 0}
                   >
-                    <FileList
-                      heading={"RAI Response Documentation"}
-                      infoText={downloadInfoText}
-                      uploadList={raiResponse.attachments}
-                      zipId={raiResponse.componentType + index}
-                    />
+                    {raiResponse.attachments && (
+                      <FileList
+                        heading={"RAI Response Documentation"}
+                        infoText={downloadInfoText}
+                        uploadList={raiResponse.attachments}
+                        zipId={raiResponse.componentType + index}
+                      />
+                    )}
                     <AdditionalInfoSection
                       additionalInfo={raiResponse.additionalInformation}
                       id={"addl-info-rai-" + index}
@@ -329,7 +385,7 @@ export const DetailSection = ({
                       <FileList
                         heading={"Withdrawal Request Documentation"}
                         uploadList={withdrawalRequest.attachments}
-                        zipId={withdrawalRequest.componentType + index}
+                        zipId={`${withdrawalRequest.componentType}-` + index}
                       />
                     ) : (
                       <>
