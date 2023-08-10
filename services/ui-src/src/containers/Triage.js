@@ -4,7 +4,7 @@ import { useLocation } from "react-router-dom";
 import PageTitleBar from "../components/PageTitleBar";
 import ChoiceList from "../components/ChoiceList";
 import { choicesFromRoute } from "../libs/triageChoices";
-import { MACCardFieldsetWrapper } from "../components/MACCard";
+import { MACFieldsetCard, MACFieldsetCardOption } from "../components/MACCard";
 
 const Triage = () => {
   const location = useLocation();
@@ -19,9 +19,11 @@ const Triage = () => {
   return (
     <>
       <PageTitleBar heading={triageData.heading} enableBackNav />
-      <MACCardFieldsetWrapper legend={triageData.intro}>
-        <ChoiceList choices={triageData.choices} />
-      </MACCardFieldsetWrapper>
+      <MACFieldsetCard legend={triageData.intro}>
+        {triageData.choices.map((choice, key) => (
+          <MACFieldsetCardOption {...choice} key={key} />
+        ))}
+      </MACFieldsetCard>
     </>
   );
 };

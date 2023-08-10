@@ -1,16 +1,12 @@
 import React from "react";
 
-import { MACTriageCard } from "./MACCard";
+import { MACFieldsetCardOption } from "./MACCard";
 
 const ChoiceList = ({ choices }) => {
   return (
     <>
       <div className="gradient-box"></div>
-      <div className="choice-list">
-        {choices.map((choice, key) => (
-          <MACTriageCard {...choice} key={key} />
-        ))}
-      </div>
+      <div className="mac-fieldset-options-list"></div>
     </>
   );
 };

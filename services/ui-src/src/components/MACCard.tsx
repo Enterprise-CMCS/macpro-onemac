@@ -76,25 +76,27 @@ export const MACCard = ({
     </MACCardWrapper>
   );
 };
-/** A styled container for nesting {@link MACTriageCard} with a fieldset and
+/** A styled MACCard for nesting {@link MACFieldsetCardOption} with a fieldset and
  * legend */
-export const MACCardFieldsetWrapper = ({
+export const MACFieldsetCard = ({
   children,
   legend,
   additionalContainerClassName,
 }: MACCardListProps) => {
   return (
-    <section className={`choice-container ${additionalContainerClassName}`}>
+    <section className={`mac-fieldset-wrapper ${additionalContainerClassName}`}>
       <fieldset>
-        <legend className="choice-intro">{legend}</legend>
-        {children}
+        <legend className="mac-fieldset-legend">{legend}</legend>
+        <MACCard childContainerClassName="mac-fieldset-options-list">
+          {children}
+        </MACCard>
       </fieldset>
     </section>
   );
 };
-/** A MACCard for use in options lists that lead to a destination, such as
+/** An element for use in options lists that lead to a destination, such as
  * the triage options found in {@link Triage} */
-export const MACTriageCard = ({
+export const MACFieldsetCardOption = ({
   title,
   description,
   linkTo,
@@ -145,7 +147,6 @@ export const MACRemovableCard = ({
           <button
             aria-label={`Self-revoke access to ${title}`}
             disabled={isReadOnly}
-            className="close-button"
             onClick={onClick}
           >
             <img alt="" className="closing-x" src={closingX} />

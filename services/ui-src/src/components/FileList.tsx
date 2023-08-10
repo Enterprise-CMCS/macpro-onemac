@@ -51,9 +51,9 @@ export default function FileList({
   }, [uploadList, zipId]);
 
   return (
-    <section className="choice-container file-list-container">
+    <section className="mac-fieldset-wrapper file-list-container">
       {heading && (
-        <div className="choice-intro">
+        <div className="mac-fieldset-legend">
           <h2>{heading}</h2>
         </div>
       )}
@@ -63,9 +63,9 @@ export default function FileList({
           <FontAwesomeIcon icon={faDownload} /> Download All
         </Button>
       </div>
-      <MACCard withGradientBar>
+      <MACCard childContainerClassName="ds-u-padding--0">
         {uploadList && (
-          <ul className="choice-list">
+          <ul className="mac-fieldset-options-list">
             {uploadList.map((upload, index) => (
               <li className="choice-list-item" key={index}>
                 <h3>{upload.title}</h3>
