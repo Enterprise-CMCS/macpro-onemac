@@ -525,7 +525,7 @@ input[type="file"] {
   }
 
   form,
-  .faq-card,
+  .mac-card-wrapper,
   .component-detail-wrapper,
   .form-subheader-message {
     @include max-width-ultra-wide;
@@ -2097,64 +2097,31 @@ article.form-container {
   font-weight: 400;
 }
 
-.faq-left-column {
-  @media only screen and (min-width: $width-xl) {
-    width: calc(100% - 400px);
+.faq-display {
+  @extend .ds-u-display--flex;
+  @extend .ds-u-justify-content--between;
+  @include max-width-ultra-wide;
+  align-items: flex-start;
+  padding: 40px 16px 8px 16px;
+  margin: 0 auto;
+  gap: 3rem;
+
+  #question-list {
+    width: 100%;
   }
 
-  .faq-misc-points {
-    width: 606px;
-  }
-}
-
-aside#faq-contact-info-box {
-  @extend .ds-u-margin-bottom--5;
-  @extend .ds-u-xl-margin-bottom--0;
-  @extend .ds-u-measure--wide;
-
-  @media only screen and (min-width: $width-xl) {
-    position: sticky;
-    top: 64px;
-    float: right;
-    width: 347px;
-  }
-
-  .faq-border-box {
-    @include gradient-top-border;
-  }
-
-  .faq-info-box {
-    @extend .ds-u-padding--4;
-    background: $color-white;
-    border: 1px solid $color-gray-lighter;
-    border-radius: 0 0 3px 3px;
-    border-top: none;
-
-    h2 {
-      @extend .ds-h3;
-      @extend .ds-u-margin-top--0;
-      @extend .ds-u-margin-bottom--3;
+  @media only screen and (min-width: $width-md) {
+    #contact-card {
+      width: 350px;
+      position: sticky;
+      top: 4rem;
     }
+  }
 
-    dl {
-      @extend .ds-l-row;
-
-      .faq-info-wrapper {
-        @extend .ds-l-col--12;
-        @extend .ds-l-md-col--6;
-        @extend .ds-l-xl-col--12;
-
-        &:not(:last-child) {
-          @extend .ds-u-margin-bottom--5;
-          @extend .ds-u-md-margin-bottom--0;
-          @extend .ds-u-xl-margin-bottom--5;
-        }
-
-        dt {
-          @extend .ds-u-font-weight--semibold;
-          @extend .ds-u-margin-bottom--1;
-        }
-      }
+  @media only screen and (max-width: $width-md) {
+    flex-wrap: wrap-reverse;
+    #contact-card {
+      width: 100%;
     }
   }
 }
