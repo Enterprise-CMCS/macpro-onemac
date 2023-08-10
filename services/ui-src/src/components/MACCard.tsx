@@ -13,9 +13,8 @@ export type MACCardProps = PropsWithChildren<{
 }>;
 export type MACTriageCardProps = Omit<MACCardProps, "children"> & {
   linkTo: string;
+  state?: any;
   strongText?: string;
-  /** @deprecated */
-  deprecatedOnClick?: () => any;
 };
 export type MACRemovableCardProps = MACCardProps & {
   onClick: () => any;
@@ -100,26 +99,37 @@ export const MACFieldsetCardOption = ({
   title,
   description,
   linkTo,
+  state,
   strongText,
-  deprecatedOnClick,
 }: MACTriageCardProps) => {
+  const Option = () => (
+    <MACCardWrapper childContainerClassName={"mac-triage-card-display"}>
+      <div>
+        {title && <MACCardTitle title={title} />}
+        {description && <p id="description">{description}</p>}
+        {strongText && <p id="strong">{strongText}</p>}
+      </div>
+      <FontAwesomeIcon icon={faChevronRight} className="choice-item-arrow" />
+    </MACCardWrapper>
+  );
   return (
-    /** onClick to be deprecated for triage options */
-    <label onClick={deprecatedOnClick}>
-      <Link to={linkTo} className="mac-triage-link">
-        <MACCardWrapper childContainerClassName={"mac-triage-card-display"}>
-          <div>
-            {title && <MACCardTitle title={title} />}
-            {description && <p id="description">{description}</p>}
-            {strongText && <p id="strong">{strongText}</p>}
-          </div>
-          <FontAwesomeIcon
-            icon={faChevronRight}
-            className="choice-item-arrow"
-          />
-        </MACCardWrapper>
+    <label className="mac-triage-link">
+      <Link to={{ pathname: linkTo, state: state }} className="mac-triage-link">
+        <Option />
       </Link>
     </label>
+  );
+};
+/** Feed in options, get a vertical list of MACFieldsetCardOptions back.
+ * TODO: Better types for props; this was refactored from a javascript
+ *  portion of the codebase. */
+export const MACFieldsetOptionsList = ({ choices }: { choices: any[] }) => {
+  return (
+    <>
+      {choices.map((choice, key) => (
+        <MACFieldsetCardOption {...choice} key={key} />
+      ))}
+    </>
   );
 };
 /** A MACCard for use in lists with removable items. Pass in an `onClick`

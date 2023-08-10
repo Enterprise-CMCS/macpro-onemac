@@ -2314,6 +2314,10 @@ aside#faq-contact-info-box {
     right: 26px;
     border: none;
   }
+
+  .mac-card-title {
+    margin-bottom: 0 !important;
+  }
 }
 
 .mac-fieldset-wrapper {
@@ -2377,7 +2381,8 @@ aside#faq-contact-info-box {
   display: flex;
   flex-direction: column;
   width: 100%;
-  padding: 0px;
+  padding: 0;
+  margin: 0;
   box-sizing: border-box;
   color: $color-primary;
   background: #fff;
