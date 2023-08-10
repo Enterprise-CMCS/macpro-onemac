@@ -37,9 +37,17 @@ const MACCardWrapper = ({
   withBorder,
 }: PropsWithChildren<Omit<MACCardProps, "title" | "description">>) => {
   return (
-    <div className={`mac-card-wrapper ${withBorder ? "mac-card-border" : ""}`}>
+    <div className={`mac-card-wrapper`}>
       {withGradientBar && <div className="mac-card-gradient-top" />}
-      {children && <div className={childContainerClassName}>{children}</div>}
+      {children && (
+        <div
+          className={`${
+            withBorder ? "mac-card-border" : ""
+          } ${childContainerClassName}`}
+        >
+          {children}
+        </div>
+      )}
     </div>
   );
 };
@@ -61,7 +69,7 @@ export const MACCard = ({
     <MACCardWrapper
       withGradientBar={withGradientBar}
       withBorder={withBorder}
-      childContainerClassName={`${childContainerClassName} mac-default-card-children`}
+      childContainerClassName={`mac-default-card-children ${childContainerClassName}`}
     >
       {title && <MACCardTitle title={title} />}
       {children}
