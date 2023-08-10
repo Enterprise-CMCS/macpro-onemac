@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
 import PageTitleBar from "../components/PageTitleBar";
-import ChoiceList from "../components/ChoiceList";
 import { choicesFromRoute } from "../libs/triageChoices";
 import { MACFieldsetCard, MACFieldsetCardOption } from "../components/MACCard";
 
