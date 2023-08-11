@@ -6,6 +6,36 @@ import { FAQContent, oneMACFAQContent } from "../libs/faq/faqContent";
 import { Accordion, AccordionItem } from "@cmsgov/design-system";
 import { MACCard } from "../components/MACCard";
 
+/** Refactored out for later extraction by cms-ux-lib. However, using this
+ * abstraction rather than doing it inline as we do in the FAQ return created
+ * out-of-scope test fixes; specifically, jest could no longer find the
+ * accordion and determine whether it had expanded. Manual testing showed
+ * no bugs in browser rendering/performance.
+ *
+ * TODO: Utilize this component in FAQ's return and update tests. */
+// const FAQSection = ({ section }: { section: FAQContent }) => {
+//   return (
+//     <div className="faq-section">
+//       <h2 className="topic-title">{section.sectionTitle}</h2>
+//       <Accordion>
+//         {section.qanda.map((questionAnswer, i) => (
+//           <div key={i}>
+//             <AccordionItem
+//               id={questionAnswer.anchorText}
+//               heading={questionAnswer.question}
+//               buttonClassName="accordion-button"
+//               contentClassName="accordion-content"
+//             >
+//               {questionAnswer.answerJSX}
+//             </AccordionItem>
+//             <hr></hr>
+//           </div>
+//         ))}
+//       </Accordion>
+//     </div>
+//   );
+// };
+
 const FAQ = () => {
   const [hash, setHash] = useState(window.location.hash.replace("#", ""));
 
@@ -34,36 +64,6 @@ const FAQ = () => {
       window.removeEventListener("hashchange", hashHandler);
     };
   }, [hash]);
-
-  /** Refactored out for later extraction by cms-ux-lib. However, using this
-   * abstraction rather than doing it inline as we do in the FAQ return created
-   * out-of-scope test fixes; specifically, jest could no longer find the
-   * accordion and determine whether it had expanded. Manual testing showed
-   * no bugs in browser rendering/performance.
-   *
-   * TODO: Utilize this component in FAQ's return and update tests. */
-  const FAQSection = ({ section }: { section: FAQContent }) => {
-    return (
-      <div className="faq-section">
-        <h2 className="topic-title">{section.sectionTitle}</h2>
-        <Accordion>
-          {section.qanda.map((questionAnswer, i) => (
-            <div key={i}>
-              <AccordionItem
-                id={questionAnswer.anchorText}
-                heading={questionAnswer.question}
-                buttonClassName="accordion-button"
-                contentClassName="accordion-content"
-              >
-                {questionAnswer.answerJSX}
-              </AccordionItem>
-              <hr></hr>
-            </div>
-          ))}
-        </Accordion>
-      </div>
-    );
-  };
 
   const Info = () => {
     const infoDetails = [

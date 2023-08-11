@@ -1,11 +1,15 @@
 import React, { useEffect, useMemo } from "react";
-import { Redirect, useHistory } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
 import { useAppContext } from "../libs/contextLib";
 import { useSignupCallback } from "../libs/hooksLib";
 import { USER_STATUS, USER_ROLE, RESPONSE_CODE } from "cmscommonlib";
 import PageTitleBar from "../components/PageTitleBar";
-import { MACFieldsetCard, MACFieldsetOptionsList } from "../components/MACCard";
+import {
+  MACFieldsetCard,
+  MACFieldsetOption,
+  MACFieldsetOptionsList,
+} from "../components/MACCard";
 
 const ignoreEventPayload = () => undefined;
 const activeOrPending = new Set([USER_STATUS.ACTIVE, USER_STATUS.PENDING]);
@@ -28,7 +32,9 @@ function StateUserSignup() {
       state: { role: USER_ROLE.STATE_SYSTEM_ADMIN },
     },
   ].filter(Boolean);
-  return <MACFieldsetOptionsList choices={STATE_CHOICES} />;
+  return (
+    <MACFieldsetOptionsList choices={STATE_CHOICES as MACFieldsetOption[]} />
+  );
 }
 
 function CMSSignup() {
@@ -55,7 +61,9 @@ function CMSSignup() {
       onclick: onClickCMS,
     },
   ].filter(Boolean);
-  return <MACFieldsetOptionsList choices={CMS_CHOICES} />;
+  return (
+    <MACFieldsetOptionsList choices={CMS_CHOICES as MACFieldsetOption[]} />
+  );
 }
 function HelpdeskSignup() {
   const [, onLoadHelpdesk] = useSignupCallback(
@@ -84,7 +92,6 @@ const isHelpdeskUser = (cmsRoles: string) =>
   !!cmsRoles.split(",").includes("onemac-helpdesk");
 
 export function Signup() {
-  // const history = useHistory();
   const { userRole, userProfile: { cmsRoles = "" /*, userData = {}*/ } = {} } =
     useAppContext() ?? {};
 
