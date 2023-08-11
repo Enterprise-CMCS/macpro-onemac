@@ -1,7 +1,7 @@
 const _ = require("lodash");
 import AWS from "aws-sdk";
 import { DateTime } from "luxon";
-
+import { formalRAIResponseType, submitAction } from "../lib/default-lib";
 import { dynamoConfig, Workflow } from "cmscommonlib";
 
 const dynamoDb = new AWS.DynamoDB.DocumentClient(dynamoConfig);
@@ -42,7 +42,7 @@ export const buildAnyPackage = async (packageId, config) => {
   try {
     const result = await dynamoDb.query(queryParams).promise();
     if (result?.Items.length <= 0) {
-      console.log("%s did not have Items?", packageId);
+      console.log("%s did not have Items.", packageId);
       return;
     }
     const packageSk = `Package`;
@@ -113,9 +113,21 @@ export const buildAnyPackage = async (packageId, config) => {
             action: config.eventActionMap[eventLabel] || "Submitted",
             currentStatus: anEvent.currentStatus,
             timestamp: anEvent.submissionTimestamp,
+            eventTimestamp: anEvent.eventTimestamp,
             attachments: anEvent.attachments ? [...anEvent.attachments] : [],
             additionalInformation: anEvent.additionalInformation,
           });
+
+        // if the RAI response is the newest so far, add the latest RAI response timestamp
+        // if the status is "Submitted" and delete the attribute if not
+        if (
+          config.eventTypeMap[eventLabel] === formalRAIResponseType &&
+          (!putParams.Item?.latestRaiResponseTimestamp ||
+            putParams.Item.latestRaiResponseTimestamp < anEvent.eventTimestamp)
+        )
+          if (config.eventActionMap[eventLabel] === submitAction)
+            putParams.Item.latestRaiResponseTimestamp = anEvent.eventTimestamp;
+          else delete putParams.Item.latestRaiResponseTimestamp;
 
         if (anEvent?.componentType)
           if (anEvent?.adminChanges && _.isArray(anEvent.adminChanges))
@@ -128,37 +140,37 @@ export const buildAnyPackage = async (packageId, config) => {
       }
 
       // collect ALL rai events in one array (parsed later)
-      if (
-        anEvent.componentType === `${config.componentType}rai` ||
-        anEvent.componentType === `waiverrai` ||
-        anEvent.componentType === `rairesponsewithdraw`
-      ) {
-        putParams.Item.raiResponses.push({
-          submissionTimestamp: anEvent.submissionTimestamp,
-          eventTimestamp: anEvent.eventTimestamp,
-          attachments: anEvent.attachments,
-          additionalInformation: anEvent.additionalInformation,
-          currentStatus: anEvent.currentStatus,
-        });
-        putParams.Item.currentStatus = anEvent.currentStatus;
+      // if (
+      //   anEvent.componentType === `${config.componentType}rai` ||
+      //   anEvent.componentType === `waiverrai` ||
+      //   anEvent.componentType === `rairesponsewithdraw`
+      // ) {
+      //   putParams.Item.raiResponses.push({
+      //     submissionTimestamp: anEvent.submissionTimestamp,
+      //     eventTimestamp: anEvent.eventTimestamp,
+      //     attachments: anEvent.attachments,
+      //     additionalInformation: anEvent.additionalInformation,
+      //     currentStatus: anEvent.currentStatus,
+      //   });
+      //   putParams.Item.currentStatus = anEvent.currentStatus;
 
-        return;
-      }
+      //   return;
+      // }
 
       // include ALL package withdraw request events in package details
-      if (anEvent.componentType === `${config.componentType}withdraw`) {
-        putParams.Item.withdrawalRequests.push({
-          submissionTimestamp: anEvent.submissionTimestamp,
-          eventTimestamp: anEvent.eventTimestamp,
-          attachments: anEvent.attachments,
-          additionalInformation: anEvent.additionalInformation,
-          currentStatus: anEvent.currentStatus,
-        });
-        putParams.Item.currentStatus =
-          Workflow.ONEMAC_STATUS.WITHDRAWAL_REQUESTED;
+      // if (anEvent.componentType === `${config.componentType}withdraw`) {
+      //   putParams.Item.withdrawalRequests.push({
+      //     submissionTimestamp: anEvent.submissionTimestamp,
+      //     eventTimestamp: anEvent.eventTimestamp,
+      //     attachments: anEvent.attachments,
+      //     additionalInformation: anEvent.additionalInformation,
+      //     currentStatus: anEvent.currentStatus,
+      //   });
+      //   putParams.Item.currentStatus =
+      //     Workflow.ONEMAC_STATUS.WITHDRAWAL_REQUESTED;
 
-        return;
-      }
+      //   return;
+      // }
 
       // SEATool "events" are actually a complete representation of the package state,
       // so if the SEATool record's CHANGED_DATE is newest, it doesn't matter if the
@@ -251,7 +263,6 @@ export const buildAnyPackage = async (packageId, config) => {
         }
       }
 
-      // assume OneMAC event if got here
       config.theAttributes.forEach((attributeName) => {
         if (anEvent[attributeName]) {
           if (attributeName === "parentId") {
@@ -282,18 +293,19 @@ export const buildAnyPackage = async (packageId, config) => {
       putParams.Item.GSI1sk = packageId;
     }
 
-    putParams.Item.raiResponses.sort(
-      (a, b) => b.eventTimestamp - a.eventTimestamp
-    );
+    // putParams.Item.raiResponses.sort(
+    //   (a, b) => b.eventTimestamp - a.eventTimestamp
+    // );
 
     putParams.Item.reverseChrono.sort((a, b) => b.timestamp - a.timestamp);
 
-    if (putParams.Item.raiResponses[0]?.currentStatus === "Submitted") {
-      putParams.Item.latestRaiResponseTimestamp =
-        putParams.Item.raiResponses[0]?.submissionTimestamp;
-    }
+    // if (putParams.Item.raiResponses[0]?.currentStatus === "Submitted") {
+    //   putParams.Item.latestRaiResponseTimestamp =
+    //     putParams.Item.raiResponses[0]?.submissionTimestamp;
+    // }
 
     adminChanges.sort((a, b) => b.changeTimestamp - a.changeTimestamp);
+    // remove duplicate messages for adminChanges that affect more than one event
     let lastTime = 0;
     adminChanges.forEach((oneChange) => {
       if (oneChange.changeTimestamp != lastTime) {
@@ -302,7 +314,9 @@ export const buildAnyPackage = async (packageId, config) => {
       }
     });
 
-    if (_.isEqual(currentPackage, putParams.Item)) return;
+    // // new SEATool events may not update the resulting OneMAC Package,
+    // // only
+    // if (_.isEqual(currentPackage, putParams.Item)) return;
 
     putParams.Item.lastEventTimestamp = lmTimestamp;
     await dynamoDb.put(putParams).promise();
