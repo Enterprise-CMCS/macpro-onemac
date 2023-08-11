@@ -11,7 +11,7 @@ export type MACCardProps = PropsWithChildren<{
   withGradientBar?: boolean;
   withBorder?: boolean;
 }>;
-export type MACTriageCardProps = Omit<MACCardProps, "children"> & {
+export type MACFieldsetOption = Omit<MACCardProps, "children"> & {
   linkTo: string;
   state?: any;
   strongText?: string;
@@ -29,7 +29,7 @@ export type MACCardListProps = PropsWithChildren<{
 
 /** Styled wrapper for use in MACCards, consolidates the use of 'mac-card'
  * css class. */
-const MACCardWrapper = ({
+export const MACCardWrapper = ({
   children,
   childContainerClassName,
   withGradientBar,
@@ -37,7 +37,9 @@ const MACCardWrapper = ({
 }: PropsWithChildren<Omit<MACCardProps, "title" | "description">>) => {
   return (
     <div className={`mac-card-wrapper`}>
-      {withGradientBar && <div className="mac-card-gradient-top" />}
+      {withGradientBar && (
+        <div data-testid="gradient-top" className="mac-card-gradient-top" />
+      )}
       {children && (
         <div
           className={`${
@@ -52,8 +54,12 @@ const MACCardWrapper = ({
 };
 /** Styled title for use in MACCards. Consolidates the use of 'mac-card-title'
  * css class. */
-const MACCardTitle = ({ title }: Pick<MACCardProps, "title">) => {
-  return <div className="mac-card-title">{title}</div>;
+export const MACCardTitle = ({ title }: Pick<MACCardProps, "title">) => {
+  return (
+    <div data-testid="mac-card-header" className="mac-card-title">
+      {title}
+    </div>
+  );
 };
 /** The most basic MACCard to wrap children in a card style element.
  * Use `withBorder` if you want to include the gradient top border. */
@@ -101,7 +107,7 @@ export const MACFieldsetCardOption = ({
   linkTo,
   state,
   strongText,
-}: MACTriageCardProps) => {
+}: MACFieldsetOption) => {
   const Option = () => (
     <MACCardWrapper childContainerClassName={"mac-triage-card-display"}>
       <div>
@@ -109,12 +115,20 @@ export const MACFieldsetCardOption = ({
         {description && <p id="description">{description}</p>}
         {strongText && <p id="strong">{strongText}</p>}
       </div>
-      <FontAwesomeIcon icon={faChevronRight} className="choice-item-arrow" />
+      <FontAwesomeIcon
+        data-testid="chevron-right"
+        icon={faChevronRight}
+        className="choice-item-arrow"
+      />
     </MACCardWrapper>
   );
   return (
     <label className="mac-triage-link">
-      <Link to={{ pathname: linkTo, state: state }} className="mac-triage-link">
+      <Link
+        data-testid="link-wrapper"
+        to={{ pathname: linkTo, state: state }}
+        className="mac-triage-link"
+      >
         <Option />
       </Link>
     </label>
@@ -123,7 +137,11 @@ export const MACFieldsetCardOption = ({
 /** Feed in options, get a vertical list of MACFieldsetCardOptions back.
  * TODO: Better types for props; this was refactored from a javascript
  *  portion of the codebase. */
-export const MACFieldsetOptionsList = ({ choices }: { choices: any[] }) => {
+export const MACFieldsetOptionsList = ({
+  choices,
+}: {
+  choices: MACFieldsetOption[];
+}) => {
   return (
     <>
       {choices.map((choice, key) => (
