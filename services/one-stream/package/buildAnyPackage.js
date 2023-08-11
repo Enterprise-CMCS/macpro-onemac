@@ -1,8 +1,13 @@
 const _ = require("lodash");
 import AWS from "aws-sdk";
 import { DateTime } from "luxon";
-import { formalRAIResponseType, submitAction } from "../lib/default-lib";
+import {
+  formalRAIResponseType,
+  submitAction,
+  withdrawalRequestedAction,
+} from "../lib/default-lib";
 import { dynamoConfig, Workflow } from "cmscommonlib";
+import { ONEMAC_STATUS } from "cmscommonlib/workflow";
 
 const dynamoDb = new AWS.DynamoDB.DocumentClient(dynamoConfig);
 
@@ -105,6 +110,14 @@ export const buildAnyPackage = async (packageId, config) => {
         if (anEvent?.currentStatus === Workflow.ONEMAC_STATUS.INACTIVATED)
           return;
         showPackageOnDashboard = true;
+
+        // because if we change what status the withdrawal request event stores
+        // we'd have to do a migration... but might want to later
+        if (
+          config.eventActionMap[eventLabel] === withdrawalRequestedAction &&
+          anEvent.currentStatus === ONEMAC_STATUS.SUBMITTED
+        )
+          anEvent.currentStatus = ONEMAC_STATUS.WITHDRAWAL_REQUESTED;
 
         const eventLabel = anEvent.GSI1pk.replace("OneMAC#", "");
         config.eventTypeMap[eventLabel] &&
@@ -263,7 +276,7 @@ export const buildAnyPackage = async (packageId, config) => {
         }
       }
 
-      config.theAttributes.forEach((attributeName) => {
+      config.packageAttributes.forEach((attributeName) => {
         if (anEvent[attributeName]) {
           if (attributeName === "parentId") {
             // having a parent adds the GSI2pk index

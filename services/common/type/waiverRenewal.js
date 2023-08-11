@@ -63,4 +63,14 @@ export const waiverRenewalB = {
     tribalConsultation,
     other,
   ],
+  packageAttributes: [
+    "submissionTimestamp",
+    "proposedEffectiveDate",
+    "currentStatus",
+    "submitterName",
+    "submitterEmail",
+    "waiverAuthority",
+    "parentId",
+    "parentType",
+  ],
 };

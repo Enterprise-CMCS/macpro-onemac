@@ -31,4 +31,11 @@ export const medicaidSPA = {
     "submitterName",
     "submitterEmail",
   ],
+  packageAttributes: [
+    "submissionTimestamp",
+    "proposedEffectiveDate",
+    "currentStatus",
+    "submitterName",
+    "submitterEmail",
+  ],
 };
