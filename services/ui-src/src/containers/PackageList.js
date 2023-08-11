@@ -164,6 +164,11 @@ const PackageList = () => {
     []
   );
 
+  const renderStatus = useCallback(
+    ({ value }) => <span className="status-bandage">{value}</span>,
+    []
+  );
+
   const renderName = useCallback(
     ({ value, row }) => (
       <Link
@@ -229,6 +234,7 @@ const PackageList = () => {
           disableFilters: false,
           filter: CustomFilterTypes.MultiCheckbox,
           Filter: CustomFilterUi.MultiCheckbox,
+          Cell: renderStatus,
         },
         {
           Header: "Initial Submission",
@@ -272,6 +278,7 @@ const PackageList = () => {
       renderId,
       getType,
       renderType,
+      renderStatus,
       userRoleObj.canAccessForms,
       renderName,
       renderActions,
