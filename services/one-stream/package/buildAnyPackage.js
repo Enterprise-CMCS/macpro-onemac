@@ -111,6 +111,7 @@ export const buildAnyPackage = async (packageId, config) => {
           return;
         showPackageOnDashboard = true;
 
+        const eventLabel = anEvent.GSI1pk.replace("OneMAC#", "");
         // because if we change what status the withdrawal request event stores
         // we'd have to do a migration... but might want to later
         if (
@@ -119,7 +120,6 @@ export const buildAnyPackage = async (packageId, config) => {
         )
           anEvent.currentStatus = ONEMAC_STATUS.WITHDRAWAL_REQUESTED;
 
-        const eventLabel = anEvent.GSI1pk.replace("OneMAC#", "");
         config.eventTypeMap[eventLabel] &&
           putParams.Item.reverseChrono.push({
             type: config.eventTypeMap[eventLabel],
