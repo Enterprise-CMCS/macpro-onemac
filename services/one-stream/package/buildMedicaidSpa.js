@@ -14,13 +14,13 @@ const medicaidSPABuildConfig = {
     submitmedicaidspa: initialSubmissionType,
     submitmedicaidsparai: formalRAIResponseType,
     submitmedicaidspawithdraw: packageType,
-    withdrawrai: formalRAIResponseType,
+    submitrairesponsewithdraw: formalRAIResponseType,
   },
   eventActionMap: {
     submitmedicaidspa: submitAction,
     submitmedicaidsparai: submitAction,
     submitmedicaidspawithdraw: withdrawalRequestedAction,
-    withdrawrai: withdrawalRequestedAction,
+    submitrairesponsewithdraw: withdrawalRequestedAction,
   },
 };
 

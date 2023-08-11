@@ -111,6 +111,7 @@ export const buildAnyPackage = async (packageId, config) => {
           putParams.Item.reverseChrono.push({
             type: config.eventTypeMap[eventLabel],
             action: config.eventActionMap[eventLabel] || "Submitted",
+            currentStatus: anEvent.currentStatus,
             timestamp: anEvent.submissionTimestamp,
             attachments: anEvent.attachments ? [...anEvent.attachments] : [],
             additionalInformation: anEvent.additionalInformation,

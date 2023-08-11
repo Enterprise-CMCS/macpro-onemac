@@ -14,13 +14,13 @@ const waiverRenewalBuildConfig = {
     submitwaiverrenewal: initialSubmissionType,
     submitwaiverrai: formalRAIResponseType,
     submitwaiverrenewalwithdraw: packageType,
-    withdrawrai: formalRAIResponseType,
+    submitrairesponsewithdraw: formalRAIResponseType,
   },
   eventActionMap: {
     submitwaiverrenewal: submitAction,
     submitwaiverrai: submitAction,
     submitwaiverrenewalwithdraw: withdrawalRequestedAction,
-    withdrawrai: withdrawalRequestedAction,
+    submitrairesponsewithdraw: withdrawalRequestedAction,
   },
 };
 
