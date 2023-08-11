@@ -13,28 +13,28 @@ import { MACCard } from "../components/MACCard";
  * no bugs in browser rendering/performance.
  *
  * TODO: Utilize this component in FAQ's return and update tests. */
-// const FAQSection = ({ section }: { section: FAQContent }) => {
-//   return (
-//     <div className="faq-section">
-//       <h2 className="topic-title">{section.sectionTitle}</h2>
-//       <Accordion>
-//         {section.qanda.map((questionAnswer, i) => (
-//           <div key={i}>
-//             <AccordionItem
-//               id={questionAnswer.anchorText}
-//               heading={questionAnswer.question}
-//               buttonClassName="accordion-button"
-//               contentClassName="accordion-content"
-//             >
-//               {questionAnswer.answerJSX}
-//             </AccordionItem>
-//             <hr></hr>
-//           </div>
-//         ))}
-//       </Accordion>
-//     </div>
-//   );
-// };
+export const FAQSection = ({ section }: { section: FAQContent }) => {
+  return (
+    <div className="faq-section">
+      <h2 className="topic-title">{section.sectionTitle}</h2>
+      <Accordion>
+        {section.qanda.map((questionAnswer, i) => (
+          <div key={i}>
+            <AccordionItem
+              id={questionAnswer.anchorText}
+              heading={questionAnswer.question}
+              buttonClassName="accordion-button"
+              contentClassName="accordion-content"
+            >
+              {questionAnswer.answerJSX}
+            </AccordionItem>
+            <hr></hr>
+          </div>
+        ))}
+      </Accordion>
+    </div>
+  );
+};
 
 const FAQ = () => {
   const [hash, setHash] = useState(window.location.hash.replace("#", ""));
