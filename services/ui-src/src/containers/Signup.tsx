@@ -28,7 +28,7 @@ function StateUserSignup() {
       !activeOrPending.has(userStatus!)) && {
       title: "State System Administrator",
       description: "Ability to approve state submitters and submit packages",
-      linkTo: "signup/state",
+      linkTo: "/signup/state",
       state: { role: USER_ROLE.STATE_SYSTEM_ADMIN },
     },
   ].filter(Boolean);
@@ -58,6 +58,7 @@ function CMSSignup() {
       description:
         "Responsible for managing CMS Reviewers and State System Admins",
       linkTo: "/usermanagement",
+      // TODO: Still needs to be tested/refactored
       onclick: onClickCMS,
     },
   ].filter(Boolean);
