@@ -11,7 +11,7 @@ interface QuestionAnswer {
   answerJSX: JSX.Element;
 }
 
-interface FAQContent {
+export interface FAQContent {
   sectionTitle: string;
   qanda: QuestionAnswer[];
 }
