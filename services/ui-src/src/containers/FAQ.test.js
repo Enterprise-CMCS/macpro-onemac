@@ -19,12 +19,9 @@ it("expands linked question", async () => {
   window.location.href =
     window.location.href + "#waiverb-extension-attachments";
 
-  // const btnEl = await screen.findByRole("button", {
-  //   name: "What are the attachments for a 1915(b) Waiver - Request for Temporary Extension?",
-  // });
-  const btnEl = await screen.findByText(
-    "What are the attachments for a 1915(b) Waiver - Request for Temporary Extension?"
-  );
+  const btnEl = await screen.findByRole("button", {
+    name: "What are the attachments for a 1915(b) Waiver - Request for Temporary Extension?",
+  });
   await waitFor(() => {
     expect(btnEl).toHaveAttribute("aria-expanded", "true");
   });
