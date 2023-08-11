@@ -3,7 +3,14 @@ import { Redirect } from "react-router-dom";
 
 import { useAppContext } from "../libs/contextLib";
 import { useSignupCallback } from "../libs/hooksLib";
-import { USER_STATUS, USER_ROLE, RESPONSE_CODE } from "cmscommonlib";
+import {
+  USER_STATUS,
+  USER_ROLE,
+  RESPONSE_CODE,
+  getUserRoleObj,
+  ONEMAC_ROUTES,
+  ROUTES,
+} from "cmscommonlib";
 import PageTitleBar from "../components/PageTitleBar";
 import {
   MACFieldsetCard,
@@ -39,10 +46,7 @@ function StateUserSignup() {
 
 function CMSSignup() {
   const { isLoggedInAsDeveloper, userRole, userStatus } = useAppContext() ?? {};
-  const [, onClickCMS] = useSignupCallback(
-    USER_ROLE.CMS_ROLE_APPROVER,
-    ignoreEventPayload
-  );
+  const roleAccess = getUserRoleObj(USER_ROLE.CMS_ROLE_APPROVER);
 
   const CMS_CHOICES = [
     isLoggedInAsDeveloper &&
@@ -50,16 +54,19 @@ function CMSSignup() {
         !activeOrPending.has(userStatus!)) && {
         title: "CMS Reviewer",
         description: "Responsible for reviewing packages",
-        linkTo: "signup/cmsreviewer",
+        linkTo: "/signup/cmsreviewer",
       },
     (userRole !== USER_ROLE.CMS_ROLE_APPROVER ||
       !activeOrPending.has(userStatus!)) && {
       title: "CMS Role Approver",
       description:
         "Responsible for managing CMS Reviewers and State System Admins",
-      linkTo: "/usermanagement",
-      // TODO: Still needs to be tested/refactored
-      onclick: onClickCMS,
+      linkTo: roleAccess.canAccessDashboard
+        ? ONEMAC_ROUTES.PACKAGE_LIST
+        : ROUTES.USER_MANAGEMENT,
+      state: {
+        passCode: RESPONSE_CODE.CMS_ROLE_APPROVER_USER_SUBMITTED,
+      },
     },
   ].filter(Boolean);
   return (
