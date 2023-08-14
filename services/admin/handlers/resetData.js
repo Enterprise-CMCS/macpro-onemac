@@ -416,19 +416,28 @@ export const main = async (event) => {
     })
   );
 
-  await Promise.all(
+  const snapshotResult = await Promise.all(
     snapshotIds.map(async (id) => {
       console.log("Checking for id: ", id);
-      const qParams = {
-        TableName: process.env.oneMacTableName,
-        KeyConditionExpression: "pk = :inPk",
-        ExpressionAttributeValues: {
-          ":inPk": id,
-        },
-        ProjectionExpression: "pk,sk",
-      };
+      // const qParams = {
+      //   TableName: process.env.oneMacTableName,
+      //   KeyConditionExpression: "pk = :inPk",
+      //   ExpressionAttributeValues: {
+      //     ":inPk": id,
+      //   },
+      //   ProjectionExpression: "pk,sk",
+      // };
       try {
-        const results = await dynamoDb.query(qParams).promise();
+        const results = await dynamoDb
+          .query({
+            TableName: process.env.oneMacTableName,
+            KeyConditionExpression: "pk = :inPk",
+            ExpressionAttributeValues: {
+              ":inPk": id,
+            },
+            ProjectionExpression: "pk,sk",
+          })
+          .promise();
         console.log("Found these results in One Table: ", results);
         for (const item of results.Items) {
           const [, eventTimestamp] = item.sk.split("#");
@@ -446,6 +455,7 @@ export const main = async (event) => {
       }
     })
   );
+  console.log("the snapshot result is: ", snapshotResult);
 
   await Promise.all(
     promiseItems.map(async (deleteParams) => {
