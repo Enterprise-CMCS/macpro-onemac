@@ -415,70 +415,25 @@ export const main = async (event) => {
       }
     })
   );
+
   await Promise.all(
-    promiseItems.map(async (deleteParams) => {
-      try {
-        console.log(`Delete Params are ${JSON.stringify(deleteParams)}`);
-
-        await dynamoDb.delete(deleteParams).promise();
-      } catch (e) {
-        console.log("delete error: ", e.message);
-      }
-    })
-  );
-  console.log("lambda thinks " + promiseItems.length + " Items are deleted");
-
-  const sspromiseItems = [];
-
-  const testresults = await dynamoDb
-    .query({
-      TableName: process.env.oneMacTableName,
-      KeyConditionExpression: "pk = :inPk",
-      ExpressionAttributeValues: {
-        ":inPk": "MD-23-7650-VM",
-      },
-      ProjectionExpression: "pk,sk",
-    })
-    .promise();
-  console.log("Query on MD-23-7650-VM returns these results: ", testresults);
-  for (const item of testresults.Items) {
-    const [, eventTimestamp] = item.sk.split("#");
-    if (eventTimestamp > 1676384054014)
-      sspromiseItems.push({
-        TableName: process.env.oneMacTableName,
-        Key: {
-          pk: item.pk,
-          sk: item.sk,
-        },
-      });
-  }
-  const snapshotResult = await Promise.all(
     snapshotIds.map(async (id) => {
       console.log("Checking for id: ", id);
-      // const qParams = {
-      //   TableName: process.env.oneMacTableName,
-      //   KeyConditionExpression: "pk = :inPk",
-      //   ExpressionAttributeValues: {
-      //     ":inPk": id,
-      //   },
-      //   ProjectionExpression: "pk,sk",
-      // };
+      const qParams = {
+        TableName: process.env.oneMacTableName,
+        KeyConditionExpression: "pk = :inPk",
+        ExpressionAttributeValues: {
+          ":inPk": id,
+        },
+        ProjectionExpression: "pk,sk",
+      };
       try {
-        const results = await dynamoDb
-          .query({
-            TableName: process.env.oneMacTableName,
-            KeyConditionExpression: "pk = :inPk",
-            ExpressionAttributeValues: {
-              ":inPk": id,
-            },
-            ProjectionExpression: "pk,sk",
-          })
-          .promise();
+        const results = await dynamoDb.query(qParams).promise();
         console.log("Found these results in One Table: ", results);
         for (const item of results.Items) {
           const [, eventTimestamp] = item.sk.split("#");
           if (eventTimestamp > 1676384054014)
-            sspromiseItems.push({
+            promiseItems.push({
               TableName: process.env.oneMacTableName,
               Key: {
                 pk: item.pk,
@@ -489,14 +444,11 @@ export const main = async (event) => {
       } catch (e) {
         console.log("query error: ", e.message);
       }
-      return Promise.resolve(id + " queried");
     })
   );
-  console.log("the snapshot result is: ", snapshotResult);
-  console.log("and the promises are: ", sspromiseItems);
 
   await Promise.all(
-    sspromiseItems.map(async (deleteParams) => {
+    promiseItems.map(async (deleteParams) => {
       try {
         console.log(`Delete Params are ${JSON.stringify(deleteParams)}`);
 
