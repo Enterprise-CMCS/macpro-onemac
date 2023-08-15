@@ -10,7 +10,7 @@ export type MACCardProps = PropsWithChildren<{
   childContainerClassName?: string;
   withBorder?: boolean;
 }>;
-export type MACFieldsetOption = Omit<MACCardProps, "children"> & {
+export type MACFieldsetOption = Pick<MACCardProps, "title" | "description"> & {
   linkTo: string;
   state?: any;
   strongText?: string;
