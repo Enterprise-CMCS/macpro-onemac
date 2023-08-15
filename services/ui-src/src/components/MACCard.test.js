@@ -15,7 +15,7 @@ describe("MACCard Component System", () => {
   describe("MACCardWrapper", () => {
     beforeEach(() =>
       render(
-        <MACCardWrapper withGradientBar>
+        <MACCardWrapper>
           <p>test</p>
         </MACCardWrapper>
       )
@@ -56,13 +56,10 @@ describe("MACCard Component System", () => {
     describe("with props", () => {
       beforeEach(() => {
         render(
-          <MACCard withGradientBar={false}>
+          <MACCard>
             <div>Test content</div>
           </MACCard>
         );
-      });
-      test("does not show gradient", () => {
-        expect(screen.queryByTestId("gradient-top")).toBe(null);
       });
       test("does not have title", () => {
         expect(screen.queryByTestId("mac-card-title")).toBe(null);

@@ -8,7 +8,6 @@ export type MACCardProps = PropsWithChildren<{
   title?: string;
   description?: string;
   childContainerClassName?: string;
-  withGradientBar?: boolean;
   withBorder?: boolean;
 }>;
 export type MACFieldsetOption = Omit<MACCardProps, "children"> & {
@@ -32,14 +31,11 @@ export type MACCardListProps = PropsWithChildren<{
 export const MACCardWrapper = ({
   children,
   childContainerClassName,
-  withGradientBar,
   withBorder,
 }: PropsWithChildren<Omit<MACCardProps, "title" | "description">>) => {
   return (
     <div className={`mac-card-wrapper`}>
-      {withGradientBar && (
-        <div data-testid="gradient-top" className="mac-card-gradient-top" />
-      )}
+      <div data-testid="gradient-top" className="mac-card-gradient-top" />
       {children && (
         <div
           className={`${
@@ -66,13 +62,11 @@ export const MACCardTitle = ({ title }: Pick<MACCardProps, "title">) => {
 export const MACCard = ({
   title,
   children,
-  withGradientBar = true,
   withBorder = true,
   childContainerClassName,
 }: MACCardProps) => {
   return (
     <MACCardWrapper
-      withGradientBar={withGradientBar}
       withBorder={withBorder}
       childContainerClassName={`mac-default-card-children ${childContainerClassName}`}
     >
@@ -109,7 +103,7 @@ export const MACFieldsetCardOption = ({
   strongText,
 }: MACFieldsetOption) => {
   const Option = () => (
-    <MACCardWrapper childContainerClassName={"mac-triage-card-display"}>
+    <div className={"mac-triage-card-display"}>
       <div>
         {title && <MACCardTitle title={title} />}
         {description && <p id="description">{description}</p>}
@@ -120,7 +114,7 @@ export const MACFieldsetCardOption = ({
         icon={faChevronRight}
         className="choice-item-arrow"
       />
-    </MACCardWrapper>
+    </div>
   );
   return (
     <label className="mac-triage-link">
@@ -165,10 +159,7 @@ export const MACRemovableCard = ({
   children,
 }: MACRemovableCardProps) => {
   return (
-    <MACCardWrapper
-      withGradientBar={true}
-      childContainerClassName="mac-card-removable-wrapper"
-    >
+    <MACCardWrapper childContainerClassName="mac-card-removable-wrapper">
       <div>
         {title && <MACCardTitle title={title} />}
         {!isReadOnly && hasRoleAccess && renderIf && (
