@@ -1,7 +1,11 @@
 import Joi from "joi";
 import handler from "../libs/handler-lib";
 import { submitAny } from "./submitAny";
-import { defaultFormConfig, defaultWaiverSchema } from "./defaultFormConfig";
+import {
+  defaultFormConfig,
+  defaultWaiverSchema,
+  waiverActionText,
+} from "./defaultFormConfig";
 import { waiverRenewalB4, waiverRenewalB } from "cmscommonlib";
 import { waiverAuthorityB4, waiverAuthorityB } from "cmscommonlib";
 
@@ -11,6 +15,7 @@ const waiverRenewalFormConfig = {
     ...defaultWaiverSchema,
     parentId: Joi.string().required(),
   },
+  closingRemarks: waiverActionText,
 };
 
 export const waiverRenewalB4FormConifg = {

@@ -67,6 +67,7 @@ export const buildAnyPackage = async (packageId, config) => {
         description: emptyField,
         cpocName: emptyField,
         reviewTeam: [],
+        reviewTeamEmailList: [],
         adminChanges: [],
       },
     };
@@ -191,16 +192,29 @@ export const buildAnyPackage = async (packageId, config) => {
           ).filter(Boolean)[0];
           console.log("the lead analsyt is: ", leadAnalyst);
 
-          if (leadAnalyst)
+          if (leadAnalyst) {
             putParams.Item.cpocName = `${leadAnalyst.FIRST_NAME} ${leadAnalyst.LAST_NAME}`;
+            putParams.Item.cpocEmail = `"${leadAnalyst.LAST_NAME}, ${leadAnalyst.FIRST_NAME} (CPOC)" <${leadAnalyst.EMAIL}>`;
+          }
         }
 
         if (anEvent.ACTION_OFFICERS && _.isArray(anEvent.ACTION_OFFICERS)) {
-          putParams.Item.reviewTeam = anEvent.ACTION_OFFICERS.map(
-            (oneReviewer) =>
+          putParams.Item.reviewTeam = [];
+          putParams.Item.reviewTeamEmailList = [];
+          anEvent.ACTION_OFFICERS.forEach((oneReviewer) => {
+            putParams.Item.reviewTeam.push(
               `${oneReviewer.FIRST_NAME} ${oneReviewer.LAST_NAME}`
-          );
+            );
+            if (oneReviewer.EMAIL)
+              putParams.Item.reviewTeamEmailList.push(
+                `"${oneReviewer.LAST_NAME}, ${oneReviewer.FIRST_NAME} (SRT)" <${oneReviewer.EMAIL}>`
+              );
+          });
           console.log("the review team is: ", putParams.Item.reviewTeam);
+          console.log(
+            "the review team email list is: ",
+            putParams.Item.reviewTeamEmailList
+          );
         }
 
         let approvedEffectiveDate = emptyField;

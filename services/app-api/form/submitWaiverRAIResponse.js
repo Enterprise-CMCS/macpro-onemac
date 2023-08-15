@@ -6,6 +6,7 @@ import {
   defaultFormConfig,
   defaultParentId,
   defaultParentType,
+  waiverRAIText,
 } from "./defaultFormConfig";
 
 export const waiverRAIResponseFormConfig = {
@@ -15,6 +16,7 @@ export const waiverRAIResponseFormConfig = {
     parentId: defaultParentId,
     parentType: defaultParentType,
   },
+  closingRemarks: waiverRAIText,
 };
 
 export const main = handler(async (event) =>
