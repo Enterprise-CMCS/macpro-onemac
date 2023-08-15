@@ -128,9 +128,7 @@ export const MACFieldsetCardOption = ({
     </label>
   );
 };
-/** Feed in options, get a vertical list of MACFieldsetCardOptions back.
- * TODO: Better types for props; this was refactored from a javascript
- *  portion of the codebase. */
+/** Feed in options, get a vertical list of MACFieldsetCardOptions back. */
 export const MACFieldsetOptionsList = ({
   choices,
 }: {
