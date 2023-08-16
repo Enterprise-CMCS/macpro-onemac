@@ -7,10 +7,10 @@ export const medicaidSPASubsequentSubmission = {
   allowMultiplesWithSameId: true,
   requiredAttachments: [],
   optionalAttachments: [
-    ...medicaidSPA.requiredAttachments.filter(
+    ...medicaidSPA.requiredAttachments,
+    ...medicaidSPA.optionalAttachments.filter(
       (attachment) => attachment !== "Cover Letter"
     ),
-    ...medicaidSPA.optionalAttachments,
   ],
   allowedParentTypes: ["medicaidspa"],
   allowedParentStatuses: ["Under Review"],

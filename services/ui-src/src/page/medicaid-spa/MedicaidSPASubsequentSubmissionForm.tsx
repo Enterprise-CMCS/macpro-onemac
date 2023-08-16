@@ -25,7 +25,7 @@ export const medicaidSPASubsequentSubmissionFormInfo: OneMACFormConfig = {
   validateParentAPI: "validateParentOfMedicaidSpa",
   introJSX: defaultSubsequentSubmissionIntroJSX,
   attachmentIntroJSX: defaultAttachmentInstructionsJSX(
-    ROUTES.FAQ_ATTACHMENTS_MED_SPA_RAI
+    ROUTES.FAQ_ATTACHMENTS_MED_SPA
   ),
   attachmentsTitle: "Subsequent Medicaid SPA Documents",
   addlInfoRequired: true,
