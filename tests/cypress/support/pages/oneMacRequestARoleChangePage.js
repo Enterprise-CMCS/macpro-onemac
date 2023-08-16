@@ -4,11 +4,11 @@ const modal = "#react-aria-modal-dialog";
 
 //These elements are xpath and use cy.xpath instead of cy.get
 const selectTheRoleText =
-  "//div[contains(text(),'Select the role for which you are registering.')]";
+  "//legend[contains(text(),'Select the role for which you are registering.')]";
 const stateSubmitterRoleBtn =
-  "//a[@href='/state']//div[contains(text(),'State Submitter')]";
+  "//a[@href='/signup/state']//div[contains(text(),'State Submitter')]";
 const SSARoleBtn =
-  "//a[@href='/state']//div[contains(text(),'State System Admin')]";
+  "//a[@href='/signup/state']//div[contains(text(),'State System Admin')]";
 const userRoleHeader = "//div[@class='signup-headings']//p[@class='user-role']";
 const errorMsg = "//div[@class='multi-select-error-message']";
 const submitBtn = "//button[contains(text(),'Submit')]";

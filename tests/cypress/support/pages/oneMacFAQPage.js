@@ -5,13 +5,14 @@ const generalHeader = '//h2[contains(text(),"General")]';
 const statePlanAmendmentSPAHeader =
   '//h2[contains(text(),"State Plan Amendments (SPAs)")]';
 const waiversHeader = '//h2[contains(text(),"Waivers")]';
-const oneMacHelpDeskContactInfoHeader =
-  '//h2[contains(text(),"OneMAC Help Desk Contact Info")]';
-const phoneNumber = '//dt[contains(text(),"Phone Number")]';
-const actualPhoneNumber = '//a[contains(text(),"(833) 228-2540")]';
-const email = '//dt[contains(text(),"Email")]';
+const oneMacHelpDeskContactInfoHeader = "#contact-card";
+const phoneNumber =
+  '//*[@id="contact-card"]//dt[contains(text(),"Phone Number")]';
+const actualPhoneNumber =
+  '//*[@id="contact-card"]//a[contains(text(),"(833) 228-2540")]';
+const email = '//*[@id="contact-card"]//dt[contains(text(),"Email")]';
 const actualEmail =
-  "//*[@id='faq-contact-info-box']//a[@href='mailto:OneMAC_Helpdesk@cms.hhs.gov']";
+  "//*[@id='contact-card']//a[@href='mailto:OneMAC_Helpdesk@cms.hhs.gov']";
 //General Section
 const whatBrowsersHeaderBtn = "#browsers-button";
 const whatBrowsersBody = "#browsers";
@@ -104,7 +105,9 @@ export class oneMacFAQPage {
     cy.xpath(waiversHeader).should("be.visible");
   }
   verifyOneMacHelpDeskInfoExists() {
-    cy.xpath(oneMacHelpDeskContactInfoHeader).should("be.visible");
+    cy.get(oneMacHelpDeskContactInfoHeader)
+      .should("be.visible")
+      .and("contain", "OneMAC Help Desk Contact Info");
   }
 
   verifyVerifywhatBrowsersHeaderBtnlinkisdisplayedandclickit() {
@@ -261,7 +264,7 @@ export class oneMacFAQPage {
     cy.get(whatAreTheAttachmentsForAppendixKWaiverValue).should("be.visible");
   }
   verifyPhoneNumberExists() {
-    cy.get(phoneNumber).should("be.visible");
+    cy.xpath(phoneNumber).should("be.visible");
   }
   verifyActualphoneNumberExists() {
     cy.xpath(actualPhoneNumber).should("be.visible");
