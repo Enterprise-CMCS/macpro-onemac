@@ -20,6 +20,7 @@ function getDefaultActions(
     case Workflow.ONEMAC_STATUS.PENDING_APPROVAL:
       if (userRole.canAccessForms)
         actions.push(Workflow.PACKAGE_ACTION.WITHDRAW);
+      actions.push(Workflow.PACKAGE_ACTION.SUBSEQUENT_SUBMISSION);
       break;
     case Workflow.ONEMAC_STATUS.RAI_ISSUED:
       if (userRole.canAccessForms)
@@ -68,7 +69,7 @@ export function getActionsForPackage(
   userRole,
   formSource
 ) {
-  const actions = [];
+  let actions = [];
   switch (packageType) {
     case Workflow.ONEMAC_TYPE.CHIP_SPA:
     case Workflow.ONEMAC_TYPE.MEDICAID_SPA:
@@ -110,6 +111,10 @@ export function getActionsForPackage(
           formSource
         ),
         ...getWaiverExtensionActions(packageStatus, userRole)
+      );
+      //Extensions should remove SUBSEQUENT_SUBMISSION action
+      actions = actions.filter(
+        (action) => action !== Workflow.PACKAGE_ACTION.SUBSEQUENT_SUBMISSION
       );
       break;
   }

@@ -6,9 +6,13 @@ const SUBMIT_API_CALL = {
   [Workflow.ONEMAC_TYPE.CHIP_SPA]: "submitCHIPSPA",
   [Workflow.ONEMAC_TYPE.CHIP_SPA_RAI]: "submitCHIPSPARAIResponse",
   [Workflow.ONEMAC_TYPE.CHIP_SPA_WITHDRAW]: "withdrawCHIPSPA",
+  [Workflow.ONEMAC_TYPE.CHIP_SPA_SUBSEQUENT_SUBMISSION]:
+    "submitChipSPASubsequent",
   [Workflow.ONEMAC_TYPE.MEDICAID_SPA]: "submitMedicaidSPA",
   [Workflow.ONEMAC_TYPE.MEDICAID_SPA_RAI]: "submitMedicaidSPARAIResponse",
   [Workflow.ONEMAC_TYPE.MEDICAID_SPA_WITHDRAW]: "withdrawMedicaidSPA",
+  [Workflow.ONEMAC_TYPE.MEDICAID_SPA_SUBSEQUENT_SUBMISSION]:
+    "submitMedicaidSPASubsequent",
   [Workflow.ONEMAC_TYPE.WAIVER_INITIAL]: "submitInitialWaiver",
   [Workflow.ONEMAC_TYPE.WAIVER_INITIAL_WITHDRAW]: "withdrawInitialWaiver",
   [Workflow.ONEMAC_TYPE.WAIVER_RENEWAL]: "submitWaiverRenewal",
@@ -22,6 +26,14 @@ const SUBMIT_API_CALL = {
   [Workflow.ONEMAC_TYPE.WAIVER_RAI]: "submitWaiverRAIResponse",
   [Workflow.ONEMAC_TYPE.ENABLE_RAI_WITHDRAW]: "enableRaiWithdraw",
   [Workflow.ONEMAC_TYPE.RAI_RESPONSE_WITHDRAW]: "withdrawRAIResponse",
+  [Workflow.ONEMAC_TYPE.WAIVER_INITIAL_SUBSEQUENT_SUBMISSION]:
+    "submitInitialWaiverSubsequent",
+  [Workflow.ONEMAC_TYPE.WAIVER_RENEWAL_SUBSEQUENT_SUBMISSION]:
+    "submitWaiverRenewalSubsequent",
+  [Workflow.ONEMAC_TYPE.WAIVER_AMENDMENT_SUBSEQUENT_SUBMISSION]:
+    "submitWaiverAmendmentSubsequent",
+  [Workflow.ONEMAC_TYPE.WAIVER_APP_K_SUBSEQUENT_SUBMISSION]:
+    "submitWaiverAppKSubsequent",
 };
 
 /**

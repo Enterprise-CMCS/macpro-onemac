@@ -540,7 +540,10 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
                 requiredUploads={formConfig.requiredAttachments}
                 optionalUploads={formConfig.optionalAttachments}
                 numRequired={
-                  formConfig.requireUploadOrAdditionalInformation ? 1 : 0
+                  formConfig.requireUploadOrAdditionalInformation ||
+                  formConfig.atLeastOneAttachmentRequired
+                    ? 1
+                    : 0
                 }
                 readyCallback={setAreUploadsReady}
               ></FileUploader>
