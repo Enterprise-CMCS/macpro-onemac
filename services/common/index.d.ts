@@ -1,5 +1,3 @@
-import { fr } from "date-fns/locale";
-
 export const RESPONSE_CODE: Record<string, string>;
 export const FORM_SUCCESS_RESPONSE_CODES: string[];
 export {
