@@ -10,10 +10,13 @@ import {
   initialWaiverBSubsequentSubmission,
   waiverAuthorityB,
   waiverAuthorityB4,
+  RESPONSE_CODE,
 } from "cmscommonlib";
 
 export const initialWaiverSubsequentSubmissionFormConfig = {
   ...defaultFormConfig,
+  successResponseCode:
+    RESPONSE_CODE.SUCCESSFULLY_SUBMITTED_SUBSEQUENT_SUBMISSION,
   appendToSchema: {
     parentType: defaultParentType,
     waiverAuthority: defaultWaiverAuthoritySchema,

@@ -1,4 +1,4 @@
-import { waiverAppKSubsequentSubmission } from "cmscommonlib";
+import { waiverAppKSubsequentSubmission, RESPONSE_CODE } from "cmscommonlib";
 import handler from "../libs/handler-lib";
 import { submitAny } from "./submitAny";
 import {
@@ -10,6 +10,8 @@ import {
 export const waiverAppKSubsequentSubmissionFormConfig = {
   ...defaultFormConfig,
   ...waiverAppKSubsequentSubmission,
+  successResponseCode:
+    RESPONSE_CODE.SUCCESSFULLY_SUBMITTED_SUBSEQUENT_SUBMISSION,
   appendToSchema: {
     parentType: defaultParentType,
     waiverAuthority: defaultWaiverAuthoritySchema,
