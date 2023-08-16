@@ -14,6 +14,12 @@ const buildParentPackageTypes = [
   Workflow.ONEMAC_TYPE.WAIVER_RAI,
   Workflow.ONEMAC_TYPE.ENABLE_RAI_WITHDRAW,
   Workflow.ONEMAC_TYPE.RAI_RESPONSE_WITHDRAW,
+  Workflow.ONEMAC_TYPE.WAIVER_INITIAL_SUBSEQUENT_SUBMISSION,
+  Workflow.ONEMAC_TYPE.WAIVER_RENEWAL_SUBSEQUENT_SUBMISSION,
+  Workflow.ONEMAC_TYPE.WAIVER_AMENDMENT_SUBSEQUENT_SUBMISSION,
+  Workflow.ONEMAC_TYPE.WAIVER_APP_K_SUBSEQUENT_SUBMISSION,
+  Workflow.ONEMAC_TYPE.MEDICAID_SPA_SUBSEQUENT_SUBMISSION,
+  Workflow.ONEMAC_TYPE.CHIP_SPA_SUBSEQUENT_SUBMISSION,
 ];
 export const main = async (eventBatch) => {
   console.log("One Stream event: ", eventBatch);
@@ -56,6 +62,7 @@ export const main = async (eventBatch) => {
             break;
           case "SEATool": {
             const [, topic] = newEventData.GSI1pk.S.split("#");
+            console.log("%s topic: ", newEventData.GSI1pk.S, topic);
             let actionType;
             console.log("%s ACTIONTYPES: ", inPK, newEventData.ACTIONTYPES);
             if (!newEventData.ACTIONTYPES.NULL)
