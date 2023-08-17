@@ -25,18 +25,18 @@ const viewFAQ = "//a[contains(text(),'View FAQ')]";
 const howToCreateASubmission =
   "//div[contains(text(),'How to create a submission')]";
 //xpath, use cy.xpath
-const loginWithIDM = "//h3[contains(text(),'Login with IDM')]";
+const loginWithIDM = "//h2[contains(text(),'Login with IDM')]";
 //xpath, use cy.xpath
 const loginWithIDMInfo =
   "//p[contains(text(),'Login with your IDM username and password to acces')]";
 //xpath, use cy.xpath
-const AttachYourDocuments = "//h3[contains(text(),'Attach your documents')]";
+const AttachYourDocuments = "//h2[contains(text(),'Attach your documents')]";
 //xpath, use cy.xpath
 const AttachYourDocumentsInfo =
   "//p[contains(text(),'Select a submission type and attach required docum')]";
 //xpath, use cy.xpath
 const receiveAnEmailConformation =
-  "//h3[contains(text(),'Receive an email confirmation')]";
+  "//h2[contains(text(),'Receive an email confirmation')]";
 //xpath, use cy.xpath
 const receiveAnEmailConformationInfo =
   "//p[contains(text(),'After you submit, you will receive an email confir')]";
@@ -69,19 +69,19 @@ const howToReviewASubmission =
   "//div[contains(text(),'How to review a submission')]";
 //xpath, use cy.xpath
 const ReceiveAnEmailForSubmissionNotification =
-  "//h3[contains(text(),'Receive an email for submission notification')]";
+  "//h2[contains(text(),'Receive an email for submission notification')]";
 
 //xpath, use cy.xpath
 const ReceiveAnEmailForSubmissionNotificationInfo =
   "//p[contains(text(),'After a state adds a submission to OneMAC, you wil')]";
 //xpath, use cy.xpath
-const loginWithEUA = "//h3[contains(text(),'Login with EUA')]";
+const loginWithEUA = "//h2[contains(text(),'Login with EUA')]";
 //xpath, use cy.xpath
 const loginWithEUAInfo =
   "//p[contains(text(),'Login with your EUA username and password to acces')]";
 //xpath, use cy.xpath
 const ReviewYourAssignedSubmission =
-  "//h3[contains(text(),'Review your assigned submission')]";
+  "//h2[contains(text(),'Review your assigned submission')]";
 //xpath, use cy.xpath
 const ReviewYourAssignedSubmissionInfo =
   "//p[contains(text(),'Search the submission ID from the email and click ')]";
