@@ -1,9 +1,9 @@
 import React, { FC } from "react";
 import OneMACForm from "../OneMACForm";
 import {
-  defaultAttachmentInstructionsJSX,
   defaultConfirmSubsequentSubmission,
   defaultOneMACFormConfig,
+  defaultSubsequentAttachmentInstructionsJSX,
   defaultSubsequentSubmissionIntroJSX,
   OneMACFormConfig,
 } from "../../libs/formLib";
@@ -22,7 +22,7 @@ export const waiverAppKSubsequentSubmissionFormInfo: OneMACFormConfig = {
   confirmSubmit: defaultConfirmSubsequentSubmission,
   validateParentAPI: "validateParentOfAny",
   introJSX: defaultSubsequentSubmissionIntroJSX,
-  attachmentIntroJSX: defaultAttachmentInstructionsJSX(
+  attachmentIntroJSX: defaultSubsequentAttachmentInstructionsJSX(
     ROUTES.FAQ_ATTACHMENTS_MED_SPA_RAI
   ),
   attachmentsTitle: "Subsequent Waiver Appendix K Documents",

@@ -1,9 +1,9 @@
 import React, { FC } from "react";
 import OneMACForm from "../OneMACForm";
 import {
-  defaultAttachmentInstructionsJSX,
   defaultConfirmSubsequentSubmission,
   defaultOneMACFormConfig,
+  defaultSubsequentAttachmentInstructionsJSX,
   defaultSubsequentSubmissionIntroJSX,
   OneMACFormConfig,
 } from "../../libs/formLib";
@@ -28,7 +28,7 @@ export const waiverRenewalSubsequentSubmissionFormInfo: OneMACFormConfig = {
   confirmSubmit: defaultConfirmSubsequentSubmission,
   validateParentAPI: "validateParentOfWaiverRenewal",
   introJSX: defaultSubsequentSubmissionIntroJSX,
-  attachmentIntroJSX: defaultAttachmentInstructionsJSX(
+  attachmentIntroJSX: defaultSubsequentAttachmentInstructionsJSX(
     ROUTES.FAQ_ATTACHMENTS_WAIVER_B
   ),
   attachmentsTitle: "Subsequent Waiver Renewal Documents",

@@ -86,6 +86,12 @@ export const RequiredAttachmentSpan = () => (
   </p>
 );
 
+export const AtLeastOneAttachmentSpan = () => (
+  <p className="req-message">
+    At least one attachment and additional information is required to submit.
+  </p>
+);
+
 export const defaultAttachmentInstructionsJSX = (
   anchoredFAQRoute: string = ROUTES.FAQ
 ) => (
@@ -93,6 +99,16 @@ export const defaultAttachmentInstructionsJSX = (
     <DefaultFileSizeInfo route={anchoredFAQRoute} />
     <DefaultFileTypesInfo />
     <RequiredAttachmentSpan />
+  </>
+);
+
+export const defaultSubsequentAttachmentInstructionsJSX = (
+  anchoredFAQRoute: string = ROUTES.FAQ
+) => (
+  <>
+    <DefaultFileSizeInfo route={anchoredFAQRoute} />
+    <DefaultFileTypesInfo />
+    <AtLeastOneAttachmentSpan />
   </>
 );
 

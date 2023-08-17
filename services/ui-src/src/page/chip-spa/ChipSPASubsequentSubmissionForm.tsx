@@ -1,9 +1,9 @@
 import React, { FC } from "react";
 import OneMACForm from "../OneMACForm";
 import {
-  defaultAttachmentInstructionsJSX,
   defaultConfirmSubsequentSubmission,
   defaultOneMACFormConfig,
+  defaultSubsequentAttachmentInstructionsJSX,
   defaultSubsequentSubmissionIntroJSX,
   OneMACFormConfig,
 } from "../../libs/formLib";
@@ -20,9 +20,9 @@ export const chipSPASubsequentSubmissionFormInfo: OneMACFormConfig = {
   detailsHeader: "CHIP SPA Subsequent Submission",
   landingPage: ONEMAC_ROUTES.PACKAGE_LIST_SPA,
   confirmSubmit: defaultConfirmSubsequentSubmission,
-  validateParentAPI: "validateParentOfChipSpaWithdraw",
+  validateParentAPI: "validateParentOfAny",
   introJSX: defaultSubsequentSubmissionIntroJSX,
-  attachmentIntroJSX: defaultAttachmentInstructionsJSX(
+  attachmentIntroJSX: defaultSubsequentAttachmentInstructionsJSX(
     ROUTES.FAQ_ATTACHMENTS_CHIP_SPA
   ),
   attachmentsTitle: "Subsequent CHIP SPA Documents",
