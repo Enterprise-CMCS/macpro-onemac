@@ -2027,9 +2027,7 @@ article.form-container {
 }
 
 .access-card-container {
-  &:not(:last-child) {
-    @extend .ds-u-margin-bottom--3;
-  }
+  padding: 0 !important;
 }
 
 .mac-card-removable-wrapper,
@@ -2402,17 +2400,10 @@ article.form-container {
 }
 
 .cms-group-division-section {
-  @extend .ds-u-border-left--1;
-  @extend .ds-u-border-right--1;
   @extend .ds-u-padding--3;
 
   &:nth-child(even) {
     background: rgba(196, 196, 196, 0.1);
-  }
-
-  &:last-child {
-    @extend .ds-u-border-bottom--1;
-    border-radius: 0px 0px 3px 3px;
   }
 }
 

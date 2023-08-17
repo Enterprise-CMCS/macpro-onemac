@@ -137,8 +137,8 @@ export const GroupDivisionDisplay = ({ profileData = {} }) => {
   return (
     <>
       <h2 id="accessHeader">Group & Division</h2>
-      <MACCard withGradientBar>
-        <dl className="access-card-container">
+      <MACCard withGradientBar childContainerClassName="access-card-container">
+        <dl>
           <div className="cms-group-division-section">
             <dt>Group</dt>
             <dd>{groupInfo.group?.name}</dd>
