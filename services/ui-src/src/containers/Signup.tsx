@@ -8,8 +8,6 @@ import {
   USER_ROLE,
   RESPONSE_CODE,
   getUserRoleObj,
-  ONEMAC_ROUTES,
-  ROUTES,
 } from "cmscommonlib";
 import PageTitleBar from "../components/PageTitleBar";
 import {
@@ -46,7 +44,6 @@ function StateUserSignup() {
 
 function CMSSignup() {
   const { isLoggedInAsDeveloper, userRole, userStatus } = useAppContext() ?? {};
-  const roleAccess = getUserRoleObj(USER_ROLE.CMS_ROLE_APPROVER);
   const [, onClickCMS] = useSignupCallback(
     USER_ROLE.CMS_ROLE_APPROVER,
     ignoreEventPayload
