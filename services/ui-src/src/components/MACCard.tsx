@@ -14,6 +14,14 @@ export type MACFieldsetOption = Pick<MACCardProps, "title" | "description"> & {
   linkTo: string;
   state?: any;
   strongText?: string;
+  /** For use ONLY when actions are necessary before navigation.
+   *
+   * We should consider deprecating this pattern as it's only used once,
+   * and these FieldsetOption interfaces are used primarily for triaged
+   * navigation to an end page.
+   *
+   * Current use can be found in {@link CMSSignup} in the CMS_OPTIONS variable
+   * */
   onClick?: () => any;
 };
 export type MACRemovableCardProps = MACCardProps & {
