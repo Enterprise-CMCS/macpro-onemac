@@ -10,7 +10,6 @@ import {
 import {
   ONEMAC_ROUTES,
   ROUTES,
-  TYPE_TO_DETAIL_ROUTE,
   waiverRenewalSubsequentSubmission,
   waiverRenewalB4SubsequentSubmission,
   waiverRenewalBSubsequentSubmission,
@@ -25,9 +24,9 @@ export const waiverRenewalSubsequentSubmissionFormInfo: OneMACFormConfig = {
   ...waiverRenewalSubsequentSubmission,
   pageTitle: "Upload Subsequent Waiver Renewal Documentation",
   detailsHeader: "Waiver Renewal Subsequent Submission",
-  landingPage: ONEMAC_ROUTES.PACKAGE_LIST,
+  landingPage: ONEMAC_ROUTES.PACKAGE_LIST_WAIVER,
   confirmSubmit: defaultConfirmSubsequentSubmission,
-  validateParentAPI: "validateParentOfAny",
+  validateParentAPI: "validateParentOfWaiverRenewal",
   introJSX: defaultSubsequentSubmissionIntroJSX,
   attachmentIntroJSX: defaultAttachmentInstructionsJSX(
     ROUTES.FAQ_ATTACHMENTS_WAIVER_B
@@ -50,10 +49,6 @@ export const waiverRenewalBSubsequentSubmissionFormInfo = {
 const WaiverRenewalSubsequentSubmissionForm: FC = () => {
   let formConfig = waiverRenewalSubsequentSubmissionFormInfo;
   const location = useLocation<FormLocationState>();
-  if (location.state?.componentId && location.state?.parentType)
-    waiverRenewalSubsequentSubmissionFormInfo.landingPage = `${
-      TYPE_TO_DETAIL_ROUTE[location.state.parentType]
-    }/${location.state?.componentId}`;
 
   if (location.state?.waiverAuthority === waiverAuthorityB.value) {
     formConfig = waiverRenewalBSubsequentSubmissionFormInfo;

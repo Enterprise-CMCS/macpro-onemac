@@ -12,15 +12,13 @@ import {
   ROUTES,
   chipSPASubsequentSubmission,
 } from "cmscommonlib";
-import { FormLocationState } from "../../domain-types";
-import { useLocation } from "react-router-dom";
 
 export const chipSPASubsequentSubmissionFormInfo: OneMACFormConfig = {
   ...defaultOneMACFormConfig,
   ...chipSPASubsequentSubmission,
   pageTitle: "Upload Subsequent CHIP SPA Documentation",
   detailsHeader: "CHIP SPA Subsequent Submission",
-  landingPage: ONEMAC_ROUTES.PACKAGE_LIST,
+  landingPage: ONEMAC_ROUTES.PACKAGE_LIST_SPA,
   confirmSubmit: defaultConfirmSubsequentSubmission,
   validateParentAPI: "validateParentOfChipSpaWithdraw",
   introJSX: defaultSubsequentSubmissionIntroJSX,
@@ -33,9 +31,6 @@ export const chipSPASubsequentSubmissionFormInfo: OneMACFormConfig = {
 };
 
 const ChipSPASubsequentSubmissionForm: FC = () => {
-  const location = useLocation<FormLocationState>();
-  if (location.state?.componentId)
-    chipSPASubsequentSubmissionFormInfo.landingPage = `${ONEMAC_ROUTES.MEDICAID_SPA_DETAIL}/${location.state?.componentId}`;
   return <OneMACForm formConfig={chipSPASubsequentSubmissionFormInfo} />;
 };
 

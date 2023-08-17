@@ -113,15 +113,18 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
     location: Location<FormLocationState>,
     formConfig: OneMACFormConfig
   ) {
+    console.log("state", location.state);
     if (
       location.state?.parentId &&
       location.state?.parentType &&
       location.state?.formSource === FORM_SOURCE.DETAIL
     ) {
+      console.log("detail landing page");
       return `${TYPE_TO_DETAIL_ROUTE[location.state?.parentType]}/${
         location.state?.parentId
       }`;
     }
+    console.log("form landing page");
     return formConfig.landingPage;
   }
 

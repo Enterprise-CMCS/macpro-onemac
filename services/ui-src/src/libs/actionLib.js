@@ -27,7 +27,10 @@ export const actionComponent = {
   [Workflow.PACKAGE_ACTION.ENABLE_RAI_WITHDRAWAL]: (theComponent) => (
     <EnableWithdraw theComponent={theComponent} />
   ),
-  [Workflow.PACKAGE_ACTION.SUBSEQUENT_SUBMISSION]: (theComponent) => (
-    <SubsequentSubmission theComponent={theComponent} />
+  [Workflow.PACKAGE_ACTION.SUBSEQUENT_SUBMISSION]: (
+    theComponent,
+    formSource
+  ) => (
+    <SubsequentSubmission theComponent={theComponent} formSource={formSource} />
   ),
 };

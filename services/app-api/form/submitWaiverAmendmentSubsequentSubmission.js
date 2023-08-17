@@ -25,12 +25,12 @@ export const waiverAmendmentSubsequentSubmissionFormConfig = {
   },
 };
 
-export const waiverAmendmentB4FormConifg = {
+export const waiverAmendmentB4SubsequentFormConifg = {
   ...waiverAmendmentSubsequentSubmissionFormConfig,
   ...waiverAmendmentB4SubsequentSubmission,
 };
 
-export const waiverAmendmentBFormConifg = {
+export const waiverAmendmentBSubsequentFormConifg = {
   ...waiverAmendmentSubsequentSubmissionFormConfig,
   ...waiverAmendmentBSubsequentSubmission,
 };
@@ -45,9 +45,9 @@ export const main = handler(async (event) => {
   }
 
   if (data.waiverAuthority === waiverAuthorityB4.value) {
-    formConfig = waiverAmendmentB4FormConifg;
+    formConfig = waiverAmendmentB4SubsequentFormConifg;
   } else if (data.waiverAuthority === waiverAuthorityB.value) {
-    formConfig = waiverAmendmentBFormConifg;
+    formConfig = waiverAmendmentBSubsequentFormConifg;
   } else {
     throw new Error("Waiver Authority not found");
   }

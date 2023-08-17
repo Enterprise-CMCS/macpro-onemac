@@ -23,12 +23,12 @@ export const initialWaiverSubsequentSubmissionFormConfig = {
   },
 };
 
-export const initialWaiverB4FormConifg = {
+export const initialWaiverB4SubsequentFormConifg = {
   ...initialWaiverSubsequentSubmissionFormConfig,
   ...initialWaiverB4SubsequentSubmission,
 };
 
-export const intialWaiverBFormConifg = {
+export const intialWaiverBSubsequentFormConifg = {
   ...initialWaiverSubsequentSubmissionFormConfig,
   ...initialWaiverBSubsequentSubmission,
 };
@@ -43,9 +43,9 @@ export const main = handler(async (event) => {
   }
 
   if (data.waiverAuthority === waiverAuthorityB4.value) {
-    formConfig = initialWaiverB4FormConifg;
+    formConfig = initialWaiverB4SubsequentFormConifg;
   } else if (data.waiverAuthority === waiverAuthorityB.value) {
-    formConfig = intialWaiverBFormConifg;
+    formConfig = intialWaiverBSubsequentFormConifg;
   } else {
     throw new Error("Waiver Authority not found");
   }

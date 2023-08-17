@@ -10,7 +10,6 @@ import {
 import {
   ONEMAC_ROUTES,
   ROUTES,
-  TYPE_TO_DETAIL_ROUTE,
   initialWaiverSubsequentSubmission,
   initialWaiverB4SubsequentSubmission,
   initialWaiverBSubsequentSubmission,
@@ -25,7 +24,7 @@ export const initialWaiverSubsequentSubmissionFormInfo: OneMACFormConfig = {
   ...initialWaiverSubsequentSubmission,
   pageTitle: "Upload Subsequent Waiver Documentation",
   detailsHeader: "Initial Waiver Subsequent Submission",
-  landingPage: ONEMAC_ROUTES.PACKAGE_LIST,
+  landingPage: ONEMAC_ROUTES.PACKAGE_LIST_WAIVER,
   confirmSubmit: defaultConfirmSubsequentSubmission,
   validateParentAPI: "validateParentOfAny",
   introJSX: defaultSubsequentSubmissionIntroJSX,
@@ -50,11 +49,6 @@ export const initialWaiverBSubsequentSubmissionFormInfo = {
 const InitialWaiverSubsequentSubmissionForm: FC = () => {
   let formConfig = initialWaiverSubsequentSubmissionFormInfo;
   const location = useLocation<FormLocationState>();
-  if (location.state?.componentId && location.state?.parentType) {
-    initialWaiverSubsequentSubmissionFormInfo.landingPage = `${
-      TYPE_TO_DETAIL_ROUTE[location.state.parentType]
-    }/${location.state?.componentId}`;
-  }
 
   if (location.state?.waiverAuthority === waiverAuthorityB.value) {
     formConfig = initialWaiverBSubsequentSubmissionFormInfo;

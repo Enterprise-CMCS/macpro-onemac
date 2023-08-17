@@ -21,7 +21,7 @@ const submissionLink = {
     ONEMAC_ROUTES.WAIVER_APP_K_SUBSEQUENT_SUBMSISSION,
 };
 
-export default function SubsequentSubmission({ theComponent }) {
+export default function SubsequentSubmission({ theComponent, formSource }) {
   return (
     <Link
       key={`popup-action-${theComponent.componentId}`}
@@ -29,8 +29,10 @@ export default function SubsequentSubmission({ theComponent }) {
         pathname: submissionLink[theComponent.componentType],
         state: {
           componentId: theComponent.componentId,
+          parentId: theComponent.componentId,
           parentType: theComponent.componentType,
           waiverAuthority: theComponent.waiverAuthority,
+          formSource: formSource,
         },
       }}
       id={"subsequent-submission-action-" + theComponent.componentId}
