@@ -111,7 +111,7 @@ const renderSubmissionSteps = (submissionsList) => {
         <div className={verticalLineClass} />
       </div>
       <div className="subtitle-and-text">
-        <h3>{subTitle}</h3>
+        <h2>{subTitle}</h2>
         <p className="text">{text}</p>
       </div>
     </div>

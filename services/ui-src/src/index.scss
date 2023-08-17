@@ -1892,7 +1892,7 @@ article.form-container {
     @extend .ds-u-padding-right--2;
     gap: 1rem;
 
-    h3 {
+    h2 {
       @include title-font(18px, 24px, 700);
       margin-top: 0;
       color: $color-gray;
