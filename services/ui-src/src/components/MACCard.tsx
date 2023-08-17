@@ -116,8 +116,8 @@ export const MACFieldsetCardOption = ({
     <div className={"mac-triage-card-display"}>
       <div>
         {title && <MACCardTitle title={title} />}
-        {description && <p id="description">{description}</p>}
-        {strongText && <p id="strong">{strongText}</p>}
+        {description && <p className="card-description">{description}</p>}
+        {strongText && <p className="card-strong-text">{strongText}</p>}
       </div>
       <FontAwesomeIcon
         data-testid="chevron-right"

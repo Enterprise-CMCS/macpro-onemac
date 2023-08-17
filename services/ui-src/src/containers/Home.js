@@ -106,11 +106,11 @@ const renderSubmissionSteps = (submissionsList) => {
    * in cms-ux-lib */
   const Step = ({ subTitle, text, icon, verticalLineClass }) => (
     <div className="home-content-card-step">
-      <div id="icon-and-line">
+      <div className="icon-and-line">
         <img src={`/assets/images/icons/${icon}.svg`} alt={subTitle} />
         <div className={verticalLineClass} />
       </div>
-      <div id="subtitle-and-text">
+      <div className="subtitle-and-text">
         <h3>{subTitle}</h3>
         <p className="text">{text}</p>
       </div>
