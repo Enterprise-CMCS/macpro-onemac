@@ -428,8 +428,6 @@ jobs:
             spaTypePage,
             submissionType,
             PackageWaiverActionTypePage,
-            PackageSubmissionType,
-            PackageSpaTypePage,
             PackageRequestTempExtentionPage,
             PackageMedicaidSpaPage,
             PackageCHIPSPAPage,
