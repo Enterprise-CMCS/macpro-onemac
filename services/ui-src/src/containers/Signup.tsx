@@ -3,12 +3,7 @@ import { Redirect } from "react-router-dom";
 
 import { useAppContext } from "../libs/contextLib";
 import { useSignupCallback } from "../libs/hooksLib";
-import {
-  USER_STATUS,
-  USER_ROLE,
-  RESPONSE_CODE,
-  getUserRoleObj,
-} from "cmscommonlib";
+import { USER_STATUS, USER_ROLE, RESPONSE_CODE } from "cmscommonlib";
 import PageTitleBar from "../components/PageTitleBar";
 import {
   MACFieldsetCard,
