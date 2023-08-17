@@ -47,6 +47,10 @@ function StateUserSignup() {
 function CMSSignup() {
   const { isLoggedInAsDeveloper, userRole, userStatus } = useAppContext() ?? {};
   const roleAccess = getUserRoleObj(USER_ROLE.CMS_ROLE_APPROVER);
+  const [, onClickCMS] = useSignupCallback(
+    USER_ROLE.CMS_ROLE_APPROVER,
+    ignoreEventPayload
+  );
 
   const CMS_CHOICES = [
     isLoggedInAsDeveloper &&
@@ -61,12 +65,8 @@ function CMSSignup() {
       title: "CMS Role Approver",
       description:
         "Responsible for managing CMS Reviewers and State System Admins",
-      linkTo: roleAccess.canAccessDashboard
-        ? ONEMAC_ROUTES.PACKAGE_LIST
-        : ROUTES.USER_MANAGEMENT,
-      state: {
-        passCode: RESPONSE_CODE.CMS_ROLE_APPROVER_USER_SUBMITTED,
-      },
+      linkTo: "/usermanagement",
+      onClick: onClickCMS,
     },
   ].filter(Boolean);
   return (

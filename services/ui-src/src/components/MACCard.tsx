@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from "react";
+import React, { PropsWithChildren, useMemo } from "react";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
@@ -14,6 +14,7 @@ export type MACFieldsetOption = Pick<MACCardProps, "title" | "description"> & {
   linkTo: string;
   state?: any;
   strongText?: string;
+  onClick?: () => any;
 };
 export type MACRemovableCardProps = MACCardProps & {
   onClick: () => any;
@@ -101,6 +102,7 @@ export const MACFieldsetCardOption = ({
   linkTo,
   state,
   strongText,
+  onClick,
 }: MACFieldsetOption) => {
   const Option = () => (
     <div className={"mac-triage-card-display"}>
@@ -117,7 +119,7 @@ export const MACFieldsetCardOption = ({
     </div>
   );
   return (
-    <label className="mac-triage-link">
+    <label className="mac-triage-link" onClick={onClick}>
       <Link
         data-testid="link-wrapper"
         to={{ pathname: linkTo, state: state }}
