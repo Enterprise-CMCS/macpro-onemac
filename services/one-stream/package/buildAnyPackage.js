@@ -69,6 +69,7 @@ export const buildAnyPackage = async (packageId, config) => {
         reviewTeam: [],
         reviewTeamEmailList: [],
         adminChanges: [],
+        lastActivityTimestamp: 0,
       },
     };
     let currentPackage;
@@ -107,6 +108,9 @@ export const buildAnyPackage = async (packageId, config) => {
         if (anEvent?.currentStatus === Workflow.ONEMAC_STATUS.INACTIVATED)
           return;
         showPackageOnDashboard = true;
+
+        if (anEvent.eventTimestamp > putParams.Item.lastActivityTimestamp)
+          putParams.Item.lastActivityTimestamp = anEvent.eventTimestamp;
 
         if (anEvent?.componentType)
           if (anEvent?.adminChanges && _.isArray(anEvent.adminChanges))
