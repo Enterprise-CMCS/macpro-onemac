@@ -67,6 +67,17 @@ $color-primary-alt-lightest: #f0fafe;
     font-weight: bold;
   }
 
+  .status-bandage {
+    margin: 0;
+    // the min and max allow for minor growing/shrinking
+    // to condense the width of the column when scaled down
+    // At full screen, the extra 25px lets the status breathe
+    max-width: 200px;
+    min-width: 175px;
+    // Responsible for wrapping any column
+    white-space: normal;
+  }
+
   .type-badge {
     @extend .ds-c-badge;
     font-weight: 600;
@@ -1033,6 +1044,7 @@ article.form-container {
 .submissions-table,
 .package-table {
   @include custom-table;
+  table-layout: auto;
 
   @media only screen and (max-width: 1199px) {
     td .type-badge {

@@ -4,6 +4,7 @@ import { submitAny } from "./submitAny";
 import {
   defaultFormConfig,
   defaultProposedEffectiveDateSchema,
+  medicaidSpaText,
 } from "./defaultFormConfig";
 
 export const medicaidSPAFormConfig = {
@@ -12,6 +13,7 @@ export const medicaidSPAFormConfig = {
   appendToSchema: {
     proposedEffectiveDate: defaultProposedEffectiveDateSchema,
   },
+  closingRemarks: medicaidSpaText,
 };
 
 export const main = handler(async (event) =>
