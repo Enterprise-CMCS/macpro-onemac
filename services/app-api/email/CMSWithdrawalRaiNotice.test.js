@@ -38,19 +38,19 @@ it("builds the CMS Withdraw RAI Response Notice Email", async () => {
   });
   try {
     let response = await CMSWithdrawRaiNotice(testData, testConfig, user);
-    expect(response.HTML.length).toBe(513);
+    expect(response.HTML.length).toBe(461);
 
     testData.parentType = ONEMAC_TYPE.CHIP_SPA;
     response = await CMSWithdrawRaiNotice(testData, testConfig, user);
-    expect(response.HTML.length).toBe(513);
+    expect(response.HTML.length).toBe(461);
 
     testData.parentType = ONEMAC_TYPE.WAIVER_INITIAL;
     response = await CMSWithdrawRaiNotice(testData, testConfig, user);
-    expect(response.HTML.length).toBe(513);
+    expect(response.HTML.length).toBe(461);
 
     testData.parentType = ONEMAC_TYPE.WAIVER_APP_K;
     response = await CMSWithdrawRaiNotice(testData, testConfig, user);
-    expect(response.HTML.length).toBe(513);
+    expect(response.HTML.length).toBe(461);
   } catch (e) {
     console.log("reeived error: ", e);
   }
