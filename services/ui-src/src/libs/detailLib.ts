@@ -31,7 +31,7 @@ export const submissionIdDefault: AttributeDetail = {
 export const latestActivityDefault: AttributeDetail = {
   heading: "Latest Package Activity",
   fieldName: "lastActivityNice",
-  default: null,
+  default: "-- --",
 };
 export const submissionDateDefault: AttributeDetail = {
   heading: "Initial Submission Date",
