@@ -577,14 +577,11 @@ Then("type in invalid Waiver Number", () => {
   OneMacSubmitNewWaiverActionPage.inputWaiverNumber("MD.123456");
 });
 
-Then("Click on Request Temporary Extension", () => {
-  OneMacSubmissionTypePage.clickRequestTemporaryExtension();
-});
 Then("Click the Request Extension button", () => {
   OneMacSubmissionTypePage.clickRequestExtensionBtn();
 });
 Then("Click on Request Temporary Extension in Package dashboard", () => {
-  OneMacSubmissionTypePage.clickRequestTemporaryExtensionPkgView();
+  OneMacSubmissionTypePage.clickRequestTemporaryExtension();
 });
 
 Then(
@@ -1095,7 +1092,7 @@ Then("Verify OneMAC Help Desk Contact Info Section Exists", () => {
   OneMacFAQPage.verifyOneMacHelpDeskInfoExists();
 });
 Then("Verify Phone Number Exists", () => {
-  OneMacFAQPage.verifyOneMacHelpDeskInfoExists();
+  OneMacFAQPage.verifyPhoneNumberExists();
 });
 Then("Verify actual Phone Number Exists", () => {
   OneMacFAQPage.verifyActualphoneNumberExists();
@@ -1243,9 +1240,6 @@ Then("Review your assigned submission exists", () => {
 });
 Then("Review your assigned submission information exists", () => {
   OneMacHomePage.verifyReviewYourAssignedSubmissionInfoExists();
-});
-Then("Submission Types include exists", () => {
-  OneMacHomePage.verifyCMSUSERSsubmissionTypesIncludeExists();
 });
 Then("Amendments to your Medicaid and CHIP State Plans exists", () => {
   OneMacHomePage.verifyCMSBullet1Exists();

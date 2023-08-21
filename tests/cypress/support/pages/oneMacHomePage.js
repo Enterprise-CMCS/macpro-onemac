@@ -25,23 +25,24 @@ const viewFAQ = "//a[contains(text(),'View FAQ')]";
 const howToCreateASubmission =
   "//div[contains(text(),'How to create a submission')]";
 //xpath, use cy.xpath
-const loginWithIDM = "//div[contains(text(),'Login with IDM')]";
+const loginWithIDM = "//h2[contains(text(),'Login with IDM')]";
 //xpath, use cy.xpath
 const loginWithIDMInfo =
-  "//div[contains(text(),'Login with your IDM username and password to acces')]";
+  "//p[contains(text(),'Login with your IDM username and password to acces')]";
 //xpath, use cy.xpath
-const AttachYourDocuments = "//div[contains(text(),'Attach your documents')]";
+const AttachYourDocuments = "//h2[contains(text(),'Attach your documents')]";
 //xpath, use cy.xpath
 const AttachYourDocumentsInfo =
-  "//div[contains(text(),'Select a submission type and attach required docum')]";
+  "//p[contains(text(),'Select a submission type and attach required docum')]";
 //xpath, use cy.xpath
 const receiveAnEmailConformation =
-  "//div[contains(text(),'Receive an email confirmation')]";
+  "//h2[contains(text(),'Receive an email confirmation')]";
 //xpath, use cy.xpath
 const receiveAnEmailConformationInfo =
-  "//div[contains(text(),'After you submit, you will receive an email confir')]";
+  "//p[contains(text(),'After you submit, you will receive an email confir')]";
 //xpath, use cy.xpath
-const submissionTypesInclude = "//main[1]/div[3]/div[1]/div[2]/div[1]";
+const submissionTypesInclude =
+  "//h2[contains(text(),'Submission Types include:')]";
 //xpath, use cy.xpath
 const firstBullet =
   "//li[contains(text(),'Amendments to your Medicaid and CHIP State Plans (')]";
@@ -68,24 +69,22 @@ const howToReviewASubmission =
   "//div[contains(text(),'How to review a submission')]";
 //xpath, use cy.xpath
 const ReceiveAnEmailForSubmissionNotification =
-  "//div[contains(text(),'Receive an email for submission notification')]";
+  "//h2[contains(text(),'Receive an email for submission notification')]";
 
 //xpath, use cy.xpath
 const ReceiveAnEmailForSubmissionNotificationInfo =
-  "//div[contains(text(),'After a state adds a submission to OneMAC, you wil')]";
+  "//p[contains(text(),'After a state adds a submission to OneMAC, you wil')]";
 //xpath, use cy.xpath
-const loginWithEUA = "//div[contains(text(),'Login with EUA')]";
+const loginWithEUA = "//h2[contains(text(),'Login with EUA')]";
 //xpath, use cy.xpath
 const loginWithEUAInfo =
-  "//div[contains(text(),'Login with your EUA username and password to acces')]";
+  "//p[contains(text(),'Login with your EUA username and password to acces')]";
 //xpath, use cy.xpath
 const ReviewYourAssignedSubmission =
-  "//div[contains(text(),'Review your assigned submission')]";
+  "//h2[contains(text(),'Review your assigned submission')]";
 //xpath, use cy.xpath
 const ReviewYourAssignedSubmissionInfo =
-  "//div[contains(text(),'Search the submission ID from the email and click ')]";
-//xpath, use cy.xpath
-const CMSUSERSsubmissionTypesInclude = "//main[1]/div[5]/div[1]/div[2]/div[1]";
+  "//p[contains(text(),'Search the submission ID from the email and click ')]";
 //xpath, use cy.xpath
 const CMSBullet1 =
   "//li[contains(text(),'Amendments to your Medicaid and CHIP State Plans.')]";
@@ -196,7 +195,7 @@ export class oneMacHomePage {
   }
 
   verifysubmissionTypesIncludeExists() {
-    cy.xpath(submissionTypesInclude).should("be.visible");
+    cy.xpath(submissionTypesInclude).should("be.visible").and("have.length", 2);
   }
   verifyfirstBulletExists() {
     cy.xpath(firstBullet).should("be.visible");
@@ -238,9 +237,6 @@ export class oneMacHomePage {
   }
   verifyReviewYourAssignedSubmissionInfoExists() {
     cy.xpath(ReviewYourAssignedSubmissionInfo).should("be.visible");
-  }
-  verifyCMSUSERSsubmissionTypesIncludeExists() {
-    cy.xpath(CMSUSERSsubmissionTypesInclude).should("be.visible");
   }
   verifyCMSBullet1Exists() {
     cy.xpath(CMSBullet1).should("be.visible");
