@@ -309,7 +309,13 @@ function DateFilter({
   inThePast,
 }: FilterProps & { inThePast?: boolean }) {
   const onChangeSelection = useCallback(
-    (value) => setFilter(value ?? []),
+    (value) => {
+      value.length
+        ? /* Filters come in an array with 2 dates, the earlier always at
+           * index 0, the later date at index 1. */
+          setFilter([startOfDay(value[0]), endOfDay(value[1])])
+        : setFilter([]);
+    },
     [setFilter]
   );
   const ranges: { label: string; value: [Date, Date] }[] = useMemo(
