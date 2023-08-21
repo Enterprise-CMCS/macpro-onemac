@@ -1,41 +1,40 @@
 import React, { useEffect, useMemo } from "react";
-import { Redirect, useHistory } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
 import { useAppContext } from "../libs/contextLib";
 import { useSignupCallback } from "../libs/hooksLib";
 import { USER_STATUS, USER_ROLE, RESPONSE_CODE } from "cmscommonlib";
 import PageTitleBar from "../components/PageTitleBar";
-import ChoiceList from "../components/ChoiceList";
+import {
+  MACFieldsetCard,
+  MACFieldsetOption,
+  MACFieldsetOptionsList,
+} from "../components/MACCard";
 
 const ignoreEventPayload = () => undefined;
 const activeOrPending = new Set([USER_STATUS.ACTIVE, USER_STATUS.PENDING]);
 
 function StateUserSignup() {
-  const history = useHistory();
   const { userRole, userStatus } = useAppContext() ?? {};
   const STATE_CHOICES = [
     (userRole !== USER_ROLE.STATE_SUBMITTER ||
       !activeOrPending.has(userStatus!)) && {
       title: "State Submitter",
       description: "Responsible for submitting packages",
-      linkTo: "/state",
-      onclick: () => {
-        history.replace("signup/state", { role: USER_ROLE.STATE_SUBMITTER });
-      },
+      linkTo: "/signup/state",
+      state: { role: USER_ROLE.STATE_SUBMITTER },
     },
     (userRole !== USER_ROLE.STATE_SYSTEM_ADMIN ||
       !activeOrPending.has(userStatus!)) && {
       title: "State System Administrator",
       description: "Ability to approve state submitters and submit packages",
-      linkTo: "/state",
-      onclick: () => {
-        history.replace("signup/state", {
-          role: USER_ROLE.STATE_SYSTEM_ADMIN,
-        });
-      },
+      linkTo: "/signup/state",
+      state: { role: USER_ROLE.STATE_SYSTEM_ADMIN },
     },
   ].filter(Boolean);
-  return <ChoiceList choices={STATE_CHOICES} />;
+  return (
+    <MACFieldsetOptionsList choices={STATE_CHOICES as MACFieldsetOption[]} />
+  );
 }
 
 function CMSSignup() {
@@ -51,7 +50,7 @@ function CMSSignup() {
         !activeOrPending.has(userStatus!)) && {
         title: "CMS Reviewer",
         description: "Responsible for reviewing packages",
-        linkTo: "signup/cmsreviewer",
+        linkTo: "/signup/cmsreviewer",
       },
     (userRole !== USER_ROLE.CMS_ROLE_APPROVER ||
       !activeOrPending.has(userStatus!)) && {
@@ -59,10 +58,12 @@ function CMSSignup() {
       description:
         "Responsible for managing CMS Reviewers and State System Admins",
       linkTo: "/usermanagement",
-      onclick: onClickCMS,
+      onClick: onClickCMS,
     },
   ].filter(Boolean);
-  return <ChoiceList choices={CMS_CHOICES} />;
+  return (
+    <MACFieldsetOptionsList choices={CMS_CHOICES as MACFieldsetOption[]} />
+  );
 }
 function HelpdeskSignup() {
   const [, onLoadHelpdesk] = useSignupCallback(
@@ -91,7 +92,6 @@ const isHelpdeskUser = (cmsRoles: string) =>
   !!cmsRoles.split(",").includes("onemac-helpdesk");
 
 export function Signup() {
-  // const history = useHistory();
   const { userRole, userProfile: { cmsRoles = "" /*, userData = {}*/ } = {} } =
     useAppContext() ?? {};
 
@@ -126,12 +126,9 @@ export function Signup() {
   return (
     <>
       <PageTitleBar heading="Registration: User Role" />
-      <div className="choice-container">
-        <div className="choice-intro">
-          Select the role for which you are registering.
-        </div>
+      <MACFieldsetCard legend="Select the role for which you are registering.">
         {signupOptions}
-      </div>
+      </MACFieldsetCard>
     </>
   );
 }

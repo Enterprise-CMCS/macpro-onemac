@@ -1,8 +1,6 @@
 import React from "react";
 import { render, screen, waitFor } from "@testing-library/react";
 import FAQ from "./FAQ";
-import { createMemoryHistory } from "history";
-import { Router, Route } from "react-router-dom";
 
 it("has target _blank for the external link", () => {
   render(<FAQ />);
