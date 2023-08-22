@@ -308,7 +308,7 @@ export const buildAnyPackage = async (packageId, config) => {
 
     if (
       putParams.Item.raiResponses[0]?.currentStatus === "Submitted" &&
-      putParams.Item.currentStatus !== ONEMAC_STATUS.RAI_ISSUED
+      putParams.Item.currentStatus !== Workflow.ONEMAC_STATUS.RAI_ISSUED
     ) {
       putParams.Item.latestRaiResponseTimestamp =
         putParams.Item.raiResponses[0]?.submissionTimestamp;
