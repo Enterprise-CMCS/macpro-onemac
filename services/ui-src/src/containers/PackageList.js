@@ -198,6 +198,7 @@ const PackageList = () => {
   const exportTransformMap = {
     submissionTimestamp: renderDate,
     latestRaiResponseTimestamp: renderDate,
+    lastActivityTimestamp: renderDate,
   };
 
   const columns = useMemo(
