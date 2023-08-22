@@ -5,6 +5,7 @@ import {
   defaultDetail,
   submissionDateDefault,
   AttributeDetail,
+  latestActivityDefault,
 } from "../../libs/detailLib";
 import { waiverTemporaryExtension } from "cmscommonlib";
 
@@ -37,6 +38,7 @@ export const waiverTemporaryExtensionDetail: OneMACDetail = {
     parentIdDetail,
     temporaryExtensionTypeDetail,
     submissionDateDefault,
+    latestActivityDefault,
   ],
 };
 

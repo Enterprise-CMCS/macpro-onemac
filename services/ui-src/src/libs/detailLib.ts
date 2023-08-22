@@ -150,6 +150,8 @@ export const defaultDetailSectionItems = [
 ];
 
 export const defaultWaiverDetailSectionItems = [
+  submissionIdDefault,
+  latestActivityDefault,
   waiverAuthorityDefault,
   blankBox, // empty space
   territoryDefault,
