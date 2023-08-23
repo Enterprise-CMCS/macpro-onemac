@@ -3138,21 +3138,6 @@ Then("verify the Initial Submission download all button exists", () => {
 Then("click the Initial Submission download all button", () => {
   OneMacPackageDetailsPage.clickInitialSubmissionDownloadAllBtn();
 });
-Then("verify the Initial Submission caret button exists", () => {
-  OneMacPackageDetailsPage.verifyInitialSubmissionCaretBtnExists();
-});
-Then("expand the Initial Submission caret", () => {
-  OneMacPackageDetailsPage.expandInitialSubmissionCaretBtn();
-});
-Then("collapse the Initial Submission caret button", () => {
-  OneMacPackageDetailsPage.collapseInitialSubmissionCaretBtn();
-});
-Then("verify the Initial Submission download all button exists", () => {
-  OneMacPackageDetailsPage.verifyInitialSubmissionDownloadAllBtnExists();
-});
-Then("click the Initial Submission download all button", () => {
-  OneMacPackageDetailsPage.clickInitialSubmissionDownloadAllBtn();
-});
 Then("verify the Withdrawal Requested caret button exists", () => {
   OneMacPackageDetailsPage.verifyWithdrawalRequestedCaretBtnExists();
 });
