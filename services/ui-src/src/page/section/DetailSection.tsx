@@ -164,25 +164,6 @@ export const DetailSection = ({
 
   const userRoleObj = getUserRoleObj(userProfile?.userData?.roleList);
 
-  console.log(
-    "params",
-    detail.componentType,
-    detail.oneMacStatus,
-    detail.latestRaiResponseTimestamp ? true : false,
-    userRoleObj,
-    FORM_SOURCE.DETAIL
-  );
-  // const actions = Workflow.getActionsForPackage(
-  //   detail.componentType,
-  //   detail.oneMacStatus,
-  //   detail.latestRaiResponseTimestamp ? true : false,
-  //   userRoleObj,
-  //   FORM_SOURCE.DETAIL
-  // );
-  const actions = detail.actions;
-
-  console.log("actions", actions);
-
   return (
     <>
       <section className="detail-card-section">
@@ -216,29 +197,44 @@ export const DetailSection = ({
         <div className="detail-card-container">
           <div className="detail-card-top"></div>
           <div className="detail-card">
-            <section className="package-actions">
-              <Review heading={pageConfig.actionLabel}>
-                <ul className="action-list">
-                  {}
-                  {actions?.length > 0 ? (
-                    actions?.map((actionName, i) => (
-                      <li key={i}>
-                        {actionComponent[actionName](
-                          detail,
-                          FORM_SOURCE.DETAIL
-                        )}
+            {userRoleObj.canAccessForms ? (
+              <section className="package-actions">
+                <Review heading={pageConfig.actionLabel}>
+                  <ul className="action-list">
+                    {pageConfig.actionsByStatus[detail.currentStatus]?.length >
+                    0 ? (
+                      pageConfig.actionsByStatus[detail.currentStatus]?.map(
+                        (actionName, i) => (
+                          <li key={i}>
+                            {actionComponent[actionName](
+                              detail,
+                              FORM_SOURCE.DETAIL
+                            )}
+                          </li>
+                        )
+                      )
+                    ) : (
+                      <li>
+                        <p>
+                          No actions are currently available for this
+                          submission.
+                        </p>
                       </li>
-                    ))
-                  ) : (
-                    <li>
-                      <p>
-                        No actions are currently available for this submission.
-                      </p>
-                    </li>
-                  )}
-                </ul>
-              </Review>
-            </section>
+                    )}
+                  </ul>
+                </Review>
+              </section>
+            ) : (
+              <section className="package-actions">
+                <div className="column-spacer">
+                  <Review heading={pageConfig.actionLabel}>
+                    <p>
+                      No actions are currently available for this submission.
+                    </p>
+                  </Review>
+                </div>
+              </section>
+            )}
           </div>
         </div>
       </section>
@@ -333,26 +329,20 @@ export const DetailSection = ({
                     buttonClassName="accordion-button"
                     contentClassName="accordion-content"
                     heading={
-                      (raiResponse.currentStatus ===
-                      Workflow.ONEMAC_STATUS.WITHDRAW_RAI_REQUESTED
-                        ? "Withdrawn"
-                        : "Submitted") +
-                      " on " +
+                      "Submitted on " +
                       formatDate(raiResponse.submissionTimestamp)
                     }
                     headingLevel="6"
-                    id={`${raiResponse.componentType}-` + index + "_caret"}
-                    key={`${raiResponse.componentType}-` + index}
+                    id={raiResponse.componentType + index + "_caret"}
+                    key={raiResponse.componentType + index}
                     defaultOpen={index === 0}
                   >
-                    {raiResponse.attachments && (
-                      <FileList
-                        heading={"RAI Response Documentation"}
-                        infoText={downloadInfoText}
-                        uploadList={raiResponse.attachments}
-                        zipId={raiResponse.componentType + index}
-                      />
-                    )}
+                    <FileList
+                      heading={"RAI Response Documentation"}
+                      infoText={downloadInfoText}
+                      uploadList={raiResponse.attachments}
+                      zipId={raiResponse.componentType + index}
+                    />
                     <AdditionalInfoSection
                       additionalInfo={raiResponse.additionalInformation}
                       id={"addl-info-rai-" + index}
@@ -385,7 +375,7 @@ export const DetailSection = ({
                       <FileList
                         heading={"Withdrawal Request Documentation"}
                         uploadList={withdrawalRequest.attachments}
-                        zipId={`${withdrawalRequest.componentType}-` + index}
+                        zipId={withdrawalRequest.componentType + index}
                       />
                     ) : (
                       <>

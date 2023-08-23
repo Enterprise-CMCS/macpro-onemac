@@ -77,14 +77,12 @@ export const ONEMAC_ROUTES = {
   WAIVER_APP_K_RAI: "/waiver-app-k-rai",
   WAIVER_APP_K_WITHDRAW: "/waiver-app-k-withdraw",
   WAIVER_RAI: "/waiver-rai",
-  WITHDRAW_RAI: "/withdraw-rai",
   APPENDIX_K_AMENDMENT: "/appendix-k-amendment",
   APPENDIX_K_AMENDMENT_WITHDRAW: "/appendix-k-amendment-withdraw",
   TEMPORARY_EXTENSION: "/temporary-extension",
   TEMPORARY_EXTENSION_DETAIL: "/detail/temporary-extension",
   FORMS_DESCRIBE: "/forms-describe",
   EVENT: "/event",
-  ENABLE_RAI_WITHDRAW: "/enable-rai-withdraw",
 };
 
 export const TYPE_TO_DETAIL_ROUTE = {

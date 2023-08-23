@@ -1,4 +1,4 @@
-import { UserRole } from "cmscommonlib";
+import { UserRole, Workflow } from "cmscommonlib";
 import { PackageType } from "./formLib";
 
 export type AttributeDetail = {
@@ -13,6 +13,7 @@ export type OneMACDetail = {
   actionLabel: string;
   show90thDayInfo: boolean;
   showEffectiveDate: boolean;
+  actionsByStatus: Record<string, Workflow.PACKAGE_ACTION[]>;
   detailHeader?: string;
   detailSection: AttributeDetail[];
   showReviewTeam: boolean;
@@ -34,7 +35,7 @@ export const submissionDateDefault: AttributeDetail = {
   default: null,
 };
 export const latestRaiResponseDateDefault: AttributeDetail = {
-  heading: "Formal RAI Response",
+  heading: "Formal RAI Received",
   fieldName: "latestRaiResponseDateNice",
   default: "-- --",
   rolePrivilege: "isCMSUser",
@@ -164,6 +165,7 @@ export const defaultDetail: OneMACDetail = {
   actionLabel: "Package Actions",
   componentType: "none",
   attachmentsHeading: "Attachments",
+  actionsByStatus: Workflow.defaultActionsByStatus,
   show90thDayInfo: false,
   showEffectiveDate: false,
   showReviewTeam: true,

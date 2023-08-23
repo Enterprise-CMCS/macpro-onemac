@@ -1,7 +1,7 @@
 [
   {
     "ParameterKey": "SubjectClaimFilters",
-    "ParameterValue": "repo:Enterprise-CMCS/macpro-onemac:ref:refs/heads/master"
+    "ParameterValue": "repo:CMSgov/onemac:ref:refs/heads/master"
   },
   {
     "ParameterKey": "Path",

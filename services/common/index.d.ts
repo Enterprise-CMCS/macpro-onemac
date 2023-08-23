@@ -85,7 +85,6 @@ export namespace Workflow {
     WITHDRAW = "Withdraw Package",
     REQUEST_TEMPORARY_EXTENSION = "Request a Temporary Extension",
     ADD_AMENDMENT = "Add Amendment",
-    ENABLE_RAI_WITHDRAWAL = "Enable Formal RAI Response Withdraw",
   }
   export const ONEMAC_TYPE: Record<string, string>;
   export const ONEMAC_LABEL: Record<string, string>;
@@ -101,21 +100,14 @@ export namespace Workflow {
     NA = "N/A",
   }
 
-  export const defaultActions: Record<string, PACKAGE_ACTION[]>;
-  export const initialWaiverActions: Record<string, PACKAGE_ACTION[]>;
-  export const renewalWaiverActions: Record<string, PACKAGE_ACTION[]>;
-  export const waiverExtensionActions: Record<string, PACKAGE_ACTION[]>;
+  export const defaultActionsByStatus: Record<string, PACKAGE_ACTION[]>;
+  export const initialWaiverActionsByStatus: Record<string, PACKAGE_ACTION[]>;
+  export const renewalWaiverActionsByStatus: Record<string, PACKAGE_ACTION[]>;
+  export const waiverExtensionActionsByStatus: Record<string, PACKAGE_ACTION[]>;
   export const get90thDayText: (
     currentStatus: string,
     clockEndTimestamp: date
   ) => string;
-  export const getActionsForPackage: (
-    packageType: string,
-    packageStatus: string,
-    hasRaiResponse: boolean,
-    userRole: UserRole,
-    formSource: string
-  ) => PACKAGE_ACTION[];
 }
 
 export * as Validate from "./idValidation.js";
@@ -155,5 +147,3 @@ export { medicaidSPAWithdraw } from "./type/medicaidSPAWithdraw.js";
 export { chipSPA } from "./type/chipSPA.js";
 export { chipSPARAIResponse } from "./type/chipSPARAIResponse.js";
 export { chipSPAWithdraw } from "./type/chipSPAWithdraw.js";
-export { enableRaiWithdraw } from "./type/enableRaiWithdraw.js";
-export { withdrawRAIResponse } from "./type/withdrawRAIResponse.js";

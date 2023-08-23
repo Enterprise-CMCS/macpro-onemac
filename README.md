@@ -1,4 +1,4 @@
-# [OneMAC](https://github.com/Enterprise-CMCS/macpro-onemac) [![Maintainability](https://api.codeclimate.com/v1/badges/2fd2de4673a78225e310/maintainability)](https://codeclimate.com/repos/610aa07d2929cc45c1004225/maintainability) [![Deploy](https://github.com/Enterprise-CMCS/macpro-onemac/actions/workflows/deploy.yml/badge.svg)](https://github.com/Enterprise-CMCS/macpro-onemac/actions/workflows/deploy.yml) [![Test Coverage](https://api.codeclimate.com/v1/badges/2fd2de4673a78225e310/test_coverage)](https://codeclimate.com/repos/610aa07d2929cc45c1004225/test_coverage)
+# [OneMAC](https://github.com/CMSgov/onemac) [![Maintainability](https://api.codeclimate.com/v1/badges/2fd2de4673a78225e310/maintainability)](https://codeclimate.com/repos/610aa07d2929cc45c1004225/maintainability) [![Deploy](https://github.com/CMSgov/onemac/actions/workflows/deploy.yml/badge.svg)](https://github.com/CMSgov/onemac/actions/workflows/deploy.yml) [![Test Coverage](https://api.codeclimate.com/v1/badges/2fd2de4673a78225e310/test_coverage)](https://codeclimate.com/repos/610aa07d2929cc45c1004225/test_coverage)
 
 # macstack-spa-submission-form
 

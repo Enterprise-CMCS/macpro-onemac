@@ -107,13 +107,8 @@ const approveCheckBox = "//span[contains(text(),'Approved')]";
 //Element is Xpath use cy.xpath instead of cy.get
 const underReviewCheckBox = "//span[contains(text(),'Under Review')]";
 //Element is Xpath use cy.xpath instead of cy.get
-const withdrawalRequestedCheckBox = "//span[text()= 'Withdrawal Requested']";
-//Element is Xpath use cy.xpath instead of cy.get
-const raiResponseWithdrawalRequestedCheckBox =
-  "//span[text()= 'Formal RAI Response - Withdrawal Requested']";
-//Element is Xpath use cy.xpath instead of cy.get
-const raiResponseWithdrawEnabledCheckBox =
-  "//span[text()= 'RAI Response Withdraw Enabled']";
+const withdrawalRequestedCheckBox =
+  "//span[contains(text(),'Withdrawal Requested')]";
 //Element is Xpath use cy.xpath instead of cy.get
 const terminatedCheckBox = "//span[contains(text(),'Terminated')]";
 //Element is Xpath use cy.xpath instead of cy.get
@@ -224,8 +219,6 @@ const childRows = "//tr[@class = 'child-row-expanded']";
 const withdrawPackageBtn = "//a[text()='Withdraw Package']";
 const withdrawPackageConfirmBtn =
   "//button[contains(text(),'Yes, withdraw package')]";
-const withdrawResponseConfirmBtn =
-  "//button[contains(text(),'Yes, withdraw response')]";
 const successMessage = "#alert-bar";
 //Element is Xpath use cy.xpath instead of cy.get
 const packageRowOneIDLink = "//td[@id='componentId-0']//a";
@@ -516,23 +509,11 @@ export class oneMacPackagePage {
   clickTerminatedCheckBox() {
     cy.xpath(terminatedCheckBox).click();
   }
-  verifyWithdrawalRequestedCheckBoxExists() {
+  verifyWithdrawalRequestedCheckBoxCheckBox() {
     cy.xpath(withdrawalRequestedCheckBox).should("be.visible");
   }
   clickWithdrawalRequestedCheckBox() {
     cy.xpath(withdrawalRequestedCheckBox).click();
-  }
-  verifyRaiResponseWithdrawalRequestedCheckBoxExists() {
-    cy.xpath(raiResponseWithdrawalRequestedCheckBox).should("be.visible");
-  }
-  clickRaiResponseWithdrawalRequestedCheckBox() {
-    cy.xpath(raiResponseWithdrawalRequestedCheckBox).click();
-  }
-  verifyRaiResponseWithdrawEnabledCheckBoxExists() {
-    cy.xpath(raiResponseWithdrawEnabledCheckBox).should("be.visible");
-  }
-  clickRaiResponseWithdrawEnabledCheckBox() {
-    cy.xpath(raiResponseWithdrawEnabledCheckBox).click();
   }
   verifyWithdrawnCheckBoxExists() {
     cy.xpath(withdrawnCheckBox).should("be.visible");
@@ -1014,13 +995,6 @@ export class oneMacPackagePage {
   }
   verifyConfirmWithdrawPackageBtnExists() {
     cy.xpath(withdrawPackageConfirmBtn).should("be.visible");
-  }
-  clickConfirmWithdrawResponseBtn() {
-    cy.xpath(withdrawResponseConfirmBtn).click();
-    cy.wait(8000);
-  }
-  verifyConfirmWithdrawResponseBtnExists() {
-    cy.xpath(withdrawResponseConfirmBtn).should("be.visible");
   }
   verifyChildRowStatusIs(status) {
     cy.get(packageRowTwoStatus).should("contain.text", status);
