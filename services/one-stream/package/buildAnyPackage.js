@@ -98,51 +98,43 @@ export const buildAnyPackage = async (packageId, config) => {
 
       // all updates after this influence lmtimestamp
       const [source, timestring] = anEvent.sk.split("#");
-      const timestamp = anEvent?.eventTimestamp
-        ? anEvent.eventTimestamp
-        : Number(timestring);
+      const timestamp = Number(timestring);
 
       if (source === "OneMAC") {
         if (anEvent?.currentStatus === Workflow.ONEMAC_STATUS.INACTIVATED)
           return;
         showPackageOnDashboard = true;
 
-        if (anEvent?.componentType)
-          if (anEvent?.adminChanges && _.isArray(anEvent.adminChanges))
-            // admin changes are consolidated across all OneMAC events
-            adminChanges = [...anEvent.adminChanges, ...adminChanges];
+        // admin changes are consolidated across all OneMAC events
+        if (anEvent?.adminChanges && _.isArray(anEvent.adminChanges))
+          adminChanges = [...anEvent.adminChanges, ...adminChanges];
       }
 
       if (timestamp > lmTimestamp) {
         lmTimestamp = timestamp;
       }
 
-      // collect ALL rai events in one array (parsed later)
+      // include ALL rai events in package details
       if (
         anEvent.componentType === `${config.componentType}rai` ||
-        anEvent.componentType === `waiverrai` ||
-        anEvent.componentType === `rairesponsewithdraw`
+        anEvent.componentType === `waiverrai`
       ) {
         putParams.Item.raiResponses.push({
           submissionTimestamp: anEvent.submissionTimestamp,
-          eventTimestamp: anEvent.eventTimestamp,
           attachments: anEvent.attachments,
           additionalInformation: anEvent.additionalInformation,
-          currentStatus: anEvent.currentStatus,
         });
-        putParams.Item.currentStatus = anEvent.currentStatus;
+        putParams.Item.currentStatus = Workflow.ONEMAC_STATUS.SUBMITTED;
 
         return;
       }
 
-      // include ALL package withdraw request events in package details
+      // include ALL withdraw request events in package details
       if (anEvent.componentType === `${config.componentType}withdraw`) {
         putParams.Item.withdrawalRequests.push({
           submissionTimestamp: anEvent.submissionTimestamp,
-          eventTimestamp: anEvent.eventTimestamp,
           attachments: anEvent.attachments,
           additionalInformation: anEvent.additionalInformation,
-          currentStatus: anEvent.currentStatus,
         });
         putParams.Item.currentStatus =
           Workflow.ONEMAC_STATUS.WITHDRAWAL_REQUESTED;
@@ -289,13 +281,8 @@ export const buildAnyPackage = async (packageId, config) => {
     }
 
     putParams.Item.raiResponses.sort(
-      (a, b) => b.eventTimestamp - a.eventTimestamp
+      (a, b) => b.submissionTimestamp - a.submissionTimestamp
     );
-
-    if (putParams.Item.raiResponses[0]?.currentStatus === "Submitted") {
-      putParams.Item.latestRaiResponseTimestamp =
-        putParams.Item.raiResponses[0]?.submissionTimestamp;
-    }
 
     adminChanges.sort((a, b) => b.changeTimestamp - a.changeTimestamp);
     let lastTime = 0;
@@ -305,6 +292,9 @@ export const buildAnyPackage = async (packageId, config) => {
         putParams.Item.adminChanges.push(oneChange);
       }
     });
+
+    putParams.Item.latestRaiResponseTimestamp =
+      putParams.Item.raiResponses[0]?.submissionTimestamp;
 
     console.log("%s currentPackage: ", packageId, currentPackage);
     console.log("%s newItem: ", packageId, putParams.Item);

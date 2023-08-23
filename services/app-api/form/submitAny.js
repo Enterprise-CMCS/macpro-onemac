@@ -25,6 +25,7 @@ import { stateSubmissionReceipt } from "../email/stateSubmissionReceipt";
  *  - save the data
  *  - send emails
  */
+
 export const submitAny = async (event, config) => {
   let data, doneBy;
   const warningsInCMSNotice = [];
@@ -97,7 +98,6 @@ export const submitAny = async (event, config) => {
     const rightNowNormalized = Date.now();
     data.submissionTimestamp = rightNowNormalized;
     data.eventTimestamp = rightNowNormalized;
-
     data.currentStatus = config.newStatus;
     data.componentType = config.componentType;
 
@@ -144,15 +144,5 @@ export const submitAny = async (event, config) => {
       error
     );
   }
-  console.log("returning success code: ", config.successResponseCode);
   return config.successResponseCode;
 };
-
-/**
- * Submitting a Form uses the configs from each form type to do the following:
- *  - parse the event
- *  - validate the submission data
- *  - authenticate the user
- *  - save the data
- *  - send emails
- */

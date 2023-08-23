@@ -23,15 +23,11 @@ export type OneMACFormConfig = {
   parentTypeNice?: string;
   attachmentsTitle?: string;
   attachmentIntroJSX: JSX.Element;
-  addlInfoTitle?: string;
   addlInfoText?: string;
-  addlInfoRequired?: boolean;
-  requireUploadOrAdditionalInformation?: boolean;
   landingPage: string;
   confirmSubmit?: ConfirmSubmitType;
   proposedEffectiveDate?: boolean;
   titleLabel?: string;
-  submitInstructionsJSX?: JSX.Element;
 } & PackageType &
   Partial<ParentPackageType> &
   Partial<WaiverPackageType> &
@@ -47,7 +43,7 @@ type ParentPackageType = {
 
 type ConfirmSubmitType = {
   confirmSubmitHeading: string;
-  confirmSubmitMessage?: JSX.Element | string;
+  confirmSubmitMessage: JSX.Element | string;
   buildMessage?: (toConfirm: string) => JSX.Element;
   confirmSubmitYesButton?: string;
 };
@@ -95,18 +91,6 @@ export const defaultAttachmentInstructionsJSX = (
   </>
 );
 
-const defaultSubmitInstructionsJSX = (
-  <p id="form-submit-instructions">
-    <i>
-      Once you submit this form, a confirmation email is sent to you and to CMS.
-      CMS will use this content to review your package, and you will not be able
-      to edit this form. If CMS needs any additional information, they will
-      follow up by email. If you leave this page, you will lose your progress on
-      this form.
-    </i>
-  </p>
-);
-
 export const defaultOneMACFormConfig = {
   idFormat: "",
   idFieldHint: [],
@@ -114,8 +98,6 @@ export const defaultOneMACFormConfig = {
   landingPage: ONEMAC_ROUTES.PACKAGE_LIST,
   proposedEffectiveDate: false,
   attachmentIntroJSX: defaultAttachmentInstructionsJSX(),
-  addlInfoTitle: "Additional Information",
-  submitInstructionsJSX: defaultSubmitInstructionsJSX,
 };
 
 export const defaultWaiverAuthority = [
@@ -234,7 +216,6 @@ export const defaultWithdrawConfig = {
       </p>
     </>
   ),
-  addlInfoTitle: "Additional Information",
   addlInfoText:
     "Explain your need for withdrawal or upload supporting documentation.",
   landingPage: ONEMAC_ROUTES.PACKAGE_LIST,

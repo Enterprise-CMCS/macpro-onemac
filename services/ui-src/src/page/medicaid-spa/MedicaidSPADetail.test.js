@@ -93,7 +93,6 @@ const testDetail = {
   submitterName: "StateSubmitter Nightwatch",
   approvedEffectiveDate: "2022-01-02",
   finalDispositionDate: "2022-01-03",
-  actions: ["Withdraw Package", "Respond to RAI"],
 };
 
 const ContextWrapper = ({ children }) => {
@@ -162,24 +161,5 @@ describe("Detail View Tests", () => {
     await waitForElementToBeRemoved(() => screen.getByTestId(LOADER_TEST_ID));
 
     fireEvent.click(screen.getByText("Respond to RAI"));
-  });
-
-  it("allows withdraw RAI action", async () => {
-    let history;
-    history = createMemoryHistory();
-    history.push("/detail/medicaid-spa/MI-12-1133");
-
-    PackageApi.getDetail.mockResolvedValue({
-      ...testDetail,
-      currentStatus: "RAI Response Withdraw Enabled",
-      actions: ["Withdraw Formal RAI Response"],
-    });
-
-    render(<MedicaidSPADetail />, { wrapper: ContextWrapper });
-
-    // wait for loading screen to disappear so package table displays
-    await waitForElementToBeRemoved(() => screen.getByTestId(LOADER_TEST_ID));
-
-    fireEvent.click(screen.getByText("Withdraw Formal RAI Response"));
   });
 });

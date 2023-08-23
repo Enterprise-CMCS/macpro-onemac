@@ -146,8 +146,8 @@ export const oneMACFAQContent: FAQContent[] = [
             </p>
             <h3>Acceptable File Formats</h3>
             <ul className="file-type-list">
-              {FILE_TYPES.map((info, index) => (
-                <li key={`file-${index}`}>
+              {FILE_TYPES.map((info) => (
+                <li>
                   <FileTypesFAQListItem info={info} />
                 </li>
               ))}
@@ -168,7 +168,11 @@ export const oneMACFAQContent: FAQContent[] = [
                   "IDM Instructions for OneMAC Users",
                 ],
                 ["OneMACIDMGuide.pdf", "OneMAC IDM Guide"],
-                ["OneMACStateUserGuide.pdf", "OneMAC State User Guide"],
+                ["OneMACStateUserGuide.pdf", "OneMAC State Submitter Guide"],
+                [
+                  "OneMACStateAdministratorGuide.pdf",
+                  "OneMAC State Administrator Guide",
+                ],
                 ["OneMACCMSUserGuide.pdf", "OneMAC CMS User Guide"],
               ].map(([filename, label]) => (
                 <li key={filename}>

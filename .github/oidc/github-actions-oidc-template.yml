@@ -19,10 +19,10 @@ Parameters:
       Default is audience for the official AWS configure action from https://github.com/aws-actions/configure-aws-credentials
   SubjectClaimFilters:
     Type: CommaDelimitedList
-    Default: "repo:Enterprise-CMCS/macpro-onemac:*"
+    Default: "repo:CMSgov/onemac:*"
     Description: >
       Subject claim filter for valid tokens.
-      Default allows any branch or tag of the Enterprise-CMCS/macpro-onemac to assume the role.
+      Default allows any branch or tag of the CMSgov/onemac to assume the role.
       See https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/about-security-hardening-with-openid-connect#example-subject-claims
       for examples of fitlering by branch or deployment environment.
   Path:

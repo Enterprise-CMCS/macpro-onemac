@@ -6,7 +6,6 @@ export const packageList = [
     submitterName: "Angie Active",
     submissionTimestamp: 1633481285595,
     submitterEmail: "statesubmitteractive@cms.hhs.local",
-    actions: [],
   },
   {
     componentType: "waivernew",
@@ -15,7 +14,6 @@ export const packageList = [
     submitterName: "Angie Active",
     submissionTimestamp: 1633481285595,
     submitterEmail: "statesubmitteractive@cms.hhs.local",
-    actions: ["Withdraw Package", "Respond to RAI"],
   },
   {
     componentType: "chipspa",
@@ -24,7 +22,6 @@ export const packageList = [
     submitterName: "Angie Active",
     submissionTimestamp: 1633481183766,
     submitterEmail: "statesubmitteractive@cms.hhs.local",
-    actions: ["Withdraw Package"],
   },
   {
     componentType: "medicaidspa",
@@ -33,6 +30,5 @@ export const packageList = [
     submitterName: "Angie Active",
     submissionTimestamp: 1633479854023,
     submitterEmail: "statesubmitteractive@cms.hhs.local",
-    actions: [],
   },
 ];

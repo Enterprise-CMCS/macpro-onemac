@@ -92,7 +92,6 @@ const testDetail = {
     },
   ],
   submitterName: "StateSubmitter Nightwatch",
-  actions: ["Withdraw Package", "Respond to RAI"],
 };
 
 const ContextWrapper = ({ children }) => {
