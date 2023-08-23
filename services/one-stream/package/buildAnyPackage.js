@@ -306,15 +306,14 @@ export const buildAnyPackage = async (packageId, config) => {
       (a, b) => b.eventTimestamp - a.eventTimestamp
     );
 
-    if (
-      putParams.Item.raiResponses[0]?.currentStatus === "Submitted" &&
-      putParams.Item.currentStatus !== Workflow.ONEMAC_STATUS.RAI_ISSUED
-    ) {
+    if (putParams.Item.raiResponses[0]?.currentStatus === "Submitted") {
       putParams.Item.latestRaiResponseTimestamp =
         putParams.Item.raiResponses[0]?.submissionTimestamp;
-    } else {
-      // Resets field to "-- --" if status is Pending RAI or raiResponses
-      // has no items/no submitted items
+    }
+
+    // Resets field to "-- --" if status is Pending RAI or raiResponses
+    // has no items/no submitted items
+    if (putParams.Item.currentStatus === Workflow.ONEMAC_STATUS.RAI_ISSUED) {
       putParams.Item.latestRaiResponseTimestamp = emptyField;
     }
 
