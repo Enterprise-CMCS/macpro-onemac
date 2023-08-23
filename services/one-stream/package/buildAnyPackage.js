@@ -311,8 +311,8 @@ export const buildAnyPackage = async (packageId, config) => {
         putParams.Item.raiResponses[0]?.submissionTimestamp;
     }
 
-    // Resets field to "-- --" if status is Pending RAI or raiResponses
-    // has no items/no submitted items
+    // Resets field to "-- --" if status is Pending - RAI (CMS)
+    // or RAI Issued (STATE)
     if (putParams.Item.currentStatus === Workflow.ONEMAC_STATUS.RAI_ISSUED) {
       putParams.Item.latestRaiResponseTimestamp = emptyField;
     }
