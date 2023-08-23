@@ -36,6 +36,11 @@ export const waiverAmendment = {
     "parentId",
     "parentType",
   ],
+  secondClockStatuses: [
+    "Pending",
+    "Pending - Concurrence",
+    "Pending - Approval",
+  ],
 };
 
 export const waiverAmendmentB4 = {
