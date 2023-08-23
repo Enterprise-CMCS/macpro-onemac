@@ -3105,3 +3105,66 @@ Then(
 Then("verify Review Team SRT is not visible in the details section", () => {
   OneMacPackageDetailsPage.verifyReviewTeamSRTDoesNotExists();
 });
+Then("verify the Formal RAI Response caret button exists", () => {
+  OneMacPackageDetailsPage.verifyFormalRAIResponseCaretBtnExists();
+});
+Then("expand the Formal RAI Response caret button", () => {
+  OneMacPackageDetailsPage.expandFormalRAIResponseCaretBtn();
+});
+Then("collapse the Formal RAI Response caret button", () => {
+  OneMacPackageDetailsPage.collapseFormalRAIResponseCaretBtn();
+});
+Then("click the Formal RAI Response caret button", () => {
+  OneMacPackageDetailsPage.clickFormalRAIResponseCaretBtn();
+});
+Then("verify the Formal RAI Response download all button exists", () => {
+  OneMacPackageDetailsPage.verifyFormalRAIResponseDownloadAllBtnExists();
+});
+Then("click the Formal RAI Response download all button", () => {
+  OneMacPackageDetailsPage.clickFormalRAIResponseDownloadAllBtn();
+});
+Then("verify the Initial Submission caret button exists", () => {
+  OneMacPackageDetailsPage.verifyInitialSubmissionCaretBtnExists();
+});
+Then("expand the Initial Submission caret", () => {
+  OneMacPackageDetailsPage.expandInitialSubmissionCaretBtn();
+});
+Then("collapse the Initial Submission caret button", () => {
+  OneMacPackageDetailsPage.collapseInitialSubmissionCaretBtn();
+});
+Then("verify the Initial Submission download all button exists", () => {
+  OneMacPackageDetailsPage.verifyInitialSubmissionDownloadAllBtnExists();
+});
+Then("click the Initial Submission download all button", () => {
+  OneMacPackageDetailsPage.clickInitialSubmissionDownloadAllBtn();
+});
+Then("verify the Initial Submission caret button exists", () => {
+  OneMacPackageDetailsPage.verifyInitialSubmissionCaretBtnExists();
+});
+Then("expand the Initial Submission caret", () => {
+  OneMacPackageDetailsPage.expandInitialSubmissionCaretBtn();
+});
+Then("collapse the Initial Submission caret button", () => {
+  OneMacPackageDetailsPage.collapseInitialSubmissionCaretBtn();
+});
+Then("verify the Initial Submission download all button exists", () => {
+  OneMacPackageDetailsPage.verifyInitialSubmissionDownloadAllBtnExists();
+});
+Then("click the Initial Submission download all button", () => {
+  OneMacPackageDetailsPage.clickInitialSubmissionDownloadAllBtn();
+});
+Then("verify the Withdrawal Requested caret button exists", () => {
+  OneMacPackageDetailsPage.verifyWithdrawalRequestedCaretBtnExists();
+});
+Then("expand the Withdrawal Requested caret", () => {
+  OneMacPackageDetailsPage.expandWithdrawalRequestedCaretBtn();
+});
+Then("collapse the Withdrawal Requested caret button", () => {
+  OneMacPackageDetailsPage.collapseWithdrawalRequestedCaretBtn();
+});
+Then("verify the Withdrawal Requested download all button exists", () => {
+  OneMacPackageDetailsPage.verifyWithdrawalRequestedDownloadAllBtnExists();
+});
+Then("click the Withdrawal Requested download all button", () => {
+  OneMacPackageDetailsPage.clickWithdrawalRequestedDownloadAllBtn();
+});

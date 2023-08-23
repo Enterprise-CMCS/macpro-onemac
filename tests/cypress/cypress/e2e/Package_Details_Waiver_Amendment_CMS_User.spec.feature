@@ -36,8 +36,9 @@ Feature: Waiver Package Details View: 1915 b Waiver Amendment for a CMS User
         Then verify there is a Final Disposition Date header in the details section
         Then verify there is an Approved Effective Date in the details section
         Then verify the description has a value displayed in the details section
-        Then verify the attachments section exists
-        Then verify the download all button exists
+        Then verify the Initial Submission caret button exists
+        Then expand the Initial Submission caret
+        Then verify the Initial Submission download all button exists
         Then verify the additional information section exists
 
     Scenario: Screen Enhance: 1915 b Waiver Amendment Details View - Pending
@@ -64,8 +65,9 @@ Feature: Waiver Package Details View: 1915 b Waiver Amendment for a CMS User
         Then verify there is a Final Disposition Date header in the details section
         Then verify there is an Approved Effective Date in the details section
         Then verify the description has a value displayed in the details section
-        Then verify the attachments section exists
-        Then verify the download all button exists
+        Then verify the Initial Submission caret button exists
+        Then expand the Initial Submission caret
+        Then verify the Initial Submission download all button exists
         Then verify the additional information section exists
 
     Scenario: Screen Enhance: 1915 b Waiver Amendment Details View - Pending - RAI
@@ -93,8 +95,9 @@ Feature: Waiver Package Details View: 1915 b Waiver Amendment for a CMS User
         Then verify there is a Final Disposition Date header in the details section
         Then verify there is an Approved Effective Date in the details section
         Then verify the description has a value displayed in the details section
-        Then verify the attachments section exists
-        Then verify the download all button exists
+        Then verify the Initial Submission caret button exists
+        Then expand the Initial Submission caret
+        Then verify the Initial Submission download all button exists
         Then verify the additional information section exists
 
     Scenario: Screen Enhance: 1915 b Waiver Amendment Details View - Approved
@@ -122,8 +125,9 @@ Feature: Waiver Package Details View: 1915 b Waiver Amendment for a CMS User
         Then verify there is a Final Disposition Date header in the details section
         Then verify there is an Approved Effective Date in the details section
         Then verify the description has a value displayed in the details section
-        Then verify the attachments section exists
-        Then verify the download all button exists
+        Then verify the Initial Submission caret button exists
+        Then expand the Initial Submission caret
+        Then verify the Initial Submission download all button exists
         Then verify the additional information section exists
 
     Scenario: Screen Enhance: 1915 b Waiver Amendment Details View - Disapproved
@@ -151,8 +155,9 @@ Feature: Waiver Package Details View: 1915 b Waiver Amendment for a CMS User
         Then verify there is a Final Disposition Date header in the details section
         Then verify there is an Approved Effective Date in the details section
         Then verify the description has a value displayed in the details section
-        Then verify the attachments section exists
-        Then verify the download all button exists
+        Then verify the Initial Submission caret button exists
+        Then expand the Initial Submission caret
+        Then verify the Initial Submission download all button exists
         Then verify the additional information section exists
 
     # Need seed data / reset data update
@@ -181,8 +186,9 @@ Feature: Waiver Package Details View: 1915 b Waiver Amendment for a CMS User
         Then verify there is a Final Disposition Date header in the details section
         Then verify there is an Approved Effective Date in the details section
         Then verify the description has a value displayed in the details section
-        Then verify the attachments section exists
-        Then verify the download all button exists
+        Then verify the Initial Submission caret button exists
+        Then expand the Initial Submission caret
+        Then verify the Initial Submission download all button exists
         Then verify the additional information section exists
 
     Scenario: Screen Enhance: 1915 b Waiver Amendment Details View - Pending - Concurrence
@@ -210,8 +216,9 @@ Feature: Waiver Package Details View: 1915 b Waiver Amendment for a CMS User
         Then verify there is a Final Disposition Date header in the details section
         Then verify there is an Approved Effective Date in the details section
         Then verify the description has a value displayed in the details section
-        Then verify the attachments section exists
-        Then verify the download all button exists
+        Then verify the Initial Submission caret button exists
+        Then expand the Initial Submission caret
+        Then verify the Initial Submission download all button exists
         Then verify the additional information section exists
 
     # Need seed data / reset data update
@@ -241,8 +248,9 @@ Feature: Waiver Package Details View: 1915 b Waiver Amendment for a CMS User
         Then verify there is an Approved Effective Date in the details section
         Then verify the description has a value displayed in the details section
         Then verify the Proposed Effective Date is a date formatted like Mon dd yyyy
-        Then verify the attachments section exists
-        Then verify the download all button exists
+        Then verify the Initial Submission caret button exists
+        Then expand the Initial Submission caret
+        Then verify the Initial Submission download all button exists
         Then verify the additional information section exists
 
     Scenario: Waiver Amendment Details View - Enable Formal RAI Response Withdraw

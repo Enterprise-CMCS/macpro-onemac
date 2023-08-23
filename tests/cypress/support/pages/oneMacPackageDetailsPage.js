@@ -50,7 +50,7 @@ const formalRAIReceivedDateHeader =
   "//h3[contains(text(),'Formal RAI Received')]";
 const adminPkgChangeSection = "//h2[text()='Administrative Package Changes']";
 const additionalInfoSection =
-  "//section[@id='addl-info-base']//h2[text()='Additional Information']";
+  "//section[contains(@id, 'addl-info-chrono')]//h2[text()='Additional Information']";
 const waiverAuthorityHeader = "//h3[text()='Waiver Authority']";
 const attachmentsSection = "//h2[text()='Attachments']";
 const downloadAllBtn = "//button[contains(text(),'Download All')]";
@@ -69,6 +69,18 @@ const subjectHeader = "//h3[contains(text(),'Subject')]";
 const descriptionHeader = "//h3[contains(text(),'Description')]";
 const cPOCNameHeader = "//h3[contains(text(),'CPOC')]";
 const reviewTeamSRTHeader = "//h3[contains(text(),'Review Team (SRT)')]";
+const formalRAIResponseCaretBtn =
+  '//h2//button[contains(@id,"Formal RAI Response")]';
+const formalRAIResponseDownloadAllBtn =
+  '//button[contains(@id,"dl_Formal RAI Response")]';
+const initialSubmissionCaretBtn =
+  '//h2//button[contains(@id,"Initial Package")]';
+const initialSubmissionDownloadAllBtn =
+  '//button[contains(@id,"dl_Initial Package")]';
+const withdrawalRequestedCaretBtn =
+  '//h2//button[contains(@id,"Package0_caret-button")]';
+const withdrawalRequestedDownloadAllBtn =
+  '//button[contains(@id,"dl_Package-0")]';
 
 export class oneMacPackageDetailsPage {
   verifyPackageDetailsPageIsVisible() {
@@ -440,8 +452,101 @@ export class oneMacPackageDetailsPage {
       .next("div")
       .contains(/^(?!\s*$).+/);
   }
-  verifyReviewTeamSRTDoesNotExists() {
-    cy.xpath(reviewTeamSRTHeader).should("not.exist");
+  verifyFormalRAIResponseCaretBtnExists() {
+    cy.xpath(formalRAIResponseCaretBtn).should("be.visible");
+  }
+  expandFormalRAIResponseCaretBtn() {
+    cy.xpath(formalRAIResponseCaretBtn)
+      .invoke("attr", "aria-expanded")
+      .then(($isExpanded) => {
+        if ($isExpanded === "false") {
+          //only click to expand
+          cy.xpath(formalRAIResponseCaretBtn).click();
+        }
+      });
+  }
+  collapseFormalRAIResponseCaretBtn() {
+    cy.xpath(formalRAIResponseCaretBtn)
+      .invoke("attr", "aria-expanded")
+      .then(($isExpanded) => {
+        if ($isExpanded === "true") {
+          //only click to expand
+          cy.xpath(formalRAIResponseCaretBtn).click();
+        }
+      });
+  }
+  clickFormalRAIResponseCaretBtn() {
+    cy.xpath(formalRAIResponseCaretBtn).click();
+  }
+  verifyFormalRAIResponseDownloadAllBtnExists() {
+    cy.xpath(formalRAIResponseDownloadAllBtn).should("be.visible");
+  }
+  clickFormalRAIResponseDownloadAllBtn() {
+    cy.xpath(formalRAIResponseDownloadAllBtn).click();
+  }
+  verifyInitialSubmissionCaretBtnExists() {
+    cy.xpath(initialSubmissionCaretBtn).should("be.visible");
+  }
+  clickInitialSubmissionCaretBtn() {
+    cy.xpath(initialSubmissionCaretBtn).click();
+  }
+  expandInitialSubmissionCaretBtn() {
+    cy.xpath(initialSubmissionCaretBtn)
+      .invoke("attr", "aria-expanded")
+      .then(($isExpanded) => {
+        if ($isExpanded === "false") {
+          //only click to expand
+          cy.xpath(initialSubmissionCaretBtn).click();
+        }
+      });
+  }
+  collapseInitialSubmissionCaretBtn() {
+    cy.xpath(initialSubmissionCaretBtn)
+      .invoke("attr", "aria-expanded")
+      .then(($isExpanded) => {
+        if ($isExpanded === "true") {
+          //only click to expand
+          cy.xpath(initialSubmissionCaretBtn).click();
+        }
+      });
+  }
+  verifyInitialSubmissionDownloadAllBtnExists() {
+    cy.xpath(initialSubmissionDownloadAllBtn).should("be.visible");
+  }
+  clickInitialSubmissionDownloadAllBtn() {
+    cy.xpath(initialSubmissionDownloadAllBtn).click();
+  }
+  verifyWithdrawalRequestedCaretBtnExists() {
+    cy.xpath(withdrawalRequestedCaretBtn).should("be.visible");
+  }
+  clickWithdrawalRequestedCaretBtn() {
+    cy.xpath(withdrawalRequestedCaretBtn).click();
+  }
+  expandWithdrawalRequestedCaretBtn() {
+    cy.xpath(withdrawalRequestedCaretBtn)
+      .invoke("attr", "aria-expanded")
+      .then(($isExpanded) => {
+        if ($isExpanded === "false") {
+          //only click to expand
+          cy.xpath(withdrawalRequestedCaretBtn).click();
+        }
+      });
+  }
+  collapseWithdrawalRequestedCaretBtn() {
+    cy.xpath(withdrawalRequestedCaretBtn)
+      .invoke("attr", "aria-expanded")
+      .then(($isExpanded) => {
+        if ($isExpanded === "true") {
+          //only click to expand
+          cy.xpath(withdrawalRequestedCaretBtn).click();
+        }
+      });
+  }
+  verifyWithdrawalRequestedDownloadAllBtnExists() {
+    cy.xpath(withdrawalRequestedDownloadAllBtn).should("be.visible");
+  }
+  clickWithdrawalRequestedDownloadAllBtn() {
+    cy.xpath(withdrawalRequestedDownloadAllBtn).click();
   }
 }
 export default oneMacPackageDetailsPage;
