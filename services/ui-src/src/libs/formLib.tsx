@@ -54,11 +54,7 @@ type ConfirmSubmitType = {
 
 export const DefaultFileTypesInfo = () => (
   <p>
-    We accept the following file types:{" "}
-    <b>
-      .doc, .docx, .jpg, .odp, .ods, .odt, .png, .pdf, .ppt, .pptx, .rtf, .txt,
-      .xls, .xlsx, and a few others.
-    </b>{" "}
+    We accept the following file types: <b>.docx, .jpg, .pdf, .png, .xlsx.</b>{" "}
     See the full list on the{" "}
     <Link to={ROUTES.FAQ_ACCEPTED_FILE_TYPES} target={FAQ_TARGET}>
       FAQ Page
