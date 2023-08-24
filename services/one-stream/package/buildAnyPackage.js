@@ -250,19 +250,20 @@ export const buildAnyPackage = async (packageId, config) => {
         }
       }
 
-      config.packageAttributes.forEach((attributeName) => {
-        if (anEvent[attributeName]) {
-          if (attributeName === "parentId") {
-            // having a parent adds the GSI2pk index
-            putParams.Item.GSI2pk = anEvent.parentId;
-            putParams.Item.GSI2sk = anEvent.componentType;
-          }
+      config.packageAttributes &&
+        config.packageAttributes.forEach((attributeName) => {
+          if (anEvent[attributeName]) {
+            if (attributeName === "parentId") {
+              // having a parent adds the GSI2pk index
+              putParams.Item.GSI2pk = anEvent.parentId;
+              putParams.Item.GSI2sk = anEvent.componentType;
+            }
 
-          // update the attribute if this is the latest event
-          if (timestamp === lmTimestamp)
-            putParams.Item[attributeName] = anEvent[attributeName];
-        }
-      });
+            // update the attribute if this is the latest event
+            if (timestamp === lmTimestamp)
+              putParams.Item[attributeName] = anEvent[attributeName];
+          }
+        });
     });
 
     //if any attribute was not yet populated from current event; then populate from currentPackage
