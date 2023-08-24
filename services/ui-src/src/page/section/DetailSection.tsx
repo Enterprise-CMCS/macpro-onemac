@@ -291,9 +291,11 @@ export const DetailSection = ({
                     contentClassName="accordion-content"
                     heading={
                       "Submitted on " +
-                        formatDate(adminChange.changeTimestamp) +
-                        " - " +
-                        adminChange?.changeType ?? "Manual Update"
+                      formatDate(adminChange.changeTimestamp) +
+                      " - " +
+                      adminChange.changeType
+                        ? adminChange.changeType
+                        : "Manual Update"
                     }
                     headingLevel="6"
                     id={"admin_change_" + index + "_caret"}
