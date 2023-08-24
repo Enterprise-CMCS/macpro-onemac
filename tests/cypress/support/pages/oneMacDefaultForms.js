@@ -5,6 +5,17 @@ const modalCancelBTN =
   "//*[@id='react-aria-modal-dialog']//button[text()='Cancel']";
 const attachmentInfoDescription =
   "//h3[text()='Attachments']/following-sibling::p[1]";
+const formHeader1 = "#title_bar";
+const formHeader2 = "h2";
+const idLabel = "//h3[contains(text(), 'ID')]";
+const waiverNumberLabel = "//h3[contains(text(), 'Number')]";
+const subsequentDocumentsHeader = (type) =>
+  `//h3[contains(text(),'Subsequent ${type} Documents')]`;
+const coverLetterAttachment = "//div[contains(text(),'Cover Letter')]";
+const additionalInfoHeader = "#additional-information-label";
+const formModal = "#dialog-content";
+const yesSubmitBtn = "//button[text()='Yes, Submit']";
+const firstUploadFileSpot = "#uploader-input-0";
 
 export class oneMacDefaultForms {
   clicksubmitBTN() {
@@ -83,6 +94,42 @@ export class oneMacDefaultForms {
           .should("have.attr", "href", "/FAQ#waiverb-rai-attachments");
         break;
     }
+  }
+  verifyFormHeader1Is(s) {
+    cy.get(formHeader1).contains(s);
+  }
+  verifyFormHeader2Is(s) {
+    cy.get(formHeader2).contains(s);
+  }
+  verifyIDIsPrefilled() {
+    cy.xpath(idLabel)
+      .next("div")
+      .contains(/[A-Z]{2}\-/);
+  }
+  verifyWaiverNumberIsPrefilled() {
+    cy.xpath(waiverNumberLabel)
+      .next("div")
+      .contains(/[A-Z]{2}\-/);
+  }
+  verifySubsequentDocumentsSectionExistsWith(type) {
+    cy.xpath(subsequentDocumentsHeader(type)).should("be.visible");
+  }
+  verifyCoverLetterDoesNotExist() {
+    cy.xpath(coverLetterAttachment).should("not.exist");
+  }
+  verifyAdditionalInfoHeaderExists() {
+    cy.get(additionalInfoHeader).should("be.visible");
+  }
+  verifyModalTextIs(s) {
+    cy.get(formModal).contains(s);
+  }
+  clickYesSubmitBTN() {
+    cy.xpath(yesSubmitBtn).click();
+    cy.wait(8000);
+  }
+  uploadFirstAddFile() {
+    const filePath = "/files/adobe.pdf";
+    cy.get(firstUploadFileSpot).attachFile(filePath);
   }
 }
 export default oneMacDefaultForms;

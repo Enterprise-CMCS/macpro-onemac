@@ -117,11 +117,11 @@ Then("Add file {string} for SPA Pages", (fileName) => {
 });
 
 Then("Add no files to SPA Pages", () => {
-  oneMacSubmitNewMedicaidSpaPage.addNoFilesToSpaPages();
+  OneMacSubmitNewMedicaidSpaPage.addNoFilesToSpaPages();
 });
 
 Then("Verify no files added to SPA Pages", () => {
-  oneMacSubmitNewMedicaidSpaPage.verifyNoFilesAttachedToSpaPages();
+  OneMacSubmitNewMedicaidSpaPage.verifyNoFilesAttachedToSpaPages();
 });
 
 Then("Verify {string} is added to SPA Pages", (fileName) => {
@@ -2127,7 +2127,7 @@ Then("verify a type containing SPA exists for the Type", () => {
 Then("verify the type is Medicaid SPA", () => {
   OneMacPackageDetailsPage.verifyTypeContainsMedicaidSPA();
 });
-Then("verify the type is CHIP SPA ", () => {
+Then("verify the type is CHIP SPA", () => {
   OneMacPackageDetailsPage.verifyTypeContainsCHIPSPA();
 });
 Then("verify the type is Initial Waiver", () => {
@@ -2144,6 +2144,9 @@ Then("verify the type is 1915b Temporary Extension", () => {
 });
 Then("verify the type is 1915b Waiver Amendment", () => {
   OneMacPackageDetailsPage.verifyTypeContains1915bWaiverAmendment();
+});
+Then("verify the type is 1915c Appendix K Amendment", () => {
+  OneMacPackageDetailsPage.verifyTypeContains191cbAppendixKAmendment();
 });
 Then(
   "verify there is a Approved Initial or Renewal Number header in the details section",
@@ -3104,4 +3107,40 @@ Then(
 );
 Then("verify Review Team SRT is not visible in the details section", () => {
   OneMacPackageDetailsPage.verifyReviewTeamSRTDoesNotExists();
+});
+Then("verify Upload Subsequent Documents action exists", () => {
+  OneMacPackageDetailsPage.verifyUploadSubsequentDocumentsActionBtnExists();
+});
+Then("click the Upload Subsequent Documents action button", () => {
+  OneMacPackageDetailsPage.clickUploadSubsequentDocumentsActionBtn();
+});
+Then("verify the form title is {string}", (string) => {
+  OneMacDefaultForms.verifyFormHeader1Is(string);
+});
+Then("verify the form header is {string}", (string) => {
+  OneMacDefaultForms.verifyFormHeader2Is(string);
+});
+Then("verify the ID is prefilled", () => {
+  OneMacDefaultForms.verifyIDIsPrefilled();
+});
+Then("verify the Waiver Number is prefilled", () => {
+  OneMacDefaultForms.verifyWaiverNumberIsPrefilled();
+});
+Then("verify the Subsequent {string} Documents section exists", (type) => {
+  OneMacDefaultForms.verifySubsequentDocumentsSectionExistsWith(type);
+});
+Then("verify the Cover Letter attachment is not listed", () => {
+  OneMacDefaultForms.verifyCoverLetterDoesNotExist();
+});
+Then("verify the Additional Information header exists", () => {
+  OneMacDefaultForms.verifyAdditionalInfoHeaderExists();
+});
+Then("verify the detailed text in the modal contains {string}", (s) => {
+  OneMacDefaultForms.verifyModalTextIs(s);
+});
+Then("click the yes, submit modal button", () => {
+  OneMacDefaultForms.clickYesSubmitBTN();
+});
+Then("Add file for Subsequent Submission", () => {
+  OneMacDefaultForms.uploadFirstAddFile();
 });

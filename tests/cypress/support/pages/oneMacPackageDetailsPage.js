@@ -69,6 +69,8 @@ const subjectHeader = "//h3[contains(text(),'Subject')]";
 const descriptionHeader = "//h3[contains(text(),'Description')]";
 const cPOCNameHeader = "//h3[contains(text(),'CPOC')]";
 const reviewTeamSRTHeader = "//h3[contains(text(),'Review Team (SRT)')]";
+const uploadSubsequentDocumentsActionBtn =
+  "//a[contains(@id,'subsequent-submission-action')]";
 
 export class oneMacPackageDetailsPage {
   verifyPackageDetailsPageIsVisible() {
@@ -171,6 +173,9 @@ export class oneMacPackageDetailsPage {
   }
   verifyTypeContains1915bWaiverAmendment() {
     cy.xpath(typeHeader).next().contains("1915(b) Waiver Amendment");
+  }
+  verifyTypeContains191cbAppendixKAmendment() {
+    cy.xpath(typeHeader).next().contains("1915(c) Appendix K");
   }
   verifyTypeContainsMedicaidSPA() {
     cy.xpath(typeHeader).next().contains("Medicaid SPA");
@@ -442,6 +447,14 @@ export class oneMacPackageDetailsPage {
   }
   verifyReviewTeamSRTDoesNotExists() {
     cy.xpath(reviewTeamSRTHeader).should("not.exist");
+  }
+  verifyUploadSubsequentDocumentsActionBtnExists() {
+    cy.xpath(uploadSubsequentDocumentsActionBtn)
+      .should("be.visible")
+      .and("contain", "Upload Subsequent Documents");
+  }
+  clickUploadSubsequentDocumentsActionBtn() {
+    cy.xpath(uploadSubsequentDocumentsActionBtn).click();
   }
 }
 export default oneMacPackageDetailsPage;
