@@ -447,10 +447,11 @@ export class oneMacPackageDetailsPage {
   verifyReviewTeamSRTHeaderExists() {
     cy.xpath(reviewTeamSRTHeader).should("be.visible");
   }
-  verifyReviewTeamSRTValueExists() {
-    cy.xpath(reviewTeamSRTHeader)
-      .next("div")
-      .contains(/^(?!\s*$).+/);
+  verifyReviewTeamSRTDoesNotExists() {
+    cy.xpath(reviewTeamSRTHeader).should("not.exist");
+  }
+  verifyCPOCNameDoesNotExists() {
+    cy.xpath(cPOCNameHeader).should("not.exist");
   }
   verifyFormalRAIResponseCaretBtnExists() {
     cy.xpath(formalRAIResponseCaretBtn).should("be.visible");
