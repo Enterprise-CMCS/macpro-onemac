@@ -447,6 +447,11 @@ export class oneMacPackageDetailsPage {
   verifyReviewTeamSRTHeaderExists() {
     cy.xpath(reviewTeamSRTHeader).should("be.visible");
   }
+  verifyReviewTeamSRTValueExists() {
+    cy.xpath(reviewTeamSRTHeader)
+      .next("div")
+      .contains(/^(?!\s*$).+/);
+  }
   verifyReviewTeamSRTDoesNotExists() {
     cy.xpath(reviewTeamSRTHeader).should("not.exist");
   }

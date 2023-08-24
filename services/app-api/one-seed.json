@@ -56297,7 +56297,7 @@
 {
   "clockEndTimestamp": 1681930575838,
   "componentType": "waiverappk",
-  "eventTimestamp": 1674158175838,
+  "eventTimestamp": 1672680579000,
   "transmittalNumberWarningMessage": "",
   "currentStatus": "Submitted",
   "attachments": [
@@ -56326,12 +56326,12 @@
   "proposedEffectiveDate": "2023-01-20",
   "GSI1sk": "MD-22958.R00.01",
   "additionalInformation": "created new APP k ",
-  "submissionTimestamp": 1674158175838,
+  "submissionTimestamp": 1672680579000,
   "waiverAuthority": "1915(c)",
   "GSI1pk": "OneMAC#submitwaiverappk",
   "submitterEmail": "mdstateonemac@gmail.com",
   "territory": "MD",
-  "sk": "OneMAC#1674158175838",
+  "sk": "OneMAC#1672680579000",
   "componentId": "MD-22958.R00.01",
   "pk": "MD-22958.R00.01",
   "submitterName": "MDSTATE SUBMITTERNK",
@@ -59289,5 +59289,31 @@
   },
   "pk": "MD-2200.R00.10",
   "RO_ANALYST": null
+},
+{
+ "pk": "MD-0023.R06.02",
+ "sk": "OneMAC#1672764062740",
+ "additionalInformation": "test",
+ "attachments": [
+  {
+   "contentType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+   "filename": "file.docx",
+   "s3Key": "1672764062055/file.docx",
+   "title": "1915(c) Appendix K Amendment Waiver Template",
+   "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A30413432-e223-4a6d-bfe1-7ed87236ff55/1672764062055/file.docx"
+  }
+ ],
+ "clockEndTimestamp": 1680536462740,
+ "componentId": "MD-0023.R06.02",
+ "componentType": "waiverappk",
+ "convertTimestamp": 1674854066766,
+ "currentStatus": "Submitted",
+ "eventTimestamp": 1672764062740,
+ "GSI1pk": "OneMAC#submitwaiverappk",
+ "GSI1sk": "MD-0023.R06.02",
+ "proposedEffectiveDate": "2023-23-08",
+ "submissionTimestamp": 1672764062740,
+ "submitterEmail": "mdstateonemac@gmail.com",
+ "submitterName": "MDSTATE SUBMITTERNK"
 }
 ]
