@@ -2030,63 +2030,92 @@
     ],
     "submitterName": "Statesubmitter Nightwatch"
   },
+{
+ "pk": "MD-22-2205-VM",
+ "sk": "Package",
+ "adminChanges": [
   {
-    "clockEndTimestamp": 1680063221990,
-    "componentType": "medicaidspa",
-    "currentStatus": "Submitted",
-    "waiverExtensions": [],
-    "attachments": [
-      {
-        "s3Key": "1672290820800/excel.xlsx",
-        "filename": "excel.xlsx",
-        "title": "CMS Form 179",
-        "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-        "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1672290820800/excel.xlsx"
-      },
-      {
-        "s3Key": "1672290820801/textnotes.txt",
-        "filename": "textnotes.txt",
-        "title": "SPA Pages",
-        "contentType": "text/plain",
-        "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1672290820801/textnotes.txt"
-      }
-    ],
-    "proposedEffectiveDate": "-- --",
-    "GSI1sk": "MD-22-2205-VM",
-    "additionalInformation": "test",
-    "submissionTimestamp": 1672290821990,
-    "GSI1pk": "OneMAC#spa",
-    "submitterEmail": "statesubmitter@nightwatch.test",
-    "sk": "Package",
-    "cpocName": "Chester Tester",
-    "reviewTeam": ["Lester Tester", "Super Tester", "Jimmy Tester"],
-    "componentId": "MD-22-2205-VM",
-    "subject": "OneMac Connection test",
-    "description": "pending-rai",
-    "adminChanges": [{
-      "changeTimestamp": 1675987200000,
-      "changeMade": "ID changed from MD-21-2205-VM to MD-22-2205-VM",
-      "changeReason": "Per request from Charlie Tester in Help Desk ticket INC34224\n\nThis ID should be for year 2022."
-    }],
-    "raiResponses": [
-      {
-        "additionalInformation": "",
-        "submissionTimestamp": 1673973536912,
-        "attachments": [
-          {
-            "s3Key": "1673973534414/adobe.pdf",
-            "filename": "adobe.pdf",
-            "title": "RAI Response",
-            "contentType": "application/pdf",
-            "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1673973534414/adobe.pdf"
-          }
-        ]
-      }
-    ],
-    "lastEventTimestamp": 1673973536912,
-    "pk": "MD-22-2205-VM",
-    "submitterName": "Statesubmitter Nightwatch"
+   "changeMade": "ID changed from MD-22-2205-KG to MD-22-2205-VM",
+   "changeReason": "Per request from Susan Jester in Help Desk ticket INC324\n\nThis RAI Repsonse is for MD-22-2205-VM, not MD-22-2205-KG.",
+   "changeTimestamp": 1675989200000
   },
+  {
+   "changeMade": "ID changed from MD-21-2205-VM to MD-22-2205-VM",
+   "changeReason": "Per request from Charlie Tester in Help Desk ticket INC34224\n\nThis ID should be for year 2022.",
+   "changeTimestamp": 1675987200000
+  }
+ ],
+ "approvedEffectiveDate": "-- --",
+ "componentId": "MD-22-2205-VM",
+ "componentType": "medicaidspa",
+ "cpocEmail": "\"Tester, Chester (CPOC)\" <chesterT@example.gov>",
+ "cpocName": "Chester Tester",
+ "currentStatus": "RAI Issued",
+ "description": "pending-rai seed marker",
+ "finalDispositionDate": "-- --",
+ "GSI1pk": "OneMAC#spa",
+ "GSI1sk": "MD-22-2205-VM",
+ "lastEventTimestamp": 1675444241667,
+ "latestRaiResponseTimestamp": 1673973536912,
+ "proposedEffectiveDate": "2023-04-06",
+ "reverseChrono": [
+  {
+   "action": "Submitted",
+   "additionalInformation": "",
+   "attachments": [
+    {
+     "contentType": "application/pdf",
+     "filename": "adobe.pdf",
+     "s3Key": "1673973534414/adobe.pdf",
+     "title": "RAI Response",
+     "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1673973534414/adobe.pdf"
+    }
+   ],
+   "currentStatus": "Submitted",
+   "eventTimestamp": 1673973536912,
+   "timestamp": 1673973536912,
+   "type": "Formal RAI Response"
+  },
+  {
+   "action": "Submitted",
+   "additionalInformation": "test",
+   "attachments": [
+    {
+     "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+     "filename": "excel.xlsx",
+     "s3Key": "1672290820800/excel.xlsx",
+     "title": "CMS Form 179",
+     "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1672290820800/excel.xlsx"
+    },
+    {
+     "contentType": "text/plain",
+     "filename": "textnotes.txt",
+     "s3Key": "1672290820801/textnotes.txt",
+     "title": "SPA Pages",
+     "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1672290820801/textnotes.txt"
+    }
+   ],
+   "currentStatus": "Submitted",
+   "eventTimestamp": 1672290821990,
+   "timestamp": 1672290821990,
+   "type": "Initial Package"
+  }
+ ],
+ "reviewTeam": [
+  "Lester Tester",
+  "Super Tester",
+  "Jimmy Tester"
+ ],
+ "reviewTeamEmailList": [
+  "\"Tester, Lester (SRT)\" <lesterT@example.gov>",
+  "\"Tester, Super (SRT)\" <SuperT@example.gov>",
+  "\"Tester, Jimmy (SRT)\" <jimmyT@example.gov>"
+ ],
+ "subject": "OneMac Connection testing",
+ "submissionTimestamp": 1673973536912,
+ "submitterEmail": "statesubmitter@nightwatch.test",
+ "submitterName": "Statesubmitter Nightwatch"
+},
   {
     "PRIORITY_COMPLEXITY": null,
     "STATES": [
@@ -8259,42 +8288,45 @@
     "componentId": "MD-23-3333-VM",
     "pk": "MD-23-3333-VM"
   },
+{
+ "pk": "MD-23-3333-VM",
+ "sk": "Package",
+ "adminChanges": [
   {
-    "componentType": "medicaidspa",
-    "currentStatus": "Under Review",
-    "waiverExtensions": [],
-    "attachments": [],
-    "proposedEffectiveDate": "2023-05-17",
-    "GSI1sk": "MD-23-3333-VM",
-    "submissionTimestamp": 1675753200000,
-    "GSI1pk": "OneMAC#spa",
-    "submitterEmail": "-- --",
-    "sk": "Package",
-    "cpocName": "Chester Tester",
-    "reviewTeam": ["Lester Tester", "Super Tester", "Jimmy Tester"],
-    "componentId": "MD-23-3333-VM",
-    "raiResponses": [
-      {
-        "additionalInformation": "Testing the RAI Response connection",
-        "attachments": [
-          {
-            "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-            "filename": "OneMACInactivated.xlsx",
-            "s3Key": "1673472581115/OneMACInactivated.xlsx",
-            "title": "Waiver RAI Response",
-            "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1673472581115/OneMACInactivated.xlsx"
-          }
-        ],
-        "submissionTimestamp": 1675987200000
-      }
-    ],
-    "latestRaiResponseTimestamp": 1675987200000,
-    "lastEventTimestamp": 1676387312330,
-    "pk": "MD-23-3333-VM",
-    "subject": "test subject",
-    "description": "test description",
-    "submitterName": "-- --"
-  },
+   "changeMade": "OneMAC submission created from SEA Tool entry",
+   "changeReason": "This is a Not Originally Submitted in OneMAC (NOSO) package that users need to see in OneMAC.",
+   "changeTimestamp": 1684154035362
+  }
+ ],
+ "approvedEffectiveDate": "-- --",
+ "componentId": "MD-23-3333-VM",
+ "componentType": "medicaidspa",
+ "cpocEmail": "\"Tester, Chester (CPOC)\" <chesterT@example.gov>",
+ "cpocName": "Chester Tester",
+ "currentStatus": "Under Review",
+ "description": "NOSO Medicaid SPA",
+ "finalDispositionDate": "-- --",
+ "GSI1pk": "OneMAC#spa",
+ "GSI1sk": "MD-23-3333-VM",
+ "lastEventTimestamp": 1676276238307,
+ "proposedEffectiveDate": "2023-05-17",
+ "reverseChrono": [
+ ],
+ "reviewTeam": [
+  "Lester Tester",
+  "Super Tester",
+  "Jimmy Tester"
+ ],
+ "reviewTeamEmailList": [
+  "\"Tester, Lester (SRT)\" <lesterT@example.gov>",
+  "\"Tester, Super (SRT)\" <SuperT@example.gov>",
+  "\"Tester, Jimmy (SRT)\" <jimmyT@example.gov>"
+ ],
+ "subject": "OneMac Connection test - seed data",
+ "submissionTimestamp": 1675753200000,
+ "submitterEmail": "-- --",
+ "submitterName": "-- --"
+},
   {
     "PRIORITY_COMPLEXITY": null,
     "STATES": [
@@ -8577,45 +8609,64 @@
     "pk": "MD-22-2201-VM",
     "submitterName": "MDSTATE SUBMITTERNK"
   },
+{
+ "pk": "MD-22-2201-VM",
+ "sk": "Package",
+ "adminChanges": [
+ ],
+ "approvedEffectiveDate": "-- --",
+ "componentId": "MD-22-2201-VM",
+ "componentType": "medicaidspa",
+ "cpocEmail": "\"Tester, Chester (CPOC)\" <chesterT@example.gov>",
+ "cpocName": "Chester Tester",
+ "currentStatus": "Disapproved",
+ "description": "disapproved status - from seed data",
+ "finalDispositionDate": "2023-01-12",
+ "GSI1pk": "OneMAC#spa",
+ "GSI1sk": "MD-22-2201-VM",
+ "lastEventTimestamp": 1673562987470,
+ "proposedEffectiveDate": "-- --",
+ "reverseChrono": [
   {
-    "clockEndTimestamp": 1680063330207,
-    "componentType": "medicaidspa",
-    "currentStatus": "Disapproved",
-    "waiverExtensions": [],
-    "attachments": [
-      {
-        "s3Key": "1672290929251/file.docx",
-        "filename": "file.docx",
-        "title": "CMS Form 179",
-        "contentType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-        "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A30413432-e223-4a6d-bfe1-7ed87236ff55/1672290929251/file.docx"
-      },
-      {
-        "s3Key": "1672290929252/excel.xlsx",
-        "filename": "excel.xlsx",
-        "title": "SPA Pages",
-        "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-        "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A30413432-e223-4a6d-bfe1-7ed87236ff55/1672290929252/excel.xlsx"
-      }
-    ],
-    "proposedEffectiveDate": "-- --",
-    "finalDispositionDate": "2023-01-12",
-    "GSI1sk": "MD-22-2201-VM",
-    "additionalInformation": "test",
-    "submissionTimestamp": 1672290930207,
-    "GSI1pk": "OneMAC#spa",
-    "submitterEmail": "mdstateonemac@gmail.com",
-    "sk": "Package",
-    "cpocName": "Chester Tester",
-    "reviewTeam": ["Lester Tester", "Super Tester", "Jimmy Tester"],
-    "componentId": "MD-22-2201-VM",
-    "raiResponses": [],
-    "lastEventTimestamp": 1673562987470,
-    "pk": "MD-22-2201-VM",
-    "subject": "test subject",
-    "description": "test description",
-    "submitterName": "MDSTATE SUBMITTERNK"
-  },
+   "action": "Submitted",
+   "additionalInformation": "test",
+   "attachments": [
+    {
+     "contentType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+     "filename": "file.docx",
+     "s3Key": "1672290929251/file.docx",
+     "title": "CMS Form 179",
+     "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A30413432-e223-4a6d-bfe1-7ed87236ff55/1672290929251/file.docx"
+    },
+    {
+     "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+     "filename": "excel.xlsx",
+     "s3Key": "1672290929252/excel.xlsx",
+     "title": "SPA Pages",
+     "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A30413432-e223-4a6d-bfe1-7ed87236ff55/1672290929252/excel.xlsx"
+    }
+   ],
+   "currentStatus": "Submitted",
+   "eventTimestamp": 1672290930207,
+   "timestamp": 1672290930207,
+   "type": "Initial Package"
+  }
+ ],
+ "reviewTeam": [
+  "Lester Tester",
+  "Super Tester",
+  "Jimmy Tester"
+ ],
+ "reviewTeamEmailList": [
+  "\"Tester, Lester (SRT)\" <lesterT@example.gov>",
+  "\"Tester, Super (SRT)\" <SuperT@example.gov>",
+  "\"Tester, Jimmy (SRT)\" <jimmyT@example.gov>"
+ ],
+ "subject": "OneMac Connection testing",
+ "submissionTimestamp": 1672290930207,
+ "submitterEmail": "mdstateonemac@gmail.com",
+ "submitterName": "MDSTATE SUBMITTERNK"
+},
   {
     "PRIORITY_COMPLEXITY": null,
     "STATES": [
@@ -9125,44 +9176,64 @@
     "pk": "MD-22-2202-VM",
     "submitterName": "MDSTATE SUBMITTERNK"
   },
+ {
+ "pk": "MD-22-2202-VM",
+ "sk": "Package",
+ "adminChanges": [
+ ],
+ "approvedEffectiveDate": "-- --",
+ "componentId": "MD-22-2202-VM",
+ "componentType": "medicaidspa",
+ "cpocEmail": "\"Tester, Chester (CPOC)\" <chesterT@example.gov>",
+ "cpocName": "Chester Tester",
+ "currentStatus": "Package Withdrawn",
+ "description": "withdrawn status",
+ "finalDispositionDate": "2023-01-12",
+ "GSI1pk": "OneMAC#spa",
+ "GSI1sk": "MD-22-2202-VM",
+ "lastEventTimestamp": 1673563146807,
+ "proposedEffectiveDate": "-- --",
+ "reverseChrono": [
   {
-    "clockEndTimestamp": 1680063360057,
-    "componentType": "medicaidspa",
-    "currentStatus": "Package Withdrawn",
-    "waiverExtensions": [],
-    "attachments": [
-      {
-        "s3Key": "1672290948201/textnotes.txt",
-        "filename": "textnotes.txt",
-        "title": "CMS Form 179",
-        "contentType": "text/plain",
-        "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A30413432-e223-4a6d-bfe1-7ed87236ff55/1672290948201/textnotes.txt"
-      },
-      {
-        "s3Key": "1672290948202/15MB.pdf",
-        "filename": "15MB.pdf",
-        "title": "SPA Pages",
-        "contentType": "application/pdf",
-        "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A30413432-e223-4a6d-bfe1-7ed87236ff55/1672290948202/15MB.pdf"
-      }
-    ],
-    "proposedEffectiveDate": "-- --",
-    "GSI1sk": "MD-22-2202-VM",
-    "additionalInformation": "test",
-    "submissionTimestamp": 1672290960057,
-    "GSI1pk": "OneMAC#spa",
-    "submitterEmail": "mdstateonemac@gmail.com",
-    "sk": "Package",
-    "cpocName": "Chester Tester",
-    "reviewTeam": ["Lester Tester", "Super Tester", "Jimmy Tester"],
-    "componentId": "MD-22-2202-VM",
-    "raiResponses": [],
-    "lastEventTimestamp": 1673563146807,
-    "pk": "MD-22-2202-VM",
-    "subject": "test subject",
-    "description": "test description",
-    "submitterName": "MDSTATE SUBMITTERNK"
-  },
+   "action": "Submitted",
+   "additionalInformation": "test",
+   "attachments": [
+    {
+     "contentType": "text/plain",
+     "filename": "textnotes.txt",
+     "s3Key": "1672290948201/textnotes.txt",
+     "title": "CMS Form 179",
+     "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A30413432-e223-4a6d-bfe1-7ed87236ff55/1672290948201/textnotes.txt"
+    },
+    {
+     "contentType": "application/pdf",
+     "filename": "15MB.pdf",
+     "s3Key": "1672290948202/15MB.pdf",
+     "title": "SPA Pages",
+     "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A30413432-e223-4a6d-bfe1-7ed87236ff55/1672290948202/15MB.pdf"
+    }
+   ],
+   "currentStatus": "Submitted",
+   "eventTimestamp": 1672290960057,
+   "timestamp": 1672290960057,
+   "type": "Initial Package"
+  }
+ ],
+ "reviewTeam": [
+  "Lester Tester",
+  "Super Tester",
+  "Jimmy Tester"
+ ],
+ "reviewTeamEmailList": [
+  "\"Tester, Lester (SRT)\" <lesterT@example.gov>",
+  "\"Tester, Super (SRT)\" <SuperT@example.gov>",
+  "\"Tester, Jimmy (SRT)\" <jimmyT@example.gov>"
+ ],
+ "subject": "OneMac Connection test - package item in seed data",
+ "submissionTimestamp": 1672290960057,
+ "submitterEmail": "mdstateonemac@gmail.com",
+ "submitterName": "MDSTATE SUBMITTERNK"
+},
   {
     "PRIORITY_COMPLEXITY": null,
     "STATES": [
@@ -10796,27 +10867,50 @@
     "componentId": "MD-23-3331-VM",
     "pk": "MD-23-3331-VM"
   },
+{
+ "pk": "MD-23-3331-VM",
+ "sk": "Package",
+ "adminChanges": [
   {
-    "componentType": "medicaidspa",
-    "currentStatus": "RAI Issued",
-    "waiverExtensions": [],
-    "attachments": [],
-    "proposedEffectiveDate": "2023-04-20",
-    "GSI1sk": "MD-23-3331-VM",
-    "submissionTimestamp": 1674235779000,
-    "GSI1pk": "OneMAC#spa",
-    "submitterEmail": "-- --",
-    "sk": "Package",
-    "cpocName": "Chester Tester",
-    "reviewTeam": ["Lester Tester", "Super Tester", "Jimmy Tester"],
-    "componentId": "MD-23-3331-VM",
-    "raiResponses": [],
-    "lastEventTimestamp": 1676477951800,
-    "pk": "MD-23-3331-VM",
-    "subject": "test subject",
-    "description": "test description",
-    "submitterName": "-- --"
+   "changeMade": "OneMAC submission created from SEA Tool entry",
+   "changeReason": "This is a Not Originally Submitted in OneMAC (NOSO) package that users need to see in OneMAC.",
+   "changeTimestamp": 1684154035362
   },
+  {
+   "changeMade": "OneMAC submission created from SEA Tool entry",
+   "changeReason": "This is a Not Originally Submitted in OneMAC (NOSO) package that users need to see in OneMAC.",
+   "changeTimestamp": 1674235779000
+  }
+ ],
+ "approvedEffectiveDate": "-- --",
+ "componentId": "MD-23-3331-VM",
+ "componentType": "medicaidspa",
+ "cpocEmail": "\"Tester, Chester (CPOC)\" <chesterT@example.gov>",
+ "cpocName": "Chester Tester",
+ "currentStatus": "RAI Issued",
+ "description": "NOSO list rai with response - seed marker",
+ "finalDispositionDate": "-- --",
+ "GSI1pk": "OneMAC#spa",
+ "GSI1sk": "MD-23-3331-VM",
+ "lastEventTimestamp": 1676103563000,
+ "proposedEffectiveDate": "2023-04-20",
+ "reverseChrono": [
+ ],
+ "reviewTeam": [
+  "Lester Tester",
+  "Super Tester",
+  "Jimmy Tester"
+ ],
+ "reviewTeamEmailList": [
+  "\"Tester, Lester (SRT)\" <lesterT@example.gov>",
+  "\"Tester, Super (SRT)\" <SuperT@example.gov>",
+  "\"Tester, Jimmy (SRT)\" <jimmyT@example.gov>"
+ ],
+ "subject": "OneMac Connection test",
+ "submissionTimestamp": 1675926000000,
+ "submitterEmail": "-- --",
+ "submitterName": "-- --"
+},
 {
  "pk": "MD-23-3331-VM",
  "sk": "SEATool#1676103563000",
@@ -11079,7 +11173,6 @@
     "componentType": "medicaidspa",
     "eventTimestamp": 1674138731121,
     "currentStatus": "Submitted",
-    "originallyFrom": "cms-spa-form-master-change-requests",
     "attachments": [
       {
         "s3Key": "1674138729997/excel.xlsx",
@@ -11101,7 +11194,6 @@
     "additionalInformation": "",
     "submissionTimestamp": 1674138731121,
     "GSI1pk": "OneMAC#submitmedicaidspa",
-    "convertTimestamp": 1674854063359,
     "submitterEmail": "statesubmitter@nightwatch.test",
     "sk": "OneMAC#1674138731121",
     "componentId": "MD-22-2206-VM",
@@ -11109,44 +11201,58 @@
     "submitterName": "Statesubmitter Nightwatch"
   },
   {
-    "clockEndTimestamp": 1681911131121,
-    "componentType": "medicaidspa",
-    "currentStatus": "Approved",
-    "waiverExtensions": [],
-    "attachments": [
-      {
-        "s3Key": "1674138729997/excel.xlsx",
-        "filename": "excel.xlsx",
-        "title": "CMS Form 179",
-        "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-        "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A35b18373-d59d-4d36-8d7f-2ca368f6a6c1/1674138729997/excel.xlsx"
-      },
-      {
-        "s3Key": "1674138729999/file.docx",
-        "filename": "file.docx",
-        "title": "SPA Pages",
-        "contentType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-        "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A35b18373-d59d-4d36-8d7f-2ca368f6a6c1/1674138729999/file.docx"
-      }
-    ],
-    "proposedEffectiveDate": "2023-02-03",
-    "finalDispositionDate": "2023-01-19",
-    "approvedEffectiveDate": "2023-02-03",
-    "GSI1sk": "MD-22-2206-VM",
-    "submissionTimestamp": 1674138731121,
-    "GSI1pk": "OneMAC#spa",
-    "submitterEmail": "statesubmitter@nightwatch.test",
-    "sk": "Package",
-    "cpocName": "Chester Tester",
-    "reviewTeam": ["Lester Tester", "Super Tester", "Jimmy Tester"],
-    "componentId": "MD-22-2206-VM",
-    "raiResponses": [],
-    "lastEventTimestamp": 1674139129880,
-    "pk": "MD-22-2206-VM",
-    "subject": "test subject",
-    "description": "test description",
-    "submitterName": "Statesubmitter Nightwatch"
-  },
+ "pk": "MD-22-2206-VM",
+ "sk": "Package",
+ "adminChanges": [
+ ],
+ "approvedEffectiveDate": "2023-02-03",
+ "componentId": "MD-22-2206-VM",
+ "componentType": "medicaidspa",
+ "cpocEmail": "\"Tester, Chester (CPOC)\" <chesterT@example.gov>",
+ "cpocName": "Chester Tester",
+ "currentStatus": "Approved",
+ "description": "approved status - some text added only to seed data",
+ "finalDispositionDate": "2023-01-19",
+ "GSI1pk": "OneMAC#spa",
+ "GSI1sk": "MD-22-2206-VM",
+ "lastEventTimestamp": 1674139129880,
+ "proposedEffectiveDate": "2023-02-03",
+ "reverseChrono": [
+  {
+   "action": "Submitted",
+   "additionalInformation": "",
+   "attachments": [
+    {
+     "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+     "filename": "excel.xlsx",
+     "s3Key": "1674138729997/excel.xlsx",
+     "title": "CMS Form 179",
+     "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A35b18373-d59d-4d36-8d7f-2ca368f6a6c1/1674138729997/excel.xlsx"
+    },
+    {
+     "contentType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+     "filename": "file.docx",
+     "s3Key": "1674138729999/file.docx",
+     "title": "SPA Pages",
+     "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A35b18373-d59d-4d36-8d7f-2ca368f6a6c1/1674138729999/file.docx"
+    }
+   ],
+   "currentStatus": "Submitted",
+   "eventTimestamp": 1674138731121,
+   "timestamp": 1674138731121,
+   "type": "Initial Package"
+  }
+ ],
+ "reviewTeam": [
+  "Bob aaa"
+ ],
+ "reviewTeamEmailList": [
+ ],
+ "subject": "OneMac Connection test",
+ "submissionTimestamp": 1674138731121,
+ "submitterEmail": "statesubmitter@nightwatch.test",
+ "submitterName": "Statesubmitter Nightwatch"
+},
   {
     "PRIORITY_COMPLEXITY": null,
     "STATES": [
