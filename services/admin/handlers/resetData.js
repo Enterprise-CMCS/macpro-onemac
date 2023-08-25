@@ -376,6 +376,179 @@ const undoAdminChanges = [
     pk: "MD-22958.R00.01",
     submitterName: "undefined undefined",
   },
+  {
+    pk: "MD-23-7652-VM",
+    sk: "Package",
+    adminChanges: [
+      {
+        changeMade:
+          "Systemadmin Nightwatch has enabled State package action to withdraw Formal RAI Response",
+        changeReason:
+          "Allow the RAI Response withdraw in the automated testing.",
+        changeTimestamp: 1690980331889,
+      },
+    ],
+    approvedEffectiveDate: "-- --",
+    componentId: "MD-23-7652-VM",
+    componentType: "medicaidspa",
+    cpocEmail: '"Tester, Chester (CPOC)" <chesterT@example.gov>',
+    cpocName: "Chester Tester",
+    currentStatus: "RAI Response Withdraw Enabled",
+    description: "package to test RAI withdrawing",
+    GSI1pk: "OneMAC#spa",
+    GSI1sk: "MD-23-7652-VM",
+    lastEventTimestamp: 1690980331889,
+    latestRaiResponseTimestamp: 1690980331889,
+    proposedEffectiveDate: "-- --",
+    reverseChrono: [
+      {
+        action: "Submitted",
+        additionalInformation: "Here is the official RAI Response",
+        attachments: [
+          {
+            contentType: "image/png",
+            filename: "Screenshot 2023-03-31 at 4.46.08 PM.png",
+            s3Key: "1689347857918/Screenshot 2023-03-31 at 4.46.08 PM.png",
+            title: "RAI Response",
+            url: "https://uploads-oy2-22413-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Abecb694d-f091-42c5-a7b5-d9a974b1c9f6/1689347857918/Screenshot%202023-03-31%20at%204.46.08%20PM.png",
+          },
+        ],
+        currentStatus: "RAI Response Withdraw Enabled",
+        eventTimestamp: 1690980331889,
+        timestamp: 1673709577000,
+        type: "Formal RAI Response",
+      },
+      {
+        action: "Submitted",
+        additionalInformation: "test",
+        attachments: [
+          {
+            contentType:
+              "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            filename: "excel.xlsx",
+            s3Key: "1672290671436/excel.xlsx",
+            title: "CMS Form 179",
+            url: "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1672290671436/excel.xlsx",
+          },
+          {
+            contentType: "text/plain",
+            filename: "textnotes.txt",
+            s3Key: "1672290671438/textnotes.txt",
+            title: "SPA Pages",
+            url: "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1672290671438/textnotes.txt",
+          },
+        ],
+        currentStatus: "Submitted",
+        eventTimestamp: 1672290673531,
+        timestamp: 1672290673531,
+        type: "Initial Package",
+      },
+    ],
+    reviewTeam: [
+      "Lester Tester",
+      "Super Tester",
+      "Jimmy Tester",
+      "Lester2 Tester",
+      "Super2 Tester",
+      "Jimmy2 Tester",
+    ],
+    reviewTeamEmailList: [
+      '"Tester, Lester (SRT)" <lesterT@example.gov>',
+      '"Tester, Super (SRT)" <SuperT@example.gov>',
+      '"Tester, Jimmy (SRT)" <jimmyT@example.gov>',
+      '"Tester, Lester2 (SRT)" <lesterT2@example.gov>',
+      '"Tester, Super2 (SRT)" <SuperT2@example.gov>',
+      '"Tester, Jimmy2 (SRT)" <jimmyT2@example.gov>',
+    ],
+    subject: "OneMac Connection test",
+    submissionTimestamp: 1673709577000,
+    submitterEmail: "statesubmitter@nightwatch.test",
+    submitterName: "StateSubmitter Nightwatch",
+  },
+  {
+    pk: "MD-22116.R00.00",
+    sk: "Package",
+    adminChanges: [
+      {
+        changeMade:
+          "Systemadmin Nightwatch has enabled State package action to withdraw Formal RAI Response",
+        changeReason:
+          "Enable the withdrawing of the RAI Response for the Automated Tests.",
+        changeTimestamp: 1690982549456,
+      },
+    ],
+    approvedEffectiveDate: "-- --",
+    componentId: "MD-22116.R00.00",
+    componentType: "waivernew",
+    cpocEmail: '"Tester, Chester (CPOC)" <chesterT@example.gov>',
+    cpocName: "Chester Tester",
+    currentStatus: "RAI Response Withdraw Enabled",
+    description: "package to test RAI withdrawing",
+    GSI1pk: "OneMAC#waiver",
+    GSI1sk: "MD-22116.R00.00",
+    lastEventTimestamp: 1690982549456,
+    latestRaiResponseTimestamp: 1690982549456,
+    proposedEffectiveDate: "-- --",
+    reverseChrono: [
+      {
+        action: "Submitted",
+        additionalInformation: "Here is the official RAI Response",
+        attachments: [
+          {
+            contentType:
+              "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            filename: "PackagelistView_ExcelExport_Issues.xlsx",
+            s3Key: "1672953505887/PackagelistView_ExcelExport_Issues.xlsx",
+            title: "Waiver RAI Response",
+            url: "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3Ac052f1db-9f55-42aa-9d43-2d957bfc754b/1672953505887/PackagelistView_ExcelExport_Issues.xlsx",
+          },
+        ],
+        currentStatus: "RAI Response Withdraw Enabled",
+        eventTimestamp: 1690982549456,
+        timestamp: 1673709577000,
+        type: "Formal RAI Response",
+      },
+      {
+        action: "Submitted",
+        additionalInformation: "test",
+        attachments: [
+          {
+            contentType:
+              "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+            filename: "file.docx",
+            s3Key: "1672269864615/file.docx",
+            title:
+              "1915(b)(4) FFS Selective Contracting (Streamlined) waiver application pre-print (Initial, Renewal, Amendment)",
+            url: "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A30413432-e223-4a6d-bfe1-7ed87236ff55/1672269864615/file.docx",
+          },
+        ],
+        currentStatus: "Submitted",
+        eventTimestamp: 1672290673531,
+        timestamp: 1672290673531,
+        type: "Initial Package",
+      },
+    ],
+    reviewTeam: [
+      "Lester Tester",
+      "Super Tester",
+      "Jimmy Tester",
+      "Lester2 Tester",
+      "Super2 Tester",
+      "Jimmy2 Tester",
+    ],
+    reviewTeamEmailList: [
+      '"Tester, Lester (SRT)" <lesterT@example.gov>',
+      '"Tester, Super (SRT)" <SuperT@example.gov>',
+      '"Tester, Jimmy (SRT)" <jimmyT@example.gov>',
+      '"Tester, Lester2 (SRT)" <lesterT2@example.gov>',
+      '"Tester, Super2 (SRT)" <SuperT2@example.gov>',
+      '"Tester, Jimmy2 (SRT)" <jimmyT2@example.gov>',
+    ],
+    subject: "OneMac Connection test",
+    submissionTimestamp: 1673709577000,
+    submitterEmail: "statesubmitter@nightwatch.test",
+    submitterName: "StateSubmitter Nightwatch",
+  },
 ];
 
 /**

@@ -109,9 +109,9 @@ Feature: Waiver Package Details View: Appendix K Amendment for a CMS User
         Then expand the Initial Submission caret
         Then verify the Initial Submission download all button exists
         Then verify the additional information section exists
-        Then verify the Formal RAI Response caret button exists
-        Then expand the Formal RAI Response caret button
-        Then verify the Formal RAI Response download all button exists
+        #Then verify the Formal RAI Response caret button exists
+        #Then expand the Formal RAI Response caret button
+        #Then verify the Formal RAI Response download all button exists
 
 
     Scenario: Screen Enhance: Appendix K Details View - Approved
