@@ -293,9 +293,9 @@ export const DetailSection = ({
                       "Submitted on " +
                       formatDate(adminChange.changeTimestamp) +
                       " - " +
-                      adminChange.changeType
+                      (adminChange.changeType
                         ? adminChange.changeType
-                        : "Manual Update"
+                        : "Manual Update")
                     }
                     headingLevel="6"
                     id={"admin_change_" + index + "_caret"}
