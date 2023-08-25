@@ -294,6 +294,7 @@ export const buildAnyPackage = async (packageId, config) => {
     });
 
     putParams.Item.lastEventTimestamp = lmTimestamp;
+    logIt(JSON.stringify(putParams));
     await dynamoDb.put(putParams).promise();
   } catch (e) {
     console.log("%s buildAnyPackage error: ", packageId, e);

@@ -52,7 +52,7 @@ const adminPkgChangeSection = "//h2[text()='Administrative Package Changes']";
 const additionalInfoSection =
   "//section[contains(@id, 'addl-info-chrono')]//h2[text()='Additional Information']";
 const waiverAuthorityHeader = "//h3[text()='Waiver Authority']";
-const attachmentsSection = "//h2[text()='Attachments']";
+const attachmentsSection = "//h2[text()='Supporting Documentation']";
 const downloadAllBtn = "//button[contains(text(),'Download All')]";
 const amendmentTitleHeader = "//h3[text()='Amendment Title']";
 const amendmentNumberHeader = "//h3[text()='Amendment Number']";
