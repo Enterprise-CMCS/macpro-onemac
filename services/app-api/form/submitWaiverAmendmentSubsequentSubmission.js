@@ -4,7 +4,6 @@ import {
   waiverAmendmentBSubsequentSubmission,
   waiverAuthorityB,
   waiverAuthorityB4,
-  RESPONSE_CODE,
 } from "cmscommonlib";
 import handler from "../libs/handler-lib";
 import { submitAny } from "./submitAny";
