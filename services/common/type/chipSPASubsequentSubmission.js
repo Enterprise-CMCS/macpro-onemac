@@ -1,11 +1,10 @@
 import { chipSPA } from "./chipSPA.js";
+import { ONEMAC_TYPE } from "../workflow.js";
 
 export const chipSPASubsequentSubmission = {
-  componentType: "chipspasubsequent",
+  ...chipSPA,
+  componentType: ONEMAC_TYPE.CHIP_SPA_SUBSEQUENT_SUBMISSION,
   typeLabel: "Chip SPA Subsequent Submission",
-  idLabel: "Chip SPA ID",
-  idRegex:
-    "(^[A-Z]{2}-[0-9]{2}-[0-9]{4}-[a-zA-Z0-9]{1,4}$)|(^[A-Z]{2}-[0-9]{2}-[0-9]{4}$)",
   idMustExist: true,
   allowMultiplesWithSameId: true,
   requiredAttachments: [],
@@ -13,15 +12,6 @@ export const chipSPASubsequentSubmission = {
     ...chipSPA.requiredAttachments,
     ...chipSPA.optionalAttachments,
   ],
-  theAttributes: [
-    "componentId",
-    "submissionTimestamp",
-    "currentStatus",
-    "attachments",
-    "additionalInformation",
-    "submitterName",
-    "submitterEmail",
-  ],
-  allowedParentTypes: ["chipspa"],
+  allowedParentTypes: [ONEMAC_TYPE.CHIP_SPA],
   allowedParentStatuses: ["Under Review"],
 };

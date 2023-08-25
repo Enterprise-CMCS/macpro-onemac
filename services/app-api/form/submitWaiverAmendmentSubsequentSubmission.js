@@ -8,21 +8,11 @@ import {
 } from "cmscommonlib";
 import handler from "../libs/handler-lib";
 import { submitAny } from "./submitAny";
-import {
-  defaultFormConfig,
-  defaultParentType,
-  defaultWaiverAuthoritySchema,
-} from "./defaultFormConfig";
+import { defaultWaiverSubsequentSubmissionConfig } from "./defaultFormConfig";
 
 export const waiverAmendmentSubsequentSubmissionFormConfig = {
-  ...defaultFormConfig,
+  ...defaultWaiverSubsequentSubmissionConfig,
   ...waiverAmendmentSubsequentSubmission,
-  successResponseCode:
-    RESPONSE_CODE.SUCCESSFULLY_SUBMITTED_SUBSEQUENT_SUBMISSION,
-  appendToSchema: {
-    parentType: defaultParentType,
-    waiverAuthority: defaultWaiverAuthoritySchema,
-  },
 };
 
 export const waiverAmendmentB4SubsequentFormConifg = {

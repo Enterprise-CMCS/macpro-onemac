@@ -16,8 +16,8 @@ import {
 export const waiverAppKSubsequentSubmissionFormInfo: OneMACFormConfig = {
   ...defaultOneMACFormConfig,
   ...waiverAppKSubsequentSubmission,
-  pageTitle: "Upload Subsequent Medicaid SPA Documentation",
-  detailsHeader: "Medicaid SPA Subsequent Submission",
+  pageTitle: "Upload Subsequent 1915(c) Appendix K Documentation",
+  detailsHeader: "1915(c) Appendix K Subsequent Submission",
   landingPage: ONEMAC_ROUTES.PACKAGE_LIST_WAIVER,
   confirmSubmit: defaultConfirmSubsequentSubmission,
   validateParentAPI: "validateParentOfAny",
@@ -25,7 +25,7 @@ export const waiverAppKSubsequentSubmissionFormInfo: OneMACFormConfig = {
   attachmentIntroJSX: defaultSubsequentAttachmentInstructionsJSX(
     ROUTES.FAQ_ATTACHMENTS_MED_SPA_RAI
   ),
-  attachmentsTitle: "Subsequent Waiver Appendix K Documents",
+  attachmentsTitle: "Subsequent 1915(c) Appendix K Documents",
   addlInfoRequired: true,
   atLeastOneAttachmentRequired: true,
 };

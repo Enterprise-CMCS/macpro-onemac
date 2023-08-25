@@ -16,6 +16,7 @@ export const ONEMAC_TYPE = {
   WAIVER_AMENDMENT_SUBSEQUENT_SUBMISSION: "waiveramendmentsubsequent",
   WAIVER_RENEWAL: "waiverrenewal",
   WAIVER_RENEWAL_WITHDRAW: "waiverrenewalwithdraw",
+  WAIVER_RENEWAL_SUBSEQUENT_SUBMISSION: "waiverrenewalsubsequent",
   WAIVER_RAI: "waiverrai",
   WAIVER_EXTENSION: "waiverextension",
   WAIVER_EXTENSION_B: "waiverextensionb",

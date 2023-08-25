@@ -28,6 +28,30 @@ export const defaultWaiverSchema = {
   proposedEffectiveDate: defaultProposedEffectiveDateSchema,
 };
 
+export const defaultSubsequentSubmissionSchema = {
+  parentId: defaultParentId,
+  parentType: defaultParentType,
+};
+
+export const defaultSubsequentSubmissionConfig = {
+  ...defaultFormConfig,
+  successResponseCode:
+    RESPONSE_CODE.SUCCESSFULLY_SUBMITTED_SUBSEQUENT_SUBMISSION,
+  appendToSchema: {
+    ...defaultSubsequentSubmissionSchema,
+  },
+};
+
+export const defaultWaiverSubsequentSubmissionConfig = {
+  ...defaultFormConfig,
+  successResponseCode:
+    RESPONSE_CODE.SUCCESSFULLY_SUBMITTED_SUBSEQUENT_SUBMISSION,
+  appendToSchema: {
+    ...defaultSubsequentSubmissionSchema,
+    waiverAuthority: defaultWaiverAuthoritySchema,
+  },
+};
+
 export const defaultWithdrawConfig = {
   ...defaultFormConfig,
   successResponseCode: RESPONSE_CODE.WITHDRAW_REQUESTED,
