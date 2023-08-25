@@ -536,7 +536,14 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
           {(formConfig?.requiredAttachments.length > 0 ||
             formConfig.optionalAttachments.length > 0) && (
             <>
-              <h3>{formConfig?.attachmentsTitle ?? "Attachments"}</h3>
+              <h3
+                className={
+                  formConfig.atLeastOneAttachmentRequired ? "required" : ""
+                }
+              >
+                {formConfig?.attachmentsTitle ?? "Attachments"}
+              </h3>
+
               {formConfig.attachmentIntroJSX}
               <FileUploader
                 ref={uploader}

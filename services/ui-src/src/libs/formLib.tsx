@@ -87,9 +87,7 @@ export const RequiredAttachmentSpan = () => (
 );
 
 export const AtLeastOneAttachmentSpan = () => (
-  <p className="req-message">
-    At least one attachment and additional information is required to submit.
-  </p>
+  <p className="req-message">At least one attachment is required to submit.</p>
 );
 
 export const defaultAttachmentInstructionsJSX = (
@@ -154,14 +152,20 @@ export const defaultConfirmSubmitRAI = {
 };
 
 export const defaultSubsequentSubmissionIntroJSX = (
-  <p id="form-intro">
-    Provide revised or additional documentation for your submission. Once you
-    submit this form, a confirmation email is sent to you and to CMS. CMS will
-    use this content to review your package, and you will not be able to edit
-    this form. If CMS needs any additional information, they will follow up by
-    email.
-    <b>If you leave this page, you will lose your progress on this form.</b>
-  </p>
+  <>
+    <p>
+      <span className="required-mark">*</span>
+      indicates required field.
+    </p>
+    <p id="form-intro">
+      Provide revised or additional documentation for your submission. Once you
+      submit this form, a confirmation email is sent to you and to CMS. CMS will
+      use this content to review your package, and you will not be able to edit
+      this form. If CMS needs any additional information, they will follow up by
+      email.
+      <b>If you leave this page, you will lose your progress on this form.</b>
+    </p>
+  </>
 );
 
 export const defaultConfirmSubmitMessageSubsequentSubmission = (
