@@ -633,29 +633,29 @@ export const main = async (event) => {
   );
   console.log("lambda thinks " + promiseItems.length + " Items are deleted");
 
-  await Promise.all(
-    undoAdminChanges.map(async (resetParams) => {
-      try {
-        console.log(
-          `Reset Admin Changes Params are ${JSON.stringify(resetParams)}`
-        );
+  // await Promise.all(
+  //   undoAdminChanges.map(async (resetParams) => {
+  //     try {
+  //       console.log(
+  //         `Reset Admin Changes Params are ${JSON.stringify(resetParams)}`
+  //       );
 
-        await dynamoDb
-          .put({
-            TableName: process.env.oneMacTableName,
-            Item: resetParams,
-          })
-          .promise();
-      } catch (e) {
-        console.log("reset admin changes error: ", e.message);
-      }
-    })
-  );
-  console.log(
-    "lambda thinks " +
-      undoAdminChanges.length +
-      " Items have the admin changes reset"
-  );
+  //       await dynamoDb
+  //         .put({
+  //           TableName: process.env.oneMacTableName,
+  //           Item: resetParams,
+  //         })
+  //         .promise();
+  //     } catch (e) {
+  //       console.log("reset admin changes error: ", e.message);
+  //     }
+  //   })
+  // );
+  // console.log(
+  //   "lambda thinks " +
+  //     undoAdminChanges.length +
+  //     " Items have the admin changes reset"
+  // );
 
   return "Done";
 };
