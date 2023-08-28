@@ -50,6 +50,8 @@ Feature: Appendix K Waiver Type Selection
         Then verify package actions header is visible
         Then verify there are no package actions available
         Then verify the details section exists
+        Then verify there is a Latest Package Activity header in the details section
+        Then verify a full date and time entry exists for the Latest Package Activity
         Then verify the waiver authority header exists
         Then verify there is a State header in the details section
         Then verify a state exists for the State

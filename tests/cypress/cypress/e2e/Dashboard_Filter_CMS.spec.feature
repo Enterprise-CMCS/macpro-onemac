@@ -12,9 +12,16 @@ Feature: Package Dashboard - Filter
         Then verify reset Exists
         Then verify state dropdown filter exists
         Then verify Type Exists
-        Then verify status DropDown Filter exists
+        Then verify status Dropdown Filter exists
         Then verify Initial Submission Date filter dropdown exists
+        Then click on Initial Submission Date filter dropdown
+        Then verify Initial Submission Date date picker filter exists
+        Then verify Latest Package Activity dropdown filter exists
+        Then click on Latest Package Activity filter dropdown
+        Then verify Latest Package Activity date picker filter exists
         Then verify Formal RAI Received dropdown filter exists
+        Then click on Formal RAI Received filter dropdown
+        Then verify Formal RAI Received date picker filter exists
         Then Click on My Account
         Then click the logout button
 
@@ -27,9 +34,16 @@ Feature: Package Dashboard - Filter
         Then verify reset Exists
         Then verify state dropdown filter exists
         Then verify Type Exists
-        Then verify status DropDown Filter exists
+        Then verify status Dropdown Filter exists
         Then verify Initial Submission Date filter dropdown exists
+        Then click on Initial Submission Date filter dropdown
+        Then verify Initial Submission Date date picker filter exists
+        Then verify Latest Package Activity dropdown filter exists
+        Then click on Latest Package Activity filter dropdown
+        Then verify Latest Package Activity date picker filter exists
         Then verify Formal RAI Received dropdown filter exists
+        Then click on Formal RAI Received filter dropdown
+        Then verify Formal RAI Received date picker filter exists
         Then Click on My Account
         Then click the logout button
 

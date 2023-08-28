@@ -22,6 +22,8 @@ Feature: Medicaid SPA State Details View - Card View with Actions
         Then verify package actions header is visible
         Then verify there are no package actions available
         Then verify the details section exists
+        Then verify there is a Latest Package Activity header in the details section
+        Then verify a full date and time entry exists for the Latest Package Activity
         Then verify there is a Type header in the details section
         Then verify the type is Medicaid SPA
         Then verify there is a State header in the details section
@@ -51,6 +53,8 @@ Feature: Medicaid SPA State Details View - Card View with Actions
         Then verify package actions header is visible
         Then verify there are no package actions available
         Then verify the details section exists
+        Then verify there is a Latest Package Activity header in the details section
+        Then verify a full date and time entry exists for the Latest Package Activity
         Then verify there is a Type header in the details section
         Then verify the type is Medicaid SPA
         Then verify there is a State header in the details section
@@ -79,6 +83,8 @@ Feature: Medicaid SPA State Details View - Card View with Actions
         Then verify package actions header is visible
         Then verify there are no package actions available
         Then verify the details section exists
+        Then verify there is a Latest Package Activity header in the details section
+        Then verify a full date and time entry exists for the Latest Package Activity
         Then verify there is a Type header in the details section
         Then verify the type is Medicaid SPA
         Then verify there is a State header in the details section
@@ -108,6 +114,8 @@ Feature: Medicaid SPA State Details View - Card View with Actions
         Then verify package actions header is visible
         Then verify withdraw package action exists
         Then verify the details section exists
+        Then verify there is a Latest Package Activity header in the details section
+        Then verify a full date and time entry exists for the Latest Package Activity
         Then verify there is a Type header in the details section
         Then verify the type is Medicaid SPA
         Then verify there is a State header in the details section
@@ -136,6 +144,8 @@ Feature: Medicaid SPA State Details View - Card View with Actions
         Then verify package actions header is visible
         Then verify there are no package actions available
         Then verify the details section exists
+        Then verify there is a Latest Package Activity header in the details section
+        Then verify a full date and time entry exists for the Latest Package Activity
         Then verify there is a Type header in the details section
         Then verify the type is Medicaid SPA
         Then verify there is a State header in the details section
@@ -165,6 +175,8 @@ Feature: Medicaid SPA State Details View - Card View with Actions
         Then verify withdraw package action exists
         Then verify Respond to RAI action exists
         Then verify the details section exists
+        Then verify there is a Latest Package Activity header in the details section
+        Then verify a full date and time entry exists for the Latest Package Activity
         Then verify there is a Type header in the details section
         Then verify the type is Medicaid SPA
         Then verify there is a State header in the details section
@@ -193,6 +205,8 @@ Feature: Medicaid SPA State Details View - Card View with Actions
         Then verify package actions header is visible
         Then verify there are no package actions available
         Then verify the details section exists
+        Then verify there is a Latest Package Activity header in the details section
+        Then verify a full date and time entry exists for the Latest Package Activity
         Then verify there is a Type header in the details section
         Then verify the type is Medicaid SPA
         Then verify there is a State header in the details section
@@ -221,6 +235,8 @@ Feature: Medicaid SPA State Details View - Card View with Actions
         Then verify package actions header is visible
         Then verify Withdraw Formal RAI Response package action exists
         Then verify the details section exists
+        Then verify there is a Latest Package Activity header in the details section
+        Then verify a full date and time entry exists for the Latest Package Activity
         Then verify there is a Type header in the details section
         Then verify a type containing SPA exists for the Type
         Then verify there is a State header in the details section

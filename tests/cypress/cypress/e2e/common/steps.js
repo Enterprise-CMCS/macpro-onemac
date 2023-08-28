@@ -242,7 +242,7 @@ Then("i am on User Management Page", () => {
   OneMacUserManagmentPage.verifyWeAreOnUserManagmentPage();
 });
 Then("Click on My Account", () => {
-  OneMacUserManagmentPage.clickMyAccountDropDown();
+  OneMacUserManagmentPage.clickMyAccountDropdown();
 });
 Then("Click on Manage Profile", () => {
   OneMacUserManagmentPage.clickmanageProfileBTN();
@@ -1329,19 +1329,19 @@ Then("verify Close Exists", () => {
   OneMacPackagePage.verifycloseButtonExists();
 });
 Then("verify Type Exists", () => {
-  OneMacPackagePage.verifytypeDropDownExists();
+  OneMacPackagePage.verifytypeDropdownExists();
 });
 Then("verify Status Exists", () => {
-  OneMacPackagePage.verifystatusDropDownExists();
+  OneMacPackagePage.verifystatusDropdownExists();
 });
 Then("verify CPOC Name dropdown button exists", () => {
-  OneMacPackagePage.verifyCPOCNameDropDownExists();
+  OneMacPackagePage.verifyCPOCNameDropdownExists();
 });
 Then("verify reset Exists", () => {
   OneMacPackagePage.verifyresetButtonExists();
 });
 Then("click on Type", () => {
-  OneMacPackagePage.clickTypeDropDown();
+  OneMacPackagePage.clickTypeDropdown();
 });
 Then("verify 1915b Initial Waiver exists", () => {
   OneMacPackagePage.verifyInitialWaiver1915bCheckBoxExists();
@@ -1371,7 +1371,7 @@ Then("verify Medicaid SPA Exists", () => {
   OneMacPackagePage.verifyMedicaidSPACheckBoxExists();
 });
 Then("click on Status", () => {
-  OneMacPackagePage.clickstatusDropDown();
+  OneMacPackagePage.clickstatusDropdown();
 });
 Then("verify rai response submitted exists", () => {
   OneMacPackagePage.verifyraiResponseSubmittedCheckBoxExists();
@@ -1484,11 +1484,17 @@ Then("verify Formal RAI Received checkbox exists", () => {
 Then("verify Formal RAI Received checkbox does not exist", () => {
   OneMacPackagePage.verifyFormalRAIReceivedCheckboxDoesNotExist();
 });
+Then("verify Latest Package Activity checkbox exists", () => {
+  OneMacPackagePage.verifyLatestPackageActivityCheckboxExists();
+});
 Then("verify Initial Submission Date column exists", () => {
   OneMacPackagePage.verifyinitialSubmissionDateColumnExists();
 });
-Then("verify expiration date column exists", () => {
-  OneMacPackagePage.verifyexpirationDateColumnExists();
+Then("verify Latest Package Activity column exists", () => {
+  OneMacPackagePage.verifyLatestPackageActivityColumnExists();
+});
+Then("verify Latest Package Activity column does not exist", () => {
+  OneMacPackagePage.verifyLatestPackageActivityDoesNotExist();
 });
 Then("verify state column exists", () => {
   OneMacPackagePage.verifystateColumnExists();
@@ -1523,8 +1529,8 @@ Then("verify CPOC Name column does not exist", () => {
 Then("click Initial Submission Date checkbox", () => {
   OneMacPackagePage.clickCheckBoxInitialSubmissionDate();
 });
-Then("click expiration date checkbox", () => {
-  OneMacPackagePage.clickCheckBoxexpirationDate();
+Then("click Latest Package Activity checkbox", () => {
+  OneMacPackagePage.clickCheckBoxLatestPackageActivity();
 });
 Then("click state checkbox", () => {
   OneMacPackagePage.clickCheckboxState();
@@ -1600,13 +1606,13 @@ Then(
   }
 );
 Then("verify expiration date filter dropdown exists", () => {
-  OneMacPackagePage.verifyExpirationDateFilterDropDownExists();
+  OneMacPackagePage.verifyExpirationDateFilterDropdownExists();
 });
 Then("verify Initial Submission Date filter dropdown exists", () => {
-  OneMacPackagePage.verifyInitialSubmissionDateFilterDropDownExists();
+  OneMacPackagePage.verifyInitialSubmissionDateFilterDropdownExists();
 });
 Then("click on expiration date filter dropdown", () => {
-  OneMacPackagePage.clickOnExpirationDateFilterDropDown();
+  OneMacPackagePage.clickOnExpirationDateFilterDropdown();
 });
 Then("verify expiration date date picker exists", () => {
   OneMacPackagePage.verifyExpirationDateDatePickerFilterExists();
@@ -1615,7 +1621,7 @@ Then("click on expiration date date picker filter", () => {
   OneMacPackagePage.clickOnExpirationDateDatePickerFilter();
 });
 Then("click on Initial Submission Date filter dropdown", () => {
-  OneMacPackagePage.clickOnInitialSubmissionDateFilterDropDown();
+  OneMacPackagePage.clickOnInitialSubmissionDateFilterDropdown();
 });
 Then("verify Initial Submission Date date picker filter exists", () => {
   OneMacPackagePage.verifyInitialSubmissionDateDatePickerFilterExists();
@@ -1624,7 +1630,7 @@ Then("click on Initial Submission Date date picker filter", () => {
   OneMacPackagePage.clickOnInitialSubmissionDateDatePickerFilter();
 });
 Then("click on Formal RAI Received filter dropdown", () => {
-  OneMacPackagePage.clickOnInitialSubmissionDateFilterDropDown();
+  OneMacPackagePage.clickOnInitialSubmissionDateFilterDropdown();
 });
 Then("verify Formal RAI Received date picker filter exists", () => {
   OneMacPackagePage.verifyFormalRAIReceivedDatePickerFilterExists();
@@ -1634,6 +1640,15 @@ Then("verify Formal RAI Received date picker filter does not exist", () => {
 });
 Then("click on Formal RAI Received date picker filter", () => {
   OneMacPackagePage.clickOnFormalRAIReceivedDatePickerFilter();
+});
+Then("click on Latest Package Activity filter dropdown", () => {
+  OneMacPackagePage.clickOnLatestPackageActivityFilterDropdown();
+});
+Then("verify Latest Package Activity date picker filter exists", () => {
+  OneMacPackagePage.verifyLatestPackageActivityDatePickerFilterExists();
+});
+Then("click on Latest Package Activity date picker filter", () => {
+  OneMacPackagePage.clickOnLatestPackageActivityDatePickerFilter();
 });
 Then("click on this quarter date picker button", () => {
   OneMacPackagePage.clickOnThisQuarterDatePickerBtn();
@@ -1673,6 +1688,11 @@ Then("verify Formal RAI Received column one date is this quarter", () => {
     OneMacPackagePage.verifypackageRowOneInitialSubmissionDateIsThisQuarter();
   }
 });
+Then("verify Latest Package Activity column one date is this quarter", () => {
+  if (OneMacPackagePage.checkIfPackageListResultsExist()) {
+    OneMacPackagePage.verifypackageRowOneLatestPackageActivityIsThisQuarter();
+  }
+});
 Then("verify states selected includes {string}", (state) => {
   OneMacPackagePage.verifyStatesSelectedIncludes(state);
 });
@@ -1686,7 +1706,13 @@ Then("verify Formal RAI Received dropdown filter exists", () => {
   OneMacPackagePage.verifyFormalRAIReceivedDateFilterDropdownExists();
 });
 Then("click on Formal RAI Received dropdown filter", () => {
-  OneMacPackagePage.clickOnFormalRAIReceivedDateFilterDropdownDropDown();
+  OneMacPackagePage.clickOnFormalRAIReceivedDateFilterDropdown();
+});
+Then("verify Latest Package Activity dropdown filter exists", () => {
+  OneMacPackagePage.verifyLatestPackageActivityDateFilterDropdownExists();
+});
+Then("click on Latest Package Activity dropdown filter", () => {
+  OneMacPackagePage.clickOnLatestPackageActivityFilterDropdown();
 });
 Then("verify state filter select exists", () => {
   OneMacPackagePage.verifyStateFilterSelectExists();
@@ -1727,8 +1753,8 @@ Then("verify SPA ID column exists", () => {
 Then("verify Waiver Number column exists", () => {
   OneMacPackagePage.verifyWaiverNumberColumnExists();
 });
-Then("verify status DropDown Filter exists", () => {
-  OneMacPackagePage.verifystatusDropDownFilterExists();
+Then("verify status Dropdown Filter exists", () => {
+  OneMacPackagePage.verifystatusDropdownFilterExists();
 });
 Then("verify the SPAs tab is selected", () => {
   //if it's disabled then it is selected.
@@ -2161,6 +2187,18 @@ Then("verify there is a State header in the details section", () => {
 Then("verify a state exists for the State", () => {
   OneMacPackageDetailsPage.verifyStateExists();
 });
+Then(
+  "verify there is a Latest Package Activity header in the details section",
+  () => {
+    OneMacPackageDetailsPage.verifyLatestPackageActivityHeaderExists();
+  }
+);
+Then(
+  "verify a full date and time entry exists for the Latest Package Activity",
+  () => {
+    OneMacPackageDetailsPage.verifyLatestPackageActivityDateExists();
+  }
+);
 Then("verify there is an Amendment Title header in the details section", () => {
   OneMacPackageDetailsPage.verifyAmendmentTitleHeaderExists();
 });
