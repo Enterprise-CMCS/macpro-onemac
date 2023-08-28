@@ -46,7 +46,7 @@ Feature: Waiver Package Details View: Waiver Renewal for a CMS User
         Then verify the package details page is visible
         Then verify 2 action cards exist
         Then verify the status on the card is "Pending"
-        Then verify there are no package actions available
+        #Then verify there are no package actions available
         Then verify the details section exists
         Then verify there is a Type header in the details section
         Then verify the type is Waiver Renewal

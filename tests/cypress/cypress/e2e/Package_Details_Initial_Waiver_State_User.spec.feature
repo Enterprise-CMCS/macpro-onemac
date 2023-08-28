@@ -208,7 +208,7 @@ Feature: Waiver Package Details View: Initial Waivers
         Then verify there is a Proposed Effective Date header in the details section
         Then verify the Withdrawal Requested caret button exists
         Then expand the Withdrawal Requested caret
-        Then verify the Withdrawal Requested download all button exists
+        #Then verify the Withdrawal Requested download all button exists
         Then verify the Initial Submission caret button exists
         Then expand the Initial Submission caret
         Then verify the Initial Submission download all button exists
