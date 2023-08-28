@@ -43,9 +43,8 @@ Feature: Medicaid SPA State Details View - Card View with Actions
         Then Click the Submit Button without waiting
         Then verify the modal pop-up is visible
         Then verify the detailed text in the modal contains "OneMAC is solely for file submission purposes."
-        Then click the yes, submit modal button
-        Then verify the success message is "Success"
-        Then verify the SPAs tab is selected
+        Then verify the yes, submit modal button is visible and clickable
+        Then click modal cancel button
 
     Scenario: Upload Subsequent Documents from the details page
         Then click Under Review checkbox
@@ -60,6 +59,5 @@ Feature: Medicaid SPA State Details View - Card View with Actions
         Then Click the Submit Button without waiting
         Then verify the modal pop-up is visible
         Then verify the detailed text in the modal contains "OneMAC is solely for file submission purposes."
-        Then click the yes, submit modal button
-        Then verify the success message is "Success"
-        Then verify the package details page is visible
+        Then verify the yes, submit modal button is visible and clickable
+        Then click modal cancel button

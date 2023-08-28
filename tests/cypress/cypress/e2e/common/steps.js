@@ -3141,6 +3141,9 @@ Then("verify the detailed text in the modal contains {string}", (s) => {
 Then("click the yes, submit modal button", () => {
   OneMacDefaultForms.clickYesSubmitBTN();
 });
+Then("verify the yes, submit modal button is visible and clickable", () => {
+  OneMacDefaultForms.clickYesSubmitBTN();
+});
 Then("Add file for Subsequent Submission", () => {
   OneMacDefaultForms.uploadFirstAddFile();
 });

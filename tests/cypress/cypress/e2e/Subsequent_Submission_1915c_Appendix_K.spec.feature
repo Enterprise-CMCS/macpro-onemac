@@ -21,11 +21,11 @@ Feature: Subsequent Submission 1915c App K Waiver
         Then verify the package details page is visible
         Then verify Upload Subsequent Documents action exists
         Then click the Upload Subsequent Documents action button
-        Then verify the form title is "Upload Subsequent Waiver Documentation"
-        Then verify the form header is "Initial Waiver Subsequent Submission Details"
+        Then verify the form title is "Upload Subsequent 1915(c) Appendix K Documentation"
+        Then verify the form header is "1915(c) Appendix K Subsequent Submission Details"
         Then verify the Waiver Number is prefilled
         Then verify the type is 1915c Appendix K Amendment
-        Then verify the Subsequent "Waiver Appendix K" Documents section exists
+        Then verify the Subsequent "1915(c) Appendix K" Documents section exists
         Then verify the Additional Information header exists
         Then verify the form Submit Button exists
         Then verify the submit button is disabled
@@ -34,7 +34,7 @@ Feature: Subsequent Submission 1915c App K Waiver
     Scenario: Upload Subsequent Documents from the package dashboard
         Then click the actions button in row one
         Then click the Upload Subsequent Documents action button
-        Then verify the form title is "Upload Subsequent Waiver Documentation"
+        Then verify the form title is "Upload Subsequent 1915(c) Appendix K Documentation"
         Then verify the Waiver Number is prefilled
         Then Add file for Subsequent Submission
         Then Type Additonal Info Comments in new form
@@ -42,14 +42,14 @@ Feature: Subsequent Submission 1915c App K Waiver
         Then verify the modal pop-up is visible
         Then verify the detailed text in the modal contains "OneMAC is solely for file submission purposes."
         Then click the yes, submit modal button
-        Then verify the success message is "Success"
+        Then verify the success message is "Attachments have been successfully submitted"
         Then verify the Waivers tab is selected
 
     Scenario: Upload Subsequent Documents from the details page
         Then click the Waiver Number link in the first row
         Then verify the package details page is visible
         Then click the Upload Subsequent Documents action button
-        Then verify the form title is "Upload Subsequent Waiver Documentation"
+        Then verify the form title is "Upload Subsequent 1915(c) Appendix K Documentation"
         Then verify the Waiver Number is prefilled
         Then Add file for Subsequent Submission
         Then Type Additonal Info Comments in new form
@@ -57,5 +57,5 @@ Feature: Subsequent Submission 1915c App K Waiver
         Then verify the modal pop-up is visible
         Then verify the detailed text in the modal contains "OneMAC is solely for file submission purposes."
         Then click the yes, submit modal button
-        Then verify the success message is "Success"
+        Then verify the success message is "Attachments have been successfully submitted"
         Then verify the package details page is visible
