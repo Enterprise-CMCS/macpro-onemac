@@ -1,5 +1,5 @@
 const newWaiverNumberInputBox = "#componentId";
-const actionTypeDropDown = "#action-type";
+const actionTypeDropdown = "#action-type";
 const newErrMsgForWaiverNumber = "#componentIdStatusMsg0";
 const errorMsgPart2 = "#componentIdStatusMsg1";
 const waiverAuthority = "//h3[text()='Waiver Authority']";
@@ -59,15 +59,15 @@ export class oneMacSubmitNewWaiverActionPage {
   }
 
   selectNewWaiverUnderActionType() {
-    cy.get(actionTypeDropDown).select("new");
+    cy.get(actionTypeDropdown).select("new");
   }
 
   selectWaiverAmendmentUnderActionType() {
-    cy.get(actionTypeDropDown).select("amendment");
+    cy.get(actionTypeDropdown).select("amendment");
   }
 
   selectRequestForWaiverRenewalUnderActionType() {
-    cy.get(actionTypeDropDown).select("renewal");
+    cy.get(actionTypeDropdown).select("renewal");
   }
 
   verify1915b4FFSSelectiveContractingwaiversUnderWaiverAuthority() {

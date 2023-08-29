@@ -21,6 +21,8 @@ Feature: Waiver Package Details View: Appendix K Amendment for a State User
         Then verify package actions header is visible
         Then verify there are no package actions available
         Then verify the details section exists
+        Then verify there is a Latest Package Activity header in the details section
+        Then verify a full date and time entry exists for the Latest Package Activity
         Then verify the package details title contains "Appendix K Amendment Package"
         Then verify the waiver authority header exists
         Then verify the waiver authority is 1915c HCBS
@@ -51,6 +53,8 @@ Feature: Waiver Package Details View: Appendix K Amendment for a State User
         Then verify package actions header is visible
         Then verify withdraw package action exists
         Then verify the details section exists
+        Then verify there is a Latest Package Activity header in the details section
+        Then verify a full date and time entry exists for the Latest Package Activity
         Then verify the package details title contains "Appendix K Amendment Package"
         Then verify the waiver authority header exists
         Then verify the waiver authority is 1915c HCBS
@@ -82,6 +86,8 @@ Feature: Waiver Package Details View: Appendix K Amendment for a State User
         Then verify withdraw package action exists
         Then verify Respond to RAI action exists
         Then verify the details section exists
+        Then verify there is a Latest Package Activity header in the details section
+        Then verify a full date and time entry exists for the Latest Package Activity
         Then verify the package details title contains "Appendix K Amendment Package"
         Then verify the waiver authority header exists
         Then verify the waiver authority is 1915c HCBS
@@ -112,6 +118,8 @@ Feature: Waiver Package Details View: Appendix K Amendment for a State User
         Then verify package actions header is visible
         Then verify there are no package actions available
         Then verify the details section exists
+        Then verify there is a Latest Package Activity header in the details section
+        Then verify a full date and time entry exists for the Latest Package Activity
         Then verify the package details title contains "Appendix K Amendment Package"
         Then verify the waiver authority header exists
         Then verify the waiver authority is 1915c HCBS
@@ -143,6 +151,8 @@ Feature: Waiver Package Details View: Appendix K Amendment for a State User
         Then verify package actions header is visible
         Then verify there are no package actions available
         Then verify the details section exists
+        Then verify there is a Latest Package Activity header in the details section
+        Then verify a full date and time entry exists for the Latest Package Activity
         Then verify the package details title contains "Appendix K Amendment Package"
         Then verify the waiver authority header exists
         Then verify the waiver authority is 1915c HCBS
@@ -174,6 +184,8 @@ Feature: Waiver Package Details View: Appendix K Amendment for a State User
         Then verify package actions header is visible
         Then verify there are no package actions available
         Then verify the details section exists
+        Then verify there is a Latest Package Activity header in the details section
+        Then verify a full date and time entry exists for the Latest Package Activity
         Then verify the package details title contains "Appendix K Amendment Package"
         Then verify the waiver authority header exists
         Then verify the waiver authority is 1915c HCBS
@@ -205,6 +217,8 @@ Feature: Waiver Package Details View: Appendix K Amendment for a State User
         Then verify package actions header is visible
         Then verify there are no package actions available
         Then verify the details section exists
+        Then verify there is a Latest Package Activity header in the details section
+        Then verify a full date and time entry exists for the Latest Package Activity
         Then verify the package details title contains "Appendix K Amendment Package"
         Then verify the waiver authority header exists
         Then verify the waiver authority is 1915c HCBS
@@ -236,6 +250,8 @@ Feature: Waiver Package Details View: Appendix K Amendment for a State User
         Then verify package actions header is visible
         Then verify Withdraw Formal RAI Response package action exists
         Then verify the details section exists
+        Then verify there is a Latest Package Activity header in the details section
+        Then verify a full date and time entry exists for the Latest Package Activity
         Then verify the package details title contains "Appendix K Amendment Package"
         Then verify the waiver authority header exists
         Then verify the waiver authority is 1915c HCBS

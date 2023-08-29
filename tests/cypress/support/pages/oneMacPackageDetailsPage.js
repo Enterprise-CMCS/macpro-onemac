@@ -34,6 +34,7 @@ const typeHeader = "//h3[contains(text(),'Type')]";
 const parentWaiverNumberHeader =
   "//h3[contains(text(),'Approved Initial or Renewal Number')]";
 const stateHeader = "//h3[text()='State']";
+const latestActivityHeader = "//h3[text()='Latest Package Activity']";
 const initialSubmittedDateHeader = "//h3[text()='Initial Submission Date']";
 const raiResponsesHeader = "//section//h2[text()='Formal RAI Responses']";
 const packageOverviewNavBtn = "//button[text()='Package Overview']";
@@ -190,6 +191,14 @@ export class oneMacPackageDetailsPage {
   }
   verifyStateExists() {
     cy.xpath(stateHeader).next().should("be.visible");
+  }
+  verifyLatestPackageActivityHeaderExists() {
+    cy.xpath(latestActivityHeader).should("be.visible");
+  }
+  verifyLatestPackageActivityDateExists() {
+    cy.xpath(latestActivityHeader)
+      .next()
+      .contains(/^[a-zA-Z]{3}.\d{2}.\d{4}||^[a-zA-Z]{3}.\d{1}.\d{4}/);
   }
   verifyInitialSubmittedDateHeaderExists() {
     cy.xpath(initialSubmittedDateHeader).should("be.visible");

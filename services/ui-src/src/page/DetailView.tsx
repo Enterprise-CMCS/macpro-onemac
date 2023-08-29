@@ -41,6 +41,8 @@ export type ComponentDetail = {
   currentStatus: string;
   attachments: any[];
   submissionTimestamp: Date;
+  lastActivityTimestamp?: Date;
+  lastActivityNice?: string;
   clockEndTimestamp: Date;
   proposedEffectiveDate: string;
   effectiveDateTimestamp: Date;
@@ -121,6 +123,11 @@ const DetailView: React.FC<{ pageConfig: OneMACDetail }> = ({ pageConfig }) => {
         if (fetchedDetail.latestRaiResponseTimestamp) {
           fetchedDetail.latestRaiResponseDateNice = formatDate(
             fetchedDetail.latestRaiResponseTimestamp
+          );
+        }
+        if (fetchedDetail.lastActivityTimestamp) {
+          fetchedDetail.lastActivityNice = formatDate(
+            fetchedDetail.lastActivityTimestamp
           );
         }
         if (fetchedDetail.proposedEffectiveDate) {

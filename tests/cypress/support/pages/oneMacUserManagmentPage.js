@@ -1,4 +1,4 @@
-const myAccountDropDown = "#myAccountLink";
+const myAccountDropdown = "#myAccountLink";
 const manageProfileBTN = "#manageAccountLink";
 //Element is Xpath use cy.xpath instead of cy.get
 const userManagmentHeader = '//h1[contains(text(),"User Management")]';
@@ -21,8 +21,8 @@ const userNameValenciaM = "//td[text()='Valencia McMurray']";
 const denyAccessBtn = "//div[@autofocus]//li[text()='Deny Access']";
 
 export class oneMacUserManagmentPage {
-  clickMyAccountDropDown() {
-    cy.get(myAccountDropDown).click();
+  clickMyAccountDropdown() {
+    cy.get(myAccountDropdown).click();
   }
   clickmanageProfileBTN() {
     cy.get(manageProfileBTN).click();

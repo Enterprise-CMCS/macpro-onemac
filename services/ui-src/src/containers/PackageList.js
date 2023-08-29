@@ -48,6 +48,7 @@ export const COLUMN_ID = {
   TYPE: "componentType",
   STATUS: "packageStatus",
   SUBMISSION_TIMESTAMP: "submissionTimestamp",
+  ACTIVITY_TIMESTAMP: "lastActivityTimestamp",
   LATEST_RAI_TIMESTAMP: "latestRaiResponseTimestamp",
   CPOC_NAME: "cpocName",
   SUBMITTER: "submitter",
@@ -197,6 +198,7 @@ const PackageList = () => {
   const exportTransformMap = {
     submissionTimestamp: renderDate,
     latestRaiResponseTimestamp: renderDate,
+    lastActivityTimestamp: renderDate,
   };
 
   const columns = useMemo(
@@ -239,6 +241,14 @@ const PackageList = () => {
         {
           Header: "Initial Submission",
           accessor: COLUMN_ID.SUBMISSION_TIMESTAMP,
+          Cell: renderDate,
+          disableFilters: false,
+          filter: CustomFilterTypes.DateRange,
+          Filter: CustomFilterUi.DateRangeInPast,
+        },
+        {
+          Header: "Latest Package Activity",
+          accessor: COLUMN_ID.ACTIVITY_TIMESTAMP,
           Cell: renderDate,
           disableFilters: false,
           filter: CustomFilterTypes.DateRange,
