@@ -57432,7 +57432,7 @@
 {
   "clockEndTimestamp": 1698763011776,
   "componentType": "waiverappkrai",
-  "eventTimestamp": 1690987151748,
+  "eventTimestamp": 1673198609000,
   "transmittalNumberWarningMessage": "",
   "currentStatus": "RAI Response Withdraw Enabled",
   "parentId": "MD-22958.R00.02",
@@ -57448,12 +57448,12 @@
   "parentType": "waiverappk",
   "GSI1sk": "MD-22958.R00.02",
   "additionalInformation": "Here is our formal RAI Response",
-  "submissionTimestamp": 1690987011776,
+  "submissionTimestamp": 1673198609000,
   "GSI1pk": "OneMAC#submitwaiverappkrai",
   "adminChanges": [
     {
       "changeReason": "Enabling the RAI Response withdrawal for the automated tests",
-      "changeTimestamp": 1690987151748,
+      "changeTimestamp": 1673198609000,
       "changeMade": "Systemadmin Nightwatch has enabled State package action to withdraw Formal RAI Response"
     }
   ],
@@ -58207,7 +58207,7 @@
 {
   "clockEndTimestamp": 1680725910479,
   "componentType": "waiverrai",
-  "eventTimestamp": 1690986376374,
+  "eventTimestamp": 1676136209000,
   "currentStatus": "RAI Response Withdraw Enabled",
   "parentId": "MD-22204.R00.02",
   "attachments": [
@@ -58228,7 +58228,7 @@
   "adminChanges": [
     {
       "changeReason": "Enable the RAI Response withdraw for the Automated Testing",
-      "changeTimestamp": 1690986376374,
+      "changeTimestamp": 1676136209000,
       "changeMade": "Systemadmin Nightwatch has enabled State package action to withdraw Formal RAI Response"
     }
   ],
@@ -59535,5 +59535,77 @@
   },
   "pk": "MD-2200.R00.10",
   "RO_ANALYST": null
-}
+},
+{
+  "pk": "MD-8676.R00.05",
+  "sk": "OneMAC#1673529269000",
+  "additionalInformation": "Testing an App K submission",
+  "attachments": [
+   {
+    "contentType": "image/png",
+    "filename": "Screenshot 2023-03-31 at 4.46.08 PM.png",
+    "s3Key": "1692650463345/Screenshot 2023-03-31 at 4.46.08 PM.png",
+    "title": "1915(c) Appendix K Amendment Waiver Template",
+    "url": "https://uploads-oy2-23552-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Aa18bf80a-e96a-4193-811a-419200fc8665/1692650463345/Screenshot%202023-03-31%20at%204.46.08%20PM.png"
+   }
+  ],
+  "clockEndTimestamp": 1700430064582,
+  "componentId": "MD-8676.R00.05",
+  "componentType": "waiverappk",
+  "currentStatus": "Submitted",
+  "eventTimestamp": 1673529269000,
+  "GSI1pk": "OneMAC#submitwaiverappk",
+  "GSI1sk": "MD-8676.R00.05",
+  "proposedEffectiveDate": "2023-09-04",
+  "submissionTimestamp": 1673529269000,
+  "submitterEmail": "statesubmitter@nightwatch.test",
+  "submitterName": "StateSubmitter Nightwatch",
+  "territory": "MD",
+  "title": "Testing the App K submissions",
+  "transmittalNumberWarningMessage": "",
+  "waiverAuthority": "1915(c)"
+ },
+ {
+  "pk": "MD-8676.R00.05",
+  "sk": "Package",
+  "additionalInformation": "Testing an App K submission",
+  "adminChanges": [
+  ],
+  "attachments": [
+   {
+    "contentType": "image/png",
+    "filename": "Screenshot 2023-03-31 at 4.46.08 PM.png",
+    "s3Key": "1692650463345/Screenshot 2023-03-31 at 4.46.08 PM.png",
+    "title": "1915(c) Appendix K Amendment Waiver Template",
+    "url": "https://uploads-oy2-23552-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Aa18bf80a-e96a-4193-811a-419200fc8665/1692650463345/Screenshot%202023-03-31%20at%204.46.08%20PM.png"
+   }
+  ],
+  "clockEndTimestamp": 1700430064582,
+  "componentId": "MD-8676.R00.05",
+  "componentType": "waiverappk",
+  "cpocName": "-- --",
+  "currentStatus": "Submitted",
+  "description": "-- --",
+  "GSI1pk": "OneMAC#waiver",
+  "GSI1sk": "MD-8676.R00.05",
+  "lastActivityTimestamp": 1673529269000,
+  "lastEventTimestamp": 1673529269000,
+  "proposedEffectiveDate": "2023-09-04",
+  "raiResponses": [
+  ],
+  "reviewTeam": [
+  ],
+  "reviewTeamEmailList": [
+  ],
+  "subject": "-- --",
+  "submissionTimestamp": 1673529269000,
+  "submitterEmail": "statesubmitter@nightwatch.test",
+  "submitterName": "StateSubmitter Nightwatch",
+  "title": "Testing the App K submissions",
+  "waiverAuthority": "1915(c)",
+  "waiverExtensions": [
+  ],
+  "withdrawalRequests": [
+  ]
+ }
 ]
