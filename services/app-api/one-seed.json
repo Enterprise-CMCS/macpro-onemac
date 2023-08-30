@@ -34692,44 +34692,64 @@
     "lastModifiedName": "Statesubmitter Nightwatch"
   },
   {
-    "clockEndTimestamp": 1682428027181,
-    "componentType": "waiveramendment",
-    "currentStatus": "Withdrawal Requested",
-    "waiverExtensions": [],
-    "attachments": [
-      {
-        "s3Key": "1674655626213/picture.jpg",
-        "filename": "picture.jpg",
-        "title": "1915(b)(4) FFS Selective Contracting (Streamlined) waiver application pre-print (Initial, Renewal, Amendment)",
-        "contentType": "image/jpeg",
-        "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A35b18373-d59d-4d36-8d7f-2ca368f6a6c1/1674655626213/picture.jpg"
-      },
-      {
-        "s3Key": "1674655626214/textnotes.txt",
-        "filename": "textnotes.txt",
-        "title": "1915(b) Comprehensive (Capitated) Waiver Application Pre-print (Initial, Renewal, Amendment)",
-        "contentType": "text/plain",
-        "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A35b18373-d59d-4d36-8d7f-2ca368f6a6c1/1674655626214/textnotes.txt"
-      }
-    ],
-    "proposedEffectiveDate": "-- --",
-    "GSI1sk": "MD-22008.R01.01",
-    "additionalInformation": "withdrawal requested test",
-    "submissionTimestamp": 1674655627181,
-    "waiverAuthority": "1915(b)(4)",
-    "GSI1pk": "OneMAC#waiver",
-    "submitterEmail": "statesubmitter@nightwatch.test",
-    "sk": "Package",
-    "cpocName": "Chester Tester",
-    "reviewTeam": ["Lester Tester", "Super Tester", "Jimmy Tester"],
-    "subject": "test subject",
-    "description": "test description",
-    "componentId": "MD-22008.R01.01",
-    "raiResponses": [],
-    "lastEventTimestamp": 1674656700248,
     "pk": "MD-22008.R01.01",
-    "submitterName": "Statesubmitter Nightwatch"
-  },
+    "sk": "Package",
+    "adminChanges": [
+    ],
+    "approvedEffectiveDate": "-- --",
+    "componentId": "MD-22008.R01.01",
+    "componentType": "waiveramendment",
+    "cpocEmail": "\"Tester, Chester (CPOC)\" <chesterT@example.gov>",
+    "cpocName": "Chester Tester",
+    "currentStatus": "RAI Issued",
+    "description": "withdrawal requested status re build",
+    "finalDispositionDate": "-- --",
+    "GSI1pk": "OneMAC#waiver",
+    "GSI1sk": "MD-22008.R01.01",
+    "lastEventTimestamp": 1675411004337,
+    "proposedEffectiveDate": "-- --",
+    "reverseChrono": [
+     {
+      "action": "Submitted",
+      "additionalInformation": "withdrawal requested test",
+      "attachments": [
+       {
+        "contentType": "image/jpeg",
+        "filename": "picture.jpg",
+        "s3Key": "1674655626213/picture.jpg",
+        "title": "1915(b)(4) FFS Selective Contracting (Streamlined) waiver application pre-print (Initial, Renewal, Amendment)",
+        "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A35b18373-d59d-4d36-8d7f-2ca368f6a6c1/1674655626213/picture.jpg"
+       },
+       {
+        "contentType": "text/plain",
+        "filename": "textnotes.txt",
+        "s3Key": "1674655626214/textnotes.txt",
+        "title": "1915(b) Comprehensive (Capitated) Waiver Application Pre-print (Initial, Renewal, Amendment)",
+        "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A35b18373-d59d-4d36-8d7f-2ca368f6a6c1/1674655626214/textnotes.txt"
+       }
+      ],
+      "currentStatus": "Submitted",
+      "eventTimestamp": 1674655627181,
+      "timestamp": 1674655627181,
+      "type": "Initial Package"
+     }
+    ],
+    "reviewTeam": [
+     "Lester Tester",
+     "Super Tester",
+     "Jimmy Tester"
+    ],
+    "reviewTeamEmailList": [
+     "\"Tester, Lester (SRT)\" <lesterT@example.gov>",
+     "\"Tester, Super (SRT)\" <SuperT@example.gov>",
+     "\"Tester, Jimmy (SRT)\" <jimmyT@example.gov>"
+    ],
+    "subject": "OneMac Connection test",
+    "submissionTimestamp": 1674655627181,
+    "submitterEmail": "statesubmitter@nightwatch.test",
+    "submitterName": "Statesubmitter Nightwatch",
+    "waiverAuthority": "1915(b)(4)"
+   },
   {
     "PRIORITY_COMPLEXITY": null,
     "STATES": [
@@ -57257,7 +57277,7 @@
 {
   "clockEndTimestamp": 1681930575838,
   "componentType": "waiverappk",
-  "eventTimestamp": 1674158175838,
+  "eventTimestamp": 1673016462000,
   "transmittalNumberWarningMessage": "",
   "currentStatus": "Submitted",
   "attachments": [
@@ -57286,12 +57306,12 @@
   "proposedEffectiveDate": "2023-01-20",
   "GSI1sk": "MD-22958.R00.02",
   "additionalInformation": "created new APP k ",
-  "submissionTimestamp": 1674158175838,
+  "submissionTimestamp": 1673016462000,
   "waiverAuthority": "1915(c)",
   "GSI1pk": "OneMAC#submitwaiverappk",
   "submitterEmail": "mdstateonemac@gmail.com",
   "territory": "MD",
-  "sk": "OneMAC#1674158175838",
+  "sk": "OneMAC#1673016462000",
   "componentId": "MD-22958.R00.02",
   "pk": "MD-22958.R00.02",
   "submitterName": "MDSTATE SUBMITTERNK",
