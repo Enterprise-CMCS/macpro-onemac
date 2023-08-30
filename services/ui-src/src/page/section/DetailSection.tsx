@@ -148,8 +148,6 @@ export const DetailSection = ({
   loadDetail: () => void;
   setAlertCode: (code: string) => void;
 }) => {
-  const { userProfile } = useAppContext() ?? {};
-
   const downloadInfoText =
     "Documents available on this page may not reflect the actual documents that were approved by CMS. Please refer to your CMS Point of Contact for the approved documents.";
 
