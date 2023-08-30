@@ -22,4 +22,9 @@ export const waiverAppendixK = {
     "waiverAuthority",
     "title",
   ],
+  secondClockStatuses: [
+    "Pending",
+    "Pending - Concurrence",
+    "Pending - Approval",
+  ],
 };

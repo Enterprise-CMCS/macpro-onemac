@@ -63,4 +63,9 @@ export const waiverRenewalB = {
     tribalConsultation,
     other,
   ],
+  secondClockStatuses: [
+    "Pending",
+    "Pending - Concurrence",
+    "Pending - Approval",
+  ],
 };

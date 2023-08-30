@@ -56,9 +56,11 @@ export const createOneMacPackage = async (item) => {
       adminChanges: [
         {
           changeTimestamp: normalizedNow,
-          changeMade: "OneMAC submission created from SEA Tool entry",
-          changeReason:
-            "This is a Not Originally Submitted in OneMAC (NOSO) package that users need to see in OneMAC.",
+          changeMade: `${theID} added to OneMAC. Package not originally submitted in OneMAC.`,
+          changeReason: item?.setChangeReason
+            ? item.setChangeReason
+            : "Per request from CMS, this package was added to OneMAC.",
+          changeType: "Package Added",
         },
       ],
     },
@@ -75,11 +77,14 @@ export const createOneMacPackage = async (item) => {
     try {
       const result = await dynamoDb.get(getParams).promise();
       putParams.Item.attachments = [...result.Item.attachments];
-      putParams.Item.adminChanges.changeMade +=
+      putParams.Item.adminChanges[0].changeMade +=
         " - with attachments copied from " + item.copyAttachmentsFrom;
     } catch (e) {
       console.log("%s error received: ", theID, e);
     }
+  } else {
+    putParams.Item.adminChanges[0].changeMade +=
+      " At this time, the attachments for this package are unavailable in this system. Contact your CPOC to verify the initial submission documents.";
   }
 
   if (item.waiverAuthority)
