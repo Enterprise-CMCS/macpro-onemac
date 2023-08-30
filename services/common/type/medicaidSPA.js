@@ -38,4 +38,9 @@ export const medicaidSPA = {
     "submitterName",
     "submitterEmail",
   ],
+  secondClockStatuses: [
+    "Pending",
+    "Pending - Concurrence",
+    "Pending - Approval",
+  ],
 };

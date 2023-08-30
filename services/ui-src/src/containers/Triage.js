@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
 import PageTitleBar from "../components/PageTitleBar";
-import ChoiceList from "../components/ChoiceList";
 import { choicesFromRoute } from "../libs/triageChoices";
+import { MACFieldsetCard, MACFieldsetCardOption } from "../components/MACCard";
 
 const Triage = () => {
   const location = useLocation();
@@ -18,12 +18,11 @@ const Triage = () => {
   return (
     <>
       <PageTitleBar heading={triageData.heading} enableBackNav />
-      <section className="choice-container">
-        <fieldset>
-          <legend className="choice-intro">{triageData.intro}</legend>
-          <ChoiceList choices={triageData.choices} />
-        </fieldset>
-      </section>
+      <MACFieldsetCard legend={triageData.intro}>
+        {triageData.choices.map((choice, key) => (
+          <MACFieldsetCardOption {...choice} key={key} />
+        ))}
+      </MACFieldsetCard>
     </>
   );
 };

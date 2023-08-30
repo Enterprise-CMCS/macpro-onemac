@@ -25756,7 +25756,7 @@
       "ADDED_COST": null,
       "MISSING_INFORMATION": null,
       "PRIORITY_COMPLEXITY_ID": null,
-      "ACTION_TYPE": 73,
+      "ACTION_TYPE": 75,
       "PENDING_CONCURRENCE_DATE": 1674172800000,
       "PUBLICHEALTH_STATEEMERGENCY": null,
       "COMPONENT_ID": null,
@@ -49251,7 +49251,7 @@
       "ADDED_COST": null,
       "MISSING_INFORMATION": null,
       "PRIORITY_COMPLEXITY_ID": null,
-      "ACTION_TYPE": null,
+      "ACTION_TYPE": 76,
       "PENDING_CONCURRENCE_DATE": null,
       "PUBLICHEALTH_STATEEMERGENCY": null,
       "COMPONENT_ID": null,
@@ -49300,7 +49300,13 @@
         "SPW_STATUS_DESC": "Pending"
       }
     ],
-    "ACTIONTYPES": null,
+    "ACTIONTYPES": [
+      {
+        "PLAN_TYPE_ID": 122,
+        "ACTION_NAME": "New",
+        "ACTION_ID": 76
+      }
+    ],
     "SP_TYPE": null,
     "SP_APD_SUB_TYPE": null,
     "STATE_PLAN_SERVICE_SUBTYPES": null,
@@ -49476,7 +49482,7 @@
       "INITIAL_SUBMISSION_COMPLETE": true,
       "MISSING_INFORMATION": null,
       "PRIORITY_COMPLEXITY_ID": null,
-      "ACTION_TYPE": null,
+      "ACTION_TYPE": 76,
       "PENDING_CONCURRENCE_DATE": null,
       "PUBLICHEALTH_STATEEMERGENCY": null,
       "BUDGET_IMPACT_VALUE": null,
@@ -49530,7 +49536,13 @@
         "SPW_STATUS_ID": 1
       }
     ],
-    "ACTIONTYPES": null,
+    "ACTIONTYPES": [
+      {
+        "PLAN_TYPE_ID": 122,
+        "ACTION_NAME": "New",
+        "ACTION_ID": 76
+      }
+    ],
     "SP_TYPE": null,
     "SP_APD_SUB_TYPE": null,
     "STATE_PLAN_SERVICE_SUBTYPES": [
@@ -49810,7 +49822,7 @@
     "ACTIONTYPES": [
       {
         "PLAN_TYPE_ID": 122,
-        "ACTION_NAME": "Amend",
+        "ACTION_NAME": "New",
         "ACTION_ID": 76
       }
     ],

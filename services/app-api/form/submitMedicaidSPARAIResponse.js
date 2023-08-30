@@ -6,6 +6,7 @@ import {
   defaultFormConfig,
   defaultParentId,
   defaultParentType,
+  medicaidSpaRAIText,
 } from "./defaultFormConfig";
 
 export const medicaidSPARAIResponseFormConfig = {
@@ -15,6 +16,7 @@ export const medicaidSPARAIResponseFormConfig = {
     parentId: defaultParentId,
     parentType: defaultParentType,
   },
+  closingRemarks: medicaidSpaRAIText,
 };
 
 export const main = handler(async (event) =>

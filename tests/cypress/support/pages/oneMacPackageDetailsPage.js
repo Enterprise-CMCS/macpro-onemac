@@ -11,11 +11,12 @@ const appKTopRaiRespCard = "#waiverappkrai0_caret";
 
 //Elements are Xpath use cy.xpath instead of cy.xpath
 const detailsPage = "//div[@class='form-container']";
-const actionCard = "//div[@class='detail-card']";
+const actionCard =
+  "//section[@class='mac-detail-card-section']//div[contains(@class, 'mac-detail-card')]";
 const statusHeader = "//h3[contains(text(),'Status')]";
 const date90thDay = "//h3[contains(text(),'90th Day')]";
 const packageActionsHeader =
-  "//div[@class='detail-card']//section[@class='package-actions']//h3";
+  "//div[contains(@class, 'mac-detail-card')]//section[@class='package-actions']//h3";
 const packageActionsList = "//ul[@class='action-list']";
 const respondToRAIAction = "//a[text()='Respond to RAI']";
 const withdrawPackageAction = "//a[text()='Withdraw Package']";

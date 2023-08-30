@@ -37,6 +37,11 @@ export const initialWaiver = {
     "submitterEmail",
     "waiverAuthority",
   ],
+  secondClockStatuses: [
+    "Pending",
+    "Pending - Concurrence",
+    "Pending - Approval",
+  ],
 };
 
 export const initialWaiverB4 = {

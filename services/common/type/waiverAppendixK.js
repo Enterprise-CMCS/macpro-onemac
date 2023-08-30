@@ -33,4 +33,9 @@ export const waiverAppendixK = {
     "parentType",
     "title",
   ],
+  secondClockStatuses: [
+    "Pending",
+    "Pending - Concurrence",
+    "Pending - Approval",
+  ],
 };

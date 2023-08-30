@@ -16,6 +16,7 @@ import { AdditionalInfoSection } from "./AdditionalInfoSection";
 import { FORM_SOURCE } from "../../domain-types";
 import { useToggle } from "../../libs/hooksLib";
 import { Grid } from "@material-ui/core";
+import { MACCard } from "../../components/MACCard";
 
 export const NUM_REVIEWERS_TO_SHOW = 3;
 
@@ -147,11 +148,7 @@ export const DetailSection = ({
   loadDetail: () => void;
   setAlertCode: (code: string) => void;
 }) => {
-  const secondClockStatuses = [
-    "Pending",
-    "Pending - Concurrence",
-    "Pending - Approval",
-  ];
+  const { userProfile } = useAppContext() ?? {};
 
   const downloadInfoText =
     "Documents available on this page may not reflect the actual documents that were approved by CMS. Please refer to your CMS Point of Contact for the approved documents.";
@@ -165,62 +162,53 @@ export const DetailSection = ({
 
   return (
     <>
-      <section className="detail-card-section">
-        <div className="detail-card-container">
-          <div className="detail-card-top"></div>
-          <div className="detail-card">
-            <section>
-              <Review heading="Status" className="no-bottom-padding">
-                <div className="detail-card-status">{detail.currentStatus}</div>
+      <section className="mac-detail-card-section">
+        <MACCard childContainerClassName="mac-detail-card">
+          <section>
+            <Review heading="Status" className="no-bottom-padding">
+              <div className="detail-card-status">{detail.currentStatus}</div>
+            </Review>
+            {/* Displays 2nd Clock subtitle under status if status is pending (sans Pending - RAI) and
+             latestRaiResponseTimestamp is present */}
+            {pageConfig.secondClockStatuses &&
+              pageConfig.secondClockStatuses.includes(detail.currentStatus) &&
+              detail?.latestRaiResponseTimestamp && <span>2nd Clock</span>}
+            {pageConfig.show90thDayInfo && ninetyDayText !== "N/A" && (
+              <Review heading="90th Day">
+                {Number(ninetyDayText)
+                  ? formatDateOnly(new Date(ninetyDayText))
+                  : ninetyDayText ?? "N/A"}
               </Review>
-              {/* Displays 2nd Clock subtitle under status if status is pending (sans Pending - RAI) and
-               latestRaiResponseTimestamp is present */}
-              {secondClockStatuses.includes(detail.currentStatus) &&
-                detail?.latestRaiResponseTimestamp && <span>2nd Clock</span>}
-              {pageConfig.show90thDayInfo && ninetyDayText !== "N/A" && (
-                <Review heading="90th Day">
-                  {Number(ninetyDayText)
-                    ? formatDateOnly(new Date(ninetyDayText))
-                    : ninetyDayText ?? "N/A"}
-                </Review>
-              )}
-              {pageConfig.showEffectiveDate &&
-                detail.effectiveDateTimestamp && (
-                  <Review heading="Effective Date">
-                    {formatDateOnly(detail.effectiveDateTimestamp)}
-                  </Review>
-                )}
-            </section>
-          </div>
-        </div>
-        <div className="detail-card-container">
-          <div className="detail-card-top"></div>
-          <div className="detail-card">
-            <section className="package-actions">
-              <Review heading={pageConfig.actionLabel}>
-                <ul className="action-list">
-                  {}
-                  {actions?.length > 0 ? (
-                    actions?.map((actionName, i) => (
-                      <li key={i}>
-                        {actionComponent[actionName](
-                          detail,
-                          FORM_SOURCE.DETAIL
-                        )}
-                      </li>
-                    ))
-                  ) : (
-                    <li>
-                      <p>
-                        No actions are currently available for this submission.
-                      </p>
+            )}
+            {pageConfig.showEffectiveDate && detail.effectiveDateTimestamp && (
+              <Review heading="Effective Date">
+                {formatDateOnly(detail.effectiveDateTimestamp)}
+              </Review>
+            )}
+          </section>
+        </MACCard>
+        <MACCard childContainerClassName="mac-detail-card">
+          <section className="package-actions">
+            <Review heading={pageConfig.actionLabel}>
+              <ul className="action-list">
+                {}
+                {actions?.length > 0 ? (
+                  actions?.map((actionName, i) => (
+                    <li key={i}>
+                      {actionComponent[actionName](detail, FORM_SOURCE.DETAIL)}
                     </li>
-                  )}
-                </ul>
-              </Review>
-            </section>
-          </div>
-        </div>
+                  ))
+                ) : (
+                  <li>
+                    <p>
+                      No actions are currently available for this submission.
+                    </p>
+                  </li>
+                )}
+              </ul>
+            </Review>
+          </section>
+        </MACCard>
       </section>
       <div className="read-only-submission">
         <section className="detail-section">
@@ -302,7 +290,10 @@ export const DetailSection = ({
                     heading={
                       "Submitted on " +
                       formatDate(adminChange.changeTimestamp) +
-                      " - Manual Update"
+                      " - " +
+                      (adminChange.changeType
+                        ? adminChange.changeType
+                        : "Manual Update")
                     }
                     headingLevel="6"
                     id={"admin_change_" + index + "_caret"}
