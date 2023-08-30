@@ -24,6 +24,8 @@ describe("Waiver RAI Form", () => {
     history = createMemoryHistory();
     history.push(ONEMAC_ROUTES.WAIVER_RAI, {
       componentId: testComponentId,
+      parentType: "waivernew",
+      waiverAuthority: "1915(b)",
     });
   });
 
