@@ -22,7 +22,6 @@ export const waiverRAIResponseFormConfig = {
 
 export const main = handler(async (event) => {
   //get waiver type and construct proper config
-  console.log("here in submit 1");
   let data;
   try {
     data = JSON.parse(event.body);
@@ -34,6 +33,5 @@ export const main = handler(async (event) => {
     ...waiverRAIResponseFormConfig,
     ...getFormConfigByTypeAndAuthority(data.parentType, data.waiverAuthority),
   };
-  console.log("here in submit 3");
   return submitAny(event, formConfig);
 });
