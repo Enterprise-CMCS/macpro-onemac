@@ -1,3 +1,5 @@
+import { waiverAppendixK } from "./waiverAppendixK.js";
+
 export const waiverAppendixKRAIResponse = {
   componentType: "waiverappkrai",
   typeLabel: "1915(c) Appendix K RAI Response",
@@ -6,7 +8,10 @@ export const waiverAppendixKRAIResponse = {
   idMustExist: true,
   allowMultiplesWithSameId: true,
   requiredAttachments: ["1915(c) Appendix K RAI Response"],
-  optionalAttachments: ["Other"],
+  optionalAttachments: [
+    ...waiverAppendixK.requiredAttachments,
+    ...waiverAppendixK.optionalAttachments,
+  ],
   theAttributes: [
     "componentId",
     "submissionTimestamp",

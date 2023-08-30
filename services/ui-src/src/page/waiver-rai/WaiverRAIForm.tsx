@@ -6,7 +6,14 @@ import {
   defaultOneMACFormConfig,
   OneMACFormConfig,
 } from "../../libs/formLib";
-import { ROUTES, ONEMAC_ROUTES, waiverRAIResponse } from "cmscommonlib";
+import {
+  ROUTES,
+  ONEMAC_ROUTES,
+  waiverRAIResponse,
+  getFormConfigByTypeAndAuthority,
+} from "cmscommonlib";
+import { useLocation } from "react-router-dom";
+import { FormLocationState } from "../../domain-types";
 
 export const waiverRAIFormInfo: OneMACFormConfig = {
   ...defaultOneMACFormConfig,
@@ -22,7 +29,19 @@ export const waiverRAIFormInfo: OneMACFormConfig = {
 };
 
 const WaiverRAIForm: FC = () => {
-  return <OneMACForm formConfig={waiverRAIFormInfo} />;
+  let formConfig = waiverRAIFormInfo;
+  const location = useLocation<FormLocationState>();
+
+  if (location.state?.waiverAuthority && location.state?.parentType) {
+    formConfig = {
+      ...waiverRAIFormInfo,
+      ...getFormConfigByTypeAndAuthority(
+        location.state.parentType,
+        location.state.waiverAuthority
+      ),
+    };
+  }
+  return <OneMACForm formConfig={formConfig} />;
 };
 
 export default WaiverRAIForm;

@@ -32,7 +32,10 @@ export { waiverAmendmentWithdraw } from "./type/waiverAmendmentWithdraw.js";
 export { waiverAppendixK } from "./type/waiverAppendixK.js";
 export { waiverAppendixKRAIResponse } from "./type/waiverAppendixKRAIResponse.js";
 export { waiverAppendixKWithdraw } from "./type/waiverAppendixKWithdraw.js";
-export { waiverRAIResponse } from "./type/waiverRAIResponse.js";
+export {
+  waiverRAIResponse,
+  getFormConfigByTypeAndAuthority,
+} from "./type/waiverRAIResponse.js";
 export { medicaidSPA } from "./type/medicaidSPA.js";
 export { medicaidSPARAIResponse } from "./type/medicaidSPARAIResponse.js";
 export { medicaidSPAWithdraw } from "./type/medicaidSPAWithdraw.js";

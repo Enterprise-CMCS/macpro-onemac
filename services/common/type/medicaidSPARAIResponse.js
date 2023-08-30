@@ -1,3 +1,4 @@
+import { medicaidSPA } from "./medicaidSPA.js";
 export const medicaidSPARAIResponse = {
   componentType: "medicaidsparai",
   typeLabel: "Medicaid SPA RAI Response",
@@ -7,7 +8,10 @@ export const medicaidSPARAIResponse = {
   idMustExist: true,
   allowMultiplesWithSameId: true, // Medicaid SPA RAI can only have one but until business decides how to handle we will allow multiple
   requiredAttachments: ["RAI Response"],
-  optionalAttachments: ["Other"],
+  optionalAttachments: [
+    ...medicaidSPA.requiredAttachments,
+    ...medicaidSPA.optionalAttachments,
+  ],
   theAttributes: [
     "componentId",
     "submissionTimestamp",
