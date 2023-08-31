@@ -168,13 +168,7 @@ export const DetailSection = ({
     userRoleObj,
     FORM_SOURCE.DETAIL
   );
-  // const actions = Workflow.getActionsForPackage(
-  //   detail.componentType,
-  //   detail.oneMacStatus,
-  //   detail.latestRaiResponseTimestamp ? true : false,
-  //   userRoleObj,
-  //   FORM_SOURCE.DETAIL
-  // );
+
   const actions = detail.actions;
 
   console.log("actions", actions);
@@ -272,47 +266,6 @@ export const DetailSection = ({
 
         <AdditionalInfoSection additionalInfo={detail.additionalInformation} />
 
-        {detail.adminChanges?.length > 0 && (
-          <section className="detail-section">
-            <h2>Administrative Package Changes</h2>
-            <p>
-              Administrative changes reflect updates to specific data fields. If
-              you have additional questions, please contact the assigned CPOC.
-            </p>
-            <Accordion>
-              {detail.adminChanges?.map((adminChange, index) => {
-                return (
-                  <AccordionItem
-                    buttonClassName="accordion-button"
-                    contentClassName="accordion-content"
-                    heading={
-                      "Submitted on " +
-                      formatDate(adminChange.changeTimestamp) +
-                      " - " +
-                      (adminChange.changeType
-                        ? adminChange.changeType
-                        : "Manual Update")
-                    }
-                    headingLevel="6"
-                    id={"admin_change_" + index + "_caret"}
-                    key={"admin_change_" + index}
-                    defaultOpen={index === 0}
-                  >
-                    <Review className="preserve-spacing" heading="Change Made">
-                      {adminChange.changeMade}
-                    </Review>
-                    <Review
-                      className="preserve-spacing"
-                      heading="Change Reason"
-                    >
-                      {adminChange.changeReason}
-                    </Review>
-                  </AccordionItem>
-                );
-              })}
-            </Accordion>
-          </section>
-        )}
         {detail.raiResponses?.length > 0 && (
           <section className="detail-section">
             <h2>Formal RAI Responses</h2>
@@ -392,6 +345,47 @@ export const DetailSection = ({
                       additionalInfo={withdrawalRequest.additionalInformation}
                       id={"addl-info-withdraw-" + index}
                     />
+                  </AccordionItem>
+                );
+              })}
+            </Accordion>
+          </section>
+        )}
+        {detail.adminChanges?.length > 0 && (
+          <section className="detail-section">
+            <h2>Administrative Package Changes</h2>
+            <p>
+              Administrative changes reflect updates to specific data fields. If
+              you have additional questions, please contact the assigned CPOC.
+            </p>
+            <Accordion>
+              {detail.adminChanges?.map((adminChange, index) => {
+                return (
+                  <AccordionItem
+                    buttonClassName="accordion-button"
+                    contentClassName="accordion-content"
+                    heading={
+                      "Submitted on " +
+                      formatDate(adminChange.changeTimestamp) +
+                      " - " +
+                      (adminChange.changeType
+                        ? adminChange.changeType
+                        : "Manual Update")
+                    }
+                    headingLevel="6"
+                    id={"admin_change_" + index + "_caret"}
+                    key={"admin_change_" + index}
+                    defaultOpen={index === 0}
+                  >
+                    <Review className="preserve-spacing" heading="Change Made">
+                      {adminChange.changeMade}
+                    </Review>
+                    <Review
+                      className="preserve-spacing"
+                      heading="Change Reason"
+                    >
+                      {adminChange.changeReason}
+                    </Review>
                   </AccordionItem>
                 );
               })}
