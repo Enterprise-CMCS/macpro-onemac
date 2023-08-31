@@ -1,9 +1,9 @@
 import React, { FC } from "react";
 import OneMACForm from "../OneMACForm";
 import {
-  defaultAttachmentInstructionsJSX,
   defaultConfirmSubmitRAI,
   defaultOneMACFormConfig,
+  medicaidSpaAttachmentInstructionsJSX,
   OneMACFormConfig,
 } from "../../libs/formLib";
 import { ONEMAC_ROUTES, ROUTES, medicaidSPARAIResponse } from "cmscommonlib";
@@ -18,7 +18,7 @@ export const medicaidSPARAIFormInfo: OneMACFormConfig = {
   landingPage: ONEMAC_ROUTES.MEDICAID_SPA_DETAIL,
   confirmSubmit: defaultConfirmSubmitRAI,
   validateParentAPI: "validateParentOfMedicaidSpaRaiResponse",
-  attachmentIntroJSX: defaultAttachmentInstructionsJSX(
+  attachmentIntroJSX: medicaidSpaAttachmentInstructionsJSX(
     ROUTES.FAQ_ATTACHMENTS_MED_SPA_RAI
   ),
 };

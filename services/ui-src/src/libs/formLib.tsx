@@ -79,6 +79,21 @@ export const DefaultFileSizeInfo = ({ route }: { route: string }) => (
   </p>
 );
 
+export const MedicaidSpaFileSizeInfo = ({ route }: { route: string }) => (
+  <p className="req-message">
+    Maximum file size of {config.MAX_ATTACHMENT_SIZE_MB} MB per attachment.{" "}
+    <b>
+      You can add multiple files per attachment type, except for the CMS Form
+      179.
+    </b>{" "}
+    Read the description for each of the attachment types on the{" "}
+    <Link to={route} target={FAQ_TARGET}>
+      FAQ Page
+    </Link>
+    .
+  </p>
+);
+
 export const RequiredAttachmentSpan = () => (
   <p className="req-message">
     <span className="required-mark">*</span> indicates required attachment
@@ -90,6 +105,16 @@ export const defaultAttachmentInstructionsJSX = (
 ) => (
   <>
     <DefaultFileSizeInfo route={anchoredFAQRoute} />
+    <DefaultFileTypesInfo />
+    <RequiredAttachmentSpan />
+  </>
+);
+
+export const medicaidSpaAttachmentInstructionsJSX = (
+  anchoredFAQRoute: string = ROUTES.FAQ
+) => (
+  <>
+    <MedicaidSpaFileSizeInfo route={anchoredFAQRoute} />
     <DefaultFileTypesInfo />
     <RequiredAttachmentSpan />
   </>
