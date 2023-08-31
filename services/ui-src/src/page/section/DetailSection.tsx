@@ -149,11 +149,6 @@ export const DetailSection = ({
   setAlertCode: (code: string) => void;
 }) => {
   const { userProfile } = useAppContext() ?? {};
-  const secondClockStatuses = [
-    "Pending",
-    "Pending - Concurrence",
-    "Pending - Approval",
-  ];
 
   const downloadInfoText =
     "Documents available on this page may not reflect the actual documents that were approved by CMS. Please refer to your CMS Point of Contact for the approved documents.";
@@ -194,7 +189,8 @@ export const DetailSection = ({
             </Review>
             {/* Displays 2nd Clock subtitle under status if status is pending (sans Pending - RAI) and
              latestRaiResponseTimestamp is present */}
-            {secondClockStatuses.includes(detail.currentStatus) &&
+            {pageConfig.secondClockStatuses &&
+              pageConfig.secondClockStatuses.includes(detail.currentStatus) &&
               detail?.latestRaiResponseTimestamp && <span>2nd Clock</span>}
             {pageConfig.show90thDayInfo && ninetyDayText !== "N/A" && (
               <Review heading="90th Day">
@@ -292,7 +288,10 @@ export const DetailSection = ({
                     heading={
                       "Submitted on " +
                       formatDate(adminChange.changeTimestamp) +
-                      " - Manual Update"
+                      " - " +
+                      (adminChange.changeType
+                        ? adminChange.changeType
+                        : "Manual Update")
                     }
                     headingLevel="6"
                     id={"admin_change_" + index + "_caret"}
