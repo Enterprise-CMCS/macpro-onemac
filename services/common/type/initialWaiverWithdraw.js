@@ -23,4 +23,9 @@ export const initialWaiverWithdraw = {
     "Pending - Approval",
     "RAI Issued",
   ],
+  secondClockStatuses: [
+    "Pending",
+    "Pending - Concurrence",
+    "Pending - Approval",
+  ],
 };

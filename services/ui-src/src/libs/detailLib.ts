@@ -19,6 +19,7 @@ export type OneMACDetail = {
   showReviewTeam: boolean;
   allowWaiverExtension: boolean;
   attachmentsHeading: string;
+  secondClockStatuses?: string[];
 } & Partial<PackageType>;
 export const blankBox: AttributeDetail = {
   heading: "",
