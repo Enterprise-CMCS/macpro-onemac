@@ -35,6 +35,7 @@ export const defaultSubsequentSubmissionSchema = {
 
 export const defaultSubsequentSubmissionConfig = {
   ...defaultFormConfig,
+  newStatus: null, //use parent's current package status
   successResponseCode:
     RESPONSE_CODE.SUCCESSFULLY_SUBMITTED_SUBSEQUENT_SUBMISSION,
   appendToSchema: {
@@ -44,6 +45,7 @@ export const defaultSubsequentSubmissionConfig = {
 
 export const defaultWaiverSubsequentSubmissionConfig = {
   ...defaultFormConfig,
+  newStatus: null, //use parent's current package status
   successResponseCode:
     RESPONSE_CODE.SUCCESSFULLY_SUBMITTED_SUBSEQUENT_SUBMISSION,
   appendToSchema: {

@@ -12,7 +12,7 @@ import { getUser } from "../getUser";
 import { validateSubmission } from "./validateSubmission";
 import packageExists from "../utils/packageExists";
 import { newEvent } from "../utils/newEvent";
-import { getPackageType } from "../utils/getPackageType";
+import { getPackage } from "../utils/getPackage";
 
 import { CMSSubmissionNotice } from "../email/CMSSubmissionNotice";
 import { stateSubmissionReceipt } from "../email/stateSubmissionReceipt";
@@ -80,7 +80,13 @@ export const submitAny = async (event, config) => {
   // if a parent ID is included, need to validate parent and grab type
   if (data.parentId) {
     try {
-      data.parentType = await getPackageType(data.parentId);
+      const parentPackage = await getPackage(data.parentId);
+      console.log("got package", parentPackage);
+      data.parentType = parentPackage.componentType;
+      // if no new status is provided, use the parent's current status
+      if (!config.newStatus) {
+        config.newStatus = parentPackage.currentStatus;
+      }
     } catch (e) {
       console.log(
         "%s parent ID %s validation failed: ",
@@ -97,9 +103,8 @@ export const submitAny = async (event, config) => {
     const rightNowNormalized = Date.now();
     data.submissionTimestamp = rightNowNormalized;
     data.eventTimestamp = rightNowNormalized;
-
-    data.currentStatus = config.newStatus;
     data.componentType = config.componentType;
+    data.currentStatus = config.newStatus;
 
     // record the current end timestamp (can be start/stopped/changed)
     // 90 days is current CMS review period and it is based on CMS time!!
