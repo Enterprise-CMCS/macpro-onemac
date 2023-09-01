@@ -89,7 +89,7 @@ export function App() {
       }
       const activeTerritories = getActiveTerritories(userData?.roleList);
       let oneMacIdmRoles;
-      console.log("payload: ", authUser.signInUserSession.idToken.payload);
+
       if (authUser.signInUserSession.idToken.payload["custom:cms_roles"])
         oneMacIdmRoles = authUser.signInUserSession.idToken.payload[
           "custom:cms_roles"
@@ -100,8 +100,6 @@ export function App() {
               role === "onemac-state-user" || role === "onemac-helpdesk"
           )
           .toString();
-
-      console.log("oneMACRoles: ", oneMacIdmRoles);
 
       setAuthState({
         ...DEFAULT_AUTH_STATE,

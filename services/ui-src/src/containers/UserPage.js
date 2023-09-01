@@ -203,7 +203,6 @@ const UserPage = () => {
       .then(([newProfileData, newProfileRole, newProfileStatus]) => {
         setProfileData(newProfileData);
         setProfileRole(newProfileRole);
-        console.log("profile status is: ", newProfileStatus);
         setProfileStatus(newProfileStatus);
       })
       .catch((e) => {
