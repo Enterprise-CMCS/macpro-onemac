@@ -4,12 +4,12 @@
   "description": "",
   "main": "index.js",
   "devDependencies": {
-    "@badeball/cypress-cucumber-preprocessor": "^16.0.3",
+    "@badeball/cypress-cucumber-preprocessor": "^18.0.5",
     "@bahmutov/cypress-esbuild-preprocessor": "^2.2.0",
     "axe-core": "^4.4.1",
     "concurrently": "^6.2.1",
-    "cypress": "^12.9.0",
-    "cypress-axe": "^1.4.0",
+    "cypress": "^13.1.0",
+    "cypress-axe": "^1.5.0",
     "cypress-file-upload": "^5.0.8",
     "cypress-xpath": "^1.6.2"
   },
