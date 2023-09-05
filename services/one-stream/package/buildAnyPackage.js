@@ -313,10 +313,10 @@ export const buildAnyPackage = async (packageId, config) => {
       putParams.Item.latestRaiResponseTimestamp =
         putParams.Item.raiResponses[0]?.submissionTimestamp;
     } else {
-      // Resets field to "-- --" if PACKAGE status is Pending - RAI (CMS)
+      // Resets field if PACKAGE status is Pending - RAI (CMS)
       // or RAI Issued (STATE) OR if the RAI Response COMPONENT does not
       // exist or has a status other than "Submitted"
-      putParams.Item.latestRaiResponseTimestamp = emptyField;
+      putParams.Item.latestRaiResponseTimestamp = 0;
     }
 
     adminChanges.sort((a, b) => b.changeTimestamp - a.changeTimestamp);
