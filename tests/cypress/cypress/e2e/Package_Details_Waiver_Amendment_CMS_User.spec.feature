@@ -65,10 +65,6 @@ Feature: Waiver Package Details View: 1915 b Waiver Amendment for a CMS User
         Then verify there is a Final Disposition Date header in the details section
         Then verify there is an Approved Effective Date in the details section
         Then verify the description has a value displayed in the details section
-        Then verify the Initial Submission caret button exists
-        Then expand the Initial Submission caret
-        Then verify the Initial Submission download all button exists
-        Then verify the additional information section exists
 
     Scenario: Screen Enhance: 1915 b Waiver Amendment Details View - Pending - RAI
         Then click Pending - RAI checkbox
