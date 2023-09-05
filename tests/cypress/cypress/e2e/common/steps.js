@@ -3142,7 +3142,7 @@ Then("click the yes, submit modal button", () => {
   OneMacDefaultForms.clickYesSubmitBTN();
 });
 Then("verify the yes, submit modal button is visible and clickable", () => {
-  OneMacDefaultForms.clickYesSubmitBTN();
+  OneMacDefaultForms.verifyModalSubmitExistsAndClickable();
 });
 Then("Add file for Subsequent Submission", () => {
   OneMacDefaultForms.uploadFirstAddFile();
