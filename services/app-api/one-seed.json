@@ -8507,7 +8507,7 @@
             "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1673472581115/OneMACInactivated.xlsx"
           }
         ],
-        "submissionTimestamp": 1675987200000
+        "submissionTimestamp": 1676073600000
       }
     ],
     "latestRaiResponseTimestamp": 1675987200000,
@@ -8520,7 +8520,7 @@
   {
     "clockEndTimestamp": 1697123859496,
     "componentType": "medicaidsparai",
-    "eventTimestamp": 1690921532851,
+    "eventTimestamp": 1676073600000,
     "transmittalNumberWarningMessage": "",
     "currentStatus": "Submitted",
     "parentId": "MD-23-3333-VM",
@@ -8536,7 +8536,7 @@
     "parentType": "medicaidspa",
     "GSI1sk": "MD-23-3333-VM",
     "additionalInformation": "Here is the official RAI Response",
-    "submissionTimestamp": 1673709577000,
+    "submissionTimestamp": 1676073600000,
     "GSI1pk": "OneMAC#submitmedicaidsparai",
     "adminChanges": [],
     "submitterEmail": "statesubmitter@nightwatch.test",
