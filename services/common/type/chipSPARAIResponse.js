@@ -27,4 +27,5 @@ export const chipSPARAIResponse = {
   ],
   allowedParentTypes: ["chipspa"],
   allowedParentStatuses: ["RAI Issued"],
+  packageAttributes: ["currentStatus"],
 };

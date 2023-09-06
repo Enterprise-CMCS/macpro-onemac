@@ -45,7 +45,7 @@ functions:
      
   resetData:
     handler: ./handlers/resetData.main
-    timeout: 180
+    timeout: 360
 
   resetOneTable:
     handler: ./handlers/resetOneTable.main
