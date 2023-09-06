@@ -39,6 +39,7 @@ import {
 import { COLUMN_ID } from "../containers/PackageList";
 import { useAppContext } from "../libs/contextLib";
 import { FilterChipTray } from "./FilterChipTray";
+import { FilterChipProvider } from "../containers/FilterChipContext";
 export { CustomFilterTypes, CustomFilterUi } from "./SearchAndFilter";
 
 export type TableProps<V extends {}> = {
@@ -123,7 +124,7 @@ export default function PortalTable<V extends {} = {}>({
   return (
     <>
       {withSearchBar && (
-        <>
+        <FilterChipProvider>
           <SearchAndFilter
             internalName={internalName}
             allRows={preGlobalFilteredRows}
@@ -140,7 +141,7 @@ export default function PortalTable<V extends {} = {}>({
             filters={filters}
             setFilter={setFilter}
           />
-        </>
+        </FilterChipProvider>
       )}
       <div className="table-wrapper">
         <table className={props.className} {...getTableProps()}>

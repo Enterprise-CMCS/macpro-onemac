@@ -16,11 +16,8 @@ interface FilterChipValue {
   column: string;
   type: FilterType;
 }
-//
-interface FilterChipState {
-  additive: FilterChipValue[];
-  subtractive: FilterChipValue[];
-}
+// Arrays of values to be rendered as filter chips.
+type FilterChipState = FilterChipValue[];
 // Available state modification actions
 export enum FilterChipActionType {
   ADD = "ADD",
@@ -36,32 +33,16 @@ type ChipStateReducer = (
   state: FilterChipState,
   action: FilterChipAction
 ) => FilterChipState;
+// Reducer function to handle state update logic
 const chipReducer: ChipStateReducer = (state, action) => {
   switch (action.type) {
     case FilterChipActionType.ADD:
-      return action.payload.type === FilterType.ADDITIVE
-        ? {
-            subtractive: state.subtractive,
-            additive: [...state.additive, action.payload],
-          }
-        : {
-            subtractive: [...state.subtractive, action.payload],
-            additive: state.additive,
-          };
+      // Add FilterChipValue to state array to render
+      return [...state, action.payload];
     case FilterChipActionType.REMOVE:
-      return action.payload.type === FilterType.ADDITIVE
-        ? {
-            subtractive: state.subtractive,
-            additive: state.additive.filter(
-              (chipValue) => chipValue === action.payload
-            ),
-          }
-        : {
-            subtractive: state.subtractive.filter(
-              (chipValue) => chipValue === action.payload
-            ),
-            additive: state.additive,
-          };
+      // Remove FilterChipValue from state to remove rendered chip
+      return state.filter((chipValue) => chipValue !== action.payload);
+    // Default action simply for safety
     default:
       return state;
   }
@@ -72,18 +53,12 @@ const FilterChipContext = createContext<{
   state: FilterChipState;
 }>({
   dispatch: undefined,
-  state: {
-    additive: [],
-    subtractive: [],
-  },
+  state: [],
 });
 // Provider that wraps any components that need access to this state/update
 // logic.
 export const FilterChipProvider = ({ children }: PropsWithChildren<any>) => {
-  const [state, dispatch] = useReducer(chipReducer, {
-    additive: [],
-    subtractive: [],
-  });
+  const [state, dispatch] = useReducer(chipReducer, []);
   return (
     <FilterChipContext.Provider value={{ dispatch, state }}>
       {children}
