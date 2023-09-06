@@ -11,12 +11,10 @@ import {
 
 export const FilterChipTray = ({
   recordCount,
-  internalName,
   filters,
   setFilter,
 }: {
   recordCount: number;
-  internalName: string;
   filters: Filters<any>;
   setFilter: (columnId: IdType<any>, updater: any) => void;
 }) => {
@@ -42,11 +40,10 @@ export const FilterChipTray = ({
     if (!value?.length && additiveFilters.includes(columnNames[column!!]))
       return null;
     // Re-adds a filter to subtractive filters such as status and type.
-    const resetFilterValueState = () => {
-      // TODO: Redo setFilter logic
-      // const newValue = filters?.find((f) => f.id === column)?.value as string[];
-      // newValue.push(value);
-      // setFilter(column, newValue);
+    const resetFilterValueState = (value: any) => {
+      const newValue = filters?.find((f) => f.id === column)?.value as string[];
+      newValue.push(value);
+      setFilter(column!!, newValue);
       dispatch({
         type: FilterChipActionType.REMOVE,
         payload: {
@@ -81,9 +78,7 @@ export const FilterChipTray = ({
         </button>
       </div>
     );
-    return !value || !value.length ? (
-      <></>
-    ) : (
+    return value && value.length ? (
       <Template
         key={`${columnNames[column!!]}-${value}`}
         label={
@@ -94,9 +89,9 @@ export const FilterChipTray = ({
         value={
           type === FilterType.DATE ? prepareDates(value as string[]) : value
         }
-        onClick={() => resetFilterValueState()}
+        onClick={() => resetFilterValueState(value)}
       />
-    );
+    ) : null;
   };
   return (
     <div className="filter-chip-tray-container">

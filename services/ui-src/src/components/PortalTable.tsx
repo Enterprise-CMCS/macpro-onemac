@@ -137,7 +137,6 @@ export default function PortalTable<V extends {} = {}>({
           />
           <FilterChipTray
             recordCount={rows.length}
-            internalName={internalName}
             filters={filters}
             setFilter={setFilter}
           />

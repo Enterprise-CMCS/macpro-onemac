@@ -4,7 +4,6 @@ import React, {
   PropsWithChildren,
   useContext,
   useReducer,
-  useState,
 } from "react";
 export enum FilterType {
   CHECKBOX,
