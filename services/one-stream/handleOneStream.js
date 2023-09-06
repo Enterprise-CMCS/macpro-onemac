@@ -26,11 +26,6 @@ export const main = async (eventBatch) => {
 
   await Promise.all(
     eventBatch.Records.map(async (event) => {
-      console.log(
-        `Processing eventName: %s and dynamodb object: `,
-        event.eventName,
-        event.dynamodb
-      );
       if (event.eventName === "REMOVE") return;
       if (event.eventName === "INSERT" || event.eventName === "MODIFY") {
         const newEventData = event.dynamodb.NewImage;
@@ -40,8 +35,6 @@ export const main = async (eventBatch) => {
           type: "",
           id: inPK,
         };
-
-        console.log("pk: %s sk: %s", inPK, inSK);
 
         const [eventSource, , offset] = inSK.split("#");
         if (offset) {
@@ -55,7 +48,6 @@ export const main = async (eventBatch) => {
             packageToBuild.id = newEventData?.parentId?.S;
             break;
           case "OneMAC":
-            console.log("OneMAC event: ", newEventData);
             if (buildParentPackageTypes.includes(newEventData.componentType.S))
               packageToBuild.type = newEventData?.parentType?.S;
             else packageToBuild.type = newEventData.componentType.S;
@@ -64,7 +56,6 @@ export const main = async (eventBatch) => {
             const [, topic] = newEventData.GSI1pk.S.split("#");
             console.log("%s topic: ", newEventData.GSI1pk.S, topic);
             let actionType;
-            console.log("%s ACTIONTYPES: ", inPK, newEventData.ACTIONTYPES);
             if (!newEventData.ACTIONTYPES.NULL)
               actionType = newEventData.ACTIONTYPES.L.map((oneType) =>
                 newEventData.STATE_PLAN.M.ACTION_TYPE.N ===
@@ -72,7 +63,6 @@ export const main = async (eventBatch) => {
                   ? oneType.M.ACTION_NAME.S
                   : null
               ).filter(Boolean)[0];
-            console.log("%s actionType resolves to: ", inPK, actionType);
 
             switch (topic) {
               case "Medicaid_SPA":
@@ -100,12 +90,6 @@ export const main = async (eventBatch) => {
               default:
                 break;
             }
-            console.log(
-              "%s topic %s is type %s",
-              inPK,
-              topic,
-              packageToBuild.type
-            );
             break;
           }
           default:

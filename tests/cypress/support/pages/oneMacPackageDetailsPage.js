@@ -11,11 +11,12 @@ const appKTopRaiRespCard = "#waiverappkrai0_caret";
 
 //Elements are Xpath use cy.xpath instead of cy.xpath
 const detailsPage = "//div[@class='form-container']";
-const actionCard = "//div[@class='detail-card']";
+const actionCard =
+  "//section[@class='mac-detail-card-section']//div[contains(@class, 'mac-detail-card')]";
 const statusHeader = "//h3[contains(text(),'Status')]";
 const date90thDay = "//h3[contains(text(),'90th Day')]";
 const packageActionsHeader =
-  "//div[@class='detail-card']//section[@class='package-actions']//h3";
+  "//div[contains(@class, 'mac-detail-card')]//section[@class='package-actions']//h3";
 const packageActionsList = "//ul[@class='action-list']";
 const respondToRAIAction = "//a[text()='Respond to RAI']";
 const withdrawPackageAction = "//a[text()='Withdraw Package']";
@@ -50,9 +51,9 @@ const formalRAIReceivedDateHeader =
   "//h3[contains(text(),'Formal RAI Received')]";
 const adminPkgChangeSection = "//h2[text()='Administrative Package Changes']";
 const additionalInfoSection =
-  "//section[@id='addl-info-base']//h2[text()='Additional Information']";
+  "//section[contains(@id, 'addl-info-chrono')]//h2[text()='Additional Information']";
 const waiverAuthorityHeader = "//h3[text()='Waiver Authority']";
-const attachmentsSection = "//h2[text()='Attachments']";
+const attachmentsSection = "//h2[text()='Supporting Documentation']";
 const downloadAllBtn = "//button[contains(text(),'Download All')]";
 const amendmentTitleHeader = "//h3[text()='Amendment Title']";
 const amendmentNumberHeader = "//h3[text()='Amendment Number']";
@@ -71,6 +72,18 @@ const cPOCNameHeader = "//h3[contains(text(),'CPOC')]";
 const reviewTeamSRTHeader = "//h3[contains(text(),'Review Team (SRT)')]";
 const uploadSubsequentDocumentsActionBtn =
   "//a[contains(@id,'subsequent-submission-action')]";
+const formalRAIResponseCaretBtn =
+  '//h2//button[contains(@id,"Formal RAI Response")]';
+const formalRAIResponseDownloadAllBtn =
+  '//button[contains(@id,"dl_Formal RAI Response")]';
+const initialSubmissionCaretBtn =
+  '//h2//button[contains(@id,"Initial Package")]';
+const initialSubmissionDownloadAllBtn =
+  '//button[contains(@id,"dl_Initial Package")]';
+const withdrawalRequestedCaretBtn =
+  '//h2//button[contains(@id,"Package0_caret-button")]';
+const withdrawalRequestedDownloadAllBtn =
+  '//button[contains(@id,"dl_Package-0")]';
 
 export class oneMacPackageDetailsPage {
   verifyPackageDetailsPageIsVisible() {
@@ -455,6 +468,105 @@ export class oneMacPackageDetailsPage {
   }
   clickUploadSubsequentDocumentsActionBtn() {
     cy.xpath(uploadSubsequentDocumentsActionBtn).click();
+  }
+  verifyCPOCNameDoesNotExists() {
+    cy.xpath(cPOCNameHeader).should("not.exist");
+  }
+  verifyFormalRAIResponseCaretBtnExists() {
+    cy.xpath(formalRAIResponseCaretBtn).should("be.visible");
+  }
+  expandFormalRAIResponseCaretBtn() {
+    cy.xpath(formalRAIResponseCaretBtn)
+      .invoke("attr", "aria-expanded")
+      .then(($isExpanded) => {
+        if ($isExpanded === "false") {
+          //only click to expand
+          cy.xpath(formalRAIResponseCaretBtn).click();
+        }
+      });
+  }
+  collapseFormalRAIResponseCaretBtn() {
+    cy.xpath(formalRAIResponseCaretBtn)
+      .invoke("attr", "aria-expanded")
+      .then(($isExpanded) => {
+        if ($isExpanded === "true") {
+          //only click to expand
+          cy.xpath(formalRAIResponseCaretBtn).click();
+        }
+      });
+  }
+  clickFormalRAIResponseCaretBtn() {
+    cy.xpath(formalRAIResponseCaretBtn).click();
+  }
+  verifyFormalRAIResponseDownloadAllBtnExists() {
+    cy.xpath(formalRAIResponseDownloadAllBtn).should("be.visible");
+  }
+  clickFormalRAIResponseDownloadAllBtn() {
+    cy.xpath(formalRAIResponseDownloadAllBtn).click();
+  }
+  verifyInitialSubmissionCaretBtnExists() {
+    cy.xpath(initialSubmissionCaretBtn).should("be.visible");
+  }
+  clickInitialSubmissionCaretBtn() {
+    cy.xpath(initialSubmissionCaretBtn).click();
+  }
+  expandInitialSubmissionCaretBtn() {
+    cy.xpath(initialSubmissionCaretBtn)
+      .invoke("attr", "aria-expanded")
+      .then(($isExpanded) => {
+        if ($isExpanded === "false") {
+          //only click to expand
+          cy.xpath(initialSubmissionCaretBtn).click();
+        }
+      });
+  }
+  collapseInitialSubmissionCaretBtn() {
+    cy.xpath(initialSubmissionCaretBtn)
+      .invoke("attr", "aria-expanded")
+      .then(($isExpanded) => {
+        if ($isExpanded === "true") {
+          //only click to expand
+          cy.xpath(initialSubmissionCaretBtn).click();
+        }
+      });
+  }
+  verifyInitialSubmissionDownloadAllBtnExists() {
+    cy.xpath(initialSubmissionDownloadAllBtn).should("be.visible");
+  }
+  clickInitialSubmissionDownloadAllBtn() {
+    cy.xpath(initialSubmissionDownloadAllBtn).click();
+  }
+  verifyWithdrawalRequestedCaretBtnExists() {
+    cy.xpath(withdrawalRequestedCaretBtn).should("be.visible");
+  }
+  clickWithdrawalRequestedCaretBtn() {
+    cy.xpath(withdrawalRequestedCaretBtn).click();
+  }
+  expandWithdrawalRequestedCaretBtn() {
+    cy.xpath(withdrawalRequestedCaretBtn)
+      .invoke("attr", "aria-expanded")
+      .then(($isExpanded) => {
+        if ($isExpanded === "false") {
+          //only click to expand
+          cy.xpath(withdrawalRequestedCaretBtn).click();
+        }
+      });
+  }
+  collapseWithdrawalRequestedCaretBtn() {
+    cy.xpath(withdrawalRequestedCaretBtn)
+      .invoke("attr", "aria-expanded")
+      .then(($isExpanded) => {
+        if ($isExpanded === "true") {
+          //only click to expand
+          cy.xpath(withdrawalRequestedCaretBtn).click();
+        }
+      });
+  }
+  verifyWithdrawalRequestedDownloadAllBtnExists() {
+    cy.xpath(withdrawalRequestedDownloadAllBtn).should("be.visible");
+  }
+  clickWithdrawalRequestedDownloadAllBtn() {
+    cy.xpath(withdrawalRequestedDownloadAllBtn).click();
   }
 }
 export default oneMacPackageDetailsPage;

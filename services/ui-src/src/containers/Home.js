@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import HomeHeader from "../components/HomeHeader";
 import HomeFooter from "../components/HomeFooter";
 import AlertBar from "../components/AlertBar";
+import { MACCard } from "../components/MACCard";
 
 const stateSubmissionTitle = "How to create a submission";
 const stateSubmissionsList = [
@@ -101,32 +102,29 @@ const cmsPaperSubmissionList = [
  * @returns  list of data divs
  */
 const renderSubmissionSteps = (submissionsList) => {
-  return submissionsList.map((item, i) => {
-    return (
-      <div key={i}>
-        <div className="ds-l-row">
-          <div className="ds-l-col--1 ds-u-padding--0">
-            <img
-              src={`/assets/images/icons/${item.image}.svg`}
-              alt={item.subTitle}
-            />
-          </div>
-          <div className="ds-l-col--11 ds-u-padding-left--1 sub-title">
-            {item.subTitle}
-          </div>
-        </div>
-
-        <div className="ds-l-row">
-          <div className="ds-l-col--1 ds-u-padding--0">
-            <div className={item.verticalLineClass}></div>
-          </div>
-          <div className="ds-l-col--11 ds-u-padding-left--1 ds-u-padding-bottom--1 text">
-            {item.text}
-          </div>
-        </div>
+  /** Refactored into reusable component for later extraction and inclusion
+   * in cms-ux-lib */
+  const Step = ({ subTitle, text, icon, verticalLineClass }) => (
+    <div className="home-content-card-step">
+      <div className="icon-and-line">
+        <img src={`/assets/images/icons/${icon}.svg`} alt={subTitle} />
+        <div className={verticalLineClass} />
       </div>
-    );
-  });
+      <div className="subtitle-and-text">
+        <h2>{subTitle}</h2>
+        <p className="text">{text}</p>
+      </div>
+    </div>
+  );
+  return submissionsList.map((item, i) => (
+    <Step
+      subTitle={item.subTitle}
+      text={item.text}
+      icon={item.image}
+      verticalLineClass={item.verticalLineClass}
+      key={i}
+    />
+  ));
 };
 
 /**
@@ -157,41 +155,33 @@ export default function Home() {
       <HomeHeader />
       <AlertBar alertCode={location?.state?.passCode} />
 
-      <div className="home-content-user-header">
-        <h1 className="ds-text-heading--3xl ds-h1">State Users</h1>
-      </div>
-      <div className="home-content-box">
-        <div className="home-content-wrapper">
-          <div className="home-content-left-box">
-            <div className="gradient-border-home" />
-            <div className="ds-l-container ds-u-margin--0">
-              <div className="title-left">{stateSubmissionTitle}</div>
-              {renderSubmissionSteps(stateSubmissionsList)}
-            </div>
-          </div>
+      <div className="home-content-container">
+        <h1>State Users</h1>
+        <section>
+          <MACCard
+            title={stateSubmissionTitle}
+            childContainerClassName="home-content-left-box"
+          >
+            {renderSubmissionSteps(stateSubmissionsList)}
+          </MACCard>
           <div className="home-content-right-box">
-            <div className="title">{statePaperSubmissionTitle}</div>
+            <h2>{statePaperSubmissionTitle}</h2>
             {renderPaperSubmissionInfo(statePaperSubmissionList)}
           </div>
-        </div>
-      </div>
-      <div className="home-content-user-header">
-        <h1 className="ds-text-heading--3xl ds-h1">CMS Users</h1>
-      </div>
-      <div className="home-content-box">
-        <div className="home-content-wrapper">
-          <div className="home-content-left-box">
-            <div className="gradient-border-home" />
-            <div className="ds-l-container ds-u-margin--0">
-              <div className="title-left">{cmsSubmissionTitle}</div>
-              {renderSubmissionSteps(cmsSubmissionsList)}
-            </div>
-          </div>
+        </section>
+        <h1>CMS Users</h1>
+        <section>
+          <MACCard
+            title={cmsSubmissionTitle}
+            childContainerClassName="home-content-left-box"
+          >
+            {renderSubmissionSteps(cmsSubmissionsList)}
+          </MACCard>
           <div className="home-content-right-box">
-            <div className="title">{cmsPaperSubmissionTitle}</div>
+            <h2>{cmsPaperSubmissionTitle}</h2>
             {renderPaperSubmissionInfo(cmsPaperSubmissionList)}
           </div>
-        </div>
+        </section>
       </div>
       <HomeFooter />
     </>

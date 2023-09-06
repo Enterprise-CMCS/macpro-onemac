@@ -22,4 +22,20 @@ export const waiverAppendixK = {
     "waiverAuthority",
     "title",
   ],
+  packageAttributes: [
+    "submissionTimestamp",
+    "proposedEffectiveDate",
+    "currentStatus",
+    "submitterName",
+    "submitterEmail",
+    "waiverAuthority",
+    "parentId",
+    "parentType",
+    "title",
+  ],
+  secondClockStatuses: [
+    "Pending",
+    "Pending - Concurrence",
+    "Pending - Approval",
+  ],
 };

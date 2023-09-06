@@ -503,7 +503,12 @@ functions:
     role: LambdaApiRole
     timeout: 30
     environment:
-      ccEmail: ${self:custom.dmcoEmail}
+      osgEmail: ${self:custom.reviewerEmail}
+      chipEmail: ${self:custom.reviewerCHIPEmail}
+      chippoEmail: ${self:custom.chipCcEmail}
+      dmcoEmail: ${self:custom.dmcoEmail}
+      dpoEmail: ${self:custom.dpoEmail}
+      dhcboEmail: ${self:custom.dhcbsooEmail}
     events:
       - http:
           path: withdrawRAIResponse

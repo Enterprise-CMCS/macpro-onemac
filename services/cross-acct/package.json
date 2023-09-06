@@ -1,0 +1,12 @@
+{
+  "name": "cross-acct",
+  "description": "",
+  "version": "1.0.0",
+  "author": "",
+  "license": "CC0-1.0",
+  "devDependencies": {
+    "serverless-iam-helper": "file:../../plugins/serverless-iam-helper",
+    "lodash": "^4.17.20"
+  },
+  "dependencies": {}
+}
