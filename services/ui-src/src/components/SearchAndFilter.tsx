@@ -430,6 +430,9 @@ const MultiSelectList = ({
   const onSelect = useCallback(
     (selected) => {
       setFilter(selected.map(({ value }: SelectOption) => value));
+      /* We can universally use "ADD" action type as it handles MULTISELECT
+       * types as more of an update rather than strictly adding it. See logic
+       * in FilterChipContext.chipReducer() */
       updateFilterChips({
         type: FilterChipActionType.ADD,
         payload: {
@@ -486,7 +489,12 @@ function FilterPane<V extends {}>({
   setAllFilters,
 }: FilterPaneProps<V>) {
   const [showFilters, toggleShowFilters] = useToggle(false);
+  const { dispatch: updateFilterChips } = useFilterChipContext();
   const onResetFilters = useCallback(() => {
+    updateFilterChips({
+      type: FilterChipActionType.RESET,
+      payload: {},
+    });
     setAllFilters(
       /* The DateFilter requires the value passed to reset be an empty array
       rather than undefined. Before this, there was a bug where the filter UI 

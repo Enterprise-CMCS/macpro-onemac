@@ -13,17 +13,18 @@ export enum FilterType {
 }
 // A single value stored in FilterChip State containing the column filtered
 // and the value added or removed as a filter
-interface FilterChipValue {
-  label: string;
-  column: string;
-  type: FilterType;
+export interface FilterChipValue {
+  label?: string | string[];
+  column?: string;
+  type?: FilterType;
 }
 // Arrays of values to be rendered as filter chips.
 type FilterChipState = FilterChipValue[];
 // Available state modification actions
 export enum FilterChipActionType {
-  ADD = "ADD",
-  REMOVE = "REMOVE",
+  ADD,
+  REMOVE,
+  RESET,
 }
 // Action object with type of modification and payload
 // to update state with.
@@ -57,6 +58,8 @@ const chipReducer: ChipStateReducer = (state, action) => {
         // Removes value (v) based on column id in payload
         return state.filter((v) => v.column !== payload.column);
       }
+    case FilterChipActionType.RESET:
+      return [];
     // Default action simply for safety
     default:
       return state;
