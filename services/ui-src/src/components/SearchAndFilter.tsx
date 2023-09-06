@@ -30,9 +30,9 @@ import {
 } from "date-fns";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+  faChevronDown,
   faSearch,
   faTimes,
-  faChevronDown,
 } from "@fortawesome/free-solid-svg-icons";
 import { AccordionItem, Button, Choice } from "@cmsgov/design-system";
 
@@ -41,11 +41,16 @@ import { SelectOption, territoryList } from "cmscommonlib";
 import { useToggle } from "../libs/hooksLib";
 import { PackageRowValue } from "../domain-types";
 
-import { animated, useTransition, easings, useSpring } from "@react-spring/web";
+import { animated, easings, useSpring, useTransition } from "@react-spring/web";
 import {
   LOCAL_STORAGE_COLUMN_VISIBILITY_SPA,
   LOCAL_STORAGE_COLUMN_VISIBILITY_WAIVER,
 } from "../utils/StorageKeys";
+import {
+  FilterChipActionType,
+  FilterType,
+  useFilterChipContext,
+} from "../containers/FilterChipContext";
 
 const { afterToday } = DateRangePicker;
 
@@ -246,6 +251,7 @@ function TextFilter({
   column: { filterValue, setFilter, id },
   preGlobalFilteredFlatRows,
 }: FilterProps) {
+  const { dispatch: updateFilterChips } = useFilterChipContext();
   const [possibleValues, hiddenValues] = useMemo(() => {
     const possibleUnique = new Set();
     const notHiddenUnique = new Set();
@@ -272,8 +278,31 @@ function TextFilter({
       setFilter((oldFilterValue?: string[]) => {
         if (!oldFilterValue) oldFilterValue = [...possibleValues]; // begin with everything
         const newFilterValue: Set<string> = new Set(oldFilterValue);
-        if (checked) newFilterValue.add(value);
-        else newFilterValue.delete(value);
+        if (checked) {
+          newFilterValue.add(value);
+          console.log(`${value} checked`);
+          // REMOVE filter because it's a subtractive type
+          updateFilterChips({
+            type: FilterChipActionType.REMOVE,
+            payload: {
+              column: id,
+              label: value,
+              type: FilterType.SUBTRACTIVE,
+            },
+          });
+        } else {
+          newFilterValue.delete(value);
+          console.log(`${value} unchecked`);
+          // ADD filter because it's a subtractive type
+          updateFilterChips({
+            type: FilterChipActionType.ADD,
+            payload: {
+              column: id,
+              label: value,
+              type: FilterType.SUBTRACTIVE,
+            },
+          });
+        }
         return Array.from(newFilterValue);
       });
     },

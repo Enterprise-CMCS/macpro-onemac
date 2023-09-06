@@ -2,6 +2,7 @@ import React, {
   createContext,
   Dispatch,
   PropsWithChildren,
+  useContext,
   useReducer,
   useState,
 } from "react";
@@ -41,7 +42,7 @@ const chipReducer: ChipStateReducer = (state, action) => {
       return [...state, action.payload];
     case FilterChipActionType.REMOVE:
       // Remove FilterChipValue from state to remove rendered chip
-      return state.filter((chipValue) => chipValue !== action.payload);
+      return state.filter((chipValue) => chipValue === action.payload);
     // Default action simply for safety
     default:
       return state;
@@ -49,10 +50,10 @@ const chipReducer: ChipStateReducer = (state, action) => {
 };
 // Creation of context with default empty arrays (i.e. no filters applied)
 const FilterChipContext = createContext<{
-  dispatch?: Dispatch<FilterChipAction>;
+  dispatch: Dispatch<FilterChipAction>;
   state: FilterChipState;
 }>({
-  dispatch: undefined,
+  dispatch: (v) => {},
   state: [],
 });
 // Provider that wraps any components that need access to this state/update
@@ -65,3 +66,5 @@ export const FilterChipProvider = ({ children }: PropsWithChildren<any>) => {
     </FilterChipContext.Provider>
   );
 };
+
+export const useFilterChipContext = () => useContext(FilterChipContext);
