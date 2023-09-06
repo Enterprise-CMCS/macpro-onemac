@@ -287,7 +287,7 @@ function TextFilter({
             payload: {
               column: id,
               label: value,
-              type: FilterType.SUBTRACTIVE,
+              type: FilterType.CHECKBOX,
             },
           });
         } else {
@@ -299,7 +299,7 @@ function TextFilter({
             payload: {
               column: id,
               label: value,
-              type: FilterType.SUBTRACTIVE,
+              type: FilterType.CHECKBOX,
             },
           });
         }
@@ -337,6 +337,7 @@ function DateFilter({
   column: { filterValue, id, setFilter },
   inThePast,
 }: FilterProps & { inThePast?: boolean }) {
+  const { dispatch: updateFilterChips } = useFilterChipContext();
   const onChangeSelection = useCallback(
     (value) => {
       value !== null && value?.length
@@ -344,6 +345,14 @@ function DateFilter({
            * index 0, the later date at index 1. */
           setFilter([startOfDay(value[0]), endOfDay(value[1])])
         : setFilter([]);
+      updateFilterChips({
+        type: FilterChipActionType.ADD,
+        payload: {
+          column: id,
+          label: value,
+          type: FilterType.DATE,
+        },
+      });
     },
     [setFilter]
   );
@@ -417,9 +426,18 @@ const MultiSelectList = ({
 }: FilterProps & {
   options: SelectOption[];
 }) => {
+  const { dispatch: updateFilterChips } = useFilterChipContext();
   const onSelect = useCallback(
     (selected) => {
       setFilter(selected.map(({ value }: SelectOption) => value));
+      updateFilterChips({
+        type: FilterChipActionType.ADD,
+        payload: {
+          column: id,
+          label: selected,
+          type: FilterType.MULTISELECT,
+        },
+      });
     },
     [setFilter]
   );

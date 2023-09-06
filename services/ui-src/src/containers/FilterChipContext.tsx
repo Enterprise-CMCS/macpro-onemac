@@ -7,8 +7,9 @@ import React, {
   useState,
 } from "react";
 export enum FilterType {
-  ADDITIVE = "additive",
-  SUBTRACTIVE = "subtractive",
+  CHECKBOX,
+  DATE,
+  MULTISELECT,
 }
 // A single value stored in FilterChip State containing the column filtered
 // and the value added or removed as a filter
@@ -36,13 +37,26 @@ type ChipStateReducer = (
 ) => FilterChipState;
 // Reducer function to handle state update logic
 const chipReducer: ChipStateReducer = (state, action) => {
-  switch (action.type) {
+  const { type, payload } = action;
+  switch (type) {
     case FilterChipActionType.ADD:
-      // Add FilterChipValue to state array to render
-      return [...state, action.payload];
+      if (payload.type === FilterType.CHECKBOX) {
+        // Just adds value
+        return [...state, payload];
+      } else {
+        // Dates and Multiselect uses an array of values for a single column
+        // Removes old value and adds new value based on column id in payload
+        return [...state.filter((v) => v.column !== payload.column), payload];
+      }
     case FilterChipActionType.REMOVE:
-      // Remove FilterChipValue from state to remove rendered chip
-      return state.filter((chipValue) => chipValue === action.payload);
+      if (payload.type === FilterType.CHECKBOX) {
+        // Payload value matches, so filters out
+        return state.filter((v) => v.label !== payload.label);
+      } else {
+        // Dates and Multiselect uses an array of values for a single column
+        // Removes value (v) based on column id in payload
+        return state.filter((v) => v.column !== payload.column);
+      }
     // Default action simply for safety
     default:
       return state;
