@@ -280,7 +280,6 @@ function TextFilter({
         const newFilterValue: Set<string> = new Set(oldFilterValue);
         if (checked) {
           newFilterValue.add(value);
-          console.log(`${value} checked`);
           // REMOVE filter because it's a subtractive type
           updateFilterChips({
             type: FilterChipActionType.REMOVE,
@@ -292,7 +291,6 @@ function TextFilter({
           });
         } else {
           newFilterValue.delete(value);
-          console.log(`${value} unchecked`);
           // ADD filter because it's a subtractive type
           updateFilterChips({
             type: FilterChipActionType.ADD,
@@ -491,6 +489,7 @@ function FilterPane<V extends {}>({
   const [showFilters, toggleShowFilters] = useToggle(false);
   const { dispatch: updateFilterChips } = useFilterChipContext();
   const onResetFilters = useCallback(() => {
+    // Resets filter chips state to no chips showing
     updateFilterChips({
       type: FilterChipActionType.RESET,
       payload: {},

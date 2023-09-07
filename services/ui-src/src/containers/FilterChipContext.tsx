@@ -10,10 +10,11 @@ export enum FilterType {
   DATE,
   MULTISELECT,
 }
+export type TerritoryFilter = { value: string; label: string };
 // A single value stored in FilterChip State containing the column filtered
 // and the value added or removed as a filter
 export interface FilterChipValue {
-  label?: string | string[];
+  label?: string | string[] | TerritoryFilter[];
   column?: string;
   type?: FilterType;
 }
@@ -41,15 +42,33 @@ const chipReducer: ChipStateReducer = (state, action) => {
   switch (type) {
     case FilterChipActionType.ADD:
       if (payload.type === FilterType.CHECKBOX) {
-        // Just adds value
+        // Just adds the single chip value to the state array.
         return [...state, payload];
+      } else if (payload.type === FilterType.MULTISELECT) {
+        // Parses through the TerritoryFilter[] for just the 2-letter abbreviated
+        // values and creates a single chip (i.e. FilterChipValue) for each.
+        const multiselectValues: FilterChipValue[] = (
+          payload.label as TerritoryFilter[]
+        ).map((f) => ({
+          label: f.value,
+          column: payload.column,
+          type: payload.type,
+        }));
+        return [
+          ...state.filter((v) => v.column !== payload.column),
+          ...multiselectValues,
+        ];
       } else {
-        // Dates and Multiselect uses an array of values for a single column
-        // Removes old value and adds new value based on column id in payload
+        // Dates use an array of values for a single column and ONLY ONE range
+        // can be set at a time. Removes old value and adds new value based on
+        // column id in payload.
         return [...state.filter((v) => v.column !== payload.column), payload];
       }
     case FilterChipActionType.REMOVE:
-      if (payload.type === FilterType.CHECKBOX) {
+      if (
+        payload.type === FilterType.CHECKBOX ||
+        payload.type === FilterType.MULTISELECT
+      ) {
         // Payload value matches, so filters out
         return state.filter((v) => v.label !== payload.label);
       } else {
