@@ -19,4 +19,5 @@ export const waiverRAIResponse = {
   ],
   allowedParentTypes: ["waivernew", "waiverrenewal", "waiveramendment"],
   allowedParentStatuses: ["RAI Issued"],
+  packageAttributes: ["currentStatus"],
 };

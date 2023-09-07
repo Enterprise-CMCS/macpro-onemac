@@ -224,100 +224,36 @@ export const DetailSection = ({
             ></ExpandableList>
           )}
         </section>
-        <section className="detail-section ds-u-margin-bottom--7">
-          {detail.attachments?.length > 0 ? (
-            <FileList
-              heading={pageConfig.attachmentsHeading}
-              infoText={downloadInfoText}
-              uploadList={detail.attachments}
-              zipId={detail.componentId}
-            />
-          ) : (
-            <>
-              <h2>{pageConfig.attachmentsHeading}</h2>
-              <Review
-                className="original-review-component preserve-spacing"
-                headingLevel="2"
-              >
-                <i>
-                  At this time, the attachments for this package are unavailable
-                  in this system. Contact your CPOC to verify the initial
-                  submission documents.
-                </i>
-              </Review>
-            </>
-          )}
-        </section>
-
-        <AdditionalInfoSection additionalInfo={detail.additionalInformation} />
-
-        {detail.raiResponses?.length > 0 && (
+        {detail.reverseChrono?.length > 0 && (
           <section className="detail-section">
-            <h2>Formal RAI Responses</h2>
             <Accordion>
-              {detail.raiResponses?.map((raiResponse, index) => {
+              {detail.reverseChrono?.map((anEvent, index) => {
                 return (
                   <AccordionItem
                     buttonClassName="accordion-button"
                     contentClassName="accordion-content"
                     heading={
-                      (raiResponse.currentStatus ===
-                      Workflow.ONEMAC_STATUS.WITHDRAW_RAI_REQUESTED
-                        ? "Withdrawn"
-                        : "Submitted") +
-                      " on " +
-                      formatDate(raiResponse.submissionTimestamp)
+                      anEvent.type +
+                      " -- " +
+                      anEvent.action +
+                      " -- " +
+                      formatDate(anEvent.timestamp)
                     }
-                    headingLevel="6"
-                    id={`${raiResponse.componentType}-` + index + "_caret"}
-                    key={`${raiResponse.componentType}-` + index}
+                    headingLevel="2"
+                    id={anEvent.type + index + "_caret"}
+                    key={anEvent.type + index}
                     defaultOpen={index === 0}
                   >
-                    {raiResponse.attachments && (
+                    {anEvent.attachments?.length > 0 ? (
                       <FileList
-                        heading={"RAI Response Documentation"}
+                        heading={"Supporting Documentation"}
                         infoText={downloadInfoText}
-                        uploadList={raiResponse.attachments}
-                        zipId={raiResponse.componentType + index}
-                      />
-                    )}
-                    <AdditionalInfoSection
-                      additionalInfo={raiResponse.additionalInformation}
-                      id={"addl-info-rai-" + index}
-                    />
-                  </AccordionItem>
-                );
-              })}
-            </Accordion>
-          </section>
-        )}
-        {detail.withdrawalRequests?.length > 0 && (
-          <section className="detail-section">
-            <h2>Withdrawal Request</h2>
-            <Accordion>
-              {detail.withdrawalRequests?.map((withdrawalRequest, index) => {
-                return (
-                  <AccordionItem
-                    buttonClassName="accordion-button"
-                    contentClassName="accordion-content"
-                    heading={
-                      "Submitted on " +
-                      formatDate(withdrawalRequest.submissionTimestamp)
-                    }
-                    headingLevel="6"
-                    id={withdrawalRequest.componentType + index + "_caret"}
-                    key={withdrawalRequest.componentType + index}
-                    defaultOpen={index === 0}
-                  >
-                    {withdrawalRequest.attachments?.length > 0 ? (
-                      <FileList
-                        heading={"Withdrawal Request Documentation"}
-                        uploadList={withdrawalRequest.attachments}
-                        zipId={`${withdrawalRequest.componentType}-` + index}
+                        uploadList={anEvent.attachments}
+                        zipId={`${anEvent.type}-` + index}
                       />
                     ) : (
                       <>
-                        <h2>Withdrawal Request Documentation</h2>
+                        <h2>Supporting Documentation</h2>
                         <Review
                           className="original-review-component preserve-spacing"
                           headingLevel="2"
@@ -327,8 +263,8 @@ export const DetailSection = ({
                       </>
                     )}
                     <AdditionalInfoSection
-                      additionalInfo={withdrawalRequest.additionalInformation}
-                      id={"addl-info-withdraw-" + index}
+                      additionalInfo={anEvent.additionalInformation}
+                      id={"addl-info-chrono-" + index}
                     />
                   </AccordionItem>
                 );

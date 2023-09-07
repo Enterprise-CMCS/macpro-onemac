@@ -84,7 +84,6 @@ class PackageApi {
       );
       throw new Error("Missing required data or uploads");
     }
-
     try {
       return await API.post("oneMacAPI", `/${SUBMIT_API_CALL[componentType]}`, {
         body: data,

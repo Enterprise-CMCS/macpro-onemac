@@ -89,7 +89,6 @@ export function App() {
       }
       const activeTerritories = getActiveTerritories(userData?.roleList);
       let oneMacIdmRoles;
-
       if (authUser.signInUserSession.idToken.payload["custom:cms_roles"])
         oneMacIdmRoles = authUser.signInUserSession.idToken.payload[
           "custom:cms_roles"

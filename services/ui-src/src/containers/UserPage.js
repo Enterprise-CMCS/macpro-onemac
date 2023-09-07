@@ -286,7 +286,6 @@ const UserPage = () => {
         if (alertCodeAlerts[returnCode] === ALERTS_MSG.SUBMISSION_SUCCESS) {
           setUserInfo();
         } else {
-          console.log("Returned: ", returnCode);
           setAlertCode(returnCode);
         }
       });

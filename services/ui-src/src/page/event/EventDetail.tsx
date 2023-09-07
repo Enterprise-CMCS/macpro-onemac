@@ -38,7 +38,6 @@ const EventDetail: React.FC = () => {
           id,
           changedDate
         )) as String;
-
         stillLoading = false;
       } catch (e) {
         console.log("error in getDetail call?? ", e);
