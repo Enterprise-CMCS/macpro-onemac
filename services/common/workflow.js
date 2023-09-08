@@ -2,16 +2,21 @@ export const ONEMAC_TYPE = {
   CHIP_SPA: "chipspa",
   CHIP_SPA_RAI: "chipsparai",
   CHIP_SPA_WITHDRAW: "chipspawithdraw",
+  CHIP_SPA_SUBSEQUENT_SUBMISSION: "chipspasubsequent",
   MEDICAID_SPA: "medicaidspa",
   MEDICAID_SPA_RAI: "medicaidsparai",
   MEDICAID_SPA_WITHDRAW: "medicaidspawithdraw",
+  MEDICAID_SPA_SUBSEQUENT_SUBMISSION: "medicaidspasubsequent",
   WAIVER: "waiver",
   WAIVER_INITIAL: "waivernew",
   WAIVER_INITIAL_WITHDRAW: "waivernewwithdraw",
+  WAIVER_INITIAL_SUBSEQUENT_SUBMISSION: "waivernewsubsequent",
   WAIVER_AMENDMENT: "waiveramendment",
   WAIVER_AMENDMENT_WITHDRAW: "waiveramendmentwithdraw",
+  WAIVER_AMENDMENT_SUBSEQUENT_SUBMISSION: "waiveramendmentsubsequent",
   WAIVER_RENEWAL: "waiverrenewal",
   WAIVER_RENEWAL_WITHDRAW: "waiverrenewalwithdraw",
+  WAIVER_RENEWAL_SUBSEQUENT_SUBMISSION: "waiverrenewalsubsequent",
   WAIVER_RAI: "waiverrai",
   WAIVER_EXTENSION: "waiverextension",
   WAIVER_EXTENSION_B: "waiverextensionb",
@@ -19,6 +24,7 @@ export const ONEMAC_TYPE = {
   WAIVER_APP_K: "waiverappk",
   WAIVER_APP_K_RAI: "waiverappkrai",
   WAIVER_APP_K_WITHDRAW: "waiverappkwithdraw",
+  WAIVER_APP_K_SUBSEQUENT_SUBMISSION: "waiverappksubsequent",
   ENABLE_RAI_WITHDRAW: "enableraiwithdraw",
   RAI_RESPONSE_WITHDRAW: "rairesponsewithdraw",
 };
@@ -74,6 +80,7 @@ export const PACKAGE_ACTION = {
   REQUEST_TEMPORARY_EXTENSION: "Request a Temporary Extension",
   ADD_AMENDMENT: "Add Amendment",
   ENABLE_RAI_WITHDRAWAL: "Enable Formal RAI Response Withdraw",
+  SUBSEQUENT_SUBMISSION: "Upload Subsequent Documents",
 };
 
 export const PACKAGE_GROUP = {

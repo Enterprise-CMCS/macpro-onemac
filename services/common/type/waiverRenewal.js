@@ -38,6 +38,16 @@ export const waiverRenewal = {
     "parentId",
     "parentType",
   ],
+  packageAttributes: [
+    "submissionTimestamp",
+    "proposedEffectiveDate",
+    "currentStatus",
+    "submitterName",
+    "submitterEmail",
+    "waiverAuthority",
+    "parentId",
+    "parentType",
+  ],
 };
 
 export const waiverRenewalB4 = {
@@ -62,5 +72,10 @@ export const waiverRenewalB = {
     waiverBIndependentAssessment,
     tribalConsultation,
     other,
+  ],
+  secondClockStatuses: [
+    "Pending",
+    "Pending - Concurrence",
+    "Pending - Approval",
   ],
 };

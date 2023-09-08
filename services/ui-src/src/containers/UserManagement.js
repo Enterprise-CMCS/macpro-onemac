@@ -100,7 +100,6 @@ const UserManagement = () => {
           if (userStatus !== USER_STATUS.PENDING) setAlertCode(ul);
           ul = [];
         }
-        console.log("user list: ", ul);
         setUserList(ul);
       })
       .catch((error) => {

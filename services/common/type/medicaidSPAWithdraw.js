@@ -25,4 +25,5 @@ export const medicaidSPAWithdraw = {
     "Pending - Approval",
     "RAI Issued",
   ],
+  packageAttributes: ["currentStatus"],
 };

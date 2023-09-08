@@ -34,7 +34,6 @@ export default function ActionPopup({
   alertCallback,
 }) {
   const [showMenu, setShowMenu] = useState(false);
-  console.log("actions: ", theComponent.actions);
   const availableActions = theComponent.actions;
 
   const wrapperRef = useRef(null);

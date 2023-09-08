@@ -1,8 +1,13 @@
 const _ = require("lodash");
 import AWS from "aws-sdk";
 import { DateTime } from "luxon";
-
+import {
+  formalRAIResponseType,
+  submitAction,
+  withdrawalRequestedAction,
+} from "../lib/default-lib";
 import { dynamoConfig, Workflow } from "cmscommonlib";
+import { ONEMAC_STATUS } from "cmscommonlib/workflow";
 
 const dynamoDb = new AWS.DynamoDB.DocumentClient(dynamoConfig);
 
@@ -28,10 +33,19 @@ const oneMacTableName = process.env.IS_OFFLINE
   ? process.env.localTableName
   : process.env.oneMacTableName;
 
-const emptyField = "-- --";
+let logPackageId = "no id";
+
+export const emptyField = "-- --";
+
+export const logIt = (logMessage) => {
+  if (process.env.IS_OFFLINE || process.env.debugOn) {
+    console.log(logPackageId + ": " + logMessage);
+  }
+};
 
 export const buildAnyPackage = async (packageId, config) => {
-  console.log("Building package: ", packageId);
+  logPackageId = packageId;
+  logIt(`being built`);
   const queryParams = {
     TableName: oneMacTableName,
     KeyConditionExpression: "pk = :pk",
@@ -39,13 +53,11 @@ export const buildAnyPackage = async (packageId, config) => {
       ":pk": packageId,
     },
   };
-  console.log("%s the new query params are: ", packageId, queryParams);
 
   try {
     const result = await dynamoDb.query(queryParams).promise();
-    console.log("%s query result: ", packageId, result);
     if (result?.Items.length <= 0) {
-      console.log("%s did not have Items?", packageId);
+      console.log("%s did not have Items.", packageId);
       return;
     }
     const packageSk = `Package`;
@@ -56,9 +68,7 @@ export const buildAnyPackage = async (packageId, config) => {
         sk: packageSk,
         componentId: packageId,
         componentType: config.componentType,
-        raiResponses: [],
-        waiverExtensions: [],
-        withdrawalRequests: [],
+        reverseChrono: [],
         currentStatus: emptyField,
         submissionTimestamp: 0,
         submitterName: emptyField,
@@ -109,8 +119,36 @@ export const buildAnyPackage = async (packageId, config) => {
           return;
         showPackageOnDashboard = true;
 
-        if (anEvent.eventTimestamp > putParams.Item.lastActivityTimestamp)
-          putParams.Item.lastActivityTimestamp = anEvent.eventTimestamp;
+        const eventLabel = anEvent.GSI1pk.replace("OneMAC#", "");
+        // because if we change what status the withdrawal request event stores
+        // we'd have to do a migration... but might want to later
+        if (
+          config.eventActionMap[eventLabel] === withdrawalRequestedAction &&
+          anEvent.currentStatus === ONEMAC_STATUS.SUBMITTED
+        )
+          anEvent.currentStatus = ONEMAC_STATUS.WITHDRAWAL_REQUESTED;
+
+        config.eventTypeMap[eventLabel] &&
+          putParams.Item.reverseChrono.push({
+            type: config.eventTypeMap[eventLabel],
+            action: config.eventActionMap[eventLabel] || "Submitted",
+            currentStatus: anEvent.currentStatus,
+            timestamp: anEvent.submissionTimestamp,
+            eventTimestamp: anEvent.eventTimestamp,
+            attachments: anEvent.attachments ? [...anEvent.attachments] : [],
+            additionalInformation: anEvent.additionalInformation,
+          });
+
+        // if the RAI response is the newest so far, add the latest RAI response timestamp
+        // if the status is "Submitted" and delete the attribute if not
+        if (
+          config.eventTypeMap[eventLabel] === formalRAIResponseType &&
+          (!putParams.Item?.latestRaiResponseTimestamp ||
+            putParams.Item.latestRaiResponseTimestamp < anEvent.eventTimestamp)
+        )
+          if (config.eventActionMap[eventLabel] === submitAction)
+            putParams.Item.latestRaiResponseTimestamp = anEvent.eventTimestamp;
+          else delete putParams.Item.latestRaiResponseTimestamp;
 
         if (anEvent?.componentType)
           if (anEvent?.adminChanges && _.isArray(anEvent.adminChanges))
@@ -120,39 +158,6 @@ export const buildAnyPackage = async (packageId, config) => {
 
       if (timestamp > lmTimestamp) {
         lmTimestamp = timestamp;
-      }
-
-      // collect ALL rai events in one array (parsed later)
-      if (
-        anEvent.componentType === `${config.componentType}rai` ||
-        anEvent.componentType === `waiverrai` ||
-        anEvent.componentType === `rairesponsewithdraw`
-      ) {
-        putParams.Item.raiResponses.push({
-          submissionTimestamp: anEvent.submissionTimestamp,
-          eventTimestamp: anEvent.eventTimestamp,
-          attachments: anEvent.attachments,
-          additionalInformation: anEvent.additionalInformation,
-          currentStatus: anEvent.currentStatus,
-        });
-        putParams.Item.currentStatus = anEvent.currentStatus;
-
-        return;
-      }
-
-      // include ALL package withdraw request events in package details
-      if (anEvent.componentType === `${config.componentType}withdraw`) {
-        putParams.Item.withdrawalRequests.push({
-          submissionTimestamp: anEvent.submissionTimestamp,
-          eventTimestamp: anEvent.eventTimestamp,
-          attachments: anEvent.attachments,
-          additionalInformation: anEvent.additionalInformation,
-          currentStatus: anEvent.currentStatus,
-        });
-        putParams.Item.currentStatus =
-          Workflow.ONEMAC_STATUS.WITHDRAWAL_REQUESTED;
-
-        return;
       }
 
       // SEATool "events" are actually a complete representation of the package state,
@@ -167,13 +172,6 @@ export const buildAnyPackage = async (packageId, config) => {
           );
           return;
         }
-        console.log(
-          "%s SEATool event has timestamp %d and status %s, lmTimestamp is: %d",
-          anEvent.pk,
-          timestamp,
-          JSON.stringify(anEvent.SPW_STATUS, null, 2),
-          lmTimestamp
-        );
 
         //always use seatool data to overwrite -- this will have to change if edit in onemac is allowed
         if (
@@ -194,7 +192,6 @@ export const buildAnyPackage = async (packageId, config) => {
               ? oneAnalyst
               : null
           ).filter(Boolean)[0];
-          console.log("the lead analsyt is: ", leadAnalyst);
 
           if (leadAnalyst) {
             putParams.Item.cpocName = `${leadAnalyst.FIRST_NAME} ${leadAnalyst.LAST_NAME}`;
@@ -214,11 +211,6 @@ export const buildAnyPackage = async (packageId, config) => {
                 `"${oneReviewer.LAST_NAME}, ${oneReviewer.FIRST_NAME} (SRT)" <${oneReviewer.EMAIL}>`
               );
           });
-          console.log("the review team is: ", putParams.Item.reviewTeam);
-          console.log(
-            "the review team email list is: ",
-            putParams.Item.reviewTeamEmailList
-          );
         }
 
         let approvedEffectiveDate = emptyField;
@@ -246,24 +238,10 @@ export const buildAnyPackage = async (packageId, config) => {
             ? oneStatus.SPW_STATUS_DESC
             : null
         ).filter(Boolean)[0];
-        console.log(
-          "%s seaToolStatus %d resolves to: ",
-          anEvent.pk,
-          anEvent.STATE_PLAN.SPW_STATUS_ID,
-          seaToolStatus
-        );
+
         if (seaToolStatus && SEATOOL_TO_ONEMAC_STATUS[seaToolStatus]) {
           const oneMacStatus = SEATOOL_TO_ONEMAC_STATUS[seaToolStatus];
           putParams.Item.currentStatus = oneMacStatus;
-          console.log("onemac status is: ", oneMacStatus);
-          console.log(
-            "onemac status date is: ",
-            anEvent.STATE_PLAN.STATUS_DATE
-          );
-          console.log(
-            "onemac status is final:",
-            finalDispositionStatuses.includes(oneMacStatus)
-          );
           putParams.Item.finalDispositionDate =
             finalDispositionStatuses.includes(oneMacStatus)
               ? DateTime.fromMillis(anEvent.STATE_PLAN.STATUS_DATE).toFormat(
@@ -273,49 +251,41 @@ export const buildAnyPackage = async (packageId, config) => {
         }
       }
 
-      // assume OneMAC event if got here
-      config.theAttributes.forEach((attributeName) => {
-        if (anEvent[attributeName]) {
-          if (attributeName === "parentId") {
-            // having a parent adds the GSI2pk index
-            putParams.Item.GSI2pk = anEvent.parentId;
-            putParams.Item.GSI2sk = anEvent.componentType;
-          }
+      config.packageAttributes &&
+        config.packageAttributes.forEach((attributeName) => {
+          if (anEvent[attributeName]) {
+            if (attributeName === "parentId") {
+              // having a parent adds the GSI2pk index
+              putParams.Item.GSI2pk = anEvent.parentId;
+              putParams.Item.GSI2sk = anEvent.componentType;
+            }
 
-          // update the attribute if this is the latest event
-          if (timestamp === lmTimestamp)
-            putParams.Item[attributeName] = anEvent[attributeName];
-        }
-      });
+            // update the attribute if this is the latest event
+            if (timestamp === lmTimestamp)
+              putParams.Item[attributeName] = anEvent[attributeName];
+          }
+        });
     });
 
     //if any attribute was not yet populated from current event; then populate from currentPackage
     if (currentPackage) {
-      config.theAttributes.forEach((attributeName) => {
+      config.packageAttributes.forEach((attributeName) => {
         if (!putParams.Item[attributeName] && currentPackage[attributeName]) {
           putParams.Item[attributeName] = currentPackage[attributeName];
         }
       });
     }
 
-    // use GSI1 to show package on dashboard
+    // use GSI1 to show package on OneMAC dashboard
     if (showPackageOnDashboard) {
       putParams.Item.GSI1pk = `OneMAC#${config.whichTab}`;
       putParams.Item.GSI1sk = packageId;
-    } else {
-      console.log("%s is not a OneMAC package: ", packageId, putParams.Item);
     }
 
-    putParams.Item.raiResponses.sort(
-      (a, b) => b.eventTimestamp - a.eventTimestamp
-    );
-
-    if (putParams.Item.raiResponses[0]?.currentStatus === "Submitted") {
-      putParams.Item.latestRaiResponseTimestamp =
-        putParams.Item.raiResponses[0]?.submissionTimestamp;
-    }
+    putParams.Item.reverseChrono.sort((a, b) => b.timestamp - a.timestamp);
 
     adminChanges.sort((a, b) => b.changeTimestamp - a.changeTimestamp);
+    // remove duplicate messages for adminChanges that affect more than one event
     let lastTime = 0;
     adminChanges.forEach((oneChange) => {
       if (oneChange.changeTimestamp != lastTime) {
@@ -324,20 +294,10 @@ export const buildAnyPackage = async (packageId, config) => {
       }
     });
 
-    console.log("%s currentPackage: ", packageId, currentPackage);
-    console.log("%s newItem: ", packageId, putParams.Item);
-    console.log(
-      "%s evaluates to: ",
-      packageId,
-      _.isEqual(currentPackage, putParams.Item)
-    );
-    if (_.isEqual(currentPackage, putParams.Item)) return;
-
     putParams.Item.lastEventTimestamp = lmTimestamp;
-    console.log("%s just before put: ", packageId, putParams);
+    logIt(JSON.stringify(putParams));
     await dynamoDb.put(putParams).promise();
   } catch (e) {
     console.log("%s buildAnyPackage error: ", packageId, e);
   }
-  console.log("%s the end of things", packageId);
 };

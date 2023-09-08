@@ -54,6 +54,7 @@ export type ComponentDetail = {
   adminChanges: any[];
   waiverExtensions: any[];
   withdrawalRequests: any[];
+  reverseChrono: any[];
   temporaryExtensionType: string;
   cpocName: string;
   reviewTeam: string[];
@@ -163,7 +164,6 @@ const DetailView: React.FC<{ pageConfig: OneMACDetail }> = ({ pageConfig }) => {
             "MMM d yyyy"
           );
         } else fetchedDetail.finalDispositionDateNice = "-- --";
-        console.log("got the package: ", fetchedDetail);
         stillLoading = false;
       } catch (e) {
         console.log("error in getDetail call?? ", e);

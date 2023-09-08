@@ -37,8 +37,9 @@ Feature: Waiver Package Details View: 1915 b Waiver Amendment for a State User
         Then verify Review Team SRT is not visible in the details section
         Then verify there is a Final Disposition Date header in the details section
         Then verify there is an Approved Effective Date in the details section
-        Then verify the attachments section exists
-        Then verify the download all button exists
+        Then verify the Initial Submission caret button exists
+        Then expand the Initial Submission caret
+        Then verify the Initial Submission download all button exists
         Then verify the additional information section exists
 
     Scenario: Screen Enhance: 1915 b Waiver Amendment Details View - Under Review
@@ -66,8 +67,9 @@ Feature: Waiver Package Details View: 1915 b Waiver Amendment for a State User
         Then verify Review Team SRT is not visible in the details section
         Then verify there is a Final Disposition Date header in the details section
         Then verify there is an Approved Effective Date in the details section
-        Then verify the attachments section exists
-        Then verify the download all button exists
+        Then verify the Initial Submission caret button exists
+        Then expand the Initial Submission caret
+        Then verify the Initial Submission download all button exists
         Then verify the additional information section exists
 
     Scenario: Screen Enhance: 1915 b Waiver Amendment Details View - RAI Issued
@@ -96,8 +98,9 @@ Feature: Waiver Package Details View: 1915 b Waiver Amendment for a State User
         Then verify Review Team SRT is not visible in the details section
         Then verify there is a Final Disposition Date header in the details section
         Then verify there is an Approved Effective Date in the details section
-        Then verify the attachments section exists
-        Then verify the download all button exists
+        Then verify the Initial Submission caret button exists
+        Then expand the Initial Submission caret
+        Then verify the Initial Submission download all button exists
         Then verify the additional information section exists
 
     Scenario: Screen Enhance: 1915 b Waiver Amendment Details View - Approved
@@ -126,8 +129,9 @@ Feature: Waiver Package Details View: 1915 b Waiver Amendment for a State User
         Then verify there is a Final Disposition Date header in the details section
         Then verify there is an Approved Effective Date in the details section
         Then verify the Proposed Effective Date is a date formatted like Mon dd yyyy
-        Then verify the attachments section exists
-        Then verify the download all button exists
+        Then verify the Initial Submission caret button exists
+        Then expand the Initial Submission caret
+        Then verify the Initial Submission download all button exists
         Then verify the additional information section exists
 
     Scenario: Screen Enhance: 1915 b Waiver Amendment Details View - Disapproved
@@ -155,8 +159,9 @@ Feature: Waiver Package Details View: 1915 b Waiver Amendment for a State User
         Then verify Review Team SRT is not visible in the details section
         Then verify there is a Final Disposition Date header in the details section
         Then verify there is an Approved Effective Date in the details section
-        Then verify the attachments section exists
-        Then verify the download all button exists
+        Then verify the Initial Submission caret button exists
+        Then expand the Initial Submission caret
+        Then verify the Initial Submission download all button exists
         Then verify the additional information section exists
 
     Scenario: Screen Enhance: 1915 b Waiver Amendment Details View - Withdrawal Requested
@@ -184,9 +189,6 @@ Feature: Waiver Package Details View: 1915 b Waiver Amendment for a State User
         Then verify Review Team SRT is not visible in the details section
         Then verify there is a Final Disposition Date header in the details section
         Then verify there is an Approved Effective Date in the details section
-        Then verify the attachments section exists
-        Then verify the download all button exists
-        Then verify the additional information section exists
 
     Scenario: Screen Enhance: 1915 b Waiver Amendment Details View - Package Withdrawn
         Then click the Package Withdrawn checkbox
@@ -213,8 +215,9 @@ Feature: Waiver Package Details View: 1915 b Waiver Amendment for a State User
         Then verify Review Team SRT is not visible in the details section
         Then verify there is a Final Disposition Date header in the details section
         Then verify there is an Approved Effective Date in the details section
-        Then verify the attachments section exists
-        Then verify the download all button exists
+        Then verify the Initial Submission caret button exists
+        Then expand the Initial Submission caret
+        Then verify the Initial Submission download all button exists
         Then verify the additional information section exists
 
     Scenario: Screen Enhance: 1915 b Waiver Amendment Details View - RAI Response Withdraw Enabled
@@ -242,8 +245,9 @@ Feature: Waiver Package Details View: 1915 b Waiver Amendment for a State User
         Then verify Review Team SRT is not visible in the details section
         Then verify there is a Final Disposition Date header in the details section
         Then verify there is an Approved Effective Date in the details section
-        Then verify the attachments section exists
-        Then verify the download all button exists
+        Then verify the Initial Submission caret button exists
+        Then expand the Initial Submission caret
+        Then verify the Initial Submission download all button exists
         Then verify the additional information section exists
 
 Scenario: Screen Enhance: 1915 b Waiver Amendment Details View - Withdraw RAI Response

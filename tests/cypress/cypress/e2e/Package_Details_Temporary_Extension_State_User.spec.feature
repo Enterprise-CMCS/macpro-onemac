@@ -27,8 +27,9 @@ Feature: Waiver Package Details View:  Temporary Extension for a State User
         Then verify the type is 1915b Temporary Extension
         Then verify there is an Initial Submission Date header in the details section
         Then verify a date exists for the Initial Submission Date
-        Then verify the attachments section exists
-        Then verify the download all button exists
+        Then verify the Initial Submission caret button exists
+        Then expand the Initial Submission caret
+        Then verify the Initial Submission download all button exists
         Then verify the additional information section exists
         Then verify subject is not visible in the details section
         Then verify description is not visible in the details section
@@ -52,8 +53,9 @@ Feature: Waiver Package Details View:  Temporary Extension for a State User
         Then verify the type is 1915c Temporary Extension
         Then verify there is an Initial Submission Date header in the details section
         Then verify a date exists for the Initial Submission Date
-        Then verify the attachments section exists
-        Then verify the download all button exists
+        Then verify the Initial Submission caret button exists
+        Then expand the Initial Submission caret
+        Then verify the Initial Submission download all button exists
         Then verify the additional information section exists
         Then verify subject is not visible in the details section
         Then verify description is not visible in the details section

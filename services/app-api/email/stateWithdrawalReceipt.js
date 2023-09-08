@@ -12,7 +12,6 @@ export const getAllActiveStateUserEmailAddresses = async (territory) => {
 
   await Promise.all(
     stateSubmittingUserRoles.map(async (role) => {
-      console.log("Collecting all Role: ", role);
       const qParams = {
         TableName: process.env.oneMacTableName,
         IndexName: "GSI2",
@@ -25,7 +24,6 @@ export const getAllActiveStateUserEmailAddresses = async (territory) => {
       };
       try {
         const results = await dynamoDb.query(qParams);
-        console.log("Found these results in One Table: ", results);
         stateSubmittingUsers.push(
           results.Items.map(({ fullName, email }) => `${fullName} <${email}>`)
         );
@@ -35,7 +33,6 @@ export const getAllActiveStateUserEmailAddresses = async (territory) => {
     })
   );
   const returnUsers = stateSubmittingUsers.flat();
-  console.log("return users: ", returnUsers);
 
   return returnUsers;
 };
@@ -68,6 +65,5 @@ export const stateWithdrawalReceipt = async (data, config, user) => {
   } catch (e) {
     console.log("Error retrieving the state user addresses ", e);
   }
-  console.log("the state receipt: ", stateReceipt);
   return stateReceipt;
 };

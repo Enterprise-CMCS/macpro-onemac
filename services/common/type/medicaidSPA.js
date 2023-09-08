@@ -31,4 +31,16 @@ export const medicaidSPA = {
     "submitterName",
     "submitterEmail",
   ],
+  packageAttributes: [
+    "submissionTimestamp",
+    "proposedEffectiveDate",
+    "currentStatus",
+    "submitterName",
+    "submitterEmail",
+  ],
+  secondClockStatuses: [
+    "Pending",
+    "Pending - Concurrence",
+    "Pending - Approval",
+  ],
 };
