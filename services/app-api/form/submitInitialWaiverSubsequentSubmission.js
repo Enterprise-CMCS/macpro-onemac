@@ -8,17 +8,13 @@ import {
   waiverAuthorityB4,
 } from "cmscommonlib";
 
-export const initialWaiverSubsequentSubmissionFormConfig = {
-  ...defaultWaiverSubsequentSubmissionConfig,
-};
-
 export const initialWaiverB4SubsequentFormConifg = {
-  ...initialWaiverSubsequentSubmissionFormConfig,
+  ...defaultWaiverSubsequentSubmissionConfig,
   ...initialWaiverB4SubsequentSubmission,
 };
 
-export const intialWaiverBSubsequentFormConifg = {
-  ...initialWaiverSubsequentSubmissionFormConfig,
+export const initialWaiverBSubsequentFormConifg = {
+  ...defaultWaiverSubsequentSubmissionConfig,
   ...initialWaiverBSubsequentSubmission,
 };
 
@@ -34,7 +30,7 @@ export const main = handler(async (event) => {
   if (data.waiverAuthority === waiverAuthorityB4.value) {
     formConfig = initialWaiverB4SubsequentFormConifg;
   } else if (data.waiverAuthority === waiverAuthorityB.value) {
-    formConfig = intialWaiverBSubsequentFormConifg;
+    formConfig = initialWaiverBSubsequentFormConifg;
   } else {
     throw new Error("Waiver Authority not found");
   }
