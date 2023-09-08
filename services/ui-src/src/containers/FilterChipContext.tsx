@@ -3,8 +3,14 @@ import React, {
   Dispatch,
   PropsWithChildren,
   useContext,
+  useEffect,
   useReducer,
 } from "react";
+import {
+  LOCAL_STORAGE_TABLE_FILTERS_SPA,
+  LOCAL_STORAGE_TABLE_FILTERS_WAIVER,
+} from "../utils/StorageKeys";
+
 export enum FilterType {
   CHECKBOX,
   DATE,
@@ -93,8 +99,21 @@ const FilterChipContext = createContext<{
 });
 // Provider that wraps any components that need access to this state/update
 // logic.
-export const FilterChipProvider = ({ children }: PropsWithChildren<any>) => {
+export const FilterChipProvider = ({
+  children,
+  tab,
+}: PropsWithChildren<{ tab: "spa" | "waiver" }>) => {
   const [state, dispatch] = useReducer(chipReducer, []);
+  // Loading from saved state
+  useEffect(() => {
+    const filtersSaveKey =
+      tab === "spa"
+        ? LOCAL_STORAGE_TABLE_FILTERS_SPA
+        : LOCAL_STORAGE_TABLE_FILTERS_WAIVER;
+    const savedState = sessionStorage?.getItem(filtersSaveKey);
+    if (savedState) {
+    }
+  }, [tab]);
   return (
     <FilterChipContext.Provider value={{ dispatch, state }}>
       {children}

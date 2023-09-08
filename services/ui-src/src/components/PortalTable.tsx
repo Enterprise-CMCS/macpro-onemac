@@ -124,7 +124,7 @@ export default function PortalTable<V extends {} = {}>({
   return (
     <>
       {withSearchBar && (
-        <FilterChipProvider>
+        <FilterChipProvider tab={internalName}>
           <SearchAndFilter
             internalName={internalName}
             allRows={preGlobalFilteredRows}
