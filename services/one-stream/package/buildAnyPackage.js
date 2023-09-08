@@ -79,6 +79,7 @@ export const buildAnyPackage = async (packageId, config) => {
         reviewTeam: [],
         reviewTeamEmailList: [],
         adminChanges: [],
+        lastActivityTimestamp: 0,
       },
     };
     let currentPackage;
