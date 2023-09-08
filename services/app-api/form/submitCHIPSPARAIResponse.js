@@ -6,6 +6,7 @@ import {
   defaultFormConfig,
   defaultParentId,
   defaultParentType,
+  chipSpaRAIText,
 } from "./defaultFormConfig";
 
 export const chipSPARAIResponseFormConfig = {
@@ -15,6 +16,7 @@ export const chipSPARAIResponseFormConfig = {
     parentId: defaultParentId,
     parentType: defaultParentType,
   },
+  closingRemarks: chipSpaRAIText,
 };
 
 export const main = handler(async (event) =>

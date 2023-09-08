@@ -36,6 +36,21 @@ export const waiverAmendment = {
     "parentId",
     "parentType",
   ],
+  packageAttributes: [
+    "submissionTimestamp",
+    "proposedEffectiveDate",
+    "currentStatus",
+    "submitterName",
+    "submitterEmail",
+    "waiverAuthority",
+    "parentId",
+    "parentType",
+  ],
+  secondClockStatuses: [
+    "Pending",
+    "Pending - Concurrence",
+    "Pending - Approval",
+  ],
 };
 
 export const waiverAmendmentB4 = {

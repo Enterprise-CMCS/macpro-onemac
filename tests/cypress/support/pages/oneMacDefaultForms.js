@@ -127,6 +127,9 @@ export class oneMacDefaultForms {
     cy.xpath(yesSubmitBtn).click();
     cy.wait(8000);
   }
+  verifyModalSubmitExistsAndClickable() {
+    cy.xpath(yesSubmitBtn).should("be.visible").and("be.enabled");
+  }
   uploadFirstAddFile() {
     const filePath = "/files/adobe.pdf";
     cy.get(firstUploadFileSpot).attachFile(filePath);

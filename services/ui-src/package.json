@@ -41,7 +41,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --watchAll=false --unhandled-rejections=strict",
+    "test": "react-scripts test --unhandled-rejections=strict",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

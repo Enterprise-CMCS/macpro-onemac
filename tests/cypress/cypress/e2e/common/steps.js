@@ -577,14 +577,11 @@ Then("type in invalid Waiver Number", () => {
   OneMacSubmitNewWaiverActionPage.inputWaiverNumber("MD.123456");
 });
 
-Then("Click on Request Temporary Extension", () => {
-  OneMacSubmissionTypePage.clickRequestTemporaryExtension();
-});
 Then("Click the Request Extension button", () => {
   OneMacSubmissionTypePage.clickRequestExtensionBtn();
 });
 Then("Click on Request Temporary Extension in Package dashboard", () => {
-  OneMacSubmissionTypePage.clickRequestTemporaryExtensionPkgView();
+  OneMacSubmissionTypePage.clickRequestTemporaryExtension();
 });
 
 Then(
@@ -1095,7 +1092,7 @@ Then("Verify OneMAC Help Desk Contact Info Section Exists", () => {
   OneMacFAQPage.verifyOneMacHelpDeskInfoExists();
 });
 Then("Verify Phone Number Exists", () => {
-  OneMacFAQPage.verifyOneMacHelpDeskInfoExists();
+  OneMacFAQPage.verifyPhoneNumberExists();
 });
 Then("Verify actual Phone Number Exists", () => {
   OneMacFAQPage.verifyActualphoneNumberExists();
@@ -1243,9 +1240,6 @@ Then("Review your assigned submission exists", () => {
 });
 Then("Review your assigned submission information exists", () => {
   OneMacHomePage.verifyReviewYourAssignedSubmissionInfoExists();
-});
-Then("Submission Types include exists", () => {
-  OneMacHomePage.verifyCMSUSERSsubmissionTypesIncludeExists();
 });
 Then("Amendments to your Medicaid and CHIP State Plans exists", () => {
   OneMacHomePage.verifyCMSBullet1Exists();
@@ -3142,8 +3136,56 @@ Then("click the yes, submit modal button", () => {
   OneMacDefaultForms.clickYesSubmitBTN();
 });
 Then("verify the yes, submit modal button is visible and clickable", () => {
-  OneMacDefaultForms.clickYesSubmitBTN();
+  OneMacDefaultForms.verifyModalSubmitExistsAndClickable();
 });
 Then("Add file for Subsequent Submission", () => {
   OneMacDefaultForms.uploadFirstAddFile();
+});
+Then("verify the Formal RAI Response caret button exists", () => {
+  OneMacPackageDetailsPage.verifyFormalRAIResponseCaretBtnExists();
+});
+Then("expand the Formal RAI Response caret button", () => {
+  OneMacPackageDetailsPage.expandFormalRAIResponseCaretBtn();
+});
+Then("collapse the Formal RAI Response caret button", () => {
+  OneMacPackageDetailsPage.collapseFormalRAIResponseCaretBtn();
+});
+Then("click the Formal RAI Response caret button", () => {
+  OneMacPackageDetailsPage.clickFormalRAIResponseCaretBtn();
+});
+Then("verify the Formal RAI Response download all button exists", () => {
+  OneMacPackageDetailsPage.verifyFormalRAIResponseDownloadAllBtnExists();
+});
+Then("click the Formal RAI Response download all button", () => {
+  OneMacPackageDetailsPage.clickFormalRAIResponseDownloadAllBtn();
+});
+Then("verify the Initial Submission caret button exists", () => {
+  OneMacPackageDetailsPage.verifyInitialSubmissionCaretBtnExists();
+});
+Then("expand the Initial Submission caret", () => {
+  OneMacPackageDetailsPage.expandInitialSubmissionCaretBtn();
+});
+Then("collapse the Initial Submission caret button", () => {
+  OneMacPackageDetailsPage.collapseInitialSubmissionCaretBtn();
+});
+Then("verify the Initial Submission download all button exists", () => {
+  OneMacPackageDetailsPage.verifyInitialSubmissionDownloadAllBtnExists();
+});
+Then("click the Initial Submission download all button", () => {
+  OneMacPackageDetailsPage.clickInitialSubmissionDownloadAllBtn();
+});
+Then("verify the Withdrawal Requested caret button exists", () => {
+  OneMacPackageDetailsPage.verifyWithdrawalRequestedCaretBtnExists();
+});
+Then("expand the Withdrawal Requested caret", () => {
+  OneMacPackageDetailsPage.expandWithdrawalRequestedCaretBtn();
+});
+Then("collapse the Withdrawal Requested caret button", () => {
+  OneMacPackageDetailsPage.collapseWithdrawalRequestedCaretBtn();
+});
+Then("verify the Withdrawal Requested download all button exists", () => {
+  OneMacPackageDetailsPage.verifyWithdrawalRequestedDownloadAllBtnExists();
+});
+Then("click the Withdrawal Requested download all button", () => {
+  OneMacPackageDetailsPage.clickWithdrawalRequestedDownloadAllBtn();
 });

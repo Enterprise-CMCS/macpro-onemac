@@ -433,8 +433,6 @@ jobs:
             spaTypePage,
             submissionType,
             PackageWaiverActionTypePage,
-            PackageSubmissionType,
-            PackageSpaTypePage,
             PackageRequestTempExtentionPage,
             PackageMedicaidSpaPage,
             PackageCHIPSPAPage,
@@ -446,7 +444,7 @@ jobs:
     steps:
       - name: set branch_name
         run: echo "branch_name=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v3
       - name: set branch specific variable names
         run: ./.github/build_vars.sh set_names
       - name: set variable values

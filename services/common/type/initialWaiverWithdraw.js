@@ -24,4 +24,5 @@ export const initialWaiverWithdraw = {
     "Pending - Approval",
     "RAI Issued",
   ],
+  packageAttributes: ["currentStatus"],
 };

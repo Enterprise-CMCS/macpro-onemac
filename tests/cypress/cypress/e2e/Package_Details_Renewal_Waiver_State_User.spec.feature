@@ -28,8 +28,9 @@ Feature: Waiver Package Details View: Waiver Renewals for a State User
         Then verify there is an Initial Submission Date header in the details section
         Then verify a date exists for the Initial Submission Date
         Then verify there is a Proposed Effective Date header in the details section
-        Then verify the attachments section exists
-        Then verify the download all button exists
+        Then verify the Initial Submission caret button exists
+        Then expand the Initial Submission caret
+        Then verify the Initial Submission download all button exists
         Then verify the additional information section exists
         Then verify subject is not visible in the details section
         Then verify description is not visible in the details section
@@ -55,8 +56,9 @@ Feature: Waiver Package Details View: Waiver Renewals for a State User
         Then verify there is an Initial Submission Date header in the details section
         Then verify a date exists for the Initial Submission Date
         Then verify there is a Proposed Effective Date header in the details section
-        Then verify the attachments section exists
-        Then verify the download all button exists
+        Then verify the Initial Submission caret button exists
+        Then expand the Initial Submission caret
+        Then verify the Initial Submission download all button exists
         Then verify the additional information section exists
         Then verify subject is not visible in the details section
         Then verify description is not visible in the details section
@@ -81,8 +83,9 @@ Feature: Waiver Package Details View: Waiver Renewals for a State User
         Then verify there is an Initial Submission Date header in the details section
         Then verify a date exists for the Initial Submission Date
         Then verify there is a Proposed Effective Date header in the details section
-        Then verify the attachments section exists
-        Then verify the download all button exists
+        Then verify the Initial Submission caret button exists
+        Then expand the Initial Submission caret
+        Then verify the Initial Submission download all button exists
         Then verify the additional information section exists
         Then verify subject is not visible in the details section
         Then verify description is not visible in the details section
@@ -109,8 +112,9 @@ Feature: Waiver Package Details View: Waiver Renewals for a State User
         Then verify there is an Initial Submission Date header in the details section
         Then verify a date exists for the Initial Submission Date
         Then verify there is a Proposed Effective Date header in the details section
-        Then verify the attachments section exists
-        Then verify the download all button exists
+        Then verify the Initial Submission caret button exists
+        Then expand the Initial Submission caret
+        Then verify the Initial Submission download all button exists
         Then verify the additional information section exists
         Then verify subject is not visible in the details section
         Then verify description is not visible in the details section
@@ -138,8 +142,9 @@ Feature: Waiver Package Details View: Waiver Renewals for a State User
         Then verify a date exists for the Initial Submission Date
         Then verify there is a Proposed Effective Date header in the details section
         Then verify the Proposed Effective Date is a date formatted like Mon dd yyyy
-        Then verify the attachments section exists
-        Then verify the download all button exists
+        Then verify the Initial Submission caret button exists
+        Then expand the Initial Submission caret
+        Then verify the Initial Submission download all button exists
         Then verify the additional information section exists
         Then verify subject is not visible in the details section
         Then verify description is not visible in the details section
@@ -165,8 +170,9 @@ Feature: Waiver Package Details View: Waiver Renewals for a State User
         Then verify there is an Initial Submission Date header in the details section
         Then verify a date exists for the Initial Submission Date
         Then verify there is a Proposed Effective Date header in the details section
-        Then verify the attachments section exists
-        Then verify the download all button exists
+        Then verify the Initial Submission caret button exists
+        Then expand the Initial Submission caret
+        Then verify the Initial Submission download all button exists
         Then verify the additional information section exists
         Then verify subject is not visible in the details section
         Then verify description is not visible in the details section
@@ -192,8 +198,9 @@ Feature: Waiver Package Details View: Waiver Renewals for a State User
         Then verify there is an Initial Submission Date header in the details section
         Then verify a date exists for the Initial Submission Date
         Then verify there is a Proposed Effective Date header in the details section
-        Then verify the attachments section exists
-        Then verify the download all button exists
+        Then verify the Initial Submission caret button exists
+        Then expand the Initial Submission caret
+        Then verify the Initial Submission download all button exists
         Then verify the additional information section exists
         Then verify subject is not visible in the details section
         Then verify description is not visible in the details section
@@ -219,8 +226,9 @@ Feature: Waiver Package Details View: Waiver Renewals for a State User
         Then verify there is an Initial Submission Date header in the details section
         Then verify a date exists for the Initial Submission Date
         Then verify there is a Proposed Effective Date header in the details section
-        Then verify the attachments section exists
-        Then verify the download all button exists
+        Then verify the Initial Submission caret button exists
+        Then expand the Initial Submission caret
+        Then verify the Initial Submission download all button exists
         Then verify the additional information section exists
         Then verify subject is not visible in the details section
         Then verify description is not visible in the details section
@@ -246,8 +254,9 @@ Feature: Waiver Package Details View: Waiver Renewals for a State User
         Then verify there is an Initial Submission Date header in the details section
         Then verify a date exists for the Initial Submission Date
         Then verify there is a Proposed Effective Date header in the details section
-        Then verify the attachments section exists
-        Then verify the download all button exists
+        Then verify the Initial Submission caret button exists
+        Then expand the Initial Submission caret
+        Then verify the Initial Submission download all button exists
         Then verify the additional information section exists
         Then verify subject is not visible in the details section
         Then verify description is not visible in the details section
