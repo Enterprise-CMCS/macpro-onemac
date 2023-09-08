@@ -1,4 +1,4 @@
-import React, { ReactNode, useCallback, useEffect } from "react";
+import React, { ReactNode, useEffect } from "react";
 import {
   HeaderGroup,
   TableInstance,
@@ -13,8 +13,6 @@ import {
   useGlobalFilter,
   useSortBy,
   useTable,
-  Filters,
-  IdType,
 } from "react-table";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -24,7 +22,6 @@ import {
   faSortUp,
 } from "@fortawesome/free-solid-svg-icons";
 import { constant } from "lodash";
-import closeIcon from "../assets/images/close.png";
 
 import {
   SearchAndFilter,
@@ -36,8 +33,6 @@ import {
   LOCAL_STORAGE_TABLE_FILTERS_SPA,
   LOCAL_STORAGE_TABLE_FILTERS_WAIVER,
 } from "../utils/StorageKeys";
-import { COLUMN_ID } from "../containers/PackageList";
-import { useAppContext } from "../libs/contextLib";
 import { FilterChipTray } from "./FilterChipTray";
 import { FilterChipProvider } from "../containers/FilterChipContext";
 export { CustomFilterTypes, CustomFilterUi } from "./SearchAndFilter";

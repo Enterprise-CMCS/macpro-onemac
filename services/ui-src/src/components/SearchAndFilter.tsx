@@ -304,7 +304,7 @@ function TextFilter({
         return Array.from(newFilterValue);
       });
     },
-    [possibleValues, setFilter]
+    [possibleValues, setFilter, id, updateFilterChips]
   );
 
   return (
@@ -352,7 +352,7 @@ function DateFilter({
         },
       });
     },
-    [setFilter]
+    [setFilter, id, updateFilterChips]
   );
   const ranges: { label: string; value: [Date, Date] }[] = useMemo(
     () =>
@@ -440,7 +440,7 @@ const MultiSelectList = ({
         },
       });
     },
-    [setFilter]
+    [setFilter, id, updateFilterChips]
   );
   const selectedOptions = useMemo(
     () =>
@@ -508,7 +508,7 @@ function FilterPane<V extends {}>({
         }
       })
     );
-  }, [columnsInternal, setAllFilters]);
+  }, [columnsInternal, setAllFilters, updateFilterChips]);
 
   //Mount transition animation
 
