@@ -264,7 +264,7 @@ Feature: Waiver Package Details View: Appendix K Amendment for a State User
 
     Scenario: Appendix K Details View - Withdraw RAI Response
         Then click the RAI Response Withdraw Enabled checkbox
-        Then search for "MD-22958.R00.01"
+        Then search for "MD-22958.R00.02"
         Then click the Waiver Number link in the first row
         Then verify the package details page is visible
         Then verify the status on the card is "RAI Response Withdraw Enabled"
