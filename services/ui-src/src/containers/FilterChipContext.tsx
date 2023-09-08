@@ -4,11 +4,12 @@ import React, {
   PropsWithChildren,
   useContext,
   useEffect,
+  useMemo,
   useReducer,
 } from "react";
 import {
-  LOCAL_STORAGE_TABLE_FILTERS_SPA,
-  LOCAL_STORAGE_TABLE_FILTERS_WAIVER,
+  LOCAL_STORAGE_FILTER_CHIP_STATE_SPA,
+  LOCAL_STORAGE_FILTER_CHIP_STATE_WAIVER,
 } from "../utils/StorageKeys";
 
 export enum FilterType {
@@ -17,23 +18,20 @@ export enum FilterType {
   MULTISELECT,
 }
 export type TerritoryFilter = { value: string; label: string };
-// A single value stored in FilterChip State containing the column filtered
-// and the value added or removed as a filter
 export interface FilterChipValue {
   label?: string | string[] | TerritoryFilter[];
   column?: string;
   type?: FilterType;
 }
-// Arrays of values to be rendered as filter chips.
 type FilterChipState = FilterChipValue[];
-// Available state modification actions
+
 export enum FilterChipActionType {
   ADD,
   REMOVE,
   RESET,
+  LOAD_SAVE_STATE,
 }
-// Action object with type of modification and payload
-// to update state with.
+
 interface FilterChipAction {
   type: FilterChipActionType;
   payload: FilterChipValue;
@@ -42,17 +40,16 @@ type ChipStateReducer = (
   state: FilterChipState,
   action: FilterChipAction
 ) => FilterChipState;
-// Reducer function to handle state update logic
+
 const chipReducer: ChipStateReducer = (state, action) => {
   const { type, payload } = action;
   switch (type) {
     case FilterChipActionType.ADD:
       if (payload.type === FilterType.CHECKBOX) {
-        // Just adds the single chip value to the state array.
         return [...state, payload];
       } else if (payload.type === FilterType.MULTISELECT) {
-        // Parses through the TerritoryFilter[] for just the 2-letter abbreviated
-        // values and creates a single chip (i.e. FilterChipValue) for each.
+        // Parses through the TerritoryFilter[] and creates a single chip
+        // for each.
         const multiselectValues: FilterChipValue[] = (
           payload.label as TerritoryFilter[]
         ).map((f) => ({
@@ -66,8 +63,7 @@ const chipReducer: ChipStateReducer = (state, action) => {
         ];
       } else {
         // Dates use an array of values for a single column and ONLY ONE range
-        // can be set at a time. Removes old value and adds new value based on
-        // column id in payload.
+        // can be set at a time.
         return [...state.filter((v) => v.column !== payload.column), payload];
       }
     case FilterChipActionType.REMOVE:
@@ -75,21 +71,21 @@ const chipReducer: ChipStateReducer = (state, action) => {
         payload.type === FilterType.CHECKBOX ||
         payload.type === FilterType.MULTISELECT
       ) {
-        // Payload value matches, so filters out
         return state.filter((v) => v.label !== payload.label);
       } else {
-        // Dates and Multiselect uses an array of values for a single column
-        // Removes value (v) based on column id in payload
+        // Dates use an array of values for a single filter chip,
+        // so we simply filter out that chip by column id
         return state.filter((v) => v.column !== payload.column);
       }
     case FilterChipActionType.RESET:
       return [];
-    // Default action simply for safety
+    case FilterChipActionType.LOAD_SAVE_STATE:
+      return [...state, payload];
     default:
       return state;
   }
 };
-// Creation of context with default empty arrays (i.e. no filters applied)
+
 const FilterChipContext = createContext<{
   dispatch: Dispatch<FilterChipAction>;
   state: FilterChipState;
@@ -97,23 +93,31 @@ const FilterChipContext = createContext<{
   dispatch: (v) => {},
   state: [],
 });
-// Provider that wraps any components that need access to this state/update
-// logic.
+
 export const FilterChipProvider = ({
   children,
   tab,
 }: PropsWithChildren<{ tab: "spa" | "waiver" }>) => {
-  const [state, dispatch] = useReducer(chipReducer, []);
-  // Loading from saved state
-  useEffect(() => {
-    const filtersSaveKey =
+  const chipStateSaveKey = useMemo(
+    () =>
       tab === "spa"
-        ? LOCAL_STORAGE_TABLE_FILTERS_SPA
-        : LOCAL_STORAGE_TABLE_FILTERS_WAIVER;
-    const savedState = sessionStorage?.getItem(filtersSaveKey);
-    if (savedState) {
-    }
-  }, [tab]);
+        ? LOCAL_STORAGE_FILTER_CHIP_STATE_SPA
+        : LOCAL_STORAGE_FILTER_CHIP_STATE_WAIVER,
+    [tab]
+  );
+  const chipStateFromSave: FilterChipState = useMemo(() => {
+    const savedState = localStorage?.getItem(chipStateSaveKey);
+    return savedState
+      ? (JSON.parse(savedState) as FilterChipState)
+      : ([] as FilterChipState);
+  }, [chipStateSaveKey]);
+  const [state, dispatch] = useReducer(chipReducer, chipStateFromSave);
+  // For loading filter chip UI from saved filter state on a page refresh
+  // or tab change.
+  useEffect(() => {
+    localStorage.setItem(chipStateSaveKey, JSON.stringify(state));
+    console.log("Set state in storage.");
+  }, [chipStateSaveKey, state]);
   return (
     <FilterChipContext.Provider value={{ dispatch, state }}>
       {children}
