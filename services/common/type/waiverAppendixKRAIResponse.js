@@ -21,4 +21,5 @@ export const waiverAppendixKRAIResponse = {
     "submitterName",
     "submitterEmail",
   ],
+  packageAttributes: ["currentStatus"],
 };

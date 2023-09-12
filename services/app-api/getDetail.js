@@ -99,8 +99,7 @@ export const getDetails = async (event) => {
 
     if (!userRoleObj.isCMSUser && result.Item.reviewTeam)
       delete result.Item.reviewTeam;
-    console.log("result.Item: ", result.Item);
-    console.log("latestRaiResponse: ", result.Item.latestRaiResponseTimestamp);
+
     result.Item.actions = getActionsForPackage(
       result.Item.componentType,
       originalStatus,
@@ -108,7 +107,7 @@ export const getDetails = async (event) => {
       userRoleObj,
       "detail"
     );
-    console.log("actions", result.Item.actions);
+
     return { ...result.Item };
   } catch (e) {
     console.log("Error is: ", e);

@@ -23,4 +23,5 @@ export const medicaidSPARAIResponse = {
   ],
   allowedParentTypes: ["medicaidspa"],
   allowedParentStatuses: ["RAI Issued"],
+  packageAttributes: ["currentStatus"],
 };

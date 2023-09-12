@@ -31,10 +31,7 @@ export const getTopicDetail = async (email, id, changedDate) => {
     },
   };
 
-  console.log("params", params);
-
   const results = await dynamoDb.query(params);
-  console.log("results", results);
   return results.Items[0];
 };
 
