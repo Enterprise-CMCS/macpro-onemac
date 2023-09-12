@@ -3099,3 +3099,9 @@ Then(
 Then("verify Review Team SRT is not visible in the details section", () => {
   OneMacPackageDetailsPage.verifyReviewTeamSRTDoesNotExists();
 });
+Then(
+  "verify each of the attachment types for a {string} RAI Response is visible",
+  (string) => {
+    OneMacRespondToRAIPage.verifyAttachmentsTypesFor(string);
+  }
+);

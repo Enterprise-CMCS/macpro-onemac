@@ -26,29 +26,14 @@ const parentIDHelpText = "#parent-fieldHint0";
 //internal function for proposed effective date
 function caculate3MonthsInFuture() {
   var t = new Date();
-  var d = ("0" + t.getDate()).slice(-2);
-  var y = t.getFullYear();
-  var futureMonth = 0;
-  switch (t.getMonth()) {
-    case 9:
-      futureMonth = 0;
-      y += 1;
-      break;
-    case 10:
-      futureMonth = 1;
-      y += 1;
-      break;
-    case 11:
-      futureMonth = 2;
-      y += 1;
-      break;
-    default:
-      futureMonth = t.getMonth() + 3;
-  }
+  t.setMonth(t.getMonth() + 3);
+  var y = t.toLocaleString("default", { year: "numeric" });
+  var m = t.toLocaleString("default", { month: "2-digit" });
+  var d = t.toLocaleString("default", { day: "2-digit" });
 
-  var m = ("0" + (futureMonth + 1)).slice(-2);
-  var date = y + "-" + m + "-" + d;
-  return date;
+  // format date to yyyy-mm-dd so it can be entered in UI.
+  var formattedDate = y + "-" + m + "-" + d;
+  return formattedDate;
 }
 export class oneMacSubmitNewWaiverActionPage {
   inputWaiverNumber(s) {

@@ -21,6 +21,7 @@ Feature: RAI Response for CHIP SPA package view
         Then verify the form is titled Formal Request for Additional Information Response
         Then verify the attachment info descriptiion
         Then verify the attachment info link is for "CHIP RAI"
+        Then verify each of the attachment types for a "CHIP SPA" RAI Response is visible
         Then Add file for Revised Amended State Plan Language
         Then Add file for Official RAI Response
         Then Click the Submit Button without waiting
@@ -36,6 +37,7 @@ Feature: RAI Response for CHIP SPA package view
         Then verify the Respond to RAI button is displayed
         Then click the Respond to RAI button
         Then verify the form is titled Formal Request for Additional Information Response
+        Then verify each of the attachment types for a "CHIP SPA" RAI Response is visible
         Then Add file for Revised Amended State Plan Language
         Then Add file for Official RAI Response
         Then Type Additonal Info Comments in new form
