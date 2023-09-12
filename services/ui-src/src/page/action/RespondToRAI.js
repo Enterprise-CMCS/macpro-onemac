@@ -22,6 +22,7 @@ export default function RespondToRAI({ theComponent }) {
           componentId: theComponent.componentId,
           parentId: theComponent.componentId,
           parentType: theComponent.componentType,
+          waiverAuthority: theComponent.waiverAuthority,
         },
       }}
       id={"respond-rai-action-" + theComponent.componentId}

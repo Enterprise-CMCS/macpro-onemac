@@ -22,6 +22,7 @@ Feature: RAI Response for Initial Waiver - Package View
         Then verify the package ID is prefilled in the form
         Then verify the attachment info descriptiion
         Then verify the attachment info link is for "Waiver RAI"
+        Then verify each of the attachment types for a "1915b Initial Waiver" RAI Response is visible
         Then Add file for Waiver RAI Response
         Then verify the submit button is enabled 
 
@@ -29,5 +30,6 @@ Feature: RAI Response for Initial Waiver - Package View
         Then click the Waiver Number link in the first row
         Then click on Respond to RAI package action
         Then verify the package ID is prefilled in the form
+        Then verify each of the attachment types for a "1915b Initial Waiver" RAI Response is visible
         Then Add file for Waiver RAI Response
         Then verify the submit button is enabled 
