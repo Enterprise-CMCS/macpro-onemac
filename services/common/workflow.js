@@ -20,6 +20,7 @@ export const ONEMAC_TYPE = {
   WAIVER_APP_K_RAI: "waiverappkrai",
   WAIVER_APP_K_WITHDRAW: "waiverappkwithdraw",
   ENABLE_RAI_WITHDRAW: "enableraiwithdraw",
+  DISABLE_RAI_WITHDRAW: "disableraiwithdraw",
   RAI_RESPONSE_WITHDRAW: "rairesponsewithdraw",
 };
 
@@ -74,6 +75,7 @@ export const PACKAGE_ACTION = {
   REQUEST_TEMPORARY_EXTENSION: "Request a Temporary Extension",
   ADD_AMENDMENT: "Add Amendment",
   ENABLE_RAI_WITHDRAWAL: "Enable Formal RAI Response Withdraw",
+  DISABLE_RAI_WITHDRAWAL: "Disable Formal RAI Response Withdraw",
 };
 
 export const PACKAGE_GROUP = {

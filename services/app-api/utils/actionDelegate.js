@@ -29,6 +29,9 @@ function getDefaultActions(
     case Workflow.ONEMAC_STATUS.WITHDRAW_RAI_ENABLED:
       if (userRole.canAccessForms)
         actions.push(Workflow.PACKAGE_ACTION.WITHDRAW_RAI);
+      if (userRole.isCMSUser && formSource === "detail") {
+        actions.push(Workflow.PACKAGE_ACTION.DISABLE_RAI_WITHDRAWAL);
+      }
       break;
   }
   return actions;

@@ -432,6 +432,17 @@ functions:
           cors: true
           authorizer: aws_iam
 
+  disableRaiWithdraw:
+    handler: form/disableRaiWithdraw.main
+    role: LambdaApiRole
+    timeout: 30
+    events:
+      - http:
+          path: disableRaiWithdraw
+          method: post
+          cors: true
+          authorizer: aws_iam
+
   withdrawRAIResponse:
     handler: form/withdrawRAIResponse.main
     role: LambdaApiRole
