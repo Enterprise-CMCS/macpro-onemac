@@ -10,7 +10,6 @@ submitAny.mockResolvedValue("yup!");
 
 const testEvent = {
   this: "is an event object",
-  temporaryExtensionType: "1915(b)",
 };
 
 const expectedResponse = {
@@ -21,6 +20,10 @@ const expectedResponse = {
   },
   statusCode: 200,
 };
+
+it("calls submitAny", async () => {
+  expect(main(testEvent)).resolves.toStrictEqual(expectedResponse);
+});
 
 it("should submit temporary extension 1915b form", async () => {
   const data = {
@@ -82,7 +85,7 @@ it("should return an HTTP 500 error when event body cannot be parsed", async () 
       "Access-Control-Allow-Credentials": true,
     },
     body: JSON.stringify({
-      error: "Unexpected token 'i', \"invalidJson\" is not valid JSON",
+      error: "Unexpected token i in JSON at position 0",
     }),
   };
 
