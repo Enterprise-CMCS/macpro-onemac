@@ -332,7 +332,7 @@ jobs:
             Withdraw_Package_Form_Medicaid_SPA.spec.feature,
             Withdraw_Package_Form_Waiver_Amendment.spec.feature,
             Withdraw_Package_Form_Waiver_Renewal.spec.feature,
-            
+            Dashboard_RAI_Withdraw_Enabled_Actions.spec.feature,
           ]
     steps:
       - name: set branch_name

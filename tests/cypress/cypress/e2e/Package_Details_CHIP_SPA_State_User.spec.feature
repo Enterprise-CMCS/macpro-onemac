@@ -226,6 +226,7 @@ Feature: CHIP SPA State Details View - Card View with Actions
         Then verify 2 action cards exist
         Then verify the status on the card is "RAI Response Withdraw Enabled"
         Then verify package actions header is visible
+        Then verify withdraw package action exists
         Then verify Withdraw Formal RAI Response package action exists
         Then verify the details section exists
         Then verify there is a Type header in the details section
