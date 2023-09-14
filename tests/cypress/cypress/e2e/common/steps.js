@@ -1398,7 +1398,7 @@ Then("click Under Review checkbox", () => {
   OneMacPackagePage.clickUnderReviewCheckBox();
 });
 Then("click Waiver Terminated checkbox", () => {
-  OneMacPackagePage.clickTerminatedCheckBox();
+  OneMacPackagePage.clickWaiverTerminatedCheckBox();
 });
 Then("verify the Withdrawal Requested checkbox exists", () => {
   OneMacPackagePage.verifyWithdrawalRequestedCheckBoxExists();
@@ -1420,9 +1420,6 @@ Then("verify the RAI Response Withdraw Enabled checkbox exists", () => {
 });
 Then("click the RAI Response Withdraw Enabled checkbox", () => {
   OneMacPackagePage.clickRaiResponseWithdrawEnabledCheckBox();
-});
-Then("verify sparai submitted exists", () => {
-  OneMacPackagePage.verifysparaiSubmittedExists();
 });
 Then("click 1915b Initial Waiver check box", () => {
   OneMacPackagePage.clickInitialWaiver1915bCheckBox();
@@ -1784,9 +1781,6 @@ Then("click the Pending - Approval checkbox", () => {
 });
 Then("verify the Pending - Approval status checkbox exists", () => {
   OneMacPackagePage.verifyPendingApprovalCheckboxExists();
-});
-Then("click Package Approved checkbox", () => {
-  OneMacPackagePage.clickPackageApprovedCheckbox();
 });
 Then(
   "verify that the value of the column for the 90th day is Clock Stopped",
