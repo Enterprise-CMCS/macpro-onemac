@@ -259,6 +259,16 @@ export const buildAnyPackage = async (packageId, config) => {
               putParams.Item.GSI2sk = anEvent.componentType;
             }
 
+            // ignore the currentStatus for an RAI Response if the timestamp is newer
+            // than the submission timestamp, yet the status is SUBMITTED
+            // (this indicates a disable of the enable)
+            if (
+              attributeName === "currentStatus" &&
+              timestamp > anEvent.submissionTimestamp &&
+              anEvent.currentStatus === ONEMAC_STATUS.SUBMITTED
+            )
+              return;
+
             // update the attribute if this is the latest event
             if (timestamp === lmTimestamp)
               putParams.Item[attributeName] = anEvent[attributeName];
