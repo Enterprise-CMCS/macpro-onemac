@@ -100,7 +100,8 @@ async function waitForStreamProcessing(componentId, eventTimestamp) {
     do {
       await new Promise((resolve) => setTimeout(resolve, 1000));
       const chkResponse = await dynamoDb.get(checkParams);
-      packageUpdated = chkResponse?.Item?.lastEventTimestamp >= eventTimestamp;
+      packageUpdated =
+        chkResponse?.Item?.adminChanges[0]?.changeTimestamp >= eventTimestamp;
     } while (!packageUpdated);
   } catch (e) {
     console.log("%s check error:", componentId, e);
@@ -139,9 +140,12 @@ export const main = handler(async (event) => {
       // the first record is the most recent as they were sorted by submissionTimestamp
       const mostRecentRecord = records[0];
       mostRecentRecord.currentStatus = Workflow.ONEMAC_STATUS.SUBMITTED;
-      mostRecentRecord.eventTimestamp = Date.now();
+      // set the eventTimestamp back to submissionTimestamp so that the
+      // status is set correctly
+      mostRecentRecord.eventTimestamp = data.submissionTimestamp;
+      const checkTimestamp = Date.now();
       const adminChange = {
-        changeTimestamp: mostRecentRecord.eventTimestamp,
+        changeTimestamp: checkTimestamp,
         changeMade: `${data.submitterName} has disabled State package action to withdraw Formal RAI Response`,
         changeReason: data.additionalInformation,
       };
@@ -149,10 +153,7 @@ export const main = handler(async (event) => {
         ? [...mostRecentRecord.adminChanges, adminChange]
         : [adminChange];
       await updateRecord(mostRecentRecord);
-      await waitForStreamProcessing(
-        data.componentId,
-        mostRecentRecord.eventTimestamp
-      );
+      await waitForStreamProcessing(data.componentId, checkTimestamp);
     } else {
       throw new Error(
         "No RAI found when attempting to enable rai withdraw for ",
