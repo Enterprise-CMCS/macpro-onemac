@@ -1,12 +1,5 @@
 import { chipSPA } from "cmscommonlib";
-import {
-  initialSubmissionType,
-  formalRAIResponseType,
-  packageType,
-  submitAction,
-  withdrawalRequestedAction,
-  defaultEventMapping,
-} from "../lib/default-lib";
+import { defaultEventMapping } from "../lib/default-lib";
 import { buildAnyPackage } from "./buildAnyPackage";
 
 const chipSPABuildConfig = {
