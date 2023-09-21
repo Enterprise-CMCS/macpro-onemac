@@ -78,3 +78,14 @@ export const defaultRnAWaiverEventMapping = {
   ...defaultWaiverEventMapping,
   submit: defaultRnAWaiverInitialSubmissionMap,
 };
+
+export const defaultWaiverExtensionEventMapping = {
+  ...defaultRnAWaiverEventMapping,
+  submit: {
+    ...defaultRnAWaiverInitialSubmissionMap,
+    packageAttributes: [
+      ...defaultRnAWaiverInitialSubmissionMap.packageAttributes,
+      "temporaryExtensionType",
+    ],
+  },
+};

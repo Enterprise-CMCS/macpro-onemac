@@ -126,9 +126,6 @@ export const buildAnyPackage = async (packageId, config) => {
           ""
         );
         eventConfig = config.eventMap[eventLabel];
-        // console.log("eventConfig: ", eventConfig);
-        // console.log("this event mapping is: ", config.eventMap);
-        // console.log("config.eventMap[eventlavel]: ", config.eventMap[eventLabel]);
 
         // because if we change what status the withdrawal request event stores
         // we'd have to do a migration... but might want to later
@@ -255,11 +252,9 @@ export const buildAnyPackage = async (packageId, config) => {
             : null
         ).filter(Boolean)[0];
 
-        console.log("seatool status: ", seaToolStatus);
         if (seaToolStatus && SEATOOL_TO_ONEMAC_STATUS[seaToolStatus]) {
           const oneMacStatus = SEATOOL_TO_ONEMAC_STATUS[seaToolStatus];
           putParams.Item.currentStatus = oneMacStatus;
-          console.log("onemac status: ", oneMacStatus);
           putParams.Item.finalDispositionDate =
             finalDispositionStatuses.includes(oneMacStatus)
               ? DateTime.fromMillis(anEvent.STATE_PLAN.STATUS_DATE).toFormat(
@@ -292,23 +287,20 @@ export const buildAnyPackage = async (packageId, config) => {
                 putParams.Item.currentStatus
               );
               return;
-            } else {
-              // update the attribute if this is the latest event
-              if (timestamp === lmTimestamp)
-                putParams.Item[attributeName] = anEvent[attributeName];
             }
+
+            // update the attribute if this is the latest event
+            // if the latest event does not have a value but the currentPackage does
+            // use the currentPackage value
+            if (timestamp === lmTimestamp)
+              if (anEvent[attributeName])
+                putParams.Item[attributeName] = anEvent[attributeName];
+              else if (currentPackage[attributeName]) {
+                putParams.Item[attributeName] = currentPackage[attributeName];
+              }
           }
         });
     });
-
-    //if any attribute was not yet populated from current event; then populate from currentPackage
-    if (currentPackage) {
-      config.packageAttributes.forEach((attributeName) => {
-        if (!putParams.Item[attributeName] && currentPackage[attributeName]) {
-          putParams.Item[attributeName] = currentPackage[attributeName];
-        }
-      });
-    }
 
     // use GSI1 to show package on OneMAC dashboard
     if (showPackageOnDashboard) {
