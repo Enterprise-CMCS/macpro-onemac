@@ -97,13 +97,13 @@ const underReviewCheckBox =
   "//label[contains(@for,'checkbox_packageStatus-Under Review')]";
 //Element is Xpath use cy.xpath instead of cy.get
 const withdrawalRequestedCheckBox =
-  "//label[contains(@for,'checkbox_packageStatus-Withdrawal Requested']";
+  "//label[contains(@for,'checkbox_packageStatus-Withdrawal Requested')]";
 //Element is Xpath use cy.xpath instead of cy.get
 const raiResponseWithdrawalRequestedCheckBox =
-  "//label[contains(@for,'checkbox_packageStatus-Formal RAI Response - Withdrawal Requested']";
+  "//label[contains(@for,'checkbox_packageStatus-Formal RAI Response - Withdrawal Requested')]";
 //Element is Xpath use cy.xpath instead of cy.get
 const raiResponseWithdrawEnabledCheckBox =
-  "//label[contains(@for,'checkbox_packageStatus-RAI Response Withdraw Enabled']";
+  "//label[contains(@for,'checkbox_packageStatus-RAI Response Withdraw Enabled')]";
 //Element is Xpath use cy.xpath instead of cy.get
 const terminatedCheckBox =
   "//label[contains(@for,'checkbox_packageStatus-Waiver Terminated')]";

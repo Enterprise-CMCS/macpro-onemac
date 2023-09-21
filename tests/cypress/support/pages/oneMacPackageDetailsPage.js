@@ -442,7 +442,7 @@ export class oneMacPackageDetailsPage {
       .next("div")
       .contains(/^(?!\s*$).+/);
   }
-  verifyCPOCNameDoesNotExists() {
+  verifyCPOCNameDoesNotExist() {
     cy.xpath(cPOCNameHeader).should("not.exist");
   }
   verifyReviewTeamSRTHeaderExists() {
@@ -455,9 +455,6 @@ export class oneMacPackageDetailsPage {
   }
   verifyReviewTeamSRTDoesNotExists() {
     cy.xpath(reviewTeamSRTHeader).should("not.exist");
-  }
-  verifyCPOCNameDoesNotExists() {
-    cy.xpath(cPOCNameHeader).should("not.exist");
   }
   verifyFormalRAIResponseCaretBtnExists() {
     cy.xpath(formalRAIResponseCaretBtn).should("be.visible");
