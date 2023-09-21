@@ -3079,7 +3079,7 @@ Then("verify the CPOC has a value displayed in the details section", () => {
   OneMacPackageDetailsPage.verifyCPOCNameValueExists();
 });
 Then("verify CPOC is not visible in the details section", () => {
-  OneMacPackageDetailsPage.verifyCPOCNameDoesNotExists();
+  OneMacPackageDetailsPage.verifyCPOCNameDoesNotExist();
 });
 Then("verify there is a Review Team SRT header in the details section", () => {
   OneMacPackageDetailsPage.verifyReviewTeamSRTHeaderExists();
