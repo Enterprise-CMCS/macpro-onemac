@@ -139,6 +139,7 @@ export const buildAnyPackage = async (packageId, config) => {
           anEvent.currentStatus = ONEMAC_STATUS.WITHDRAWAL_REQUESTED;
 
         eventConfig &&
+          eventConfig.type &&
           putParams.Item.reverseChrono.push({
             type: eventConfig.type,
             action: eventConfig?.action || "Submitted",

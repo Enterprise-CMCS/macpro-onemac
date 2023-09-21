@@ -14,5 +14,4 @@ export const disableRaiWithdraw = {
     "submitterName",
     "submitterEmail",
   ],
-  packageAttributes: [],
 };

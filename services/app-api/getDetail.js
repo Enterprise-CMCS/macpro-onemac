@@ -47,6 +47,15 @@ async function assignAttachmentUrls(item) {
       await generateSignedUrl(child);
     }
   }
+
+  if (
+    item?.reverseChrono?.length > 0 &&
+    Array.isArray(item.reverseChrono.attachments)
+  ) {
+    for (const child of item.reverseChrono) {
+      await generateSignedUrl(child);
+    }
+  }
 }
 export const getDetails = async (event) => {
   const componentId = event?.pathParameters?.id;

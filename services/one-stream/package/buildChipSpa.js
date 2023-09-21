@@ -4,18 +4,6 @@ import { buildAnyPackage } from "./buildAnyPackage";
 
 const chipSPABuildConfig = {
   ...chipSPA,
-  // eventTypeMap: {
-  //   submitchipspa: initialSubmissionType,
-  //   submitchipsparai: formalRAIResponseType,
-  //   submitchipspawithdraw: packageType,
-  //   submitrairesponsewithdraw: formalRAIResponseType,
-  // },
-  // eventActionMap: {
-  //   submitchipspa: submitAction,
-  //   submitchipsparai: submitAction,
-  //   submitchipspawithdraw: withdrawalRequestedAction,
-  //   submitrairesponsewithdraw: withdrawalRequestedAction,
-  // },
   eventMap: defaultEventMapping,
 };
 

@@ -16,11 +16,30 @@ export const defaultInitialSubmissionMap = {
   ],
 };
 
+export const defaultCreateMap = {
+  type: null,
+  action: null,
+  packageAttributes: [
+    "submissionTimestamp",
+    "proposedEffectiveDate",
+    "currentStatus",
+  ],
+};
+
 export const defaultWaiverInitialSubmissionMap = {
   defaultInitialSubmissionMap,
   packageAttributes: [
     ...defaultInitialSubmissionMap.packageAttributes,
     "waiverAuthority",
+  ],
+};
+
+export const defaultRnAWaiverInitialSubmissionMap = {
+  defaultWaiverInitialSubmissionMap,
+  packageAttributes: [
+    ...defaultWaiverInitialSubmissionMap.packageAttributes,
+    "parentId",
+    "parentType",
   ],
 };
 
@@ -43,6 +62,7 @@ export const defaultWithdrawRAIResponseMap = {
 };
 
 export const defaultEventMapping = {
+  create: defaultCreateMap,
   submit: defaultInitialSubmissionMap,
   submitrai: defaultRAIResponseMap,
   submitwithdraw: defaultWithdrawPackageMap,
@@ -52,4 +72,9 @@ export const defaultEventMapping = {
 export const defaultWaiverEventMapping = {
   ...defaultEventMapping,
   submit: defaultWaiverInitialSubmissionMap,
+};
+
+export const defaultRnAWaiverEventMapping = {
+  ...defaultWaiverEventMapping,
+  submit: defaultRnAWaiverInitialSubmissionMap,
 };

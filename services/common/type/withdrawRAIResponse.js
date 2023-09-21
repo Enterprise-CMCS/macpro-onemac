@@ -25,5 +25,4 @@ export const withdrawRAIResponse = {
     "waiverappk",
   ],
   allowedParentStatuses: ["RAI Response Withdraw Enabled"],
-  packageAttributes: ["currentStatus"],
 };

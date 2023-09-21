@@ -14,5 +14,4 @@ export const enableRaiWithdraw = {
     "submitterName",
     "submitterEmail",
   ],
-  packageAttributes: ["currentStatus"],
 };
