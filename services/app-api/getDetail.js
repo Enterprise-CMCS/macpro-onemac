@@ -28,10 +28,7 @@ async function generateSignedUrl(item) {
 }
 
 async function assignAttachmentUrls(item) {
-  if (
-    item?.reverseChrono?.length > 0 &&
-    Array.isArray(item.reverseChrono.attachments)
-  ) {
+  if (item?.reverseChrono?.length > 0 && Array.isArray(item.reverseChrono)) {
     for (const child of item.reverseChrono) {
       await generateSignedUrl(child);
     }
