@@ -1,0 +1,58 @@
+service: cross-acct
+
+frameworkVersion: "3"
+
+plugins:
+  - serverless-iam-helper
+  - serverless-s3-bucket-helper
+
+custom:
+  stage: ${opt:stage, self:provider.stage}
+  iamPath: ${ssm:/configuration/${self:custom.stage}/iam/path, ssm:/configuration/default/iam/path, "/"}
+  iamPermissionsBoundaryPolicy: ${ssm:/configuration/${self:custom.stage}/iam/permissionsBoundaryPolicy, ssm:/configuration/default/iam/permissionsBoundaryPolicy, ""}
+  attachmentsBucketArn: ${cf:uploads-${self:custom.stage}.AttachmentsBucketArn}
+  destinationAcct: ${ssm:/configuration/${self:custom.stage}/cross-acct/destinationAcct, ssm:/configuration/default/cross-acct/destinationAcct}
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  region: us-east-1
+  stage: dev
+  iam:
+    role:
+      path: ${self:custom.iamPath}
+      permissionsBoundary: !Sub 'arn:aws:iam::${AWS::AccountId}:policy${self:custom.iamPermissionsBoundaryPolicy, ""}'
+
+resources:
+  Resources:
+    CrossAccountS3:
+      Type: "AWS::IAM::Role"
+      Properties:
+        AssumeRolePolicyDocument:
+          Version: "2012-10-17"
+          Statement:
+            - Effect: "Allow"
+              Principal:
+                AWS: ${self:custom.destinationAcct}
+              Action: "sts:AssumeRole"
+        Path: ${self:custom.iamPath}
+        PermissionsBoundary:
+          Fn::If:
+            - CreatePermissionsBoundary
+            - Fn::Join:
+                - ""
+                - - "arn:aws:iam::"
+                  - Ref: AWS::AccountId
+                  - ":policy"
+                  - '${self:custom.iamPermissionsBoundaryPolicy, ""}'
+            - Ref: AWS::NoValue
+        Policies:
+          - PolicyName: "S3GetObjectPolicy"
+            PolicyDocument:
+              Version: "2012-10-17"
+              Statement:
+                - Effect: "Allow"
+                  Action:
+                    - s3:GetObject
+                    - s3:GetObjectTagging
+                  Resource: !Sub ${self:custom.attachmentsBucketArn}/*
