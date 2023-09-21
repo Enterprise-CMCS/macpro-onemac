@@ -3,6 +3,8 @@ import Joi from "joi";
 import { RESPONSE_CODE, Workflow } from "cmscommonlib";
 import { CMSWithdrawalNotice } from "../email/CMSWithdrawalNotice";
 import { stateWithdrawalReceipt } from "../email/stateWithdrawalReceipt";
+import { CMSSubsequentSubmissionNotice } from "../email/CMSSubsequentSubmissionNotice";
+import { stateSubsequentSubmissionReceipt } from "../email/stateSubsequentSubmissionReceipt";
 
 export const defaultFormConfig = {
   CMSToAddresses: [process.env.reviewerEmail, process.env.testingEmail].filter(
@@ -38,6 +40,8 @@ export const defaultSubsequentSubmissionConfig = {
   newStatus: null, //use parent's current package status
   successResponseCode:
     RESPONSE_CODE.SUCCESSFULLY_SUBMITTED_SUBSEQUENT_SUBMISSION,
+  buildCMSNotice: CMSSubsequentSubmissionNotice,
+  buildStateReceipt: stateSubsequentSubmissionReceipt,
   appendToSchema: {
     ...defaultSubsequentSubmissionSchema,
   },
