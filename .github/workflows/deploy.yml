@@ -338,6 +338,7 @@ jobs:
             Subsequent_Submission_Initial_Waiver.spec.feature,
             Subsequent_Submission_Medicaid_Spa.spec.feature,
             Subsequent_Submission_Renewal_Waiver.spec.feature,
+            Dashboard_RAI_Withdraw_Enabled_Actions.spec.feature,
           ]
     steps:
       - name: set branch_name

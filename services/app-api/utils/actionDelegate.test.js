@@ -79,4 +79,40 @@ describe("getActionsForPackage", () => {
 
     expect(actions).toEqual(["Withdraw Package", "Respond to RAI"]);
   });
+  it("returns correct actions for medicaid spa with WITHDRAW_RAI_ENABLED status", () => {
+    const packageType = "medicaidspa";
+    const packageStatus = "RAI Response Withdraw Enabled";
+    const hasRaiResponse = true;
+    const formSource = "detail";
+
+    const actions = getActionsForPackage(
+      packageType,
+      packageStatus,
+      hasRaiResponse,
+      stateUserRole,
+      formSource
+    );
+
+    expect(actions).toEqual([
+      "Withdraw Package",
+      "Withdraw Formal RAI Response",
+    ]);
+  });
+
+  it("returns correct actions for medicaid spa with Pending - Approval status", () => {
+    const packageType = "medicaidspa";
+    const packageStatus = "Pending - Approval";
+    const hasRaiResponse = false;
+    const formSource = "detail";
+
+    const actions = getActionsForPackage(
+      packageType,
+      packageStatus,
+      hasRaiResponse,
+      stateUserRole,
+      formSource
+    );
+
+    expect(actions).toEqual(["Withdraw Package"]);
+  });
 });

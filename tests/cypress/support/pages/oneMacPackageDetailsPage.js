@@ -456,7 +456,7 @@ export class oneMacPackageDetailsPage {
       .next("div")
       .contains(/^(?!\s*$).+/);
   }
-  verifyCPOCNameDoesNotExists() {
+  verifyCPOCNameDoesNotExist() {
     cy.xpath(cPOCNameHeader).should("not.exist");
   }
   verifyReviewTeamSRTHeaderExists() {

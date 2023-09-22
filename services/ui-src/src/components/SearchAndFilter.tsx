@@ -30,9 +30,9 @@ import {
 } from "date-fns";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+  faChevronDown,
   faSearch,
   faTimes,
-  faChevronDown,
 } from "@fortawesome/free-solid-svg-icons";
 import { AccordionItem, Button, Choice } from "@cmsgov/design-system";
 
@@ -41,11 +41,16 @@ import { SelectOption, territoryList } from "cmscommonlib";
 import { useToggle } from "../libs/hooksLib";
 import { PackageRowValue } from "../domain-types";
 
-import { animated, useTransition, easings, useSpring } from "@react-spring/web";
+import { animated, easings, useSpring, useTransition } from "@react-spring/web";
 import {
   LOCAL_STORAGE_COLUMN_VISIBILITY_SPA,
   LOCAL_STORAGE_COLUMN_VISIBILITY_WAIVER,
 } from "../utils/StorageKeys";
+import {
+  FilterChipActionType,
+  FilterType,
+  useFilterChipContext,
+} from "../containers/FilterChipContext";
 
 const { afterToday } = DateRangePicker;
 
@@ -246,6 +251,7 @@ function TextFilter({
   column: { filterValue, setFilter, id },
   preGlobalFilteredFlatRows,
 }: FilterProps) {
+  const { dispatch: updateFilterChips } = useFilterChipContext();
   const [possibleValues, hiddenValues] = useMemo(() => {
     const possibleUnique = new Set();
     const notHiddenUnique = new Set();
@@ -272,12 +278,33 @@ function TextFilter({
       setFilter((oldFilterValue?: string[]) => {
         if (!oldFilterValue) oldFilterValue = [...possibleValues]; // begin with everything
         const newFilterValue: Set<string> = new Set(oldFilterValue);
-        if (checked) newFilterValue.add(value);
-        else newFilterValue.delete(value);
+        if (checked) {
+          newFilterValue.add(value);
+          // REMOVE filter because it's a subtractive type
+          updateFilterChips({
+            type: FilterChipActionType.REMOVE,
+            payload: {
+              column: id,
+              label: value,
+              type: FilterType.CHECKBOX,
+            },
+          });
+        } else {
+          newFilterValue.delete(value);
+          // ADD filter because it's a subtractive type
+          updateFilterChips({
+            type: FilterChipActionType.ADD,
+            payload: {
+              column: id,
+              label: value,
+              type: FilterType.CHECKBOX,
+            },
+          });
+        }
         return Array.from(newFilterValue);
       });
     },
-    [possibleValues, setFilter]
+    [possibleValues, setFilter, id, updateFilterChips]
   );
 
   return (
@@ -308,6 +335,7 @@ function DateFilter({
   column: { filterValue, id, setFilter },
   inThePast,
 }: FilterProps & { inThePast?: boolean }) {
+  const { dispatch: updateFilterChips } = useFilterChipContext();
   const onChangeSelection = useCallback(
     (value) => {
       value !== null && value?.length
@@ -315,8 +343,16 @@ function DateFilter({
            * index 0, the later date at index 1. */
           setFilter([startOfDay(value[0]), endOfDay(value[1])])
         : setFilter([]);
+      updateFilterChips({
+        type: FilterChipActionType.ADD,
+        payload: {
+          column: id,
+          label: value,
+          type: FilterType.DATE,
+        },
+      });
     },
-    [setFilter]
+    [setFilter, id, updateFilterChips]
   );
   const ranges: { label: string; value: [Date, Date] }[] = useMemo(
     () =>
@@ -388,11 +424,23 @@ const MultiSelectList = ({
 }: FilterProps & {
   options: SelectOption[];
 }) => {
+  const { dispatch: updateFilterChips } = useFilterChipContext();
   const onSelect = useCallback(
     (selected) => {
       setFilter(selected.map(({ value }: SelectOption) => value));
+      /* We can universally use "ADD" action type as it handles MULTISELECT
+       * types as more of an update rather than strictly adding it. See logic
+       * in FilterChipContext.chipReducer() */
+      updateFilterChips({
+        type: FilterChipActionType.ADD,
+        payload: {
+          column: id,
+          label: selected,
+          type: FilterType.MULTISELECT,
+        },
+      });
     },
-    [setFilter]
+    [setFilter, id, updateFilterChips]
   );
   const selectedOptions = useMemo(
     () =>
@@ -439,7 +487,13 @@ function FilterPane<V extends {}>({
   setAllFilters,
 }: FilterPaneProps<V>) {
   const [showFilters, toggleShowFilters] = useToggle(false);
+  const { dispatch: updateFilterChips } = useFilterChipContext();
   const onResetFilters = useCallback(() => {
+    // Resets filter chips state to no chips showing
+    updateFilterChips({
+      type: FilterChipActionType.RESET,
+      payload: {},
+    });
     setAllFilters(
       /* The DateFilter requires the value passed to reset be an empty array
       rather than undefined. Before this, there was a bug where the filter UI 
@@ -454,7 +508,7 @@ function FilterPane<V extends {}>({
         }
       })
     );
-  }, [columnsInternal, setAllFilters]);
+  }, [columnsInternal, setAllFilters, updateFilterChips]);
 
   //Mount transition animation
 

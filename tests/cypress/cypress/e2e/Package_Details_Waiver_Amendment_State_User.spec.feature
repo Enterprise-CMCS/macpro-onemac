@@ -227,6 +227,7 @@ Feature: Waiver Package Details View: 1915 b Waiver Amendment for a State User
         Then verify 2 action cards exist
         Then verify the status on the card is "RAI Response Withdraw Enabled"
         Then verify package actions header is visible
+        Then verify withdraw package action exists
         Then verify Withdraw Formal RAI Response package action exists
         Then verify the details section exists
         Then verify there is a Latest Package Activity header in the details section
