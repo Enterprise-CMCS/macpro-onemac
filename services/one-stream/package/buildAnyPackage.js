@@ -78,6 +78,7 @@ export const buildAnyPackage = async (packageId, config) => {
     };
     let currentPackage;
     let showPackageOnDashboard = false;
+    let forceStatusTo;
     let lmTimestamp = 0;
     let adminChanges = [];
 
@@ -148,6 +149,8 @@ export const buildAnyPackage = async (packageId, config) => {
             additionalInformation: anEvent.additionalInformation,
           });
 
+        if (anEvent.currentStatus === ONEMAC_STATUS.WITHDRAW_RAI_ENABLED)
+          forceStatusTo = ONEMAC_STATUS.WITHDRAW_RAI_ENABLED;
         // if the RAI response is the newest so far, add the latest RAI response timestamp
         // if the status is "Submitted" and delete the attribute if not
         if (
@@ -308,6 +311,11 @@ export const buildAnyPackage = async (packageId, config) => {
       putParams.Item.GSI1pk = `OneMAC#${config.whichTab}`;
       putParams.Item.GSI1sk = packageId;
     }
+
+    if (forceStatusTo) putParams.Item.currentStatus = forceStatusTo;
+
+    if (putParams.Item.currentStatus === ONEMAC_STATUS.RAI_ISSUED)
+      delete putParams.Item.latestRaiResponseTimestamp;
 
     putParams.Item.reverseChrono.sort((a, b) => b.timestamp - a.timestamp);
 
