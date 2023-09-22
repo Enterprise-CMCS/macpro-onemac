@@ -3314,7 +3314,7 @@
     "GSI1pk": "OneMAC#submitwaivernew",
     "adminChanges": [{
       "changeTimestamp": 1674637174000,
-      "changeMade": "Type changed from Waiver Renewal to Waiver Amendment",
+      "changeMade": "Type changed from Waiver Renewal to Initial Waiver",
       "changeReason": "Per request from Bester Tester in Help Desk ticket INC354"
     }],
     "convertTimestamp": 1674574260442,
@@ -3329,7 +3329,7 @@
  "sk": "Package",
  "adminChanges": [
   {
-   "changeMade": "Type changed from Waiver Renewal to Waiver Amendment",
+   "changeMade": "Type changed from Waiver Renewal to Initial Waiver",
    "changeReason": "Per request from Bester Tester in Help Desk ticket INC354",
    "changeTimestamp": 1674637174000
   }
@@ -12705,58 +12705,72 @@
     "submitterName": "MDSTATE SUBMITTERNK",
     "title": "New Title for App K "
   },
-{
- "pk": "MD-12958.R00.02",
- "sk": "Package",
- "additionalInformation": "created new APP k ",
- "attachments": [
   {
-   "contentType": "text/csv",
-   "filename": "Report_UserList(1).csv",
-   "s3Key": "1674158150631/Report_UserList(1).csv",
-   "title": "1915(c) Appendix K Amendment Waiver Template",
-   "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A30413432-e223-4a6d-bfe1-7ed87236ff55/1674158150631/Report_UserList%281%29.csv"
+    "finalDispositionDate": "-- --",
+    "componentType": "waiverappk",
+    "componentId": "MD-12958.R00.02",
+    "waiverAuthority": "1915(c)",
+    "currentStatus": "Under Review",
+    "subject": "test",
+    "cpocEmail": "\"Tester, Chester (CPOC)\" <chesterT@example.gov>",
+    "reverseChrono": [
+      {
+        "additionalInformation": "created new APP k ",
+        "attachments": [
+          {
+            "s3Key": "1674158150631/Report_UserList(1).csv",
+            "filename": "Report_UserList(1).csv",
+            "title": "1915(c) Appendix K Amendment Waiver Template",
+            "contentType": "text/csv",
+            "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A30413432-e223-4a6d-bfe1-7ed87236ff55/1674158150631/Report_UserList%281%29.csv"
+          },
+          {
+            "s3Key": "1674158150632/Report_spaList(5).csv",
+            "filename": "Report_spaList(5).csv",
+            "title": "1915(c) Appendix K Amendment Waiver Template",
+            "contentType": "text/csv",
+            "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A30413432-e223-4a6d-bfe1-7ed87236ff55/1674158150632/Report_spaList%285%29.csv"
+          },
+          {
+            "s3Key": "1674158150632/Report_waiverList(8).csv",
+            "filename": "Report_waiverList(8).csv",
+            "title": "Other",
+            "contentType": "text/csv",
+            "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A30413432-e223-4a6d-bfe1-7ed87236ff55/1674158150632/Report_waiverList%288%29.csv"
+          }
+        ],
+        "currentStatus": "Submitted",
+        "action": "Submitted",
+        "type": "Initial Package",
+        "timestamp": 1674158175838,
+        "eventTimestamp": 1674158175838
+      }
+    ],
+    "description": "test",
+    "title": "New Title for App K ",
+    "reviewTeam": [
+      "Lester Tester",
+      "Super Tester",
+      "Jimmy Tester"
+    ],
+    "submissionTimestamp": 1674158175838,
+    "reviewTeamEmailList": [
+      "\"Tester, Lester (SRT)\" <lesterT@example.gov>",
+      "\"Tester, Super (SRT)\" <SuperT@example.gov>",
+      "\"Tester, Jimmy (SRT)\" <jimmyT@example.gov>"
+    ],
+    "proposedEffectiveDate": "2023-01-19",
+    "GSI1pk": "OneMAC#waiver",
+    "adminChanges": [],
+    "GSI1sk": "MD-12958.R00.02",
+    "lastEventTimestamp": 1674158680503,
+    "sk": "Package",
+    "approvedEffectiveDate": "-- --",
+    "pk": "MD-12958.R00.02",
+    "submitterName": "MDSTATE SUBMITTERNK",
+    "cpocName": "Chester Tester",
+    "submitterEmail": "mdstateonemac@gmail.com"
   },
-  {
-   "contentType": "text/csv",
-   "filename": "Report_spaList(5).csv",
-   "s3Key": "1674158150632/Report_spaList(5).csv",
-   "title": "1915(c) Appendix K Amendment Waiver Template",
-   "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A30413432-e223-4a6d-bfe1-7ed87236ff55/1674158150632/Report_spaList%285%29.csv"
-  },
-  {
-   "contentType": "text/csv",
-   "filename": "Report_waiverList(8).csv",
-   "s3Key": "1674158150632/Report_waiverList(8).csv",
-   "title": "Other",
-   "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A30413432-e223-4a6d-bfe1-7ed87236ff55/1674158150632/Report_waiverList%288%29.csv"
-  }
- ],
- "clockEndTimestamp": 1681930575838,
- "componentId": "MD-12958.R00.02",
- "componentType": "waiverappk",
- "cpocName": "Chester Tester",
- "currentStatus": "Under Review",
- "description": "test description",
- "GSI1pk": "OneMAC#waiver",
- "GSI1sk": "MD-12958.R00.02",
- "lastEventTimestamp": 1674158680503,
- "proposedEffectiveDate": "2023-01-20",
- "raiResponses": [
- ],
- "reviewTeam": [
-  "Lester Tester",
-  "Super Tester",
-  "Jimmy Tester"
- ],
- "subject": "test subject",
- "submissionTimestamp": 1674158175838,
- "submitterEmail": "mdstateonemac@gmail.com",
- "submitterName": "MDSTATE SUBMITTERNK",
- "waiverAuthority": "1915(c)",
- "waiverExtensions": [
- ]
-},
   {
     "PRIORITY_COMPLEXITY": null,
     "STATES": [
@@ -26232,9 +26246,10 @@
   {
     "componentType": "waiverrenewal",
     "eventTimestamp": 1674156634255,
+    "submissionTimestamp": 1674156634255,
     "currentStatus": "Withdrawal Requested",
     "GSI1sk": "MD-12958.R01.00",
-    "GSI1pk": "OneMAC#withdrawwaiverrenewal",
+    "GSI1pk": "OneMAC#submitwaiverrenewalwithdraw",
     "lastModifiedEmail": "mdstateonemac@gmail.com",
     "changedByName": "MDSTATE SUBMITTERNK",
     "changedByEmail": "MDSTATEONEMAC@gmail.com",
@@ -26244,46 +26259,32 @@
     "lastModifiedName": "MDSTATE SUBMITTERNK"
   },
   {
-    "clockEndTimestamp": 1681924066347,
+    "componentId": "MD-12958.R01.00",
+    "waiverAuthority": "1915(b)",
+    "subject": "test",
+    "latestRaiResponseTimestamp": 1674156100252,
+    "description": "test",
+    "submissionTimestamp": 1674151666347,
+    "reviewTeamEmailList": [],
+    "proposedEffectiveDate": "2023-01-22",
+    "GSI2sk": "waiverrenewal",
+    "GSI1sk": "MD-12958.R01.00",
+    "sk": "Package",
+    "finalDispositionDate": "2023-01-18",
     "componentType": "waiverrenewal",
     "currentStatus": "Approved",
-    "waiverExtensions": [],
-    "parentId": "MD-12958.R00.00",
-    "attachments": [
+    "cpocEmail": "\"Tester, Chester (CPOC)\" <chesterT@example.gov>",
+    "reverseChrono": [
       {
-        "s3Key": "1674151641079/Report_UserList(1).csv",
-        "filename": "Report_UserList(1).csv",
-        "title": "1915(b) Comprehensive (Capitated) Waiver Cost effectiveness spreadsheets (Initial, Renewal, Amendment)",
-        "contentType": "text/csv",
-        "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A30413432-e223-4a6d-bfe1-7ed87236ff55/1674151641079/Report_UserList%281%29.csv"
+        "action": "Withdrawal Requested",
+        "attachments": [],
+        "type": "Package",
+        "currentStatus": "Withdrawal Requested",
+        "timestamp": 1674156634255,
+        "eventTimestamp": 1674156634255
       },
       {
-        "s3Key": "1674151641081/Report_SubmissionList(1).csv",
-        "filename": "Report_SubmissionList(1).csv",
-        "title": "Tribal Consultation (Initial, Renewal, Amendment)",
-        "contentType": "text/csv",
-        "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A30413432-e223-4a6d-bfe1-7ed87236ff55/1674151641081/Report_SubmissionList%281%29.csv"
-      }
-    ],
-    "proposedEffectiveDate": "2023-01-23",
-    "GSI1sk": "MD-12958.R01.00",
-    "additionalInformation": "this is the new renewal on an approved initial waiver.",
-    "submissionTimestamp": 1674151666347,
-    "GSI2sk": "waiverrenewal",
-    "waiverAuthority": "1915(b)",
-    "GSI2pk": "MD-12958.R00.00",
-    "GSI1pk": "OneMAC#waiver",
-    "submitterEmail": "mdstateonemac@gmail.com",
-    "sk": "Package",
-    "cpocName": "Chester Tester",
-    "reviewTeam": ["Lester Tester", "Super Tester", "Jimmy Tester"],
-    "subject": "test subject",
-    "description": "test description",
-    "componentId": "MD-12958.R01.00",
-    "raiResponses": [
-      {
         "additionalInformation": "rai response ",
-        "submissionTimestamp": 1674156100252,
         "attachments": [
           {
             "s3Key": "1674156075134/Report_waiverList(7).csv",
@@ -26292,12 +26293,51 @@
             "contentType": "text/csv",
             "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A30413432-e223-4a6d-bfe1-7ed87236ff55/1674156075134/Report_waiverList%287%29.csv"
           }
-        ]
+        ],
+        "currentStatus": "Submitted",
+        "action": "Submitted",
+        "type": "Formal RAI Response",
+        "timestamp": 1674156100252,
+        "eventTimestamp": 1674156100252
+      },
+      {
+        "additionalInformation": "this is the new renewal on an approved initial waiver.",
+        "attachments": [
+          {
+            "s3Key": "1674151641079/Report_UserList(1).csv",
+            "filename": "Report_UserList(1).csv",
+            "title": "1915(b) Comprehensive (Capitated) Waiver Cost effectiveness spreadsheets (Initial, Renewal, Amendment)",
+            "contentType": "text/csv",
+            "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A30413432-e223-4a6d-bfe1-7ed87236ff55/1674151641079/Report_UserList%281%29.csv"
+          },
+          {
+            "s3Key": "1674151641081/Report_SubmissionList(1).csv",
+            "filename": "Report_SubmissionList(1).csv",
+            "title": "Tribal Consultation (Initial, Renewal, Amendment)",
+            "contentType": "text/csv",
+            "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A30413432-e223-4a6d-bfe1-7ed87236ff55/1674151641081/Report_SubmissionList%281%29.csv"
+          }
+        ],
+        "currentStatus": "Submitted",
+        "action": "Submitted",
+        "type": "Initial Package",
+        "timestamp": 1674151666347,
+        "eventTimestamp": 1674151666347
       }
     ],
+    "GSI2pk": "MD-12958.R00.00",
+    "reviewTeam": [
+      "Brett aaa"
+    ],
+    "parentId": "MD-12958.R00.00",
+    "GSI1pk": "OneMAC#waiver",
+    "adminChanges": [],
     "lastEventTimestamp": 1674157537257,
+    "approvedEffectiveDate": "2023-01-22",
     "pk": "MD-12958.R01.00",
-    "submitterName": "MDSTATE SUBMITTERNK"
+    "submitterName": "MDSTATE SUBMITTERNK",
+    "cpocName": "Chester Tester",
+    "submitterEmail": "mdstateonemac@gmail.com"
   },
   {
     "PRIORITY_COMPLEXITY": null,
@@ -38540,33 +38580,6 @@
     "RO_ANALYST": null
   },
   {
-    "clockEndTimestamp": 1680536492247,
-    "componentType": "waiverappk",
-    "eventTimestamp": 1672764092247,
-    "currentStatus": "Submitted",
-    "originallyFrom": "cms-spa-form-master-change-requests",
-    "attachments": [
-      {
-        "s3Key": "1672764091622/textnotes.txt",
-        "filename": "textnotes.txt",
-        "title": "1915(c) Appendix K Amendment Waiver Template",
-        "contentType": "text/plain",
-        "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A30413432-e223-4a6d-bfe1-7ed87236ff55/1672764091622/textnotes.txt"
-      }
-    ],
-    "proposedEffectiveDate": "-- --",
-    "GSI1sk": "MD-22102.R00.01",
-    "additionalInformation": "test",
-    "submissionTimestamp": 1672764092247,
-    "GSI1pk": "OneMAC#submitwaiverappk",
-    "convertTimestamp": 1674854066803,
-    "submitterEmail": "mdstateonemac@gmail.com",
-    "sk": "OneMAC#1672764092247",
-    "componentId": "MD-22102.R00.01",
-    "pk": "MD-22102.R00.01",
-    "submitterName": "MDSTATE SUBMITTERNK"
-  },
-  {
     "clockEndTimestamp": 1681919477050,
     "componentType": "waiverappk",
     "eventTimestamp": 1674147077050,
@@ -38593,74 +38606,56 @@
     "pk": "MD-22102.R00.01",
     "submitterName": "Statesubmitter Nightwatch"
   },
-{
- "pk": "MD-22102.R00.01",
- "sk": "Package",
- "adminChanges": [
- ],
- "approvedEffectiveDate": "-- --",
- "componentId": "MD-22102.R00.01",
- "componentType": "waiverappk",
- "cpocEmail": "\"Tester, Chester (CPOC)\" <chesterT@example.gov>",
- "cpocName": "Chester Tester",
- "currentStatus": "Pending - Concurrence",
- "description": "pending-concurrence rebuild",
- "finalDispositionDate": "-- --",
- "GSI1pk": "OneMAC#waiver",
- "GSI1sk": "MD-22102.R00.01",
- "lastEventTimestamp": 1675448274253,
- "proposedEffectiveDate": "-- --",
- "reverseChrono": [
   {
-   "action": "Submitted",
-   "additionalInformation": "pending-concurrence status test",
-   "attachments": [
-    {
-     "contentType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-     "filename": "file.docx",
-     "s3Key": "1674147076130/file.docx",
-     "title": "1915(c) Appendix K Amendment Waiver Template",
-     "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A35b18373-d59d-4d36-8d7f-2ca368f6a6c1/1674147076130/file.docx"
-    }
-   ],
-   "currentStatus": "Submitted",
-   "eventTimestamp": 1674147077050,
-   "timestamp": 1674147077050,
-   "type": "Initial Package"
+    "finalDispositionDate": "-- --",
+    "componentType": "waiverappk",
+    "componentId": "MD-22102.R00.01",
+    "currentStatus": "Pending - Concurrence",
+    "subject": "OneMac Connection test",
+    "cpocEmail": "\"Tester, Chester (CPOC)\" <chesterT@example.gov>",
+    "reverseChrono": [
+      {
+        "additionalInformation": "pending-concurrence status test",
+        "attachments": [
+          {
+            "s3Key": "1674147076130/file.docx",
+            "filename": "file.docx",
+            "title": "1915(c) Appendix K Amendment Waiver Template",
+            "contentType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+            "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A35b18373-d59d-4d36-8d7f-2ca368f6a6c1/1674147076130/file.docx"
+          }
+        ],
+        "currentStatus": "Submitted",
+        "action": "Submitted",
+        "type": "Initial Package",
+        "timestamp": 1674147077050,
+        "eventTimestamp": 1674147077050
+      }
+    ],
+    "description": "pending-concurrence",
+    "reviewTeam": [
+      "Lester Tester",
+      "Super Tester",
+      "Jimmy Tester"
+    ],
+    "submissionTimestamp": 1674147077050,
+    "reviewTeamEmailList": [
+      "\"Tester, Lester (SRT)\" <lesterT@example.gov>",
+      "\"Tester, Super (SRT)\" <SuperT@example.gov>",
+      "\"Tester, Jimmy (SRT)\" <jimmyT@example.gov>"
+    ],
+    "proposedEffectiveDate": "2023-02-14",
+    "GSI1pk": "OneMAC#waiver",
+    "adminChanges": [],
+    "GSI1sk": "MD-22102.R00.01",
+    "lastEventTimestamp": 1674226356523,
+    "sk": "Package",
+    "approvedEffectiveDate": "2023-02-28",
+    "pk": "MD-22102.R00.01",
+    "submitterName": "Statesubmitter Nightwatch",
+    "cpocName": "Chester Tester",
+    "submitterEmail": "statesubmitter@nightwatch.test"
   },
-  {
-   "action": "Submitted",
-   "additionalInformation": "test",
-   "attachments": [
-    {
-     "contentType": "text/plain",
-     "filename": "textnotes.txt",
-     "s3Key": "1672764091622/textnotes.txt",
-     "title": "1915(c) Appendix K Amendment Waiver Template",
-     "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A30413432-e223-4a6d-bfe1-7ed87236ff55/1672764091622/textnotes.txt"
-    }
-   ],
-   "currentStatus": "Submitted",
-   "eventTimestamp": 1672764092247,
-   "timestamp": 1672764092247,
-   "type": "Initial Package"
-  }
- ],
- "reviewTeam": [
-  "Lester Tester",
-  "Super Tester",
-  "Jimmy Tester"
- ],
- "reviewTeamEmailList": [
-  "\"Tester, Lester (SRT)\" <lesterT@example.gov>",
-  "\"Tester, Super (SRT)\" <SuperT@example.gov>",
-  "\"Tester, Jimmy (SRT)\" <jimmyT@example.gov>"
- ],
- "subject": "OneMac Connection test",
- "submissionTimestamp": 1674147077050,
- "submitterEmail": "statesubmitter@nightwatch.test",
- "submitterName": "Statesubmitter Nightwatch"
-},
   {
     "PRIORITY_COMPLEXITY": null,
     "STATES": [

@@ -121,11 +121,12 @@ export const buildAnyPackage = async (packageId, config) => {
         showPackageOnDashboard = true;
 
         // the normalized eventLabel is the GSI1pk without the source and componentType
-        const eventLabel = anEvent.GSI1pk.replace("OneMAC#", "").replace(
-          config.componentType,
-          ""
-        );
+        // but waiver rai should only remove waiver part
+        const eventLabel = anEvent.GSI1pk.replace("OneMAC#", "")
+          .replace(config.componentType, "")
+          .replace("waiver", "");
         eventConfig = config.eventMap[eventLabel];
+        console.log("EventConfig: ", eventConfig);
 
         // because if we change what status the withdrawal request event stores
         // we'd have to do a migration... but might want to later

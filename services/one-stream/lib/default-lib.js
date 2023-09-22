@@ -27,7 +27,7 @@ export const defaultCreateMap = {
 };
 
 export const defaultWaiverInitialSubmissionMap = {
-  defaultInitialSubmissionMap,
+  ...defaultInitialSubmissionMap,
   packageAttributes: [
     ...defaultInitialSubmissionMap.packageAttributes,
     "waiverAuthority",
@@ -35,7 +35,7 @@ export const defaultWaiverInitialSubmissionMap = {
 };
 
 export const defaultRnAWaiverInitialSubmissionMap = {
-  defaultWaiverInitialSubmissionMap,
+  ...defaultWaiverInitialSubmissionMap,
   packageAttributes: [
     ...defaultWaiverInitialSubmissionMap.packageAttributes,
     "parentId",
