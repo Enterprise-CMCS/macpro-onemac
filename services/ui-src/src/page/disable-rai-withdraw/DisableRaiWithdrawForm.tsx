@@ -23,8 +23,12 @@ export const disableRaiWithdrawFormInfo: OneMACFormConfig = {
     </p>
   ),
   addlInfoTitle: "Change Reason",
-  addlInfoText:
-    "Please be descriptive about why this action is being disabled. Information entered will be visible to both CMS and State users.",
+  addlInfoText: (
+    <p>
+      Please be descriptive about why this action is being disabled.{" "}
+      <b>Information entered will be visible to both CMS and State users.</b>
+    </p>
+  ) as React.ReactNode,
   addlInfoRequired: true,
   landingPage: ONEMAC_ROUTES.PACKAGE_LIST,
   submitInstructionsJSX: <></>,
