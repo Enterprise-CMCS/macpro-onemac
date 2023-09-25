@@ -1,6 +1,7 @@
 import { medicaidSPA } from "cmscommonlib";
 import {
   initialSubmissionType,
+  subsequentSubmissionType,
   formalRAIResponseType,
   packageType,
   submitAction,
@@ -12,6 +13,7 @@ const medicaidSPABuildConfig = {
   ...medicaidSPA,
   eventTypeMap: {
     submitmedicaidspa: initialSubmissionType,
+    submitmedicaidspasubsequent: subsequentSubmissionType,
     submitmedicaidsparai: formalRAIResponseType,
     submitmedicaidspawithdraw: packageType,
     submitrairesponsewithdraw: formalRAIResponseType,

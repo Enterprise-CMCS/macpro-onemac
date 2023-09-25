@@ -5,6 +5,7 @@ import {
   packageType,
   submitAction,
   withdrawalRequestedAction,
+  subsequentSubmissionType,
 } from "../lib/default-lib";
 import { buildAnyPackage } from "./buildAnyPackage";
 
@@ -12,6 +13,7 @@ const waiverAppendixKBuildConfig = {
   ...waiverAppendixK,
   eventTypeMap: {
     submitwaiverappk: initialSubmissionType,
+    submitwaiverappksubsequent: subsequentSubmissionType,
     submitwaiverappkrai: formalRAIResponseType,
     submitwaiverappkwithdraw: packageType,
     submitrairesponsewithdraw: formalRAIResponseType,
