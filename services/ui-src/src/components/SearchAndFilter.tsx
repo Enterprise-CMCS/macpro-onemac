@@ -488,7 +488,10 @@ function FilterPane<V extends {}>({
 }: FilterPaneProps<V>) {
   const [showFilters, toggleShowFilters] = useToggle(false);
   const { state: filterChips } = useFilterChipContext();
-  const filterCount = useMemo(() => filterChips.length, [filterChips]);
+  const filterCount = useMemo(
+    () => filterChips.filter((chipVal) => chipVal.label !== null).length,
+    [filterChips]
+  );
   const { dispatch: updateFilterChips } = useFilterChipContext();
   const onResetFilters = useCallback(() => {
     // Resets filter chips state to no chips showing
