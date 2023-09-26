@@ -20,7 +20,7 @@ jobs:
       - name: set branch_name
         run: echo "branch_name=${GITHUB_HEAD_REF}" >> $GITHUB_ENV
       - name: Configure AWS credentials for GitHub Actions
-        uses: aws-actions/configure-aws-credentials@v1
+        uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.AWS_OIDC_ROLE_TO_ASSUME }}
           aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
