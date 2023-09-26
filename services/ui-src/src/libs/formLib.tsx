@@ -24,7 +24,7 @@ export type OneMACFormConfig = {
   attachmentsTitle?: string;
   attachmentIntroJSX: JSX.Element;
   addlInfoTitle?: string;
-  addlInfoText?: string;
+  addlInfoText?: string | React.ReactNode;
   addlInfoRequired?: boolean;
   requireUploadOrAdditionalInformation?: boolean;
   landingPage: string;
