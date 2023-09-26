@@ -78,7 +78,6 @@ export const buildAnyPackage = async (packageId, config) => {
     };
     let currentPackage;
     let showPackageOnDashboard = false;
-    let forceStatusTo;
     let lmTimestamp = 0;
     let adminChanges = [];
 
@@ -149,8 +148,6 @@ export const buildAnyPackage = async (packageId, config) => {
             additionalInformation: anEvent.additionalInformation,
           });
 
-        if (anEvent.currentStatus === ONEMAC_STATUS.WITHDRAW_RAI_ENABLED)
-          forceStatusTo = ONEMAC_STATUS.WITHDRAW_RAI_ENABLED;
         // if the RAI response is the newest so far, add the latest RAI response timestamp
         // if the status is "Submitted" and delete the attribute if not
         if (
@@ -312,12 +309,18 @@ export const buildAnyPackage = async (packageId, config) => {
       putParams.Item.GSI1sk = packageId;
     }
 
-    if (forceStatusTo) putParams.Item.currentStatus = forceStatusTo;
-
     if (putParams.Item.currentStatus === ONEMAC_STATUS.RAI_ISSUED)
       delete putParams.Item.latestRaiResponseTimestamp;
 
-    putParams.Item.reverseChrono.sort((a, b) => b.timestamp - a.timestamp);
+    putParams.Item?.reverseChrono.sort((a, b) => b.timestamp - a.timestamp);
+
+    // if the most recent OneMAC event is an enabled RAI Response, lock
+    // the status to "Withdraw RAI Enabled"
+    if (
+      putParams.Item?.reverseChrono[0].currentStatus ===
+      ONEMAC_STATUS.WITHDRAW_RAI_ENABLED
+    )
+      putParams.Item.currentStatus = ONEMAC_STATUS.WITHDRAW_RAI_ENABLED;
 
     adminChanges.sort((a, b) => b.changeTimestamp - a.changeTimestamp);
     // remove duplicate messages for adminChanges that affect more than one event
