@@ -10,6 +10,7 @@ submitAny.mockResolvedValue("yup!");
 
 const testEvent = {
   this: "is an event object",
+  body: "needs to have somebody to love?",
 };
 
 const expectedResponse = {
@@ -21,10 +22,6 @@ const expectedResponse = {
   statusCode: 200,
 };
 
-it("calls submitAny", async () => {
-  //expect(main(testEvent)).resolves.toStrictEqual(expectedResponse);
-});
-/*
 it("should submit temporary extension 1915b form", async () => {
   const data = {
     temporaryExtensionType: "1915(b)",
@@ -93,4 +90,3 @@ it("should return an HTTP 500 error when event body cannot be parsed", async () 
 
   expect(result).toEqual(expectedResponse);
 });
-*/
