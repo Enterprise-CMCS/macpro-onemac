@@ -38,7 +38,7 @@ Feature: Subsequent Submission 1915b Waiver Amendment
         Then click form cancel button
         Then click Leave Anyway form button
         Then verify the package details page is visible
-        
+
         Scenario: Screen Enhance - Subsequent Documents from the package dashboard
         Then click the actions button in row one
         Then verify Upload Subsequent Documents action exists
@@ -93,3 +93,5 @@ Feature: Subsequent Submission 1915b Waiver Amendment
         Then click the yes, submit modal button
         Then verify the package details page is visible
         Then verify the success message is "Attachments have been successfully submitted"
+        Then verify the Subsequent Documentation Uploaded caret button exists
+        Then verify the Subsequent Documentation download all button exists

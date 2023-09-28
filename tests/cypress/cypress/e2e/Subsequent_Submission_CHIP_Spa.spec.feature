@@ -92,3 +92,5 @@ Feature: CHIP SPA State Details View - Card View with Actions
         Then click the yes, submit modal button
         Then verify the package details page is visible
         Then verify the success message is "Attachments have been successfully submitted"
+        Then verify the Subsequent Documentation Uploaded caret button exists
+        Then verify the Subsequent Documentation download all button exists
