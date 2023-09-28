@@ -7,7 +7,7 @@ import {
 import Joi from "joi";
 import handler from "../libs/handler-lib";
 import { submitAny } from "./submitAny";
-import { defaultFormConfig } from "./defaultFormConfig";
+import { defaultFormConfig, waiverExtensionText } from "./defaultFormConfig";
 
 export const waiverTemporaryExtensionFormConfig = {
   ...defaultFormConfig,
@@ -18,6 +18,7 @@ export const waiverTemporaryExtensionFormConfig = {
     parentType: Joi.string().optional(),
     temporaryExtensionType: Joi.string().required(),
   },
+  closingRemarks: waiverExtensionText,
 };
 
 export const waiverTemporaryExtension1915bFormConfig = {

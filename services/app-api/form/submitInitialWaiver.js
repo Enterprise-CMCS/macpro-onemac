@@ -2,7 +2,11 @@ import { initialWaiverB4, initialWaiverB } from "cmscommonlib";
 
 import handler from "../libs/handler-lib";
 import { submitAny } from "./submitAny";
-import { defaultFormConfig, defaultWaiverSchema } from "./defaultFormConfig";
+import {
+  defaultFormConfig,
+  defaultWaiverSchema,
+  waiverActionText,
+} from "./defaultFormConfig";
 
 /**
  * Submitting a Initial Waiver MUST do the following to return SUCCESS:
@@ -21,6 +25,7 @@ const initialWaiverFormConfig = {
   appendToSchema: {
     ...defaultWaiverSchema,
   },
+  closingRemarks: waiverActionText,
 };
 
 export const initialWaiverB4FormConifg = {
