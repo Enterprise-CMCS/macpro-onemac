@@ -113,6 +113,9 @@ describe("getActionsForPackage", () => {
       formSource
     );
 
-    expect(actions).toEqual(["Withdraw Package"]);
+    expect(actions).toEqual([
+      "Withdraw Package",
+      "Upload Subsequent Documents",
+    ]);
   });
 });

@@ -85,6 +85,10 @@ const withdrawalRequestedCaretBtn =
   '//h2//button[contains(@id,"Package0_caret-button")]';
 const withdrawalRequestedDownloadAllBtn =
   '//button[contains(@id,"dl_Package-0")]';
+const subsequentSubmissionCaretBtn =
+  '//h2//button[contains(@id,"Subsequent Documentation Uploaded")]';
+const subsequentSubmissionDownloadAllBtn =
+  '//button[contains(@id,"dl_Subsequent Documentation Uploaded")]';
 
 export class oneMacPackageDetailsPage {
   verifyPackageDetailsPageIsVisible() {
@@ -576,6 +580,19 @@ export class oneMacPackageDetailsPage {
   }
   clickWithdrawalRequestedDownloadAllBtn() {
     cy.xpath(withdrawalRequestedDownloadAllBtn).click();
+  }
+  verifySubsequentSubmissionCaretBtnExists() {
+    cy.xpath(subsequentSubmissionCaretBtn).should("be.visible");
+  }
+  clickSubsequentSubmissionCaretBtn() {
+    cy.xpath(subsequentSubmissionCaretBtn).click();
+  }
+
+  verifySubsequentSubmissionDownloadAllBtnExists() {
+    cy.xpath(subsequentSubmissionDownloadAllBtn).should("be.visible");
+  }
+  clickSubsequentSubmissionDownloadAllBtn() {
+    cy.xpath(subsequentSubmissionDownloadAllBtn).click();
   }
 }
 export default oneMacPackageDetailsPage;

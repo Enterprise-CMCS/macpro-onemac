@@ -3221,3 +3221,15 @@ Then("verify the Withdrawal Requested download all button exists", () => {
 Then("click the Withdrawal Requested download all button", () => {
   OneMacPackageDetailsPage.clickWithdrawalRequestedDownloadAllBtn();
 });
+Then("verify the Subsequent Documentation Uploaded caret button exists", () => {
+  OneMacPackageDetailsPage.verifySubsequentSubmissionCaretBtnExists();
+});
+Then("click the Subsequent Documentation Uploaded caret button", () => {
+  OneMacPackageDetailsPage.clickSubsequentSubmissionCaretBtn();
+});
+Then("verify the Subsequent Documentation download all button exists", () => {
+  OneMacPackageDetailsPage.verifySubsequentSubmissionDownloadAllBtnExists();
+});
+Then("click the Subsequent Documentation download all button", () => {
+  OneMacPackageDetailsPage.clickSubsequentSubmissionDownloadAllBtn();
+});

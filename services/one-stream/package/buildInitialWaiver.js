@@ -1,6 +1,7 @@
 import { initialWaiver } from "cmscommonlib";
 import {
   initialSubmissionType,
+  subsequentSubmissionType,
   formalRAIResponseType,
   packageType,
   submitAction,
@@ -12,6 +13,7 @@ const initialWaiverBuildConfig = {
   ...initialWaiver,
   eventTypeMap: {
     submitwaivernew: initialSubmissionType,
+    submitwaivernewsubsequent: subsequentSubmissionType,
     submitwaiverrai: formalRAIResponseType,
     submitwaivernewwithdraw: packageType,
     submitrairesponsewithdraw: formalRAIResponseType,
