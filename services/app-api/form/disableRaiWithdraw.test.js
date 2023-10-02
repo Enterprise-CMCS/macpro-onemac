@@ -288,6 +288,6 @@ it("returns system error if get fails", async () => {
   const response = await main(testEvent);
   expect(response).toEqual({
     ...expectedResponse,
-    body: JSON.stringify(RESPONSE_CODE.SUCCESSFULLY_SUBMITTED),
+    body: JSON.stringify(RESPONSE_CODE.RAI_RESPONSE_WITHDRAW_DISABLE_SUCCESS),
   });
 });
