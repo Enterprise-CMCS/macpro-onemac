@@ -14,6 +14,7 @@ import { ONEMAC_TYPE } from "cmscommonlib/workflow";
 
 export const disableRaiWithdrawFormConfig = {
   ...defaultFormConfig,
+  successResponseCode: RESPONSE_CODE.RAI_RESPONSE_WITHDRAW_DISABLE_SUCCESS,
   ...disableRaiWithdraw,
   newStatus: Workflow.ONEMAC_STATUS.SUBMITTED,
   hasAuthorizationToSubmit: (userRole) => {
