@@ -1,7 +1,8 @@
 //css, use cy.get
 const devLoginBtn = "#devloginBtn";
 const loginBtn = "#loginBtn";
-
+const oneMacLogo = "#oneMacLogo";
+const homePageMainContent = "#main";
 //xpath, use cy.xpath
 const FAQPage = "//a[text()='FAQ']";
 const HomePageLink = "//a[contains(text(),'Home')]";
@@ -11,7 +12,10 @@ export class oneMacHomePage {
   launch() {
     cy.visit("/");
   }
-  pageHasLoaded() {}
+  pageHasLoaded() {
+    cy.get(oneMacLogo).should("be.visible");
+    cy.get(homePageMainContent).should("be.visible");
+  }
   verifyUserIsNotLoggedInOnHomePage() {
     cy.xpath(HomePageLink).should("be.visible").and("have.class", "activeLink");
   }
