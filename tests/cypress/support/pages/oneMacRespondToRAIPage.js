@@ -40,10 +40,6 @@ export class oneMacRespondToRAIPage {
     cy.xpath(leaveAnywaysBtn).click();
   }
 
-  clickYesSubmitBTN() {
-    cy.xpath(yesSubmitBtn).click();
-    cy.wait(8000);
-  }
   verifyWaiverNumberMatchesID(s) {
     cy.xpath(prepopulatedWaiverNumber).should("have.text", s);
   }

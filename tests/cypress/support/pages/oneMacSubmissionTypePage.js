@@ -110,9 +110,6 @@ export class oneMacSubmissionTypePage {
   clickRequestTemporaryExtension() {
     cy.xpath(RequestTemporaryExtension).click();
   }
-  clickRequestExtensionBtn() {
-    cy.xpath(RequestExtensionBtn).click();
-  }
   clickAppendixKAmendment() {
     cy.xpath(AppendixKAmendment).click();
   }
