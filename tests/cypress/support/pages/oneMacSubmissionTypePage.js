@@ -65,12 +65,12 @@ export class oneMacSubmissionTypePage {
   clickStatePlanAmendmentSPA() {
     cy.xpath(statePlanAmendmentSPA).click();
   }
-  verifyNewWaiverPage() {
-    cy.url().should("include", "/newwaiver");
-  }
-  verifyNewSPAPage() {
-    cy.url().should("include", "/newspa");
-  }
+  // verifyNewWaiverPage() {
+  //   cy.url().should("include", "/newwaiver");
+  // }
+  // verifyNewSPAPage() {
+  //   cy.url().should("include", "/newspa");
+  // }
   verifyNewInitialWaiverPage() {
     cy.url().should("include", "/initial-waiver");
   }
