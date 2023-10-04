@@ -58,18 +58,6 @@ export class oneMacSubmitNewWaiverActionPage {
     cy.get(newWaiverNumberInputBox).type(existingWaiverNumber);
   }
 
-  selectNewWaiverUnderActionType() {
-    cy.get(actionTypeDropDown).select("new");
-  }
-
-  selectWaiverAmendmentUnderActionType() {
-    cy.get(actionTypeDropDown).select("amendment");
-  }
-
-  selectRequestForWaiverRenewalUnderActionType() {
-    cy.get(actionTypeDropDown).select("renewal");
-  }
-
   verify1915b4FFSSelectiveContractingwaiversUnderWaiverAuthority() {
     cy.xpath(waiverAuthority)
       .next("div")
@@ -132,10 +120,6 @@ export class oneMacSubmitNewWaiverActionPage {
       .contains(
         /[A-Z]{2}\-\d{4}\.[A-Z]{1}([0]{1}[1-9]|[1-9][0-9]).0{2}|[A-Z]{2}\-\d{5}\.[A-Z]{1}([0]{1}[1-9]|[1-9][0-9]).0{2}/
       );
-  }
-
-  inputComments(s) {
-    cy.get(commentsInputBox).type(s);
   }
 
   inputAdditionalInfoText(s) {

@@ -26,9 +26,16 @@ export class oneMacRespondToRAIPage {
   verifyModalTextIs(s) {
     cy.get(modalText).contains(s);
   }
-  clickYesSubmitBTN() {
-    cy.xpath(yesSubmitBtn).click();
-    cy.wait(8000);
+  clickBackArrow() {
+    cy.get(backArrow).click();
+  }
+
+  clickLeaveAnyway() {
+    cy.xpath(leaveAnywaysBtn).click();
+  }
+
+  verifyWaiverNumberMatchesID(s) {
+    cy.xpath(prepopulatedWaiverNumber).should("have.text", s);
   }
   verifyAppKMatchesID(s) {
     cy.xpath(prepopulatedWaiverAmendmentNumber).should("have.text", s);

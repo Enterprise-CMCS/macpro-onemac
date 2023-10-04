@@ -45,11 +45,6 @@ export class oneMacDashboardPage {
   verifySuccessMessage1IsDisplayed() {
     cy.get(successMessage1).contains("Submission Completed");
   }
-  verifySuccessMessageIsDisplayedAfterRAIResponse() {
-    cy.xpath(successMessageAfterRAIResponse).contains(
-      "Your submission has been received."
-    );
-  }
   verifyIDNumber(s) {
     cy.xpath(IDNUMBER(s)).first().should("exist");
   }
@@ -81,27 +76,14 @@ export class oneMacDashboardPage {
   verifyWeAreOnDashboardPage() {
     cy.url().should("include", "/dashboard");
   }
-  verifySubmissionListIsDisplayed() {
-    cy.xpath(submissionList).should("be.visible");
-  }
+
   verifyexportToEXcelCSVBTNIsDisplayed() {
     cy.get(exportToEXcelCSVBTN).should("be.visible");
-  }
-  verifyidNumberHeaderIsDisplayed() {
-    cy.get(idNumberHeader).should("be.visible");
-  }
-  verifytypeHeaderIsDisplayed() {
-    cy.get(typeHeader).should("be.visible");
   }
   verifyStateHeaderIsDisplayed() {
     cy.get(stateHeader).should("be.visible");
   }
-  verifyInitialSubmissionDateHeaderIsDisplayed() {
-    cy.get(initialSubmissionDateHeader).should("be.visible");
-  }
-  verifySubmittedByHeadersDisplayed() {
-    cy.get(submittedByHeader).should("be.visible");
-  }
+
   verifyNewSubmissionBTNIsDisplayed() {
     cy.get(newSubmissionBTN).should("be.visible");
   }
@@ -113,13 +95,6 @@ export class oneMacDashboardPage {
   }
   navigatetoURL(s) {
     cy.visit(s);
-  }
-  clickOnSpaID() {
-    cy.get(spaIDLink).click();
-    cy.wait(5000);
-  }
-  verifyAttachmentExists(s) {
-    cy.get(uploadedAttachments).contains(s);
   }
   verifyLogoutBtnExists() {
     cy.xpath(logoutBtn).should("be.visible");
