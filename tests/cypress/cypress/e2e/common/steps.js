@@ -2236,10 +2236,6 @@ Then("click the Request Temporary Extension button", () => {
 Then("verify the Request Temporary Extension button is displayed", () => {
   OneMacPackagePage.verifyRequestTempExtensionBtnExists();
 });
-// this test step is commented out in the tests
-Then("click the Add Amendment button", () => {
-  OneMacPackagePage.clickAddAmendmentBtn();
-});
 Then("verify the Add Amendment button is displayed", () => {
   OneMacPackagePage.verifyAddAmendmentBtnExists();
 });
@@ -2314,10 +2310,6 @@ Then("verify the waiver authority is 1915c HCBS", () => {
 });
 Then("verify the attachments section exists", () => {
   OneMacPackageDetailsPage.verifyAttachmentsSectionExists();
-});
-// all uses of this test are there, but commented out
-Then("verify the download all button exists", () => {
-  OneMacPackageDetailsPage.verifyDownloadAllBtnExists();
 });
 Then("verify the additional information section exists", () => {
   OneMacPackageDetailsPage.verifyAdditionalInfoSectionExists();
@@ -2820,18 +2812,6 @@ Then(
 Then("verify Review Team SRT is not visible in the details section", () => {
   OneMacPackageDetailsPage.verifyReviewTeamSRTDoesNotExists();
 });
-// in a test, but commented out
-Then("verify the Formal RAI Response caret button exists", () => {
-  OneMacPackageDetailsPage.verifyFormalRAIResponseCaretBtnExists();
-});
-// in a test, but commented out
-Then("expand the Formal RAI Response caret button", () => {
-  OneMacPackageDetailsPage.expandFormalRAIResponseCaretBtn();
-});
-// in a test, but commented out
-Then("verify the Formal RAI Response download all button exists", () => {
-  OneMacPackageDetailsPage.verifyFormalRAIResponseDownloadAllBtnExists();
-});
 Then("verify the Initial Submission caret button exists", () => {
   OneMacPackageDetailsPage.verifyInitialSubmissionCaretBtnExists();
 });
@@ -2846,8 +2826,4 @@ Then("verify the Withdrawal Requested caret button exists", () => {
 });
 Then("expand the Withdrawal Requested caret", () => {
   OneMacPackageDetailsPage.expandWithdrawalRequestedCaretBtn();
-});
-// in a test, but commented out
-Then("verify the Withdrawal Requested download all button exists", () => {
-  OneMacPackageDetailsPage.verifyWithdrawalRequestedDownloadAllBtnExists();
 });

@@ -209,7 +209,6 @@ const rowTwo = "tbody > tr:nth-child(2)";
 const packageRowTwoSubmittedBy = "#submitter-1";
 const packageRowTwoActions = "#packageActions-1";
 //Element is Xpath use cy.xpath instead of cy.get
-const allPackageRowActions = "//td[contains(@id,'packageActions')]";
 const packageRowTwoExpirationDate = "#expirationTimestamp-1";
 //Element is Xpath use cy.xpath instead of cy.get
 const childRows = "//tr[@class = 'child-row-expanded']";
@@ -1033,9 +1032,6 @@ export class oneMacPackagePage {
   }
   verifyRequestTempExtensionBtnExists() {
     cy.xpath(RequestTempExtensionBtn).should("be.visible");
-  }
-  clickAddAmendmentBtn() {
-    cy.xpath(addAmendmentBtn).scrollIntoView().click();
   }
   verifyAddAmendmentBtnExists() {
     cy.xpath(addAmendmentBtn).scrollIntoView().should("be.visible");
