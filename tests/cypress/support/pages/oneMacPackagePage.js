@@ -252,13 +252,6 @@ export class oneMacPackagePage {
     cy.xpath(expirationDateColumnHeader).should("be.visible");
   }
 
-  verifyMD32560ExpirationDateIsSetTooct142026() {
-    cy.xpath(MD32560hrefValue);
-  }
-  verifyExpirationDateFirstValue(s) {
-    cy.xpath(firstExperationDate).contains(s);
-  }
-
   typePendingInSearchBar() {
     cy.get(searchbar).type("pending");
   }
@@ -1007,11 +1000,6 @@ export class oneMacPackagePage {
   }
   verifyChildRowStatusIs(status) {
     cy.get(packageRowTwoStatus).should("contain.text", status);
-  }
-  verifyPackageWithdrawalMessageIsDisplayed() {
-    cy.get(successMessage).contains(
-      "Your submission package has successfully been withdrawn."
-    );
   }
   clickSPAIDLinkInFirstRow() {
     cy.xpath(packageRowOneIDLink).click();

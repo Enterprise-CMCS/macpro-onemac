@@ -95,48 +95,11 @@ Then("Add {string} file to form 179", (fileName) => {
   OneMacSubmitNewMedicaidSpaPage.addFileForForm179(fileName);
 });
 
-Then("Verify {string} is added to form 179", (fileName) => {
-  OneMacSubmitNewMedicaidSpaPage.verifyFileAddedForForm179(fileName);
-});
-
-Then("Verify {string} is not added to form 179", (fileName) => {
-  OneMacSubmitNewMedicaidSpaPage.verifyFileNotAddedForForm179(fileName);
-});
-
-Then("Delete file from form 179", () => {
-  OneMacSubmitNewMedicaidSpaPage.deleteFileFromForm179();
-});
-
 //End OY2-5869
 Then("Add file for SPA Pages", () => {
   OneMacSubmitNewMedicaidSpaPage.uploadSPAPagesAddFile();
 });
 
-Then("Add file {string} for SPA Pages", (fileName) => {
-  OneMacSubmitNewMedicaidSpaPage.addFilesToSpaPages(fileName);
-});
-
-Then("Add no files to SPA Pages", () => {
-  oneMacSubmitNewMedicaidSpaPage.addNoFilesToSpaPages();
-});
-
-Then("Verify no files added to SPA Pages", () => {
-  oneMacSubmitNewMedicaidSpaPage.verifyNoFilesAttachedToSpaPages();
-});
-
-Then("Verify {string} is added to SPA Pages", (fileName) => {
-  OneMacSubmitNewMedicaidSpaPage.verifyFileAddedForSpaPages(fileName);
-});
-
-Then("Verify file {string} exists in Spa Pages", (fileName) => {
-  OneMacSubmitNewMedicaidSpaPage.verifyFileNameExistsInSpaPages(fileName);
-});
-
-Then("Type Additonal Information Comments", () => {
-  OneMacSubmitNewMedicaidSpaPage.AdditionalInformationTypeComment(
-    "This is just a test"
-  );
-});
 Then("Type Additonal Info Comments in new form", () => {
   OneMacSubmitNewMedicaidSpaPage.additionalInfoTypeComment(
     "This is just a test"
@@ -179,18 +142,6 @@ Then(
   }
 );
 
-Then("click yes, submit RAI response button", () => {
-  OneMacRespondToRAIPage.clickYesSubmitBTN();
-});
-Then("verify submission warning text is visible", () => {
-  OneMacSubmitNewMedicaidSpaPage.verifySubmissionWarningTextIsVisible();
-});
-Then("verify submission warning text", () => {
-  OneMacSubmitNewMedicaidSpaPage.verifySubmissionWarningText();
-});
-Then("verify the form Submit Button exists", () => {
-  OneMacDefaultForms.verifySubmitBtnExists();
-});
 Then("verify form cancel button exists", () => {
   OneMacDefaultForms.verifyCancelBtnExists();
 });
@@ -212,24 +163,9 @@ Then("verify the success message is {string}", (s) => {
 Then("verify submission successful message in the alert bar", () => {
   OneMacDashboardPage.verifySuccessMessage1IsDisplayed();
 });
-Then("verify submission date", () => {
-  OneMacDashboardPage.verifyDate();
-});
-Then("Verify submission type", () => {
-  OneMacDashboardPage.verifyType("Medicaid SPA");
-});
 
-Then("Verify submission Waiver type", () => {
-  OneMacDashboardPage.verifyType("Waiver");
-});
 Then("Add file for RAI Response", () => {
   medicaidSPARAIResponsePage.uploadRAIResponseAddFile();
-});
-Then("Add Additional Comments", () => {
-  medicaidSPARAIResponsePage.addCommentsRAIRespone();
-});
-Then("verify submission Successful message after RAI", () => {
-  OneMacDashboardPage.verifySuccessMessageIsDisplayedAfterRAIResponse();
 });
 //this is for the oy2 8616
 When("Login with cms role approver", () => {
@@ -263,9 +199,6 @@ Then("Role text is Displayed", () => {
   OneMacMyProfilePage.verifyRoleHeader();
 });
 Then("Actual Role is Displayed", () => {
-  OneMacMyProfilePage.verifyRole();
-});
-Then("User Role is Read Only User", () => {
   OneMacMyProfilePage.verifyRole();
 });
 Then("Email text is Displayed", () => {
@@ -307,32 +240,8 @@ When("Login as a State System Admin", () => {
 Then("i am on Dashboard Page", () => {
   OneMacDashboardPage.verifyWeAreOnDashboardPage();
 });
-Then("verify Submission List is Displayed", () => {
-  OneMacDashboardPage.verifySubmissionListIsDisplayed();
-});
 Then("verify Export to Excel CSV is Displayed", () => {
   OneMacDashboardPage.verifyexportToEXcelCSVBTNIsDisplayed();
-});
-Then("verify IDNumber is Displayed", () => {
-  OneMacDashboardPage.verifyidNumberHeaderIsDisplayed();
-});
-Then("verify Type is Displayed", () => {
-  OneMacDashboardPage.verifytypeHeaderIsDisplayed();
-});
-Then("verify state is Displaed", () => {
-  OneMacDashboardPage.verifyStateHeaderIsDisplayed();
-});
-Then("verify Initial Submission Date is Displayed", () => {
-  OneMacDashboardPage.verifyInitialSubmissionDateHeaderIsDisplayed();
-});
-Then("verify Submitted By is Displayed", () => {
-  OneMacDashboardPage.verifySubmittedByHeadersDisplayed();
-});
-Then("Click on the SPA ID Link", () => {
-  OneMacDashboardPage.clickOnSpaID();
-});
-Then("Verify {string} exists in the attachments", (fileName) => {
-  OneMacDashboardPage.verifyAttachmentExists(fileName);
 });
 Then("verify User Management is Displayed", () => {
   OneMacUserManagmentPage.verifyUserManagmentHeaderIsDisplayed();
@@ -382,10 +291,6 @@ Then("clear SPA ID in Medicaid SPA Input box", () => {
   OneMacSubmitNewMedicaidSpaPage.clearSPAIDInputBox();
 });
 
-Then("Return to dashboard Page", () => {
-  OneMacSubmitNewMedicaidSpaPage.clickOnDashboardTab();
-});
-
 Then("type in invalid SPA ID on Medicaid SPA page", () => {
   OneMacSubmitNewMedicaidSpaPage.typeIncorrectSPAIDAndFormat();
 });
@@ -427,10 +332,6 @@ Then("click on 1915b 4 FFS Selective Contracting waivers", () => {
 });
 Then("click on 1915b Comprehensive Capitated Waiver Authority", () => {
   OneMacSubmissionTypePage.click1915bComprehensiveCapitatedWaiverAuthority();
-});
-
-Then("click on Waiver Action on Waiver Action Type page", () => {
-  OneMacSubmissionTypePage.clickWaiverActionUnderWaiverAction();
 });
 
 Then("click on 1915b 4 FFS Selective Contracting New Initial Waiver", () => {
@@ -536,13 +437,6 @@ Then("verify All Other CHIP SPA Submissions is a clickable option", () => {
 Then("click All Other CHIP SPA Submissions", () => {
   OneMacSubmissionTypePage.clickAllOtherChip();
 });
-Then("select Action Type New Waiver", () => {
-  OneMacSubmitNewWaiverActionPage.selectNewWaiverUnderActionType();
-});
-
-Then("select 1915b 4 FFS Selective Contracting waivers", () => {
-  OneMacSubmitNewWaiverActionPage.select1915b4FFSSelectiveContractingwaiversUnderWaiverAuthority();
-});
 
 Then(
   "Add file for 1915b 4 FFS Selective Contracting waiver application pre-print",
@@ -559,10 +453,6 @@ Then("Click on Waiver Action under Waiver Type", () => {
   OneMacSubmissionTypePage.clickWaiverActionUnderWaiverAction();
 });
 
-Then("Click on New Waiver under Action type", () => {
-  OneMacSubmitNewWaiverActionPage.selectNewWaiverUnderActionType();
-});
-
 Then("verify error message is not present on New Waiver Page", () => {
   OneMacSubmitNewWaiverActionPage.verifyErrorMessageIsNotDisplayed();
 });
@@ -577,9 +467,6 @@ Then("type in invalid Waiver Number", () => {
   OneMacSubmitNewWaiverActionPage.inputWaiverNumber("MD.123456");
 });
 
-Then("Click the Request Extension button", () => {
-  OneMacSubmissionTypePage.clickRequestExtensionBtn();
-});
 Then("Click on Request Temporary Extension in Package dashboard", () => {
   OneMacSubmissionTypePage.clickRequestTemporaryExtension();
 });
@@ -698,9 +585,6 @@ Then("upload Waiver Extension Request", () => {
   OneMacRequestWaiverTemporaryExtension.uploadWaiverExtensionRequest();
 });
 
-Then("Type {string} in Summary Box", (Comments) => {
-  OneMacSubmitNewWaiverActionPage.inputComments(Comments);
-});
 Then("type {string} in additional info textarea", (Comments) => {
   OneMacSubmitNewWaiverActionPage.inputAdditionalInfoText(Comments);
 });
@@ -711,14 +595,6 @@ Then(
     OneMacSubmitNewWaiverActionPage.verifyAllOther1915bWaiversUnderWaiverAuthority();
   }
 );
-
-Then("Click on Waiver Amendment under Action type", () => {
-  OneMacSubmitNewWaiverActionPage.selectWaiverAmendmentUnderActionType();
-});
-
-Then("Click on Request for waiver renewal from Action Type", () => {
-  OneMacSubmitNewWaiverActionPage.selectRequestForWaiverRenewalUnderActionType();
-});
 
 Then("type in Existing Waiver Number in new form", () => {
   OneMacSubmitNewWaiverActionPage.inputExistingWaiverNumberNewForms();
@@ -816,9 +692,6 @@ Then("verify id number in the first row matches CHIP SPA ID", () => {
     OneMacPackagePage.verifyIDNumberInFirstRowIs(data.newChipSPAID1);
   });
 });
-Then("verify success message for Withdrawal", () => {
-  OneMacPackagePage.verifyPackageWithdrawalMessageIsDisplayed();
-});
 
 Then("click on Packages", () => {
   OneMacDashboardPage.clickPackageTab();
@@ -844,12 +717,6 @@ Then(
     OneMacPackagePage.verifyexpirationDateColumnHeaderExists();
   }
 );
-Then("expiration date on MD.32560 is Oct 14, 2026", () => {
-  OneMacPackagePage.verifyMD32560ExpirationDateIsSetTooct142026();
-});
-Then("Expiration Date value for generated Record is {string}", (s) => {
-  OneMacPackagePage.verifyExpirationDateFirstValue(s);
-});
 Then("Add file for Current State Plan", () => {
   OneMacCHIPSPAPage.uploadCurrentStatePlanFile();
 });
@@ -877,14 +744,6 @@ When("Login with cms role approver Revoked", () => {
 
 When("Login with cms role approver Denied", () => {
   OneMacDevLoginPage.loginAsCMSUserDenied();
-});
-
-Then("Actual Status is Displayed with Access Revoked", () => {
-  OneMacMyProfilePage.verifyAccessStatusRevoked();
-});
-
-Then("Actual Status is Displayed with Access Denied", () => {
-  OneMacMyProfilePage.verifyAccessStatusDenied();
 });
 
 Then("Verify General Section Exists", () => {
