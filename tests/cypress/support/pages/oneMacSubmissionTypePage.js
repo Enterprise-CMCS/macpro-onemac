@@ -36,10 +36,6 @@ const AppendixKAmendment = '//div[text()="1915(c) Appendix K Amendment"]';
 const respondToMedicaidSPARAI =
   '//div[text()="Respond to Formal Medicaid SPA RAI"]';
 //Element is Xpath use cy.xpath instead of cy.get
-const respondToCHIPSPARAI = '//div[text()="Respond to Formal CHIP SPA RAI"]';
-//Element is Xpath use cy.xpath instead of cy.get
-const respondToWaiverRAI = "//a//div[text()='Respond to Waiver RAI']";
-//Element is Xpath use cy.xpath instead of cy.get
 const initialWaiver1915b4 =
   ":contains('1915(b)(4) FFS Selective Contracting New Initial Waiver')";
 //Element is Xpath use cy.xpath instead of cy.get
@@ -118,12 +114,6 @@ export class oneMacSubmissionTypePage {
   }
   clickRespondToMedicaidSPARAI() {
     cy.xpath(respondToMedicaidSPARAI).click();
-  }
-  clickRespondToCHIPSPARAI() {
-    cy.xpath(respondToCHIPSPARAI).click();
-  }
-  clickRespondToWaiverRAI() {
-    cy.xpath(respondToWaiverRAI).click();
   }
   clickInitialWaiver() {
     cy.xpath(cardLink).filter(initialWaiver1915b4).click();

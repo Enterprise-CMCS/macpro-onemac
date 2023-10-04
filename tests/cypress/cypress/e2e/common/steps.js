@@ -1097,17 +1097,14 @@ Then("Verify Phone Number Exists", () => {
 Then("Verify actual Phone Number Exists", () => {
   OneMacFAQPage.verifyActualphoneNumberExists();
 });
-Then("Verify Email Exists", () => {
-  OneMacFAQPage.verifyemailExists();
+Then("verify Contact Email label Exists", () => {
+  OneMacFAQPage.verifyEmailExists();
 });
-Then("Verify actual Email Exists", () => {
-  OneMacFAQPage.verifyActualemailExists();
+Then("verify actual Contact Email address Exists", () => {
+  OneMacFAQPage.verifyActualEmailExists();
 });
-Then("Verify page title is FAQ", () => {
-  OneMacFAQPage.VerifypagetitleisFAQ();
-});
-Then("Verify Frequently Asked Questions Exists", () => {
-  OneMacFAQPage.VerifyFrequentlyAskedQuestionsExists();
+Then("Verify page title is {string}", () => {
+  OneMacFAQPage.VerifyPageTitleIs(s);
 });
 Then("Click on What is my SPA ID link", () => {
   OneMacSubmitNewMedicaidSpaPage.clickWhatIsMySPAIDLink();
@@ -1331,12 +1328,6 @@ Then("verify Close Exists", () => {
 Then("verify Type Exists", () => {
   OneMacPackagePage.verifytypeDropDownExists();
 });
-Then("verify Status Exists", () => {
-  OneMacPackagePage.verifystatusDropDownExists();
-});
-Then("verify CPOC Name dropdown button exists", () => {
-  OneMacPackagePage.verifyCPOCNameDropDownExists();
-});
 Then("verify reset Exists", () => {
   OneMacPackagePage.verifyresetButtonExists();
 });
@@ -1373,9 +1364,6 @@ Then("verify Medicaid SPA Exists", () => {
 Then("click on Status", () => {
   OneMacPackagePage.clickstatusDropDown();
 });
-Then("verify rai response submitted exists", () => {
-  OneMacPackagePage.verifyraiResponseSubmittedCheckBoxExists();
-});
 Then("verify Under Review checkbox exists", () => {
   OneMacPackagePage.verifyUnderReviewCheckBoxExists();
 });
@@ -1400,23 +1388,11 @@ Then("click Under Review checkbox", () => {
 Then("click Waiver Terminated checkbox", () => {
   OneMacPackagePage.clickWaiverTerminatedCheckBox();
 });
-Then("verify the Withdrawal Requested checkbox exists", () => {
-  OneMacPackagePage.verifyWithdrawalRequestedCheckBoxExists();
-});
 Then("click the Withdrawal Requested checkbox", () => {
   OneMacPackagePage.clickWithdrawalRequestedCheckBox();
 });
-Then(
-  "verify the Formal RAI Response - Withdrawal Requested checkbox exists",
-  () => {
-    OneMacPackagePage.verifyRaiResponseWithdrawalRequestedCheckBoxExists();
-  }
-);
 Then("click the Formal RAI Response - Withdrawal Requested checkbox", () => {
   OneMacPackagePage.clickRaiResponseWithdrawalRequestedCheckBox();
-});
-Then("verify the RAI Response Withdraw Enabled checkbox exists", () => {
-  OneMacPackagePage.verifyRaiResponseWithdrawEnabledCheckBoxExists();
 });
 Then("click the RAI Response Withdraw Enabled checkbox", () => {
   OneMacPackagePage.clickRaiResponseWithdrawEnabledCheckBox();
@@ -1457,9 +1433,6 @@ Then("click show hide columns button", () => {
 Then("verify Initial Submission Date exists", () => {
   OneMacPackagePage.verifycheckBoxInitialSubmissionDateExists();
 });
-Then("verify expiration date exists", () => {
-  OneMacPackagePage.verifycheckBoxexpirationDateBTNExists();
-});
 Then("verify state exists", () => {
   OneMacPackagePage.verifycheckboxStateExists();
 });
@@ -1478,14 +1451,8 @@ Then("verify CPOC Name exists", () => {
 Then("verify Formal RAI Received checkbox exists", () => {
   OneMacPackagePage.verifyFormalRAIReceivedCheckboxExists();
 });
-Then("verify Formal RAI Received checkbox does not exist", () => {
-  OneMacPackagePage.verifyFormalRAIReceivedCheckboxDoesNotExist();
-});
 Then("verify Initial Submission Date column exists", () => {
   OneMacPackagePage.verifyinitialSubmissionDateColumnExists();
-});
-Then("verify expiration date column exists", () => {
-  OneMacPackagePage.verifyexpirationDateColumnExists();
 });
 Then("verify state column exists", () => {
   OneMacPackagePage.verifystateColumnExists();
@@ -1520,9 +1487,6 @@ Then("verify CPOC Name column does not exist", () => {
 Then("click Initial Submission Date checkbox", () => {
   OneMacPackagePage.clickCheckBoxInitialSubmissionDate();
 });
-Then("click expiration date checkbox", () => {
-  OneMacPackagePage.clickCheckBoxexpirationDate();
-});
 Then("click state checkbox", () => {
   OneMacPackagePage.clickCheckboxState();
 });
@@ -1547,9 +1511,6 @@ Then("verify type column does not exist", () => {
 Then("verify state column does not exist", () => {
   OneMacPackagePage.verifystateColumnDoesNotExist();
 });
-Then("verify expiration date column does not exist", () => {
-  OneMacPackagePage.verifyexpirationDateColumnDoesNotExist();
-});
 Then("verify status column does not exist", () => {
   OneMacPackagePage.verifystatusColumnDoesNotExist();
 });
@@ -1571,45 +1532,8 @@ Then("type partial existing ID in search bar", () => {
 Then("verify the state on row one exists", () => {
   OneMacPackagePage.verifypackageRowOneStateExists();
 });
-
-Then("verify that the 3 dots next to Approved status is not clickable", () => {
-  OneMacPackagePage.checkforApprovedIsNotClickable();
-});
-Then(
-  "verify that the 3 dots next to Disapproved status is not clickable",
-  () => {
-    OneMacPackagePage.checkforDisapprovedIsNotClickable();
-  }
-);
-Then("verify that the 3 dots next to Withdrawn status is not clickable", () => {
-  OneMacPackagePage.checkforWithdrawnIsNotClickable();
-});
-Then(
-  "verify that the 3 dots next to Terminated status is not clickable",
-  () => {
-    OneMacPackagePage.checkforTerminatedIsNotClickable();
-  }
-);
-Then(
-  "verify that the 3 dots next to Unsubmitted status is not clickable",
-  () => {
-    OneMacPackagePage.checkforUnsubmittedIsNotClickable();
-  }
-);
-Then("verify expiration date filter dropdown exists", () => {
-  OneMacPackagePage.verifyExpirationDateFilterDropDownExists();
-});
 Then("verify Initial Submission Date filter dropdown exists", () => {
   OneMacPackagePage.verifyInitialSubmissionDateFilterDropDownExists();
-});
-Then("click on expiration date filter dropdown", () => {
-  OneMacPackagePage.clickOnExpirationDateFilterDropDown();
-});
-Then("verify expiration date date picker exists", () => {
-  OneMacPackagePage.verifyExpirationDateDatePickerFilterExists();
-});
-Then("click on expiration date date picker filter", () => {
-  OneMacPackagePage.clickOnExpirationDateDatePickerFilter();
 });
 Then("click on Initial Submission Date filter dropdown", () => {
   OneMacPackagePage.clickOnInitialSubmissionDateFilterDropDown();
@@ -1620,15 +1544,6 @@ Then("verify Initial Submission Date date picker filter exists", () => {
 Then("click on Initial Submission Date date picker filter", () => {
   OneMacPackagePage.clickOnInitialSubmissionDateDatePickerFilter();
 });
-Then("click on Formal RAI Received filter dropdown", () => {
-  OneMacPackagePage.clickOnInitialSubmissionDateFilterDropDown();
-});
-Then("verify Formal RAI Received date picker filter exists", () => {
-  OneMacPackagePage.verifyFormalRAIReceivedDatePickerFilterExists();
-});
-Then("verify Formal RAI Received date picker filter does not exist", () => {
-  OneMacPackagePage.verifyFormalRAIReceivedDatePickerFilterDoesNotExist();
-});
 Then("click on Formal RAI Received date picker filter", () => {
   OneMacPackagePage.clickOnFormalRAIReceivedDatePickerFilter();
 });
@@ -1638,34 +1553,13 @@ Then("click on this quarter date picker button", () => {
 Then("click on quarter to date date picker button", () => {
   OneMacPackagePage.clickOnQuarterToDateDatePickerBtn();
 });
-Then("click on OK date picker button", () => {
-  OneMacPackagePage.clickOnOkDatePickerBtn();
-});
-Then("click on today date picker button", () => {
-  OneMacPackagePage.clickOntodayPickerBtn();
-});
 Then("click on reset button", () => {
   OneMacPackagePage.clickOnResetButton();
 });
 Then("verify package row one exists", () => {
   OneMacPackagePage.verifyPackageRowOneExists();
 });
-Then("verify 90th day column one is not na", () => {
-  if (OneMacPackagePage.checkIfPackageListResultsExist()) {
-    OneMacPackagePage.verify90thDayRowOneIsNotNA();
-  }
-});
-Then("verify 90th day column one is not Pending", () => {
-  if (OneMacPackagePage.checkIfPackageListResultsExist()) {
-    OneMacPackagePage.verify90thDayRowOneIsNotPending();
-  }
-});
 Then("verify Initial Submission Date column one date is this quarter", () => {
-  if (OneMacPackagePage.checkIfPackageListResultsExist()) {
-    OneMacPackagePage.verifypackageRowOneInitialSubmissionDateIsThisQuarter();
-  }
-});
-Then("verify Formal RAI Received column one date is this quarter", () => {
   if (OneMacPackagePage.checkIfPackageListResultsExist()) {
     OneMacPackagePage.verifypackageRowOneInitialSubmissionDateIsThisQuarter();
   }
@@ -1688,12 +1582,6 @@ Then("click on Formal RAI Received dropdown filter", () => {
 Then("verify state filter select exists", () => {
   OneMacPackagePage.verifyStateFilterSelectExists();
 });
-Then("click on state filter select", () => {
-  OneMacPackagePage.clickStateFilterSelect();
-});
-Then("verify no states are selected", () => {
-  OneMacPackagePage.verifyStateFilterSelectIsEmpty();
-});
 Then("set value on state filter select to {string}", (state) => {
   OneMacPackagePage.typeStateToSelect(state + "{enter}");
 });
@@ -1715,9 +1603,6 @@ Then("click on the Waivers tab", () => {
 Then("verify the SPAs tab exists", () => {
   OneMacPackagePage.verifySPAsTabExists();
 });
-Then("click on SPAs tab", () => {
-  OneMacPackagePage.clickOnSPAsTab();
-});
 Then("verify SPA ID column exists", () => {
   OneMacPackagePage.verifySPAIDColumnExists();
 });
@@ -1731,10 +1616,6 @@ Then("verify the SPAs tab is selected", () => {
   //if it's disabled then it is selected.
   OneMacPackagePage.verifySPAsTabIsDisabled();
 });
-Then("verify the SPAs tab is clickable", () => {
-  //if it's disabled then it is selected.
-  OneMacPackagePage.verifySPAsTabIsClickable();
-});
 Then("verify the Waivers tab is selected", () => {
   //if it's disabled then it is selected.
   OneMacPackagePage.verifyWaiversTabIsDisabled();
@@ -1744,10 +1625,6 @@ Then("verify the Waivers tab is clickable", () => {
 });
 Then("refresh the page", () => {
   cy.reload();
-});
-
-Then("verify that Clock Stopped checkbox exists", () => {
-  OneMacPackagePage.verifyNinetiethDayClockStoppedCheckboxExists();
 });
 Then("check all of the status checkboxes", () => {
   OneMacPackagePage.checkAllStatusFilterCheckboxes();
@@ -1782,17 +1659,8 @@ Then("click the Pending - Approval checkbox", () => {
 Then("verify the Pending - Approval status checkbox exists", () => {
   OneMacPackagePage.verifyPendingApprovalCheckboxExists();
 });
-Then(
-  "verify that the value of the column for the 90th day is Clock Stopped",
-  () => {
-    OneMacPackagePage.verify90thDayRowOneIsClockStopped();
-  }
-);
 Then("click Approved checkbox", () => {
   OneMacPackagePage.clickApprovedCheckbox();
-});
-Then("verify that the value of the column for the 90th day is NA", () => {
-  OneMacPackagePage.verify90thDayRowOneIsNA();
 });
 Then("click Disapproved checkbox", () => {
   OneMacPackagePage.clickDisapprovedCheckbox();
@@ -1805,9 +1673,6 @@ Then("click the Waiver Number link in the first row", () => {
 });
 Then("click the Package Withdrawn checkbox", () => {
   OneMacPackagePage.clickWithdrawnCheckBoxExists();
-});
-Then("verify that the value of the column for the 90th day is Pending", () => {
-  OneMacPackagePage.verify90thDayRowOneIsPending();
 });
 Then("click Unsubmitted checkbox", () => {
   OneMacPackagePage.clickUnsubmittedCheckbox();
@@ -1826,9 +1691,6 @@ Then("click Requested checkbox", () => {
 });
 Then("click the Pending checkbox", () => {
   OneMacPackagePage.clickPendingCheckbox();
-});
-Then("verify the type in row one is some kind of 1915 Waiver", () => {
-  OneMacPackagePage.verifypackageRowOneTypeContains1915Waiver();
 });
 Then("verify the type in row one is Initial Waiver", () => {
   OneMacPackagePage.verifypackageRowOneTypeHasTextInitialWaiver();
@@ -1869,9 +1731,6 @@ Then("verify OneMAC IDM Guide link exists", () => {
 Then("verify OneMAC State User Guide link exists", () => {
   OneMacFAQPage.verifyStateSubmitterGuideLinkExists();
 });
-Then("verify OneMAC State Administrator Guide link exists", () => {
-  OneMacFAQPage.verifyStateAdminGuideLinkExists();
-});
 Then("verify OneMAC CMS User Guide link exists", () => {
   OneMacFAQPage.verifyCmsUserGuideLinkExists();
 });
@@ -1884,25 +1743,9 @@ Then("verify OneMAC IDM Guide is valid", () => {
 Then("verify OneMAC State User Guide is valid", () => {
   OneMacFAQPage.verifyStateSubmitterGuideLinkIsValid();
 });
-Then("verify OneMAC State Administrator Guide is valid", () => {
-  OneMacFAQPage.verifyStateAdminGuideLinkIsValid();
-});
 Then("verify OneMAC CMS User Guide is valid", () => {
   OneMacFAQPage.verifyCmsUserGuideLinkIsValid();
 });
-Then("click on Respond to Medicaid SPA RAI", () => {
-  OneMacSubmissionTypePage.clickRespondToMedicaidSPARAI();
-});
-Then("click on Respond to CHIP SPA RAI", () => {
-  OneMacSubmissionTypePage.clickRespondToCHIPSPARAI();
-});
-Then("click on Respond to Waiver RAI", () => {
-  OneMacSubmissionTypePage.clickRespondToWaiverRAI();
-});
-Then("verify ID field is empty and not disabled", () => {
-  medicaidSPARAIResponsePage.verifySPAIDFieldIsEmptyThenNotDisabled();
-});
-
 Then("search for {string}", (part) => {
   OneMacPackagePage.searchFor(part);
   cy.wait(1000);
@@ -1960,11 +1803,9 @@ Then("verify the submit button is enabled", () => {
 Then("verify there is no error message", () => {
   OneMacRequestARoleChangePage.verifyErrorMsgDoesNotExist();
 });
-
 Then("click on cancel", () => {
   OneMacRequestARoleChangePage.clickCancelBtn();
 });
-
 Then("verify the cancel button is clickable", () => {
   OneMacRequestARoleChangePage.verifyCancelBtnIsEnabled();
 });
@@ -2011,12 +1852,6 @@ Then(
   "verify withdraw package button is visible for package in package dashboard",
   () => {
     OneMacPackagePage.verifyWithdrawPackageBtnExists();
-  }
-);
-Then(
-  "verify withdraw package button is not visible for package in package dashboard",
-  () => {
-    OneMacPackagePage.verifyWithdrawPackageBtnDoesNotExist();
   }
 );
 Then("click withdraw package button", () => {
@@ -2100,12 +1935,7 @@ Then("verify the details section exists", () => {
 Then("verify the package details title contains {string}", (string) => {
   OneMacPackageDetailsPage.verifyTitleContains(string);
 });
-Then("verify there is a SPA ID header in the details section", () => {
-  OneMacPackageDetailsPage.verifyCHIPSPAIDHeaderExists();
-});
-Then("verify an ID exists for the SPA ID", () => {
-  OneMacPackageDetailsPage.verifyIDExists();
-});
+
 Then("verify there is a Type header in the details section", () => {
   OneMacPackageDetailsPage.verifyTypeHeaderExists();
 });
