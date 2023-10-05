@@ -6,14 +6,14 @@ import { systemAdminInitialAuthState } from "../../libs/testDataAppContext";
 
 import { ONEMAC_ROUTES } from "cmscommonlib";
 import { AppContext } from "../../libs/contextLib";
-import EnableRaiWithdrawForm, {
-  enableRaiWithdrawFormInfo,
-} from "./EnableRaiWithdrawForm";
+import DisableRaiWithdrawForm, {
+  disableRaiWithdrawFormInfo,
+} from "./DisableRaiWithdrawForm";
 
 window.HTMLElement.prototype.scrollIntoView = jest.fn();
 window.scrollTo = jest.fn();
 
-describe("Enable Rai Withdraw Form", () => {
+describe("Disable Rai Withdraw Form", () => {
   let history;
 
   const componentId = "123";
@@ -26,7 +26,7 @@ describe("Enable Rai Withdraw Form", () => {
     });
   });
 
-  it("updates landingPage in enableRaiWithdrawFormInfo based on the location state", () => {
+  it("updates landingPage in disableRaiWithdrawFormInfo based on the location state", () => {
     render(
       <AppContext.Provider
         value={{
@@ -34,12 +34,12 @@ describe("Enable Rai Withdraw Form", () => {
         }}
       >
         <Router history={history}>
-          <EnableRaiWithdrawForm />
+          <DisableRaiWithdrawForm />
         </Router>
       </AppContext.Provider>
     );
 
     const expectedLandingPage = `${ONEMAC_ROUTES.CHIP_SPA_DETAIL}/${componentId}`;
-    expect(enableRaiWithdrawFormInfo.landingPage).toEqual(expectedLandingPage);
+    expect(disableRaiWithdrawFormInfo.landingPage).toEqual(expectedLandingPage);
   });
 });

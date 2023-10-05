@@ -62,6 +62,7 @@ import WaiverAmendmentBForm from "./page/waiver-amendment/WaiverAmendmentBForm";
 import WithdrawRAIForm from "./page/withdraw-rai/WithdrawRAIForm";
 import { clearTableStateStorageKeys } from "./utils/StorageKeys";
 import EnableRaiWithdrawForm from "./page/enable-rai-withdraw/EnableRaiWithdrawForm";
+import DisableRaiWithdrawForm from "./page/disable-rai-withdraw/DisableRaiWithdrawForm";
 
 type RouteSpec = {
   path: string;
@@ -279,6 +280,10 @@ const ROUTE_LIST: RouteSpec[] = [
     {
       path: ONEMAC_ROUTES.ENABLE_RAI_WITHDRAW,
       component: EnableRaiWithdrawForm,
+    },
+    {
+      path: ONEMAC_ROUTES.DISABLE_RAI_WITHDRAW,
+      component: DisableRaiWithdrawForm,
     },
   ].map(({ path, ...rest }) => ({
     path,

@@ -56,6 +56,18 @@ export const ALERTS_MSG: Record<
     text: "Thank you. The CMS Role Approver will verify your access and credentials.  Please check your email for details on access.",
   },
 
+  RAI_RESPONSE_WITHDRAW_ENABLE_SUCCESS: {
+    type: ALERT_TYPES.SUCCESS,
+    heading: "Formal RAI Response Withdraw action has been enabled.",
+    text: "You have successfully enabled the Formal RAI Response Withdraw action for the State.",
+  },
+
+  RAI_RESPONSE_WITHDRAW_DISABLE_SUCCESS: {
+    type: ALERT_TYPES.SUCCESS,
+    heading: "Formal RAI Response Withdraw action has been disabled.",
+    text: "You have successfully disabled the Formal RAI Response Withdraw action for the State.",
+  },
+
   // Success woth Survey Link
   SUBMISSION_SUCCESS_SURVEY: {
     type: ALERT_TYPES.SUCCESS,
@@ -243,4 +255,8 @@ export const alertCodeAlerts = {
   [RESPONSE_CODE.SESSION_EXPIRED]: ALERTS_MSG.SESSION_EXPIRED,
   [RESPONSE_CODE.PACKAGE_WITHDRAW_SUCCESS]: ALERTS_MSG.WITHDREW_PACKAGE,
   [RESPONSE_CODE.UPLOADS_ERROR]: ALERTS_MSG.UPLOADS_ERROR,
+  [RESPONSE_CODE.RAI_RESPONSE_WITHDRAW_DISABLE_SUCCESS]:
+    ALERTS_MSG.RAI_RESPONSE_WITHDRAW_DISABLE_SUCCESS,
+  [RESPONSE_CODE.RAI_RESPONSE_WITHDRAW_ENABLE_SUCCESS]:
+    ALERTS_MSG.RAI_RESPONSE_WITHDRAW_ENABLE_SUCCESS,
 };

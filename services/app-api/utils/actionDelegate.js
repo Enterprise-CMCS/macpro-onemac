@@ -32,6 +32,9 @@ function getDefaultActions(
           Workflow.PACKAGE_ACTION.WITHDRAW,
           Workflow.PACKAGE_ACTION.WITHDRAW_RAI
         );
+      if (userRole.isCMSUser && formSource === "detail") {
+        actions.push(Workflow.PACKAGE_ACTION.DISABLE_RAI_WITHDRAWAL);
+      }
       break;
   }
   return actions;

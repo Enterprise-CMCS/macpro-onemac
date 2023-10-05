@@ -1,6 +1,6 @@
-export const enableRaiWithdraw = {
-  componentType: "enableraiwithdraw",
-  typeLabel: "Enable Formal RAI Response Withdraw",
+export const disableRaiWithdraw = {
+  componentType: "disableraiwithdraw",
+  typeLabel: "Disable Formal RAI Response Withdraw",
   idLabel: "Package ID",
   idRegex: "(^[A-Z]{2}[.-])",
   idMustExist: true,

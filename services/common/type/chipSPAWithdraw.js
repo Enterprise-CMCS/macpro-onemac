@@ -24,5 +24,4 @@ export const chipSPAWithdraw = {
     "Pending - Approval",
     "RAI Issued",
   ],
-  packageAttributes: ["currentStatus"],
 };
