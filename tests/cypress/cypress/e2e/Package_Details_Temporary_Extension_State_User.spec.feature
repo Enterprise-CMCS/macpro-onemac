@@ -76,5 +76,4 @@ Feature: Waiver Package Details View:  Temporary Extension for a State User
     #     Then verify there is an Initial Submission Date header in the details section
     #     Then verify a date exists for the Initial Submission Date
     #     Then verify the attachments section exists
-    #     Then verify the download all button exists
     #     Then verify the additional information section exists

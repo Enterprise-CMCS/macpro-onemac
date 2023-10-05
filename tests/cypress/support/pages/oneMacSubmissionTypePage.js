@@ -65,12 +65,6 @@ export class oneMacSubmissionTypePage {
   clickStatePlanAmendmentSPA() {
     cy.xpath(statePlanAmendmentSPA).click();
   }
-  verifyNewWaiverPage() {
-    cy.url().should("include", "/newwaiver");
-  }
-  verifyNewSPAPage() {
-    cy.url().should("include", "/newspa");
-  }
   verifyNewInitialWaiverPage() {
     cy.url().should("include", "/initial-waiver");
   }
@@ -98,15 +92,12 @@ export class oneMacSubmissionTypePage {
   clickMedicaidSPA() {
     cy.xpath(cardLink).filter(medicaidSPA).click();
   }
-
   clickChipSPA() {
     cy.xpath(cardLink).filter(chipSPA).click();
   }
-
   clickWaiverActionUnderWaiverAction() {
     cy.xpath(waiverActionWaiverAction).click();
   }
-
   clickRequestTemporaryExtension() {
     cy.xpath(RequestTemporaryExtension).click();
   }
