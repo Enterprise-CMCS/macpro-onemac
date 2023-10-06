@@ -1,5 +1,5 @@
 import { RESPONSE_CODE } from "cmscommonlib";
-import { main } from "./enableRaiWithdraw";
+import { main } from "./disableRaiWithdraw";
 import { validateSubmission } from "./validateSubmission";
 import dynamoDb from "../libs/dynamodb-lib";
 import { getUser } from "../getUser";
@@ -81,7 +81,7 @@ const GSIQueryReturn = {
       clockEndTimestamp: 1697123859496,
       componentId: "MD-22-2200-KG",
       componentType: "medicaidsparai",
-      currentStatus: "Submitted",
+      currentStatus: "RAI Response Withdraw Enabled",
       eventTimestamp: 1673709577000,
       GSI1pk: "OneMAC#submitmedicaidsparai",
       GSI1sk: "MD-22-2200-KG",
@@ -288,6 +288,6 @@ it("returns system error if get fails", async () => {
   const response = await main(testEvent);
   expect(response).toEqual({
     ...expectedResponse,
-    body: JSON.stringify(RESPONSE_CODE.RAI_RESPONSE_WITHDRAW_ENABLE_SUCCESS),
+    body: JSON.stringify(RESPONSE_CODE.RAI_RESPONSE_WITHDRAW_DISABLE_SUCCESS),
   });
 });

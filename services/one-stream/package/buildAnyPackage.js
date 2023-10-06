@@ -1,11 +1,6 @@
 const _ = require("lodash");
 import AWS from "aws-sdk";
 import { DateTime } from "luxon";
-import {
-  formalRAIResponseType,
-  submitAction,
-  withdrawalRequestedAction,
-} from "../lib/default-lib";
 import { dynamoConfig, Workflow } from "cmscommonlib";
 import { ONEMAC_STATUS } from "cmscommonlib/workflow";
 
@@ -92,6 +87,12 @@ export const buildAnyPackage = async (packageId, config) => {
         console.log("ignoring: ", anEvent.sk);
         return;
       }
+      console.log("this event: ", anEvent.GSI1pk);
+      console.log(
+        "currentstatus of package %s currentstatus of event: %s",
+        anEvent.currentStatus,
+        putParams.Item.currentStatus
+      );
 
       // save the old package record for comparison
       if (anEvent.sk === packageSk) {
@@ -112,25 +113,34 @@ export const buildAnyPackage = async (packageId, config) => {
       const timestamp = anEvent?.eventTimestamp
         ? anEvent.eventTimestamp
         : Number(timestring);
+      let eventConfig = {};
 
       if (source === "OneMAC") {
         if (anEvent?.currentStatus === Workflow.ONEMAC_STATUS.INACTIVATED)
           return;
         showPackageOnDashboard = true;
 
-        const eventLabel = anEvent.GSI1pk.replace("OneMAC#", "");
+        // the normalized eventLabel is the GSI1pk without the source and componentType
+        // but waiver rai should only remove waiver part
+        const eventLabel = anEvent.GSI1pk.replace("OneMAC#", "")
+          .replace(config.componentType, "")
+          .replace("waiver", "");
+        eventConfig = config.eventMap[eventLabel];
+        console.log("EventConfig: ", eventConfig);
+
         // because if we change what status the withdrawal request event stores
         // we'd have to do a migration... but might want to later
         if (
-          config.eventActionMap[eventLabel] === withdrawalRequestedAction &&
+          eventLabel === "submitwithdraw" &&
           anEvent.currentStatus === ONEMAC_STATUS.SUBMITTED
         )
           anEvent.currentStatus = ONEMAC_STATUS.WITHDRAWAL_REQUESTED;
 
-        config.eventTypeMap[eventLabel] &&
+        eventConfig &&
+          eventConfig.type &&
           putParams.Item.reverseChrono.push({
-            type: config.eventTypeMap[eventLabel],
-            action: config.eventActionMap[eventLabel] || "Submitted",
+            type: eventConfig.type,
+            action: eventConfig?.action || "Submitted",
             currentStatus: anEvent.currentStatus,
             timestamp: anEvent.submissionTimestamp,
             eventTimestamp: anEvent.eventTimestamp,
@@ -141,13 +151,18 @@ export const buildAnyPackage = async (packageId, config) => {
         // if the RAI response is the newest so far, add the latest RAI response timestamp
         // if the status is "Submitted" and delete the attribute if not
         if (
-          config.eventTypeMap[eventLabel] === formalRAIResponseType &&
+          eventLabel === "submitrai" &&
           (!putParams.Item?.latestRaiResponseTimestamp ||
-            putParams.Item.latestRaiResponseTimestamp < anEvent.eventTimestamp)
+            putParams.Item.latestRaiResponseTimestamp <
+              anEvent.submissionTimestamp)
         )
-          if (config.eventActionMap[eventLabel] === submitAction)
-            putParams.Item.latestRaiResponseTimestamp = anEvent.eventTimestamp;
+          if (anEvent.currentStatus === "Submitted")
+            putParams.Item.latestRaiResponseTimestamp =
+              anEvent.submissionTimestamp;
           else delete putParams.Item.latestRaiResponseTimestamp;
+
+        if (eventLabel === "submitrairesponsewithdraw")
+          delete putParams.Item.latestRaiResponseTimestamp;
 
         if (anEvent?.componentType)
           if (anEvent?.adminChanges && _.isArray(anEvent.adminChanges))
@@ -250,8 +265,9 @@ export const buildAnyPackage = async (packageId, config) => {
         }
       }
 
-      config.packageAttributes &&
-        config.packageAttributes.forEach((attributeName) => {
+      eventConfig &&
+        eventConfig.packageAttributes &&
+        eventConfig.packageAttributes.forEach((attributeName) => {
           if (anEvent[attributeName]) {
             if (attributeName === "parentId") {
               // having a parent adds the GSI2pk index
@@ -259,21 +275,33 @@ export const buildAnyPackage = async (packageId, config) => {
               putParams.Item.GSI2sk = anEvent.componentType;
             }
 
+            // ignore the currentStatus for an RAI Response if the timestamp is newer
+            // than the submission timestamp, yet the status is SUBMITTED
+            // (this indicates a disable of the enable)
+            if (
+              attributeName === "currentStatus" &&
+              timestamp > anEvent.submissionTimestamp &&
+              anEvent.currentStatus === ONEMAC_STATUS.SUBMITTED
+            ) {
+              console.log(
+                "found a disabled RAI Response when currentStatus is: ",
+                putParams.Item.currentStatus
+              );
+              return;
+            }
+
             // update the attribute if this is the latest event
+            // if the latest event does not have a value but the currentPackage does
+            // use the currentPackage value
             if (timestamp === lmTimestamp)
-              putParams.Item[attributeName] = anEvent[attributeName];
+              if (anEvent[attributeName])
+                putParams.Item[attributeName] = anEvent[attributeName];
+              else if (currentPackage[attributeName]) {
+                putParams.Item[attributeName] = currentPackage[attributeName];
+              }
           }
         });
     });
-
-    //if any attribute was not yet populated from current event; then populate from currentPackage
-    if (currentPackage) {
-      config.packageAttributes.forEach((attributeName) => {
-        if (!putParams.Item[attributeName] && currentPackage[attributeName]) {
-          putParams.Item[attributeName] = currentPackage[attributeName];
-        }
-      });
-    }
 
     // use GSI1 to show package on OneMAC dashboard
     if (showPackageOnDashboard) {
@@ -281,7 +309,18 @@ export const buildAnyPackage = async (packageId, config) => {
       putParams.Item.GSI1sk = packageId;
     }
 
-    putParams.Item.reverseChrono.sort((a, b) => b.timestamp - a.timestamp);
+    if (putParams.Item.currentStatus === ONEMAC_STATUS.RAI_ISSUED)
+      delete putParams.Item.latestRaiResponseTimestamp;
+
+    putParams.Item?.reverseChrono.sort((a, b) => b.timestamp - a.timestamp);
+
+    // if the most recent OneMAC event is an enabled RAI Response, lock
+    // the status to "Withdraw RAI Enabled"
+    if (
+      putParams.Item?.reverseChrono[0].currentStatus ===
+      ONEMAC_STATUS.WITHDRAW_RAI_ENABLED
+    )
+      putParams.Item.currentStatus = ONEMAC_STATUS.WITHDRAW_RAI_ENABLED;
 
     adminChanges.sort((a, b) => b.changeTimestamp - a.changeTimestamp);
     // remove duplicate messages for adminChanges that affect more than one event

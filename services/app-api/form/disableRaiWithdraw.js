@@ -1,5 +1,5 @@
 import {
-  enableRaiWithdraw,
+  disableRaiWithdraw,
   RESPONSE_CODE,
   Workflow,
   getUserRoleObj,
@@ -12,11 +12,11 @@ import { validateSubmission } from "./validateSubmission";
 import { getUser } from "../getUser";
 import { ONEMAC_TYPE } from "cmscommonlib/workflow";
 
-export const enableRaiWithdrawFormConfig = {
+export const disableRaiWithdrawFormConfig = {
   ...defaultFormConfig,
-  successResponseCode: RESPONSE_CODE.RAI_RESPONSE_WITHDRAW_ENABLE_SUCCESS,
-  ...enableRaiWithdraw,
-  newStatus: Workflow.ONEMAC_STATUS.WITHDRAW_RAI_ENABLED,
+  successResponseCode: RESPONSE_CODE.RAI_RESPONSE_WITHDRAW_DISABLE_SUCCESS,
+  ...disableRaiWithdraw,
+  newStatus: Workflow.ONEMAC_STATUS.SUBMITTED,
   hasAuthorizationToSubmit: (userRole) => {
     return userRole.isCMSUser;
   },
@@ -34,7 +34,7 @@ export const enableRaiWithdrawFormConfig = {
 };
 
 async function validate(data) {
-  if (validateSubmission(data, enableRaiWithdrawFormConfig)) {
+  if (validateSubmission(data, disableRaiWithdrawFormConfig)) {
     throw RESPONSE_CODE.VALIDATION_ERROR;
   }
 
@@ -44,7 +44,7 @@ async function validate(data) {
     throw RESPONSE_CODE.USER_NOT_FOUND;
   }
   if (
-    enableRaiWithdrawFormConfig.hasAuthorizationToSubmit(userRoleObj) !== true
+    disableRaiWithdrawFormConfig.hasAuthorizationToSubmit(userRoleObj) !== true
   ) {
     throw RESPONSE_CODE.USER_NOT_AUTHORIZED;
   }
@@ -101,7 +101,8 @@ async function waitForStreamProcessing(componentId, eventTimestamp) {
     do {
       await new Promise((resolve) => setTimeout(resolve, 1000));
       const chkResponse = await dynamoDb.get(checkParams);
-      packageUpdated = chkResponse?.Item?.lastEventTimestamp >= eventTimestamp;
+      packageUpdated =
+        chkResponse?.Item?.adminChanges[0]?.changeTimestamp >= eventTimestamp;
     } while (!packageUpdated);
   } catch (e) {
     console.log("%s check error:", componentId, e);
@@ -139,22 +140,21 @@ export const main = handler(async (event) => {
     if (records.length > 0) {
       // the first record is the most recent as they were sorted by submissionTimestamp
       const mostRecentRecord = records[0];
-      mostRecentRecord.currentStatus =
-        Workflow.ONEMAC_STATUS.WITHDRAW_RAI_ENABLED;
-      mostRecentRecord.eventTimestamp = Date.now();
+      mostRecentRecord.currentStatus = Workflow.ONEMAC_STATUS.SUBMITTED;
+      // set the eventTimestamp back to submissionTimestamp so that the
+      // status is set correctly
+      mostRecentRecord.eventTimestamp = data.submissionTimestamp;
+      const checkTimestamp = Date.now();
       const adminChange = {
-        changeTimestamp: mostRecentRecord.eventTimestamp,
-        changeMade: `${data.submitterName} has enabled State package action to withdraw Formal RAI Response`,
+        changeTimestamp: checkTimestamp,
+        changeMade: `${data.submitterName} has disabled State package action to withdraw Formal RAI Response`,
         changeReason: data.additionalInformation,
       };
       mostRecentRecord.adminChanges = mostRecentRecord.adminChanges
         ? [...mostRecentRecord.adminChanges, adminChange]
         : [adminChange];
       await updateRecord(mostRecentRecord);
-      await waitForStreamProcessing(
-        data.componentId,
-        mostRecentRecord.eventTimestamp
-      );
+      await waitForStreamProcessing(data.componentId, checkTimestamp);
     } else {
       throw new Error(
         "No RAI found when attempting to enable rai withdraw for ",
@@ -165,6 +165,6 @@ export const main = handler(async (event) => {
     console.error("Error enabling withraw rai:", error);
     return RESPONSE_CODE.SYSTEM_ERROR;
   }
-  console.log("returning success response code from enableRaiWithdraw");
-  return enableRaiWithdrawFormConfig.successResponseCode;
+  console.log("returning success response code from disableRaiWithdraw");
+  return disableRaiWithdrawFormConfig.successResponseCode;
 });

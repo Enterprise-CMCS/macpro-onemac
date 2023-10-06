@@ -29,11 +29,4 @@ export const chipSPA = {
     "submitterName",
     "submitterEmail",
   ],
-  packageAttributes: [
-    "submissionTimestamp",
-    "proposedEffectiveDate",
-    "currentStatus",
-    "submitterName",
-    "submitterEmail",
-  ],
 };
