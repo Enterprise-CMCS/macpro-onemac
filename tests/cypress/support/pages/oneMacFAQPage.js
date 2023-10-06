@@ -277,7 +277,7 @@ export class oneMacFAQPage {
   verifyActualEmailExists() {
     cy.xpath(actualEmail).should("be.visible");
   }
-  VerifyPageTitleIsFAQ(s) {
+  VerifyPageTitleIs(s) {
     cy.xpath(pageHeader).should("be.visible").contains(s);
   }
   verifyOnboardingMaterialsBtnExists() {

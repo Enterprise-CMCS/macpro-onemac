@@ -449,10 +449,6 @@ Then("Add file for Waiver RAI Response", () => {
   medicaidSPARAIResponsePage.uploadRAIResponseAddFile();
 });
 
-Then("Click on Waiver Action under Waiver Type", () => {
-  OneMacSubmissionTypePage.clickWaiverActionUnderWaiverAction();
-});
-
 Then("verify error message is not present on New Waiver Page", () => {
   OneMacSubmitNewWaiverActionPage.verifyErrorMessageIsNotDisplayed();
 });
@@ -962,14 +958,17 @@ Then("verify Contact Email label Exists", () => {
 Then("verify actual Contact Email address Exists", () => {
   OneMacFAQPage.verifyActualEmailExists();
 });
-Then("Verify page title is {string}", () => {
+Then("Verify page title is {string}", (s) => {
   OneMacFAQPage.VerifyPageTitleIs(s);
 });
 Then("Click on What is my SPA ID link", () => {
   OneMacSubmitNewMedicaidSpaPage.clickWhatIsMySPAIDLink();
 });
-Then("Click on What is my Waiver ID Link", () => {
-  OneMacSubmitNewWaiverActionPage.clickWhatIsMyWaiverIdLink();
+Then("click on What is my Initial Waiver Number", () => {
+  OneMacSubmitNewWaiverActionPage.clickWhatIsMyInitialWaiverNumberLink();
+});
+Then("click on What is my 1915b Waiver Renewal Number", () => {
+  OneMacSubmitNewWaiverActionPage.clickWhatIsMyWaiverRenewalNumberLink();
 });
 
 Then("Home tab exists", () => {
@@ -1440,6 +1439,9 @@ Then("click on Formal RAI Received dropdown filter", () => {
 });
 Then("verify state filter select exists", () => {
   OneMacPackagePage.verifyStateFilterSelectExists();
+});
+Then("verify no states are selected", () => {
+  OneMacPackagePage.verifyStateFilterSelectIsEmpty();
 });
 Then("set value on state filter select to {string}", (state) => {
   OneMacPackagePage.typeStateToSelect(state + "{enter}");

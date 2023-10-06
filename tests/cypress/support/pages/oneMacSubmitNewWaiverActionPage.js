@@ -15,7 +15,10 @@ const fileUpload2 = "#uploader-input-1";
 const commentsInputBox = "#field_2";
 const additionalInfoTextarea = "#additional-information";
 const existingWaiverNumber = "MD-22005.R00.00";
-const whatIsMyWaiverIDLink = "//a[@href='/FAQ#waiver-id-format']";
+const whatIsMyInitialWaiverNumberLink =
+  "//a[@href='/FAQ#initial-waiver-id-format']";
+const whatIsMyWaiverRenewalNumberLink =
+  "//a[@href='/FAQ#waiver-renewal-id-format']";
 const proposedEffectiveDate = "#proposed-effective-date";
 const parentIDInputBox = "#parent-componentId";
 const parentErrMsgForWaiverNumber = "#parent-componentIdStatusMsg0";
@@ -126,8 +129,15 @@ export class oneMacSubmitNewWaiverActionPage {
     cy.get(additionalInfoTextarea).type(s);
   }
 
-  clickWhatIsMyWaiverIdLink() {
-    cy.xpath(whatIsMyWaiverIDLink)
+  clickWhatIsMyInitialWaiverNumberLink() {
+    cy.xpath(whatIsMyInitialWaiverNumberLink)
+      .invoke("attr", "href")
+      .then((href) => {
+        cy.visit(href);
+      });
+  }
+  clickWhatIsMyWaiverRenewalNumberLink() {
+    cy.xpath(whatIsMyWaiverRenewalNumberLink)
       .invoke("attr", "href")
       .then((href) => {
         cy.visit(href);

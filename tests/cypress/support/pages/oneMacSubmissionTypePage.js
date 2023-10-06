@@ -22,8 +22,6 @@ const chipEligibility = ':contains("CHIP Eligibility")';
 //Element is Xpath use cy.xpath instead of cy.get
 const allOtherChip = ':contains("All Other CHIP SPA Submissions")';
 //Element is Xpath use cy.xpath instead of cy.get
-const waiverActionWaiverAction =
-  '//p[contains(text(),"Submit 1915(b) waivers, amendments, and renewals")]';
 const ffsSelectiveAuthority =
   "//div[contains(text(),'1915(b)(4) FFS Selective Contracting Waivers')]";
 const comprehensiveCapitatedWaiverAuthority =
