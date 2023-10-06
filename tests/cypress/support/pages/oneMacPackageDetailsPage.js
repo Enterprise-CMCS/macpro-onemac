@@ -134,12 +134,6 @@ export class oneMacPackageDetailsPage {
   verifyTitleContains(s) {
     cy.get("h2").first().contains(s);
   }
-  verifyCHIPSPAIDHeaderExists() {
-    cy.xpath(CHIPSPAIDHeader).should("be.visible");
-  }
-  verifyIDExists() {
-    cy.xpath(CHIPSPAIDHeader).next().should("be.visible");
-  }
   verifyTypeHeaderExists() {
     cy.xpath(typeHeader).should("be.visible");
   }
