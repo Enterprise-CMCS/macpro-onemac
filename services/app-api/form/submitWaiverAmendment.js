@@ -7,7 +7,11 @@ import {
 } from "cmscommonlib";
 import handler from "../libs/handler-lib";
 import { submitAny } from "./submitAny";
-import { defaultFormConfig, defaultWaiverSchema } from "./defaultFormConfig";
+import {
+  defaultFormConfig,
+  defaultWaiverSchema,
+  waiverActionText,
+} from "./defaultFormConfig";
 
 const waiverAmendmentFormConfig = {
   ...defaultFormConfig,
@@ -15,6 +19,7 @@ const waiverAmendmentFormConfig = {
     ...defaultWaiverSchema,
     parentId: Joi.string().required(),
   },
+  closingRemarks: waiverActionText,
 };
 
 export const waiverAmendmentB4FormConifg = {

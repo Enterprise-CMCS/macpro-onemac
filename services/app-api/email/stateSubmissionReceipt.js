@@ -18,20 +18,10 @@ export const stateSubmissionReceipt = (data, config) => {
     CcAddresses: [],
     Subject: `Your ${config.typeLabel} ${data.componentId} has been submitted to CMS`,
     HTML: `
-    <p>This response confirms the receipt of your ${config.typeLabel}:</p>
+    <p>	This is confirmation that you submitted a ${
+      config.typeLabel
+    } to CMS for review:</p>
     ${formatPackageDetails(data, config)}
-    <p>
-        This response confirms the receipt of your Waiver request or your response to a Waiver Request for Additional Information (RAI)). 
-        You can expect a formal response to your submittal to be issued within 90 days, before ${
-          data.ninetyDayDate
-        }.
-    </p>
-    <p>
-        This mailbox is for the submittal of Section 1915(b) and 1915(c) non-web-based Waivers, responses to Requests for Additional 
-        Information (RAI) on Waivers, and extension requests on Waivers only.  Any other correspondence will be disregarded. 
-    </p>
-    <p>If you have any questions, please contact <a href="mailto:spa@cms.hhs.gov">spa@cms.hhs.gov</a> or your state lead.</p>
-    <p>Thank you!</p>
-        `,
+    ${config.closingRemarks.replace("%NINETYDAYS%", data.ninetyDayDate)}`,
   };
 };
