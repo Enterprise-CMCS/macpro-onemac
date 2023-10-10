@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "main": "handler.js",
   "scripts": {
-    "test": "serverless-bundle test --passWithNoTests"
+    "test": "npx jest"
   },
   "author": "",
   "license": "CC0-1.0",
@@ -13,9 +13,12 @@
     "url": "https://github.com/AnomalyInnovations/serverless-nodejs-starter.git"
   },
   "devDependencies": {
+    "@types/jest": "^29.5.5",
     "aws-sdk": "^2.752.0",
     "aws-sdk-client-mock": "^0.5.6",
     "esbuild": "^0.19.4",
+    "esbuild-jest": "^0.5.0",
+    "jest": "^29.7.0",
     "serverless-associate-waf": "^1.2.1",
     "serverless-dotenv-plugin": "^3.12.2",
     "serverless-esbuild": "^1.48.4",
@@ -50,6 +53,9 @@
     "moduleNameMapper": {
       "react-spring/renderprops": "<rootDir>/node_modules/react-spring/renderprops.cjs",
       "react-spring": "<rootDir>/node_modules/react-spring/web.cjs"
+    },
+    "transform": {
+      "^.+\\.(j|t)sx?$": "esbuild-jest"
     }
   }
 }
