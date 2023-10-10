@@ -1,13 +1,9 @@
 const medicaidTopRaiRespCaret = "#medicaidsparai0_caret-button";
 const medicaidTopRaiRespDownloadBtn = "#dl_medicaidsparai0";
-const medicaidTopRaiRespCard = "#medicaidsparai0_caret";
-const topRaiRespAddInfo = "#addl-info-rai-0";
 const chipTopRaiRespCaret = "#chipsparai0_caret-button";
 const chipTopRaiRespDownloadBtn = "#dl_chipsparai0";
-const chipTopRaiRespCard = "#chipsparai0_caret";
 const appKTopRaiRespCaret = "#waiverappkrai0_caret-button";
 const appKTopRaiRespDownloadBtn = "#dl_waiverappkrai0";
-const appKTopRaiRespCard = "#waiverappkrai0_caret";
 
 //Elements are Xpath use cy.xpath instead of cy.xpath
 const detailsPage = "//div[@class='form-container']";
@@ -36,17 +32,12 @@ const parentWaiverNumberHeader =
 const stateHeader = "//h3[text()='State']";
 const initialSubmittedDateHeader = "//h3[text()='Initial Submission Date']";
 const raiResponsesHeader = "//section//h2[text()='Formal RAI Responses']";
-const packageOverviewNavBtn = "//button[text()='Package Overview']";
-const packageDetailsNavBtn =
-  "//li[contains(@class, 'nav')]//a[text()='Package Details']";
 const proposedEffectiveDateHeader =
   "//h3[contains(text(),'Proposed Effective Date')]";
 const finalDispositionDateHeader =
   "//h3[contains(text(),'Final Disposition Date')]";
 const approvedEffectiveDateHeader =
   "//h3[contains(text(),'Approved Effective Date')]";
-const actualEffectiveDateHeader =
-  "//h3[contains(text(),'Actual Effective Date')]";
 const formalRAIReceivedDateHeader =
   "//h3[contains(text(),'Formal RAI Received')]";
 const adminPkgChangeSection = "//h2[text()='Administrative Package Changes']";
@@ -54,34 +45,19 @@ const additionalInfoSection =
   "//section[contains(@id, 'addl-info-chrono')]//h2[text()='Additional Information']";
 const waiverAuthorityHeader = "//h3[text()='Waiver Authority']";
 const attachmentsSection = "//h2[text()='Supporting Documentation']";
-const downloadAllBtn = "//button[contains(text(),'Download All')]";
 const amendmentTitleHeader = "//h3[text()='Amendment Title']";
 const amendmentNumberHeader = "//h3[text()='Amendment Number']";
-const successMessage = "#alert-bar";
-const withdrawConfirmationBtn = "//button[text()='Withdraw Package?']";
 const withdrawBtn = "//a[text()='Withdraw Package']";
-const amendmentHeaders = "//h2[text()='Waiver Amendment']";
-const tempExtensionsNavBtn =
-  "//li[contains(@class, 'nav')]//a[text()='Temporary Extension']";
-const tempExtensionID = "//td[contains(@id,'componentId-')]";
-const withdrawBtnOnTempExt = "//li[text()='Withdraw Package']";
-const packageAction = "//td[contains(@id,'packageActions-')]";
 const subjectHeader = "//h3[contains(text(),'Subject')]";
 const descriptionHeader = "//h3[contains(text(),'Description')]";
 const cPOCNameHeader = "//h3[contains(text(),'CPOC')]";
 const reviewTeamSRTHeader = "//h3[contains(text(),'Review Team (SRT)')]";
-const formalRAIResponseCaretBtn =
-  '//h2//button[contains(@id,"Formal RAI Response")]';
-const formalRAIResponseDownloadAllBtn =
-  '//button[contains(@id,"dl_Formal RAI Response")]';
 const initialSubmissionCaretBtn =
   '//h2//button[contains(@id,"Initial Package")]';
 const initialSubmissionDownloadAllBtn =
   '//button[contains(@id,"dl_Initial Package")]';
 const withdrawalRequestedCaretBtn =
   '//h2//button[contains(@id,"Package0_caret-button")]';
-const withdrawalRequestedDownloadAllBtn =
-  '//button[contains(@id,"dl_Package-0")]';
 
 export class oneMacPackageDetailsPage {
   verifyPackageDetailsPageIsVisible() {
@@ -158,12 +134,6 @@ export class oneMacPackageDetailsPage {
   verifyTitleContains(s) {
     cy.get("h2").first().contains(s);
   }
-  verifyCHIPSPAIDHeaderExists() {
-    cy.xpath(CHIPSPAIDHeader).should("be.visible");
-  }
-  verifyIDExists() {
-    cy.xpath(CHIPSPAIDHeader).next().should("be.visible");
-  }
   verifyTypeHeaderExists() {
     cy.xpath(typeHeader).should("be.visible");
   }
@@ -187,9 +157,6 @@ export class oneMacPackageDetailsPage {
   }
   verifyTypeContainsMedicaidSPA() {
     cy.xpath(typeHeader).next().contains("Medicaid SPA");
-  }
-  verifyTypeContainsCHIPSPA() {
-    cy.xpath(typeHeader).next().contains("CHIP SPA");
   }
   verifyParentWaiverNumberHeaderExists() {
     cy.xpath(parentWaiverNumberHeader).should("be.visible");
@@ -230,24 +197,6 @@ export class oneMacPackageDetailsPage {
     cy.get(appKTopRaiRespCaret).scrollIntoView().should("be.visible");
     cy.get(appKTopRaiRespCaret).should("be.enabled");
   }
-  verifyCHIPTopRaiRespCaretTitle() {
-    cy.get(chipTopRaiRespCaret).scrollIntoView().contains("Submitted on");
-  }
-  verifyMedicaidTopRaiRespCaretTitle() {
-    cy.get(medicaidTopRaiRespCaret).scrollIntoView().contains("Submitted on");
-  }
-  verifyAppKTopRaiRespCaretTitle() {
-    cy.get(appKTopRaiRespCaret).scrollIntoView().contains("Submitted on");
-  }
-  verifyCHIPTopRaiRespCardExists() {
-    cy.get(chipTopRaiRespCard).scrollIntoView().should("be.visible");
-  }
-  verifyMedicaidTopRaiRespCardExists() {
-    cy.get(medicaidTopRaiRespCard).scrollIntoView().should("be.visible");
-  }
-  verifyAppKTopRaiRespCardExists() {
-    cy.get(appKTopRaiRespCard).scrollIntoView().should("be.visible");
-  }
   verifyCHIPTopRaiRespDownloadBtnExistsAndEnabled() {
     cy.get(chipTopRaiRespDownloadBtn).scrollIntoView().should("be.visible");
     cy.get(chipTopRaiRespDownloadBtn).should("be.enabled");
@@ -260,37 +209,8 @@ export class oneMacPackageDetailsPage {
     cy.get(appKTopRaiRespDownloadBtn).scrollIntoView().should("be.visible");
     cy.get(appKTopRaiRespDownloadBtn).should("be.enabled");
   }
-
-  verifyTopRaiRespAddInfoDoesNotExist() {
-    cy.get(topRaiRespAddInfo).should("not.exist");
-  }
-  verifyTopRaiRespAddInfoExists() {
-    cy.get(topRaiRespAddInfo).scrollIntoView().should("be.visible");
-  }
-  verifyPackageOverviewNavBtnExists() {
-    cy.xpath(packageOverviewNavBtn).should("be.visible");
-  }
-  verifyPackageOverviewNavBtnIsEnabled() {
-    cy.xpath(packageOverviewNavBtn).should("be.enabled");
-  }
-  verifyPackageOverviewNavBtnIsExpanded() {
-    cy.xpath(packageOverviewNavBtn).should(
-      "have.attr",
-      "aria-expanded",
-      "true"
-    );
-  }
-  verifyPackageDetailsNavBtnExists() {
-    cy.xpath(packageDetailsNavBtn).should("be.visible");
-  }
   verifyProposedEffectiveDateHeaderExists() {
     cy.xpath(proposedEffectiveDateHeader).should("be.visible");
-  }
-  verifyproposedEffectiveDateHeaderContainsNA() {
-    cy.xpath(proposedEffectiveDateHeader).next().contains("N/A");
-  }
-  verifyproposedEffectiveDateHeaderContainsPending() {
-    cy.xpath(proposedEffectiveDateHeader).next().contains("Pending");
   }
   verifyproposedEffectiveDateHeaderContainsDate() {
     cy.xpath(proposedEffectiveDateHeader)
@@ -303,46 +223,19 @@ export class oneMacPackageDetailsPage {
   verifyFinalDispositionDateHeaderDoesNotExists() {
     cy.xpath(finalDispositionDateHeader).should("not.exist");
   }
-  verifyFinalDispositionDateHeaderContainsDate() {
-    cy.xpath(finalDispositionDateHeader)
-      .next()
-      .contains(/^[a-zA-Z]{3}.\d{2}.\d{4}||^[a-zA-Z]{3}.\d{1}.\d{4}/);
-  }
   verifyApprovedEffectiveDateHeaderExists() {
     cy.xpath(approvedEffectiveDateHeader).should("be.visible");
   }
   verifyApprovedEffectiveDateHeaderDoesNotExists() {
     cy.xpath(approvedEffectiveDateHeader).should("not.exist");
   }
-  verifyApprovedEffectiveDateHeaderContainsDate() {
-    cy.xpath(approvedEffectiveDateHeader)
-      .next()
-      .contains(/^[a-zA-Z]{3}.\d{2}.\d{4}||^[a-zA-Z]{3}.\d{1}.\d{4}/);
-  }
-  verifyActualEffectiveDateHeaderExists() {
-    cy.xpath(actualEffectiveDateHeader).should("be.visible");
-  }
-  verifyActualEffectiveDateHeaderDoesNotExists() {
-    cy.xpath(actualEffectiveDateHeader).should("not.exist");
-  }
-  verifyActualEffectiveDateHeaderContainsDate() {
-    cy.xpath(actualEffectiveDateHeader)
-      .next()
-      .contains(/^[a-zA-Z]{3}.\d{2}.\d{4}||^[a-zA-Z]{3}.\d{1}.\d{4}/);
-  }
   verifyFormalRAIReceivedDateHeaderExists() {
     cy.xpath(formalRAIReceivedDateHeader).should("be.visible");
-  }
-  verifyFormalRAIReceivedDateHeaderDoesNotExists() {
-    cy.xpath(formalRAIReceivedDateHeader).should("not.exist");
   }
   verifyFormalRAIReceivedDateHeaderContainsDate() {
     cy.xpath(formalRAIReceivedDateHeader)
       .next()
       .contains(/^[a-zA-Z]{3}.\d{2}.\d{4}||^[a-zA-Z]{3}.\d{1}.\d{4}/);
-  }
-  verifyAmendmentNumberHeaderExists() {
-    cy.xpath(amendmentNumberHeader).should("be.visible");
   }
   verifyAmendmentNumbermatches(anumber) {
     cy.xpath(amendmentNumberHeader).next().contains(anumber);
@@ -356,7 +249,6 @@ export class oneMacPackageDetailsPage {
   verifyAmendmentTitleIs(s) {
     cy.xpath(amendmentTitleHeader).next().contains(s);
   }
-
   verifyWaiverAuthorityHeaderExists() {
     cy.xpath(waiverAuthorityHeader).should("be.visible");
   }
@@ -366,12 +258,6 @@ export class oneMacPackageDetailsPage {
   verifyAttachmentsSectionExists() {
     cy.xpath(attachmentsSection).should("be.visible");
   }
-  verifyDownloadAllBtnExists() {
-    cy.xpath(downloadAllBtn)
-      .first()
-      .scrollIntoView({ easing: "linear" })
-      .should("be.visible");
-  }
   verifyAdditionalInfoSectionExists() {
     cy.xpath(additionalInfoSection).should("be.visible");
   }
@@ -380,37 +266,6 @@ export class oneMacPackageDetailsPage {
   }
   clickWithdrawBtn() {
     cy.xpath(withdrawBtn).click();
-  }
-  clickWithdrawConfirmationBtn() {
-    cy.xpath(withdrawConfirmationBtn).click();
-  }
-  verifySubmissionMsgForWithdrawnAmendment() {
-    cy.get(successMessage).contains(
-      "Your submission package has successfully been withdrawn"
-    );
-  }
-  verifyAmendmentDetailSectionExists() {
-    cy.xpath(amendmentHeaders).should("be.visible");
-  }
-  clickTempExtensionsNavBtn() {
-    cy.xpath(tempExtensionsNavBtn).click();
-  }
-  verifyTempExtensionIDExists(num) {
-    cy.xpath(tempExtensionID).contains(num).should("be.visible");
-  }
-  clickTempExtensionID(num) {
-    cy.xpath(tempExtensionID).contains(num).click();
-  }
-  clickTempExtensionActionBtn(num) {
-    cy.xpath(tempExtensionID)
-      .contains(num)
-      .parents("tr")
-      .first()
-      .find("button")
-      .click();
-  }
-  clickWithdrawBtnOnTempExt() {
-    cy.xpath(withdrawBtnOnTempExt).filter(":visible").click();
   }
   verifySubjectHeaderExists() {
     cy.xpath(subjectHeader).should("be.visible");
@@ -456,38 +311,6 @@ export class oneMacPackageDetailsPage {
   verifyReviewTeamSRTDoesNotExists() {
     cy.xpath(reviewTeamSRTHeader).should("not.exist");
   }
-  verifyFormalRAIResponseCaretBtnExists() {
-    cy.xpath(formalRAIResponseCaretBtn).should("be.visible");
-  }
-  expandFormalRAIResponseCaretBtn() {
-    cy.xpath(formalRAIResponseCaretBtn)
-      .invoke("attr", "aria-expanded")
-      .then(($isExpanded) => {
-        if ($isExpanded === "false") {
-          //only click to expand
-          cy.xpath(formalRAIResponseCaretBtn).click();
-        }
-      });
-  }
-  collapseFormalRAIResponseCaretBtn() {
-    cy.xpath(formalRAIResponseCaretBtn)
-      .invoke("attr", "aria-expanded")
-      .then(($isExpanded) => {
-        if ($isExpanded === "true") {
-          //only click to expand
-          cy.xpath(formalRAIResponseCaretBtn).click();
-        }
-      });
-  }
-  clickFormalRAIResponseCaretBtn() {
-    cy.xpath(formalRAIResponseCaretBtn).click();
-  }
-  verifyFormalRAIResponseDownloadAllBtnExists() {
-    cy.xpath(formalRAIResponseDownloadAllBtn).should("be.visible");
-  }
-  clickFormalRAIResponseDownloadAllBtn() {
-    cy.xpath(formalRAIResponseDownloadAllBtn).click();
-  }
   verifyInitialSubmissionCaretBtnExists() {
     cy.xpath(initialSubmissionCaretBtn).should("be.visible");
   }
@@ -504,21 +327,8 @@ export class oneMacPackageDetailsPage {
         }
       });
   }
-  collapseInitialSubmissionCaretBtn() {
-    cy.xpath(initialSubmissionCaretBtn)
-      .invoke("attr", "aria-expanded")
-      .then(($isExpanded) => {
-        if ($isExpanded === "true") {
-          //only click to expand
-          cy.xpath(initialSubmissionCaretBtn).click();
-        }
-      });
-  }
   verifyInitialSubmissionDownloadAllBtnExists() {
     cy.xpath(initialSubmissionDownloadAllBtn).should("be.visible");
-  }
-  clickInitialSubmissionDownloadAllBtn() {
-    cy.xpath(initialSubmissionDownloadAllBtn).click();
   }
   verifyWithdrawalRequestedCaretBtnExists() {
     cy.xpath(withdrawalRequestedCaretBtn).should("be.visible");
@@ -535,22 +345,6 @@ export class oneMacPackageDetailsPage {
           cy.xpath(withdrawalRequestedCaretBtn).click();
         }
       });
-  }
-  collapseWithdrawalRequestedCaretBtn() {
-    cy.xpath(withdrawalRequestedCaretBtn)
-      .invoke("attr", "aria-expanded")
-      .then(($isExpanded) => {
-        if ($isExpanded === "true") {
-          //only click to expand
-          cy.xpath(withdrawalRequestedCaretBtn).click();
-        }
-      });
-  }
-  verifyWithdrawalRequestedDownloadAllBtnExists() {
-    cy.xpath(withdrawalRequestedDownloadAllBtn).should("be.visible");
-  }
-  clickWithdrawalRequestedDownloadAllBtn() {
-    cy.xpath(withdrawalRequestedDownloadAllBtn).click();
   }
 }
 export default oneMacPackageDetailsPage;

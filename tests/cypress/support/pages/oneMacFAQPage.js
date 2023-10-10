@@ -1,6 +1,6 @@
 //Element is Xpath use cy.xpath instead of cy.get: All of the following are xpath
 //overall headers and help desk section
-const frequentlyAskedQuestionHeader = "//*[@id='title_bar']//h1";
+const pageHeader = "//*[@id='title_bar']//h1";
 const generalHeader = '//h2[contains(text(),"General")]';
 const statePlanAmendmentSPAHeader =
   '//h2[contains(text(),"State Plan Amendments (SPAs)")]';
@@ -258,7 +258,9 @@ export class oneMacFAQPage {
     cy.get(canISubmitAppendixKAmendmentsInOneMacValue).should("be.visible");
   }
   VerifyWhataretheattachmentsfora1915cAppendixKWaiverisdisplayedandclickit() {
-    cy.get(whatAreTheAttachmentsForAppendixKWaiver).click();
+    cy.get(whatAreTheAttachmentsForAppendixKWaiver)
+      .should("be.visible")
+      .click();
   }
   VerifytextcontainsTheregulationsat42CFR4302543155and42CFR441301describethe() {
     cy.get(whatAreTheAttachmentsForAppendixKWaiverValue).should("be.visible");
@@ -269,19 +271,14 @@ export class oneMacFAQPage {
   verifyActualphoneNumberExists() {
     cy.xpath(actualPhoneNumber).should("be.visible");
   }
-  verifyemailExists() {
+  verifyEmailExists() {
     cy.xpath(email).should("be.visible");
   }
-  verifyActualemailExists() {
+  verifyActualEmailExists() {
     cy.xpath(actualEmail).should("be.visible");
   }
-  VerifypagetitleisFAQ() {
-    cy.url().should("include", "/FAQ");
-  }
-  VerifyFrequentlyAskedQuestionsExists() {
-    cy.xpath(frequentlyAskedQuestionHeader)
-      .should("be.visible")
-      .contains("Frequently Asked Questions");
+  VerifyPageTitleIs(s) {
+    cy.xpath(pageHeader).should("be.visible").contains(s);
   }
   verifyOnboardingMaterialsBtnExists() {
     cy.get(onboardingMaterialsBtn).should("be.visible");
@@ -300,9 +297,6 @@ export class oneMacFAQPage {
   }
   verifyStateSubmitterGuideLinkExists() {
     cy.xpath(stateSubmitterGuideLink).should("be.visible");
-  }
-  verifyStateAdminGuideLinkExists() {
-    cy.xpath(stateAdminGuideLink).should("be.visible");
   }
   verifyCmsUserGuideLinkExists() {
     cy.xpath(cmsUserGuideLink).should("be.visible");
@@ -330,13 +324,6 @@ export class oneMacFAQPage {
   }
   verifyStateSubmitterGuideLinkIsValid() {
     cy.xpath(stateSubmitterGuideLink)
-      .invoke("attr", "href")
-      .then((href) => {
-        cy.request(href).its("status").should("eq", 200);
-      });
-  }
-  verifyStateAdminGuideLinkIsValid() {
-    cy.xpath(stateAdminGuideLink)
       .invoke("attr", "href")
       .then((href) => {
         cy.request(href).its("status").should("eq", 200);

@@ -52,50 +52,12 @@ export class oneMacSubmitNewMedicaidSPAPage {
     cy.get(CMSForm179AddFileUpload).attachFile(filePath + fileName);
   }
 
-  verifyFileAddedForForm179(fileName) {
-    cy.get(uploadedFile).contains(fileName);
-  }
-
-  verifyFileNotAddedForForm179(fileName) {
-    cy.get(uploadedFile).should("not.exist");
-  }
-
-  deleteFileFromForm179() {
-    cy.xpath(deleteForm179File).click();
-    cy.get(uploadedFile).should("not.exist");
-  }
-
   uploadSPAPagesAddFile() {
     cy.xpath(SPAPagesAddFileBTN).click();
     const filePath = "/files/adobe.pdf";
     cy.get(SPAPAgesAddFileUpload).attachFile(filePath);
   }
 
-  addFilesToSpaPages(fileName) {
-    cy.xpath(SPAPagesAddFileBTN).click();
-    const filePath = "/files/";
-    cy.get(SPAPAgesAddFileUpload).attachFile(filePath + fileName);
-  }
-
-  verifyFileAddedForSpaPages(fileName) {
-    cy.get(SPAPAgesAddFileUpload).contains(fileName);
-  }
-
-  verifyFileNameExistsInSpaPages(fileName) {
-    cy.get(SPAPagesMainElement).contains(fileName);
-  }
-
-  addNoFilesToSpaPages() {
-    cy.xpath(SPAPagesAddFileBTN).click();
-  }
-
-  verifyNoFilesAttachedToSpaPages() {
-    cy.get(SPAPagesMainElement).should("not.exist");
-  }
-
-  AdditionalInformationTypeComment(s) {
-    cy.xpath(additionalInformationCommentBox).type(s);
-  }
   additionalInfoTypeComment(s) {
     cy.xpath(additionalInfoCommentBox).type(s);
   }
@@ -105,27 +67,12 @@ export class oneMacSubmitNewMedicaidSPAPage {
   clickLeaveAnywayBtn() {
     cy.xpath(leaveAnywayBtn).click();
   }
-  verifySubmissionWarningTextIsVisible() {
-    cy.xpath(warningText).scrollIntoView().should("be.visible");
-  }
-  verifySubmissionWarningText() {
-    cy.xpath(warningText)
-      .scrollIntoView()
-      .contains("Once you submit this form");
-    cy.xpath(warningText)
-      .scrollIntoView()
-      .contains("you will lose your progress on this form.");
-  }
   verifySPAIDErrorMessageIsNotDisplayed() {
     cy.get(SPAIDErrorMessage).should("not.exist");
   }
 
   clearSPAIDInputBox() {
     cy.get(SpaIDInput).clear();
-  }
-
-  clickOnDashboardTab() {
-    cy.get(dashboardTabBTN).click();
   }
 
   typeIncorrectSPAIDAndFormat() {

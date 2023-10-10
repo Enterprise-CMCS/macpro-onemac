@@ -69,14 +69,13 @@ Feature: OY2_Update_Text_on_FAQ_Page
         Then Verify OneMAC Help Desk Contact Info Section Exists
         Then Verify Phone Number Exists
         Then Verify actual Phone Number Exists
-        Then Verify Email Exists
-        Then Verify actual Email Exists
+        Then verify Contact Email label Exists
+        Then verify actual Contact Email address Exists
 
     Scenario: Verify screen enhancements on FAQ page
         Given I am on Login Page
         When Clicking on FAQ Tab
-        Then Verify page title is FAQ
-        Then Verify Frequently Asked Questions Exists
+        Then Verify page title is "Frequently Asked Questions"
 
     Scenario: Verify redirect link on spa
         Given I am on Login Page
@@ -89,17 +88,31 @@ Feature: OY2_Update_Text_on_FAQ_Page
         Then Click on What is my SPA ID link
         Then Verify text contains Enter the State Plan Amendment transmittal number Assign consecutive numbers on a calendar year basis
 
-    # Scenario: Verify redirect link on waivers
-    #     Given I am on Login Page
-    #     When Clicking on Development Login
-    #     When Login with state submitter user
-    #     Then click on New Submission
-    #     Then Click on Waiver Action
-    #     Then Click on Waiver Action under Waiver Type
-    #     Then Click on What is my Waiver ID Link
-    #     Then Verify text contains "Waiver number must follow the format"
+    Scenario: Verify redirect link on 1915b4 waivers
+        Given I am on Login Page
+        When Clicking on Development Login
+        When Login with state submitter user
+        Then click on New Submission
+        Then Click on Waiver Action
+        Then click on 1915b Waiver Actions
+        Then click on 1915b 4 FFS Selective Contracting waivers
+        Then click on 1915b 4 FFS Selective Contracting New Initial Waiver
+        Then click on What is my Initial Waiver Number
+        Then verify What format is used to enter a 1915b Initial Waiver number body is visible
 
-    Scenario: Screen enhancement
+    Scenario: Verify redirect link on 1915b waivers
+        Given I am on Login Page
+        When Clicking on Development Login
+        When Login with state submitter user
+        Then click on New Submission
+        Then Click on Waiver Action
+        Then click on 1915b Waiver Actions
+        Then click on 1915b Comprehensive Capitated Waiver Authority
+        Then click on 1915b Comprehensive Capitated Renewal Waiver
+        Then click on What is my 1915b Waiver Renewal Number
+        Then verify What format is used to enter a 1915b Waiver Renewal number header is visible
+
+    Scenario: Verify the Guides exist in the FAQ
         Given I am on Login Page
         When Clicking on FAQ Tab
         Then verify Onboarding Materials exists
