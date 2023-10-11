@@ -1784,6 +1784,12 @@ Then("click Withdraw Formal RAI Response package action", () => {
 Then("verify Enable Formal RAI Response Withdraw package action exists", () => {
   OneMacPackageDetailsPage.verifyEnableRAIResponseWithdrawActionExists();
 });
+Then(
+  "verify Disable Formal RAI Response Withdraw package action exists",
+  () => {
+    OneMacPackageDetailsPage.verifyDisableRAIResponseWithdrawActionExists();
+  }
+);
 Then("click Enable Formal RAI Response Withdraw package action", () => {
   OneMacPackageDetailsPage.clickEnableRAIResponseWithdrawAction();
 });

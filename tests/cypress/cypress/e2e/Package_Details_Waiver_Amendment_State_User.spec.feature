@@ -35,10 +35,11 @@ Feature: Waiver Package Details View: 1915 b Waiver Amendment for a State User
         Then verify Review Team SRT is not visible in the details section
         Then verify there is a Final Disposition Date header in the details section
         Then verify there is an Approved Effective Date in the details section
-        Then verify the Initial Submission caret button exists
-        Then expand the Initial Submission caret
-        Then verify the Initial Submission download all button exists
-        Then verify the additional information section exists
+# commented out because NOSOs legitimately do not have this section
+#        Then verify the Initial Submission caret button exists
+#        Then expand the Initial Submission caret
+#        Then verify the Initial Submission download all button exists
+#        Then verify the additional information section exists
 
     Scenario: Screen Enhance: 1915 b Waiver Amendment Details View - Under Review
         Then click Under Review checkbox
@@ -63,10 +64,11 @@ Feature: Waiver Package Details View: 1915 b Waiver Amendment for a State User
         Then verify Review Team SRT is not visible in the details section
         Then verify there is a Final Disposition Date header in the details section
         Then verify there is an Approved Effective Date in the details section
-        Then verify the Initial Submission caret button exists
-        Then expand the Initial Submission caret
-        Then verify the Initial Submission download all button exists
-        Then verify the additional information section exists
+# commented out because NOSOs legitimately do not have this section
+#        Then verify the Initial Submission caret button exists
+#        Then expand the Initial Submission caret
+#        Then verify the Initial Submission download all button exists
+#        Then verify the additional information section exists
 
     Scenario: Screen Enhance: 1915 b Waiver Amendment Details View - RAI Issued
         Then click RAI Issued checkbox
@@ -92,10 +94,11 @@ Feature: Waiver Package Details View: 1915 b Waiver Amendment for a State User
         Then verify Review Team SRT is not visible in the details section
         Then verify there is a Final Disposition Date header in the details section
         Then verify there is an Approved Effective Date in the details section
-        Then verify the Initial Submission caret button exists
-        Then expand the Initial Submission caret
-        Then verify the Initial Submission download all button exists
-        Then verify the additional information section exists
+# commented out because NOSOs legitimately do not have this section
+#        Then verify the Initial Submission caret button exists
+#        Then expand the Initial Submission caret
+#        Then verify the Initial Submission download all button exists
+#        Then verify the additional information section exists
 
     Scenario: Screen Enhance: 1915 b Waiver Amendment Details View - Approved
         Then click Approved checkbox
@@ -121,10 +124,11 @@ Feature: Waiver Package Details View: 1915 b Waiver Amendment for a State User
         Then verify there is a Final Disposition Date header in the details section
         Then verify there is an Approved Effective Date in the details section
         Then verify the Proposed Effective Date is a date formatted like Mon dd yyyy
-        Then verify the Initial Submission caret button exists
-        Then expand the Initial Submission caret
-        Then verify the Initial Submission download all button exists
-        Then verify the additional information section exists
+# commented out because NOSOs legitimately do not have this section
+#        Then verify the Initial Submission caret button exists
+#        Then expand the Initial Submission caret
+#        Then verify the Initial Submission download all button exists
+#        Then verify the additional information section exists
 
     Scenario: Screen Enhance: 1915 b Waiver Amendment Details View - Disapproved
         Then click Disapproved checkbox
@@ -149,10 +153,11 @@ Feature: Waiver Package Details View: 1915 b Waiver Amendment for a State User
         Then verify Review Team SRT is not visible in the details section
         Then verify there is a Final Disposition Date header in the details section
         Then verify there is an Approved Effective Date in the details section
-        Then verify the Initial Submission caret button exists
-        Then expand the Initial Submission caret
-        Then verify the Initial Submission download all button exists
-        Then verify the additional information section exists
+# commented out because NOSOs legitimately do not have this section
+#        Then verify the Initial Submission caret button exists
+#        Then expand the Initial Submission caret
+#        Then verify the Initial Submission download all button exists
+#        Then verify the additional information section exists
 
     Scenario: Screen Enhance: 1915 b Waiver Amendment Details View - Withdrawal Requested
         Then click the Withdrawal Requested checkbox
@@ -201,10 +206,11 @@ Feature: Waiver Package Details View: 1915 b Waiver Amendment for a State User
         Then verify Review Team SRT is not visible in the details section
         Then verify there is a Final Disposition Date header in the details section
         Then verify there is an Approved Effective Date in the details section
-        Then verify the Initial Submission caret button exists
-        Then expand the Initial Submission caret
-        Then verify the Initial Submission download all button exists
-        Then verify the additional information section exists
+# commented out because NOSOs legitimately do not have this section
+#        Then verify the Initial Submission caret button exists
+#        Then expand the Initial Submission caret
+#        Then verify the Initial Submission download all button exists
+#        Then verify the additional information section exists
 
     Scenario: Screen Enhance: 1915 b Waiver Amendment Details View - RAI Response Withdraw Enabled
         Then click the RAI Response Withdraw Enabled checkbox
@@ -230,10 +236,11 @@ Feature: Waiver Package Details View: 1915 b Waiver Amendment for a State User
         Then verify Review Team SRT is not visible in the details section
         Then verify there is a Final Disposition Date header in the details section
         Then verify there is an Approved Effective Date in the details section
-        Then verify the Initial Submission caret button exists
-        Then expand the Initial Submission caret
-        Then verify the Initial Submission download all button exists
-        Then verify the additional information section exists
+# commented out because NOSOs legitimately do not have this section
+#        Then verify the Initial Submission caret button exists
+#        Then expand the Initial Submission caret
+#        Then verify the Initial Submission download all button exists
+#        Then verify the additional information section exists
 
 Scenario: Screen Enhance: 1915 b Waiver Amendment Details View - Withdraw RAI Response
         Then click the RAI Response Withdraw Enabled checkbox
