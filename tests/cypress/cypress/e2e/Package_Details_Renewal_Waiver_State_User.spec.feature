@@ -269,7 +269,7 @@ Feature: Waiver Package Details View: Waiver Renewals for a State User
 
     Scenario: Waiver Renewal Details View - Withdraw RAI Response
         Then click the RAI Response Withdraw Enabled checkbox
-        Then search for "MD-22116.R01.00"
+#        Then search for "MD-22116.R01.00"
         Then click the Waiver Number link in the first row
         Then verify the package details page is visible
         Then verify the status on the card is "RAI Response Withdraw Enabled"

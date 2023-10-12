@@ -10,7 +10,7 @@ service: uploads
 frameworkVersion: "3"
 
 plugins:
-  - serverless-bundle
+  - serverless-esbuild
   - serverless-plugin-scripts
   - serverless-s3-bucket-helper
 provider:
