@@ -9,7 +9,7 @@ Feature: Package Dashboard - Waiver Tab Column Picker for CMS User
         Then verify show hide columns button exists
         Then verify IDNumber column exists
         Then verify type column exists
-        Then verify state column exists
+        Then Verify State Column Exists
         Then verify Waiver Number column exists
         Then verify status column exists
         Then verify Initial Submission Date column exists
@@ -18,12 +18,12 @@ Feature: Package Dashboard - Waiver Tab Column Picker for CMS User
         Then verify CPOC Name column does not exist
         Then click show hide columns button
         Then verify Formal RAI Received checkbox exists
-        Then verify state exists
-        Then verify status exists
-        Then verify Initial Submission Date exists
-        Then verify submitted by exists
-        Then verify type exists
-        Then verify CPOC Name exists
+        Then verify state checkbox exists
+        Then verify status checkbox exists
+        Then verify Initial Submission Date checkbox exists
+        Then verify submitted by checkbox exists
+        Then verify type checkbox exists
+        Then verify CPOC Name checkbox exists
         Then click show hide columns button
         Then Click on My Account
         Then click the logout button
