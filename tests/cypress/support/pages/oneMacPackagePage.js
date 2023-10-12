@@ -123,7 +123,6 @@ const checkBoxType = "//span[contains(text(),'Type')]";
 const checkboxCPOCName = "//span[contains(text(),'CPOC Name')]";
 const IDNumberColumn = "#componentIdColHeader";
 const typeColumn = "#componentTypeColHeader";
-const stateColumn = "#territoryColHeader";
 const statusColumn = "#packageStatusColHeader";
 const initialSubmissionDateColumn = "#submissionTimestampColHeader";
 const submittedByColumn = "#submitterColHeader";
@@ -239,10 +238,6 @@ export class oneMacPackagePage {
     cy.xpath(expirationDateColumnHeader).should("be.visible");
   }
 
-  typePendingInSearchBar() {
-    cy.get(searchbar).type("pending");
-  }
-
   noResultsFoundErrorMessage() {
     cy.xpath(noResultsFound).contains("No Results Found");
   }
@@ -264,9 +259,6 @@ export class oneMacPackagePage {
   }
   typeSubmittersNameAllUpperCase() {
     cy.get(searchbar).type("ANGIE ACTIVE");
-  }
-  typedashInSearchBar() {
-    cy.get(searchbar).type("-");
   }
   verifySearchBarExists() {
     cy.get(searchbar).should("be.visible");
@@ -545,9 +537,6 @@ export class oneMacPackagePage {
   verifytypeColumnExists() {
     cy.get(typeColumn).should("be.visible");
   }
-  verifystateColumnExists() {
-    cy.get(stateColumn).should("be.visible");
-  }
   verifystatusColumnExists() {
     cy.get(statusColumn).should("be.visible");
   }
@@ -574,8 +563,8 @@ export class oneMacPackagePage {
   verifytypeColumnDoesNotExist() {
     cy.get(typeColumn).should("not.exist");
   }
-  verifystateColumnDoesNotExist() {
-    cy.get(stateColumn).should("not.exist");
+  verifyStateColumnDoesNotExist() {
+    cy.get(stateColumnHeader).should("not.exist");
   }
   verifystatusColumnDoesNotExist() {
     cy.get(statusColumn).should("not.exist");
@@ -603,9 +592,6 @@ export class oneMacPackagePage {
   }
   verifypackageRowOneTypeHasTextMedicaidSPA() {
     cy.get(packageRowOneType).should("have.text", "Medicaid SPA");
-  }
-  typePartialExistingID() {
-    cy.get(searchbar).type("MD-13");
   }
   checkforApprovedIsNotClickable() {
     cy.xpath(Approved).children("button").should("be.disabled");
@@ -787,70 +773,7 @@ export class oneMacPackagePage {
   searchFor(part) {
     cy.get(searchbar).type(part);
   }
-  verifyFirstParentRowExpanderExists() {
-    cy.xpath(parentRowExpander).should("be.visible");
-  }
-  verifyTheNextRowIsNotAChild() {
-    cy.get(rowTwo).should("not.have.class", "child-row-expanded");
-  }
-  clickFirstParentRowExpander() {
-    cy.xpath(parentRowExpander).not(":disabled").click();
-  }
-  verifyTheNextRowIsAChild() {
-    cy.get(rowTwo).should("have.class", "child-row-expanded");
-  }
-  verifyAllChildrenStartWith(part) {
-    cy.xpath(childRows).each(($el) => {
-      cy.wrap($el).find("td:nth-of-type(2)").should("contain.text", part);
-    });
-  }
-  verifyWaiverNumberColumnExistsForChild() {
-    cy.get(packageRowTwoID).should("be.visible");
-  }
-  verifytypeColumnExistsForChild() {
-    cy.get(packageRowTwoType).should("be.visible");
-  }
-  verifystateColumnExistsForChild() {
-    cy.get(packageRowTwoState).should("be.visible");
-  }
-  verify90thDayColumnExistsForChild() {
-    cy.get(packageRowTwo90thDay).should("be.visible");
-  }
-  verifystatusColumnExistsForChild() {
-    cy.get(packageRowOneType).should("be.visible");
-  }
-  verifyInitialSubmissionDateColumnExistsForChild() {
-    cy.get(packageRowTwoInitialSubmissionDate).should("be.visible");
-  }
-  verifysubmittedByColumnExistsForChild() {
-    cy.get(packageRowTwoSubmittedBy).should("be.visible");
-  }
-  verifyactionsColumnExistsForChild() {
-    cy.get(packageRowTwoActions).should("be.visible");
-  }
-  clickActionsColumnForChild() {
-    cy.get(packageRowTwoActions).scrollIntoView().click();
-  }
-  verifyChildActionsBtnIsDisabled() {
-    cy.get(packageRowTwoActions)
-      .scrollIntoView()
-      .children("button")
-      .first()
-      .should("be.disabled");
-  }
-  clickActionsBtnForTempExtensionChild() {
-    cy.xpath(childRows)
-      .filter(":contains('Temporary Extension')")
-      .then(($el) => {
-        cy.wrap($el).find("button").first().scrollIntoView().click();
-      });
-  }
-  verifyFirstParentRowExpanderIsDisabled() {
-    cy.xpath(parentRowExpander).should("be.disabled");
-  }
-  verifyFirstParentRowExpanderIsNotDisabled() {
-    cy.xpath(parentRowExpander).should("not.be.disabled");
-  }
+
   clickWithdrawPackageBtn() {
     cy.xpath(withdrawPackageBtn)
       .filter(":visible")
