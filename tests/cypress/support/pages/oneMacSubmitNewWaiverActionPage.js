@@ -1,5 +1,4 @@
 const newWaiverNumberInputBox = "#componentId";
-const actionTypeDropDown = "#action-type";
 const newErrMsgForWaiverNumber = "#componentIdStatusMsg0";
 const errorMsgPart2 = "#componentIdStatusMsg1";
 const waiverAuthority = "//h3[text()='Waiver Authority']";
@@ -12,7 +11,6 @@ const capitatedSpreadsheetFile =
   "//td[div[contains(text(),'1915(b) Comprehensive (Capitated) Waiver Cost Effectiveness Spreadsheets')]]";
 const fileUpload1 = "#uploader-input-0";
 const fileUpload2 = "#uploader-input-1";
-const commentsInputBox = "#field_2";
 const additionalInfoTextarea = "#additional-information";
 const existingWaiverNumber = "MD-22005.R00.00";
 const whatIsMyInitialWaiverNumberLink =
@@ -152,7 +150,6 @@ export class oneMacSubmitNewWaiverActionPage {
       }
     });
   }
-
   setProposedEffectiveDateThreeMonthsAway() {
     var futureDate = caculate3MonthsInFuture();
     cy.get(proposedEffectiveDate).type(futureDate);

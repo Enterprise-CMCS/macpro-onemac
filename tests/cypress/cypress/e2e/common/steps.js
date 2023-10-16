@@ -1123,10 +1123,6 @@ Then(
     OneMacHomePage.verifyCMSBullet6Exists();
   }
 );
-
-Then("type in search bar expiration status “pending”", () => {
-  OneMacPackagePage.typePendingInSearchBar();
-});
 Then("verify Error message displayed should be No Results Found", () => {
   OneMacPackagePage.noResultsFoundErrorMessage();
 });
@@ -1137,15 +1133,6 @@ Then("verify user exists with id number searched", () => {
 });
 Then("clear search bar", () => {
   OneMacPackagePage.clearSearchBar();
-});
-Then("type in submitters name", () => {
-  OneMacPackagePage.typeSubmittersName();
-});
-Then("search existing user with all upper case", () => {
-  OneMacPackagePage.typeSubmittersNameAllUpperCase();
-});
-Then("search existing user with dash", () => {
-  OneMacPackagePage.typedashInSearchBar();
 });
 Then("verify search bar exists", () => {
   OneMacPackagePage.verifySearchBarExists();
@@ -1183,7 +1170,7 @@ Then("verify Filter By Exists", () => {
 Then("verify Close Exists", () => {
   OneMacPackagePage.verifycloseButtonExists();
 });
-Then("verify Type Exists", () => {
+Then("verify type dropdown filter exists", () => {
   OneMacPackagePage.verifytypeDropDownExists();
 });
 Then("verify reset Exists", () => {
@@ -1288,22 +1275,22 @@ Then("verify show hide columns button exists", () => {
 Then("click show hide columns button", () => {
   OneMacPackagePage.clickShowHideColumnsBTN();
 });
-Then("verify Initial Submission Date exists", () => {
+Then("verify Initial Submission Date checkbox exists", () => {
   OneMacPackagePage.verifycheckBoxInitialSubmissionDateExists();
 });
-Then("verify state exists", () => {
+Then("verify state checkbox exists", () => {
   OneMacPackagePage.verifycheckboxStateExists();
 });
-Then("verify status exists", () => {
+Then("verify status checkbox exists", () => {
   OneMacPackagePage.verifycheckBoxStatusExists();
 });
-Then("verify submitted by exists", () => {
+Then("verify submitted by checkbox exists", () => {
   OneMacPackagePage.verifycheckBoxSubmittedByExists();
 });
-Then("verify type exists", () => {
+Then("verify type checkbox exists", () => {
   OneMacPackagePage.verifycheckBoxTypeExists();
 });
-Then("verify CPOC Name exists", () => {
+Then("verify CPOC Name checkbox exists", () => {
   OneMacPackagePage.verifycheckBoxCPOCNameExists();
 });
 Then("verify Formal RAI Received checkbox exists", () => {
@@ -1367,7 +1354,7 @@ Then("verify type column does not exist", () => {
   OneMacPackagePage.verifytypeColumnDoesNotExist();
 });
 Then("verify state column does not exist", () => {
-  OneMacPackagePage.verifystateColumnDoesNotExist();
+  OneMacPackagePage.verifyStateColumnDoesNotExist();
 });
 Then("verify status column does not exist", () => {
   OneMacPackagePage.verifystatusColumnDoesNotExist();
@@ -1383,9 +1370,6 @@ Then("verify the type on row one exists", () => {
 });
 Then("verify the type on row one is Medicaid SPA", () => {
   OneMacPackagePage.verifypackageRowOneTypeHasTextMedicaidSPA();
-});
-Then("type partial existing ID in search bar", () => {
-  OneMacPackagePage.typePartialExistingID();
 });
 Then("verify the state on row one exists", () => {
   OneMacPackagePage.verifypackageRowOneStateExists();
@@ -1609,14 +1593,6 @@ Then("verify OneMAC CMS User Guide is valid", () => {
 });
 Then("search for {string}", (part) => {
   OneMacPackagePage.searchFor(part);
-  cy.wait(1000);
-});
-Then("search for CPOC named Chester Tester", () => {
-  OneMacPackagePage.searchFor("Chester Tester");
-  cy.wait(1000);
-});
-Then("search for Appendix K number", () => {
-  OneMacPackagePage.searchFor("MD-10330.R00.12");
   cy.wait(1000);
 });
 Then("verify that Request a Role Change button exists", () => {

@@ -19,12 +19,12 @@ Feature: Package Dashboard - Waiver Tab Column Picker
         Then verify CPOC Name column does not exist
         Then click show hide columns button
         Then verify Formal RAI Received checkbox exists
-        Then verify state exists
-        Then verify status exists
-        Then verify Initial Submission Date exists
-        Then verify submitted by exists
-        Then verify type exists
-        Then verify CPOC Name exists
+        Then verify state checkbox exists
+        Then verify status checkbox exists
+        Then verify Initial Submission Date checkbox exists
+        Then verify submitted by checkbox exists
+        Then verify type checkbox exists
+        Then verify CPOC Name checkbox exists
         Then click show hide columns button
         Then Click on My Account
         Then click the logout button
@@ -69,7 +69,7 @@ Feature: Package Dashboard - Waiver Tab Column Picker
         Then click show hide columns button
         Then click state checkbox
         Then click show hide columns button
-        Then verify state column exists
+        Then Verify State Column Exists
         Then click show hide columns button
         Then click state checkbox
         Then click show hide columns button

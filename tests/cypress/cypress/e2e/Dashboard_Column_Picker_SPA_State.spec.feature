@@ -17,13 +17,13 @@ Feature: Package Dashboard - SPA Tab Column Picker
         Then verify Formal RAI Received column exists
         Then click show hide columns button
         Then verify Formal RAI Received checkbox exists
-        Then verify Initial Submission Date exists
-        Then verify state exists
-        Then verify status exists
-        Then verify submitted by exists
-        Then verify type exists
+        Then verify Initial Submission Date checkbox exists
+        Then verify state checkbox exists
+        Then verify status checkbox exists
+        Then verify submitted by checkbox exists
+        Then verify type checkbox exists
         Then verify Formal RAI Received checkbox exists
-        Then verify CPOC Name exists
+        Then verify CPOC Name checkbox exists
         Then click show hide columns button
 
     Scenario: SPAs Tab - Uncheck all and verify SPA ID and actions exists
@@ -52,7 +52,7 @@ Feature: Package Dashboard - SPA Tab Column Picker
         Then click show hide columns button
         Then click state checkbox
         Then click show hide columns button
-        Then verify state column exists
+        Then Verify State Column Exists
         Then click show hide columns button
         Then click state checkbox
         Then click show hide columns button
@@ -91,7 +91,7 @@ Feature: Package Dashboard - SPA Tab Column Picker
         Then click the logout button
 
     Scenario: Search with no results and verify error message is correct, verify columns are existing per selection on filter
-        Then type in search bar expiration status “pending”
+        Then search for "pending"
         Then verify Error message displayed should be No Results Found
         Then verify IDNumber column exists
         Then verify type column exists
@@ -113,7 +113,7 @@ Feature: Package Dashboard - SPA Tab Column Picker
         Then click state checkbox
         Then click show hide columns button
         Then verify type column exists
-        Then verify state column exists
+        Then Verify State Column Exists
         Then verify the type on row one exists
         Then verify the state on row one exists
         Then click show hide columns button

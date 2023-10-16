@@ -12,7 +12,7 @@ Feature: OY2-11149 Submission Dashboard - Search bar
         Given I am on Login Page
         When Clicking on Development Login
         When Login with state submitter user
-        Then type in search bar expiration status “pending”
+        Then search for "pending"
         Then verify Error message displayed should be No Results Found
         Then verify Error message details is displayed
 
@@ -48,14 +48,14 @@ Feature: OY2-11149 Submission Dashboard - Search bar
         Then verify submission successful message in the alert bar
         Then search for Initial Waiver Number 2 with 12 Characters
         Then clear search bar
-        Then type in submitters name
+        Then search for "Angie Active"
         Then verify user exists with id number searched
 
     Scenario: Search existing user with Upper case
         Given I am on Login Page
         When Clicking on Development Login
         When Login with state submitter user
-        Then search existing user with all upper case
+        Then search for "ANGIE ACTIVE"
         Then verify user exists with id number searched
 
 
@@ -63,7 +63,7 @@ Feature: OY2-11149 Submission Dashboard - Search bar
         Given I am on Login Page
         When Clicking on Development Login
         When Login with state submitter user
-        Then search existing user with dash
+        Then search for "-"
         Then verify user exists with id number searched
 
     Scenario: Search CPOC
@@ -72,7 +72,7 @@ Feature: OY2-11149 Submission Dashboard - Search bar
         When Login with state submitter user
         Then click show hide columns button
         Then click CPOC Name checkbox
-        Then search for CPOC named Chester Tester
+        Then search for "Chester Tester"
         Then verify the CPOC searched for is Chester Tester in the first result
 
     Scenario: Log in with help desk user
@@ -95,5 +95,5 @@ Feature: OY2-11149 Submission Dashboard - Search bar
         When Login with state submitter user
         Then verify search bar exists
         Then verify Search by Package ID, CPOC Name, or Submitter Name is displayed on top of search bar
-        Then search existing user with all upper case
+        Then search for "ANGIE ACTIVE"
         Then verify x in search bar exists to clear search and click it
