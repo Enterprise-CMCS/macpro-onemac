@@ -411,10 +411,6 @@ jobs:
             --to "p7w4w6l0z1g8s9m5@cmsgov.slack.com" \
             --subject "Cypress tests failed :x:" \
             --text "The Cypress tests for repository ${{ github.repository }} failed. Check the details at ${{ steps.get_run_url.outputs.run_url }}."
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
 
       # Send notification on success
       - name: Send Email Notification on Success
@@ -425,10 +421,6 @@ jobs:
             --to "p7w4w6l0z1g8s9m5@cmsgov.slack.com" \
             --subject "Cypress tests passed :white_check_mark:" \
             --text "The Cypress tests for repository ${{ github.repository }} passed successfully. Check the details at ${{ steps.get_run_url.outputs.run_url }}."
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
 
   a11y-tests:
     name: A11y Tests
