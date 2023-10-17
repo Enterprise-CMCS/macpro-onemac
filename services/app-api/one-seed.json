@@ -53726,7 +53726,6 @@
   "componentType": "waiverrai",
   "eventTimestamp": 1672953510479,
   "currentStatus": "Submitted",
-  "originallyFrom": "cms-spa-form-master-change-requests",
   "parentId": "MD-22204.R01.00",
   "attachments": [
     {
@@ -53751,78 +53750,81 @@
   "submitterName": "undefined undefined"
 },
 {
- "pk": "MD-22204.R01.00",
- "sk": "Package",
- "adminChanges": [
-  {
-   "changeMade": "Valencia McMurray has enabled State package action to withdraw Formal RAI Response",
-   "changeReason": "Automated test to enable an RAI Response withdrawal.",
-   "changeTimestamp": 1692995861025
-  }
- ],
- "approvedEffectiveDate": "2023-03-02",
- "componentId": "MD-22204.R01.00",
- "componentType": "waiverrenewal",
- "cpocEmail": "\"Tester, Chester (CPOC)\" <chesterT@example.gov>",
- "cpocName": "Chester Tester",
- "currentStatus": "RAI Response Withdraw Enabled",
- "description": "pending-rai",
- "GSI1pk": "OneMAC#waiver",
- "GSI1sk": "MD-22204.R01.00",
- "GSI2pk": "MD-22204.R01.00",
- "GSI2sk": "waiverrai",
- "lastEventTimestamp": 1692995861025,
- "latestRaiResponseTimestamp": 1692995861025,
- "parentId": "MD-22204.R01.00",
- "parentType": "waiverrenewal",
- "proposedEffectiveDate": "2023-03-02",
- "reverseChrono": [
-  {
-   "action": "Submitted",
-   "additionalInformation": "Jan 5 did the rai response for this waiver to verify the migration process.",
-   "attachments": [
-    {
-     "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-     "filename": "PackagelistView_ExcelExport_Issues.xlsx",
-     "s3Key": "1672953505887/PackagelistView_ExcelExport_Issues.xlsx",
-     "title": "Waiver RAI Response",
-     "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3Ac052f1db-9f55-42aa-9d43-2d957bfc754b/1672953505887/PackagelistView_ExcelExport_Issues.xlsx"
-    }
-   ],
-   "currentStatus": "RAI Response Withdraw Enabled",
-   "eventTimestamp": 1692995861025,
-   "timestamp": 1672953510479,
-   "type": "Formal RAI Response"
-  },
-  {
-   "action": "Submitted",
-   "additionalInformation": "test",
-   "attachments": [
-    {
-     "contentType": "image/jpeg",
-     "filename": "picture.jpg",
-     "s3Key": "1672269887538/picture.jpg",
-     "title": "1915(b)(4) FFS Selective Contracting (Streamlined) waiver application pre-print (Initial, Renewal, Amendment)",
-     "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A30413432-e223-4a6d-bfe1-7ed87236ff55/1672269887538/picture.jpg"
-    }
-   ],
-   "currentStatus": "Submitted",
-   "eventTimestamp": 1672269888263,
-   "timestamp": 1672269888263,
-   "type": "Initial Package"
-  }
- ],
- "reviewTeam": [
-  "Test Test"
- ],
- "reviewTeamEmailList": [
- ],
- "subject": "OneMac Connection test",
- "submissionTimestamp": 1672953510479,
- "submitterEmail": "statesystemadmin@nightwatch.test",
- "submitterName": "undefined undefined",
- "waiverAuthority": "1915(b)"
-},
+  "pk": "MD-22204.R01.00",
+  "sk": "Package",
+  "adminChanges": [
+  ],
+  "approvedEffectiveDate": "2023-03-02",
+  "componentId": "MD-22204.R01.00",
+  "componentType": "waiverrenewal",
+  "cpocEmail": "\"Tester, Chester (CPOC)\" <chesterT@example.gov>",
+  "cpocName": "Chester Tester",
+  "currentStatus": "Formal RAI Response - Withdrawal Requested",
+  "description": "pending-rai",
+  "GSI1pk": "OneMAC#waiver",
+  "GSI1sk": "MD-22204.R01.00",
+  "GSI2pk": "MD-22204.R00.00",
+  "GSI2sk": "waiverrenewal",
+  "lastEventTimestamp": 1697474521363,
+  "parentId": "MD-22204.R00.00",
+  "proposedEffectiveDate": "2023-03-02",
+  "reverseChrono": [
+   {
+    "action": "Withdrawal Requested",
+    "additionalInformation": "Automated test to withdraw the RAI Response.",
+    "attachments": [
+    ],
+    "currentStatus": "Formal RAI Response - Withdrawal Requested",
+    "eventTimestamp": 1697474521363,
+    "timestamp": 1697474521363,
+    "type": "Formal RAI Response"
+   },
+   {
+    "action": "Submitted",
+    "additionalInformation": "Jan 5 did the rai response for this waiver to verify the migration process.",
+    "attachments": [
+     {
+      "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "filename": "PackagelistView_ExcelExport_Issues.xlsx",
+      "s3Key": "1672953505887/PackagelistView_ExcelExport_Issues.xlsx",
+      "title": "Waiver RAI Response",
+      "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3Ac052f1db-9f55-42aa-9d43-2d957bfc754b/1672953505887/PackagelistView_ExcelExport_Issues.xlsx"
+     }
+    ],
+    "currentStatus": "Submitted",
+    "eventTimestamp": 1672953510479,
+    "timestamp": 1672953510479,
+    "type": "Formal RAI Response"
+   },
+   {
+    "action": "Submitted",
+    "additionalInformation": "test",
+    "attachments": [
+     {
+      "contentType": "image/jpeg",
+      "filename": "picture.jpg",
+      "s3Key": "1672269887538/picture.jpg",
+      "title": "1915(b)(4) FFS Selective Contracting (Streamlined) waiver application pre-print (Initial, Renewal, Amendment)",
+      "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A30413432-e223-4a6d-bfe1-7ed87236ff55/1672269887538/picture.jpg"
+     }
+    ],
+    "currentStatus": "Submitted",
+    "eventTimestamp": 1672269888263,
+    "timestamp": 1672269888263,
+    "type": "Initial Package"
+   }
+  ],
+  "reviewTeam": [
+   "Test Test"
+  ],
+  "reviewTeamEmailList": [
+  ],
+  "subject": "OneMac Connection test",
+  "submissionTimestamp": 1672269888263,
+  "submitterEmail": "mdstateonemac@gmail.com",
+  "submitterName": "MDSTATE SUBMITTERNK",
+  "waiverAuthority": "1915(b)"
+ },
 {
   "PRIORITY_COMPLEXITY": null,
   "STATES": [
