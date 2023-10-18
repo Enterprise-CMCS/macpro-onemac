@@ -381,6 +381,21 @@ jobs:
     if: always()
     runs-on: ubuntu-latest
     steps:
+      - name: set branch_name
+        run: echo "branch_name=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
+      - uses: actions/checkout@v3
+      - name: set branch specific variable names
+        run: ./.github/build_vars.sh set_names
+      - name: set variable values
+        run: ./.github/build_vars.sh set_values
+        env:
+          AWS_OIDC_ROLE_TO_ASSUME: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_AWS_OIDC_ROLE_TO_ASSUME] || secrets.AWS_OIDC_ROLE_TO_ASSUME }}
+          AWS_DEFAULT_REGION: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_AWS_DEFAULT_REGION] || secrets.AWS_DEFAULT_REGION }}
+      - name: Configure AWS credentials for GitHub Actions
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ env.AWS_OIDC_ROLE_TO_ASSUME }}
+          aws-region: ${{ env.AWS_DEFAULT_REGION }}
       - name: Set Run URL
         id: get_run_url
         run: echo "::set-output name=run_url::https://github.com/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
