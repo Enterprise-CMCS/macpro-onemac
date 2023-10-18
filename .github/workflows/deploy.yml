@@ -378,6 +378,7 @@ jobs:
 
   send-slack-notification:
     needs: cypress-test
+    if: always()
     runs-on: ubuntu-latest
     steps:
       - name: Set Run URL
