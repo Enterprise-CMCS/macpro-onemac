@@ -385,8 +385,10 @@ jobs:
         run: echo "::set-output name=run_url::https://github.com/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
       - name: Send Slack notification
         run: |
+          TOTAL_JOBS=0
           FAILED_JOBS=0
           for STATUS in ${{ needs.cypress-test.outputs.status }}; do
+            TOTAL_JOBS=$((TOTAL_JOBS + 1))
             if [[ "$STATUS" == "failure" ]]; then
               FAILED_JOBS=$((FAILED_JOBS + 1))
             fi
@@ -396,7 +398,7 @@ jobs:
             --from "noreply@cms.hhs.gov" \
             --to "p7w4w6l0z1g8s9m5@cmsgov.slack.com" \
             --subject "Cypress tests failed :x:" \
-            --text "${{ TOTAL_FAILURES }} out of ${{ needs.cypress-test.outputs.status | split('\n') | length }} Cypress tests failed for repository ${{ github.repository }}. Check the details at ${{ steps.get_run_url.outputs.run_url }}."
+            --text "$TOTAL_FAILURES out of $TOTAL_JOBS Cypress tests failed for repository ${{ github.repository }}. Check the details at ${{ steps.get_run_url.outputs.run_url }}."
           elif [[ $FAILED_JOBS -eq 0 ]]; then
             aws ses send-email \
             --from "noreply@cms.hhs.gov" \
