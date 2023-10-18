@@ -373,12 +373,12 @@ jobs:
           else
             echo "::set-output name=status::failure"
           fi
-      outputs:
-        status: ${{ steps.result.outputs.status }}
-  
+    outputs:
+      status: ${{ steps.result.outputs.status }}
+
   send-slack-notification:
     needs: cypress-test
-    # ... rest of your job configuration ...
+    runs-on: ubuntu-latest
     steps:
       - name: Set Run URL
         id: get_run_url
