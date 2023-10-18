@@ -303,4 +303,5 @@ Feature: Waiver Package Details View: Initial Waivers
         Then Click on Submit Button
         Then verify the status on the card is "RAI Response Withdraw Enabled"
         Then verify package actions header is visible
-        Then verify there are no package actions available
+        Then verify Disable Formal RAI Response Withdraw package action exists
+        #Then verify there are no package actions available
