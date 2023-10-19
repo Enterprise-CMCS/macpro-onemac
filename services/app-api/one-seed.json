@@ -53375,16 +53375,6 @@
   "proposedEffectiveDate": "2023-03-02",
   "reverseChrono": [
    {
-    "action": "Withdrawal Requested",
-    "additionalInformation": "Automated test to withdraw the RAI Response.",
-    "attachments": [
-    ],
-    "currentStatus": "Formal RAI Response - Withdrawal Requested",
-    "eventTimestamp": 1697474521363,
-    "timestamp": 1697474521363,
-    "type": "Formal RAI Response"
-   },
-   {
     "action": "Submitted",
     "additionalInformation": "Jan 5 did the rai response for this waiver to verify the migration process.",
     "attachments": [
