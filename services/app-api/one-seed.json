@@ -53329,8 +53329,7 @@
 {
   "clockEndTimestamp": 1680725910479,
   "componentType": "waiverrai",
-  "eventTimestamp": 1697738313692,
-  "currentStatus": "RAI Response Withdraw Enabled",
+  "currentStatus": "Submitted",
   "parentId": "MD-22204.R01.00",
   "attachments": [
     {
@@ -53347,13 +53346,7 @@
   "additionalInformation": "Jan 5 did the rai response for this waiver to verify the migration process.",
   "submissionTimestamp": 1672953510479,
   "GSI1pk": "OneMAC#submitwaiverrai",
-  "adminChanges": [
-    {
-      "changeReason": "State requested that they be able to withdraw - automated testing",
-      "changeTimestamp": 1697738313692,
-      "changeMade": "Systemadmin Nightwatch has enabled State package action to withdraw Formal RAI Response"
-    }
-  ],
+  "adminChanges": [],
   "convertTimestamp": 1674854067202,
   "submitterEmail": "statesystemadmin@nightwatch.test",
   "sk": "OneMAC#1672953510479",
@@ -53374,13 +53367,16 @@
   "waiverAuthority": "1915(b)",
   "submitterEmail": "mdstateonemac@gmail.com",
   "approvedEffectiveDate": "2023-03-02",
+  "latestRaiResponseTimestamp": 1672953510479,
+  "finalDispositionDate": "-- --",
   "sk": "Package",
-  "lastEventTimestamp": 1697738313692,
+  "lastEventTimestamp": 1673622793000,
   "componentType": "waiverrenewal",
-  "currentStatus": "RAI Response Withdraw Enabled",
+  "currentStatus": "Under Review",
   "parentId": "MD-22204.R00.00",
   "reverseChrono": [
     {
+      "action": "Submitted",
       "additionalInformation": "Jan 5 did the rai response for this waiver to verify the migration process.",
       "attachments": [
         {
@@ -53391,11 +53387,9 @@
           "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3Ac052f1db-9f55-42aa-9d43-2d957bfc754b/1672953505887/PackagelistView_ExcelExport_Issues.xlsx"
         }
       ],
-      "currentStatus": "RAI Response Withdraw Enabled",
-      "action": "Submitted",
       "type": "Formal RAI Response",
-      "timestamp": 1672953510479,
-      "eventTimestamp": 1697738313692
+      "currentStatus": "Submitted",
+      "timestamp": 1672953510479
     },
     {
       "additionalInformation": "test",
@@ -53417,13 +53411,7 @@
   ],
   "GSI2pk": "MD-22204.R00.00",
   "GSI1pk": "OneMAC#waiver",
-  "adminChanges": [
-    {
-      "changeReason": "State requested that they be able to withdraw - automated testing",
-      "changeTimestamp": 1697738313692,
-      "changeMade": "Systemadmin Nightwatch has enabled State package action to withdraw Formal RAI Response"
-    }
-  ],
+  "adminChanges": [],
   "cpocName": "Chester Tester",
   "componentId": "MD-22204.R01.00",
   "description": "pending-rai ",
