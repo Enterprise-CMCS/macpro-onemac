@@ -53329,8 +53329,8 @@
 {
   "clockEndTimestamp": 1680725910479,
   "componentType": "waiverrai",
-  "eventTimestamp": 1672953510479,
-  "currentStatus": "Submitted",
+  "eventTimestamp": 1697738313692,
+  "currentStatus": "RAI Response Withdraw Enabled",
   "parentId": "MD-22204.R01.00",
   "attachments": [
     {
@@ -53347,6 +53347,13 @@
   "additionalInformation": "Jan 5 did the rai response for this waiver to verify the migration process.",
   "submissionTimestamp": 1672953510479,
   "GSI1pk": "OneMAC#submitwaiverrai",
+  "adminChanges": [
+    {
+      "changeReason": "State requested that they be able to withdraw - automated testing",
+      "changeTimestamp": 1697738313692,
+      "changeMade": "Systemadmin Nightwatch has enabled State package action to withdraw Formal RAI Response"
+    }
+  ],
   "convertTimestamp": 1674854067202,
   "submitterEmail": "statesystemadmin@nightwatch.test",
   "sk": "OneMAC#1672953510479",
@@ -53355,71 +53362,75 @@
   "submitterName": "undefined undefined"
 },
 {
-  "pk": "MD-22204.R01.00",
-  "sk": "Package",
-  "adminChanges": [
-  ],
-  "approvedEffectiveDate": "2023-03-02",
-  "componentId": "MD-22204.R01.00",
-  "componentType": "waiverrenewal",
-  "cpocEmail": "\"Tester, Chester (CPOC)\" <chesterT@example.gov>",
-  "cpocName": "Chester Tester",
-  "currentStatus": "Formal RAI Response - Withdrawal Requested",
-  "description": "pending-rai",
-  "GSI1pk": "OneMAC#waiver",
-  "GSI1sk": "MD-22204.R01.00",
-  "GSI2pk": "MD-22204.R00.00",
-  "GSI2sk": "waiverrenewal",
-  "lastEventTimestamp": 1697474521363,
-  "parentId": "MD-22204.R00.00",
-  "proposedEffectiveDate": "2023-03-02",
-  "reverseChrono": [
-   {
-    "action": "Submitted",
-    "additionalInformation": "Jan 5 did the rai response for this waiver to verify the migration process.",
-    "attachments": [
-     {
-      "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-      "filename": "PackagelistView_ExcelExport_Issues.xlsx",
-      "s3Key": "1672953505887/PackagelistView_ExcelExport_Issues.xlsx",
-      "title": "Waiver RAI Response",
-      "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3Ac052f1db-9f55-42aa-9d43-2d957bfc754b/1672953505887/PackagelistView_ExcelExport_Issues.xlsx"
-     }
-    ],
-    "currentStatus": "Submitted",
-    "eventTimestamp": 1672953510479,
-    "timestamp": 1672953510479,
-    "type": "Formal RAI Response"
-   },
-   {
-    "action": "Submitted",
-    "additionalInformation": "test",
-    "attachments": [
-     {
-      "contentType": "image/jpeg",
-      "filename": "picture.jpg",
-      "s3Key": "1672269887538/picture.jpg",
-      "title": "1915(b)(4) FFS Selective Contracting (Streamlined) waiver application pre-print (Initial, Renewal, Amendment)",
-      "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A30413432-e223-4a6d-bfe1-7ed87236ff55/1672269887538/picture.jpg"
-     }
-    ],
-    "currentStatus": "Submitted",
-    "eventTimestamp": 1672269888263,
-    "timestamp": 1672269888263,
-    "type": "Initial Package"
-   }
-  ],
-  "reviewTeam": [
-   "Test Test"
-  ],
-  "reviewTeamEmailList": [
-  ],
   "subject": "OneMac Connection test",
+  "reviewTeamEmailList": [],
+  "reviewTeam": [
+    "Test Test"
+  ],
+  "proposedEffectiveDate": "2023-03-02",
+  "GSI1sk": "MD-22204.R01.00",
   "submissionTimestamp": 1672269888263,
+  "GSI2sk": "waiverrenewal",
+  "waiverAuthority": "1915(b)",
   "submitterEmail": "mdstateonemac@gmail.com",
-  "submitterName": "MDSTATE SUBMITTERNK",
-  "waiverAuthority": "1915(b)"
- },
+  "approvedEffectiveDate": "2023-03-02",
+  "sk": "Package",
+  "lastEventTimestamp": 1697738313692,
+  "componentType": "waiverrenewal",
+  "currentStatus": "RAI Response Withdraw Enabled",
+  "parentId": "MD-22204.R00.00",
+  "reverseChrono": [
+    {
+      "additionalInformation": "Jan 5 did the rai response for this waiver to verify the migration process.",
+      "attachments": [
+        {
+          "s3Key": "1672953505887/PackagelistView_ExcelExport_Issues.xlsx",
+          "filename": "PackagelistView_ExcelExport_Issues.xlsx",
+          "title": "Waiver RAI Response",
+          "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+          "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3Ac052f1db-9f55-42aa-9d43-2d957bfc754b/1672953505887/PackagelistView_ExcelExport_Issues.xlsx"
+        }
+      ],
+      "currentStatus": "RAI Response Withdraw Enabled",
+      "action": "Submitted",
+      "type": "Formal RAI Response",
+      "timestamp": 1672953510479,
+      "eventTimestamp": 1697738313692
+    },
+    {
+      "additionalInformation": "test",
+      "attachments": [
+        {
+          "s3Key": "1672269887538/picture.jpg",
+          "filename": "picture.jpg",
+          "title": "1915(b)(4) FFS Selective Contracting (Streamlined) waiver application pre-print (Initial, Renewal, Amendment)",
+          "contentType": "image/jpeg",
+          "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A30413432-e223-4a6d-bfe1-7ed87236ff55/1672269887538/picture.jpg"
+        }
+      ],
+      "currentStatus": "Submitted",
+      "action": "Submitted",
+      "type": "Initial Package",
+      "timestamp": 1672269888263,
+      "eventTimestamp": 1672269888263
+    }
+  ],
+  "GSI2pk": "MD-22204.R00.00",
+  "GSI1pk": "OneMAC#waiver",
+  "adminChanges": [
+    {
+      "changeReason": "State requested that they be able to withdraw - automated testing",
+      "changeTimestamp": 1697738313692,
+      "changeMade": "Systemadmin Nightwatch has enabled State package action to withdraw Formal RAI Response"
+    }
+  ],
+  "cpocName": "Chester Tester",
+  "componentId": "MD-22204.R01.00",
+  "description": "pending-rai ",
+  "cpocEmail": "\"Tester, Chester (CPOC)\" <chesterT@example.gov>",
+  "pk": "MD-22204.R01.00",
+  "submitterName": "MDSTATE SUBMITTERNK"
+},
 {
   "PRIORITY_COMPLEXITY": null,
   "STATES": [
@@ -53918,7 +53929,7 @@
     "CALL_HELD": true,
     "TEMPLATE_ISSUES_RESOLVED": null,
     "ALERT_MILESTONE2_DAYS": null,
-    "SUMMARY_MEMO": "pending-rai",
+    "SUMMARY_MEMO": "pending-rai ",
     "SPW_STATUS_ID": 11,
     "BUDGET_NEUTRALITY_ESTABLISHED_FLAG": false,
     "FISCAL_QUARTER": null,
