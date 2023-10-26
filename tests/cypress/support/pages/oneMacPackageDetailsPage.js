@@ -25,6 +25,8 @@ const enableRAIResponseWithdrawAction =
   "//a[text()='Enable Formal RAI Response Withdraw']";
 const detailSection =
   "//section[@class='detail-section']//h2[contains(.,'Details')]";
+const disableRAIResponseWithdrawAction =
+  "//a[text()='Disable Formal RAI Response Withdraw']";
 const CHIPSPAIDHeader = "//h3[contains(text(),'SPA ID')]";
 const typeHeader = "//h3[contains(text(),'Type')]";
 const parentWaiverNumberHeader =
@@ -127,6 +129,11 @@ export class oneMacPackageDetailsPage {
   }
   clickRespondToRAIAction() {
     cy.xpath(respondToRAIAction).click();
+  }
+  verifyDisableRAIResponseWithdrawActionExists() {
+    cy.xpath(disableRAIResponseWithdrawAction)
+      .scrollIntoView()
+      .should("be.visible");
   }
   verifyDetailSectionExists() {
     cy.xpath(detailSection).should("be.visible");
