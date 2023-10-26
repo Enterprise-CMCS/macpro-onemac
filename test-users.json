@@ -1,0 +1,309 @@
+[
+    {
+        "email": "k.grue.cmsapprover@gmail.com",
+        "cms_roles": "notaonemacrole,anothernononemacrole",
+        "ismemberof": "cn=CARTS_Group_Val,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CARTS_Group_Val_Admin,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP_ADMIN,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=EUA_USER,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_D,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_V,ou=Groups,dc=cms,dc=hhs,dc=gov",
+        "firstName": "KristinCMS",
+        "lastName": "GrueRoleApp"
+    },{
+        "email": "helpdesk@notreal.com",
+        "cms_roles": "onemac-helpdesk",
+        "ismemberof": "cn=CARTS_Group_Val,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CARTS_Group_Val_Admin,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP_ADMIN,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=EUA_USER,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_D,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_V,ou=Groups,dc=cms,dc=hhs,dc=gov",
+        "firstName": "ValenciaHelp",
+        "lastName": "McMurrayDesk"
+    },{
+        "email": "k.grue.stateuser@gmail.com",
+        "cms_roles": "onemac-state-user",
+        "ismemberof": "cn=CARTS_Group_Val,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CARTS_Group_Val_Admin,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP_ADMIN,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=EUA_USER,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_D,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_V,ou=Groups,dc=cms,dc=hhs,dc=gov",
+        "firstName": "KristinState",
+        "lastName": "GrueSubmitter"
+    },{
+        "email": "helpdesk2@notreal.com",
+        "cms_roles": "onemac-helpdesk,notaonemacrole,anothernononemacrole",
+        "ismemberof": "cn=CARTS_Group_Val,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CARTS_Group_Val_Admin,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP_ADMIN,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=EUA_USER,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_D,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_V,ou=Groups,dc=cms,dc=hhs,dc=gov",
+        "firstName": "KristinHelp",
+        "lastName": "GrueDesk"
+    },{
+        "email": "k.grue.stateadmn@gmail.com",
+        "cms_roles": "notaonemacrole,onemac-state-user,anothernononemacrole",
+        "ismemberof": "cn=CARTS_Group_Val,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CARTS_Group_Val_Admin,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP_ADMIN,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=EUA_USER,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_D,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_V,ou=Groups,dc=cms,dc=hhs,dc=gov",
+        "firstName": "KristinState",
+        "lastName": "GrueAdmin"
+    },{
+        "email": "macproemailnotification@gmail.com",
+        "cms_roles": "notaonemacrole,onemac-state-user,anothernononemacrole",
+        "ismemberof": "cn=CARTS_Group_Val,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CARTS_Group_Val_Admin,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP_ADMIN,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=EUA_USER,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_D,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_V,ou=Groups,dc=cms,dc=hhs,dc=gov",
+        "firstName": "Test",
+        "lastName": "User"
+    },
+    {
+        "email": "statesubmitterunregistered@cms.hhs.local",
+        "role": "statesubmitter",
+        "cms_roles": "onemac-state-user",
+        "ismemberof": "cn=CARTS_Group_Val,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CARTS_Group_Val_Admin,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP_ADMIN,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=EUA_USER,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_D,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_V,ou=Groups,dc=cms,dc=hhs,dc=gov",
+        "firstName": "Ulysses",
+        "lastName": "Unregistered"
+    },
+    {
+        "email": "statesystemadminunregistered@cms.hhs.local",
+        "role": "statesystemadmin",
+        "cms_roles": "onemac-state-user",
+        "ismemberof": "cn=CARTS_Group_Val,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CARTS_Group_Val_Admin,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP_ADMIN,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=EUA_USER,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_D,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_V,ou=Groups,dc=cms,dc=hhs,dc=gov",
+        "firstName": "Umberta",
+        "lastName": "Unregistered"
+    },
+    {
+        "email": "cmsroleapproverunregistered@cms.hhs.local",
+        "role": "cmsroleapprover",
+        "cms_roles": "notaonemacrole,anothernononemacrole",
+        "ismemberof": "cn=CARTS_Group_Val,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CARTS_Group_Val_Admin,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP_ADMIN,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=EUA_USER,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_D,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_V,ou=Groups,dc=cms,dc=hhs,dc=gov",
+        "firstName": "Unita",
+        "lastName": "Unregistered"
+    },
+    {
+        "email": "cmsreviewerunregistered@cms.hhs.local",
+        "role": "cmsreviewer",
+        "cms_roles": "notaonemacrole,anothernononemacrole",
+        "ismemberof": "cn=CARTS_Group_Val,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CARTS_Group_Val_Admin,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP_ADMIN,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=EUA_USER,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_D,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_V,ou=Groups,dc=cms,dc=hhs,dc=gov",
+        "firstName": "Upton",
+        "lastName": "Unregistered"
+    },
+    {
+        "email": "helpdeskunregistered@cms.hhs.local",
+        "role": "helpdesk",
+        "cms_roles": "onemac-helpdesk",
+        "ismemberof": "cn=CARTS_Group_Val,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CARTS_Group_Val_Admin,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP_ADMIN,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=EUA_USER,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_D,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_V,ou=Groups,dc=cms,dc=hhs,dc=gov",
+        "firstName": "Ursula",
+        "lastName": "Unregistered"
+    },
+    {
+        "email": "stateSUBMITTERactive@cms.hhs.local",
+        "role": "statesubmitter",
+        "cms_roles": "onemac-state-user",
+        "ismemberof": "cn=CARTS_Group_Val,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CARTS_Group_Val_Admin,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP_ADMIN,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=EUA_USER,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_D,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_V,ou=Groups,dc=cms,dc=hhs,dc=gov",
+        "firstName": "Thiswill",
+        "lastName": "Notshowupintheapp"
+    },
+    {
+        "email": "cmsreviewerrevoked@cms.hhs.local",
+        "role": "cmsreviewer",
+        "cms_roles": "notaonemacrole,anothernononemacrole",
+        "ismemberof": "cn=CARTS_Group_Val,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CARTS_Group_Val_Admin,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP_ADMIN,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=EUA_USER,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_D,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_V,ou=Groups,dc=cms,dc=hhs,dc=gov",
+        "firstName": "Ronald",
+        "lastName": "Revoked"
+    },
+    {
+        "email": "statesystemadmindenied@cms.hhs.local",
+        "role": "statesystemadmin",
+        "cms_roles": "onemac-state-user",
+        "ismemberof": "cn=CARTS_Group_Val,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CARTS_Group_Val_Admin,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP_ADMIN,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=EUA_USER,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_D,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_V,ou=Groups,dc=cms,dc=hhs,dc=gov",
+        "firstName": "Daniel",
+        "lastName": "Denied"
+    },
+    {
+        "email": "helpdeskdenied@cms.hhs.local",
+        "role": "helpdesk",
+        "cms_roles": "onemac-helpdesk",
+        "ismemberof": "cn=CARTS_Group_Val,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CARTS_Group_Val_Admin,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP_ADMIN,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=EUA_USER,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_D,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_V,ou=Groups,dc=cms,dc=hhs,dc=gov",
+        "firstName": "David",
+        "lastName": "Denied"
+    },
+    {
+        "email": "statesystemadminactivemi@cms.hhs.local",
+        "role": "statesystemadmin",
+        "cms_roles": "onemac-state-user",
+        "ismemberof": "cn=CARTS_Group_Val,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CARTS_Group_Val_Admin,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP_ADMIN,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=EUA_USER,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_D,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_V,ou=Groups,dc=cms,dc=hhs,dc=gov",
+        "firstName": "Abby",
+        "lastName": "Active"
+    },
+    {
+        "email": "cmsreviewer@nightwatch.test",
+        "role": "cmsreviewer",
+        "cms_roles": "notaonemacrole,anothernononemacrole",
+        "ismemberof": "cn=CARTS_Group_Val,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CARTS_Group_Val_Admin,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP_ADMIN,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=EUA_USER,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_D,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_V,ou=Groups,dc=cms,dc=hhs,dc=gov",
+        "firstName": "CMSReviewer",
+        "lastName": "Nightwatch"
+    },
+    {
+        "email": "cmsreviewerpending@cms.hhs.local",
+        "role": "cmsreviewer",
+        "cms_roles": "notaonemacrole,anothernononemacrole",
+        "ismemberof": "cn=CARTS_Group_Val,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CARTS_Group_Val_Admin,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP_ADMIN,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=EUA_USER,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_D,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_V,ou=Groups,dc=cms,dc=hhs,dc=gov",
+        "firstName": "Pamela",
+        "lastName": "Pending"
+    },
+    {
+        "email": "statesubmitter@nightwatch.test",
+        "role": "statesubmitter",
+        "cms_roles": "onemac-state-user",
+        "ismemberof": "cn=CARTS_Group_Val,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CARTS_Group_Val_Admin,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP_ADMIN,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=EUA_USER,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_D,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_V,ou=Groups,dc=cms,dc=hhs,dc=gov",
+        "firstName": "StateSubmitter",
+        "lastName": "Nightwatch"
+    },
+    {
+        "email": "helpinghands@cms.hhs.local",
+        "role": "helpdesk",
+        "cms_roles": "onemac-helpdesk",
+        "ismemberof": "cn=CARTS_Group_Val,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CARTS_Group_Val_Admin,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP_ADMIN,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=EUA_USER,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_D,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_V,ou=Groups,dc=cms,dc=hhs,dc=gov",
+        "firstName": "Helping",
+        "lastName": "Hands"
+    },
+    {
+        "email": "cmsroleapprover@nightwatch.test",
+        "role": "cmsroleapprover",
+        "cms_roles": "notaonemacrole,anothernononemacrole",
+        "ismemberof": "cn=CARTS_Group_Val,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CARTS_Group_Val_Admin,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP_ADMIN,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=EUA_USER,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_D,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_V,ou=Groups,dc=cms,dc=hhs,dc=gov",
+        "firstName": "CMSroleapprover",
+        "lastName": "Nightwatch"
+    },
+    {
+        "email": "cmsroleapproveractive@cms.hhs.local",
+        "role": "cmsroleapprover",
+        "cms_roles": "notaonemacrole,anothernononemacrole",
+        "ismemberof": "cn=CARTS_Group_Val,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CARTS_Group_Val_Admin,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP_ADMIN,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=EUA_USER,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_D,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_V,ou=Groups,dc=cms,dc=hhs,dc=gov",
+        "firstName": "Arnold",
+        "lastName": "Active"
+    },
+    {
+        "email": "statesystemadmin@nightwatch.test",
+        "role": "statesystemadmin",
+        "cms_roles": "onemac-state-user",
+        "ismemberof": "cn=CARTS_Group_Val,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CARTS_Group_Val_Admin,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP_ADMIN,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=EUA_USER,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_D,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_V,ou=Groups,dc=cms,dc=hhs,dc=gov",
+        "firstName": "Statesystemadmin",
+        "lastName": "Nightwatch"
+    },
+    {
+        "email": "statesystemadminrevoked@cms.hhs.local",
+        "role": "statesystemadmin",
+        "cms_roles": "onemac-state-user",
+        "ismemberof": "cn=CARTS_Group_Val,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CARTS_Group_Val_Admin,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP_ADMIN,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=EUA_USER,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_D,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_V,ou=Groups,dc=cms,dc=hhs,dc=gov",
+        "firstName": "Ricky",
+        "lastName": "Revoked"
+    },
+    {
+        "email": "cmsroleapproverrevoked@cms.hhs.local",
+        "role": "cmsroleapprover",
+        "cms_roles": "notaonemacrole,anothernononemacrole",
+        "ismemberof": "cn=CARTS_Group_Val,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CARTS_Group_Val_Admin,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP_ADMIN,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=EUA_USER,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_D,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_V,ou=Groups,dc=cms,dc=hhs,dc=gov",
+        "firstName": "Rhonda",
+        "lastName": "Revoked"
+    },
+    {
+        "email": "statesubmitterdenied@cms.hhs.local",
+        "role": "statesubmitter",
+        "cms_roles": "onemac-state-user",
+        "ismemberof": "cn=CARTS_Group_Val,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CARTS_Group_Val_Admin,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP_ADMIN,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=EUA_USER,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_D,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_V,ou=Groups,dc=cms,dc=hhs,dc=gov",
+        "firstName": "Darrell",
+        "lastName": "Denied"
+    },
+    {
+        "email": "helpdesk@nightwatch.test",
+        "role": "helpdesk",
+        "cms_roles": "onemac-helpdesk",
+        "ismemberof": "cn=CARTS_Group_Val,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CARTS_Group_Val_Admin,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP_ADMIN,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=EUA_USER,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_D,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_V,ou=Groups,dc=cms,dc=hhs,dc=gov",
+        "firstName": "Helpdesk",
+        "lastName": "Nightwatch"
+    },
+    {
+        "email": "statesubmitterrevoked@cms.hhs.local",
+        "role": "statesubmitter",
+        "cms_roles": "onemac-state-user",
+        "ismemberof": "cn=CARTS_Group_Val,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CARTS_Group_Val_Admin,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP_ADMIN,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=EUA_USER,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_D,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_V,ou=Groups,dc=cms,dc=hhs,dc=gov",
+        "firstName": "Randy",
+        "lastName": "Revoked"
+    },
+    {
+        "email": "cmsreviewerdenied@cms.hhs.local",
+        "role": "cmsreviewer",
+        "cms_roles": "notaonemacrole,anothernononemacrole",
+        "ismemberof": "cn=CARTS_Group_Val,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CARTS_Group_Val_Admin,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP_ADMIN,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=EUA_USER,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_D,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_V,ou=Groups,dc=cms,dc=hhs,dc=gov",
+        "firstName": "Donny",
+        "lastName": "Denied"
+    },
+    {
+        "email": "helpdeskactive@cms.hhs.local",
+        "role": "helpdesk",
+        "cms_roles": "onemac-helpdesk",
+        "ismemberof": "cn=CARTS_Group_Val,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CARTS_Group_Val_Admin,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP_ADMIN,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=EUA_USER,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_D,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_V,ou=Groups,dc=cms,dc=hhs,dc=gov",
+        "firstName": "Arthur",
+        "lastName": "Active"
+    },
+    {
+        "email": "cmsroleapproverpending@cms.hhs.local",
+        "role": "cmsroleapprover",
+        "firstName": "Peter",
+        "lastName": "Pending"
+    },
+    {
+        "email": "statesystemadminactivemi2@cms.hhs.local",
+        "role": "statesystemadmin",
+        "cms_roles": "onemac-state-user",
+        "ismemberof": "cn=CARTS_Group_Val,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CARTS_Group_Val_Admin,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP_ADMIN,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=EUA_USER,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_D,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_V,ou=Groups,dc=cms,dc=hhs,dc=gov",
+        "firstName": "Anthony",
+        "lastName": "Active"
+    },
+    {
+        "email": "helpdeskpending@cms.hhs.local",
+        "role": "helpdesk",
+        "cms_roles": "onemac-helpdesk",
+        "ismemberof": "cn=CARTS_Group_Val,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CARTS_Group_Val_Admin,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP_ADMIN,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=EUA_USER,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_D,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_V,ou=Groups,dc=cms,dc=hhs,dc=gov",
+        "firstName": "Perry",
+        "lastName": "Pending"
+    },
+    {
+        "email": "cmsrevieweractive@cms.hhs.local",
+        "role": "cmsreviewer",
+        "cms_roles": "notaonemacrole,anothernononemacrole",
+        "ismemberof": "cn=CARTS_Group_Val,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CARTS_Group_Val_Admin,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP_ADMIN,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=EUA_USER,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_D,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_V,ou=Groups,dc=cms,dc=hhs,dc=gov",
+        "firstName": "Amanda",
+        "lastName": "Active"
+    },
+    {
+        "email": "statesystemadminpending@cms.hhs.local",
+        "role": "statesystemadmin",
+        "cms_roles": "onemac-state-user",
+        "ismemberof": "cn=CARTS_Group_Val,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CARTS_Group_Val_Admin,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP_ADMIN,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=EUA_USER,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_D,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_V,ou=Groups,dc=cms,dc=hhs,dc=gov",
+        "firstName": "Patricia",
+        "lastName": "Pending"
+    },
+    {
+        "email": "systemadmin@nightwatch.test",
+        "role": "systemadmin",
+        "cms_roles": "onemac-state-user",
+        "ismemberof": "cn=CARTS_Group_Val,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CARTS_Group_Val_Admin,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP_ADMIN,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=EUA_USER,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_D,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_V,ou=Groups,dc=cms,dc=hhs,dc=gov",
+        "firstName": "Systemadmin",
+        "lastName": "Nightwatch"
+    },
+    {
+        "email": "statesubmitterpending@cms.hhs.local",
+        "role": "statesubmitter",
+        "cms_roles": "onemac-state-user",
+        "ismemberof": "cn=CARTS_Group_Val,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CARTS_Group_Val_Admin,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP_ADMIN,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=EUA_USER,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_D,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_V,ou=Groups,dc=cms,dc=hhs,dc=gov",
+        "firstName": "Pauline",
+        "lastName": "Pending"
+    },
+    {
+        "email": "statesubmitteractive@cms.hhs.local",
+        "role": "statesubmitter",
+        "cms_roles": "onemac-state-user",
+        "ismemberof": "cn=CARTS_Group_Val,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CARTS_Group_Val_Admin,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP_ADMIN,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=EUA_USER,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_D,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_V,ou=Groups,dc=cms,dc=hhs,dc=gov",
+        "firstName": "Angie",
+        "lastName": "Active"
+    },
+    {
+        "email": "helpdeskrevoked@cms.hhs.local",
+        "role": "helpdesk",
+        "cms_roles": "onemac-helpdesk",
+        "ismemberof": "cn=CARTS_Group_Val,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CARTS_Group_Val_Admin,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP_ADMIN,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=EUA_USER,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_D,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_V,ou=Groups,dc=cms,dc=hhs,dc=gov",
+        "firstName": "Raymond",
+        "lastName": "Revoked"
+    },
+    {
+        "email": "cmsroleapproverdenied@cms.hhs.local",
+        "role": "cmsroleapprover",
+        "cms_roles": "notaonemacrole,anothernononemacrole",
+        "ismemberof": "cn=CARTS_Group_Val,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CARTS_Group_Val_Admin,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP_ADMIN,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=EUA_USER,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_D,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_V,ou=Groups,dc=cms,dc=hhs,dc=gov",
+        "firstName": "Debbie",
+        "lastName": "Denied"
+    }
+]
