@@ -1,6 +1,7 @@
 export const medicaidSPAWithdraw = {
   componentType: "medicaidspawithdraw",
   typeLabel: "Medicaid SPA Withdraw Request",
+  packageLabel: "Medicaid SPA",
   idLabel: "SPA ID",
   idRegex:
     "(^[A-Z]{2}-[0-9]{2}-[0-9]{4}-[a-zA-Z0-9]{1,4}$)|(^[A-Z]{2}-[0-9]{2}-[0-9]{4}$)",

@@ -382,15 +382,24 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
       event.preventDefault();
       if (isSubmissionReady && !limitSubmit.current) {
         if (formConfig.confirmSubmit) {
+          const confirmHeading: string = formConfig.confirmSubmit.buildHeading
+            ? formConfig.confirmSubmit.buildHeading(
+                formConfig.packageLabel ?? "this"
+              )
+            : formConfig.confirmSubmit.confirmSubmitHeading ??
+              "Placeholder heading";
           const confirmMessage: JSX.Element | string = formConfig.confirmSubmit
             .buildMessage
-            ? formConfig.confirmSubmit.buildMessage(oneMacFormData.componentId)
+            ? formConfig.confirmSubmit.buildMessage(
+                oneMacFormData.componentId,
+                formConfig.packageLabel ?? ""
+              )
             : formConfig.confirmSubmit.confirmSubmitMessage ??
               "Placeholder message";
 
           confirmAction &&
             confirmAction(
-              formConfig.confirmSubmit.confirmSubmitHeading,
+              confirmHeading,
               formConfig.confirmSubmit.confirmSubmitYesButton ?? "Yes, Submit",
               "Cancel",
               confirmMessage,
