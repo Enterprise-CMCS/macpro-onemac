@@ -17,6 +17,7 @@ export type OneMACFormConfig = {
   idFAQLink?: string;
   pageTitle?: string;
   introJSX?: JSX.Element;
+  buildIntroJSX?: (packageType: string) => JSX.Element;
   addlIntroJSX?: JSX.Element;
   detailsHeader?: string;
   detailsHeaderFull?: string;
@@ -214,6 +215,14 @@ export const buildMustNotExistMessage = (formConfig: OneMACFormConfig) => ({
   statusMessage: `According to our records, this ${formConfig.idLabel} already exists. Please check the ${formConfig.idLabel} and try entering it again.`,
 });
 
+export const defaultWithdrawIntroJSX = (packageLabel: string) => (
+  <p id="form-intro">
+    Complete this action to withdraw this {packageLabel} package. Once
+    completed, you will not be able to resubmit the {packageLabel} package or
+    undo this action.
+  </p>
+);
+
 export const defaultWithdrawConfig = {
   introJSX: (
     <p id="form-intro">
@@ -224,6 +233,7 @@ export const defaultWithdrawConfig = {
       email.
     </p>
   ),
+  buildIntroJSX: defaultWithdrawIntroJSX,
   confirmSubmit: defaultConfirmSubmitWithdraw,
   attachmentsTitle: "Upload Supporting Documentation",
   attachmentIntroJSX: (

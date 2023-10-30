@@ -437,26 +437,29 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
             {formConfig.detailsHeaderFull ??
               formConfig.detailsHeader + " Details"}
           </h2>
-          {formConfig.introJSX ?? (
-            <>
-              <p>
-                <span className="required-mark">*</span>
-                indicates required field.
-              </p>
-              <p id="form-intro">
-                Once you submit this form, a confirmation email is sent to you
-                and to CMS. CMS will use this content to review your package,
-                and you will not be able to edit this form. If CMS needs any
-                additional information, they will follow up by email.
-                <b>
-                  {" "}
-                  If you leave this page, you will lose your progress on this
-                  form.
-                </b>
-                {formConfig.addlIntroJSX ?? ""}
-              </p>
-            </>
-          )}
+          {formConfig.buildIntroJSX
+            ? formConfig.buildIntroJSX(formConfig.packageLabel ?? "this")
+            : formConfig.introJSX ?? (
+                <>
+                  <p>
+                    <span className="required-mark">*</span>
+                    indicates required field.
+                  </p>
+                  <p id="form-intro">
+                    Once you submit this form, a confirmation email is sent to
+                    you and to CMS. CMS will use this content to review your
+                    package, and you will not be able to edit this form. If CMS
+                    needs any additional information, they will follow up by
+                    email.
+                    <b>
+                      {" "}
+                      If you leave this page, you will lose your progress on
+                      this form.
+                    </b>
+                    {formConfig.addlIntroJSX ?? ""}
+                  </p>
+                </>
+              )}
           {formConfig.titleLabel && (
             <TextField
               name="title"
