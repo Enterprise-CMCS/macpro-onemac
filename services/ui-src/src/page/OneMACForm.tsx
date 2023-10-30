@@ -415,6 +415,7 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
     [
       isSubmissionReady,
       formConfig.confirmSubmit,
+      formConfig.packageLabel,
       confirmAction,
       doSubmit,
       oneMacFormData.componentId,
