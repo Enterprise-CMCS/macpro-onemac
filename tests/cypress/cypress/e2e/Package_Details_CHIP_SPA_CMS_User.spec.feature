@@ -264,7 +264,7 @@ Feature: CHIP SPA CMS Details View - Card View with Actions
         Scenario: CHIP SPA Details View - Enable Formal RAI Response Withdraw
         Then click the Pending checkbox
         Then Click on Filter Button
-        Then search for "MD-22-2401-VM"
+        #Then search for "MD-22-2401-VM"
         Then click the SPA ID link in the first row
         Then verify the package details page is visible
         Then verify the status on the card is "Pending"

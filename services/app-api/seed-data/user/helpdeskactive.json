@@ -1,0 +1,47 @@
+[  {
+    "dataFrom": "app-api/seed-data/user/helpdeskactive.json",
+    "notes": "this test user account (available through Development Login) provides insight into the active helpdesk user experience",
+    "GSI1pk": "helpdesk#N/A",
+    "sk": "ContactInfo",
+    "GSI1sk": "helpinghands@cms.hhs.local",
+    "email": "helpinghands@cms.hhs.local",
+    "fullName": "Helping Hands",
+    "pk": "helpinghands@cms.hhs.local"
+  },
+  {
+    "doneByName": "Teresa Test",
+    "status": "active",
+    "Latest": "1",
+    "GSI1sk": "Boss",
+    "email": "helpinghands@cms.hhs.local",
+    "fullName": "Helping Hands",
+    "doneByEmail": "systemadmintest@cms.hhs.local",
+    "GSI1pk": "USER",
+    "GSI2pk": "helpdesk#N/A",
+    "GSI2sk": "active",
+    "date": 1617149287000,
+    "role": "helpdesk",
+    "territory": "N/A",
+    "sk": "v0#helpdesk#N/A",
+    "pk": "helpinghands@cms.hhs.local"
+  },
+  {
+    "doneByEmail": "helpinghands@cms.hhs.local",
+    "doneByName": "Helping Hands",
+    "date": 1617149286000,
+    "role": "helpdesk",
+    "territory": "N/A",
+    "status": "pending",
+    "sk": "v1#helpdesk#N/A",
+    "pk": "helpinghands@cms.hhs.local"
+  },
+  {
+    "doneByEmail": "systemadmintest@cms.hhs.local",
+    "doneByName": "Teresa Test",
+    "date": 1617149287000,
+    "role": "helpdesk",
+    "territory": "N/A",
+    "status": "active",
+    "sk": "v2#helpdesk#N/A",
+    "pk": "helpinghands@cms.hhs.local"
+  }]

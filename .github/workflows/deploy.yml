@@ -237,10 +237,13 @@ jobs:
           pushd services
           echo "::notice::Endpoint URL - `./output.sh ui ApplicationEndpointUrl $STAGE_PREFIX$branch_name`"
           popd
+      - name: Consolidate Seed Data
+        if: ${{ env.branch_name != 'production'}}
+        run: cd services/app-api/seed-data && ./buildSeedData.py .
       - name: Seed Data
         # this "resets" any data explicitly provided in the seed files to what
         # is in the committed code
-        if: ${{ env.branch_name != 'production' && env.branch_name != 'master' }}
+        if: ${{ env.branch_name != 'production' }}
         env:
           SLS_DEBUG: 'true'
           BRANCH: ${{ env.STAGE_PREFIX }}${{ env.branch_name }}
