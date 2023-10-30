@@ -6176,50 +6176,6 @@
     "pk": "MD-12958.R01.00",
     "RO_ANALYST": null
   },
-  {
-    "pk": "MD-10330.R01.00",
-    "sk": "Package",
-    "cpocName": "Chester Tester",
-    "reviewTeam": ["Lester Tester", "Super Tester", "Jimmy Tester"],
-    "attachments": [
-     {
-      "contentType": "application/pdf",
-      "filename": "Attachment 3.1-A, #4b, Page 3f Clean.pdf",
-      "s3Key": "1652815530531/Attachment 3.1-A, #4b, Page 3f Clean.pdf",
-      "title": "1915(b)(4) FFS Selective Contracting (Streamlined) and 1915(b) Comprehensive (Capitated) Waiver Independent Assessment (first two renewals only)",
-      "url": "https://uploads-oy2-17509-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Ac84c445b-a748-47dc-b39a-b06c3075b5a5/1652815530531/Attachment%203.1-A%2C%20%234b%2C%20Page%203f%20Clean.pdf"
-     }
-    ],
-    "clockEndTimestamp": 1660591531339,
-    "componentId": "MD-10330.R01.00",
-    "componentType": "waiverrenewal",
-    "currentStatus": "Submitted",
-    "GSI1pk": "OneMAC#waiver",
-    "GSI1sk": "MD-10330.R01.00",
-    "lastEventTimestamp": 1673472581869,
-    "proposedEffectiveDate": "-- --",
-    "raiResponses": [
-     {
-      "additionalInformation": "Testing the RAI Response connections to Waivers",
-      "attachments": [
-       {
-        "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-        "filename": "OneMACInactivated.xlsx",
-        "s3Key": "1673472581115/OneMACInactivated.xlsx",
-        "title": "Waiver RAI Response",
-        "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1673472581115/OneMACInactivated.xlsx"
-       }
-      ],
-      "submissionTimestamp": 1673472581869
-     }
-    ],
-    "submissionTimestamp": 1652815531339,
-    "submitterEmail": "statesubmitter@nightwatch.test",
-    "submitterName": "StateSubmitter Nightwatch",
-    "waiverAuthority": "1915(b)(4)",
-    "waiverExtensions": [
-    ]
-   },
    {
     "clockEndTimestamp": 1680182633554,
     "componentType": "waiverrenewal",
