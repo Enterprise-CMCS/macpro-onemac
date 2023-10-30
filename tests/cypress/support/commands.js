@@ -76,7 +76,7 @@ Cypress.Commands.add("checkA11yOfPage", () => {
   cy.checkA11y(
     null,
     {
-      values: ["wcag2a", "wcag2aa", "wcag2aaa"],
+      values: ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"],
       includedImpacts: ["minor", "moderate", "serious", "critical"], // options: "minor", "moderate", "serious", "critical"
     },
     terminalLog
