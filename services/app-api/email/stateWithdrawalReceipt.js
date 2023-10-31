@@ -47,15 +47,11 @@ export const stateWithdrawalReceipt = async (data, config, user) => {
   const stateReceipt = {
     ToAddresses: [],
     CcAddresses: [],
-    Subject: `${config.typeLabel} Package ${data.componentId} Withdraw Request`,
+    Subject: `${config.packageLabel} ${data.componentId} Withdrawal Confirmation`,
     HTML: `
-        <p>The OneMAC submission portal received a request to withdraw a package. You are receiving this email notification as ${
-          data.componentId
-        } was withdrawn by ${user.fullName} (${
-      user.email
-    }). The package will no longer be considered for CMS review.</p>
-        ${formatPackageDetails(data, config)}
-        <p>Thank you!</p>
+        <p>This email is to confirm ${config.packageLabel} ${data.componentId} was withdrawn by ${user.fullName}. 
+        The review of ${config.packageLabel} ${data.componentId} has concluded.
+        </p>
         `,
   };
   try {
