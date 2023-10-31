@@ -539,40 +539,44 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
               ></FileUploader>
             </>
           )}
-          <TextField
-            name="additionalInformation"
-            labelClassName={
-              formConfig.addlInfoRequired ? "addl-info-required" : ""
-            }
-            label={formConfig.addlInfoTitle}
-            labelId="additional-information-label"
-            id="additional-information"
-            hint={
-              formConfig.addlInfoText ??
-              "Add anything else that you would like to share with CMS."
-            }
-            disabled={isSubmitting}
-            fieldClassName="summary-field required"
-            multiline
-            onChange={(e) => {
-              handleInputChange(e);
-            }}
-            value={oneMacFormData.additionalInformation}
-            maxLength={config.MAX_ADDITIONAL_INFO_LENGTH}
-            aria-describedby="character-count"
-            aria-live="off"
-            aria-multiline={true}
-          ></TextField>
-          <span
-            tabIndex={0}
-            id="character-count"
-            aria-label="character-count"
-            aria-live="polite"
-          >
-            {`${
-              4000 - oneMacFormData.additionalInformation.length
-            } characters remaining`}
-          </span>
+          {!formConfig?.noText && (
+            <>
+              <TextField
+                name="additionalInformation"
+                labelClassName={
+                  formConfig.addlInfoRequired ? "addl-info-required" : ""
+                }
+                label={formConfig.addlInfoTitle}
+                labelId="additional-information-label"
+                id="additional-information"
+                hint={
+                  formConfig.addlInfoText ??
+                  "Add anything else that you would like to share with CMS."
+                }
+                disabled={isSubmitting}
+                fieldClassName="summary-field required"
+                multiline
+                onChange={(e) => {
+                  handleInputChange(e);
+                }}
+                value={oneMacFormData.additionalInformation}
+                maxLength={config.MAX_ADDITIONAL_INFO_LENGTH}
+                aria-describedby="character-count"
+                aria-live="off"
+                aria-multiline={true}
+              ></TextField>
+              <span
+                tabIndex={0}
+                id="character-count"
+                aria-label="character-count"
+                aria-live="polite"
+              >
+                {`${
+                  4000 - oneMacFormData.additionalInformation.length
+                } characters remaining`}
+              </span>
+            </>
+          )}
 
           {formConfig.submitInstructionsJSX ?? ""}
 
