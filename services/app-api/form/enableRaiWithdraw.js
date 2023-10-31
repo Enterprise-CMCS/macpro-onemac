@@ -16,7 +16,6 @@ export const enableRaiWithdrawFormConfig = {
   ...defaultFormConfig,
   successResponseCode: RESPONSE_CODE.RAI_RESPONSE_WITHDRAW_ENABLE_SUCCESS,
   ...enableRaiWithdraw,
-  newStatus: Workflow.ONEMAC_STATUS.WITHDRAW_RAI_ENABLED,
   hasAuthorizationToSubmit: (userRole) => {
     return userRole.isCMSUser;
   },

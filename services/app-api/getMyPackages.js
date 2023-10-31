@@ -39,7 +39,7 @@ export const getMyPackages = async (email, group) => {
         ExclusiveStartKey: null,
         ScanIndexForward: false,
         ProjectionExpression:
-          "componentId,componentType,currentStatus,submissionTimestamp,latestRaiResponseTimestamp,submitterName,submitterEmail,waiverAuthority, cpocName, reviewTeam",
+          "componentId,componentType,currentStatus,submissionTimestamp,latestRaiResponseTimestamp,submitterName,submitterEmail,waiverAuthority, cpocName, reviewTeam, subStatus",
       };
       const grouppk = "OneMAC#" + group;
       let paramList = [];
@@ -76,6 +76,7 @@ export const getMyPackages = async (email, group) => {
                 oneItem.componentType,
                 oneItem.currentStatus,
                 !!oneItem.latestRaiResponseTimestamp,
+                oneItem.subStatus,
                 userRoleObj,
                 "package"
               );
