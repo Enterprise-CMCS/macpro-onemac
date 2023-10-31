@@ -166,6 +166,7 @@ export const DetailSection = ({
             <Review heading="Status" className="no-bottom-padding">
               <div className="detail-card-status">{detail.currentStatus}</div>
             </Review>
+            {detail.subStatus && <span>{detail.subStatus}</span>}
             {/* Displays 2nd Clock subtitle under status if status is pending (sans Pending - RAI) and
              latestRaiResponseTimestamp is present */}
             {pageConfig.secondClockStatuses &&

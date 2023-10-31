@@ -314,13 +314,17 @@ export const buildAnyPackage = async (packageId, config) => {
 
     putParams.Item?.reverseChrono.sort((a, b) => b.timestamp - a.timestamp);
 
-    // if the most recent OneMAC event is an enabled RAI Response, lock
-    // the status to "Withdraw RAI Enabled"
+    // if the most recent OneMAC event is an enabled RAI Response,
+    // then set sub status to "Withdraw RAI Enabled"
     if (
       putParams.Item?.reverseChrono[0].currentStatus ===
       ONEMAC_STATUS.WITHDRAW_RAI_ENABLED
-    )
-      putParams.Item.currentStatus = ONEMAC_STATUS.WITHDRAW_RAI_ENABLED;
+    ) {
+      putParams.Item.subStatus = ONEMAC_STATUS.WITHDRAW_RAI_ENABLED;
+    } else {
+      putParams.Item.subStatus = null;
+      delete putParams.Item.subStatus;
+    }
 
     adminChanges.sort((a, b) => b.changeTimestamp - a.changeTimestamp);
     // remove duplicate messages for adminChanges that affect more than one event
