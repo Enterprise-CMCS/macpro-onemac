@@ -27,7 +27,6 @@
 before(() => {
   // root-level hook
   // runs once before all tests
-
   // generate waiver numbers to be used across tests
   // cy.task("generateWaiverNumber", {
   //   filename: "sharedWaiverNumber4",
@@ -39,9 +38,8 @@ before(() => {
   // });
   // cy.task("generateWaiverNumber", { filename: "raiWaiverNumber4", digits: 4 });
   // cy.task("generateWaiverNumber", { filename: "raiWaiverNumber5", digits: 5 });
-
   // waits up to 5 mins for serverless to boot up all services and web page
-  cy.visit("/", { timeout: 60000 * 5 });
+  //cy.visit("/", { timeout: 60000 * 5 });
 });
 
 Cypress.Commands.add("waitForSpinners", () => {
