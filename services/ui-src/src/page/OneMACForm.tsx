@@ -384,7 +384,7 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
         if (formConfig.confirmSubmit) {
           const confirmHeading: string = formConfig.confirmSubmit.buildHeading
             ? formConfig.confirmSubmit.buildHeading(
-                formConfig.packageLabel ?? "this"
+                presetParentTypeNice ?? "this"
               )
             : formConfig.confirmSubmit.confirmSubmitHeading ??
               "Placeholder heading";
@@ -392,7 +392,7 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
             .buildMessage
             ? formConfig.confirmSubmit.buildMessage(
                 oneMacFormData.componentId,
-                formConfig.packageLabel ?? ""
+                presetParentTypeNice ?? ""
               )
             : formConfig.confirmSubmit.confirmSubmitMessage ??
               "Placeholder message";
@@ -415,7 +415,7 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
     [
       isSubmissionReady,
       formConfig.confirmSubmit,
-      formConfig.packageLabel,
+      presetParentTypeNice,
       confirmAction,
       doSubmit,
       oneMacFormData.componentId,
@@ -438,7 +438,7 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
               formConfig.detailsHeader + " Details"}
           </h2>
           {formConfig.buildIntroJSX
-            ? formConfig.buildIntroJSX(formConfig.packageLabel ?? "this")
+            ? formConfig.buildIntroJSX(presetParentTypeNice ?? "this")
             : formConfig.introJSX ?? (
                 <>
                   <p>

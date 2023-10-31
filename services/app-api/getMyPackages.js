@@ -29,7 +29,10 @@ export const getMyPackages = async (email, group) => {
         ? cmsStatusUIMap
         : stateStatusUIMap;
 
-      if (!userRoleObj.canAccessDashboard || territoryList === []) {
+      if (
+        !userRoleObj.canAccessDashboard ||
+        (Array.isArray(territoryList) && territoryList.length === 0)
+      ) {
         throw RESPONSE_CODE.USER_NOT_AUTHORIZED;
       }
 

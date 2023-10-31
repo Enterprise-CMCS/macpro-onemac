@@ -1,5 +1,5 @@
 import dynamoDb from "../libs/dynamodb-lib";
-import { USER_ROLE, USER_STATUS } from "cmscommonlib";
+import { USER_ROLE, USER_STATUS, Workflow } from "cmscommonlib";
 
 export const getAllActiveStateUserEmailAddresses = async (territory) => {
   const stateSubmittingUserRoles = [
@@ -42,13 +42,16 @@ export const getAllActiveStateUserEmailAddresses = async (territory) => {
  * @returns {Object} email parameters in generic format.
  */
 export const stateWithdrawalReceipt = async (data, config, user) => {
+  const parentTypeNice =
+    Workflow.ONEMAC_LABEL[data.parentType] ?? config.typeLabel;
+
   const stateReceipt = {
     ToAddresses: [],
     CcAddresses: [],
-    Subject: `${config.packageLabel} ${data.componentId} Withdrawal Confirmation`,
+    Subject: `${parentTypeNice} ${data.componentId} Withdrawal Confirmation`,
     HTML: `
-        <p>This email is to confirm ${config.packageLabel} ${data.componentId} was withdrawn by ${user.fullName}. 
-        The review of ${config.packageLabel} ${data.componentId} has concluded.
+        <p>This email is to confirm ${parentTypeNice} ${data.componentId} was withdrawn by ${user.fullName}. 
+        The review of ${parentTypeNice} ${data.componentId} has concluded.
         </p>
         `,
   };
