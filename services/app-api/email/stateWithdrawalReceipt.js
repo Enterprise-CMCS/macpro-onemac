@@ -1,8 +1,6 @@
 import dynamoDb from "../libs/dynamodb-lib";
 import { USER_ROLE, USER_STATUS } from "cmscommonlib";
 
-import { formatPackageDetails } from "./formatPackageDetails.js";
-
 export const getAllActiveStateUserEmailAddresses = async (territory) => {
   const stateSubmittingUserRoles = [
     USER_ROLE.STATE_SUBMITTER,
