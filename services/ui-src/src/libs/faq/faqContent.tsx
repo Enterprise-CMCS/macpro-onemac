@@ -5,8 +5,9 @@ import { stateSystemOverviewTranscript } from "./stateSystemOverviewTranscript";
 import { FILE_TYPES, FileTypesFAQListItem } from "../../utils/fileTypes";
 import config from "../../utils/config";
 
-interface QuestionAnswer {
+export interface QuestionAnswer {
   anchorText: string;
+  isOpen: boolean;
   question: string;
   answerJSX: JSX.Element;
 }
@@ -25,6 +26,7 @@ export const oneMACFAQContent: FAQContent[] = [
     qanda: [
       {
         anchorText: "system",
+        isOpen: true,
         question: "Which system should I use for my state’s submission?",
         answerJSX: (
           <>
@@ -48,6 +50,7 @@ export const oneMACFAQContent: FAQContent[] = [
       },
       {
         anchorText: "browsers",
+        isOpen: false,
         question: "What browsers can I use to access the system?",
         answerJSX: (
           <p>
@@ -58,6 +61,7 @@ export const oneMACFAQContent: FAQContent[] = [
       },
       {
         anchorText: "confirm-email",
+        isOpen: false,
         question: "What should we do if we don’t receive a confirmation email?",
         answerJSX: (
           <p>
@@ -72,6 +76,7 @@ export const oneMACFAQContent: FAQContent[] = [
       },
       {
         anchorText: "is-official",
+        isOpen: false,
         question: "Is this considered the official state submission?",
         answerJSX: (
           <p>
@@ -88,6 +93,7 @@ export const oneMACFAQContent: FAQContent[] = [
       },
       {
         anchorText: "onemac-roles",
+        isOpen: false,
         question: "What are the OneMAC user roles?",
         answerJSX: (
           <table className="faq-table">
@@ -134,6 +140,7 @@ export const oneMACFAQContent: FAQContent[] = [
       },
       {
         anchorText: "acceptable-file-formats",
+        isOpen: false,
         question: "What are the kinds of file formats I can upload into OneMAC",
         answerJSX: (
           <section>
@@ -157,6 +164,7 @@ export const oneMACFAQContent: FAQContent[] = [
       },
       {
         anchorText: "onboarding-materials",
+        isOpen: false,
         question: "Onboarding Materials",
         answerJSX: (
           <>
@@ -198,6 +206,7 @@ export const oneMACFAQContent: FAQContent[] = [
     qanda: [
       {
         anchorText: "spa-id-format",
+        isOpen: false,
         question: "What format is used to enter a SPA ID?",
         answerJSX: (
           <>
@@ -221,6 +230,7 @@ export const oneMACFAQContent: FAQContent[] = [
       },
       {
         anchorText: "medicaid-spa-attachments",
+        isOpen: false,
         question: "What are the attachments for a Medicaid SPA?",
         answerJSX: (
           <>
@@ -320,6 +330,7 @@ export const oneMACFAQContent: FAQContent[] = [
       },
       {
         anchorText: "medicaid-spa-rai-attachments",
+        isOpen: false,
         question:
           "What are the attachments for a Medicaid response to Request for Additional Information (RAI)?",
         answerJSX: (
@@ -354,6 +365,7 @@ export const oneMACFAQContent: FAQContent[] = [
       },
       {
         anchorText: "chip-spa-attachments",
+        isOpen: false,
         question: "What are the attachments for a CHIP SPA?",
         answerJSX: (
           <>
@@ -422,6 +434,7 @@ export const oneMACFAQContent: FAQContent[] = [
       },
       {
         anchorText: "chip-spa-rai-attachments",
+        isOpen: false,
         question:
           "What are the attachments for a CHIP SPA response to Request for Additional Information (RAI)?",
         answerJSX: (
@@ -486,6 +499,7 @@ export const oneMACFAQContent: FAQContent[] = [
       },
       {
         anchorText: "public-health-emergency",
+        isOpen: false,
         question:
           "Can I submit SPAs relating to the Public Health Emergency (PHE) in OneMAC?",
         answerJSX: (
@@ -502,6 +516,7 @@ export const oneMACFAQContent: FAQContent[] = [
     qanda: [
       {
         anchorText: "initial-waiver-id-format",
+        isOpen: false,
         question:
           "What format is used to enter a 1915(b) Initial Waiver number?",
         answerJSX: (
@@ -528,6 +543,7 @@ export const oneMACFAQContent: FAQContent[] = [
       },
       {
         anchorText: "waiver-renewal-id-format",
+        isOpen: false,
         question:
           "What format is used to enter a 1915(b) Waiver Renewal number?",
         answerJSX: (
@@ -554,6 +570,7 @@ export const oneMACFAQContent: FAQContent[] = [
       },
       {
         anchorText: "waiver-amendment-id-format",
+        isOpen: false,
         question:
           "What format is used to enter a 1915(b) Waiver Amendment number?",
         answerJSX: (
@@ -581,6 +598,7 @@ export const oneMACFAQContent: FAQContent[] = [
       },
       {
         anchorText: "waiver-id-help",
+        isOpen: false,
         question:
           "Who can I contact to help me figure out the correct 1915(b) Waiver Number?",
         answerJSX: (
@@ -595,6 +613,7 @@ export const oneMACFAQContent: FAQContent[] = [
       },
       {
         anchorText: "waiver-c-id",
+        isOpen: false,
         question: "What format is used to enter a 1915(c) waiver number?",
         answerJSX: (
           <>
@@ -624,6 +643,7 @@ export const oneMACFAQContent: FAQContent[] = [
       },
       {
         anchorText: "waiverb-attachments",
+        isOpen: false,
         question:
           "What attachments are needed to submit a 1915(b) waiver action?",
         answerJSX: (
@@ -707,6 +727,7 @@ export const oneMACFAQContent: FAQContent[] = [
       },
       {
         anchorText: "waiverb-rai-attachments",
+        isOpen: false,
         question:
           "What are the attachments for a 1915(b) Waiver response to Request for Additional Information (RAI)?",
         answerJSX: (
@@ -743,6 +764,7 @@ export const oneMACFAQContent: FAQContent[] = [
       },
       {
         anchorText: "waiver-extension-id-format",
+        isOpen: false,
         question:
           "What format is used to enter a 1915(b) and 1915(c) Temporary Extension number?",
         answerJSX: (
@@ -776,6 +798,7 @@ export const oneMACFAQContent: FAQContent[] = [
       },
       {
         anchorText: "waiver-extension-status",
+        isOpen: false,
         question:
           "Why does the status of my Temporary Extension Request continue to show as 'Submitted'?",
         answerJSX: (
@@ -791,6 +814,7 @@ export const oneMACFAQContent: FAQContent[] = [
       },
       {
         anchorText: "waiverb-extension-attachments",
+        isOpen: false,
         question:
           "What are the attachments for a 1915(b) Waiver - Request for Temporary Extension?",
         answerJSX: (
@@ -826,6 +850,7 @@ export const oneMACFAQContent: FAQContent[] = [
       },
       {
         anchorText: "waiverc-extension-attachments",
+        isOpen: false,
         question:
           "What are the attachments for a 1915(c) Waiver - Request for Temporary Extension",
         answerJSX: (
@@ -861,6 +886,7 @@ export const oneMACFAQContent: FAQContent[] = [
       },
       {
         anchorText: "appk",
+        isOpen: false,
         question: "Can I submit Appendix K amendments in OneMAC?",
         answerJSX: (
           <p>
@@ -871,6 +897,7 @@ export const oneMACFAQContent: FAQContent[] = [
       },
       {
         anchorText: "appk-attachments",
+        isOpen: false,
         question: "What are the attachments for a 1915(c) Appendix K Waiver?",
         answerJSX: (
           <>

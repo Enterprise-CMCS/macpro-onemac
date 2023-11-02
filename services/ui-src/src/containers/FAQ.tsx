@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from "react";
 import PageTitleBar from "../components/PageTitleBar";
 import { helpDeskContact } from "../libs/helpDeskContact";
-import { FAQContent, oneMACFAQContent } from "../libs/faq/faqContent";
+import {
+  QuestionAnswer,
+  FAQContent,
+  oneMACFAQContent,
+} from "../libs/faq/faqContent";
 
-import { Accordion, AccordionItem } from "@cmsgov/design-system";
+import { Accordion, AccordionItem, Button } from "@cmsgov/design-system";
 import { MACCard } from "../components/MACCard";
 
 /** Refactored out for later extraction by cms-ux-lib. However, using this
@@ -37,7 +41,36 @@ export const FAQSection = ({ section }: { section: FAQContent }) => {
 };
 
 const FAQ = () => {
+  const [faqItems, setFaqItems] = useState(oneMACFAQContent);
   const [hash, setHash] = useState(window.location.hash.replace("#", ""));
+
+  const toggleAccordianItem = (anchorText: string) => {
+    const newItems = faqItems.map((section) => {
+      return {
+        sectionTitle: section.sectionTitle,
+        qanda: section.qanda.map((qa) => {
+          const openState =
+            qa.anchorText === anchorText ? !qa.isOpen : qa.isOpen;
+          return { ...qa, isOpen: openState } as QuestionAnswer;
+        }),
+      } as FAQContent;
+    });
+    setFaqItems(newItems);
+  };
+
+  const openAll = () => {
+    console.log("faq Items: ", faqItems);
+    const newItems = faqItems.map((section) => {
+      return {
+        sectionTitle: section.sectionTitle,
+        qanda: section.qanda.map((qa) => {
+          return { ...qa, isOpen: true } as QuestionAnswer;
+        }),
+      } as FAQContent;
+    });
+    console.log("New items: ", newItems);
+    setFaqItems(newItems);
+  };
 
   const hashHandler = () => {
     setHash((prev) => {
@@ -97,7 +130,10 @@ const FAQ = () => {
       <PageTitleBar heading="Frequently Asked Questions" />
       <div className="faq-display" id="top">
         <div id="faq-list">
-          {oneMACFAQContent.map((section, idx) => (
+          <Button className="faqButtonLink" onClick={() => openAll()}>
+            Expand all to search with CTRL+F
+          </Button>
+          {faqItems.map((section, idx) => (
             /** To be replaced with {@link FAQSection} */
             <div key={`faq-section-${idx}`} className="faq-section">
               <h2 className="topic-title">{section.sectionTitle}</h2>
@@ -109,6 +145,10 @@ const FAQ = () => {
                       heading={questionAnswer.question}
                       buttonClassName="accordion-button"
                       contentClassName="accordion-content"
+                      isControlledOpen={questionAnswer.isOpen}
+                      onChange={() =>
+                        toggleAccordianItem(questionAnswer.anchorText)
+                      }
                     >
                       {questionAnswer.answerJSX}
                     </AccordionItem>
