@@ -165,7 +165,17 @@ const PackageList = () => {
   );
 
   const renderStatus = useCallback(
-    ({ value }) => <span className="status-bandage">{value}</span>,
+    ({ value, row }) => (
+      <span className="status-bandage">
+        {value}
+        {row.original.subStatus ? (
+          <>
+            <br />
+            {row.original.subStatus}
+          </>
+        ) : null}
+      </span>
+    ),
     []
   );
 

@@ -279,15 +279,12 @@ export const buildAnyPackage = async (packageId, config) => {
             // than the submission timestamp, yet the status is SUBMITTED
             // (this indicates a disable of the enable)
             if (
-              attributeName === "currentStatus" &&
-              timestamp > anEvent.submissionTimestamp &&
-              anEvent.currentStatus === ONEMAC_STATUS.SUBMITTED
+              (attributeName === "currentStatus" &&
+                timestamp > anEvent.submissionTimestamp &&
+                anEvent.currentStatus === ONEMAC_STATUS.SUBMITTED) ||
+              anEvent.currentStatus === ONEMAC_STATUS.WITHDRAW_RAI_ENABLED
             ) {
-              console.log(
-                "found a disabled RAI Response when currentStatus is: ",
-                putParams.Item.currentStatus
-              );
-              return;
+              anEvent.currentStatus === ONEMAC_STATUS.PENDING;
             }
 
             // update the attribute if this is the latest event
@@ -320,6 +317,7 @@ export const buildAnyPackage = async (packageId, config) => {
       putParams.Item?.reverseChrono[0].currentStatus ===
       ONEMAC_STATUS.WITHDRAW_RAI_ENABLED
     ) {
+      putParams.Item.currentStatus = ONEMAC_STATUS.PENDING;
       putParams.Item.subStatus = ONEMAC_STATUS.WITHDRAW_RAI_ENABLED;
     } else {
       putParams.Item.subStatus = null;
