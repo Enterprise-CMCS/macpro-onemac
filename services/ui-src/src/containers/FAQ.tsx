@@ -59,7 +59,6 @@ const FAQ = () => {
   };
 
   const openAll = () => {
-    console.log("faq Items: ", faqItems);
     const newItems = faqItems.map((section) => {
       return {
         sectionTitle: section.sectionTitle,
@@ -68,7 +67,6 @@ const FAQ = () => {
         }),
       } as FAQContent;
     });
-    console.log("New items: ", newItems);
     setFaqItems(newItems);
   };
 

@@ -10,7 +10,6 @@ export const ROUTES = {
   DETAIL: "/detail",
   USER_MANAGEMENT: "/usermanagement",
   FAQ: "/FAQ",
-  FAQ_OPEN: "/FAQ#open",
   FAQ_ACCEPTED_FILE_TYPES: "/FAQ#acceptable-file-formats",
   FAQ_ATTACHMENTS_MED_SPA: "/FAQ#medicaid-spa-attachments",
   FAQ_ATTACHMENTS_MED_SPA_RAI: "/FAQ#medicaid-spa-rai-attachments",
