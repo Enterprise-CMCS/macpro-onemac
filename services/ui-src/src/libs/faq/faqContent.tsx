@@ -26,7 +26,7 @@ export const oneMACFAQContent: FAQContent[] = [
     qanda: [
       {
         anchorText: "system",
-        isOpen: true,
+        isOpen: false,
         question: "Which system should I use for my state’s submission?",
         answerJSX: (
           <>
