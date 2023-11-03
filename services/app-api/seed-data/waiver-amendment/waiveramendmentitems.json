@@ -9475,7 +9475,7 @@
     "clockEndTimestamp": 1680725910479,
     "componentType": "waiverrai",
     "eventTimestamp": 1676136209000,
-    "currentStatus": "RAI Response Withdraw Enabled",
+    "currentStatus": "Under Review",
     "parentId": "MD-22204.R00.02",
     "attachments": [
       {
@@ -9543,7 +9543,7 @@
     ],
     "lastEventTimestamp": 1690986376374,
     "componentType": "waiveramendment",
-    "currentStatus": "RAI Response Withdraw Enabled",
+    "currentStatus": "Under Review",
     "attachments": [
       {
         "s3Key": "1672269887538/picture.jpg",
@@ -10117,7 +10117,7 @@
    "componentType": "waiveramendment",
    "cpocEmail": "\"Beasley, Michelle (CPOC)\" <Michelle.Beasley@example.com>",
    "cpocName": "Michelle Beasley",
-   "currentStatus": "RAI Response Withdraw Enabled",
+   "currentStatus": "Under Review",
    "description": "RAI response withdrawal test. rebuild",
    "GSI1pk": "OneMAC#waiver",
    "GSI1sk": "MD-2200.R00.10",

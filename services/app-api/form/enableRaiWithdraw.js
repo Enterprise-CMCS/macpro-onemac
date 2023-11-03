@@ -140,7 +140,6 @@ export const main = handler(async (event) => {
       const mostRecentRecord = records[0];
       mostRecentRecord.currentStatus =
         Workflow.ONEMAC_STATUS.WITHDRAW_RAI_ENABLED;
-      mostRecentRecord.eventTimestamp = Date.now();
       const adminChange = {
         changeTimestamp: mostRecentRecord.eventTimestamp,
         changeMade: `${data.submitterName} has enabled State package action to withdraw Formal RAI Response`,

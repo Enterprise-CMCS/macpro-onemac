@@ -140,9 +140,6 @@ export const main = handler(async (event) => {
       // the first record is the most recent as they were sorted by submissionTimestamp
       const mostRecentRecord = records[0];
       mostRecentRecord.currentStatus = Workflow.ONEMAC_STATUS.SUBMITTED;
-      // set the eventTimestamp back to submissionTimestamp so that the
-      // status is set correctly
-      mostRecentRecord.eventTimestamp = data.submissionTimestamp;
       const checkTimestamp = Date.now();
       const adminChange = {
         changeTimestamp: checkTimestamp,

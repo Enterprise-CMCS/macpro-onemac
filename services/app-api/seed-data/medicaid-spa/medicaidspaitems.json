@@ -4535,7 +4535,7 @@
     "componentType": "medicaidsparai",
     "eventTimestamp": 1690921532851,
     "transmittalNumberWarningMessage": "",
-    "currentStatus": "RAI Response Withdraw Enabled",
+    "currentStatus": "Under Review",
     "parentId": "MD-22-2200-KG",
     "attachments": [
       {
@@ -4580,7 +4580,7 @@
  "componentType": "medicaidspa",
  "cpocEmail": "\"Tester, Chester (CPOC)\" <chesterT@example.gov>",
  "cpocName": "Chester Tester",
- "currentStatus": "RAI Response Withdraw Enabled",
+ "currentStatus": "Under Review",
  "description": "Sample Summary Memo",
  "GSI1pk": "OneMAC#spa",
  "GSI1sk": "MD-22-2200-KG",
@@ -5410,7 +5410,7 @@
     "componentType": "medicaidsparai",
     "eventTimestamp": 1690980331889,
     "transmittalNumberWarningMessage": "",
-    "currentStatus": "RAI Response Withdraw Enabled",
+    "currentStatus": "Under Review",
     "parentId": "MD-23-7652-VM",
     "attachments": [
       {
@@ -5455,7 +5455,7 @@
  "componentType": "medicaidspa",
  "cpocEmail": "\"Tester, Chester (CPOC)\" <chesterT@example.gov>",
  "cpocName": "Chester Tester",
- "currentStatus": "RAI Response Withdraw Enabled",
+ "currentStatus": "Under Review",
  "description": "package to test RAI withdrawing rebuild",
  "GSI1pk": "OneMAC#spa",
  "GSI1sk": "MD-23-7652-VM",

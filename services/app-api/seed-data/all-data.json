@@ -7859,9 +7859,9 @@
     {
         "clockEndTimestamp": 1698763011776,
         "componentType": "waiverappkrai",
-        "eventTimestamp": 1673198609000,
+        "eventTimestamp": 1673195509000,
         "transmittalNumberWarningMessage": "",
-        "currentStatus": "RAI Response Withdraw Enabled",
+        "currentStatus": "Under Review",
         "parentId": "MD-22958.R00.02",
         "attachments": [
             {
@@ -13510,7 +13510,7 @@
         "componentType": "chipsparai",
         "eventTimestamp": 1690923157815,
         "transmittalNumberWarningMessage": "",
-        "currentStatus": "RAI Response Withdraw Enabled",
+        "currentStatus": "Under Review",
         "parentId": "MD-22-2201-KG",
         "attachments": [
             {
@@ -13555,7 +13555,7 @@
         "componentType": "chipspa",
         "cpocEmail": "\"Tester, Chester (CPOC)\" <chesterT@example.gov>",
         "cpocName": "Chester Tester",
-        "currentStatus": "RAI Response Withdraw Enabled",
+        "currentStatus": "Under Review",
         "description": "Sample Summary Memo",
         "GSI1pk": "OneMAC#spa",
         "GSI1sk": "MD-22-2201-KG",
@@ -14075,7 +14075,7 @@
         "componentType": "chipsparai",
         "eventTimestamp": 1675348646000,
         "transmittalNumberWarningMessage": "",
-        "currentStatus": "RAI Response Withdraw Enabled",
+        "currentStatus": "Under Review",
         "parentId": "MD-23-7650-VM",
         "attachments": [
             {
@@ -14108,7 +14108,7 @@
     {
         "componentType": "chipspa",
         "componentId": "MD-23-7650-VM",
-        "currentStatus": "RAI Response Withdraw Enabled",
+        "currentStatus": "Under Review",
         "subject": "OneMac Connection test",
         "cpocEmail": "\"Tester, Chester (CPOC)\" <chesterT@example.gov>",
         "reverseChrono": [
@@ -25396,7 +25396,7 @@
         "clockEndTimestamp": 1680725910479,
         "componentType": "waiverrai",
         "eventTimestamp": 1676136209000,
-        "currentStatus": "RAI Response Withdraw Enabled",
+        "currentStatus": "Under Review",
         "parentId": "MD-22204.R00.02",
         "attachments": [
             {
@@ -25464,7 +25464,7 @@
         ],
         "lastEventTimestamp": 1690986376374,
         "componentType": "waiveramendment",
-        "currentStatus": "RAI Response Withdraw Enabled",
+        "currentStatus": "Under Review",
         "attachments": [
             {
                 "s3Key": "1672269887538/picture.jpg",
@@ -26038,7 +26038,7 @@
         "componentType": "waiveramendment",
         "cpocEmail": "\"Beasley, Michelle (CPOC)\" <Michelle.Beasley@example.com>",
         "cpocName": "Michelle Beasley",
-        "currentStatus": "RAI Response Withdraw Enabled",
+        "currentStatus": "Under Review",
         "description": "RAI response withdrawal test. rebuild",
         "GSI1pk": "OneMAC#waiver",
         "GSI1sk": "MD-2200.R00.10",
@@ -36118,7 +36118,7 @@
         "componentType": "waiverrai",
         "eventTimestamp": 1690982549456,
         "transmittalNumberWarningMessage": "",
-        "currentStatus": "RAI Response Withdraw Enabled",
+        "currentStatus": "Under Review",
         "parentId": "MD-22116.R00.00",
         "attachments": [
             {
@@ -36151,7 +36151,7 @@
     {
         "componentType": "waivernew",
         "componentId": "MD-22116.R00.00",
-        "currentStatus": "RAI Response Withdraw Enabled",
+        "currentStatus": "Under Review",
         "subject": "OneMac Connection test",
         "cpocEmail": "\"Tester, Chester (CPOC)\" <chesterT@example.gov>",
         "reverseChrono": [
@@ -47237,7 +47237,7 @@
         "componentType": "waiverrai",
         "eventTimestamp": 1690982903782,
         "transmittalNumberWarningMessage": "",
-        "currentStatus": "RAI Response Withdraw Enabled",
+        "currentStatus": "Under Review",
         "parentId": "MD-22116.R01.00",
         "attachments": [
             {
@@ -47282,7 +47282,7 @@
         "componentType": "waiverrenewal",
         "cpocEmail": "\"Tester, Chester (CPOC)\" <chesterT@example.gov>",
         "cpocName": "Chester Tester",
-        "currentStatus": "RAI Response Withdraw Enabled",
+        "currentStatus": "Under Review",
         "description": "package to test RAI withdrawing rebuild",
         "GSI1pk": "OneMAC#waiver",
         "GSI1sk": "MD-22116.R01.00",
@@ -48207,7 +48207,7 @@
         "componentType": "waiverrenewal",
         "cpocEmail": "\"Tester, Chester (CPOC)\" <chesterT@example.gov>",
         "cpocName": "Chester Tester",
-        "currentStatus": "RAI Response Withdraw Enabled",
+        "currentStatus": "Under Review",
         "description": "pending-rai",
         "GSI1pk": "OneMAC#waiver",
         "GSI1sk": "MD-22204.R01.00",
@@ -54656,7 +54656,7 @@
         "componentType": "medicaidsparai",
         "eventTimestamp": 1690921532851,
         "transmittalNumberWarningMessage": "",
-        "currentStatus": "RAI Response Withdraw Enabled",
+        "currentStatus": "Under Review",
         "parentId": "MD-22-2200-KG",
         "attachments": [
             {
@@ -54701,7 +54701,7 @@
         "componentType": "medicaidspa",
         "cpocEmail": "\"Tester, Chester (CPOC)\" <chesterT@example.gov>",
         "cpocName": "Chester Tester",
-        "currentStatus": "RAI Response Withdraw Enabled",
+        "currentStatus": "Under Review",
         "description": "Sample Summary Memo",
         "GSI1pk": "OneMAC#spa",
         "GSI1sk": "MD-22-2200-KG",
@@ -55531,7 +55531,7 @@
         "componentType": "medicaidsparai",
         "eventTimestamp": 1690980331889,
         "transmittalNumberWarningMessage": "",
-        "currentStatus": "RAI Response Withdraw Enabled",
+        "currentStatus": "Under Review",
         "parentId": "MD-23-7652-VM",
         "attachments": [
             {
@@ -55576,7 +55576,7 @@
         "componentType": "medicaidspa",
         "cpocEmail": "\"Tester, Chester (CPOC)\" <chesterT@example.gov>",
         "cpocName": "Chester Tester",
-        "currentStatus": "RAI Response Withdraw Enabled",
+        "currentStatus": "Under Review",
         "description": "package to test RAI withdrawing rebuild",
         "GSI1pk": "OneMAC#spa",
         "GSI1sk": "MD-23-7652-VM",

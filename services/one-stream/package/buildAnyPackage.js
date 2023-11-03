@@ -89,9 +89,10 @@ export const buildAnyPackage = async (packageId, config) => {
       }
       console.log("this event: ", anEvent.GSI1pk);
       console.log(
-        "currentstatus of package %s currentstatus of event: %s",
+        "status of event: %s currentstatus of package: %s eventTimestamp: %s",
         anEvent.currentStatus,
-        putParams.Item.currentStatus
+        putParams.Item.currentStatus,
+        anEvent.eventTimestamp
       );
 
       // save the old package record for comparison
@@ -275,25 +276,21 @@ export const buildAnyPackage = async (packageId, config) => {
               putParams.Item.GSI2sk = anEvent.componentType;
             }
 
-            // ignore the currentStatus for an RAI Response if the timestamp is newer
-            // than the submission timestamp, yet the status is SUBMITTED
-            // (this indicates a disable of the enable)
+            // for rai withdraw enabled, use status from package
             if (
-              (attributeName === "currentStatus" &&
-                timestamp > anEvent.submissionTimestamp &&
-                anEvent.currentStatus === ONEMAC_STATUS.SUBMITTED) ||
+              anEvent[attributeName] === "currentStatus" &&
               anEvent.currentStatus === ONEMAC_STATUS.WITHDRAW_RAI_ENABLED
             ) {
-              anEvent.currentStatus === ONEMAC_STATUS.PENDING;
+              anEvent.currentStatus = currentPackage[currentStatus];
             }
 
             // update the attribute if this is the latest event
             // if the latest event does not have a value but the currentPackage does
             // use the currentPackage value
             if (timestamp === lmTimestamp)
-              if (anEvent[attributeName])
+              if (anEvent[attributeName]) {
                 putParams.Item[attributeName] = anEvent[attributeName];
-              else if (currentPackage[attributeName]) {
+              } else if (currentPackage[attributeName]) {
                 putParams.Item[attributeName] = currentPackage[attributeName];
               }
           }
@@ -311,15 +308,17 @@ export const buildAnyPackage = async (packageId, config) => {
 
     putParams.Item?.reverseChrono.sort((a, b) => b.timestamp - a.timestamp);
 
-    // if the most recent OneMAC event is an enabled RAI Response,
+    // if the most recent OneMAC event is an enable withdraw RAI Response,
     // then set sub status to "Withdraw RAI Enabled"
+    // and freeze status to current package status
     if (
       putParams.Item?.reverseChrono[0].currentStatus ===
       ONEMAC_STATUS.WITHDRAW_RAI_ENABLED
     ) {
-      putParams.Item.currentStatus = ONEMAC_STATUS.PENDING;
+      putParams.Item.currentStatus = currentPackage["currentStatus"];
       putParams.Item.subStatus = ONEMAC_STATUS.WITHDRAW_RAI_ENABLED;
     } else {
+      console.log("setting sub status to null");
       putParams.Item.subStatus = null;
       delete putParams.Item.subStatus;
     }
