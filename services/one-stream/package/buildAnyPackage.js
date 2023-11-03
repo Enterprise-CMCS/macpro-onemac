@@ -281,7 +281,7 @@ export const buildAnyPackage = async (packageId, config) => {
               anEvent[attributeName] === "currentStatus" &&
               anEvent.currentStatus === ONEMAC_STATUS.WITHDRAW_RAI_ENABLED
             ) {
-              anEvent.currentStatus = currentPackage[currentStatus];
+              anEvent.currentStatus = currentPackage["currentStatus"];
             }
 
             // update the attribute if this is the latest event

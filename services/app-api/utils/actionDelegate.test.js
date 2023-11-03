@@ -19,6 +19,7 @@ describe("getActionsForPackage", () => {
       packageType,
       packageStatus,
       hasRaiResponse,
+      null,
       stateUserRole,
       formSource
     );
@@ -36,6 +37,7 @@ describe("getActionsForPackage", () => {
       packageType,
       packageStatus,
       hasRaiResponse,
+      null,
       cmsUserRole,
       formSource
     );
@@ -53,6 +55,7 @@ describe("getActionsForPackage", () => {
       packageType,
       packageStatus,
       hasRaiResponse,
+      null,
       stateUserRole,
       formSource
     );
@@ -70,6 +73,7 @@ describe("getActionsForPackage", () => {
       packageType,
       packageStatus,
       hasRaiResponse,
+      null,
       stateUserRole,
       formSource
     );
@@ -78,7 +82,8 @@ describe("getActionsForPackage", () => {
   });
   it("returns correct actions for medicaid spa with WITHDRAW_RAI_ENABLED status", () => {
     const packageType = "medicaidspa";
-    const packageStatus = "RAI Response Withdraw Enabled";
+    const packageStatus = "Under Review";
+    const packageSubStatus = "RAI Response Withdraw Enabled";
     const hasRaiResponse = true;
     const formSource = "detail";
 
@@ -86,6 +91,7 @@ describe("getActionsForPackage", () => {
       packageType,
       packageStatus,
       hasRaiResponse,
+      packageSubStatus,
       stateUserRole,
       formSource
     );
@@ -106,6 +112,7 @@ describe("getActionsForPackage", () => {
       packageType,
       packageStatus,
       hasRaiResponse,
+      null,
       stateUserRole,
       formSource
     );
