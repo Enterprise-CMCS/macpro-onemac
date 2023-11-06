@@ -11,7 +11,12 @@ function getDefaultActions(
     case Workflow.ONEMAC_STATUS.PENDING:
       if (userRole.canAccessForms)
         actions.push(Workflow.PACKAGE_ACTION.WITHDRAW);
-      if (userRole.isCMSUser && hasRaiResponse && formSource === "detail") {
+      if (
+        userRole.isCMSUser &&
+        hasRaiResponse &&
+        packageSubStatus !== Workflow.ONEMAC_STATUS.WITHDRAW_RAI_ENABLED &&
+        formSource === "detail"
+      ) {
         actions.push(Workflow.PACKAGE_ACTION.ENABLE_RAI_WITHDRAWAL);
       }
       break;
