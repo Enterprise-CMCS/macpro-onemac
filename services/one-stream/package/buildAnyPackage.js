@@ -156,11 +156,10 @@ export const buildAnyPackage = async (packageId, config) => {
           (!putParams.Item?.latestRaiResponseTimestamp ||
             putParams.Item.latestRaiResponseTimestamp <
               anEvent.submissionTimestamp)
-        )
-          if (anEvent.currentStatus === "Submitted")
-            putParams.Item.latestRaiResponseTimestamp =
-              anEvent.submissionTimestamp;
-          else delete putParams.Item.latestRaiResponseTimestamp;
+        ) {
+          putParams.Item.latestRaiResponseTimestamp =
+            anEvent.submissionTimestamp;
+        }
 
         if (eventLabel === "submitrairesponsewithdraw")
           delete putParams.Item.latestRaiResponseTimestamp;

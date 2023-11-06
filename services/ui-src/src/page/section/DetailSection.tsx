@@ -166,12 +166,12 @@ export const DetailSection = ({
             <Review heading="Status" className="no-bottom-padding">
               <div className="detail-card-status">{detail.currentStatus}</div>
             </Review>
-            {detail.subStatus && <span>{detail.subStatus}</span>}
             {/* Displays 2nd Clock subtitle under status if status is pending (sans Pending - RAI) and
              latestRaiResponseTimestamp is present */}
             {pageConfig.secondClockStatuses &&
               pageConfig.secondClockStatuses.includes(detail.currentStatus) &&
               detail?.latestRaiResponseTimestamp && <span>2nd Clock</span>}
+            {detail.subStatus && <div>{detail.subStatus}</div>}
             {pageConfig.show90thDayInfo && ninetyDayText !== "N/A" && (
               <Review heading="90th Day">
                 {Number(ninetyDayText)
