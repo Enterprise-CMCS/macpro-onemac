@@ -127,3 +127,12 @@ Feature: OY2_Update_Text_on_FAQ_Page
         Then verify OneMAC State User Guide is valid
         Then verify OneMAC CMS User Guide link exists
         Then verify OneMAC CMS User Guide is valid
+
+
+        Scenario: Verify the Guides exist in the FAQ
+        Given I am on Login Page
+        When Clicking on FAQ Tab
+        Then verify the expand all button is visible
+        Then verify all sections are collapsed
+        Then click the expand all button
+        Then verify all sections are expanded
