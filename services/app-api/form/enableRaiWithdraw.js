@@ -140,8 +140,9 @@ export const main = handler(async (event) => {
       const mostRecentRecord = records[0];
       mostRecentRecord.currentStatus =
         Workflow.ONEMAC_STATUS.WITHDRAW_RAI_ENABLED;
+      const adminChangeTimestamp = Date.now();
       const adminChange = {
-        changeTimestamp: mostRecentRecord.eventTimestamp,
+        changeTimestamp: adminChangeTimestamp,
         changeMade: `${data.submitterName} has enabled State package action to withdraw Formal RAI Response`,
         changeReason: data.additionalInformation,
       };
@@ -149,10 +150,7 @@ export const main = handler(async (event) => {
         ? [...mostRecentRecord.adminChanges, adminChange]
         : [adminChange];
       await updateRecord(mostRecentRecord);
-      await waitForStreamProcessing(
-        data.componentId,
-        mostRecentRecord.eventTimestamp
-      );
+      await waitForStreamProcessing(data.componentId, adminChangeTimestamp);
     } else {
       throw new Error(
         "No RAI found when attempting to enable rai withdraw for ",
