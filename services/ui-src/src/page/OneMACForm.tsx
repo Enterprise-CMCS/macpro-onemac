@@ -382,15 +382,24 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
       event.preventDefault();
       if (isSubmissionReady && !limitSubmit.current) {
         if (formConfig.confirmSubmit) {
+          const confirmHeading: string = formConfig.confirmSubmit.buildHeading
+            ? formConfig.confirmSubmit.buildHeading(
+                presetParentTypeNice ?? "this"
+              )
+            : formConfig.confirmSubmit.confirmSubmitHeading ??
+              "Placeholder heading";
           const confirmMessage: JSX.Element | string = formConfig.confirmSubmit
             .buildMessage
-            ? formConfig.confirmSubmit.buildMessage(oneMacFormData.componentId)
+            ? formConfig.confirmSubmit.buildMessage(
+                oneMacFormData.componentId,
+                presetParentTypeNice ?? ""
+              )
             : formConfig.confirmSubmit.confirmSubmitMessage ??
               "Placeholder message";
 
           confirmAction &&
             confirmAction(
-              formConfig.confirmSubmit.confirmSubmitHeading,
+              confirmHeading,
               formConfig.confirmSubmit.confirmSubmitYesButton ?? "Yes, Submit",
               "Cancel",
               confirmMessage,
@@ -406,6 +415,7 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
     [
       isSubmissionReady,
       formConfig.confirmSubmit,
+      presetParentTypeNice,
       confirmAction,
       doSubmit,
       oneMacFormData.componentId,
@@ -427,26 +437,29 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
             {formConfig.detailsHeaderFull ??
               formConfig.detailsHeader + " Details"}
           </h2>
-          {formConfig.introJSX ?? (
-            <>
-              <p>
-                <span className="required-mark">*</span>
-                indicates required field.
-              </p>
-              <p id="form-intro">
-                Once you submit this form, a confirmation email is sent to you
-                and to CMS. CMS will use this content to review your package,
-                and you will not be able to edit this form. If CMS needs any
-                additional information, they will follow up by email.
-                <b>
-                  {" "}
-                  If you leave this page, you will lose your progress on this
-                  form.
-                </b>
-                {formConfig.addlIntroJSX ?? ""}
-              </p>
-            </>
-          )}
+          {formConfig.buildIntroJSX
+            ? formConfig.buildIntroJSX(presetParentTypeNice ?? "this")
+            : formConfig.introJSX ?? (
+                <>
+                  <p>
+                    <span className="required-mark">*</span>
+                    indicates required field.
+                  </p>
+                  <p id="form-intro">
+                    Once you submit this form, a confirmation email is sent to
+                    you and to CMS. CMS will use this content to review your
+                    package, and you will not be able to edit this form. If CMS
+                    needs any additional information, they will follow up by
+                    email.
+                    <b>
+                      {" "}
+                      If you leave this page, you will lose your progress on
+                      this form.
+                    </b>
+                    {formConfig.addlIntroJSX ?? ""}
+                  </p>
+                </>
+              )}
           {formConfig.titleLabel && (
             <TextField
               name="title"
