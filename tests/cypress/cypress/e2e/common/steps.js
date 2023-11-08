@@ -2503,3 +2503,15 @@ Then("verify the Withdrawal Requested caret button exists", () => {
 Then("expand the Withdrawal Requested caret", () => {
   OneMacPackageDetailsPage.expandWithdrawalRequestedCaretBtn();
 });
+Then("verify the expand all button is visible", () => {
+  OneMacFAQPage.verifyExpandAllBtnExists();
+});
+Then("click the expand all button", () => {
+  OneMacFAQPage.clickExpandAllBtn();
+});
+Then("verify all sections are collapsed", () => {
+  OneMacFAQPage.verifyAllSectionsAreCollapsed();
+});
+Then("verify all sections are expanded", () => {
+  OneMacFAQPage.verifyAllSectionsAreExpanded();
+});
