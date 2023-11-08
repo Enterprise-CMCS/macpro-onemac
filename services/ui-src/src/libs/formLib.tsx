@@ -26,6 +26,7 @@ export type OneMACFormConfig = {
   addlInfoTitle?: string;
   addlInfoText?: string | React.ReactNode;
   addlInfoRequired?: boolean;
+  noText?: boolean;
   requireUploadOrAdditionalInformation?: boolean;
   landingPage: string;
   confirmSubmit?: ConfirmSubmitType;
