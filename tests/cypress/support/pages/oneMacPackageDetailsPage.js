@@ -353,5 +353,11 @@ export class oneMacPackageDetailsPage {
         }
       });
   }
+  verifyTheSubStatus() {
+    cy.xpath(statusHeader)
+      .parent()
+      .next("div")
+      .contains("RAI Response Withdraw Enabled");
+  }
 }
 export default oneMacPackageDetailsPage;

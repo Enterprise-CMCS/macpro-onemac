@@ -250,7 +250,6 @@ Feature: Waiver Package Details View: Initial Waivers
         Then verify there is an Approved Effective Date in the details section
 
     Scenario: Screen Enhance: Initial Waiver Details View - RAI Response Withdraw Enabled
-        Then click the RAI Response Withdraw Enabled checkbox
         Then click the Waiver Number link in the first row
         Then verify the package details page is visible
         Then verify 2 action cards exist
@@ -280,11 +279,10 @@ Feature: Waiver Package Details View: Initial Waivers
         Then verify there is an Approved Effective Date in the details section
 
     Scenario: Initial Waiver Details View - Withdraw RAI Response
-        Then click the RAI Response Withdraw Enabled checkbox
         Then search for "MD-22116.R00.00"
         Then click the Waiver Number link in the first row
         Then verify the package details page is visible
-        Then verify the status on the card is "RAI Response Withdraw Enabled"
+        Then verify the sub status on the card is RAI Response Withdraw Enabled
         Then click Withdraw Formal RAI Response package action
         Then type "Automated test to withdraw the RAI Response." in additional info textarea
         Then Click the Submit Button without waiting
