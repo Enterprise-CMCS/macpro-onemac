@@ -1,7 +1,5 @@
 import dynamoDb from "../libs/dynamodb-lib";
-import { USER_ROLE, USER_STATUS } from "cmscommonlib";
-
-import { formatPackageDetails } from "./formatPackageDetails.js";
+import { USER_ROLE, USER_STATUS, Workflow } from "cmscommonlib";
 
 export const getAllActiveStateUserEmailAddresses = async (territory) => {
   const stateSubmittingUserRoles = [
@@ -44,18 +42,17 @@ export const getAllActiveStateUserEmailAddresses = async (territory) => {
  * @returns {Object} email parameters in generic format.
  */
 export const stateWithdrawalReceipt = async (data, config, user) => {
+  const parentTypeNice =
+    Workflow.ONEMAC_LABEL[data.parentType] ?? config.typeLabel;
+
   const stateReceipt = {
     ToAddresses: [],
     CcAddresses: [],
-    Subject: `${config.typeLabel} Package ${data.componentId} Withdraw Request`,
+    Subject: `${parentTypeNice} ${data.componentId} Withdrawal Confirmation`,
     HTML: `
-        <p>The OneMAC submission portal received a request to withdraw a package. You are receiving this email notification as ${
-          data.componentId
-        } was withdrawn by ${user.fullName} (${
-      user.email
-    }). The package will no longer be considered for CMS review.</p>
-        ${formatPackageDetails(data, config)}
-        <p>Thank you!</p>
+        <p>This email is to confirm ${parentTypeNice} ${data.componentId} was withdrawn by ${user.fullName}. 
+        The review of ${parentTypeNice} ${data.componentId} has concluded.
+        </p>
         `,
   };
   try {

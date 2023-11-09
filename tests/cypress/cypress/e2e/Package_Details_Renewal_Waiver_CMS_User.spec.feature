@@ -290,9 +290,7 @@ Feature: Waiver Package Details View: Waiver Renewal for a CMS User
         Then verify the status on the card is "Pending"
         Then verify Enable Formal RAI Response Withdraw package action exists
         Then click Enable Formal RAI Response Withdraw package action
-        Then type "Automated test to enable an RAI Response withdrawal." in additional info textarea
         Then Click on Submit Button
         Then verify the status on the card is "RAI Response Withdraw Enabled"
         Then verify package actions header is visible
         Then verify Disable Formal RAI Response Withdraw package action exists
-        #Then verify there are no package actions available

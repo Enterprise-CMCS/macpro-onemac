@@ -13,11 +13,11 @@ export class withdrawPackagePage {
   verifyWithdrawPageHeader(s) {
     cy.xpath(withdrawPageHeader).contains(s);
   }
-  verifyFormIntroIsVisible() {
+  verifyFormIntroIsVisible(pkgType) {
     cy.get(formDetails)
       .should("be.visible")
       .contains(
-        "Complete this form to withdraw a package. Once complete, you will not be able to resubmit this package. CMS will be notified and will use this content to review your request, and you will not be able to edit this form. If CMS needs any additional information, they will follow up by email."
+        `Complete this action to withdraw this ${pkgType} package. Once completed, you will not be able to resubmit the ${pkgType} package or undo this action.`
       );
   }
   verifySPAIDHeaderExists() {

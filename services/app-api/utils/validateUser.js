@@ -11,7 +11,11 @@ export const validateUserReadOnly = (user, checkTerritory) => {
     .filter(({ status }) => status === USER_STATUS.ACTIVE)
     .map(({ territory }) => territory);
 
-  if (!userRoleObj.canAccessDashboard || territoryList === []) return false;
+  if (
+    !userRoleObj.canAccessDashboard ||
+    (Array.isArray(territoryList) && territoryList.length === 0)
+  )
+    return false;
 
   if (
     Array.isArray(territoryList) &&

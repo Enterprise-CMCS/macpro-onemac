@@ -17,7 +17,7 @@ Feature: Verify user can withdraw a package in Under Review Status in the packag
         Then click the actions button in row one
         Then click withdraw package button
         Then verify the header is "Withdraw Waiver" on the withdrawal form
-        Then verify the form intro exists on the withdrawal form
+        Then verify the form intro exists on the "1915(b) Initial Waiver" withdrawal form
         Then verify the Waiver number header exists on the withdrawal form
         Then verify the Waiver number exists on the withdrawal form
         Then verify the Type header exists on the withdrawal form
@@ -39,7 +39,7 @@ Feature: Verify user can withdraw a package in Under Review Status in the packag
         Then verify the package details page is visible
         Then click withdraw button
         Then verify the header is "Withdraw Waiver" on the withdrawal form
-        Then verify the form intro exists on the withdrawal form
+        Then verify the form intro exists on the "1915(b) Initial Waiver" withdrawal form
         Then verify the Waiver number header exists on the withdrawal form
         Then verify the Waiver number exists on the withdrawal form
         Then verify the Type header exists on the withdrawal form
