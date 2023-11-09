@@ -302,12 +302,16 @@ export const DetailSection = ({
                     <Review className="preserve-spacing" heading="Change Made">
                       {adminChange.changeMade}
                     </Review>
-                    <Review
-                      className="preserve-spacing"
-                      heading="Change Reason"
-                    >
-                      {adminChange.changeReason}
-                    </Review>
+                    {!adminChange.changeMade.includes(
+                      "abled State package action to withdraw Formal RAI Response"
+                    ) && (
+                      <Review
+                        className="preserve-spacing"
+                        heading="Change Reason"
+                      >
+                        {adminChange.changeReason}
+                      </Review>
+                    )}
                   </AccordionItem>
                 );
               })}

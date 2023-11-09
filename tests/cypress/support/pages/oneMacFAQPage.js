@@ -92,6 +92,8 @@ const stateAdminGuideLink =
   "//div[@id='onboarding-materials']//a[text() = 'OneMAC State Administrator Guide']";
 const cmsUserGuideLink =
   "//div[@id='onboarding-materials']//a[text() = 'OneMAC CMS User Guide']";
+const expandAllBtn =
+  "//button[contains(text(),'Expand all to search with CTRL+F')]";
 
 export class oneMacFAQPage {
   verifyGeneralSectionExists() {
@@ -367,6 +369,22 @@ export class oneMacFAQPage {
   }
   verifyAttachmentsFor1915cRequestTempExtBody() {
     cy.get(attachmentsFor1915cRequestTempExtBody).should("be.visible");
+  }
+  verifyExpandAllBtnExists() {
+    cy.xpath(expandAllBtn).should("be.visible");
+  }
+  clickExpandAllBtn() {
+    cy.xpath(expandAllBtn).click();
+  }
+  verifyAllSectionsAreCollapsed() {
+    cy.get("button.accordion-button")
+      .should("have.attr", "aria-expanded", "false")
+      .and("have.length.greaterThan", 20);
+  }
+  verifyAllSectionsAreExpanded() {
+    cy.get("button.accordion-button")
+      .should("have.attr", "aria-expanded", "true")
+      .and("have.length.greaterThan", 20);
   }
 }
 export default oneMacFAQPage;
