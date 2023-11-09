@@ -2398,9 +2398,12 @@ Then("select the 1915c Temporary Extension Type button", () => {
 Then("verify the header is {string} on the withdrawal form", (string) => {
   WithdrawPackagePage.verifyWithdrawPageHeader(string);
 });
-Then("verify the form intro exists on the withdrawal form", () => {
-  WithdrawPackagePage.verifyFormIntroIsVisible();
-});
+Then(
+  "verify the form intro exists on the {string} withdrawal form",
+  (pkgType) => {
+    WithdrawPackagePage.verifyFormIntroIsVisible(pkgType);
+  }
+);
 Then("verify the SPA ID header exists on the withdrawal form", () => {
   WithdrawPackagePage.verifySPAIDHeaderExists();
 });
@@ -2504,5 +2507,16 @@ Then(
   "verify the sub status on the card is RAI Response Withdraw Enabled",
   () => {
     OneMacPackageDetailsPage.verifyTheSubStatus();
-  }
-);
+});
+Then("verify the expand all button is visible", () => {
+  OneMacFAQPage.verifyExpandAllBtnExists();
+});
+Then("click the expand all button", () => {
+  OneMacFAQPage.clickExpandAllBtn();
+});
+Then("verify all sections are collapsed", () => {
+  OneMacFAQPage.verifyAllSectionsAreCollapsed();
+});
+Then("verify all sections are expanded", () => {
+  OneMacFAQPage.verifyAllSectionsAreExpanded();
+});

@@ -16,7 +16,7 @@ Feature: Verify user can withdraw a package in Under Review Status in the packag
         Then click the actions button in row one
         Then click withdraw package button
         Then verify the header is "Withdraw CHIP SPA Package" on the withdrawal form
-        Then verify the form intro exists on the withdrawal form
+        Then verify the form intro exists on the "CHIP SPA" withdrawal form
         Then verify the SPA ID header exists on the withdrawal form
         Then verify the SPA ID exists on the withdrawal form
         Then verify the Type header exists on the withdrawal form
@@ -35,7 +35,7 @@ Feature: Verify user can withdraw a package in Under Review Status in the packag
         Then verify the package details page is visible
         Then click withdraw button
         Then verify the header is "Withdraw CHIP SPA Package" on the withdrawal form
-        Then verify the form intro exists on the withdrawal form
+        Then verify the form intro exists on the "CHIP SPA" withdrawal form
         Then verify the SPA ID header exists on the withdrawal form
         Then verify the SPA ID exists on the withdrawal form
         Then verify the Type header exists on the withdrawal form
