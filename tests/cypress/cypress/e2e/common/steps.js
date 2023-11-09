@@ -2500,3 +2500,9 @@ Then("verify the Withdrawal Requested caret button exists", () => {
 Then("expand the Withdrawal Requested caret", () => {
   OneMacPackageDetailsPage.expandWithdrawalRequestedCaretBtn();
 });
+Then(
+  "verify the sub status on the card is RAI Response Withdraw Enabled",
+  () => {
+    OneMacPackageDetailsPage.verifyTheSubStatus();
+  }
+);

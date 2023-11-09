@@ -231,7 +231,6 @@ Feature: Waiver Package Details View: Appendix K Amendment for a State User
         Then verify there is an Approved Effective Date in the details section
 
     Scenario: Screen Enhance: Appendix K Details View - RAI Response Withdraw Enabled
-        Then click the RAI Response Withdraw Enabled checkbox
         Then click the Waiver Number link in the first row
         Then verify the package details page is visible
         Then verify 2 action cards exist
@@ -264,11 +263,10 @@ Feature: Waiver Package Details View: Appendix K Amendment for a State User
         Then verify there is an Approved Effective Date in the details section
 
     Scenario: Appendix K Details View - Withdraw RAI Response
-        Then click the RAI Response Withdraw Enabled checkbox
-#        Then search for "MD-22958.R00.02"
+        Then search for "MD-22958.R00.02"
         Then click the Waiver Number link in the first row
         Then verify the package details page is visible
-        Then verify the status on the card is "RAI Response Withdraw Enabled"
+        Then verify the sub status on the card is RAI Response Withdraw Enabled
         Then click Withdraw Formal RAI Response package action
         Then type "Automated test to withdraw the RAI Response." in additional info textarea
         Then Click the Submit Button without waiting
