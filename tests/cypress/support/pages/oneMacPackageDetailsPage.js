@@ -355,7 +355,8 @@ export class oneMacPackageDetailsPage {
   }
   verifyTheSubStatus() {
     cy.xpath(statusHeader)
-      .parent("section")
+      .parents("section")
+      .first()
       .contains("RAI Response Withdraw Enabled");
   }
 }
