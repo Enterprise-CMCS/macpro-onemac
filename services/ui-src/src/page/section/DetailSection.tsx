@@ -170,8 +170,10 @@ export const DetailSection = ({
              latestRaiResponseTimestamp is present */}
             {pageConfig.secondClockStatuses &&
               pageConfig.secondClockStatuses.includes(detail.currentStatus) &&
-              detail?.latestRaiResponseTimestamp && <span>2nd Clock</span>}
-            {detail.subStatus && <div>{detail.subStatus}</div>}
+              detail?.latestRaiResponseTimestamp && (
+                <span id="secondclock">2nd Clock</span>
+              )}
+            {detail.subStatus && <div id="substatus">{detail.subStatus}</div>}
             {pageConfig.show90thDayInfo && ninetyDayText !== "N/A" && (
               <Review heading="90th Day">
                 {Number(ninetyDayText)
