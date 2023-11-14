@@ -498,3 +498,157 @@ jobs:
           config: baseUrl=${{ env.APPLICATION_ENDPOINT }}
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+  daily-configure:
+    name: Daily Configure
+    on:
+      schedule:
+        - cron: 0 1 * * *
+    runs-on: ubuntu-latest
+    steps:
+      - name: set branch_name
+        run: echo "branch_name=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
+      - name: set branch specific variable names
+        run: ./.github/build_vars.sh set_names
+      - name: set variable values
+        run: ./.github/build_vars.sh set_values
+        env:
+            AWS_OIDC_ROLE_TO_ASSUME: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_AWS_OIDC_ROLE_TO_ASSUME] || secrets.AWS_OIDC_ROLE_TO_ASSUME }}
+            AWS_DEFAULT_REGION: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_AWS_DEFAULT_REGION] || secrets.AWS_DEFAULT_REGION }}
+            INFRASTRUCTURE_TYPE: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_INFRASTRUCTURE_TYPE] || secrets.INFRASTRUCTURE_TYPE || 'development' }}
+            STAGE_PREFIX: ${{ secrets.STAGE_PREFIX }}
+      - name: Configure AWS credentials for GitHub Actions
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ env.AWS_OIDC_ROLE_TO_ASSUME }}
+          aws-region: ${{ env.AWS_DEFAULT_REGION }}
+      - uses: actions/setup-node@v3
+        with:
+          node-version: "18.x"
+      - name: Combine package-lock.json files to single file
+        run: find services -maxdepth 3 -name package-lock.json | xargs cat package-lock.json > combined-package-lock.txt
+      - name: cache service dependencies
+        uses: actions/cache@v3
+        with:
+          path: |
+              services/.sechub/node_modules
+              services/admin/node_modules
+              services/seatool-sink/node_modules
+              services/uploads/node_modules
+              services/app-api/node_modules
+              services/one-stream/node_modules
+              services/stream-functions/node_modules
+              services/ui/node_modules
+              services/ui-auth/node_modules
+              services/ui-src/node_modules
+              node_modules
+          key: ${{ runner.os }}-${{ hashFiles('combined-package-lock.txt') }}
+      - name: set path
+        run: |
+          echo "PATH=$(pwd)/node_modules/.bin/:$PATH" >> $GITHUB_ENV
+      - name: Consolidate Seed Data
+        if: ${{ env.branch_name != 'production'}}
+        run: cd services/app-api/seed-data && ./buildSeedData.py .
+      - name: Seed Data
+          # this "resets" any data explicitly provided in the seed files to what
+          # is in the committed code
+        if: ${{ env.branch_name != 'production' }}
+        env:
+            SLS_DEBUG: 'true'
+            BRANCH: ${{ env.STAGE_PREFIX }}${{ env.branch_name }}
+        run: cd services/app-api && serverless dynamodb seed --stage=$BRANCH --region=$AWS_DEFAULT_REGION --online
+      - name: Migrate Data
+        if: ${{ env.branch_name != 'production'}}
+        run: cd ./services/app-api && sls invoke -s $STAGE_PREFIX$branch_name -f migrate
+      - name: Reset Test Data
+        if: ${{ env.branch_name != 'production'}}
+        run: cd ./services/admin && sls invoke -s $STAGE_PREFIX$branch_name -f resetData
+
+  daily-cypress:
+    name: Daily Cypress Tests
+    if: ${{ github.ref != 'refs/heads/production'}}
+    on:
+      schedule:
+        - cron: 0 3 * * *
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        containers:
+          [
+            Package_Details_Medicaid_SPA_CMS_User.spec.feature,
+            Package_Details_Medicaid_SPA_State_User.spec.feature,
+          ]
+    steps:
+      - name: set branch_name
+        run: echo "branch_name=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
+      - uses: actions/checkout@v3
+      - name: set branch specific variable names
+        run: ./.github/build_vars.sh set_names
+      - name: set variable values
+        run: ./.github/build_vars.sh set_values
+        env:
+          AWS_OIDC_ROLE_TO_ASSUME: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_AWS_OIDC_ROLE_TO_ASSUME] || secrets.AWS_OIDC_ROLE_TO_ASSUME }}
+          AWS_DEFAULT_REGION: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_AWS_DEFAULT_REGION] || secrets.AWS_DEFAULT_REGION }}
+          INFRASTRUCTURE_TYPE: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_INFRASTRUCTURE_TYPE] || secrets.INFRASTRUCTURE_TYPE || 'development' }}
+          STAGE_PREFIX: ${{ secrets.STAGE_PREFIX }}
+          COGNITO_TEST_USERS_PASSWORD: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_COGNITO_TEST_USERS_PASSWORD] || secrets.COGNITO_TEST_USERS_PASSWORD }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      - name: Configure AWS credentials for GitHub Actions
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ env.AWS_OIDC_ROLE_TO_ASSUME }}
+          aws-region: ${{ env.AWS_DEFAULT_REGION }}
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - name: Combine package-lock.json files to single file
+        run: find services -maxdepth 3 -name package-lock.json | xargs cat package-lock.json > combined-package-lock.txt
+      - name: cache service dependencies
+        uses: actions/cache@v3
+        with:
+          path: |
+            services/uploads/node_modules
+            services/app-api/node_modules
+            services/stream-functions/node_modules
+            services/ui/node_modules
+            services/ui-auth/node_modules
+            services/ui-src/node_modules
+            node_modules
+          key: ${{ runner.os }}-${{ hashFiles('combined-package-lock.txt') }}
+      - name: Install dependencies
+        run: |
+          npm i --legacy-peer-deps
+      - name: set path
+        run: |
+          echo "PATH=$(pwd)/node_modules/.bin/:$PATH" >> $GITHUB_ENV
+      - name: Endpoint
+        run: |
+          pushd services
+          export APPLICATION_ENDPOINT=`./output.sh ui ApplicationEndpointUrl $STAGE_PREFIX$branch_name`
+          echo "APPLICATION_ENDPOINT=$APPLICATION_ENDPOINT" >> $GITHUB_ENV
+          echo "Application endpoint: $APPLICATION_ENDPOINT"
+          popd         
+      - name: Run Cypress Tests
+        uses: cypress-io/github-action@v5
+        with:
+          working-directory: tests/cypress
+          spec: cypress/e2e/${{ matrix.containers }}
+          browser: chrome
+          config: baseUrl=${{ env.APPLICATION_ENDPOINT }}
+      - name: Upload screenshots
+        uses: actions/upload-artifact@v3
+        if: failure()
+        with:
+          name: cypress-screenshots
+          path: tests/cypress/screenshots/
+      - name: Slack Notification
+        uses: rtCamp/action-slack-notify@v2
+        if: env.SLACK_WEBHOOK_URL != '' && contains(fromJson('["develop", "master", "production"]'), env.branch_name) && failure ()
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_USERNAME: ${{env.branch_name}} Deploy Failure
+          SLACK_ICON_EMOJI: ":bell:"
+          SLACK_COLOR: ${{job.status}}
+          SLACK_FOOTER: ""
+          MSG_MINIMAL: actions url,commit,ref
