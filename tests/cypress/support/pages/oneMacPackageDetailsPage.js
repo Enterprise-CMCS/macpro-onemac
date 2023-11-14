@@ -60,6 +60,8 @@ const initialSubmissionDownloadAllBtn =
   '//button[contains(@id,"dl_Initial Package")]';
 const withdrawalRequestedCaretBtn =
   '//h2//button[contains(@id,"Package0_caret-button")]';
+const subStatus = "#substatus";
+const secondClock = "#secondclock";
 
 export class oneMacPackageDetailsPage {
   verifyPackageDetailsPageIsVisible() {
@@ -72,10 +74,10 @@ export class oneMacPackageDetailsPage {
     cy.xpath(statusHeader).next().contains(status);
   }
   verify2ndClockIsVisible() {
-    cy.xpath(actionCard).first().find("span").should("be.visible");
+    cy.get(secondClock).should("be.visible");
   }
   verify2ndClockIsNotVisible() {
-    cy.xpath(actionCard).first().find("span").should("not.exist");
+    cy.get(secondClock).should("not.exist");
   }
   verify90thDayDateDoesntExist() {
     cy.xpath(date90thDay).should("not.exist");
@@ -354,10 +356,7 @@ export class oneMacPackageDetailsPage {
       });
   }
   verifyTheSubStatus() {
-    cy.xpath(statusHeader)
-      .parents("section")
-      .first()
-      .contains("RAI Response Withdraw Enabled");
+    cy.get(subStatus).contains("RAI Response Withdraw Enabled");
   }
 }
 export default oneMacPackageDetailsPage;
