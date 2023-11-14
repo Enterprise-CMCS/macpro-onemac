@@ -239,6 +239,8 @@ Feature: Waiver Package Details View: Waiver Renewals for a State User
         Then verify there is an Approved Effective Date in the details section
 
     Scenario: Screen Enhance: Waiver Renewal Details View - RAI Response Withdraw Enabled
+        Then click Under Review checkbox
+        Then Click on Filter Button
         Then search for "MD-22116.R01.00"
         Then click the Waiver Number link in the first row
         Then verify the package details page is visible
@@ -268,6 +270,8 @@ Feature: Waiver Package Details View: Waiver Renewals for a State User
         Then verify there is an Approved Effective Date in the details section
 
     Scenario: Waiver Renewal Details View - Withdraw RAI Response
+        Then click Under Review checkbox
+        Then Click on Filter Button
         Then search for "MD-22116.R01.00"
         Then click the Waiver Number link in the first row
         Then verify the package details page is visible

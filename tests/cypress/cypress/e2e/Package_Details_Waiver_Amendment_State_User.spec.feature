@@ -207,6 +207,8 @@ Feature: Waiver Package Details View: 1915 b Waiver Amendment for a State User
         #Then verify the additional information section exists
 
     Scenario: Screen Enhance: 1915 b Waiver Amendment Details View - RAI Response Withdraw Enabled
+        Then click Under Review checkbox
+        Then Click on Filter Button
         Then search for "MD-22204.R00.02"
         Then click the Waiver Number link in the first row
         Then verify the package details page is visible
@@ -236,6 +238,8 @@ Feature: Waiver Package Details View: 1915 b Waiver Amendment for a State User
         #Then verify the additional information section exists
 
 Scenario: Screen Enhance: 1915 b Waiver Amendment Details View - Withdraw RAI Response
+        Then click Under Review checkbox
+        Then Click on Filter Button
         Then search for "MD-22204.R00.02"
         Then click the Waiver Number link in the first row
         Then verify the package details page is visible

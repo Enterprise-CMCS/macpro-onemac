@@ -215,7 +215,9 @@ Feature: Medicaid SPA State Details View - Card View with Actions
         Then verify there is an Approved Effective Date in the details section
 
     Scenario: Screen Enhance - RAI Response Withdraw Enabled SPA
+        Then click Under Review checkbox
         Then Click on Filter Button
+        Then search for "MD-23-7652-VM"
         Then click the SPA ID link in the first row
         Then verify the package details page is visible
         Then verify 2 action cards exist
@@ -241,6 +243,8 @@ Feature: Medicaid SPA State Details View - Card View with Actions
         Then verify there is an Approved Effective Date in the details section
 
     Scenario: Medicaid SPA Details View - Withdraw RAI Response
+        Then click Under Review checkbox
+        Then Click on Filter Button
         Then search for "MD-23-7652-VM"
         Then click the SPA ID link in the first row
         Then verify the package details page is visible
