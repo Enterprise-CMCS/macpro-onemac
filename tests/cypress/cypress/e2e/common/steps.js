@@ -56,7 +56,7 @@ When("Clicking on FAQ Tab", () => {
 });
 
 When("Login with state submitter user", () => {
-  OneMacDevLoginPage.loginAsStateSubmiiter();
+  OneMacDevLoginPage.loginAs("State Submitter", "Active");
 });
 Then("click on New Submission", () => {
   OneMacDashboardPage.clickNewSubmission();

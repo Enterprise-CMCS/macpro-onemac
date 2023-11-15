@@ -2,7 +2,19 @@ const EmailInput = "#email";
 const PasswordInput = "#password";
 const LoginBtn = "#loginDevUserBtn";
 
+const DEFAULT_DEV_WORD = "Passw0rd!";
+
 export class oneMacDevLoginPage {
+  loginAs(userRole, userStatus) {
+    const fixtureFile = `user-logins.json`;
+
+    cy.fixture(fixtureFile).then(function (loginCredentials) {
+      cy.get(EmailInput).type(loginCredentials[userRole][userStatus]);
+      cy.get(PasswordInput).type(DEFAULT_DEV_WORD);
+      cy.get(LoginBtn).click();
+    });
+  }
+
   loginAsStateSubmiiter() {
     cy.get(EmailInput).type("statesubmitter@nightwatch.test");
     cy.get(PasswordInput).type("Passw0rd!");
