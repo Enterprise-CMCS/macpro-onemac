@@ -54,10 +54,12 @@ When("Clicking on Development Login", () => {
 When("Clicking on FAQ Tab", () => {
   OneMacHomePage.clickFAQPage();
 });
-
-When("Login with state submitter user", () => {
-  OneMacDevLoginPage.loginAs("State Submitter", "Active");
-});
+When(
+  "Login with {string} {string} {string} user",
+  (article, status, userRole) => {
+    OneMacDevLoginPage.loginAs(userRole, status);
+  }
+);
 Then("click on New Submission", () => {
   OneMacDashboardPage.clickNewSubmission();
 });
