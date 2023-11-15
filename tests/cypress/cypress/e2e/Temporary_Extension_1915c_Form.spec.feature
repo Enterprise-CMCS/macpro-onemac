@@ -2,7 +2,7 @@ Feature: Package Dashboard Temporary Extension
     Background: reoccurring steps
         Given I am on Login Page
         When Clicking on Development Login
-        When Login with state submitter user
+        When Login with "an Active" "State Submitter" user
 
     Scenario: Verify user can create a temporary extension from new submission button
         Then click on New Submission

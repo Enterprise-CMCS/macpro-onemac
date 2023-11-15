@@ -2,7 +2,7 @@ Feature: Package Dashboard - Filter options that include Dates
     Background: Reoccuring Steps
         Given I am on Login Page
         When Clicking on Development Login
-        When Login with state submitter user
+        When Login with "an Active" "State Submitter" user
 
     Scenario: Change Initial Submission Date filter. Verify no results. Then reset filter
         Then click on the Waivers tab

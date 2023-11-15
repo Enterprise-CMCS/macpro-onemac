@@ -2,7 +2,7 @@ Feature: Package Dashboard: Medicaid SPA Form
     Background: Reoccuring Steps
         Given I am on Login Page
         When Clicking on Development Login
-        When Login with state submitter user
+        When Login with "an Active" "State Submitter" user
         Then click on New Submission
         Then Click on State Plan Amendment SPA
 

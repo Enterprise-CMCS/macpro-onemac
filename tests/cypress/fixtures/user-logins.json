@@ -1,0 +1,20 @@
+{
+    "State Submitter": {
+        "Active": "statesubmitter@nightwatch.test",
+        "Pending": "statesubmitterpending@cms.hhs.local"
+    },
+    "State System Admin": {
+        "Active": "statesystemadmin@nightwatch.test"
+    },
+    "CMS Role Approver": {
+        "Active": "cmsroleapprover@nightwatch.test",
+        "Denied": "cmsroleapproverdenied@cms.hhs.local",
+        "Revoked": "cmsroleapproverrevoked@cms.hhs.local"
+    },
+    "Help Desk": {
+        "Active": "helpdesk@nightwatch.test"
+    },
+    "CMS Read Only": {
+        "Active": "vmcmurray@collabralink.com"
+    }
+}

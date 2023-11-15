@@ -3,7 +3,7 @@ Feature: OY2-11149 Submission Dashboard - Search bar
     Scenario: Search for non existing user and verify error message
         Given I am on Login Page
         When Clicking on Development Login
-        When Login with state submitter user
+        When Login with "an Active" "State Submitter" user
         Then type in search bar not existing ID in search bar
         Then verify Error message displayed should be No Results Found
         Then verify Error message details is displayed
@@ -11,7 +11,7 @@ Feature: OY2-11149 Submission Dashboard - Search bar
     Scenario: Search for non existing criteria and verify error message
         Given I am on Login Page
         When Clicking on Development Login
-        When Login with state submitter user
+        When Login with "an Active" "State Submitter" user
         Then search for "pending"
         Then verify Error message displayed should be No Results Found
         Then verify Error message details is displayed
@@ -19,7 +19,7 @@ Feature: OY2-11149 Submission Dashboard - Search bar
     Scenario: Search for medicaid SPA
         Given I am on Login Page
         When Clicking on Development Login
-        When Login with state submitter user
+        When Login with "an Active" "State Submitter" user
         Then Click on Filter Button
         Then click on Type
         Then click CHIP SPA check box
@@ -33,7 +33,7 @@ Feature: OY2-11149 Submission Dashboard - Search bar
     Scenario: Create Initial Waiver and search it
         Given I am on Login Page
         When Clicking on Development Login
-        When Login with state submitter user
+        When Login with "an Active" "State Submitter" user
         Then click on New Submission
         Then Click on Waiver Action
         Then click on 1915b Waiver Actions
@@ -54,7 +54,7 @@ Feature: OY2-11149 Submission Dashboard - Search bar
     Scenario: Search existing user with Upper case
         Given I am on Login Page
         When Clicking on Development Login
-        When Login with state submitter user
+        When Login with "an Active" "State Submitter" user
         Then search for "ANGIE ACTIVE"
         Then verify user exists with id number searched
 
@@ -62,14 +62,14 @@ Feature: OY2-11149 Submission Dashboard - Search bar
     Scenario: Search existing user with special characters
         Given I am on Login Page
         When Clicking on Development Login
-        When Login with state submitter user
+        When Login with "an Active" "State Submitter" user
         Then search for "-"
         Then verify user exists with id number searched
 
     Scenario: Search CPOC
         Given I am on Login Page
         When Clicking on Development Login
-        When Login with state submitter user
+        When Login with "an Active" "State Submitter" user
         Then click show hide columns button
         Then click CPOC Name checkbox
         Then search for "Chester Tester"
@@ -78,7 +78,7 @@ Feature: OY2-11149 Submission Dashboard - Search bar
     Scenario: Log in with help desk user
         Given I am on Login Page
         When Clicking on Development Login
-        When Login with cms Help Desk User
+        When Login with "an Active" "Help Desk" user
         Then verify search bar exists
         Then verify Search by Package ID, CPOC Name, or Submitter Name is displayed on top of search bar
 
@@ -92,7 +92,7 @@ Feature: OY2-11149 Submission Dashboard - Search bar
     Scenario: Screen Enhancement
         Given I am on Login Page
         When Clicking on Development Login
-        When Login with state submitter user
+        When Login with "an Active" "State Submitter" user
         Then verify search bar exists
         Then verify Search by Package ID, CPOC Name, or Submitter Name is displayed on top of search bar
         Then search for "ANGIE ACTIVE"

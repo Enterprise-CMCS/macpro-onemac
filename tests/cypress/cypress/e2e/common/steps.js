@@ -54,12 +54,10 @@ When("Clicking on Development Login", () => {
 When("Clicking on FAQ Tab", () => {
   OneMacHomePage.clickFAQPage();
 });
-When(
-  "Login with {string} {string} {string} user",
-  (article, status, userRole) => {
-    OneMacDevLoginPage.loginAs(userRole, status);
-  }
-);
+When("Login with {string} {string} user", (status, userRole) => {
+  const realStatus = status.replace("a ", "").replace("an ", "");
+  OneMacDevLoginPage.loginAs(userRole, realStatus);
+});
 Then("click on New Submission", () => {
   OneMacDashboardPage.clickNewSubmission();
 });
@@ -169,13 +167,13 @@ Then("verify submission successful message in the alert bar", () => {
 Then("Add file for RAI Response", () => {
   medicaidSPARAIResponsePage.uploadRAIResponseAddFile();
 });
-//this is for the oy2 8616
-When("Login with cms role approver", () => {
-  OneMacDevLoginPage.loginAsCMSRoleApprover();
-});
-When("Login as EUA CMS Read Only User", () => {
-  OneMacDevLoginPage.loginAsEUACMSReadOnlyUser();
-});
+// //this is for the oy2 8616
+// When("Login with cms role approver", () => {
+//   OneMacDevLoginPage.loginAs("CMS Role Approver", "Active");
+// });
+// When("Login with "an Active" "CMS Read Only" user", () => {
+//   OneMacDevLoginPage.loginAsEUACMSReadOnlyUser();
+// });
 Then("i am on User Management Page", () => {
   OneMacUserManagmentPage.verifyWeAreOnUserManagmentPage();
 });
@@ -236,9 +234,9 @@ Then("Click on User Management Tab", () => {
 When("Login with cms Help Desk User", () => {
   OneMacDevLoginPage.loginAsHelpDeskUser();
 });
-When("Login as a State System Admin", () => {
-  OneMacDevLoginPage.loginAsStateSystemAdmin();
-});
+// When("Login as a State System Admin", () => {
+//   OneMacDevLoginPage.loginAsStateSystemAdmin();
+// });
 Then("i am on Dashboard Page", () => {
   OneMacDashboardPage.verifyWeAreOnDashboardPage();
 });
@@ -695,9 +693,9 @@ Then("click on Packages", () => {
   OneMacDashboardPage.clickPackageTab();
 });
 
-When("Login with CMS Reviewer User", () => {
-  OneMacDevLoginPage.loginAsCMSReviewer();
-});
+// When("Login with CMS Reviewer User", () => {
+//   OneMacDevLoginPage.loginAsCMSReviewer();
+// });
 
 Then(
   "verify that value of the column for the ID is NA Pending or a date",
@@ -736,13 +734,13 @@ Then("Add file for 1915c Appendix K Amendment Waiver Template", () => {
   OneMacAppendixKAmendmentPage.uploadAppKAmendmentWaiverTemplate();
 });
 
-When("Login with cms role approver Revoked", () => {
-  OneMacDevLoginPage.loginAsCMSUserRevoked();
-});
+// When("Login with cms role approver Revoked", () => {
+//   OneMacDevLoginPage.loginAsCMSUserRevoked();
+// });
 
-When("Login with cms role approver Denied", () => {
-  OneMacDevLoginPage.loginAsCMSUserDenied();
-});
+// When("Login with cms role approver Denied", () => {
+//   OneMacDevLoginPage.loginAsCMSUserDenied();
+// });
 
 Then("Verify General Section Exists", () => {
   OneMacFAQPage.verifyGeneralSectionExists();

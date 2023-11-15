@@ -2,7 +2,7 @@ Feature: OY2-12679 Users can request a role change in OneMAC
     Scenario: Screen enhance - State Submitter role change
         Given I am on Login Page
         When Clicking on Development Login
-        When Login with state submitter user
+        When Login with "an Active" "State Submitter" user
         Then i am on Dashboard Page
         Then Click on My Account
         Then verify that Request a Role Change button exists
@@ -23,7 +23,7 @@ Feature: OY2-12679 Users can request a role change in OneMAC
     Scenario: Screen enhance - SSA role change
         Given I am on Login Page
         When Clicking on Development Login
-        When Login as a State System Admin
+        When Login as "an Active" "State System Admin" user
         Then i am on Dashboard Page
         Then Click on My Account
         Then verify that Request a Role Change button exists
@@ -45,7 +45,7 @@ Feature: OY2-12679 Users can request a role change in OneMAC
     Scenario: Screen enhance - cms role approver role change
         Given I am on Login Page
         When Clicking on Development Login
-        When Login with cms role approver
+        When Login with "an Active" "CMS Role Approver" user
         Then i am on User Management Page
         Then Click on My Account
         Then verify that Request a Role Change button exists
@@ -81,7 +81,7 @@ Feature: OY2-12679 Users can request a role change in OneMAC
     Scenario: Screen enhance - Help Desk User role change
         Given I am on Login Page
         When Clicking on Development Login
-        When Login with cms Help Desk User
+        When Login with "an Active" "Help Desk" user
         Then i am on Dashboard Page
         Then Click on My Account
         Then verify that Request a Role Change button does not exist
@@ -89,7 +89,7 @@ Feature: OY2-12679 Users can request a role change in OneMAC
     Scenario: Screen Enhance - Denied CMS user can request CMS Role Approver
         Given I am on Login Page
         When Clicking on Development Login
-        When Login with cms role approver Denied
+        When Login with "a Denied" "CMS Role Approver" user
         Then i am on Dashboard Page
         Then Click on My Account
         Then verify that Request a Role Change button exists
@@ -100,7 +100,7 @@ Feature: OY2-12679 Users can request a role change in OneMAC
     Scenario: Screen Enhance - Revoked CMS user can request CMS Role Approver
         Given I am on Login Page
         When Clicking on Development Login
-        When Login with cms role approver Revoked
+        When Login with "a Revoked" "CMS Role Approver" user
         Then i am on Dashboard Page
         Then Click on My Account
         Then verify that Request a Role Change button exists

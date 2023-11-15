@@ -2,7 +2,7 @@ Feature: RAI Response for Medicaid SPA package view
     Background: Reoccuring Steps
         Given I am on Login Page
         When Clicking on Development Login
-        When Login with state submitter user
+        When Login with "an Active" "State Submitter" user
         Then Click on Filter Button
         Then click on Type
         Then uncheck all of the type checkboxes

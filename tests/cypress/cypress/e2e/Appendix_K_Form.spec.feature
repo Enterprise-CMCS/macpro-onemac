@@ -2,7 +2,7 @@ Feature: Appendix K Waiver Type Selection
     Background: Reoccurring steps
         Given I am on Login Page
         When Clicking on Development Login
-        When Login with state submitter user
+        When Login with "an Active" "State Submitter" user
         Then click on New Submission
         Then Click on Waiver Action
 

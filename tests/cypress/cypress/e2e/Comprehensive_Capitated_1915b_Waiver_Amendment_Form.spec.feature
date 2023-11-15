@@ -3,7 +3,7 @@ Feature: Create a waiver Amendment
     Background: Reoccurring steps
         Given I am on Login Page
         When Clicking on Development Login
-        When Login with state submitter user
+        When Login with "an Active" "State Submitter" user
 
     Scenario: Screen Enhance - Amendment
         Then click on New Submission

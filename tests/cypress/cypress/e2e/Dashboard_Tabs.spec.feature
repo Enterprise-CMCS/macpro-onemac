@@ -2,7 +2,7 @@ Feature: OY2-14464 Package Dashboard - Separate Tab for Waivers and SPAs
     Background: Reoccuring Steps
         Given I am on Login Page
         When Clicking on Development Login
-        When Login with state submitter user
+        When Login with "an Active" "State Submitter" user
 
     Scenario: SPAs Tab - Screen enhancement
         Then verify the SPAs tab exists

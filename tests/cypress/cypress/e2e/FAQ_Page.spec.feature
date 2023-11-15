@@ -80,7 +80,7 @@ Feature: OY2_Update_Text_on_FAQ_Page
     Scenario: Verify redirect link on spa
         Given I am on Login Page
         When Clicking on Development Login
-        When Login with state submitter user
+        When Login with "an Active" "State Submitter" user
         Then click on New Submission
         Then Click on State Plan Amendment SPA
         Then click on Medicaid SPA
@@ -91,7 +91,7 @@ Feature: OY2_Update_Text_on_FAQ_Page
     Scenario: Verify redirect link on 1915b4 waivers
         Given I am on Login Page
         When Clicking on Development Login
-        When Login with state submitter user
+        When Login with "an Active" "State Submitter" user
         Then click on New Submission
         Then Click on Waiver Action
         Then click on 1915b Waiver Actions
@@ -103,7 +103,7 @@ Feature: OY2_Update_Text_on_FAQ_Page
     Scenario: Verify redirect link on 1915b waivers
         Given I am on Login Page
         When Clicking on Development Login
-        When Login with state submitter user
+        When Login with "an Active" "State Submitter" user
         Then click on New Submission
         Then Click on Waiver Action
         Then click on 1915b Waiver Actions

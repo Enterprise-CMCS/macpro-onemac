@@ -2,7 +2,7 @@ Feature: Waiver Package Details View: Initial Waivers
     Background: Reoccuring Steps
         Given I am on Login Page
         When Clicking on Development Login
-        When Login as EUA CMS Read Only User
+        When Login with "an Active" "CMS Read Only" user
         Then click on the Waivers tab
         Then Click on Filter Button
         Then click on Type

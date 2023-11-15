@@ -11,7 +11,7 @@ Feature: OY2-16707 CMS Users Denied a CRA Role loses Read Only Access to OneMAC
     Scenario: Denied EUA CMS user requests and denied but still see same info
         Then Verify I am on the login page and not logged in
         When Clicking on Development Login
-        When Login as EUA CMS Read Only User
+        When Login with "an Active" "CMS Read Only" user
         Then Click on My Account
         Then click on Request a Role Change button
         Then click on the CMS Role Approver role
@@ -45,7 +45,7 @@ Feature: OY2-16707 CMS Users Denied a CRA Role loses Read Only Access to OneMAC
         Then click the logout button
         Then Verify I am on the login page and not logged in
         When Clicking on Development Login
-        When Login as EUA CMS Read Only User
+        When Login with "an Active" "CMS Read Only" user
         Then Click on My Account
         Then verify that Request a Role Change button exists
         Then Click on Manage Profile

@@ -2,7 +2,7 @@ Feature: Verify user can package actions in Withdraw Formal RAI Response in the 
     Background: Reoccurring steps
         Given I am on Login Page
         When Clicking on Development Login
-        When Login with state submitter user
+        When Login with "an Active" "State Submitter" user
         Then click on Packages
 
     Scenario: Demonstrate withdraw package and Withdraw Formal RAI Response are available for CHIP SPA in RAI Response Withdraw Enabled Status
