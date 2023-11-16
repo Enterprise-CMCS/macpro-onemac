@@ -309,12 +309,12 @@ export const buildAnyPackage = async (packageId, config) => {
 
     // if the most recent OneMAC event is an enable withdraw RAI Response,
     // then set sub status to "Withdraw RAI Enabled"
-    // and freeze status to current package status
+    // and freeze status to pending
     if (
       putParams.Item?.reverseChrono[0].currentStatus ===
       ONEMAC_STATUS.WITHDRAW_RAI_ENABLED
     ) {
-      putParams.Item.currentStatus = currentPackage["currentStatus"];
+      putParams.Item.currentStatus = ONEMAC_STATUS.PENDING;
       putParams.Item.subStatus = ONEMAC_STATUS.WITHDRAW_RAI_ENABLED;
     } else {
       console.log("setting sub status to null");

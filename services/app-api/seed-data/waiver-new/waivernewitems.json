@@ -7346,9 +7346,9 @@
   {
     "clockEndTimestamp": 1697123859496,
     "componentType": "waiverrai",
-    "eventTimestamp": 1690982549456,
+    "eventTimestamp": 1673709577000,
     "transmittalNumberWarningMessage": "",
-    "currentStatus": "Under Review",
+    "currentStatus": "RAI Response Withdraw Enabled",
     "parentId": "MD-22116.R00.00",
     "attachments": [
       {
@@ -7382,6 +7382,7 @@
     "componentType": "waivernew",
     "componentId": "MD-22116.R00.00",
     "currentStatus": "Under Review",
+    "subStatus": "RAI Response Withdraw Enabled",
     "subject": "OneMac Connection test",
     "cpocEmail": "\"Tester, Chester (CPOC)\" <chesterT@example.gov>",
     "reverseChrono": [
@@ -7400,7 +7401,7 @@
         "action": "Submitted",
         "type": "Formal RAI Response",
         "timestamp": 1673709577000,
-        "eventTimestamp": 1690982549456
+        "eventTimestamp": 1673709577000
       },
       {
         "additionalInformation": "test",
@@ -7430,6 +7431,7 @@
       "Jimmy2 Tester"
     ],
     "submissionTimestamp": 1672290673531,
+    "latestRaiResponseTimestamp": 1673709577000,
     "reviewTeamEmailList": [
       "\"Tester, Lester (SRT)\" <lesterT@example.gov>",
       "\"Tester, Super (SRT)\" <SuperT@example.gov>",

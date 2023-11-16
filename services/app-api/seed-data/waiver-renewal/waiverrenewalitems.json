@@ -6745,9 +6745,9 @@
 {
   "clockEndTimestamp": 1697123859496,
   "componentType": "waiverrai",
-  "eventTimestamp": 1690982903782,
+  "eventTimestamp": 1673709577000,
   "transmittalNumberWarningMessage": "",
-  "currentStatus": "Under Review",
+  "currentStatus": "RAI Response Withdraw Enabled",
   "parentId": "MD-22116.R01.00",
   "attachments": [
     {
@@ -6793,6 +6793,7 @@
   "cpocEmail": "\"Tester, Chester (CPOC)\" <chesterT@example.gov>",
   "cpocName": "Chester Tester",
   "currentStatus": "Under Review",
+  "subStatus": "RAI Response Withdraw Enabled",
   "description": "package to test RAI withdrawing rebuild",
   "GSI1pk": "OneMAC#waiver",
   "GSI1sk": "MD-22116.R01.00",

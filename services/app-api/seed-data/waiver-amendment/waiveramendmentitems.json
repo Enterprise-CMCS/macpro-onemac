@@ -9474,8 +9474,8 @@
   {
     "clockEndTimestamp": 1680725910479,
     "componentType": "waiverrai",
-    "eventTimestamp": 1676136209000,
-    "currentStatus": "Under Review",
+    "eventTimestamp": 1672953510479,
+    "currentStatus": "RAI Response Withdraw Enabled",
     "parentId": "MD-22204.R00.02",
     "attachments": [
       {
@@ -9520,6 +9520,7 @@
     "GSI1sk": "MD-22204.R00.02",
     "additionalInformation": "test",
     "submissionTimestamp": 1672269888263,
+    "latestRaiResponseTimestamp": 1672953510479,
     "waiverAuthority": "1915(b)",
     "submitterEmail": "mdstateonemac@gmail.com",
     "approvedEffectiveDate": "2023-03-02",
@@ -9544,6 +9545,7 @@
     "lastEventTimestamp": 1690986376374,
     "componentType": "waiveramendment",
     "currentStatus": "Under Review",
+    "subStatus": "RAI Response Withdraw Enabled",
     "attachments": [
       {
         "s3Key": "1672269887538/picture.jpg",
