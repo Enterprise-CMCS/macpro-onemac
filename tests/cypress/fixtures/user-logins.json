@@ -16,5 +16,8 @@
     },
     "CMS Read Only": {
         "Active": "vmcmurray@collabralink.com"
+    },
+    "CMS System Admin": {
+        "Active": "systemadmin@nightwatch.test"
     }
 }

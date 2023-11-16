@@ -73,7 +73,7 @@ Feature: OY2-12679 Users can request a role change in OneMAC
     Scenario: Screen enhance - cms system admin role change
         Given I am on Login Page
         When Clicking on Development Login
-        When Login with cms System Admin
+        When Login with "an Active" "CMS System Admin" user
         Then i am on Dashboard Page
         Then Click on My Account
         Then verify that Request a Role Change button does not exist

@@ -2,7 +2,7 @@ Feature: OY2-16707 CMS Users Denied a CRA Role loses Read Only Access to OneMAC
     Background: Reoccuring Steps
         Given I am on Login Page
         When Clicking on Development Login
-        When Login with cms System Admin
+        When Login with "an Active" "CMS System Admin" user
         Then Click on User Management Tab
         Then reset EUA CMS Read Only User state if needed
         Then Click on My Account
@@ -34,7 +34,7 @@ Feature: OY2-16707 CMS Users Denied a CRA Role loses Read Only Access to OneMAC
         Then click the logout button
         Then Verify I am on the login page and not logged in
         When Clicking on Development Login
-        When Login with cms System Admin
+        When Login with "an Active" "CMS System Admin" user
         Then Click on User Management Tab
         Then click the pending user action button
         Then click the deny access button

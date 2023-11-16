@@ -85,7 +85,7 @@ Feature: OY2-11149 Submission Dashboard - Search bar
     Scenario: Log in with system admin user
         Given I am on Login Page
         When Clicking on Development Login
-        When Login with cms System Admin
+        When Login with "an Active" "CMS System Admin" user
         Then verify search bar exists
         Then verify Search by Package ID, CPOC Name, or Submitter Name is displayed on top of search bar
 
