@@ -23,7 +23,7 @@ Feature: OY2-12679 Users can request a role change in OneMAC
     Scenario: Screen enhance - SSA role change
         Given I am on Login Page
         When Clicking on Development Login
-        When Login as "an Active" "State System Admin" user
+        When Login with "an Active" "State System Admin" user
         Then i am on Dashboard Page
         Then Click on My Account
         Then verify that Request a Role Change button exists
