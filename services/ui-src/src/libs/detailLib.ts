@@ -70,6 +70,11 @@ export const finalDispositionDateDefault: AttributeDetail = {
   fieldName: "finalDispositionDateNice",
   default: "-- --",
 };
+export const packageWithdrawnDateDefault: AttributeDetail = {
+  heading: "Package Withdrawn Date",
+  fieldName: "packageWithdrawnDateNice",
+  default: null,
+};
 export const subjectDefault: AttributeDetail = {
   heading: "Subject",
   fieldName: "subject",
@@ -138,6 +143,7 @@ export const defaultDetailSectionItems = [
   proposedEffectiveDateDefault,
   approvedEffectiveDateDefault,
   finalDispositionDateDefault,
+  packageWithdrawnDateDefault,
   latestRaiResponseDateDefault,
   blankBox, // empty space
   subjectDefault,

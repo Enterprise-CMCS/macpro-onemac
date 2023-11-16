@@ -262,6 +262,12 @@ export const buildAnyPackage = async (packageId, config) => {
                   "yyyy-LL-dd"
                 )
               : emptyField;
+          putParams.Item.packageWithdrawnDate =
+            oneMacStatus === ONEMAC_STATUS.WITHDRAWN
+              ? DateTime.fromMillis(anEvent.STATE_PLAN.STATUS_DATE).toFormat(
+                  "yyyy-LL-dd"
+                )
+              : emptyField;
         }
       }
 

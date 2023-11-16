@@ -157,6 +157,15 @@ const DetailView: React.FC<{ pageConfig: OneMACDetail }> = ({ pageConfig }) => {
             "MMM d yyyy"
           );
         } else fetchedDetail.finalDispositionDateNice = "-- --";
+        if (
+          fetchedDetail.packageWithdrawnDate &&
+          fetchedDetail.packageWithdrawnDate !== "-- --"
+        ) {
+          fetchedDetail.packageWithdrawnDateNice = format(
+            parseISO(fetchedDetail.packageWithdrawnDate),
+            "MMM d yyyy"
+          );
+        } else fetchedDetail.packageWithdrawnDateNice = "-- --";
         stillLoading = false;
       } catch (e) {
         console.log("error in getDetail call?? ", e);
