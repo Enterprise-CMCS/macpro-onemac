@@ -67,7 +67,7 @@ Then(
     OneMacNewSubmissionPage.verifyChoiceGoesTo(choiceText, destinationUrl);
   }
 );
-Then("click on {string} Choice", (choiceText) => {
+Then("click on {string} choice", (choiceText) => {
   OneMacNewSubmissionPage.clickChoice(choiceText);
 });
 Then("Click on State Plan Amendment SPA", () => {
