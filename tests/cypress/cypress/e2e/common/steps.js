@@ -4,6 +4,7 @@ import oneMacDashboardPage from "../../../support/pages/oneMacDashboardPage";
 import oneMacDevLoginPage from "../../../support/pages/oneMacDevLoginPage";
 import oneMacHomePage from "../../../support/pages/oneMacHomePage";
 import oneMacSubmissionTypePage from "../../../support/pages/oneMacSubmissionTypePage";
+import oneMacNewSubmissionPage from "../../../support/pages/oneMacNewSubmissionPage";
 import oneMacSubmitNewMedicaidSpaPage from "../../../support/pages/oneMacSubmitNewMedicaidSPAPage";
 import oneMacUserManagmentPage from "../../../support/pages/oneMacUserManagmentPage";
 import oneMacMyProfilePage from "../../../support/pages/oneMacMyProfilePage";
@@ -17,12 +18,14 @@ import oneMacPackageDetailsPage from "../../../support/pages/oneMacPackageDetail
 import oneMacRespondToRAIPage from "../../../support/pages/oneMacRespondToRAIPage";
 import oneMacDefaultForms from "../../../support/pages/oneMacDefaultForms";
 import withdrawPackagePage from "../../../support/pages/WithdrawPackagePage";
+import oneMacNewSubmissionPage from "../../../support/pages/oneMacNewSubmissionPage";
 
 const medicaidSPARAIResponsePage = new MedicaidSPARAIResponsePage();
 const OneMacDashboardPage = new oneMacDashboardPage();
 const OneMacDevLoginPage = new oneMacDevLoginPage();
 const OneMacHomePage = new oneMacHomePage();
 const OneMacSubmissionTypePage = new oneMacSubmissionTypePage();
+const OneMacNewSubmissionPage = new oneMacNewSubmissionPage();
 const OneMacSubmitNewMedicaidSpaPage = new oneMacSubmitNewMedicaidSpaPage();
 const OneMacUserManagmentPage = new oneMacUserManagmentPage();
 const OneMacMyProfilePage = new oneMacMyProfilePage();
@@ -58,6 +61,15 @@ When("Login with {string} {string} user", (status, userRole) => {
 });
 Then("click on New Submission", () => {
   OneMacDashboardPage.clickNewSubmission();
+});
+Then(
+  "verify {string} choice goes to {string}",
+  (choiceText, destinationUrl) => {
+    OneMacNewSubmissionPage.verifyChoiceGoesTo(choiceText, destinationUrl);
+  }
+);
+Then("click on {string} Choice", (choiceText) => {
+  OneMacNewSubmissionPage.clickChoice(choiceText);
 });
 Then("Click on State Plan Amendment SPA", () => {
   OneMacSubmissionTypePage.clickStatePlanAmendmentSPA();
