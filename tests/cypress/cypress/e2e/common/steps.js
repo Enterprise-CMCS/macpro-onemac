@@ -18,7 +18,6 @@ import oneMacPackageDetailsPage from "../../../support/pages/oneMacPackageDetail
 import oneMacRespondToRAIPage from "../../../support/pages/oneMacRespondToRAIPage";
 import oneMacDefaultForms from "../../../support/pages/oneMacDefaultForms";
 import withdrawPackagePage from "../../../support/pages/WithdrawPackagePage";
-import oneMacNewSubmissionPage from "../../../support/pages/oneMacNewSubmissionPage";
 
 const medicaidSPARAIResponsePage = new MedicaidSPARAIResponsePage();
 const OneMacDashboardPage = new oneMacDashboardPage();
