@@ -215,12 +215,12 @@ Feature: Medicaid SPA State Details View - Card View with Actions
         Then verify there is an Approved Effective Date in the details section
 
     Scenario: Screen Enhance - RAI Response Withdraw Enabled SPA
-        Then click the RAI Response Withdraw Enabled checkbox
+        Then click Under Review checkbox
         Then Click on Filter Button
+        Then search for "MD-23-7652-VM"
         Then click the SPA ID link in the first row
         Then verify the package details page is visible
         Then verify 2 action cards exist
-        Then verify the status on the card is "RAI Response Withdraw Enabled"
         Then verify package actions header is visible
         Then verify withdraw package action exists
         Then verify Withdraw Formal RAI Response package action exists
@@ -243,11 +243,12 @@ Feature: Medicaid SPA State Details View - Card View with Actions
         Then verify there is an Approved Effective Date in the details section
 
     Scenario: Medicaid SPA Details View - Withdraw RAI Response
-        Then click the RAI Response Withdraw Enabled checkbox
+        Then click Under Review checkbox
+        Then Click on Filter Button
         Then search for "MD-23-7652-VM"
         Then click the SPA ID link in the first row
         Then verify the package details page is visible
-        Then verify the status on the card is "RAI Response Withdraw Enabled"
+        Then verify the sub status on the card is RAI Response Withdraw Enabled
         Then click Withdraw Formal RAI Response package action
         Then type "Automated test to withdraw the RAI Response." in additional info textarea
         Then Click the Submit Button without waiting
