@@ -246,6 +246,7 @@ Feature: CHIP SPA State Details View - Card View with Actions
     #     Then verify there is a Final Disposition Date header in the details section
     #     Then verify there is an Approved Effective Date in the details section
 
+
     # Scenario: Chip SPA Details View - Withdraw RAI Response
     #     Then click Under Review checkbox
     #     Then Click on Filter Button
