@@ -13,24 +13,24 @@
   "unsafe-perm": true,
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Enterprise-CMCS/macpro-onemac.git"
+    "url": "git+https://github.com/CMSgov/onemac.git"
   },
   "author": "",
   "license": "CC0-1.0",
   "bugs": {
-    "url": "https://github.com/Enterprise-CMCS/macpro-onemac/issues"
+    "url": "https://github.com/CMSgov/onemac/issues"
   },
-  "homepage": "https://github.com/Enterprise-CMCS/macpro-onemac#readme",
+  "homepage": "https://github.com/CMSgov/onemac#readme",
   "devDependencies": {
+    "@badeball/cypress-cucumber-preprocessor": "^18.0.6",
+    "@bahmutov/cypress-esbuild-preprocessor": "^2.2.0",
     "@typescript-eslint/eslint-plugin": "^4.29.1",
     "@typescript-eslint/parser": "^4.29.1",
-    "chai": "^4.2.0",
-    "chromedriver": ">=90.0.0",
-    "cypress-axe": "^1.4.0",
-    "@badeball/cypress-cucumber-preprocessor": "^16.0.3",
-    "@bahmutov/cypress-esbuild-preprocessor": "^2.2.0",
+    "chai": "^4.3.10",
+    "chromedriver": "^116.0.0",
+    "cypress-axe": "^1.5.0",
     "cypress-file-upload": "^5.0.8",
-    "cypress-xpath": "^1.6.2",
+    "cypress-xpath": "^2.0.1",
     "dotenv": "^8.2.0",
     "eslint": "^7.32.0",
     "eslint-plugin-react": "^7.24.0",
@@ -41,7 +41,7 @@
     "prettier": "^2.3.1",
     "selenium-server": "^3.141.59",
     "serverless": "3.12.0",
-    "serverless-s3-bucket-helper": "https://git@github.com/Enterprise-CMCS/serverless-s3-bucket-helper#0.1.1",
+    "serverless-s3-bucket-helper": "https://git@github.com/CMSgov/serverless-s3-bucket-helper#0.1.1",
     "sinon": "^9.2.3",
     "typescript": "^4.3.5"
   },

@@ -1,5 +1,5 @@
 const newSubmissionBTN = "#new-submission-button";
-const successMessage = "#alert-bar h2";
+const successMessage = "#alert_3";
 const successMessage1 = "#alert-bar";
 //Element is Xpath use cy.xpath instead of cy.get
 const successMessageAfterRAIResponse =
