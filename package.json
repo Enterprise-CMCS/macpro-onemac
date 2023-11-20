@@ -27,7 +27,7 @@
     "@typescript-eslint/eslint-plugin": "^4.29.1",
     "@typescript-eslint/parser": "^4.29.1",
     "chai": "^4.3.10",
-    "chromedriver": "^116.0.0",
+    "chromedriver": "^119.0.1",
     "cypress-axe": "^1.5.0",
     "cypress-file-upload": "^5.0.8",
     "cypress-xpath": "^2.0.1",
