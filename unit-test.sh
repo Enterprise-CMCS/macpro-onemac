@@ -15,5 +15,5 @@ for d in services/*/; do
   fi
   popd
 done
-exit 0
-# exit $RET
+
+exit $RET
