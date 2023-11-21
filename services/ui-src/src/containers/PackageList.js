@@ -7,7 +7,7 @@ import React, {
 } from "react";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { Button } from "@cmsgov/design-system";
-import { format, getUnixTime } from "date-fns";
+import { format } from "date-fns";
 import classNames from "classnames";
 
 import {
