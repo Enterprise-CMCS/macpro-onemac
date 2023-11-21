@@ -7,7 +7,7 @@ import React, {
 } from "react";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { Button } from "@cmsgov/design-system";
-import { format } from "date-fns";
+import { format, getUnixTime } from "date-fns";
 import classNames from "classnames";
 
 import {
@@ -48,7 +48,7 @@ export const COLUMN_ID = {
   TYPE: "componentType",
   STATUS: "packageStatus",
   SUBMISSION_TIMESTAMP: "submissionTimestamp",
-  FINAL_DISPOSITION_DATE: "finalDispositionDate",
+  FINAL_DISPOSITION_TIMESTAMP: "finalDispositionTimestamp",
   LATEST_RAI_TIMESTAMP: "latestRaiResponseTimestamp",
   CPOC_NAME: "cpocName",
   SUBMITTER: "submitter",
@@ -58,12 +58,12 @@ export const COLUMN_ID = {
 const defaultStateHiddenCols = [
   COLUMN_ID.TERRITORY,
   COLUMN_ID.CPOC_NAME,
-  COLUMN_ID.FINAL_DISPOSITION_DATE,
+  COLUMN_ID.FINAL_DISPOSITION_TIMESTAMP,
 ];
 const defaultCMSHiddenCols = [
   COLUMN_ID.SUBMITTER,
   COLUMN_ID.CPOC_NAME,
-  COLUMN_ID.FINAL_DISPOSITION_DATE,
+  COLUMN_ID.FINAL_DISPOSITION_TIMESTAMP,
 ];
 
 const DEFAULT_COLUMNS = {
@@ -216,6 +216,7 @@ const PackageList = () => {
   const exportTransformMap = {
     submissionTimestamp: renderDate,
     latestRaiResponseTimestamp: renderDate,
+    finalDispositionTimestamp: renderDate,
   };
 
   const columns = useMemo(
@@ -265,7 +266,7 @@ const PackageList = () => {
         },
         {
           Header: "Final Disposition Date",
-          accessor: COLUMN_ID.FINAL_DISPOSITION_DATE,
+          accessor: COLUMN_ID.FINAL_DISPOSITION_TIMESTAMP,
           Cell: renderDate,
           disableFilters: false,
           filter: CustomFilterTypes.DateRange,

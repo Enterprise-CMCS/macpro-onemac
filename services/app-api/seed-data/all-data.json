@@ -9804,6 +9804,7 @@
         "currentStatus": "Disapproved",
         "description": "disapproved test - another thing that might be overwritten",
         "finalDispositionDate": "2023-01-12",
+        "finalDispositionTimestamp": 1673499600000,
         "GSI1pk": "OneMAC#spa",
         "GSI1sk": "MD-22-2301-VM",
         "lastEventTimestamp": 1673561667690,

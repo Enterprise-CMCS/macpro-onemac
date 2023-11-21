@@ -262,6 +262,8 @@ export const buildAnyPackage = async (packageId, config) => {
                   "yyyy-LL-dd"
                 )
               : emptyField;
+          putParams.Item.finalDispositionTimestamp =
+            anEvent.STATE_PLAN.STATUS_DATE + 18000000;
         }
       }
 
