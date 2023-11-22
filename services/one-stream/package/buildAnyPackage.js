@@ -262,7 +262,7 @@ export const buildAnyPackage = async (packageId, config) => {
             ).toFormat("yyyy-LL-dd");
             // have to add 18000000 seconds because of time zone
             putParams.Item.finalDispositionTimestamp =
-              anEvent.STATE_PLAN.STATUS_DATE + 18000000;
+              anEvent.STATE_PLAN.STATUS_DATE + 18000009;
           } else {
             putParams.Item.finalDispositionDate = emptyField;
             putParams.Item.finalDispositionTimestamp = 0;

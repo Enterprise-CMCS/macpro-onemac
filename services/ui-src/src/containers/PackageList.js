@@ -265,7 +265,7 @@ const PackageList = () => {
           Filter: CustomFilterUi.DateRangeInPast,
         },
         {
-          Header: "Final Disposition Date",
+          Header: "Final Disposition",
           accessor: COLUMN_ID.FINAL_DISPOSITION_TIMESTAMP,
           Cell: renderDate,
           disableFilters: false,

@@ -33,6 +33,7 @@ export const FilterChipTray = ({
     [COLUMN_ID.TYPE]: "Type",
     [COLUMN_ID.STATUS]: "Status",
     [COLUMN_ID.SUBMISSION_TIMESTAMP]: "Initial Submission",
+    [COLUMN_ID.FINAL_DISPOSITION_TIMESTAMP]: "Final Disposition",
     [COLUMN_ID.LATEST_RAI_TIMESTAMP]: "Formal RAI Response",
   };
   const Chip = ({ label: value, column, type }: FilterChipValue) => {
