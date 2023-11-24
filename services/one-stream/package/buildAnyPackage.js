@@ -256,17 +256,12 @@ export const buildAnyPackage = async (packageId, config) => {
         if (seaToolStatus && SEATOOL_TO_ONEMAC_STATUS[seaToolStatus]) {
           const oneMacStatus = SEATOOL_TO_ONEMAC_STATUS[seaToolStatus];
           putParams.Item.currentStatus = oneMacStatus;
-          if (finalDispositionStatuses.includes(oneMacStatus)) {
-            putParams.Item.finalDispositionDate = DateTime.fromMillis(
-              anEvent.STATE_PLAN.STATUS_DATE
-            ).toFormat("yyyy-LL-dd");
-            // have to add 18000000 seconds because of time zone
-            putParams.Item.finalDispositionTimestamp =
-              anEvent.STATE_PLAN.STATUS_DATE + 18000009;
-          } else {
-            putParams.Item.finalDispositionDate = emptyField;
-            putParams.Item.finalDispositionTimestamp = 0;
-          }
+          putParams.Item.finalDispositionDate =
+            finalDispositionStatuses.includes(oneMacStatus)
+              ? DateTime.fromMillis(anEvent.STATE_PLAN.STATUS_DATE).toFormat(
+                  "yyyy-LL-dd"
+                )
+              : emptyField;
         }
       }
 

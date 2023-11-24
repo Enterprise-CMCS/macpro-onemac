@@ -48,7 +48,7 @@ export const COLUMN_ID = {
   TYPE: "componentType",
   STATUS: "packageStatus",
   SUBMISSION_TIMESTAMP: "submissionTimestamp",
-  FINAL_DISPOSITION_TIMESTAMP: "finalDispositionTimestamp",
+  FINAL_DISPOSITION_DATE: "finalDispositionDate",
   LATEST_RAI_TIMESTAMP: "latestRaiResponseTimestamp",
   CPOC_NAME: "cpocName",
   SUBMITTER: "submitter",
@@ -58,12 +58,12 @@ export const COLUMN_ID = {
 const defaultStateHiddenCols = [
   COLUMN_ID.TERRITORY,
   COLUMN_ID.CPOC_NAME,
-  COLUMN_ID.FINAL_DISPOSITION_TIMESTAMP,
+  COLUMN_ID.FINAL_DISPOSITION_DATE,
 ];
 const defaultCMSHiddenCols = [
   COLUMN_ID.SUBMITTER,
   COLUMN_ID.CPOC_NAME,
-  COLUMN_ID.FINAL_DISPOSITION_TIMESTAMP,
+  COLUMN_ID.FINAL_DISPOSITION_DATE,
 ];
 
 const DEFAULT_COLUMNS = {
@@ -76,10 +76,35 @@ const DEFAULT_COLUMNS = {
   [USER_ROLE.DEFAULT_CMS_USER]: defaultCMSHiddenCols,
 };
 
+const shortMonth = [
+  "none",
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
+];
+
 const renderDate = ({ value }) =>
   typeof value === "number" && value > 0
     ? format(value, "MMM d, yyyy")
     : "-- --";
+
+const renderStringDate = ({ value }) => {
+  let returnValue = "-- --";
+  if (value && value !== "-- --") {
+    const [year, month, day] = value.split("-");
+    returnValue = `${shortMonth[Number(month)]} ${day}, ${year}`;
+  }
+  return returnValue;
+};
 
 export const getState = ({ componentId }) =>
   componentId ? componentId.toString().substring(0, 2) : "--";
@@ -216,7 +241,6 @@ const PackageList = () => {
   const exportTransformMap = {
     submissionTimestamp: renderDate,
     latestRaiResponseTimestamp: renderDate,
-    finalDispositionTimestamp: renderDate,
   };
 
   const columns = useMemo(
@@ -266,8 +290,8 @@ const PackageList = () => {
         },
         {
           Header: "Final Disposition",
-          accessor: COLUMN_ID.FINAL_DISPOSITION_TIMESTAMP,
-          Cell: renderDate,
+          accessor: COLUMN_ID.FINAL_DISPOSITION_DATE,
+          Cell: renderStringDate,
           disableFilters: false,
           filter: CustomFilterTypes.DateRange,
           Filter: CustomFilterUi.DateRangeInPast,
