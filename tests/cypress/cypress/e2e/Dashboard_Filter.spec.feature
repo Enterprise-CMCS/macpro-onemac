@@ -17,6 +17,7 @@ Feature: Package Dashboard - Filter
         Then click on Initial Submission Date filter dropdown
         Then verify Initial Submission Date date picker filter exists
         Then verify Formal RAI Received dropdown filter exists
+        Then verify Final Disposition dropdown filter exists
         Then Click on My Account
         Then click the logout button
 
@@ -34,6 +35,7 @@ Feature: Package Dashboard - Filter
         Then click on Initial Submission Date filter dropdown
         Then verify Initial Submission Date date picker filter exists
         Then verify Formal RAI Received dropdown filter exists
+        Then verify Final Disposition dropdown filter exists
         Then Click on My Account
         Then click the logout button
 
