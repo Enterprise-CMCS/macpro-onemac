@@ -51,8 +51,10 @@ const initialSubmissionDateDatePickerFilter =
   "#submissionTimestamp-date-filter";
 const formalRAIReceivedDateFilterDropdown =
   "#latestRaiResponseTimestamp-button";
+const finalDispositionDateFilterDropdown = "#finalDispositionDate-button";
 const formalRAIReceivedDatePickerFilter =
   "#latestRaiResponseTimestamp-date-filter";
+const finalDispositionDatePickerFilter = "#finalDispositionDate-date-filter";
 //Element is Xpath use cy.xpath instead of cy.get
 const thisQuarterDatePickerBtn = "//button[contains(text(),'This Quarter')]";
 //Element is Xpath use cy.xpath instead of cy.get
@@ -121,6 +123,8 @@ const checkBoxSubmittedBy = "//span[contains(text(),'Submitted By')]";
 //Element is Xpath use cy.xpath instead of cy.get
 const checkBoxType = "//span[contains(text(),'Type')]";
 const checkboxCPOCName = "//span[contains(text(),'CPOC Name')]";
+const checkboxfinalDispositionDate =
+  "//span[contains(text(),'Final Disposition')]";
 const IDNumberColumn = "#componentIdColHeader";
 const typeColumn = "#componentTypeColHeader";
 const statusColumn = "#packageStatusColHeader";
@@ -129,6 +133,7 @@ const submittedByColumn = "#submitterColHeader";
 const actionsColumn = "#packageActionsColHeader";
 const formalRAIReceivedColumn = "#latestRaiResponseTimestampColHeader";
 const cPOCNameColumn = "#cpocNameColHeader";
+const finalDispositionColumn = "#finalDispositionDateColHeader";
 const packageRowOneType = "#componentType-0";
 const packageRowOneState = "#territory-0";
 //first obj is a header and second obj is row if there are results
@@ -314,6 +319,13 @@ export class oneMacPackagePage {
     cy.get(formalRAIReceivedDateFilterDropdown).wait(1000);
     cy.get(formalRAIReceivedDateFilterDropdown).click();
   }
+  verifyFinalDispositionDateFilterDropdownExists() {
+    cy.get(finalDispositionDateFilterDropdown).should("be.visible");
+  }
+  clickOnFinalDispositionDateFilterDropdownDropDown() {
+    cy.get(finalDispositionDateFilterDropdown).wait(1000);
+    cy.get(finalDispositionDateFilterDropdown).click();
+  }
   verifyNinetiethDayNACheckboxExists() {
     cy.xpath(ninetiethDayNACheckbox).should("exist");
   }
@@ -345,6 +357,10 @@ export class oneMacPackagePage {
   clickOnFormalRAIReceivedDatePickerFilter() {
     cy.get(formalRAIReceivedDatePickerFilter).wait(1000);
     cy.get(formalRAIReceivedDatePickerFilter).last().click();
+  }
+  clickOnFinalDispositionDatePickerFilter() {
+    cy.get(finalDispositionDatePickerFilter).wait(1000);
+    cy.get(finalDispositionDatePickerFilter).last().click();
   }
   clickOnThisQuarterDatePickerBtn() {
     cy.xpath(thisQuarterDatePickerBtn).click();
@@ -531,6 +547,12 @@ export class oneMacPackagePage {
   clickCPOCNameCheckBox() {
     cy.xpath(checkboxCPOCName).click();
   }
+  verifyFinalDispositionCheckBoxExists() {
+    cy.xpath(checkboxfinalDispositionDate).should("be.visible");
+  }
+  clickFinalDispositionDateCheckBox() {
+    cy.xpath(checkboxfinalDispositionDate).click();
+  }
   verifyIDNumberColumnExists() {
     cy.get(IDNumberColumn).should("be.visible");
   }
@@ -580,6 +602,12 @@ export class oneMacPackagePage {
   }
   verifyCPOCNameColumnDoesNotExist() {
     cy.get(cPOCNameColumn).should("not.exist");
+  }
+  verifyFinalDispositionColumnExists() {
+    cy.get(finalDispositionColumn).should("be.visible");
+  }
+  verifyFinalDispositionColumnDoesNotExist() {
+    cy.get(finalDispositionColumn).should("not.exist");
   }
   verifyactionsColumnDoesNotExist() {
     cy.get(actionsColumn).should("not.exist");
