@@ -157,8 +157,8 @@ Then("click Leave Anyway form button", () => {
 Then("click Stay on Page", () => {
   OneMacSubmitNewMedicaidSpaPage.clickStayOnPageBtn();
 });
-Then("verify submission Successful message", () => {
-  OneMacDashboardPage.verifySuccessMessageIsDisplayed();
+Then("verify the success message is {string}", (s) => {
+  OneMacDashboardPage.verifySuccessMessageIs(s);
 });
 Then("verify submission successful message in the alert bar", () => {
   OneMacDashboardPage.verifySuccessMessage1IsDisplayed();
@@ -1594,7 +1594,7 @@ Then("verify IDM Instructions for OneMAC Users link exists", () => {
 Then("verify OneMAC IDM Guide link exists", () => {
   OneMacFAQPage.verifyIdmGuideLinkExists();
 });
-Then("verify OneMAC State Submitter Guide link exists", () => {
+Then("verify OneMAC State User Guide link exists", () => {
   OneMacFAQPage.verifyStateSubmitterGuideLinkExists();
 });
 Then("verify OneMAC CMS User Guide link exists", () => {
@@ -1606,7 +1606,7 @@ Then("verify IDM Instructions for OneMAC Users is valid", () => {
 Then("verify OneMAC IDM Guide is valid", () => {
   OneMacFAQPage.verifyIdmGuideLinkIsValid();
 });
-Then("verify OneMAC State Submitter Guide is valid", () => {
+Then("verify OneMAC State User Guide is valid", () => {
   OneMacFAQPage.verifyStateSubmitterGuideLinkIsValid();
 });
 Then("verify OneMAC CMS User Guide is valid", () => {
@@ -1720,6 +1720,12 @@ Then("click yes, withdraw package button", () => {
 });
 Then("verify yes, withdraw package button exists", () => {
   OneMacPackagePage.verifyConfirmWithdrawPackageBtnExists();
+});
+Then("click Yes, withdraw response button", () => {
+  OneMacPackagePage.clickConfirmWithdrawResponseBtn();
+});
+Then("verify Yes, withdraw response button exists", () => {
+  OneMacPackagePage.verifyConfirmWithdrawResponseBtnExists();
 });
 Then("verify the package details page is visible", () => {
   OneMacPackageDetailsPage.verifyPackageDetailsPageIsVisible();

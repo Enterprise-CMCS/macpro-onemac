@@ -18,7 +18,7 @@ Feature: Waiver Package Details View: Appendix K Amendment for a CMS User
         Then verify the package details page is visible
         Then verify 2 action cards exist
         Then verify the status on the card is "Submitted - Intake Needed"
-        Then verify the package actions section is unavailable
+        Then verify there are no package actions available
         Then verify the details section exists
         Then verify the package details title contains "Appendix K Amendment Package"
         Then verify the waiver authority header exists
@@ -83,7 +83,7 @@ Feature: Waiver Package Details View: Appendix K Amendment for a CMS User
         Then verify the package details page is visible
         Then verify 2 action cards exist
         Then verify the status on the card is "Pending - RAI"
-        Then verify the package actions section is unavailable
+        Then verify there are no package actions available
         Then verify the details section exists
         Then verify the package details title contains "Appendix K Amendment Package"
         Then verify the waiver authority header exists
@@ -117,7 +117,7 @@ Feature: Waiver Package Details View: Appendix K Amendment for a CMS User
         Then verify the package details page is visible
         Then verify 2 action cards exist
         Then verify the status on the card is "Approved"
-        Then verify the package actions section is unavailable
+        Then verify there are no package actions available
         Then verify the details section exists
         Then verify the package details title contains "Appendix K Amendment Package"
         Then verify the waiver authority header exists
@@ -151,7 +151,7 @@ Feature: Waiver Package Details View: Appendix K Amendment for a CMS User
         Then verify the package details page is visible
         Then verify 2 action cards exist
         Then verify the status on the card is "Disapproved"
-        Then verify the package actions section is unavailable
+        Then verify there are no package actions available
         Then verify the details section exists
         Then verify the package details title contains "Appendix K Amendment Package"
         Then verify the waiver authority header exists
@@ -184,7 +184,7 @@ Feature: Waiver Package Details View: Appendix K Amendment for a CMS User
         Then verify the package details page is visible
         Then verify 2 action cards exist
         Then verify the status on the card is "Package Withdrawn"
-        Then verify the package actions section is unavailable
+        Then verify there are no package actions available
         Then verify the details section exists
         Then verify the package details title contains "Appendix K Amendment Package"
         Then verify the waiver authority header exists
@@ -217,7 +217,7 @@ Feature: Waiver Package Details View: Appendix K Amendment for a CMS User
         Then verify the package details page is visible
         Then verify 2 action cards exist
         Then verify the status on the card is "Pending - Concurrence"
-        Then verify the package actions section is unavailable
+        Then verify there are no package actions available
         Then verify the details section exists
         Then verify the package details title contains "Appendix K Amendment Package"
         Then verify the waiver authority header exists
@@ -250,7 +250,7 @@ Feature: Waiver Package Details View: Appendix K Amendment for a CMS User
         Then verify the package details page is visible
         Then verify 2 action cards exist
         Then verify the status on the card is "Pending - Approval"
-        Then verify the package actions section is unavailable
+        Then verify there are no package actions available
         Then verify the details section exists
         Then verify the package details title contains "Appendix K Amendment Package"
         Then verify the waiver authority header exists

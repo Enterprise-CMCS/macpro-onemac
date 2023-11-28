@@ -207,6 +207,8 @@ const childRows = "//tr[@class = 'child-row-expanded']";
 const withdrawPackageBtn = "//a[text()='Withdraw Package']";
 const withdrawPackageConfirmBtn =
   "//button[contains(text(),'Yes, withdraw package')]";
+const withdrawResponseConfirmBtn =
+  "//button[contains(text(),'Yes, withdraw response')]";
 const successMessage = "#alert-bar";
 //Element is Xpath use cy.xpath instead of cy.get
 const packageRowOneIDLink = "//td[@id='componentId-0']//a";
@@ -428,7 +430,7 @@ export class oneMacPackagePage {
   clickWaiverTerminatedCheckBox() {
     cy.xpath(terminatedCheckBox).click();
   }
-  verifyWithdrawalRequestedCheckBoxCheckBox() {
+  verifyWithdrawalRequestedCheckBoxExists() {
     cy.xpath(withdrawalRequestedCheckBox).should("be.visible");
   }
   clickWithdrawalRequestedCheckBox() {
@@ -818,6 +820,13 @@ export class oneMacPackagePage {
   }
   verifyConfirmWithdrawPackageBtnExists() {
     cy.xpath(withdrawPackageConfirmBtn).should("be.visible");
+  }
+  clickConfirmWithdrawResponseBtn() {
+    cy.xpath(withdrawResponseConfirmBtn).click();
+    cy.wait(8000);
+  }
+  verifyConfirmWithdrawResponseBtnExists() {
+    cy.xpath(withdrawResponseConfirmBtn).should("be.visible");
   }
   verifyChildRowStatusIs(status) {
     cy.get(packageRowTwoStatus).should("contain.text", status);
