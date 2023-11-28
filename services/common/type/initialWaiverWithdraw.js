@@ -7,6 +7,7 @@ export const initialWaiverWithdraw = {
   allowMultiplesWithSameId: true,
   requiredAttachments: [],
   optionalAttachments: ["Supporting Documentation"],
+  requireUploadOrAdditionalInformation: true,
   theAttributes: [
     "componentId",
     "submissionTimestamp",
@@ -22,10 +23,5 @@ export const initialWaiverWithdraw = {
     "Pending - Concurrence",
     "Pending - Approval",
     "RAI Issued",
-  ],
-  secondClockStatuses: [
-    "Pending",
-    "Pending - Concurrence",
-    "Pending - Approval",
   ],
 };

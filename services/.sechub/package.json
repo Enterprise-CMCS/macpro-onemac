@@ -10,10 +10,14 @@
   "license": "ISC",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/CMSgov/onemac.git"
+    "url": "git+https://github.com/Enterprise-CMCS/macpro-onemac.git"
   },
   "dependencies": {
     "lodash": "^4.17.21",
     "octokit": "^1.5.0"
+  },
+  "devDependencies": {
+    "esbuild": "^0.19.4",
+    "serverless-esbuild": "^1.48.4"
   }
 }

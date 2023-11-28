@@ -14,9 +14,6 @@ export class oneMacDefaultForms {
   clicksubmitBTNWithoutWait() {
     cy.get(submitBTN).click();
   }
-  verifySubmitBtnExists() {
-    cy.get(submitBTN).scrollIntoView().should("be.visible");
-  }
   verifySubmitBtnIsNotDisabled() {
     cy.get(submitBTN).should("not.be.disabled");
   }

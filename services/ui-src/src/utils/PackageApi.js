@@ -20,6 +20,9 @@ const SUBMIT_API_CALL = {
   [Workflow.ONEMAC_TYPE.WAIVER_AMENDMENT]: "submitWaiverAmendment",
   [Workflow.ONEMAC_TYPE.WAIVER_AMENDMENT_WITHDRAW]: "withdrawWaiverAmendment",
   [Workflow.ONEMAC_TYPE.WAIVER_RAI]: "submitWaiverRAIResponse",
+  [Workflow.ONEMAC_TYPE.ENABLE_RAI_WITHDRAW]: "enableRaiWithdraw",
+  [Workflow.ONEMAC_TYPE.DISABLE_RAI_WITHDRAW]: "disableRaiWithdraw",
+  [Workflow.ONEMAC_TYPE.RAI_RESPONSE_WITHDRAW]: "withdrawRAIResponse",
 };
 
 /**
@@ -82,8 +85,6 @@ class PackageApi {
       );
       throw new Error("Missing required data or uploads");
     }
-    console.log("componentType: ", componentType);
-    console.log("posting to: ", SUBMIT_API_CALL[componentType]);
     try {
       return await API.post("oneMacAPI", `/${SUBMIT_API_CALL[componentType]}`, {
         body: data,

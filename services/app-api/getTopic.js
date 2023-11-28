@@ -34,10 +34,7 @@ export const getTopic = async (email, topic) => {
     ProjectionExpression: "STATE_PLAN,SPW_STATUS",
   };
 
-  console.log("params", params);
-
   const results = await dynamoDb.query(params);
-  console.log("results", results);
   return results.Items;
 };
 

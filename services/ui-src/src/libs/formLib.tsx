@@ -17,17 +17,23 @@ export type OneMACFormConfig = {
   idFAQLink?: string;
   pageTitle?: string;
   introJSX?: JSX.Element;
+  buildIntroJSX?: (packageType: string) => JSX.Element;
   addlIntroJSX?: JSX.Element;
   detailsHeader?: string;
   detailsHeaderFull?: string;
   parentTypeNice?: string;
   attachmentsTitle?: string;
   attachmentIntroJSX: JSX.Element;
-  addlInfoText?: string;
+  addlInfoTitle?: string;
+  addlInfoText?: string | React.ReactNode;
+  addlInfoRequired?: boolean;
+  noText?: boolean;
+  requireUploadOrAdditionalInformation?: boolean;
   landingPage: string;
   confirmSubmit?: ConfirmSubmitType;
   proposedEffectiveDate?: boolean;
   titleLabel?: string;
+  submitInstructionsJSX?: JSX.Element;
 } & PackageType &
   Partial<ParentPackageType> &
   Partial<WaiverPackageType> &
@@ -42,19 +48,16 @@ type ParentPackageType = {
 };
 
 type ConfirmSubmitType = {
-  confirmSubmitHeading: string;
-  confirmSubmitMessage: JSX.Element | string;
-  buildMessage?: (toConfirm: string) => JSX.Element;
+  confirmSubmitHeading?: string;
+  confirmSubmitMessage?: JSX.Element | string;
+  buildHeading?: (packageType: string) => string;
+  buildMessage?: (toConfirm: string, packageType: string) => JSX.Element;
   confirmSubmitYesButton?: string;
 };
 
 export const DefaultFileTypesInfo = () => (
   <p>
-    We accept the following file types:{" "}
-    <b>
-      .doc, .docx, .jpg, .odp, .ods, .odt, .png, .pdf, .ppt, .pptx, .rtf, .txt,
-      .xls, .xlsx, and a few others.
-    </b>{" "}
+    We accept the following file formats: <b>.docx, .jpg, .pdf, .png, .xlsx.</b>{" "}
     See the full list on the{" "}
     <Link to={ROUTES.FAQ_ACCEPTED_FILE_TYPES} target={FAQ_TARGET}>
       FAQ Page
@@ -91,6 +94,18 @@ export const defaultAttachmentInstructionsJSX = (
   </>
 );
 
+const defaultSubmitInstructionsJSX = (
+  <p id="form-submit-instructions">
+    <i>
+      Once you submit this form, a confirmation email is sent to you and to CMS.
+      CMS will use this content to review your package, and you will not be able
+      to edit this form. If CMS needs any additional information, they will
+      follow up by email. If you leave this page, you will lose your progress on
+      this form.
+    </i>
+  </p>
+);
+
 export const defaultOneMACFormConfig = {
   idFormat: "",
   idFieldHint: [],
@@ -98,6 +113,8 @@ export const defaultOneMACFormConfig = {
   landingPage: ONEMAC_ROUTES.PACKAGE_LIST,
   proposedEffectiveDate: false,
   attachmentIntroJSX: defaultAttachmentInstructionsJSX(),
+  addlInfoTitle: "Additional Information",
+  submitInstructionsJSX: defaultSubmitInstructionsJSX,
 };
 
 export const defaultWaiverAuthority = [
@@ -118,17 +135,24 @@ export const defaultConfirmSubmitRAI = {
   confirmSubmitMessage: defaultConfirmSubmitMessageRAI,
 };
 
-export const defaultConfirmSubmitHeadingWithdraw = "Withdraw Package?";
-export const defaultConfirmSubmitMessageWithdraw = (toConfirm: string) => (
+export const defaultConfirmSubmitHeadingWithdraw = (packageType: string) =>
+  `Withdraw ${packageType} Package?`;
+export const defaultConfirmSubmitMessageWithdraw = (
+  toConfirm: string,
+  packageType: string
+) => (
   <p>
-    You are about to withdraw {toConfirm}. Once complete, you will not be able
-    to resubmit this package. CMS will be notified.
+    You are about to withdraw {packageType} {toConfirm}. Completing this action
+    will conclude the review of this {packageType} package. If you are not sure
+    this is the correct action to select, contact your CMS point of contact for
+    assistance.
   </p>
 );
 
 export const defaultConfirmSubmitWithdraw = {
-  confirmSubmitHeading: defaultConfirmSubmitHeadingWithdraw,
-  confirmSubmitMessage: defaultConfirmSubmitMessageWithdraw("this package"),
+  confirmSubmitHeading: defaultConfirmSubmitHeadingWithdraw(""),
+  confirmSubmitMessage: defaultConfirmSubmitMessageWithdraw("this package", ""),
+  buildHeading: defaultConfirmSubmitHeadingWithdraw,
   buildMessage: defaultConfirmSubmitMessageWithdraw,
   confirmSubmitYesButton: "Yes, withdraw package",
 };
@@ -137,6 +161,7 @@ export type PackageType = {
   whichTab?: string;
   componentType: string;
   typeLabel: string;
+  packageLabel?: string;
   idLabel: string;
   idRegex: string;
   idMustExist: boolean;
@@ -191,6 +216,14 @@ export const buildMustNotExistMessage = (formConfig: OneMACFormConfig) => ({
   statusMessage: `According to our records, this ${formConfig.idLabel} already exists. Please check the ${formConfig.idLabel} and try entering it again.`,
 });
 
+export const defaultWithdrawIntroJSX = (packageLabel: string) => (
+  <p id="form-intro">
+    Complete this action to withdraw this {packageLabel} package. Once
+    completed, you will not be able to resubmit the {packageLabel} package or
+    undo this action.
+  </p>
+);
+
 export const defaultWithdrawConfig = {
   introJSX: (
     <p id="form-intro">
@@ -201,6 +234,7 @@ export const defaultWithdrawConfig = {
       email.
     </p>
   ),
+  buildIntroJSX: defaultWithdrawIntroJSX,
   confirmSubmit: defaultConfirmSubmitWithdraw,
   attachmentsTitle: "Upload Supporting Documentation",
   attachmentIntroJSX: (
@@ -216,6 +250,7 @@ export const defaultWithdrawConfig = {
       </p>
     </>
   ),
+  addlInfoTitle: "Additional Information",
   addlInfoText:
     "Explain your need for withdrawal or upload supporting documentation.",
   landingPage: ONEMAC_ROUTES.PACKAGE_LIST,

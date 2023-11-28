@@ -3,7 +3,6 @@ import { Button } from "@cmsgov/design-system";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEllipsisV } from "@fortawesome/free-solid-svg-icons";
 
-import { Workflow } from "cmscommonlib";
 import { actionComponent } from "../libs/actionLib";
 
 /**
@@ -35,8 +34,7 @@ export default function ActionPopup({
   alertCallback,
 }) {
   const [showMenu, setShowMenu] = useState(false);
-  const availableActions =
-    Workflow.ACTIONS[theComponent.componentType][theComponent.currentStatus];
+  const availableActions = theComponent.actions;
 
   const wrapperRef = useRef(null);
   useOutsideAlerter(wrapperRef, setShowMenu);

@@ -55,6 +55,7 @@ export default class FileUploader extends Component {
         }),
       ])
     ),
+    numRequired: PropTypes.number,
     showRequiredFieldErrors: PropTypes.bool,
     withdrawIntro: PropTypes.bool,
   };
@@ -65,8 +66,12 @@ export default class FileUploader extends Component {
    */
   constructor(props) {
     super();
-    this.allUploadsComplete = false;
+    this.allUploadsComplete =
+      props.requiredUploads.length === 0 && props.numRequired === 0;
     this.readyCallback = props.readyCallback;
+    if (this.readyCallback) {
+      this.readyCallback(this.allUploadsComplete);
+    }
 
     function initializeUploader(uploadDetails, isRequired) {
       let uploadCriteria = {
@@ -128,18 +133,16 @@ export default class FileUploader extends Component {
   filesUpdated() {
     // Checks if all required uploaders have a file
     let areAllComplete = true;
-    let hasAtLeastOne = false;
+    let numFiles = 0;
 
     this.state.uploaders.forEach((uploader) => {
-      if (uploader.hasFile) hasAtLeastOne = true;
       if (uploader.isRequired && !uploader.hasFile) {
         areAllComplete = false;
       }
+      if (uploader.hasFile) numFiles++;
     });
 
-    if (this.props.requiredUploads.length === 0) {
-      areAllComplete = hasAtLeastOne;
-    }
+    if (numFiles < this.props.numRequired) areAllComplete = false;
     this.allUploadsComplete = areAllComplete;
 
     if (this.readyCallback) {

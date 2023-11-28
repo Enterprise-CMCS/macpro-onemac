@@ -67,6 +67,17 @@ $color-primary-alt-lightest: #f0fafe;
     font-weight: bold;
   }
 
+  .status-bandage {
+    margin: 0;
+    // the min and max allow for minor growing/shrinking
+    // to condense the width of the column when scaled down
+    // At full screen, the extra 25px lets the status breathe
+    max-width: 200px;
+    min-width: 175px;
+    // Responsible for wrapping any column
+    white-space: normal;
+  }
+
   .type-badge {
     @extend .ds-c-badge;
     font-weight: 600;
@@ -371,10 +382,12 @@ ul {
 .required-mark {
   color: red;
 }
+form label.addl-info-required span:first-of-type:after,
 form label.required:after {
   color: red;
   content: "*";
 }
+
 select.form-control,
 textarea.form-control,
 input.form-control {
@@ -523,7 +536,7 @@ input[type="file"] {
   }
 
   form,
-  .faq-card,
+  .mac-card-wrapper,
   .component-detail-wrapper,
   .form-subheader-message {
     @include max-width-ultra-wide;
@@ -740,7 +753,7 @@ article.form-container {
 
     // i hate this hacky, redundant selector, but such is life
     > section + section,
-    .choice-container {
+    .mac-fieldset-wrapper {
       @extend .ds-u-margin-top--7;
     }
 
@@ -1031,6 +1044,7 @@ article.form-container {
 .submissions-table,
 .package-table {
   @include custom-table;
+  table-layout: auto;
 
   @media only screen and (max-width: 1199px) {
     td .type-badge {
@@ -1765,19 +1779,6 @@ article.form-container {
   left: 0;
 }
 
-.home-content-user-header {
-  @extend .ds-u-display--flex;
-  @extend .ds-u-justify-content--center;
-  @extend .ds-u-margin-top--7;
-  @extend .ds-u-padding-top--7;
-
-  h1 {
-    @include max-width-ultra-wide;
-    @extend .ds-u-padding-x--1;
-    flex: 1;
-  }
-}
-
 @media only screen and (max-width: 1024px) {
   .home-content-user-header {
     display: flex;
@@ -1795,13 +1796,21 @@ article.form-container {
   margin-right: -17px;
 }
 
-.home-content-box {
+.home-content-container {
   @extend .ds-u-display--flex;
+  @extend .ds-u-flex-direction--column;
   @extend .ds-u-justify-content--center;
-  @extend .ds-u-margin-top--3;
-  @extend .ds-u-padding-x--7;
-  @extend .ds-u-lg-padding-x--0;
+  @include max-width-ultra-wide;
+  margin: 0 auto;
   background-color: $color-white;
+
+  @media only screen and (max-width: $width-xl) {
+    max-width: 560px;
+    // Centers section titles when on mobile view
+    h1 {
+      margin: 2rem auto;
+    }
+  }
 
   // Reusable styles
   @mixin title-font($size, $lineHeight, $weight) {
@@ -1814,43 +1823,113 @@ article.form-container {
     text-align: left;
   }
 
-  .title-left {
-    @include title-font(24px, 30px, 700);
-    @extend .ds-u-margin-bottom--3;
-    @extend .ds-u-margin-top--3;
-    color: $color-base;
-    width: 100%;
+  // Row titles for home page content
+  h1 {
+    @extend .ds-u-margin-top--7;
+    @extend .ds-u-padding-top--7;
+    @extend .ds-u-padding-x--1;
   }
 
-  .title {
-    @include title-font(24px, 30px, 700);
-    @extend .ds-u-margin-bottom--3;
-    color: $color-base;
+  // Container for each row of home page content
+  section {
+    @extend .ds-u-display--flex;
+    @extend .ds-u-flex-wrap--wrap;
+    @extend .ds-u-justify-content--between;
     width: 100%;
-  }
-  .vertical-line {
-    border-left: 2px solid $color-gray-lighter;
-    margin-left: 11px;
-  }
-  .sub-title {
-    @include title-font(18px, 24px, 700);
-    @extend .ds-u-padding-bottom--1;
-    color: $color-gray;
-  }
-  .text {
-    @include title-font(16px, 24px, 400);
-    width: 352px;
-    padding-bottom: 8px;
-    color: $color-base;
-    width: 100%;
+
+    @media only screen and (max-width: $width-xl) {
+      .mac-card-wrapper {
+        width: 100%;
+      }
+    }
+
+    .title-left {
+      @include title-font(24px, 30px, 700);
+      @extend .ds-u-margin-bottom--3;
+      @extend .ds-u-margin-top--3;
+      color: $color-base;
+      width: 100%;
+    }
+
+    .text {
+      @include title-font(16px, 24px, 400);
+      width: 352px;
+      padding-bottom: 8px;
+      color: $color-base;
+      width: 100%;
+    }
+
+    // Right column styles
+    #home-content-right-column {
+      @extend .ds-l-col--12;
+      @extend .ds-u-measure--base;
+      .text {
+        @include title-font(16px, 24px, 400);
+        width: 352px;
+        padding-bottom: 8px;
+        color: $color-base;
+        width: 100%;
+      }
+
+      h2 {
+        @include title-font(24px, 30px, 700);
+        @extend .ds-u-margin-bottom--3;
+        color: $color-base;
+        width: 100%;
+      }
+
+      div {
+        padding: 2rem 10rem;
+      }
+
+      li {
+        margin-bottom: 24px;
+      }
+    }
   }
 
-  .home-content-wrapper {
-    @extend .ds-l-row;
-    @extend .ds-u-align-items--start;
-    @extend .ds-u-justify-content--around;
-    @include max-width-ultra-wide;
-    width: 100%;
+  .mac-card-wrapper {
+    width: 40%;
+  }
+
+  .mac-card-title {
+    @extend .ds-u-padding-left--2;
+    @extend .ds-u-padding-right--2;
+    max-width: 75%;
+  }
+
+  .home-content-card-step {
+    @extend .ds-u-display--flex;
+    @extend .ds-u-padding-left--2;
+    @extend .ds-u-padding-right--2;
+    gap: 1rem;
+
+    h2 {
+      @include title-font(18px, 24px, 700);
+      margin-top: 0;
+      color: $color-gray;
+    }
+
+    .vertical-line {
+      border-left: 2px solid $color-gray-lighter;
+    }
+
+    .icon-and-line,
+    .subtitle-and-text {
+      @extend .ds-u-display--flex;
+      @extend .ds-u-flex-direction--column;
+      gap: 1rem;
+    }
+
+    .icon-and-line {
+      align-items: center !important;
+      gap: 2rem;
+      width: 28px;
+    }
+
+    .subtitle-and-text {
+      @extend .ds-u-padding-left--1;
+    }
   }
 
   .home-content-left-box,
@@ -1865,8 +1944,6 @@ article.form-container {
     @extend .ds-u-margin-bottom--5;
     @extend .ds-u-lg-margin-bottom--0;
     @extend .ds-u-padding-bottom--5;
-    border: 1px solid $color-gray-lighter;
-    border-radius: 4px;
 
     .vertical-line-64 {
       @extend .vertical-line;
@@ -1962,38 +2039,10 @@ article.form-container {
 }
 
 .access-card-container {
-  &:not(:last-child) {
-    @extend .ds-u-margin-bottom--3;
-  }
-  .gradient-border {
-    @include gradient-top-border;
-  }
+  padding: 0 !important;
 }
 
-.state-access-card {
-  @extend .ds-u-padding--3;
-  @extend .ds-u-fill--white;
-
-  border: 1px solid $color-gray-lighter;
-  border-top: none;
-  border-radius: 0px 0px 3px 3px;
-  box-shadow: 0px 0px 24px rgba(0, 0, 0, 0.05);
-  position: relative;
-
-  &:not(:last-child) {
-    @extend .ds-u-margin-bottom--3;
-  }
-
-  button {
-    position: absolute;
-    background: inherit;
-    top: 26px;
-    right: 26px;
-    border: none;
-  }
-}
-
-.state-access-card,
+.mac-card-removable-wrapper,
 .cms-group-division-section {
   div {
     @extend .ds-u-font-size--h3;
@@ -2058,64 +2107,31 @@ article.form-container {
   font-weight: 400;
 }
 
-.faq-left-column {
-  @media only screen and (min-width: $width-xl) {
-    width: calc(100% - 400px);
+.faq-display {
+  @extend .ds-u-display--flex;
+  @extend .ds-u-justify-content--between;
+  @include max-width-ultra-wide;
+  align-items: flex-start;
+  padding: 40px 16px 8px 16px;
+  margin: 0 auto;
+  gap: 3rem;
+
+  #question-list {
+    width: 100%;
   }
 
-  .faq-misc-points {
-    width: 606px;
-  }
-}
-
-aside#faq-contact-info-box {
-  @extend .ds-u-margin-bottom--5;
-  @extend .ds-u-xl-margin-bottom--0;
-  @extend .ds-u-measure--wide;
-
-  @media only screen and (min-width: $width-xl) {
-    position: sticky;
-    top: 64px;
-    float: right;
-    width: 347px;
-  }
-
-  .faq-border-box {
-    @include gradient-top-border;
-  }
-
-  .faq-info-box {
-    @extend .ds-u-padding--4;
-    background: $color-white;
-    border: 1px solid $color-gray-lighter;
-    border-radius: 0 0 3px 3px;
-    border-top: none;
-
-    h2 {
-      @extend .ds-h3;
-      @extend .ds-u-margin-top--0;
-      @extend .ds-u-margin-bottom--3;
+  @media only screen and (min-width: $width-md) {
+    #contact-card {
+      width: 350px;
+      position: sticky;
+      top: 4rem;
     }
+  }
 
-    dl {
-      @extend .ds-l-row;
-
-      .faq-info-wrapper {
-        @extend .ds-l-col--12;
-        @extend .ds-l-md-col--6;
-        @extend .ds-l-xl-col--12;
-
-        &:not(:last-child) {
-          @extend .ds-u-margin-bottom--5;
-          @extend .ds-u-md-margin-bottom--0;
-          @extend .ds-u-xl-margin-bottom--5;
-        }
-
-        dt {
-          @extend .ds-u-font-weight--semibold;
-          @extend .ds-u-margin-bottom--1;
-        }
-      }
+  @media only screen and (max-width: $width-md) {
+    flex-wrap: wrap-reverse;
+    #contact-card {
+      width: 100%;
     }
   }
 }
@@ -2181,7 +2197,108 @@ aside#faq-contact-info-box {
   min-width: 8ch;
 }
 
-.choice-container {
+.mac-card-wrapper {
+  width: 100%;
+}
+
+.mac-card-border {
+  border: 1px solid #d6d7d9;
+  border-top: none;
+  border-radius: 0 0 4px 4px;
+}
+
+.mac-card-gradient-top {
+  @include gradient-top-border;
+}
+
+.mac-card-title {
+  @extend .ds-h2;
+  @extend .ds-u-margin-bottom--4;
+  line-height: 30px;
+  text-align: left;
+  width: 100%;
+}
+
+.mac-card-spaced-vertical-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.mac-default-card-children {
+  padding: 2rem 8rem;
+}
+
+.mac-triage-link {
+  text-decoration: none;
+}
+
+.mac-triage-card-display {
+  width: 100%;
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+
+  // Triage cards use h4-like titles, so we override margins and font-size
+  // here for them exclusively.
+  .mac-card-title {
+    font-size: 18px;
+    margin: 0 0 0.5rem 0 !important;
+  }
+
+  .choice-item-arrow {
+    background: inherit;
+    border: none;
+    color: $color-primary;
+    font-size: 24px;
+
+    &:hover {
+      text-decoration: none;
+      color: $color-primary-darker;
+    }
+  }
+
+  .card-description {
+    color: #5b616b;
+    margin-bottom: 0;
+  }
+
+  .card-strong-text {
+    font-weight: 600;
+    font-style: italic;
+    color: #5b616b;
+    margin-top: 0;
+  }
+}
+
+.mac-card-removable-wrapper {
+  @extend .ds-u-padding--3;
+  @extend .ds-u-fill--white;
+
+  border: 1px solid $color-gray-lighter;
+  border-top: none;
+  border-radius: 0px 0px 3px 3px;
+  box-shadow: 0px 0px 24px rgba(0, 0, 0, 0.05);
+  position: relative;
+
+  &:not(:last-child) {
+    @extend .ds-u-margin-bottom--3;
+  }
+
+  button {
+    position: absolute;
+    background: inherit;
+    top: 26px;
+    right: 26px;
+    border: none;
+  }
+
+  .mac-card-title {
+    margin-bottom: 0 !important;
+  }
+}
+
+.mac-fieldset-wrapper {
   @extend .form-container;
   @extend .ds-u-padding-bottom--7;
   @extend .ds-u-margin-x--auto;
@@ -2201,7 +2318,7 @@ aside#faq-contact-info-box {
     align-self: flex-start;
     max-width: initial !important;
 
-    .choice-intro {
+    .mac-fieldset-legend {
       @extend .ds-u-margin-bottom--2;
       @extend .ds-u-padding-bottom--0;
       // Possibly unnecessary? Can't find a use for this since this class is only
@@ -2226,7 +2343,7 @@ aside#faq-contact-info-box {
   }
 }
 
-.choice-intro {
+.mac-fieldset-legend {
   @extend .ds-u-padding-bottom--1;
   font-family: Open Sans;
   font-size: 21px;
@@ -2238,23 +2355,16 @@ aside#faq-contact-info-box {
   color: #212121;
 }
 
-ul.choice-list {
-  margin-top: 0;
-}
-
-.choice-list {
+.mac-fieldset-options-list {
   display: flex;
   flex-direction: column;
   width: 100%;
-  padding: 0px;
+  padding: 0;
+  margin: 0;
   box-sizing: border-box;
   color: $color-primary;
   background: #fff;
   background-clip: padding-box;
-  border-bottom: 1px solid #d6d7d9;
-  border-left: 1px solid #d6d7d9;
-  border-right: 1px solid #d6d7d9;
-  border-radius: 0 0 3px 3px;
   label,
   li {
     max-width: 100%;
@@ -2301,30 +2411,11 @@ ul.choice-list {
   }
 }
 
-.choice-item-arrow {
-  background: inherit;
-  border: none;
-  color: $color-primary;
-  font-size: 24px;
-
-  &:hover {
-    text-decoration: none;
-    color: $color-primary-darker;
-  }
-}
-
 .cms-group-division-section {
-  @extend .ds-u-border-left--1;
-  @extend .ds-u-border-right--1;
   @extend .ds-u-padding--3;
 
   &:nth-child(even) {
     background: rgba(196, 196, 196, 0.1);
-  }
-
-  &:last-child {
-    @extend .ds-u-border-bottom--1;
-    border-radius: 0px 0px 3px 3px;
   }
 }
 
@@ -2396,7 +2487,7 @@ ul.choice-list {
   margin-left: 1rem;
   margin-right: 1rem;
   justify-content: space-between;
-  @extend .ds-u-margin-bottom--4;
+  @extend .ds-u-margin-bottom--2;
   @extend .ds-u-display--flex;
   @extend .ds-u-align-items--center;
   @include max-width-ultra-wide;
@@ -2477,6 +2568,51 @@ ul.choice-list {
     padding-top: 24px;
     gap: 16px;
     flex-wrap: wrap;
+  }
+}
+
+.filter-chip-tray-container {
+  display: flex;
+  @include max-width-ultra-wide;
+  width: -webkit-fill-available;
+  width: -moz-available;
+  margin-right: 1rem;
+  margin-left: 1rem;
+  margin-bottom: 2rem;
+  justify-content: space-between;
+
+  span {
+    white-space: nowrap;
+  }
+}
+
+.filter-chip-tray {
+  display: flex;
+  flex-direction: row;
+  gap: 0.75rem;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+
+.filter-chip-container {
+  background: #eaf8fc;
+  border: 1.5px solid #3070b6;
+  border-radius: 100px;
+  padding-left: 1rem;
+  padding-right: 0.5rem; // Icon on the right has built-in padding, so we subtract it from this
+  display: flex;
+  align-items: center;
+}
+
+.filter-chip-text {
+  white-space: nowrap;
+}
+
+.filter-chip-close {
+  background: none;
+  img {
+    width: 1rem;
+    margin-bottom: 2px;
   }
 }
 
@@ -2682,36 +2818,29 @@ ul.choice-list {
   width: 50%;
 }
 
-.detail-card-section {
+.mac-detail-card-section {
   display: flex;
   justify-content: space-between;
+
+  .mac-card-wrapper {
+    width: 45%;
+  }
 
   @media only screen and (max-width: $width-sm) {
     justify-content: start;
     flex-direction: column;
     gap: 1rem;
+
+    .mac-card-wrapper {
+      width: 100%;
+    }
   }
 }
 
-.detail-card-container {
-  display: flex;
-  flex-direction: column;
-  width: 45%;
-
-  @media only screen and (max-width: $width-sm) {
-    width: 100%;
-  }
-}
-
-.detail-card-top {
-  @include gradient-top-border;
-}
-
-.detail-card {
+.mac-detail-card {
   @extend .ds-u-display--flex;
   @extend .ds-u-padding--4;
-  height: -moz-available; /* Mozilla Firefox will use this. */
-  height: -webkit-fill-available; /* WebKit-based browsers will use this. */
+  height: 100%;
   justify-content: space-between;
   background: $color-white;
   border: 1px solid $color-gray-lighter;
@@ -2747,6 +2876,7 @@ ul.choice-list {
     @extend .ds-c-button--transparent;
     @extend .ds-u-text-decoration--none;
     @extend .ds-u-padding--0;
+    text-align: left;
   }
 }
 .detail-section {
@@ -2764,10 +2894,6 @@ ul.choice-list {
 
 .detail-title {
   @extend .ds-u-margin-bottom--3;
-}
-
-.choice-title {
-  @extend .ds-h4;
 }
 
 .ds-u-color--warn {
@@ -2799,10 +2925,6 @@ ul.choice-list {
     width: 100%;
   }
 }
-.strong-text {
-  font-weight: 600;
-  font-style: italic;
-}
 .review-team {
   @extend .ds-c-button--transparent;
   @extend .ds-c-button--small;
@@ -2823,4 +2945,9 @@ ul.choice-list {
 .landing-description {
   max-width: 540px;
   margin: 3rem 0;
+}
+
+.faqButtonLink {
+  @extend .ds-c-button;
+  margin: 10px;
 }

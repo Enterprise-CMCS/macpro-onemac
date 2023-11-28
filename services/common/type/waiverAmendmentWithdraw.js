@@ -7,6 +7,7 @@ export const waiverAmendmentWithdraw = {
   allowMultiplesWithSameId: true,
   requiredAttachments: [],
   optionalAttachments: ["Supporting Documentation"],
+  requireUploadOrAdditionalInformation: true,
   theAttributes: [
     "componentId",
     "submissionTimestamp",

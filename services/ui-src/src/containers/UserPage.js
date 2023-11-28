@@ -23,11 +23,9 @@ import PageTitleBar from "../components/PageTitleBar";
 import { ConfirmationDialog } from "../components/ConfirmationDialog";
 import { PhoneNumber } from "../components/PhoneNumber";
 import { MultiSelectDropDown } from "../components/MultiSelectDropDown";
-import closingX from "../images/ClosingX.svg";
 import addStateButton from "../images/addStateButton.svg";
 import groupData from "cmscommonlib/groupDivision.json";
-
-const CLOSING_X_IMAGE = <img alt="" className="closing-x" src={closingX} />;
+import { MACCard, MACRemovableCard } from "../components/MACCard";
 
 export const ACCESS_LABELS = {
   active: "Access Granted",
@@ -42,7 +40,7 @@ export const ContactList = ({ contacts, profileRole }) => {
   if (contacts.length > 1) label += "s";
 
   return (
-    <p>
+    <p className="ds-u-lg-margin-top--3">
       {label}:{" "}
       {contacts.map(({ fullName, email }, idx) => (
         <React.Fragment key={email}>
@@ -60,6 +58,12 @@ export const AccessDisplay = ({
   profileRole,
   accesses = [],
 }) => {
+  const getTitle = useCallback(
+    (territory, territoryMap) =>
+      (!!territory && territory !== "N/A" && territoryMap[territory]) ||
+      territory,
+    []
+  );
   let accessHeading;
 
   switch (profileRole) {
@@ -79,36 +83,25 @@ export const AccessDisplay = ({
   return (
     <>
       <h2 id="accessHeader">{accessHeading}</h2>
-
-      {accesses
-        .filter(({ role }) => role === profileRole)
-        .map(({ territory, status, contacts }) => (
-          <div className="access-card-container" key={territory ?? "only-one"}>
-            <div className="gradient-border" />
-            <div className="state-access-card">
-              {!isReadOnly &&
-                profileRole === USER_ROLE.STATE_SUBMITTER &&
-                (status === USER_STATUS.ACTIVE ||
-                  status === USER_STATUS.PENDING) && (
-                  <button
-                    aria-label={`Self-revoke access to ${territoryMap[territory]}`}
-                    disabled={isReadOnly}
-                    className="close-button"
-                    onClick={() => selfRevoke(territory)}
-                  >
-                    {CLOSING_X_IMAGE}
-                  </button>
-                )}
-              {!!territory && territory !== "N/A" && (
-                <div>{territoryMap[territory] || territory}</div>
-              )}
+      <div className="mac-card-spaced-vertical-list">
+        {accesses
+          .filter(({ role }) => role === profileRole)
+          .map(({ territory, status, contacts }) => (
+            <MACRemovableCard
+              withGradientBar
+              title={getTitle(territory, territoryMap)}
+              onClick={() => selfRevoke(territory)}
+              isReadOnly={isReadOnly}
+              hasRoleAccess={profileRole === USER_ROLE.STATE_SUBMITTER}
+              isRemovable={
+                status === USER_STATUS.ACTIVE || status === USER_STATUS.PENDING
+              }
+            >
               <em>{ACCESS_LABELS[status] || status}</em>
-              <br />
-              <br />
               <ContactList contacts={contacts} profileRole={profileRole} />
-            </div>
-          </div>
-        ))}
+            </MACRemovableCard>
+          ))}
+      </div>
     </>
   );
 };
@@ -141,22 +134,22 @@ export function getUserGroup(profileData) {
 
 export const GroupDivisionDisplay = ({ profileData = {} }) => {
   const groupInfo = getUserGroup(profileData);
-
   return (
-    <div className="access-card-container">
+    <>
       <h2 id="accessHeader">Group & Division</h2>
-      <div className="gradient-border" />
-      <dl className="access-card-container">
-        <div className="cms-group-division-section">
-          <dt>Group</dt>
-          <dd>{groupInfo.group?.name}</dd>
-        </div>
-        <div className="cms-group-division-section cms-division-background">
-          <dt>Division</dt>
-          <dd>{groupInfo.division?.name}</dd>
-        </div>
-      </dl>
-    </div>
+      <MACCard withGradientBar childContainerClassName="access-card-container">
+        <dl>
+          <div className="cms-group-division-section">
+            <dt>Group</dt>
+            <dd>{groupInfo.group?.name}</dd>
+          </div>
+          <div className="cms-group-division-section cms-division-background">
+            <dt>Division</dt>
+            <dd>{groupInfo.division?.name}</dd>
+          </div>
+        </dl>
+      </MACCard>
+    </>
   );
 };
 
@@ -210,7 +203,6 @@ const UserPage = () => {
       .then(([newProfileData, newProfileRole, newProfileStatus]) => {
         setProfileData(newProfileData);
         setProfileRole(newProfileRole);
-        console.log("profile status is: ", newProfileStatus);
         setProfileStatus(newProfileStatus);
       })
       .catch((e) => {
@@ -294,7 +286,6 @@ const UserPage = () => {
         if (alertCodeAlerts[returnCode] === ALERTS_MSG.SUBMISSION_SUCCESS) {
           setUserInfo();
         } else {
-          console.log("Returned: ", returnCode);
           setAlertCode(returnCode);
         }
       });

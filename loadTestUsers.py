@@ -1,115 +1,10 @@
 #!/usr/bin/env python3
 
 import argparse
-from itertools import cycle
 import json
 import os
 import subprocess
 import sys
-
-"""
-Hard coded here as there is no record of them elsewhere.
-"""
-UNREGISTERED_USERS = [
-    {
-        "email": f"{user_role}unregistered@cms.hhs.local",
-        "role": user_role,
-        "firstName": name,
-        "lastName": "Unregistered",
-    }
-    for user_role, name in zip(
-        [
-            "statesubmitter",
-            "statesystemadmin",
-            "cmsroleapprover",
-            "cmsreviewer",
-            "helpdesk",
-        ],
-        # using a cycle here so we don't silently run out of names
-        cycle(
-            [
-                "Ulysses",
-                "Umberta",
-                "Unita",
-                "Upton",
-                "Ursula",
-            ]
-        ),
-    )
-]
-
-"""
-Purely to demonstrate case insensitivity in email addresses.
-"""
-UPPER_CASE_USER = [
-    {
-        "email": "stateSUBMITTERactive@cms.hhs.local",
-        "role": "statesubmitter",
-        "firstName": "Thiswill",
-        "lastName": "Notshowupintheapp",
-    }
-]
-
-devs = [
-    {
-        "email": "k.grue.cmsapprover@gmail.com",
-        "cms_roles": "notaonemacrole,anothernononemacrole",
-        "ismemberof": "cn=CARTS_Group_Val,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CARTS_Group_Val_Admin,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP_ADMIN,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=EUA_USER,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_D,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_V,ou=Groups,dc=cms,dc=hhs,dc=gov",
-        "firstName": "KristinCMS",
-        "lastName": "GrueRoleApp",
-    },{
-        "email": "helpdesk@notreal.com",
-        "cms_roles": "onemac-helpdesk",
-        "ismemberof": "cn=CARTS_Group_Val,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CARTS_Group_Val_Admin,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP_ADMIN,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=EUA_USER,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_D,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_V,ou=Groups,dc=cms,dc=hhs,dc=gov",
-        "firstName": "ValenciaHelp",
-        "lastName": "McMurrayDesk",
-    },{
-        "email": "k.grue.stateuser@gmail.com",
-        "cms_roles": "onemac-state-user",
-        "ismemberof": "cn=CARTS_Group_Val,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CARTS_Group_Val_Admin,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP_ADMIN,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=EUA_USER,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_D,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_V,ou=Groups,dc=cms,dc=hhs,dc=gov",
-        "firstName": "KristinState",
-        "lastName": "GrueSubmitter",
-    },{
-        "email": "helpdesk2@notreal.com",
-        "cms_roles": "onemac-helpdesk,notaonemacrole,anothernononemacrole",
-        "ismemberof": "cn=CARTS_Group_Val,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CARTS_Group_Val_Admin,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP_ADMIN,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=EUA_USER,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_D,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_V,ou=Groups,dc=cms,dc=hhs,dc=gov",
-        "firstName": "KristinHelp",
-        "lastName": "GrueDesk",
-    },{
-        "email": "k.grue.stateadmn@gmail.com",
-        "cms_roles": "notaonemacrole,onemac-state-user,anothernononemacrole",
-        "ismemberof": "cn=CARTS_Group_Val,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CARTS_Group_Val_Admin,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP_ADMIN,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=EUA_USER,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_D,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_V,ou=Groups,dc=cms,dc=hhs,dc=gov",
-        "firstName": "KristinState",
-        "lastName": "GrueAdmin",
-    },{
-        "email": "macproemailnotification@gmail.com",
-        "cms_roles": "notaonemacrole,onemac-state-user,anothernononemacrole",
-        "ismemberof": "cn=CARTS_Group_Val,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CARTS_Group_Val_Admin,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP_ADMIN,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=EUA_USER,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_D,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_V,ou=Groups,dc=cms,dc=hhs,dc=gov",
-        "firstName": "Test",
-        "lastName": "User",
-    }
-]
-
-def seed_data():
-    """
-    Read the seed data file for our User Profile table.
-    """
-
-    def process_item(item):
-        name_parts = item["fullName"].split(" ")
-        return {
-            "email": item["email"],
-            "role": item["role"],
-            "firstName": name_parts[0],
-            "lastName": name_parts[1],
-        }
-
-    with open("services/app-api/one-seed.json") as f:
-        return [
-            process_item(item)
-            for item in json.load(f)
-            if "GSI1pk" in item and item["GSI1pk"] == "USER"
-        ]
 
 def get_user_pool_id(stage):
     """
@@ -128,23 +23,6 @@ def seed_cognito(test_users, user_pool_id, password):
     Populate test users into Cognito and set their passwords.
     """
     for user in test_users:
-        print(f'Creating user with ID {user["email"]}')
-        role = ""
-        if "role" not in user:
-            if "cms_roles" not in user:
-                print(f'no role or cms_roles for user:\n {user}')
-                pass
-            else:
-                role = user["cms_roles"]
-        elif user["role"].startswith("state"):
-            role = "onemac-state-user"
-        elif user["role"].startswith("cms") or user["role"] == "systemadmin":
-            role = ""
-        elif user["role"] == "helpdesk":
-            role = "onemac-helpdesk"
-
-        user["ismemberof"] = "cn=EUA_USER,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_D,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_V,ou=Groups,dc=cms,dc=hhs,dc=gov";
-
         # checking errors so we do not set the password when the first call
         # fails, but the failure itself is not a big problem - in most cases
         # the user already exists
@@ -163,7 +41,7 @@ def seed_cognito(test_users, user_pool_id, password):
                     "--user-attributes",
                     f'Name=given_name,Value={user["firstName"]}',
                     f'Name=family_name,Value={user["lastName"]}',
-                    f'Name=custom:cms_roles,Value="{role}"',
+                    f'Name=custom:cms_roles,Value="{user["cms_roles"]}"',
                     f'Name=custom:ismemberof,Value="{user["ismemberof"]}"',
                 ],
                 check=True,
@@ -203,15 +81,12 @@ if __name__ == "__main__":
     )
     args = parser.parse_args()
 
-    seed_users = seed_data()
+    f = open("test-users.json")
+    seed_users = json.load(f)
 
     if args.dry_run:
         print("Seed users:")
         print(seed_users)
-        print("\nDevelopers:")
-        print(devs)
-        print("\nUnregistered users:")
-        print(UNREGISTERED_USERS)
     else:
         user_pool_id = get_user_pool_id(args.stage)
 
@@ -223,7 +98,9 @@ if __name__ == "__main__":
             sys.exit(101)
 
         seed_cognito(
-            seed_users + devs + UNREGISTERED_USERS + UPPER_CASE_USER,
+            seed_users,
             user_pool_id,
             os.environ.get("COGNITO_TEST_USERS_PASSWORD"), 
         )
+
+    f.close()

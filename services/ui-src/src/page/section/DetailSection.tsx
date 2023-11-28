@@ -16,6 +16,7 @@ import { AdditionalInfoSection } from "./AdditionalInfoSection";
 import { FORM_SOURCE } from "../../domain-types";
 import { useToggle } from "../../libs/hooksLib";
 import { Grid } from "@material-ui/core";
+import { MACCard } from "../../components/MACCard";
 
 export const NUM_REVIEWERS_TO_SHOW = 3;
 
@@ -147,8 +148,6 @@ export const DetailSection = ({
   loadDetail: () => void;
   setAlertCode: (code: string) => void;
 }) => {
-  const { userProfile } = useAppContext() ?? {};
-
   const downloadInfoText =
     "Documents available on this page may not reflect the actual documents that were approved by CMS. Please refer to your CMS Point of Contact for the approved documents.";
 
@@ -157,82 +156,60 @@ export const DetailSection = ({
     detail.clockEndTimestamp
   );
 
-  const userRoleObj = getUserRoleObj(userProfile?.userData?.roleList);
+  const actions = detail.actions;
 
   return (
     <>
-      <section className="detail-card-section">
-        <div className="detail-card-container">
-          <div className="detail-card-top"></div>
-          <div className="detail-card">
-            <section>
-              <Review heading="Status" className="no-bottom-padding">
-                <div className="detail-card-status">{detail.currentStatus}</div>
-              </Review>
-              {/* Displays 2nd Clock subtitle under status if status is pending (sans Pending - RAI) and
-               latestRaiResponseTimestamp is present */}
-              {pageConfig.secondClockStatuses &&
-                pageConfig.secondClockStatuses.includes(detail.currentStatus) &&
-                detail?.latestRaiResponseTimestamp && <span>2nd Clock</span>}
-              {pageConfig.show90thDayInfo && ninetyDayText !== "N/A" && (
-                <Review heading="90th Day">
-                  {Number(ninetyDayText)
-                    ? formatDateOnly(new Date(ninetyDayText))
-                    : ninetyDayText ?? "N/A"}
-                </Review>
+      <section className="mac-detail-card-section">
+        <MACCard childContainerClassName="mac-detail-card">
+          <section>
+            <Review heading="Status" className="no-bottom-padding">
+              <div className="detail-card-status">{detail.currentStatus}</div>
+            </Review>
+            {/* Displays 2nd Clock subtitle under status if status is pending (sans Pending - RAI) and
+             latestRaiResponseTimestamp is present */}
+            {pageConfig.secondClockStatuses &&
+              pageConfig.secondClockStatuses.includes(detail.currentStatus) &&
+              detail?.latestRaiResponseTimestamp && (
+                <span id="secondclock">2nd Clock</span>
               )}
-              {pageConfig.showEffectiveDate &&
-                detail.effectiveDateTimestamp && (
-                  <Review heading="Effective Date">
-                    {formatDateOnly(detail.effectiveDateTimestamp)}
-                  </Review>
-                )}
-            </section>
-          </div>
-        </div>
-        <div className="detail-card-container">
-          <div className="detail-card-top"></div>
-          <div className="detail-card">
-            {userRoleObj.canAccessForms ? (
-              <section className="package-actions">
-                <Review heading={pageConfig.actionLabel}>
-                  <ul className="action-list">
-                    {pageConfig.actionsByStatus[detail.currentStatus]?.length >
-                    0 ? (
-                      pageConfig.actionsByStatus[detail.currentStatus]?.map(
-                        (actionName, i) => (
-                          <li key={i}>
-                            {actionComponent[actionName](
-                              detail,
-                              FORM_SOURCE.DETAIL
-                            )}
-                          </li>
-                        )
-                      )
-                    ) : (
-                      <li>
-                        <p>
-                          No actions are currently available for this
-                          submission.
-                        </p>
-                      </li>
-                    )}
-                  </ul>
-                </Review>
-              </section>
-            ) : (
-              <section className="package-actions">
-                <div className="column-spacer">
-                  <Review heading={pageConfig.actionLabel}>
+            {detail.subStatus && <div id="substatus">{detail.subStatus}</div>}
+            {pageConfig.show90thDayInfo && ninetyDayText !== "N/A" && (
+              <Review heading="90th Day">
+                {Number(ninetyDayText)
+                  ? formatDateOnly(new Date(ninetyDayText))
+                  : ninetyDayText ?? "N/A"}
+              </Review>
+            )}
+            {pageConfig.showEffectiveDate && detail.effectiveDateTimestamp && (
+              <Review heading="Effective Date">
+                {formatDateOnly(detail.effectiveDateTimestamp)}
+              </Review>
+            )}
+          </section>
+        </MACCard>
+        <MACCard childContainerClassName="mac-detail-card">
+          <section className="package-actions">
+            <Review heading={pageConfig.actionLabel}>
+              <ul className="action-list">
+                {}
+                {actions?.length > 0 ? (
+                  actions?.map((actionName, i) => (
+                    <li key={i}>
+                      {actionComponent[actionName](detail, FORM_SOURCE.DETAIL)}
+                    </li>
+                  ))
+                ) : (
+                  <li>
                     <p>
                       No actions are currently available for this submission.
                     </p>
-                  </Review>
-                </div>
-              </section>
-            )}
-          </div>
-        </div>
+                  </li>
+                )}
+              </ul>
+            </Review>
+          </section>
+        </MACCard>
       </section>
       <div className="read-only-submission">
         <section className="detail-section">
@@ -250,33 +227,54 @@ export const DetailSection = ({
             ></ExpandableList>
           )}
         </section>
-        <section className="detail-section ds-u-margin-bottom--7">
-          {detail.attachments?.length > 0 ? (
-            <FileList
-              heading={pageConfig.attachmentsHeading}
-              infoText={downloadInfoText}
-              uploadList={detail.attachments}
-              zipId={detail.componentId}
-            />
-          ) : (
-            <>
-              <h2>{pageConfig.attachmentsHeading}</h2>
-              <Review
-                className="original-review-component preserve-spacing"
-                headingLevel="2"
-              >
-                <i>
-                  At this time, the attachments for this package are unavailable
-                  in this system. Contact your CPOC to verify the initial
-                  submission documents.
-                </i>
-              </Review>
-            </>
-          )}
-        </section>
-
-        <AdditionalInfoSection additionalInfo={detail.additionalInformation} />
-
+        {detail.reverseChrono?.length > 0 && (
+          <section className="detail-section">
+            <Accordion>
+              {detail.reverseChrono?.map((anEvent, index) => {
+                return (
+                  <AccordionItem
+                    buttonClassName="accordion-button"
+                    contentClassName="accordion-content"
+                    heading={
+                      anEvent.type +
+                      " -- " +
+                      anEvent.action +
+                      " -- " +
+                      formatDate(anEvent.timestamp)
+                    }
+                    headingLevel="2"
+                    id={anEvent.type + index + "_caret"}
+                    key={anEvent.type + index}
+                    defaultOpen={index === 0}
+                  >
+                    {anEvent.attachments?.length > 0 ? (
+                      <FileList
+                        heading={"Supporting Documentation"}
+                        infoText={downloadInfoText}
+                        uploadList={anEvent.attachments}
+                        zipId={`${anEvent.type}-` + index}
+                      />
+                    ) : (
+                      <>
+                        <h2>Supporting Documentation</h2>
+                        <Review
+                          className="original-review-component preserve-spacing"
+                          headingLevel="2"
+                        >
+                          <i>No attachments have been submitted.</i>
+                        </Review>
+                      </>
+                    )}
+                    <AdditionalInfoSection
+                      additionalInfo={anEvent.additionalInformation}
+                      id={"addl-info-chrono-" + index}
+                    />
+                  </AccordionItem>
+                );
+              })}
+            </Accordion>
+          </section>
+        )}
         {detail.adminChanges?.length > 0 && (
           <section className="detail-section">
             <h2>Administrative Package Changes</h2>
@@ -293,7 +291,10 @@ export const DetailSection = ({
                     heading={
                       "Submitted on " +
                       formatDate(adminChange.changeTimestamp) +
-                      " - Manual Update"
+                      " - " +
+                      (adminChange.changeType
+                        ? adminChange.changeType
+                        : "Manual Update")
                     }
                     headingLevel="6"
                     id={"admin_change_" + index + "_caret"}
@@ -303,91 +304,16 @@ export const DetailSection = ({
                     <Review className="preserve-spacing" heading="Change Made">
                       {adminChange.changeMade}
                     </Review>
-                    <Review
-                      className="preserve-spacing"
-                      heading="Change Reason"
-                    >
-                      {adminChange.changeReason}
-                    </Review>
-                  </AccordionItem>
-                );
-              })}
-            </Accordion>
-          </section>
-        )}
-        {detail.raiResponses?.length > 0 && (
-          <section className="detail-section">
-            <h2>Formal RAI Responses</h2>
-            <Accordion>
-              {detail.raiResponses?.map((raiResponse, index) => {
-                return (
-                  <AccordionItem
-                    buttonClassName="accordion-button"
-                    contentClassName="accordion-content"
-                    heading={
-                      "Submitted on " +
-                      formatDate(raiResponse.submissionTimestamp)
-                    }
-                    headingLevel="6"
-                    id={raiResponse.componentType + index + "_caret"}
-                    key={raiResponse.componentType + index}
-                    defaultOpen={index === 0}
-                  >
-                    <FileList
-                      heading={"RAI Response Documentation"}
-                      infoText={downloadInfoText}
-                      uploadList={raiResponse.attachments}
-                      zipId={raiResponse.componentType + index}
-                    />
-                    <AdditionalInfoSection
-                      additionalInfo={raiResponse.additionalInformation}
-                      id={"addl-info-rai-" + index}
-                    />
-                  </AccordionItem>
-                );
-              })}
-            </Accordion>
-          </section>
-        )}
-        {detail.withdrawalRequests?.length > 0 && (
-          <section className="detail-section">
-            <h2>Withdrawal Request</h2>
-            <Accordion>
-              {detail.withdrawalRequests?.map((withdrawalRequest, index) => {
-                return (
-                  <AccordionItem
-                    buttonClassName="accordion-button"
-                    contentClassName="accordion-content"
-                    heading={
-                      "Submitted on " +
-                      formatDate(withdrawalRequest.submissionTimestamp)
-                    }
-                    headingLevel="6"
-                    id={withdrawalRequest.componentType + index + "_caret"}
-                    key={withdrawalRequest.componentType + index}
-                    defaultOpen={index === 0}
-                  >
-                    {withdrawalRequest.attachments?.length > 0 ? (
-                      <FileList
-                        heading={"Withdrawal Request Documentation"}
-                        uploadList={withdrawalRequest.attachments}
-                        zipId={withdrawalRequest.componentType + index}
-                      />
-                    ) : (
-                      <>
-                        <h2>Withdrawal Request Documentation</h2>
-                        <Review
-                          className="original-review-component preserve-spacing"
-                          headingLevel="2"
-                        >
-                          <i>No attachments have been submitted.</i>
-                        </Review>
-                      </>
+                    {!adminChange.changeMade.includes(
+                      "abled State package action to withdraw Formal RAI Response"
+                    ) && (
+                      <Review
+                        className="preserve-spacing"
+                        heading="Change Reason"
+                      >
+                        {adminChange.changeReason}
+                      </Review>
                     )}
-                    <AdditionalInfoSection
-                      additionalInfo={withdrawalRequest.additionalInformation}
-                      id={"addl-info-withdraw-" + index}
-                    />
                   </AccordionItem>
                 );
               })}

@@ -38,7 +38,7 @@ Feature: OY2-12297 Home Page Update - Include guidance for CMS User
         Then Login with EUA information exists
         Then Review your assigned submission exists
         Then Review your assigned submission information exists
-        Then Submission Types include exists
+        Then Submission Types include Exists
         Then Amendments to your Medicaid and CHIP State Plans exists
         Then Official state responses to formal requests for additional information RAIs for SPAs exists
         Then Section 1915b waiver submissions exists

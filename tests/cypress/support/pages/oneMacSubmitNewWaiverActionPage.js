@@ -1,5 +1,4 @@
 const newWaiverNumberInputBox = "#componentId";
-const actionTypeDropDown = "#action-type";
 const newErrMsgForWaiverNumber = "#componentIdStatusMsg0";
 const errorMsgPart2 = "#componentIdStatusMsg1";
 const waiverAuthority = "//h3[text()='Waiver Authority']";
@@ -12,10 +11,12 @@ const capitatedSpreadsheetFile =
   "//td[div[contains(text(),'1915(b) Comprehensive (Capitated) Waiver Cost Effectiveness Spreadsheets')]]";
 const fileUpload1 = "#uploader-input-0";
 const fileUpload2 = "#uploader-input-1";
-const commentsInputBox = "#field_2";
 const additionalInfoTextarea = "#additional-information";
 const existingWaiverNumber = "MD-22005.R00.00";
-const whatIsMyWaiverIDLink = "//a[@href='/FAQ#waiver-id-format']";
+const whatIsMyInitialWaiverNumberLink =
+  "//a[@href='/FAQ#initial-waiver-id-format']";
+const whatIsMyWaiverRenewalNumberLink =
+  "//a[@href='/FAQ#waiver-renewal-id-format']";
 const proposedEffectiveDate = "#proposed-effective-date";
 const parentIDInputBox = "#parent-componentId";
 const parentErrMsgForWaiverNumber = "#parent-componentIdStatusMsg0";
@@ -56,18 +57,6 @@ export class oneMacSubmitNewWaiverActionPage {
   }
   inputExistingWaiverNumberNewForms() {
     cy.get(newWaiverNumberInputBox).type(existingWaiverNumber);
-  }
-
-  selectNewWaiverUnderActionType() {
-    cy.get(actionTypeDropDown).select("new");
-  }
-
-  selectWaiverAmendmentUnderActionType() {
-    cy.get(actionTypeDropDown).select("amendment");
-  }
-
-  selectRequestForWaiverRenewalUnderActionType() {
-    cy.get(actionTypeDropDown).select("renewal");
   }
 
   verify1915b4FFSSelectiveContractingwaiversUnderWaiverAuthority() {
@@ -134,16 +123,19 @@ export class oneMacSubmitNewWaiverActionPage {
       );
   }
 
-  inputComments(s) {
-    cy.get(commentsInputBox).type(s);
-  }
-
   inputAdditionalInfoText(s) {
     cy.get(additionalInfoTextarea).type(s);
   }
 
-  clickWhatIsMyWaiverIdLink() {
-    cy.xpath(whatIsMyWaiverIDLink)
+  clickWhatIsMyInitialWaiverNumberLink() {
+    cy.xpath(whatIsMyInitialWaiverNumberLink)
+      .invoke("attr", "href")
+      .then((href) => {
+        cy.visit(href);
+      });
+  }
+  clickWhatIsMyWaiverRenewalNumberLink() {
+    cy.xpath(whatIsMyWaiverRenewalNumberLink)
       .invoke("attr", "href")
       .then((href) => {
         cy.visit(href);
@@ -158,7 +150,6 @@ export class oneMacSubmitNewWaiverActionPage {
       }
     });
   }
-
   setProposedEffectiveDateThreeMonthsAway() {
     var futureDate = caculate3MonthsInFuture();
     cy.get(proposedEffectiveDate).type(futureDate);

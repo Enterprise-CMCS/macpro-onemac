@@ -8,6 +8,7 @@ import {
 } from "cmscommonlib";
 import { cmsStatusUIMap, stateStatusUIMap } from "./libs/status-lib";
 import { getUser } from "./getUser";
+import { getActionsForPackage } from "./utils/actionDelegate";
 
 /**
  * Gets all packages from the DynamoDB one table
@@ -28,7 +29,10 @@ export const getMyPackages = async (email, group) => {
         ? cmsStatusUIMap
         : stateStatusUIMap;
 
-      if (!userRoleObj.canAccessDashboard || territoryList === []) {
+      if (
+        !userRoleObj.canAccessDashboard ||
+        (Array.isArray(territoryList) && territoryList.length === 0)
+      ) {
         throw RESPONSE_CODE.USER_NOT_AUTHORIZED;
       }
 
@@ -38,7 +42,7 @@ export const getMyPackages = async (email, group) => {
         ExclusiveStartKey: null,
         ScanIndexForward: false,
         ProjectionExpression:
-          "componentId,componentType,currentStatus,submissionTimestamp,latestRaiResponseTimestamp,submitterName,submitterEmail,waiverAuthority, cpocName, reviewTeam",
+          "componentId,componentType,currentStatus,submissionTimestamp,latestRaiResponseTimestamp,submitterName,submitterEmail,waiverAuthority, cpocName, reviewTeam, subStatus, finalDispositionDate",
       };
       const grouppk = "OneMAC#" + group;
       let paramList = [];
@@ -71,6 +75,14 @@ export const getMyPackages = async (email, group) => {
           do {
             const results = await dynamoDb.query(params);
             results.Items.map((oneItem) => {
+              oneItem.actions = getActionsForPackage(
+                oneItem.componentType,
+                oneItem.currentStatus,
+                !!oneItem.latestRaiResponseTimestamp,
+                oneItem.subStatus,
+                userRoleObj,
+                "package"
+              );
               if (oneItem.waiverAuthority)
                 oneItem.temporaryExtensionType = oneItem.waiverAuthority.slice(
                   0,

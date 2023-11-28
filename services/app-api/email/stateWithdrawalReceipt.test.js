@@ -32,7 +32,7 @@ const user = {
 it("builds the State Withdrawal Receipt Email", async () => {
   try {
     const response = await stateWithdrawalReceipt(testData, testConfig, user);
-    expect(response.HTML.length).toBe(418);
+    expect(response.HTML.length).toBe(507);
   } catch (e) {
     console.log("reeived error: ", e);
   }

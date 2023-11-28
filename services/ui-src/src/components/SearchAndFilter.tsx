@@ -30,9 +30,9 @@ import {
 } from "date-fns";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+  faChevronDown,
   faSearch,
   faTimes,
-  faChevronDown,
 } from "@fortawesome/free-solid-svg-icons";
 import { AccordionItem, Button, Choice } from "@cmsgov/design-system";
 
@@ -41,11 +41,16 @@ import { SelectOption, territoryList } from "cmscommonlib";
 import { useToggle } from "../libs/hooksLib";
 import { PackageRowValue } from "../domain-types";
 
-import { animated, useTransition, easings, useSpring } from "@react-spring/web";
+import { animated, easings, useSpring, useTransition } from "@react-spring/web";
 import {
   LOCAL_STORAGE_COLUMN_VISIBILITY_SPA,
   LOCAL_STORAGE_COLUMN_VISIBILITY_WAIVER,
 } from "../utils/StorageKeys";
+import {
+  FilterChipActionType,
+  FilterType,
+  useFilterChipContext,
+} from "../containers/FilterChipContext";
 
 const { afterToday } = DateRangePicker;
 
@@ -205,9 +210,17 @@ const filterFromMultiCheckbox = <
     filterValue.includes(cellValue)
   );
 
-const betweenDates = (dateA: Date, dateB: Date, epoch: number) => {
-  const dateFromValue = new Date(epoch);
-  return dateFromValue > dateA && dateFromValue < dateB;
+const betweenDates = (dateA: Date, dateB: Date, epoch: number | string) => {
+  let dateFromValue;
+
+  if (typeof epoch === "string" && epoch !== "-- --") {
+    const [year, month, day] = epoch.split("-");
+    // in Date objects, month is an index (starts at 0), year and day are not
+    dateFromValue = new Date(Number(year), Number(month) - 1, Number(day));
+  } else {
+    dateFromValue = new Date(epoch);
+  }
+  return dateFromValue >= dateA && dateFromValue <= dateB;
 };
 
 const filterFromDateRange = <
@@ -246,6 +259,7 @@ function TextFilter({
   column: { filterValue, setFilter, id },
   preGlobalFilteredFlatRows,
 }: FilterProps) {
+  const { dispatch: updateFilterChips } = useFilterChipContext();
   const [possibleValues, hiddenValues] = useMemo(() => {
     const possibleUnique = new Set();
     const notHiddenUnique = new Set();
@@ -272,12 +286,33 @@ function TextFilter({
       setFilter((oldFilterValue?: string[]) => {
         if (!oldFilterValue) oldFilterValue = [...possibleValues]; // begin with everything
         const newFilterValue: Set<string> = new Set(oldFilterValue);
-        if (checked) newFilterValue.add(value);
-        else newFilterValue.delete(value);
+        if (checked) {
+          newFilterValue.add(value);
+          // REMOVE filter because it's a subtractive type
+          updateFilterChips({
+            type: FilterChipActionType.REMOVE,
+            payload: {
+              column: id,
+              label: value,
+              type: FilterType.CHECKBOX,
+            },
+          });
+        } else {
+          newFilterValue.delete(value);
+          // ADD filter because it's a subtractive type
+          updateFilterChips({
+            type: FilterChipActionType.ADD,
+            payload: {
+              column: id,
+              label: value,
+              type: FilterType.CHECKBOX,
+            },
+          });
+        }
         return Array.from(newFilterValue);
       });
     },
-    [possibleValues, setFilter]
+    [possibleValues, setFilter, id, updateFilterChips]
   );
 
   return (
@@ -308,15 +343,24 @@ function DateFilter({
   column: { filterValue, id, setFilter },
   inThePast,
 }: FilterProps & { inThePast?: boolean }) {
+  const { dispatch: updateFilterChips } = useFilterChipContext();
   const onChangeSelection = useCallback(
     (value) => {
-      value !== null && value.length
+      value !== null && value?.length
         ? /* Filters come in an array with 2 dates, the earlier always at
            * index 0, the later date at index 1. */
           setFilter([startOfDay(value[0]), endOfDay(value[1])])
         : setFilter([]);
+      updateFilterChips({
+        type: FilterChipActionType.ADD,
+        payload: {
+          column: id,
+          label: value,
+          type: FilterType.DATE,
+        },
+      });
     },
-    [setFilter]
+    [setFilter, id, updateFilterChips]
   );
   const ranges: { label: string; value: [Date, Date] }[] = useMemo(
     () =>
@@ -388,11 +432,23 @@ const MultiSelectList = ({
 }: FilterProps & {
   options: SelectOption[];
 }) => {
+  const { dispatch: updateFilterChips } = useFilterChipContext();
   const onSelect = useCallback(
     (selected) => {
       setFilter(selected.map(({ value }: SelectOption) => value));
+      /* We can universally use "ADD" action type as it handles MULTISELECT
+       * types as more of an update rather than strictly adding it. See logic
+       * in FilterChipContext.chipReducer() */
+      updateFilterChips({
+        type: FilterChipActionType.ADD,
+        payload: {
+          column: id,
+          label: selected,
+          type: FilterType.MULTISELECT,
+        },
+      });
     },
-    [setFilter]
+    [setFilter, id, updateFilterChips]
   );
   const selectedOptions = useMemo(
     () =>
@@ -439,7 +495,18 @@ function FilterPane<V extends {}>({
   setAllFilters,
 }: FilterPaneProps<V>) {
   const [showFilters, toggleShowFilters] = useToggle(false);
+  const { state: filterChips } = useFilterChipContext();
+  const filterCount = useMemo(
+    () => filterChips.filter((chipVal) => chipVal.label !== null).length,
+    [filterChips]
+  );
+  const { dispatch: updateFilterChips } = useFilterChipContext();
   const onResetFilters = useCallback(() => {
+    // Resets filter chips state to no chips showing
+    updateFilterChips({
+      type: FilterChipActionType.RESET,
+      payload: {},
+    });
     setAllFilters(
       /* The DateFilter requires the value passed to reset be an empty array
       rather than undefined. Before this, there was a bug where the filter UI 
@@ -454,7 +521,7 @@ function FilterPane<V extends {}>({
         }
       })
     );
-  }, [columnsInternal, setAllFilters]);
+  }, [columnsInternal, setAllFilters, updateFilterChips]);
 
   //Mount transition animation
 
@@ -470,7 +537,7 @@ function FilterPane<V extends {}>({
 
   return (
     <>
-      <Button onClick={toggleShowFilters}>Filter</Button>
+      <Button onClick={toggleShowFilters}>Filter ({filterCount})</Button>
 
       {transitionFilterPane((style, showFilters) =>
         showFilters

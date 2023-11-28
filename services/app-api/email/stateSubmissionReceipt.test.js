@@ -10,7 +10,6 @@ it("builds the State Submission Receipt Email", async () => {
   const testConfig = {
     typeLabel: "Test Type",
   };
-
   try {
     const response2 = stateSubmissionReceipt(testData, testConfig);
     expect(response2.HTML.length).toBe(999);

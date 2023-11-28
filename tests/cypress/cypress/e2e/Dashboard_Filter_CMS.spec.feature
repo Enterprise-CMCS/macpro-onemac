@@ -11,10 +11,11 @@ Feature: Package Dashboard - Filter
         Then verify Close Exists
         Then verify reset Exists
         Then verify state dropdown filter exists
-        Then verify Type Exists
+        Then verify type dropdown filter exists
         Then verify status DropDown Filter exists
         Then verify Initial Submission Date filter dropdown exists
         Then verify Formal RAI Received dropdown filter exists
+        Then verify Final Disposition dropdown filter exists
         Then Click on My Account
         Then click the logout button
 
@@ -26,10 +27,11 @@ Feature: Package Dashboard - Filter
         Then verify Close Exists
         Then verify reset Exists
         Then verify state dropdown filter exists
-        Then verify Type Exists
+        Then verify type dropdown filter exists
         Then verify status DropDown Filter exists
         Then verify Initial Submission Date filter dropdown exists
         Then verify Formal RAI Received dropdown filter exists
+        Then verify Final Disposition dropdown filter exists
         Then Click on My Account
         Then click the logout button
 

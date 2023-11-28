@@ -1,0 +1,37 @@
+[{
+    "doneByName": "Teresa Test",
+    "status": "denied",
+    "Latest": "1",
+    "GSI1sk": "Boss",
+    "email": "helpdeskdenied@cms.hhs.local",
+    "fullName": "David Denied",
+    "doneByEmail": "systemadmintest@cms.hhs.local",
+    "GSI1pk": "USER",
+    "GSI2pk": "helpdesk#N/A",
+    "GSI2sk": "denied",
+    "date": 1617149287000,
+    "role": "helpdesk",
+    "territory": "N/A",
+    "sk": "v0#helpdesk#N/A",
+    "pk": "helpdeskdenied@cms.hhs.local"
+  },
+  {
+    "doneByEmail": "helpdeskdenied@cms.hhs.local",
+    "doneByName": "David Denied",
+    "date": 1617149286000,
+    "role": "helpdesk",
+    "territory": "N/A",
+    "status": "pending",
+    "sk": "v1#helpdesk#N/A",
+    "pk": "helpdeskdenied@cms.hhs.local"
+  },
+  {
+    "doneByEmail": "systemadmintest@cms.hhs.local",
+    "doneByName": "Teresa Test",
+    "date": 1617149287000,
+    "role": "helpdesk",
+    "territory": "N/A",
+    "status": "denied",
+    "sk": "v2#helpdesk#N/A",
+    "pk": "helpdeskdenied@cms.hhs.local"
+  }]
