@@ -136,6 +136,7 @@ const checkboxfinalDispositionDate =
 //Element is Xpath use cy.xpath instead of cy.get
 const raiResponseWithdrawEnabledCheckBox =
   "//label[contains(@for,'checkbox_packageStatus-RAI Response Withdraw Enabled')]";
+const finalDispositionColumn = "#finalDispositionDateColHeader";
 //Element is Xpath use cy.xpath instead of cy.get
 const terminatedCheckBox =
   "//label[contains(@for,'checkbox_packageStatus-Waiver Terminated')]";
@@ -993,6 +994,12 @@ export class oneMacDashboardPage {
   clickOnFinalDispositionDateFilterDropdownDropDown() {
     cy.get(finalDispositionDateFilterDropdown).wait(1000);
     cy.get(finalDispositionDateFilterDropdown).click();
+  }
+  verifyFinalDispositionColumnExists() {
+    cy.get(finalDispositionColumn).should("be.visible");
+  }
+  verifyFinalDispositionColumnDoesNotExist() {
+    cy.get(finalDispositionColumn).should("not.exist");
   }
 }
 export default oneMacDashboardPage;
