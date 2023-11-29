@@ -16,7 +16,6 @@ export const enableRaiWithdrawFormConfig = {
   ...defaultFormConfig,
   successResponseCode: RESPONSE_CODE.RAI_RESPONSE_WITHDRAW_ENABLE_SUCCESS,
   ...enableRaiWithdraw,
-  newStatus: Workflow.ONEMAC_STATUS.WITHDRAW_RAI_ENABLED,
   hasAuthorizationToSubmit: (userRole) => {
     return userRole.isCMSUser;
   },
@@ -141,9 +140,8 @@ export const main = handler(async (event) => {
       const mostRecentRecord = records[0];
       mostRecentRecord.currentStatus =
         Workflow.ONEMAC_STATUS.WITHDRAW_RAI_ENABLED;
-      mostRecentRecord.eventTimestamp = Date.now();
       const adminChange = {
-        changeTimestamp: mostRecentRecord.eventTimestamp,
+        changeTimestamp: Date.now(),
         changeMade: `${data.submitterName} has enabled State package action to withdraw Formal RAI Response`,
         changeReason: data.additionalInformation,
       };

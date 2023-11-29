@@ -16,6 +16,7 @@ Feature: Package Dashboard - Waiver Tab Column Picker for CMS User
         Then verify Formal RAI Received column exists
         Then verify submitted by column does not exist
         Then verify CPOC Name column does not exist
+        Then verify Final Disposition column does not exist
         Then click show hide columns button
         Then verify Formal RAI Received checkbox exists
         Then verify state checkbox exists
@@ -24,6 +25,7 @@ Feature: Package Dashboard - Waiver Tab Column Picker for CMS User
         Then verify submitted by checkbox exists
         Then verify type checkbox exists
         Then verify CPOC Name checkbox exists
+        Then verify Final Disposition checkbox exists
         Then click show hide columns button
         Then Click on My Account
         Then click the logout button
@@ -37,6 +39,7 @@ Feature: Package Dashboard - Waiver Tab Column Picker for CMS User
         Then click status checkbox
         Then click type checkbox
         Then click CPOC Name checkbox
+        Then click Final Disposition checkbox
         Then click show hide columns button
         Then verify Waiver Number column exists
         Then verify type column does not exist
@@ -45,6 +48,7 @@ Feature: Package Dashboard - Waiver Tab Column Picker for CMS User
         Then verify Initial Submission Date column does not exist
         Then verify submitted by column does not exist
         Then verify Formal RAI Received column does not exist
+        Then verify Final Disposition column exists
         Then verify CPOC Name column exists
         Then Click on My Account
         Then click the logout button

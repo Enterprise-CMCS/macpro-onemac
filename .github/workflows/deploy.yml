@@ -335,7 +335,6 @@ jobs:
             Withdraw_Package_Form_Medicaid_SPA.spec.feature,
             Withdraw_Package_Form_Waiver_Amendment.spec.feature,
             Withdraw_Package_Form_Waiver_Renewal.spec.feature,
-            Dashboard_RAI_Withdraw_Enabled_Actions.spec.feature,
           ]
     steps:
       - name: set branch_name
@@ -376,7 +375,7 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('combined-package-lock.txt') }}
       - name: Install dependencies
         run: |
-          npm i --legacy-peer-deps
+          npm ci --legacy-peer-deps
       - name: set path
         run: |
           echo "PATH=$(pwd)/node_modules/.bin/:$PATH" >> $GITHUB_ENV

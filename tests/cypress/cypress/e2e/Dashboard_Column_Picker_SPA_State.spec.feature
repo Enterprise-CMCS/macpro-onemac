@@ -14,6 +14,7 @@ Feature: Package Dashboard - SPA Tab Column Picker
         Then verify submitted by column exists
         Then verify CPOC Name column does not exist
         Then verify actions column exists
+        Then verify Final Disposition column does not exist
         Then verify Formal RAI Received column exists
         Then click show hide columns button
         Then verify Formal RAI Received checkbox exists
@@ -24,6 +25,7 @@ Feature: Package Dashboard - SPA Tab Column Picker
         Then verify type checkbox exists
         Then verify Formal RAI Received checkbox exists
         Then verify CPOC Name checkbox exists
+        Then verify Final Disposition checkbox exists
         Then click show hide columns button
 
     Scenario: SPAs Tab - Uncheck all and verify SPA ID and actions exists
@@ -34,6 +36,7 @@ Feature: Package Dashboard - SPA Tab Column Picker
         Then click submitted by checkbox
         Then click type checkbox
         Then click CPOC Name checkbox
+        Then click Final Disposition checkbox
         Then click show hide columns button
         Then verify SPA ID column exists
         Then verify actions column exists
@@ -42,6 +45,7 @@ Feature: Package Dashboard - SPA Tab Column Picker
         Then verify status column does not exist
         Then verify Initial Submission Date column does not exist
         Then verify submitted by column does not exist
+        Then verify Final Disposition column exists
         Then verify Formal RAI Received column does not exist
         Then verify CPOC Name column exists
         Then Click on My Account

@@ -1305,6 +1305,9 @@ Then("verify CPOC Name checkbox exists", () => {
 Then("verify Formal RAI Received checkbox exists", () => {
   OneMacDashboardPage.verifyFormalRAIReceivedCheckboxExists();
 });
+Then("verify Final Disposition checkbox exists", () => {
+  OneMacPackagePage.verifyFinalDispositionCheckBoxExists();
+});
 Then("verify Initial Submission Date column exists", () => {
   OneMacDashboardPage.verifyinitialSubmissionDateColumnExists();
 });
@@ -1338,6 +1341,12 @@ Then("verify CPOC Name column exists", () => {
 Then("verify CPOC Name column does not exist", () => {
   OneMacDashboardPage.verifyCPOCNameColumnDoesNotExist();
 });
+Then("verify Final Disposition column exists", () => {
+  OneMacPackagePage.verifyFinalDispositionColumnExists();
+});
+Then("verify Final Disposition column does not exist", () => {
+  OneMacPackagePage.verifyFinalDispositionColumnDoesNotExist();
+});
 Then("click Initial Submission Date checkbox", () => {
   OneMacDashboardPage.clickCheckBoxInitialSubmissionDate();
 });
@@ -1358,6 +1367,9 @@ Then("click CPOC Name checkbox", () => {
 });
 Then("click Formal RAI Received checkbox", () => {
   OneMacDashboardPage.clickFormalRAIReceivedCheckbox();
+});
+Then("click Final Disposition checkbox", () => {
+  OneMacPackagePage.clickFinalDispositionDateCheckBox();
 });
 Then("verify type column does not exist", () => {
   OneMacDashboardPage.verifytypeColumnDoesNotExist();
@@ -1398,6 +1410,9 @@ Then("click on Initial Submission Date date picker filter", () => {
 Then("click on Formal RAI Received date picker filter", () => {
   OneMacDashboardPage.clickOnFormalRAIReceivedDatePickerFilter();
 });
+Then("click on Final Disposition date picker filter", () => {
+  OneMacPackagePage.clickOnFinalDispositionDatePickerFilter();
+});
 Then("click on this quarter date picker button", () => {
   OneMacDashboardPage.clickOnThisQuarterDatePickerBtn();
 });
@@ -1429,6 +1444,12 @@ Then("verify Formal RAI Received dropdown filter exists", () => {
 });
 Then("click on Formal RAI Received dropdown filter", () => {
   OneMacDashboardPage.clickOnFormalRAIReceivedDateFilterDropdownDropDown();
+});
+Then("verify Final Disposition dropdown filter exists", () => {
+  OneMacPackagePage.verifyFinalDispositionDateFilterDropdownExists();
+});
+Then("click on Final Disposition dropdown filter", () => {
+  OneMacPackagePage.clickOnFinalDispositionDateFilterDropdownDropDown();
 });
 Then("verify state filter select exists", () => {
   OneMacDashboardPage.verifyStateFilterSelectExists();
@@ -2512,6 +2533,12 @@ Then("verify the Withdrawal Requested caret button exists", () => {
 Then("expand the Withdrawal Requested caret", () => {
   OneMacPackageDetailsPage.expandWithdrawalRequestedCaretBtn();
 });
+Then(
+  "verify the sub status on the card is RAI Response Withdraw Enabled",
+  () => {
+    OneMacPackageDetailsPage.verifyTheSubStatus();
+  }
+);
 Then("verify the expand all button is visible", () => {
   OneMacFAQPage.verifyExpandAllBtnExists();
 });

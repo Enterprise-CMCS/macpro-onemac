@@ -14,4 +14,4 @@ Feature: Package Dashboard Read Only View
 
         Then click on the Waivers tab
         Then click the Waiver Number link in the first row
-        Then verify the package actions section is unavailable
+        Then verify there are no package actions available

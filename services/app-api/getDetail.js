@@ -91,6 +91,7 @@ export const getDetails = async (event) => {
       result.Item.componentType,
       originalStatus,
       !!result.Item.latestRaiResponseTimestamp,
+      result.Item.subStatus,
       userRoleObj,
       "detail"
     );

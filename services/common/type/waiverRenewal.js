@@ -38,6 +38,11 @@ export const waiverRenewal = {
     "parentId",
     "parentType",
   ],
+  secondClockStatuses: [
+    "Pending",
+    "Pending - Concurrence",
+    "Pending - Approval",
+  ],
 };
 
 export const waiverRenewalB4 = {
@@ -62,10 +67,5 @@ export const waiverRenewalB = {
     waiverBIndependentAssessment,
     tribalConsultation,
     other,
-  ],
-  secondClockStatuses: [
-    "Pending",
-    "Pending - Concurrence",
-    "Pending - Approval",
   ],
 };
