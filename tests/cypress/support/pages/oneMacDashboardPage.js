@@ -72,9 +72,11 @@ const filterByText = "//header//h4";
 const closeButton = "//header/button[1]";
 //Element is Xpath use cy.xpath instead of cy.get
 const typeDropDownFilter = "//button[text()='Type']";
+const finalDispositionDatePickerFilter = "#finalDispositionDate-date-filter";
 const typeDropDown = "#componentType-button";
 const statusDropDown = "#packageStatus-button";
 const cPOCNameDropDown = "#cpocName-button";
+const finalDispositionDateFilterDropdown = "#finalDispositionDate-button";
 const statusFilterCheckboxes = "#packageStatus input";
 const typeFilterCheckboxes = "#componentType input";
 //Element is Xpath use cy.xpath instead of cy.get
@@ -129,6 +131,8 @@ const withdrawalRequestedCheckBox =
 //Element is Xpath use cy.xpath instead of cy.get
 const raiResponseWithdrawalRequestedCheckBox =
   "//label[contains(@for,'checkbox_packageStatus-Formal RAI Response - Withdrawal Requested')]";
+const checkboxfinalDispositionDate =
+  "//span[contains(text(),'Final Disposition')]";
 //Element is Xpath use cy.xpath instead of cy.get
 const raiResponseWithdrawEnabledCheckBox =
   "//label[contains(@for,'checkbox_packageStatus-RAI Response Withdraw Enabled')]";
@@ -965,6 +969,30 @@ export class oneMacDashboardPage {
   }
   verifyActionsColumnDoesNotExist() {
     cy.get(actionsColumn).should("not.exist");
+  }
+  verifyFinalDispositionDateFilterDropdownExists() {
+    cy.get(finalDispositionDateFilterDropdown).should("be.visible");
+  }
+  clickOnFinalDispositionDateFilterDropdownDropDown() {
+    cy.get(finalDispositionDateFilterDropdown).wait(1000);
+    cy.get(finalDispositionDateFilterDropdown).click();
+  }
+  verifyFinalDispositionCheckBoxExists() {
+    cy.xpath(checkboxfinalDispositionDate).should("be.visible");
+  }
+  clickFinalDispositionDateCheckBox() {
+    cy.xpath(checkboxfinalDispositionDate).click();
+  }
+  clickOnFinalDispositionDatePickerFilter() {
+    cy.get(finalDispositionDatePickerFilter).wait(1000);
+    cy.get(finalDispositionDatePickerFilter).last().click();
+  }
+  verifyFinalDispositionDateFilterDropdownExists() {
+    cy.get(finalDispositionDateFilterDropdown).should("be.visible");
+  }
+  clickOnFinalDispositionDateFilterDropdownDropDown() {
+    cy.get(finalDispositionDateFilterDropdown).wait(1000);
+    cy.get(finalDispositionDateFilterDropdown).click();
   }
 }
 export default oneMacDashboardPage;

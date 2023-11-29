@@ -1306,7 +1306,7 @@ Then("verify Formal RAI Received checkbox exists", () => {
   OneMacDashboardPage.verifyFormalRAIReceivedCheckboxExists();
 });
 Then("verify Final Disposition checkbox exists", () => {
-  OneMacPackagePage.verifyFinalDispositionCheckBoxExists();
+  OneMacDashboardPage.verifyFinalDispositionCheckBoxExists();
 });
 Then("verify Initial Submission Date column exists", () => {
   OneMacDashboardPage.verifyinitialSubmissionDateColumnExists();
@@ -1342,10 +1342,10 @@ Then("verify CPOC Name column does not exist", () => {
   OneMacDashboardPage.verifyCPOCNameColumnDoesNotExist();
 });
 Then("verify Final Disposition column exists", () => {
-  OneMacPackagePage.verifyFinalDispositionColumnExists();
+  OneMacDashboardPage.verifyFinalDispositionColumnExists();
 });
 Then("verify Final Disposition column does not exist", () => {
-  OneMacPackagePage.verifyFinalDispositionColumnDoesNotExist();
+  OneMacDashboardPage.verifyFinalDispositionColumnDoesNotExist();
 });
 Then("click Initial Submission Date checkbox", () => {
   OneMacDashboardPage.clickCheckBoxInitialSubmissionDate();
@@ -1369,7 +1369,7 @@ Then("click Formal RAI Received checkbox", () => {
   OneMacDashboardPage.clickFormalRAIReceivedCheckbox();
 });
 Then("click Final Disposition checkbox", () => {
-  OneMacPackagePage.clickFinalDispositionDateCheckBox();
+  OneMacDashboardPage.clickFinalDispositionDateCheckBox();
 });
 Then("verify type column does not exist", () => {
   OneMacDashboardPage.verifytypeColumnDoesNotExist();
@@ -1411,7 +1411,7 @@ Then("click on Formal RAI Received date picker filter", () => {
   OneMacDashboardPage.clickOnFormalRAIReceivedDatePickerFilter();
 });
 Then("click on Final Disposition date picker filter", () => {
-  OneMacPackagePage.clickOnFinalDispositionDatePickerFilter();
+  OneMacDashboardPage.clickOnFinalDispositionDatePickerFilter();
 });
 Then("click on this quarter date picker button", () => {
   OneMacDashboardPage.clickOnThisQuarterDatePickerBtn();
@@ -1446,10 +1446,10 @@ Then("click on Formal RAI Received dropdown filter", () => {
   OneMacDashboardPage.clickOnFormalRAIReceivedDateFilterDropdownDropDown();
 });
 Then("verify Final Disposition dropdown filter exists", () => {
-  OneMacPackagePage.verifyFinalDispositionDateFilterDropdownExists();
+  OneMacDashboardPage.verifyFinalDispositionDateFilterDropdownExists();
 });
 Then("click on Final Disposition dropdown filter", () => {
-  OneMacPackagePage.clickOnFinalDispositionDateFilterDropdownDropDown();
+  OneMacDashboardPage.clickOnFinalDispositionDateFilterDropdownDropDown();
 });
 Then("verify state filter select exists", () => {
   OneMacDashboardPage.verifyStateFilterSelectExists();
