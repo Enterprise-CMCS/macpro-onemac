@@ -1,4 +1,4 @@
-Feature: Package Dashboard: CHIP SPA Forms
+Feature: Package Dashboard: CHIP SPA Initial Submission
     Background: Reoccurring steps
         Given I am on Login Page
         When Clicking on Development Login
@@ -8,27 +8,25 @@ Feature: Package Dashboard: CHIP SPA Forms
         Then verify "CHIP SPA" choice goes to "/choices/spa/chip"
         Then click on "CHIP SPA" choice
 
-    Scenario: Screen Enhance - All Other CHIP SPA
-        Then verify "All Other CHIP SPA Submissions" choice goes to "/chip-spa"
-        Then click on "All Other CHIP SPA Submissions" choice
-        Then verify user is on new CHIP SPA page
-        Then verify the attachment info descriptiion
-        Then verify the attachment info link is for "CHIP SPA"
-
-    Scenario: Screen Enhance - CHIP Eligibility
+    Scenario: Screen Enhance - CHIP Eligibility is Outside of OneMAC
         Then verify "CHIP Eligibility" choice goes to "/chip-eligibility"
         Then click on "CHIP Eligibility" choice
-        Then verify user is on CHIP Eligibility page
+        Then verify page url contains "/chip-eligibility"
         Then verify the page header is "CHIP Eligibility SPAs"
         Then verify Enter the MMDL System button is visible and clickable
 
-    Scenario: Create All Other CHIP SPA Submission from package dashboard and search it
+    Scenario: Create Medicaid SPA Initial Submission in OneMAC using the All Other CHIP SPA Submissions choice
+        Then verify "All Other CHIP SPA Submissions" choice goes to "/chip-spa"
         Then click on "All Other CHIP SPA Submissions" choice
-        Then type in Chip SPA ID
+        Then verify page url contains "/chip-spa"
+        Then verify the page header is "Submit New CHIP SPA"
+        Then type "MD-22-0283-9434" into the ID Input box
         Then select proposed effective date 3 months from today
-        Then Add file for Current State Plan
-        Then Add file for Amended State Plan Language
-        Then Add file for Cover Letter
+        Then verify the attachment info descriptiion
+        Then verify the attachment info link is for "CHIP SPA"
+        Then Attach "picture.jpg" file to attachment 1
+        Then Attach "adobe.pdf" file to attachment 2
+        Then Attach "adobe.pdf" file to attachment 3
         Then Type Additonal Info Comments in new form
         Then Click on Submit Button
         Then verify submission successful message in the alert bar

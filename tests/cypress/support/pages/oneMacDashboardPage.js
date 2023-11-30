@@ -258,6 +258,9 @@ const addAmendmentBtn = "//a[text()='Add Amendment']";
 const waiverNumLink = (n) => `//a[text()="${n}"]`;
 
 export class oneMacDashboardPage {
+  verifyPageByURL(expectedUrl) {
+    cy.url().should("include", expectedUrl);
+  }
   clickNewSubmission() {
     cy.get(newSubmissionBTN).click();
   }

@@ -3,12 +3,12 @@ import MedicaidSPARAIResponsePage from "../../../support/pages/MedicaidSPARAIRes
 import oneMacDashboardPage from "../../../support/pages/oneMacDashboardPage";
 import oneMacDevLoginPage from "../../../support/pages/oneMacDevLoginPage";
 import oneMacHomePage from "../../../support/pages/oneMacHomePage";
+import oneMacFormPage from "../../../support/pages/oneMacFormPage";
 import oneMacSubmissionTypePage from "../../../support/pages/oneMacSubmissionTypePage";
 import oneMacNewSubmissionPage from "../../../support/pages/oneMacNewSubmissionPage";
 import oneMacSubmitNewMedicaidSpaPage from "../../../support/pages/oneMacSubmitNewMedicaidSPAPage";
 import oneMacUserManagmentPage from "../../../support/pages/oneMacUserManagmentPage";
 import oneMacMyProfilePage from "../../../support/pages/oneMacMyProfilePage";
-import oneMacCHIPSPAPage from "../../../support/pages/oneMacCHIPSPAPage";
 import oneMacSubmitNewWaiverActionPage from "../../../support/pages/oneMacSubmitNewWaiverActionPage";
 import oneMacRequestWaiverTemporaryExtension from "../../../support/pages/oneMacRequestWaiverTemporaryExtension";
 import oneMacAppendixKAmendmentPage from "../../../support/pages/oneMacAppendixKAmendmentPage";
@@ -23,12 +23,12 @@ const medicaidSPARAIResponsePage = new MedicaidSPARAIResponsePage();
 const OneMacDashboardPage = new oneMacDashboardPage();
 const OneMacDevLoginPage = new oneMacDevLoginPage();
 const OneMacHomePage = new oneMacHomePage();
+const OneMacFormPage = new oneMacFormPage();
 const OneMacSubmissionTypePage = new oneMacSubmissionTypePage();
 const OneMacNewSubmissionPage = new oneMacNewSubmissionPage();
 const OneMacSubmitNewMedicaidSpaPage = new oneMacSubmitNewMedicaidSpaPage();
 const OneMacUserManagmentPage = new oneMacUserManagmentPage();
 const OneMacMyProfilePage = new oneMacMyProfilePage();
-const OneMacCHIPSPAPage = new oneMacCHIPSPAPage();
 const OneMacSubmitNewWaiverActionPage = new oneMacSubmitNewWaiverActionPage();
 const OneMacRequestWaiverTemporaryExtension =
   new oneMacRequestWaiverTemporaryExtension();
@@ -312,23 +312,21 @@ Then("click on CHIP SPA", () => {
   OneMacSubmissionTypePage.clickChipSPA();
 });
 
-Then("verify error message is not present on Submit New CHIP SPA Page", () => {
-  OneMacCHIPSPAPage.verifyErrorMessageIsNotDisplayed();
+Then("verify ID error message is not present", () => {
+  OneMacFormPage.verifyIDErrorMessageIsNotDisplayed();
 });
-Then("clear SPA ID Input box CHIP SPA page", () => {
-  OneMacCHIPSPAPage.clearSPAIDInputBox();
+Then("clear the ID Input box", () => {
+  OneMacFormPage.clearIDInputBox();
 });
-
-Then("type in invalid SPA ID on CHIP SPA page", () => {
-  OneMacCHIPSPAPage.inputIncorrectSPAIDFormat();
+Then("type {string} into the ID Input box", (newID) => {
+  OneMacFormPage.clearIDInputBox(newID);
 });
-
-Then(
-  "verify that error message for incorrect SPA ID is Displayed on CHIP SPA Page",
-  () => {
-    OneMacCHIPSPAPage.verifyErrorMessageIsDisplayed();
-  }
-);
+Then("verify ID error message is not present", () => {
+  OneMacFormPage.verifyIDErrorMessageIsNotDisplayed();
+});
+Then("verify the ID error message is {string}", (chkErrorMessage) => {
+  OneMacFormPage.verifyErrorMessageContains(chkErrorMessage);
+});
 
 Then("Click on Waiver Action", () => {
   OneMacSubmissionTypePage.clickwaiverAction();
@@ -722,15 +720,12 @@ Then(
     OneMacDashboardPage.verifyexpirationDateColumnHeaderExists();
   }
 );
-Then("Add file for Current State Plan", () => {
-  OneMacCHIPSPAPage.uploadCurrentStatePlanFile();
-});
-Then("Add file for Amended State Plan Language", () => {
-  OneMacCHIPSPAPage.uploadAmendedStatePlanLanguageFile();
-});
-Then("Add file for Cover Letter", () => {
-  OneMacCHIPSPAPage.uploadCoverLetterFile();
-});
+Then(
+  "Attach {string} file to attachment {int}",
+  (fileName, attachmentIndex) => {
+    OneMacFormPage.uploadAttachment(fileName, attachmentIndex);
+  }
+);
 
 Then("Add file for Revised Amended State Plan Language", () => {
   medicaidSPARAIResponsePage.uploadChipSPARAIRESPONSERevisedAmendedStatePlanLanguage();
@@ -1906,17 +1901,11 @@ Then(
     OneMacSubmitNewMedicaidSpaPage.verifyMedicaidAlternativePage();
   }
 );
-Then("verify user is on new CHIP SPA page", () => {
-  OneMacCHIPSPAPage.verifyNewChipSPAPage();
-});
-Then("verify user is on CHIP Eligibility page", () => {
-  OneMacCHIPSPAPage.verifyChipEligibilityPage();
-});
-Then("verify the page header is {string}", (string) => {
-  OneMacCHIPSPAPage.verifyPageH1Is(string);
+Then("verify the page header is {string}", (pageHeader) => {
+  OneMacFormPage.verifyPageHeader(pageHeader);
 });
 Then("verify Enter the MMDL System button is visible and clickable", () => {
-  OneMacCHIPSPAPage.verifyMmdlSystenBtn();
+  OneMacFormPage.verifyMmdlSystenBtn();
 });
 Then("verify Enter the MACPro system button is visible and clickable", () => {
   OneMacSubmitNewMedicaidSpaPage.verifyMacProSystenBtn();
@@ -2550,4 +2539,7 @@ Then("verify all sections are collapsed", () => {
 });
 Then("verify all sections are expanded", () => {
   OneMacFAQPage.verifyAllSectionsAreExpanded();
+});
+Then("verify page url contains {string}", (checkUrl) => {
+  OneMacDashboardPage.verifyPageByURL(checkUrl);
 });

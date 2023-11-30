@@ -16,11 +16,11 @@ Feature: SPA Form Logic
         Then verify error message is not present on Medicaid SPA page
         Then Add file for SPA Pages
         Then verify the submit button is not disabled
-        Then clear SPA ID in Medicaid SPA Input box
+        Then clear the ID Input box
         Then type in invalid SPA ID on Medicaid SPA page
         Then verify that error message for incorrect SPA ID is Displayed
         Then verify the submit button is disabled
-        Then clear SPA ID in Medicaid SPA Input box
+        Then clear the ID Input box
         Then type in Medicaid SPA ID 2
         Then verify error message is not present on Medicaid SPA page
         Then verify the submit button is not disabled
@@ -30,16 +30,16 @@ Feature: SPA Form Logic
         Then click All Other CHIP SPA Submissions
         Then type in Chip SPA ID 2
         Then select proposed effective date 3 months from today
-        Then Add file for Current State Plan
-        Then Add file for Amended State Plan Language
-        Then Add file for Cover Letter
-        Then verify error message is not present on Submit New CHIP SPA Page
+        Then Attach "picture.jpg" file to attachment 1
+        Then Attach "adobe.pdf" file to attachment 2
+        Then Attach "adobe.pdf" file to attachment 3
+        Then verify ID error message is not present
         Then verify the submit button is not disabled
-        Then clear SPA ID Input box CHIP SPA page
-        Then type in invalid SPA ID on CHIP SPA page
-        Then verify that error message for incorrect SPA ID is Displayed on CHIP SPA Page
+        Then clear the ID Input box
+        Then type "MD-DD-DDDD" into the ID Input box
+        Then verify the ID error message is "The SPA ID must be in the format of SS-YY-NNNN-xxxx"
         Then verify the submit button is disabled
-        Then clear SPA ID Input box CHIP SPA page
-        Then type in Chip SPA ID 2
-        Then verify error message is not present on Submit New CHIP SPA Page
+        Then clear the ID Input box
+        Then type "MD-22-0283-VM" into the ID Input box
+        Then verify ID error message is not present
         Then verify the submit button is not disabled
