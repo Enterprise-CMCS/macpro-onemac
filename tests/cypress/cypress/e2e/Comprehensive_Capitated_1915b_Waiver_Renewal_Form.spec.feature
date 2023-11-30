@@ -17,18 +17,18 @@ Feature: Waiver Renewal in Package Dashboard
 
     Scenario: Existing Waiver Number Input Field format
         Then click on 1915b Comprehensive Capitated Renewal Waiver
-        Then verify All other 1915 b Waivers is displayed under Waiver Authority
+        Then verify Waiver Authority contains "All other 1915 b Waivers"
         Then verify help text under Existing Waiver Number to Renew field
         Then type bad format into Existing Waiver Number to Renew field
         Then type new waiver renewal number "2" in 1915b Waiver Renewal Number field
         Then select proposed effective date 3 months from today
-        Then Add file for 1915b Comprehensive Capitated Waiver Application Pre-print
-        Then Add file for 1915b Comprehensive Capitated Waiver Cost Effectiveness Spreadsheets
+        Then Attach "excel.xlsx" file to attachment 1
+        Then Attach "excel.xlsx" file to attachment 2
         Then verify parent error message is present on package dashboard New Waiver Page
         Then verify the submit button is disabled
         Then clear Existing Waiver Number to Renew field
         Then type approved Initial Waiver number into Existing Waiver Number to Renew field
-        Then verify parent error message is not present on New Waiver Page
+        Then verify Parent ID error message is not present
         Then verify the submit button is not disabled
         Then clear Existing Waiver Number to Renew field
         Then type bad format into Existing Waiver Number to Renew field
@@ -38,18 +38,18 @@ Feature: Waiver Renewal in Package Dashboard
 
     Scenario: 1915b Waiver Renewal Number Input Field format
         Then click on 1915b Comprehensive Capitated Renewal Waiver
-        Then verify All other 1915 b Waivers is displayed under Waiver Authority
+        Then verify Waiver Authority contains "All other 1915 b Waivers"
         Then type approved Initial Waiver number into Existing Waiver Number to Renew field
         Then type bad format into 1915b Waiver Renewal Number field
         Then select proposed effective date 3 months from today
-        Then Add file for 1915b Comprehensive Capitated Waiver Application Pre-print
-        Then Add file for 1915b Comprehensive Capitated Waiver Cost Effectiveness Spreadsheets
+        Then Attach "excel.xlsx" file to attachment 1
+        Then Attach "excel.xlsx" file to attachment 2
         Then verify error message is present on package dashboard New Waiver Page
         Then verify the error message for renewals includes For renewals, the “R##” starts with ‘01’ and ascends.
         Then verify the submit button is disabled
         Then clear 1915b Waiver Renewal Number field
         Then type new waiver renewal number "2" in 1915b Waiver Renewal Number field
-        Then verify error message is not present on New Waiver Page
+        Then verify ID error message is not present
         Then verify the submit button is not disabled
         Then clear 1915b Waiver Renewal Number field
         Then type bad format into 1915b Waiver Renewal Number field
@@ -60,26 +60,26 @@ Feature: Waiver Renewal in Package Dashboard
 
     Scenario: Verify pre-print and spreadsheet are both required
         Then click on 1915b Comprehensive Capitated Renewal Waiver
-        Then verify All other 1915 b Waivers is displayed under Waiver Authority
+        Then verify Waiver Authority contains "All other 1915 b Waivers"
         Then type approved Initial Waiver number into Existing Waiver Number to Renew field
         Then type new waiver renewal number "2" in 1915b Waiver Renewal Number field
         Then select proposed effective date 3 months from today
-        Then Add file for 1915b Comprehensive Capitated Waiver Cost Effectiveness Spreadsheets
+        Then Attach "excel.xlsx" file to attachment 2
         Then verify the submit button is disabled
         Then Remove file for 1915b Comprehensive Capitated Waiver Cost Effectiveness Spreadsheets
-        Then Add file for 1915b Comprehensive Capitated Waiver Application Pre-print
+        Then Attach "excel.xlsx" file to attachment 1
         Then verify the submit button is disabled
-        Then Add file for 1915b Comprehensive Capitated Waiver Cost Effectiveness Spreadsheets
+        Then Attach "excel.xlsx" file to attachment 2
         Then verify the submit button is not disabled
 
     Scenario: create waiver renewal from package dashboard and search it
         Then click on 1915b Comprehensive Capitated Renewal Waiver
-        Then verify All other 1915 b Waivers is displayed under Waiver Authority
+        Then verify Waiver Authority contains "All other 1915 b Waivers"
         Then type approved Initial Waiver number into Existing Waiver Number to Renew field
         Then type new waiver renewal number "3" in 1915b Waiver Renewal Number field
         Then select proposed effective date 3 months from today
-        Then Add file for 1915b Comprehensive Capitated Waiver Application Pre-print
-        Then Add file for 1915b Comprehensive Capitated Waiver Cost Effectiveness Spreadsheets
+        Then Attach "excel.xlsx" file to attachment 1
+        Then Attach "excel.xlsx" file to attachment 2
         Then Type Additonal Info Comments in new form
         Then Click on Submit Button
         Then verify submission successful message in the alert bar

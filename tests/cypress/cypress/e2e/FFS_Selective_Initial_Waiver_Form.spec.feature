@@ -17,28 +17,28 @@ Feature: FFS Selective Initial Waiver
 
     Scenario: Initial Waiver number format
         Then click on 1915b 4 FFS Selective Contracting New Initial Waiver
-        Then verify 1915 b 4 FFS Selective Contracting waivers is displayed under Waiver Authority
+        Then verify Waiver Authority contains "1915 b 4 FFS Selective Contracting waivers"
         Then type initial waiver number in old format SS.####.R00.00
         Then select proposed effective date 3 months from today
-        Then Add file for 1915b 4 FFS Selective Contracting waiver application pre-print
+        Then Attach "picture.jpg" file to attachment 1
         Then verify error message is present on package dashboard New Waiver Page
         Then verify the submit button is disabled
-        Then clear Waiver Number Input box in new form
-        Then Type a valid and unused Initial Waiver Number in format SS-#####.R00.00
-        Then verify error message is not present on New Waiver Page
+        Then clear the ID Input box
+        Then type "MD-99331.R00.00" into the ID Input box
+        Then verify ID error message is not present
         Then verify the submit button is not disabled
-        Then clear Waiver Number Input box in new form
+        Then clear the ID Input box
         Then type initial waiver number in old format SS.#####.R00.00
         Then verify error message is present on package dashboard New Waiver Page
         Then verify the submit button is disabled
-        Then clear Waiver Number Input box in new form
+        Then clear the ID Input box
 
     Scenario: create initial waiver from package dashboard and search it
         Then click on 1915b 4 FFS Selective Contracting New Initial Waiver
-        Then verify 1915 b 4 FFS Selective Contracting waivers is displayed under Waiver Authority
-        Then Type Initial Waiver Number 3 in format SS-#####.R00.00
+        Then verify Waiver Authority contains "1915 b 4 FFS Selective Contracting waivers"
+        Then type "MD-39263.R00.00" into the ID Input box
         Then select proposed effective date 3 months from today
-        Then Add file for 1915b 4 FFS Selective Contracting waiver application pre-print
+        Then Attach "picture.jpg" file to attachment 1
         Then Type Additonal Info Comments in new form
         Then Click on Submit Button
         Then verify submission successful message in the alert bar

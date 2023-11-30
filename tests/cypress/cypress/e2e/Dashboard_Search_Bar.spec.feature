@@ -39,10 +39,10 @@ Feature: OY2-11149 Submission Dashboard - Search bar
         Then click on 1915b Waiver Actions
         Then click on 1915b 4 FFS Selective Contracting waivers
         Then click on 1915b 4 FFS Selective Contracting New Initial Waiver
-        Then verify 1915 b 4 FFS Selective Contracting waivers is displayed under Waiver Authority
-        Then Type Initial Waiver Number 2 in format SS-#####.R00.00
+        Then verify Waiver Authority contains "1915 b 4 FFS Selective Contracting waivers"
+        Then type "MD-39253.R00.00" into the ID Input box
         Then select proposed effective date 3 months from today
-        Then Add file for 1915b 4 FFS Selective Contracting waiver application pre-print
+        Then Attach "picture.jpg" file to attachment 1
         Then Type Additonal Info Comments in new form
         Then Click on Submit Button
         Then verify submission successful message in the alert bar

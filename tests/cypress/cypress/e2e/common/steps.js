@@ -325,6 +325,18 @@ Then(
     OneMacFormPage.verifyIDErrorMessage2Contains(chkErrorMessage);
   }
 );
+Then("clear the Parent ID Input box", () => {
+  OneMacFormPage.clearParentIDInputBox();
+});
+Then("type {string} into the Parent ID Input box", (newID) => {
+  OneMacFormPage.inputParentID(newID);
+});
+Then("verify Parent ID error message is not present", () => {
+  OneMacFormPage.verifyParentIDErrorMessageIsNotDisplayed();
+});
+Then("verify the Parent ID error message is {string}", (chkErrorMessage) => {
+  OneMacFormPage.verifyParentIDErrorMessageContains(chkErrorMessage);
+});
 
 Then("Click on Waiver Action", () => {
   OneMacSubmissionTypePage.clickwaiverAction();
@@ -443,29 +455,8 @@ Then("click All Other CHIP SPA Submissions", () => {
   OneMacSubmissionTypePage.clickAllOtherChip();
 });
 
-Then(
-  "Add file for 1915b 4 FFS Selective Contracting waiver application pre-print",
-  () => {
-    OneMacSubmitNewWaiverActionPage.upload1915BFFSPrePrintFile();
-  }
-);
-
 Then("Add file for Waiver RAI Response", () => {
   medicaidSPARAIResponsePage.uploadRAIResponseAddFile();
-});
-
-Then("verify error message is not present on New Waiver Page", () => {
-  OneMacSubmitNewWaiverActionPage.verifyErrorMessageIsNotDisplayed();
-});
-Then("verify parent error message is not present on New Waiver Page", () => {
-  OneMacSubmitNewWaiverActionPage.verifyParentErrorMessageIsNotDisplayed();
-});
-
-Then("clear Waiver Number Input box in new form", () => {
-  OneMacSubmitNewWaiverActionPage.clearWaiverNumberInputBoxNewForms();
-});
-Then("type in invalid Waiver Number", () => {
-  OneMacSubmitNewWaiverActionPage.inputWaiverNumber("MD.123456");
 });
 
 Then("Click on Request Temporary Extension in Package dashboard", () => {
@@ -477,25 +468,10 @@ Then("Click on Appendix K Amendment", () => {
 });
 
 //this is for oy2_4807
-Then(
-  "verify 1915 b 4 FFS Selective Contracting waivers is displayed under Waiver Authority",
-  () => {
-    OneMacSubmitNewWaiverActionPage.verify1915b4FFSSelectiveContractingwaiversUnderWaiverAuthority();
-  }
-);
+Then("verify Waiver Authority contains {string}", (whatAuthority) => {
+  OneMacFormPage.verifyWaiverAuthorityContains(whatAuthority);
+});
 
-Then(
-  "Add file for 1915b Comprehensive Capitated Waiver Application Pre-print",
-  () => {
-    OneMacSubmitNewWaiverActionPage.upload1915BComprehensivePrePrintFile();
-  }
-);
-Then(
-  "Add file for 1915b Comprehensive Capitated Waiver Cost Effectiveness Spreadsheets",
-  () => {
-    OneMacSubmitNewWaiverActionPage.upload1915BComprehensiveSpreadsheetFile();
-  }
-);
 Then(
   "Remove file for 1915b Comprehensive Capitated Waiver Application Pre-print",
   () => {
@@ -512,36 +488,6 @@ Then("type {string} in additional info textarea", (Comments) => {
   OneMacSubmitNewWaiverActionPage.inputAdditionalInfoText(Comments);
 });
 
-Then(
-  "verify All other 1915 b Waivers is displayed under Waiver Authority",
-  () => {
-    OneMacSubmitNewWaiverActionPage.verifyAllOther1915bWaiversUnderWaiverAuthority();
-  }
-);
-
-Then("type in Existing Waiver Number in new form", () => {
-  OneMacSubmitNewWaiverActionPage.inputExistingWaiverNumberNewForms();
-});
-Then("Type Initial Waiver Number in format SS-#####.R00.00", () => {
-  cy.fixture("packageDashboardWaiverNumbers.json").then((d) => {
-    OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
-      d.newInitialWaiverNumber1
-    );
-  });
-});
-Then("Type Initial Waiver Number 3 in format SS-#####.R00.00", () => {
-  cy.fixture("packageDashboardWaiverNumbers.json").then((d) => {
-    OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
-      d.newInitialWaiverNumber3
-    );
-  });
-});
-Then(
-  "Type a valid and unused Initial Waiver Number in format SS-#####.R00.00",
-  () => {
-    OneMacSubmitNewWaiverActionPage.inputWaiverNumber("MD-99331.R00.00");
-  }
-);
 Then("Type Initial Waiver Number 2 in format SS-#####.R00.00", () => {
   cy.fixture("packageDashboardWaiverNumbers.json").then((d) => {
     OneMacSubmitNewWaiverActionPage.inputWaiverNumber(

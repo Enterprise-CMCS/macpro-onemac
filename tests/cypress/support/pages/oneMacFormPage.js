@@ -10,6 +10,9 @@ const enterMmdlBtn = "//button[contains(text(),'Enter the MMDL system')]";
 const IDInputBox = "#componentId";
 const errorMessageID = "#componentIdStatusMsg0";
 const errorMessageLine2ID = "#componentIdStatusMsg1";
+const parentIDInputBox = "#parent-componentId";
+const errorMessageParentID = "#parent-componentIdStatusMsg0";
+const waiverAuthorityLabel = "//h3[text()='Waiver Authority']";
 const amendmentTitleField = "#title";
 const tempExtensionTypeHeader =
   "//h3[contains(text(),'Temporary Extension Type')]";
@@ -39,6 +42,23 @@ export class oneMacFormPage {
     cy.get(errorMessageLine2ID).should("be.visible");
     cy.get(errorMessageLine2ID).contains(errorMessage);
   }
+  inputParentID(anId) {
+    cy.get(parentIDInputBox).type(anId);
+  }
+  clearParentIDInputBox() {
+    cy.get(parentIDInputBox).clear();
+  }
+  verifyParentIDErrorMessageIsNotDisplayed() {
+    cy.get(errorMessageParentID).should("not.exist");
+  }
+  verifyParentIDErrorMessageContains(errorMessage) {
+    cy.get(errorMessageParentID).should("be.visible");
+    cy.get(errorMessageParentID).contains(errorMessage);
+  }
+  verifyWaiverAuthorityContains(whatAuthority) {
+    cy.get(waiverAuthorityLabel).next("div").contains(whatAuthority);
+  }
+  selectWaiverAuthority(whichAuthority) {}
   verifyTempExtensionType(whatType) {
     cy.xpath(tempExtensionTypeHeader).next("div").contains(whatType);
   }
