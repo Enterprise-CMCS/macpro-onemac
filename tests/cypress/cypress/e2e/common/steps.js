@@ -319,7 +319,7 @@ Then("clear the ID Input box", () => {
   OneMacFormPage.clearIDInputBox();
 });
 Then("type {string} into the ID Input box", (newID) => {
-  OneMacFormPage.clearIDInputBox(newID);
+  OneMacFormPage.inputID(newID);
 });
 Then("verify ID error message is not present", () => {
   OneMacFormPage.verifyIDErrorMessageIsNotDisplayed();

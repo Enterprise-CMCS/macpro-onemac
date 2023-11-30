@@ -974,13 +974,6 @@ export class oneMacDashboardPage {
   verifyActionsColumnDoesNotExist() {
     cy.get(actionsColumn).should("not.exist");
   }
-  verifyFinalDispositionDateFilterDropdownExists() {
-    cy.get(finalDispositionDateFilterDropdown).should("be.visible");
-  }
-  clickOnFinalDispositionDateFilterDropdownDropDown() {
-    cy.get(finalDispositionDateFilterDropdown).wait(1000);
-    cy.get(finalDispositionDateFilterDropdown).click();
-  }
   verifyFinalDispositionCheckBoxExists() {
     cy.xpath(checkboxfinalDispositionDate).should("be.visible");
   }
