@@ -10,7 +10,6 @@ import oneMacSubmitNewMedicaidSpaPage from "../../../support/pages/oneMacSubmitN
 import oneMacUserManagmentPage from "../../../support/pages/oneMacUserManagmentPage";
 import oneMacMyProfilePage from "../../../support/pages/oneMacMyProfilePage";
 import oneMacSubmitNewWaiverActionPage from "../../../support/pages/oneMacSubmitNewWaiverActionPage";
-import oneMacRequestWaiverTemporaryExtension from "../../../support/pages/oneMacRequestWaiverTemporaryExtension";
 import oneMacFAQPage from "../../../support/pages/oneMacFAQPage";
 import oneMacRequestARoleChangePage from "../../../support/pages/oneMacRequestARoleChangePage";
 import oneMacPackageDetailsPage from "../../../support/pages/oneMacPackageDetailsPage";
@@ -29,8 +28,6 @@ const OneMacSubmitNewMedicaidSpaPage = new oneMacSubmitNewMedicaidSpaPage();
 const OneMacUserManagmentPage = new oneMacUserManagmentPage();
 const OneMacMyProfilePage = new oneMacMyProfilePage();
 const OneMacSubmitNewWaiverActionPage = new oneMacSubmitNewWaiverActionPage();
-const OneMacRequestWaiverTemporaryExtension =
-  new oneMacRequestWaiverTemporaryExtension();
 const OneMacFAQPage = new oneMacFAQPage();
 const OneMacRequestARoleChangePage = new oneMacRequestARoleChangePage();
 const OneMacPackageDetailsPage = new oneMacPackageDetailsPage();
@@ -475,48 +472,6 @@ Then("Click on Request Temporary Extension in Package dashboard", () => {
   OneMacSubmissionTypePage.clickRequestTemporaryExtension();
 });
 
-Then(
-  "type waiver number with state abbreviation different from user on Request Waiver Temporary Extenstion Page",
-  () => {
-    OneMacRequestWaiverTemporaryExtension.inputWaiverNumber("JK");
-  }
-);
-
-Then(
-  "verify error message is not present on Request Waiver Temporary Extenstion Page",
-  () => {
-    OneMacRequestWaiverTemporaryExtension.verifyErrorMessageIsNotDisplayed();
-  }
-);
-
-Then(
-  "clear Waiver Number Input box on Request Waiver Temporary Extenstion Page",
-  () => {
-    OneMacRequestWaiverTemporaryExtension.clearWaiverNumberInputBox();
-  }
-);
-
-Then(
-  "Type waiver number with 5 characters on Request Waiver Temporary Extenstion Page",
-  () => {
-    OneMacRequestWaiverTemporaryExtension.inputWaiverNumber("MD.12345");
-  }
-);
-
-Then(
-  "type in invalid Waiver Number on Request Waiver Temporary Extenstion Page",
-  () => {
-    OneMacRequestWaiverTemporaryExtension.inputWaiverNumber("MD.123");
-  }
-);
-
-Then(
-  "verify that error message for incorrect Waiver Number is Displayed",
-  () => {
-    OneMacRequestWaiverTemporaryExtension.verifyErrorMessageIsDisplayed();
-  }
-);
-
 Then("Click on Appendix K Amendment", () => {
   OneMacSubmissionTypePage.clickAppendixKAmendment();
 });
@@ -553,11 +508,6 @@ Then(
     OneMacSubmitNewWaiverActionPage.remove1915BComprehensiveSpreadsheetFile();
   }
 );
-
-Then("upload Waiver Extension Request", () => {
-  OneMacRequestWaiverTemporaryExtension.uploadWaiverExtensionRequest();
-});
-
 Then("type {string} in additional info textarea", (Comments) => {
   OneMacSubmitNewWaiverActionPage.inputAdditionalInfoText(Comments);
 });
@@ -2372,14 +2322,11 @@ Then(
     OneMacSubmitNewWaiverActionPage.verifyRenewalWaiverErrorMsgPt2();
   }
 );
-Then("verify the 1915b Temporary Extension is prefilled under type", () => {
-  OneMacRequestWaiverTemporaryExtension.option1915bIsPrefilled();
+Then("verify the Temporary Extension Type is {string}", (whichType) => {
+  OneMacFormPage.verifyTempExtensionType(whichType);
 });
-Then("select the 1915b Temporary Extension Type button", () => {
-  OneMacRequestWaiverTemporaryExtension.selectOption1915bInTempExtensionType();
-});
-Then("select the 1915c Temporary Extension Type button", () => {
-  OneMacRequestWaiverTemporaryExtension.selectOption1915cInTempExtensionType();
+Then("select {string} as the Temporary Extension Type", (whichType) => {
+  OneMacFormPage.selectTempExtensionType(whichType);
 });
 Then("verify the header is {string} on the withdrawal form", (string) => {
   WithdrawPackagePage.verifyWithdrawPageHeader(string);

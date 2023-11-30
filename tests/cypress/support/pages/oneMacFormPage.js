@@ -11,6 +11,9 @@ const IDInputBox = "#componentId";
 const errorMessageID = "#componentIdStatusMsg0";
 const errorMessageLine2ID = "#componentIdStatusMsg1";
 const amendmentTitleField = "#title";
+const tempExtensionTypeHeader =
+  "//h3[contains(text(),'Temporary Extension Type')]";
+const tempExtensionTypeBtn = "#temp-ext-type";
 
 export class oneMacFormPage {
   verifyPageHeader(inPageHeader) {
@@ -35,6 +38,12 @@ export class oneMacFormPage {
   verifyIDErrorMessage2Contains(errorMessage) {
     cy.get(errorMessageLine2ID).should("be.visible");
     cy.get(errorMessageLine2ID).contains(errorMessage);
+  }
+  verifyTempExtensionType(whatType) {
+    cy.xpath(tempExtensionTypeHeader).next("div").contains(whatType);
+  }
+  selectTempExtensionType(whatType) {
+    cy.get(tempExtensionTypeBtn).select(whatType);
   }
   uploadAttachment(fileName, attachmentIndex) {
     const addFileBTN = `//tbody/tr[${attachmentIndex}]/td[2]/label[1]`;

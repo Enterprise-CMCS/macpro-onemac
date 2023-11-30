@@ -8,10 +8,10 @@ Feature: Package Dashboard Temporary Extension
         Then click on New Submission
         Then Click on Waiver Action
         Then Click on Request Temporary Extension in Package dashboard
-        Then select the 1915c Temporary Extension Type button
+        Then select "1915(c)" as the Temporary Extension Type
         Then type approved Initial Waiver number into Existing Waiver Number to Renew field
         Then Type Temporary Extension Number "2"
-        Then upload Waiver Extension Request
+        Then Attach "picture.jpg" file to attachment 1
         Then type "This is just a test" in additional info textarea
         Then Click on Submit Button
         Then verify submission successful message in the alert bar
