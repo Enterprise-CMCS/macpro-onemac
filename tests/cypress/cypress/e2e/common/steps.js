@@ -312,9 +312,6 @@ Then("click on CHIP SPA", () => {
   OneMacSubmissionTypePage.clickChipSPA();
 });
 
-Then("verify ID error message is not present", () => {
-  OneMacFormPage.verifyIDErrorMessageIsNotDisplayed();
-});
 Then("clear the ID Input box", () => {
   OneMacFormPage.clearIDInputBox();
 });
