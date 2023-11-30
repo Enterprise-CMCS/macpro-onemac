@@ -15,28 +15,28 @@ Feature: Appendix K Waiver Type Selection
     
     Scenario: Verify the Waiver Number format on Appendix K Form
         Then Click on Appendix K Amendment
-        Then type Appendix K Submission 1 into Amendment Title field
-        Then type in unused Waiver Number with 5 characters on Appendix K Amendment Page
-        Then Add file for 1915c Appendix K Amendment Waiver Template
+        Then type "Appendix K Submission 1" into Amendment Title field
+        Then type "MD-22106.R01.03" into the ID Input box
+        Then Attach "adobe.pdf" file to attachment 1
         Then select proposed effective date 3 months from today
-        Then verify error message is not present on Appendix K Amendment Page
+        Then verify ID error message is not present
         Then verify the submit button is not disabled
-        Then clear Waiver Number Input box on Appendix K Amendment Page
-        Then type in invalid Waiver Number on Appendix K Amendment Page
-        Then verify that error message for incorrect Waiver Number is Displayed on Appendix K Amendment Page
-        Then verify error message contains 'For amendments, the last two digits start with'
+        Then clear the ID Input box
+        Then type "MD.123" into the ID Input box
+        Then verify the ID error message is "The Waiver Amendment Number must be in the format of SS-####.R##.## or SS-#####.R##.##"
+        Then verify the ID error message has a second line with "For amendments, the last two digits start with ‘01’ and ascends."
         Then verify the submit button is disabled
-        Then clear Waiver Number Input box on Appendix K Amendment Page
-        Then type in unused Waiver Number with 5 characters on Appendix K Amendment Page
-        Then verify error message is not present on Appendix K Amendment Page
+        Then clear the ID Input box
+        Then type "MD-22106.R01.03" into the ID Input box
+        Then verify ID error message is not present
         Then verify the submit button is not disabled
 
     Scenario: create Appendix K from package dashboard and search it
         Then Click on Appendix K Amendment
-        Then type Appendix K Submission 1 into Amendment Title field
-        Then type in Waiver Number with 5 characters on Appendix K Amendment Page
+        Then type "Appendix K Submission 1" into Amendment Title field
+        Then type "MD-22106.R01.02" into the ID Input box
         Then select proposed effective date 3 months from today
-        Then Add file for 1915c Appendix K Amendment Waiver Template
+        Then Attach "adobe.pdf" file to attachment 1
         Then Type Additonal Info Comments in new form
         Then Click on Submit Button
         Then verify submission successful message in the alert bar

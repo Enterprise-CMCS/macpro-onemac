@@ -11,7 +11,6 @@ import oneMacUserManagmentPage from "../../../support/pages/oneMacUserManagmentP
 import oneMacMyProfilePage from "../../../support/pages/oneMacMyProfilePage";
 import oneMacSubmitNewWaiverActionPage from "../../../support/pages/oneMacSubmitNewWaiverActionPage";
 import oneMacRequestWaiverTemporaryExtension from "../../../support/pages/oneMacRequestWaiverTemporaryExtension";
-import oneMacAppendixKAmendmentPage from "../../../support/pages/oneMacAppendixKAmendmentPage";
 import oneMacFAQPage from "../../../support/pages/oneMacFAQPage";
 import oneMacRequestARoleChangePage from "../../../support/pages/oneMacRequestARoleChangePage";
 import oneMacPackageDetailsPage from "../../../support/pages/oneMacPackageDetailsPage";
@@ -32,7 +31,6 @@ const OneMacMyProfilePage = new oneMacMyProfilePage();
 const OneMacSubmitNewWaiverActionPage = new oneMacSubmitNewWaiverActionPage();
 const OneMacRequestWaiverTemporaryExtension =
   new oneMacRequestWaiverTemporaryExtension();
-const OneMacAppendixKAmendmentPage = new oneMacAppendixKAmendmentPage();
 const OneMacFAQPage = new oneMacFAQPage();
 const OneMacRequestARoleChangePage = new oneMacRequestARoleChangePage();
 const OneMacPackageDetailsPage = new oneMacPackageDetailsPage();
@@ -324,6 +322,12 @@ Then("verify ID error message is not present", () => {
 Then("verify the ID error message is {string}", (chkErrorMessage) => {
   OneMacFormPage.verifyIDErrorMessageContains(chkErrorMessage);
 });
+Then(
+  "verify the ID error message has a second line with {string}",
+  (chkErrorMessage) => {
+    OneMacFormPage.verifyIDErrorMessage2Contains(chkErrorMessage);
+  }
+);
 
 Then("Click on Waiver Action", () => {
   OneMacSubmissionTypePage.clickwaiverAction();
@@ -517,37 +521,6 @@ Then("Click on Appendix K Amendment", () => {
   OneMacSubmissionTypePage.clickAppendixKAmendment();
 });
 
-Then("verify error message is not present on Appendix K Amendment Page", () => {
-  OneMacAppendixKAmendmentPage.verifyErrorMessageIsNotDisplayed();
-});
-Then("clear Waiver Number Input box on Appendix K Amendment Page", () => {
-  OneMacAppendixKAmendmentPage.clearWaiverNumberInputBox();
-});
-Then(
-  "type in Waiver Number with 5 characters on Appendix K Amendment Page",
-  () => {
-    OneMacAppendixKAmendmentPage.inputWaiverNumber(`MD-22106.R01.02`);
-  }
-);
-
-Then(
-  "type in unused Waiver Number with 5 characters on Appendix K Amendment Page",
-  () => {
-    OneMacAppendixKAmendmentPage.inputWaiverNumber(`MD-22106.R01.03`);
-  }
-);
-
-Then("type in invalid Waiver Number on Appendix K Amendment Page", () => {
-  OneMacAppendixKAmendmentPage.inputWaiverNumber("MD.123");
-});
-
-Then(
-  "verify that error message for incorrect Waiver Number is Displayed on Appendix K Amendment Page",
-  () => {
-    OneMacAppendixKAmendmentPage.verifyErrorMessageIsDisplayed();
-  }
-);
-
 //this is for oy2_4807
 Then(
   "verify 1915 b 4 FFS Selective Contracting waivers is displayed under Waiver Authority",
@@ -730,9 +703,6 @@ Then("Add file for Revised Amended State Plan Language", () => {
 
 Then("Add file for Official RAI Response", () => {
   medicaidSPARAIResponsePage.uploadOfficialRAIResponse();
-});
-Then("Add file for 1915c Appendix K Amendment Waiver Template", () => {
-  OneMacAppendixKAmendmentPage.uploadAppKAmendmentWaiverTemplate();
 });
 
 // When("Login with cms role approver Revoked", () => {
@@ -2387,8 +2357,8 @@ Then(
     });
   }
 );
-Then("type Appendix K Submission 1 into Amendment Title field", () => {
-  OneMacAppendixKAmendmentPage.inputAmendmentTitle("Appendix K Submission 1");
+Then("type {string} into Amendment Title field", (amendmentTitle) => {
+  OneMacFormPage.inputAmendmentTitle(amendmentTitle);
 });
 Then("verify id number in the first row matches {string}", (s) => {
   OneMacDashboardPage.verifyIDNumberInFirstRowIs(s);

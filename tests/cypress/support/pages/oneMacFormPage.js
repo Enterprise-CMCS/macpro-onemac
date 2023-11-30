@@ -9,10 +9,15 @@ const enterMmdlBtn = "//button[contains(text(),'Enter the MMDL system')]";
 
 const IDInputBox = "#componentId";
 const errorMessageID = "#componentIdStatusMsg0";
+const errorMessageLine2ID = "#componentIdStatusMsg1";
+const amendmentTitleField = "#title";
 
 export class oneMacFormPage {
   verifyPageHeader(inPageHeader) {
     cy.get("h1").contains(inPageHeader);
+  }
+  inputAmendmentTitle(s) {
+    cy.get(amendmentTitleField).type(s);
   }
   inputID(anId) {
     cy.get(IDInputBox).type(anId);
@@ -26,6 +31,10 @@ export class oneMacFormPage {
   verifyIDErrorMessageContains(errorMessage) {
     cy.get(errorMessageID).should("be.visible");
     cy.get(errorMessageID).contains(errorMessage);
+  }
+  verifyIDErrorMessage2Contains(errorMessage) {
+    cy.get(errorMessageLine2ID).should("be.visible");
+    cy.get(errorMessageLine2ID).contains(errorMessage);
   }
   uploadAttachment(fileName, attachmentIndex) {
     const addFileBTN = `//tbody/tr[${attachmentIndex}]/td[2]/label[1]`;
