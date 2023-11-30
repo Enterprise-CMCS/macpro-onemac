@@ -322,7 +322,7 @@ Then("verify ID error message is not present", () => {
   OneMacFormPage.verifyIDErrorMessageIsNotDisplayed();
 });
 Then("verify the ID error message is {string}", (chkErrorMessage) => {
-  OneMacFormPage.verifyErrorMessageContains(chkErrorMessage);
+  OneMacFormPage.verifyIDErrorMessageContains(chkErrorMessage);
 });
 
 Then("Click on Waiver Action", () => {
