@@ -85,7 +85,7 @@ Feature: OY2_Update_Text_on_FAQ_Page
         Then Click on State Plan Amendment SPA
         Then click on Medicaid SPA
         Then click All Other Medicaid SPA Submissions
-        Then Click on What is my SPA ID link
+        Then click link labelled "What is my SPA ID?"
         Then Verify text contains Enter the State Plan Amendment transmittal number Assign consecutive numbers on a calendar year basis
 
     Scenario: Verify redirect link on 1915b4 waivers
@@ -97,7 +97,7 @@ Feature: OY2_Update_Text_on_FAQ_Page
         Then click on 1915b Waiver Actions
         Then click on 1915b 4 FFS Selective Contracting waivers
         Then click on 1915b 4 FFS Selective Contracting New Initial Waiver
-        Then click on What is my Initial Waiver Number
+        Then click link labelled "What is my Initial Waiver Number?"
         Then verify What format is used to enter a 1915b Initial Waiver number body is visible
 
     Scenario: Verify redirect link on 1915b waivers
@@ -109,7 +109,7 @@ Feature: OY2_Update_Text_on_FAQ_Page
         Then click on 1915b Waiver Actions
         Then click on 1915b Comprehensive Capitated Waiver Authority
         Then click on 1915b Comprehensive Capitated Renewal Waiver
-        Then click on What is my 1915b Waiver Renewal Number
+        Then click link labelled "What is my 1915b Waiver Renewal Number?"
         Then verify What format is used to enter a 1915b Waiver Renewal number header is visible
 
     Scenario: Verify the Guides exist in the FAQ

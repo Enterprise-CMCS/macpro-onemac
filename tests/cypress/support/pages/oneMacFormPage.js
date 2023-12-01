@@ -18,12 +18,78 @@ const tempExtensionTypeHeader =
   "//h3[contains(text(),'Temporary Extension Type')]";
 const tempExtensionTypeBtn = "#temp-ext-type";
 
+const elementFromLabel = {
+  // Different forms may have different labels for the ID field
+  "SPA ID": "#componentId",
+  "Temporary Extension Request Number": "#componentId",
+  "Initial Waiver Number": "#componentId",
+  "1915(b) Waiver Amendment Number": "#componentId",
+  "1915(b) Waiver Renewal Number": "#componentId",
+  "Existing Waiver Number to Renew": "#parent-componentId",
+  "Existing Waiver Number to Amend": "#parent-componentId",
+  "Additional Information": "#additional-information",
+};
+const errorMessageLine1FromLabel = {
+  "SPA ID": "#componentIdStatusMsg0",
+  "Temporary Extension Request Number": "#componentIdStatusMsg0",
+  "Initial Waiver Number": "#componentIdStatusMsg0",
+  "1915(b) Waiver Renewal Number": "#componentIdStatusMsg0",
+  "1915(b) Waiver Amendment Number": "#componentIdStatusMsg0",
+  "Existing Waiver Number to Renew": "#parent-componentIdStatusMsg0",
+  "Existing Waiver Number to Amend": "#parent-componentIdStatusMsg0",
+};
+const errorMessageLine2FromLabel = {
+  "SPA ID": "#componentIdStatusMsg1",
+  "Temporary Extension Request Number": "#componentIdStatusMsg1",
+  "Initial Waiver Number": "#componentIdStatusMsg1",
+  "1915(b) Waiver Renewal Number": "#componentIdStatusMsg1",
+  "1915(b) Waiver Amendment Number": "#componentIdStatusMsg1",
+};
+const hintTextFromLabel = {
+  "SPA ID": "#fieldHint0",
+  "Temporary Extension Request Number": "#fieldHint0",
+  "Initial Waiver Number": "#fieldHint0",
+  "1915(b) Waiver Renewal Number": "#fieldHint0",
+  "1915(b) Waiver Amendment Number": "#fieldHint0",
+  "Existing Waiver Number to Renew": "#parent-fieldHint0",
+  "Existing Waiver Number to Amend": "#parent-fieldHint0",
+};
+
 export class oneMacFormPage {
+  clearInput(whereTo) {
+    cy.get(elementFromLabel[whereTo]).clear();
+  }
+  inputInto(whereTo, newValue) {
+    cy.get(elementFromLabel[whereTo]).type(newValue);
+  }
+  verifyErrorMessageContains(whichLabel, whichLine, errorMessage) {
+    const errorMessageElement =
+      whichLine === "2"
+        ? cy.get(errorMessageLine2FromLabel[whichLabel])
+        : cy.get(errorMessageLine1FromLabel[whichLabel]);
+
+    errorMessageElement.should("be.visible");
+    errorMessageElement.contains(errorMessage);
+  }
+  verifyHintTextContains(whichLabel, hintText) {
+    const hintTextElement = cy.get(hintTextFromLabel[whichLabel]);
+
+    hintTextElement.should("be.visible");
+    hintTextElement.contains(hintText);
+  }
   verifyPageHeader(inPageHeader) {
     cy.get("h1").contains(inPageHeader);
   }
   inputAmendmentTitle(s) {
     cy.get(amendmentTitleField).type(s);
+  }
+  clickLinkWithLabel(linkLabel) {
+    cy.get("a:visible")
+      .contains(linkLabel)
+      .invoke("attr", "href")
+      .then((href) => {
+        cy.visit(href);
+      });
   }
   inputID(anId) {
     cy.get(IDInputBox).type(anId);
@@ -56,7 +122,7 @@ export class oneMacFormPage {
     cy.get(errorMessageParentID).contains(errorMessage);
   }
   verifyWaiverAuthorityContains(whatAuthority) {
-    cy.get(waiverAuthorityLabel).next("div").contains(whatAuthority);
+    cy.xpath(waiverAuthorityLabel).next("div").contains(whatAuthority);
   }
   selectWaiverAuthority(whichAuthority) {}
   verifyTempExtensionType(whatType) {

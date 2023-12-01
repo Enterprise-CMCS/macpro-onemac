@@ -11,7 +11,6 @@ const capitatedSpreadsheetFile =
   "//td[div[contains(text(),'1915(b) Comprehensive (Capitated) Waiver Cost Effectiveness Spreadsheets')]]";
 const fileUpload1 = "#uploader-input-0";
 const fileUpload2 = "#uploader-input-1";
-const additionalInfoTextarea = "#additional-information";
 const existingWaiverNumber = "MD-22005.R00.00";
 const whatIsMyInitialWaiverNumberLink =
   "//a[@href='/FAQ#initial-waiver-id-format']";
@@ -100,10 +99,6 @@ export class oneMacSubmitNewWaiverActionPage {
       .contains(
         /[A-Z]{2}\-\d{4}\.[A-Z]{1}([0]{1}[1-9]|[1-9][0-9]).0{2}|[A-Z]{2}\-\d{5}\.[A-Z]{1}([0]{1}[1-9]|[1-9][0-9]).0{2}/
       );
-  }
-
-  inputAdditionalInfoText(s) {
-    cy.get(additionalInfoTextarea).type(s);
   }
 
   clickWhatIsMyInitialWaiverNumberLink() {

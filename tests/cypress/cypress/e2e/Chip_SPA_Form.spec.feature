@@ -24,9 +24,9 @@ Feature: Package Dashboard: CHIP SPA Initial Submission
         Then select proposed effective date 3 months from today
         Then verify the attachment info descriptiion
         Then verify the attachment info link is for "CHIP SPA"
-        Then Attach "picture.jpg" file to attachment 1
-        Then Attach "adobe.pdf" file to attachment 2
-        Then Attach "adobe.pdf" file to attachment 3
+        Then attach "picture.jpg" file to attachment 1
+        Then attach "adobe.pdf" file to attachment 2
+        Then attach "adobe.pdf" file to attachment 3
         Then Type Additonal Info Comments in new form
         Then Click on Submit Button
         Then verify submission successful message in the alert bar

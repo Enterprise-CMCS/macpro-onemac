@@ -17,43 +17,43 @@ Feature: 1915b Comprehensive Capitated Initial Waiver
 
     Scenario: Initial Waiver number format
         Then click on 1915b Comprehensive Capitated New Initial Waiver
-        Then verify Waiver Authority contains "All other 1915 b Waivers"
-        Then type initial waiver number in old format SS.####.R00.00
+        Then verify Waiver Authority contains "All other 1915(b) Waivers"
+        Then into "Initial Waiver Number" type "MD.1055.R00.00"
         Then select proposed effective date 3 months from today
-        Then Attach "excel.xlsx" file to attachment 1
-        Then Attach "excel.xlsx" file to attachment 2
-        Then verify error message is present on package dashboard New Waiver Page
+        Then attach "excel.xlsx" file to attachment 1
+        Then attach "excel.xlsx" file to attachment 2
+        Then verify the "Initial Waiver Number" error message is "The Initial Waiver Number must be in the format of SS-####.R00.00 or SS-#####.R00.00"
         Then verify the submit button is disabled
         Then clear the ID Input box
         Then type "MD-99331.R00.00" into the ID Input box
         Then verify ID error message is not present
         Then verify the submit button is not disabled
         Then clear the ID Input box
-        Then type initial waiver number in old format SS.#####.R00.00
-        Then verify error message is present on package dashboard New Waiver Page
+        Then into "Initial Waiver Number" type "MD.10555.R00.00"
+        Then verify the "Initial Waiver Number" error message is "The Initial Waiver Number must be in the format of SS-####.R00.00 or SS-#####.R00.00"
         Then verify the submit button is disabled
         Then clear the ID Input box
 
     Scenario: Verify pre-print and spreadsheet are both required
         Then click on 1915b Comprehensive Capitated New Initial Waiver
-        Then verify Waiver Authority contains "All other 1915 b Waivers"
+        Then verify Waiver Authority contains "All other 1915(b) Waivers"
         Then type "MD-99331.R00.00" into the ID Input box
         Then select proposed effective date 3 months from today
-        Then Attach "excel.xlsx" file to attachment 2
+        Then attach "excel.xlsx" file to attachment 2
         Then verify the submit button is disabled
         Then Remove file for 1915b Comprehensive Capitated Waiver Cost Effectiveness Spreadsheets
-        Then Attach "excel.xlsx" file to attachment 1
+        Then attach "excel.xlsx" file to attachment 1
         Then verify the submit button is disabled
-        Then Attach "excel.xlsx" file to attachment 2
+        Then attach "excel.xlsx" file to attachment 2
         Then verify the submit button is not disabled
 
     Scenario: create initial waiver from package dashboard and search it
         Then click on 1915b Comprehensive Capitated New Initial Waiver
-        Then verify Waiver Authority contains "All other 1915 b Waivers"
+        Then verify Waiver Authority contains "All other 1915(b) Waivers"
         Then type "MD-33463.R00.00" into the ID Input box
         Then select proposed effective date 3 months from today
-        Then Attach "excel.xlsx" file to attachment 1
-        Then Attach "excel.xlsx" file to attachment 2
+        Then attach "excel.xlsx" file to attachment 1
+        Then attach "excel.xlsx" file to attachment 2
         Then Type Additonal Info Comments in new form
         Then Click on Submit Button
         Then verify submission successful message in the alert bar

@@ -30,13 +30,13 @@ Feature: SPA Form Logic
         Then click All Other CHIP SPA Submissions
         Then type in Chip SPA ID 2
         Then select proposed effective date 3 months from today
-        Then Attach "picture.jpg" file to attachment 1
-        Then Attach "adobe.pdf" file to attachment 2
-        Then Attach "adobe.pdf" file to attachment 3
+        Then attach "picture.jpg" file to attachment 1
+        Then attach "adobe.pdf" file to attachment 2
+        Then attach "adobe.pdf" file to attachment 3
         Then verify ID error message is not present
         Then verify the submit button is not disabled
         Then clear the ID Input box
-        Then type "MD-DD-DDDD" into the ID Input box
+        Then into "SPA ID" type "MD-DD-DDDD"
         Then verify the ID error message is "The SPA ID must be in the format of SS-YY-NNNN-xxxx"
         Then verify the submit button is disabled
         Then clear the ID Input box

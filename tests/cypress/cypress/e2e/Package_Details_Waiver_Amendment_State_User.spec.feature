@@ -245,7 +245,7 @@ Scenario: Screen Enhance: 1915 b Waiver Amendment Details View - Withdraw RAI Re
         Then verify the package details page is visible
         Then verify the sub status on the card is RAI Response Withdraw Enabled
         Then click Withdraw Formal RAI Response package action
-        Then type "Automated test to withdraw the RAI Response." in additional info textarea
+        Then into "Additional Information" type "Automated test to withdraw the RAI Response."
         Then Click the Submit Button without waiting
         Then verify Yes, withdraw response button exists
         Then click Yes, withdraw response button

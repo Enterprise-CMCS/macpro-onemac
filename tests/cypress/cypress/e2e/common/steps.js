@@ -313,12 +313,32 @@ Then("clear the ID Input box", () => {
 Then("type {string} into the ID Input box", (newID) => {
   OneMacFormPage.inputID(newID);
 });
+Then("into {string} type {string}", (whereTo, newValue) => {
+  OneMacFormPage.inputInto(whereTo, newValue);
+});
+Then("clear {string} input field", (whereTo, newValue) => {
+  OneMacFormPage.clearInput(whereTo);
+});
+
 Then("verify ID error message is not present", () => {
   OneMacFormPage.verifyIDErrorMessageIsNotDisplayed();
 });
 Then("verify the ID error message is {string}", (chkErrorMessage) => {
   OneMacFormPage.verifyIDErrorMessageContains(chkErrorMessage);
 });
+//
+Then(
+  "verify the {string} error message is {string}",
+  (whichLabel, chkErrorMessage) => {
+    OneMacFormPage.verifyErrorMessageContains(whichLabel, "1", chkErrorMessage);
+  }
+);
+Then(
+  "verify the {string} error message line 2 is {string}",
+  (whichLabel, chkErrorMessage) => {
+    OneMacFormPage.verifyErrorMessageContains(whichLabel, "2", chkErrorMessage);
+  }
+);
 Then(
   "verify the ID error message has a second line with {string}",
   (chkErrorMessage) => {
@@ -484,17 +504,6 @@ Then(
     OneMacSubmitNewWaiverActionPage.remove1915BComprehensiveSpreadsheetFile();
   }
 );
-Then("type {string} in additional info textarea", (Comments) => {
-  OneMacSubmitNewWaiverActionPage.inputAdditionalInfoText(Comments);
-});
-
-Then("Type Initial Waiver Number 2 in format SS-#####.R00.00", () => {
-  cy.fixture("packageDashboardWaiverNumbers.json").then((d) => {
-    OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
-      d.newInitialWaiverNumber2
-    );
-  });
-});
 Then("search for Initial Waiver Number 1 with 12 Characters", () => {
   cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
     OneMacDashboardPage.searchFor(data.newInitialWaiverNumber1);
@@ -566,10 +575,6 @@ Then("click on Packages", () => {
   OneMacDashboardPage.clickPackageTab();
 });
 
-// When("Login with CMS Reviewer User", () => {
-//   OneMacDevLoginPage.loginAsCMSReviewer();
-// });
-
 Then(
   "verify that value of the column for the ID is NA Pending or a date",
   () => {
@@ -587,7 +592,7 @@ Then(
   }
 );
 Then(
-  "Attach {string} file to attachment {int}",
+  "attach {string} file to attachment {int}",
   (fileName, attachmentIndex) => {
     OneMacFormPage.uploadAttachment(fileName, attachmentIndex);
   }
@@ -600,14 +605,6 @@ Then("Add file for Revised Amended State Plan Language", () => {
 Then("Add file for Official RAI Response", () => {
   medicaidSPARAIResponsePage.uploadOfficialRAIResponse();
 });
-
-// When("Login with cms role approver Revoked", () => {
-//   OneMacDevLoginPage.loginAsCMSUserRevoked();
-// });
-
-// When("Login with cms role approver Denied", () => {
-//   OneMacDevLoginPage.loginAsCMSUserDenied();
-// });
 
 Then("Verify General Section Exists", () => {
   OneMacFAQPage.verifyGeneralSectionExists();
@@ -831,11 +828,8 @@ Then("Verify page title is {string}", (s) => {
 Then("Click on What is my SPA ID link", () => {
   OneMacSubmitNewMedicaidSpaPage.clickWhatIsMySPAIDLink();
 });
-Then("click on What is my Initial Waiver Number", () => {
-  OneMacSubmitNewWaiverActionPage.clickWhatIsMyInitialWaiverNumberLink();
-});
-Then("click on What is my 1915b Waiver Renewal Number", () => {
-  OneMacSubmitNewWaiverActionPage.clickWhatIsMyWaiverRenewalNumberLink();
+Then("click link labelled {string}", (linkLabel) => {
+  OneMacFormPage.clickLinkWithLabel(linkLabel);
 });
 
 Then("Home tab exists", () => {
@@ -1881,62 +1875,6 @@ Then("verify success message for denied role", () => {
 Then("select proposed effective date 3 months from today", () => {
   OneMacSubmitNewWaiverActionPage.setProposedEffectiveDateThreeMonthsAway();
 });
-Then("Type Temporary Extension Number {string}", (s) => {
-  cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
-    switch (parseInt(s)) {
-      case 1:
-        OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
-          data.newTemporaryExtensionNumber1
-        );
-        break;
-      case 2:
-        OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
-          data.newTemporaryExtensionNumber2
-        );
-        break;
-      case 3:
-        OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
-          data.newTemporaryExtensionNumber3
-        );
-        break;
-      case 4:
-        OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
-          data.newTemporaryExtensionNumber4
-        );
-        break;
-      case 5:
-        OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
-          data.newTemporaryExtensionNumber5
-        );
-        break;
-      case 6:
-        OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
-          data.newTemporaryExtensionNumber6
-        );
-        break;
-      case 7:
-        OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
-          data.newTemporaryExtensionNumber7
-        );
-        break;
-      case 8:
-        OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
-          data.newTemporaryExtensionNumber8
-        );
-        break;
-      case 9:
-        OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
-          data.newTemporaryExtensionNumber9
-        );
-        break;
-      case 10:
-        OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
-          data.newTemporaryExtensionNumber10
-        );
-        break;
-    }
-  });
-});
 Then("verify the initial waiver parent ID is prefilled in the form", () => {
   OneMacSubmitNewWaiverActionPage.verifyParentInitialIDIsPrefilled();
 });
@@ -2035,27 +1973,6 @@ Then("verify the submit button is not disabled", () => {
 Then("verify the submit button is disabled", () => {
   OneMacDefaultForms.verifySubmitBtnIsDisabled();
 });
-Then("type in valid waiver amendment number", () => {
-  OneMacSubmitNewWaiverActionPage.inputWaiverNumber("MD-12323.R01.01");
-});
-Then("type initial waiver number in old format SS.####.R00.00", () => {
-  OneMacSubmitNewWaiverActionPage.inputWaiverNumber("MD.1055.R00.00");
-});
-Then("type initial waiver number in old format SS.#####.R00.00", () => {
-  OneMacSubmitNewWaiverActionPage.inputWaiverNumber("MD.10555.R00.00");
-});
-Then(
-  "verify error message is present on package dashboard New Waiver Page",
-  () => {
-    OneMacSubmitNewWaiverActionPage.verifyErrorMessageIsDisplayed();
-  }
-);
-Then(
-  "verify parent error message is present on package dashboard New Waiver Page",
-  () => {
-    OneMacSubmitNewWaiverActionPage.verifyParentErrorMessageIsDisplayed();
-  }
-);
 Then(
   "verify What format is used to enter a 1915b and 1915c Temporary Extension number header",
   () => {
@@ -2101,59 +2018,7 @@ Then(
     OneMacRespondToRAIPage.verifyAmendmentIDIsPrefilled();
   }
 );
-Then(
-  "type new waiver renewal number {string} in 1915b Waiver Renewal Number field",
-  (s) => {
-    cy.fixture("packageDashboardWaiverNumbers.json").then((d) => {
-      switch (parseInt(s)) {
-        case 1:
-          OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
-            d.newWaiverRenewalNum1
-          );
-          break;
-        case 2:
-          OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
-            d.newWaiverRenewalNum2
-          );
-          break;
-        case 3:
-          OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
-            d.newWaiverRenewalNum3
-          );
-          break;
-      }
-    });
-  }
-);
-Then(
-  "type new waiver amendment number {string} in 1915b Waiver Amendment Number field",
-  (s) => {
-    cy.fixture("packageDashboardWaiverNumbers.json").then((d) => {
-      switch (parseInt(s)) {
-        case 1:
-          OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
-            d.newWaiverAmendmentNum1
-          );
-          break;
-        case 2:
-          OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
-            d.newWaiverAmendmentNum2
-          );
-          break;
-        case 3:
-          OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
-            d.newWaiverAmendmentNum3
-          );
-          break;
-        case 4:
-          OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
-            d.newWaiverAmendmentNum4
-          );
-          break;
-      }
-    });
-  }
-);
+
 Then("search for new waiver renewal number {string}", (s) => {
   cy.fixture("packageDashboardWaiverNumbers.json").then((d) => {
     switch (parseInt(s)) {
@@ -2166,54 +2031,6 @@ Then("search for new waiver renewal number {string}", (s) => {
     }
   });
   cy.wait(1000);
-});
-Then(
-  "type approved Initial Waiver number into Existing Waiver Number to Renew field",
-  () => {
-    cy.fixture("packageDashboardWaiverNumbers.json").then((d) => {
-      OneMacSubmitNewWaiverActionPage.inputWaiverParentNumber(
-        d.approvedInitialWaiverNum1
-      );
-    });
-  }
-);
-Then(
-  "type approved Initial Waiver number into Existing Waiver Number to Amend field",
-  () => {
-    cy.fixture("packageDashboardWaiverNumbers.json").then((d) => {
-      OneMacSubmitNewWaiverActionPage.inputWaiverParentNumber(
-        d.approvedInitialWaiverNum1
-      );
-    });
-  }
-);
-Then("clear Existing Waiver Number to Renew field", () => {
-  OneMacSubmitNewWaiverActionPage.clearWaiverParentNumber();
-  cy.wait(1500);
-});
-Then("clear Existing Waiver Number to Amend field", () => {
-  OneMacSubmitNewWaiverActionPage.clearWaiverParentNumber();
-  cy.wait(1500);
-});
-Then("clear 1915b Waiver Renewal Number field", () => {
-  OneMacSubmitNewWaiverActionPage.clearWaiverNumberInputBoxNewForms();
-  cy.wait(1500);
-});
-Then("clear 1915b Waiver Amendment Number field", () => {
-  OneMacSubmitNewWaiverActionPage.clearWaiverNumberInputBoxNewForms();
-  cy.wait(1500);
-});
-Then("type bad format into Existing Waiver Number to Renew field", () => {
-  OneMacSubmitNewWaiverActionPage.inputWaiverParentNumber("MD");
-});
-Then("type bad format into Existing Waiver Number to Amend field", () => {
-  OneMacSubmitNewWaiverActionPage.inputWaiverParentNumber("MD");
-});
-Then("type bad format into 1915b Waiver Renewal Number field", () => {
-  OneMacSubmitNewWaiverActionPage.inputWaiverNumber("MD");
-});
-Then("type bad format into 1915b Waiver Amendment Number field", () => {
-  OneMacSubmitNewWaiverActionPage.inputWaiverNumber("MD");
 });
 Then(
   "verify id number in the first row matches new waiver renewal number {string}",
@@ -2259,15 +2076,9 @@ Then("type {string} into Amendment Title field", (amendmentTitle) => {
 Then("verify id number in the first row matches {string}", (s) => {
   OneMacDashboardPage.verifyIDNumberInFirstRowIs(s);
 });
-Then("verify help text under Existing Waiver Number to Renew field", () => {
-  OneMacSubmitNewWaiverActionPage.verifyParentFieldHelpText();
+Then("verify the {string} hint text is {string}", (whichLabel, hintText) => {
+  OneMacFormPage.verifyHintTextContains(whichLabel, hintText);
 });
-Then(
-  "verify the error message for renewals includes For renewals, the “R##” starts with ‘01’ and ascends.",
-  () => {
-    OneMacSubmitNewWaiverActionPage.verifyRenewalWaiverErrorMsgPt2();
-  }
-);
 Then("verify the Temporary Extension Type is {string}", (whichType) => {
   OneMacFormPage.verifyTempExtensionType(whichType);
 });

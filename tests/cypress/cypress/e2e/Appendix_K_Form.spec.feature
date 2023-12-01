@@ -17,7 +17,7 @@ Feature: Appendix K Waiver Type Selection
         Then Click on Appendix K Amendment
         Then type "Appendix K Submission 1" into Amendment Title field
         Then type "MD-22106.R01.03" into the ID Input box
-        Then Attach "adobe.pdf" file to attachment 1
+        Then attach "adobe.pdf" file to attachment 1
         Then select proposed effective date 3 months from today
         Then verify ID error message is not present
         Then verify the submit button is not disabled
@@ -36,7 +36,7 @@ Feature: Appendix K Waiver Type Selection
         Then type "Appendix K Submission 1" into Amendment Title field
         Then type "MD-22106.R01.02" into the ID Input box
         Then select proposed effective date 3 months from today
-        Then Attach "adobe.pdf" file to attachment 1
+        Then attach "adobe.pdf" file to attachment 1
         Then Type Additonal Info Comments in new form
         Then Click on Submit Button
         Then verify submission successful message in the alert bar
