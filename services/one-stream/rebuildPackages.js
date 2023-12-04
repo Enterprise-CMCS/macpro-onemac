@@ -4,11 +4,14 @@ import { dynamoConfig } from "cmscommonlib";
 
 const dynamoDb = new AWS.DynamoDB.DocumentClient(dynamoConfig);
 
-const topicsToRebuild = [
+// rebuild all packages with SEA Tool events and TEs
+const gsipksToRebuild = [
   "SEATool#Medicaid_SPA",
   "SEATool#CHIP_SPA",
   "SEATool#1915b_waivers",
   "SEATool#1915c_waivers",
+  "OneMac#submitwaiverextensionb",
+  "OneMac#submitwaiverextensionc",
 ];
 
 const oneMacTableName = process.env.IS_OFFLINE
@@ -17,7 +20,7 @@ const oneMacTableName = process.env.IS_OFFLINE
 
 export const main = async (event) => {
   await Promise.all(
-    topicsToRebuild.map(async (oneTopic) => {
+    gsipksToRebuild.map(async (oneTopic) => {
       const processParams = {
         TableName: oneMacTableName,
         Item: {
