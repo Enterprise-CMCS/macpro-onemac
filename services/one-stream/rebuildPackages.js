@@ -10,8 +10,9 @@ const gsipksToRebuild = [
   "SEATool#CHIP_SPA",
   "SEATool#1915b_waivers",
   "SEATool#1915c_waivers",
-  "OneMac#submitwaiverextensionb",
-  "OneMac#submitwaiverextensionc",
+  "OneMAC#submitwaiverextension",
+  "OneMAC#submitwaiverextensionb",
+  "OneMAC#submitwaiverextensionc",
 ];
 
 const oneMacTableName = process.env.IS_OFFLINE
