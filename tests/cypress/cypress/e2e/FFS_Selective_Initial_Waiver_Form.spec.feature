@@ -18,8 +18,8 @@ Feature: FFS Selective Initial Waiver
     Scenario: Initial Waiver number format
         Then click on 1915b 4 FFS Selective Contracting New Initial Waiver
         Then verify Waiver Authority contains "1915(b)(4) FFS Selective Contracting waivers"
-        Then into "1915(b) Waiver Amendment Number" type "MD.1055.R00.00"
-        Then select proposed effective date 3 months from today
+        Then into "Initial Waiver Number" type "MD.1055.R00.00"
+        Then set "Proposed Effective Date of 1915(b) Initial Waiver" to 3 months from today
         Then attach "picture.jpg" file to attachment 1
         Then verify the "Initial Waiver Number" error message is "The Initial Waiver Number must be in the format of SS-####.R00.00 or SS-#####.R00.00"
         Then verify the submit button is disabled
@@ -28,7 +28,7 @@ Feature: FFS Selective Initial Waiver
         Then verify ID error message is not present
         Then verify the submit button is not disabled
         Then clear the ID Input box
-        Then into "1915(b) Waiver Amendment Number" type "MD.10555.R00.00"
+        Then into "Initial Waiver Number" type "MD.10555.R00.00"
         Then verify the "Initial Waiver Number" error message is "The Initial Waiver Number must be in the format of SS-####.R00.00 or SS-#####.R00.00"
         Then verify the submit button is disabled
         Then clear the ID Input box
@@ -37,7 +37,7 @@ Feature: FFS Selective Initial Waiver
         Then click on 1915b 4 FFS Selective Contracting New Initial Waiver
         Then verify Waiver Authority contains "1915(b)(4) FFS Selective Contracting waivers"
         Then type "MD-39263.R00.00" into the ID Input box
-        Then select proposed effective date 3 months from today
+        Then set "Proposed Effective Date of 1915(b) Initial Waiver" to 3 months from today
         Then attach "picture.jpg" file to attachment 1
         Then Type Additonal Info Comments in new form
         Then Click on Submit Button

@@ -9,7 +9,6 @@ import oneMacNewSubmissionPage from "../../../support/pages/oneMacNewSubmissionP
 import oneMacSubmitNewMedicaidSpaPage from "../../../support/pages/oneMacSubmitNewMedicaidSPAPage";
 import oneMacUserManagmentPage from "../../../support/pages/oneMacUserManagmentPage";
 import oneMacMyProfilePage from "../../../support/pages/oneMacMyProfilePage";
-import oneMacSubmitNewWaiverActionPage from "../../../support/pages/oneMacSubmitNewWaiverActionPage";
 import oneMacFAQPage from "../../../support/pages/oneMacFAQPage";
 import oneMacRequestARoleChangePage from "../../../support/pages/oneMacRequestARoleChangePage";
 import oneMacPackageDetailsPage from "../../../support/pages/oneMacPackageDetailsPage";
@@ -27,7 +26,6 @@ const OneMacNewSubmissionPage = new oneMacNewSubmissionPage();
 const OneMacSubmitNewMedicaidSpaPage = new oneMacSubmitNewMedicaidSpaPage();
 const OneMacUserManagmentPage = new oneMacUserManagmentPage();
 const OneMacMyProfilePage = new oneMacMyProfilePage();
-const OneMacSubmitNewWaiverActionPage = new oneMacSubmitNewWaiverActionPage();
 const OneMacFAQPage = new oneMacFAQPage();
 const OneMacRequestARoleChangePage = new oneMacRequestARoleChangePage();
 const OneMacPackageDetailsPage = new oneMacPackageDetailsPage();
@@ -495,13 +493,13 @@ Then("verify Waiver Authority contains {string}", (whatAuthority) => {
 Then(
   "Remove file for 1915b Comprehensive Capitated Waiver Application Pre-print",
   () => {
-    OneMacSubmitNewWaiverActionPage.remove1915BComprehensivePrePrintFile();
+    OneMacFormPage.removeFirstAttachment(1);
   }
 );
 Then(
   "Remove file for 1915b Comprehensive Capitated Waiver Cost Effectiveness Spreadsheets",
   () => {
-    OneMacSubmitNewWaiverActionPage.remove1915BComprehensiveSpreadsheetFile();
+    OneMacFormPage.removeFirstAttachment(2);
   }
 );
 Then("search for Initial Waiver Number 1 with 12 Characters", () => {
@@ -1872,14 +1870,11 @@ Then("click withdraw button", () => {
 Then("verify success message for denied role", () => {
   OneMacDashboardPage.verifySuccessMessageIsDisplayedForRoleChange();
 });
-Then("select proposed effective date 3 months from today", () => {
-  OneMacSubmitNewWaiverActionPage.setProposedEffectiveDateThreeMonthsAway();
+Then("set {string} to {int} months from today", (whichDate, numMonths) => {
+  OneMacFormPage.addMonthsTo(whichDate, numMonths);
 });
-Then("verify the initial waiver parent ID is prefilled in the form", () => {
-  OneMacSubmitNewWaiverActionPage.verifyParentInitialIDIsPrefilled();
-});
-Then("verify the renewal waiver parent ID is prefilled in the form", () => {
-  OneMacSubmitNewWaiverActionPage.verifyParentRenewalIDIsPrefilled();
+Then("verify {string} is prefilled", (whereTo) => {
+  OneMacFormPage.verifyPrefill(whereTo);
 });
 Then("verify the package ID is prefilled in the form", () => {
   OneMacRespondToRAIPage.verifyIDIsPrefilled();

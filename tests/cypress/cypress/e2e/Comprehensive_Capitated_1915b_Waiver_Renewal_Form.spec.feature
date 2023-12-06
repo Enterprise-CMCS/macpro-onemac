@@ -22,7 +22,7 @@ Feature: Waiver Renewal in Package Dashboard
         Then into "Existing Waiver Number to Renew" type "MD"
         Then into "1915(b) Waiver Renewal Number" type "MD-5533.R02.00"
         Then into "1915(b) Waiver Renewal Number" type "MD-5533.R02.00"
-        Then select proposed effective date 3 months from today
+        Then set "Proposed Effective Date of 1915(b) Waiver Renewal" to 3 months from today
         Then attach "excel.xlsx" file to attachment 1
         Then attach "excel.xlsx" file to attachment 2
         Then verify the "Existing Waiver Number to Renew" error message is "The waiver number entered does not appear to match our records. Please enter an approved initial or renewal waiver number, using a dash after the two character state abbreviation."
@@ -42,9 +42,8 @@ Feature: Waiver Renewal in Package Dashboard
         Then click on 1915b Comprehensive Capitated Renewal Waiver
         Then verify Waiver Authority contains "All other 1915(b) Waivers"
         Then into "Existing Waiver Number to Renew" type "MD-2200.R00.00"
-
         Then into "1915(b) Waiver Renewal Number" type "MD"
-        Then select proposed effective date 3 months from today
+        Then set "Proposed Effective Date of 1915(b) Waiver Renewal" to 3 months from today
         Then attach "excel.xlsx" file to attachment 1
         Then attach "excel.xlsx" file to attachment 2
         Then verify the "1915(b) Waiver Renewal Number" error message is "The 1915(b) Waiver Renewal Number must be in the format of SS-####.R##.00 or SS-#####.R##.00"
@@ -67,7 +66,7 @@ Feature: Waiver Renewal in Package Dashboard
         Then into "Existing Waiver Number to Renew" type "MD-2200.R00.00"
 
         Then into "1915(b) Waiver Renewal Number" type "MD-5533.R02.00"
-        Then select proposed effective date 3 months from today
+        Then set "Proposed Effective Date of 1915(b) Waiver Renewal" to 3 months from today
         Then attach "excel.xlsx" file to attachment 2
         Then verify the submit button is disabled
         Then Remove file for 1915b Comprehensive Capitated Waiver Cost Effectiveness Spreadsheets
@@ -80,9 +79,8 @@ Feature: Waiver Renewal in Package Dashboard
         Then click on 1915b Comprehensive Capitated Renewal Waiver
         Then verify Waiver Authority contains "All other 1915(b) Waivers"
         Then into "Existing Waiver Number to Renew" type "MD-2200.R00.00"
-
         Then into "1915(b) Waiver Renewal Number" type "MD-5533.R03.00"
-        Then select proposed effective date 3 months from today
+        Then set "Proposed Effective Date of 1915(b) Waiver Renewal" to 3 months from today
         Then attach "excel.xlsx" file to attachment 1
         Then attach "excel.xlsx" file to attachment 2
         Then Type Additonal Info Comments in new form

@@ -11,7 +11,7 @@ Feature: SPA Form Logic
         Then click on Medicaid SPA
         Then click All Other Medicaid SPA Submissions
         Then type in Medicaid SPA ID 2
-        Then select proposed effective date 3 months from today
+        Then set "Proposed Effective Date of Medicaid SPA" to 3 months from today
         Then Add "15MB.pdf" file to form 179
         Then verify error message is not present on Medicaid SPA page
         Then Add file for SPA Pages
@@ -29,7 +29,7 @@ Feature: SPA Form Logic
         Then click on CHIP SPA
         Then click All Other CHIP SPA Submissions
         Then type in Chip SPA ID 2
-        Then select proposed effective date 3 months from today
+        Then set "Proposed Effective Date of CHIP SPA" to 3 months from today
         Then attach "picture.jpg" file to attachment 1
         Then attach "adobe.pdf" file to attachment 2
         Then attach "adobe.pdf" file to attachment 3

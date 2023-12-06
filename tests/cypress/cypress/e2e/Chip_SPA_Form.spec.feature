@@ -15,13 +15,13 @@ Feature: Package Dashboard: CHIP SPA Initial Submission
         Then verify the page header is "CHIP Eligibility SPAs"
         Then verify Enter the MMDL System button is visible and clickable
 
-    Scenario: Create Medicaid SPA Initial Submission in OneMAC using the All Other CHIP SPA Submissions choice
+    Scenario: Create CHIP SPA Initial Submission in OneMAC using the All Other CHIP SPA Submissions choice
         Then verify "All Other CHIP SPA Submissions" choice goes to "/chip-spa"
         Then click on "All Other CHIP SPA Submissions" choice
         Then verify page url contains "/chip-spa"
         Then verify the page header is "Submit New CHIP SPA"
         Then type "MD-22-0283-9434" into the ID Input box
-        Then select proposed effective date 3 months from today
+        Then set "Proposed Effective Date of CHIP SPA" to 3 months from today
         Then verify the attachment info descriptiion
         Then verify the attachment info link is for "CHIP SPA"
         Then attach "picture.jpg" file to attachment 1

@@ -13,7 +13,7 @@ Feature: Validate Waiver Form is checking ID format without period
         Then click on 1915b Comprehensive Capitated New Initial Waiver
         Then verify Waiver Authority contains "All other 1915(b) Waivers"
         Then into "Initial Waiver Number" type "MD.1055.R00.00"
-        Then select proposed effective date 3 months from today
+        Then set "Proposed Effective Date of 1915(b) Initial Waiver" to 3 months from today
         Then attach "excel.xlsx" file to attachment 1
         Then attach "excel.xlsx" file to attachment 2
         Then verify the "Initial Waiver Number" error message is "The Initial Waiver Number must be in the format of SS-####.R00.00 or SS-#####.R00.00"
@@ -34,7 +34,7 @@ Feature: Validate Waiver Form is checking ID format without period
         Then into "Existing Waiver Number to Amend" type "MD-2200.R00.00"
 
         Then type "MD.123456" into the ID Input box
-        Then select proposed effective date 3 months from today
+        Then set "Proposed Effective Date of 1915(b) Waiver Amendment" to 3 months from today
         Then verify the "1915(b) Waiver Amendment Number" error message is "The 1915(b) Waiver Amendment Number must be in the format of SS-####.R##.## or SS-#####.R##.##"
         Then verify the "1915(b) Waiver Amendment Number" error message line 2 is "For amendments, the last two digits start with ‘01’ and ascends."
         Then attach "excel.xlsx" file to attachment 1

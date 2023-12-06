@@ -24,7 +24,7 @@ Feature: Create a waiver Amendment
         Then verify Waiver Authority contains "1915(b)(4) FFS Selective Contracting waivers"
         Then into "Existing Waiver Number to Amend" type "MD"
         Then into "1915(b) Waiver Amendment Number" type "MD-5533.R00.02"
-        Then select proposed effective date 3 months from today
+        Then set "Proposed Effective Date of 1915(b) Waiver Amendment" to 3 months from today
         Then attach "picture.jpg" file to attachment 1
         Then verify the "Existing Waiver Number to Amend" error message is "The waiver number entered does not appear to match our records. Please enter an approved initial or renewal waiver number, using a dash after the two character state abbreviation."
         Then verify the submit button is disabled
@@ -47,9 +47,8 @@ Feature: Create a waiver Amendment
         Then click on 1915b 4 FFS Selective Contracting Waiver Amendment
         Then verify Waiver Authority contains "1915(b)(4) FFS Selective Contracting waivers"
         Then into "Existing Waiver Number to Amend" type "MD-2200.R00.00"
-
         Then into "1915(b) Waiver Amendment Number" type "MD"
-        Then select proposed effective date 3 months from today
+        Then set "Proposed Effective Date of 1915(b) Waiver Amendment" to 3 months from today
         Then attach "picture.jpg" file to attachment 1
         Then verify the "1915(b) Waiver Amendment Number" error message is "The 1915(b) Waiver Amendment Number must be in the format of SS-####.R##.## or SS-#####.R##.##"
         Then verify the "1915(b) Waiver Amendment Number" error message line 2 is "For amendments, the last two digits start with ‘01’ and ascends."
@@ -73,9 +72,8 @@ Feature: Create a waiver Amendment
         Then click on 1915b 4 FFS Selective Contracting Waiver Amendment
         Then verify Waiver Authority contains "1915(b)(4) FFS Selective Contracting waivers"
         Then into "Existing Waiver Number to Amend" type "MD-2200.R00.00"
-
         Then into "1915(b) Waiver Amendment Number" type "MD-5533.R00.03"
-        Then select proposed effective date 3 months from today
+        Then set "Proposed Effective Date of 1915(b) Waiver Amendment" to 3 months from today
         Then attach "picture.jpg" file to attachment 1
         Then Type Additonal Info Comments in new form
         Then Click on Submit Button

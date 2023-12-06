@@ -25,7 +25,7 @@ Feature: Create a waiver Amendment
         Then verify Waiver Authority contains "All other 1915(b) Waivers"
         Then into "Existing Waiver Number to Amend" type "MD"
         Then into "1915(b) Waiver Amendment Number" type "MD-5533.R00.02"
-        Then select proposed effective date 3 months from today
+        Then set "Proposed Effective Date of 1915(b) Waiver Amendment" to 3 months from today
         Then attach "excel.xlsx" file to attachment 1
         Then attach "excel.xlsx" file to attachment 2
         Then verify the "Existing Waiver Number to Amend" error message is "The waiver number entered does not appear to match our records. Please enter an approved initial or renewal waiver number, using a dash after the two character state abbreviation."
@@ -51,7 +51,7 @@ Feature: Create a waiver Amendment
         Then into "Existing Waiver Number to Amend" type "MD-2200.R00.00"
 
         Then into "1915(b) Waiver Amendment Number" type "MD"
-        Then select proposed effective date 3 months from today
+        Then set "Proposed Effective Date of 1915(b) Waiver Amendment" to 3 months from today
         Then attach "excel.xlsx" file to attachment 1
         Then attach "excel.xlsx" file to attachment 2
         Then verify the "1915(b) Waiver Amendment Number" error message is "The 1915(b) Waiver Amendment Number must be in the format of SS-####.R##.## or SS-#####.R##.##"
@@ -78,7 +78,7 @@ Feature: Create a waiver Amendment
         Then into "Existing Waiver Number to Amend" type "MD-2200.R00.00"
 
         Then into "1915(b) Waiver Amendment Number" type "MD-5533.R00.02"
-        Then select proposed effective date 3 months from today
+        Then set "Proposed Effective Date of 1915(b) Waiver Amendment" to 3 months from today
         Then attach "excel.xlsx" file to attachment 2
         Then verify the submit button is disabled
         Then Remove file for 1915b Comprehensive Capitated Waiver Cost Effectiveness Spreadsheets
@@ -97,7 +97,7 @@ Feature: Create a waiver Amendment
         Then into "Existing Waiver Number to Amend" type "MD-2200.R00.00"
 
         Then into "1915(b) Waiver Amendment Number" type "MD-5533.R00.01"
-        Then select proposed effective date 3 months from today
+        Then set "Proposed Effective Date of 1915(b) Waiver Amendment" to 3 months from today
         Then attach "excel.xlsx" file to attachment 1
         Then attach "excel.xlsx" file to attachment 2
         Then Type Additonal Info Comments in new form
@@ -116,7 +116,7 @@ Feature: Create a waiver Amendment
     #     Then click Add Amendment package action
     #     Then verify Waiver Authority contains "All other 1915(b) Waivers"
     #     Then type new waiver amendment number 5 in 1915b Waiver Amendment Number field
-    #     Then select proposed effective date 3 months from today
+    #     Then set "Proposed Effective Date of 1915(b) Waiver Amendment" to 3 months from today
     #     Then attach "excel.xlsx" file to attachment 1
     #     Then attach "excel.xlsx" file to attachment 2
     #     Then Type Additonal Info Comments in new form
@@ -130,7 +130,7 @@ Feature: Create a waiver Amendment
     #     Then verify the Add Amendment button is displayed
     #     Then verify Waiver Authority contains "All other 1915(b) Waivers"
     #     Then type new waiver amendment number 6 in 1915b Waiver Amendment Number field
-    #     Then select proposed effective date 3 months from today
+    #     Then set "Proposed Effective Date of 1915(b) Waiver Amendment" to 3 months from today
     #     Then attach "excel.xlsx" file to attachment 1
     #     Then attach "excel.xlsx" file to attachment 2
     #     Then Type Additonal Info Comments in new form

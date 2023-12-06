@@ -54,6 +54,25 @@ const hintTextFromLabel = {
   "Existing Waiver Number to Renew": "#parent-fieldHint0",
   "Existing Waiver Number to Amend": "#parent-fieldHint0",
 };
+const dateElementsFromLabel = {
+  "Proposed Effective Date of Medicaid SPA": "#proposed-effective-date",
+  "Proposed Effective Date of CHIP SPA": "#proposed-effective-date",
+  "Proposed Effective Date of 1915(b) Initial Waiver":
+    "#proposed-effective-date",
+  "Proposed Effective Date of 1915(b) Waiver Renewal":
+    "#proposed-effective-date",
+  "Proposed Effective Date of 1915(b) Waiver Amendment":
+    "#proposed-effective-date",
+  "Proposed Effective Date of 1915(c) Appendix K Amendment":
+    "#proposed-effective-date",
+};
+
+//internal function for proposed effective date
+function caculateMonthsInFuture(numMonths) {
+  var t = new Date();
+  t.setMonth(t.getMonth() + Number(numMonths));
+  return `${t.toISOString().slice(0, 10)}`;
+}
 
 export class oneMacFormPage {
   clearInput(whereTo) {
@@ -61,6 +80,11 @@ export class oneMacFormPage {
   }
   inputInto(whereTo, newValue) {
     cy.get(elementFromLabel[whereTo]).type(newValue);
+  }
+  verifyPrefill(whereTo) {
+    cy.xpath(`//h3[text()='${whereTo}']`)
+      .next("div")
+      .contains(/^(?!\s*$).+/);
   }
   verifyErrorMessageContains(whichLabel, whichLine, errorMessage) {
     const errorMessageElement =
@@ -124,6 +148,11 @@ export class oneMacFormPage {
   verifyWaiverAuthorityContains(whatAuthority) {
     cy.xpath(waiverAuthorityLabel).next("div").contains(whatAuthority);
   }
+  addMonthsTo(whichDate, numMonths) {
+    cy.get(dateElementsFromLabel[whichDate]).type(
+      caculateMonthsInFuture(numMonths)
+    );
+  }
   selectWaiverAuthority(whichAuthority) {}
   verifyTempExtensionType(whatType) {
     cy.xpath(tempExtensionTypeHeader).next("div").contains(whatType);
@@ -138,6 +167,11 @@ export class oneMacFormPage {
 
     cy.xpath(addFileBTN).click();
     cy.get(innerBTN).attachFile(filePath);
+  }
+  removeFirstAttachment(attachmentIndex) {
+    const closeBTNXPath = `//*[@id="main"]/div[2]/div[2]/form/div[3]/div/table/tbody/tr[${attachmentIndex}]/td[3]/div[1]/button`;
+
+    cy.xpath(closeBTNXPath).click();
   }
   clicksubmitBTN() {
     cy.get(submitBTN).click();

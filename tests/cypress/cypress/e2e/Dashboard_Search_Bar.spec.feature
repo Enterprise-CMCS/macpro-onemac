@@ -41,7 +41,7 @@ Feature: OY2-11149 Submission Dashboard - Search bar
         Then click on 1915b 4 FFS Selective Contracting New Initial Waiver
         Then verify Waiver Authority contains "1915(b)(4) FFS Selective Contracting waivers"
         Then type "MD-39253.R00.00" into the ID Input box
-        Then select proposed effective date 3 months from today
+        Then set "Proposed Effective Date of 1915(b) Initial Waiver" to 3 months from today
         Then attach "picture.jpg" file to attachment 1
         Then Type Additonal Info Comments in new form
         Then Click on Submit Button

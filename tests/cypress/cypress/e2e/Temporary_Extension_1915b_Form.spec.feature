@@ -40,7 +40,7 @@ Feature: Package Dashboard Temporary Extension
         Then verify Request a Temporary Extension package action exists
         Then click Request a Temporary Extension package action
         Then verify the Temporary Extension Type is "1915(b)"
-        Then verify the initial waiver parent ID is prefilled in the form
+        Then verify "Approved Initial or Renewal Waiver Number" is prefilled
         Then into "Temporary Extension Request Number" type "MD-5533.R00.TE02"
         Then attach "picture.jpg" file to attachment 1
         Then Type Additonal Info Comments in new form
@@ -61,7 +61,7 @@ Feature: Package Dashboard Temporary Extension
         Then verify Request a Temporary Extension package action exists
         Then click Request a Temporary Extension package action
         Then verify the Temporary Extension Type is "1915(b)"
-        Then verify the renewal waiver parent ID is prefilled in the form
+        Then verify "Approved Initial or Renewal Waiver Number" is prefilled
         Then into "Temporary Extension Request Number" type "MD-5533.R00.TE03"
         Then attach "picture.jpg" file to attachment 1
         Then Type Additonal Info Comments in new form
@@ -82,7 +82,7 @@ Feature: Package Dashboard Temporary Extension
         Then verify the Request Temporary Extension button is displayed
         Then click the Request Temporary Extension button
         Then verify the Temporary Extension Type is "1915(b)"
-        Then verify the initial waiver parent ID is prefilled in the form
+        Then verify "Approved Initial or Renewal Waiver Number" is prefilled
         Then into "Temporary Extension Request Number" type "MD-5533.R00.TE04"
         Then attach "picture.jpg" file to attachment 1
         Then Type Additonal Info Comments in new form
@@ -103,7 +103,7 @@ Feature: Package Dashboard Temporary Extension
         Then verify the Request Temporary Extension button is displayed
         Then click the Request Temporary Extension button
         Then verify the Temporary Extension Type is "1915(b)"
-        Then verify the renewal waiver parent ID is prefilled in the form
+        Then verify "Approved Initial or Renewal Waiver Number" is prefilled
         Then into "Temporary Extension Request Number" type "MD-5533.R00.TE05"
         Then attach "picture.jpg" file to attachment 1
         Then Type Additonal Info Comments in new form
