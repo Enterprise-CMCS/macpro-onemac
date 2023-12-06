@@ -29,7 +29,6 @@ Feature: Waiver Renewal in Package Dashboard
         Then verify the submit button is disabled
         Then clear "Existing Waiver Number to Renew" input field
         Then into "Existing Waiver Number to Renew" type "MD-2200.R00.00"
-
         Then verify Parent ID error message is not present
         Then verify the submit button is not disabled
         Then clear "Existing Waiver Number to Renew" input field
@@ -64,7 +63,6 @@ Feature: Waiver Renewal in Package Dashboard
         Then click on 1915b Comprehensive Capitated Renewal Waiver
         Then verify Waiver Authority contains "All other 1915(b) Waivers"
         Then into "Existing Waiver Number to Renew" type "MD-2200.R00.00"
-
         Then into "1915(b) Waiver Renewal Number" type "MD-5533.R02.00"
         Then set "Proposed Effective Date of 1915(b) Waiver Renewal" to 3 months from today
         Then attach "excel.xlsx" file to attachment 2

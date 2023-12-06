@@ -30,7 +30,6 @@ Feature: Create a waiver Amendment
         Then verify the submit button is disabled
         Then clear "Existing Waiver Number to Amend" input field
         Then into "Existing Waiver Number to Amend" type "MD-2200.R00.00"
-
         Then verify Parent ID error message is not present
         Then verify the submit button is not disabled
         Then clear "Existing Waiver Number to Amend" input field

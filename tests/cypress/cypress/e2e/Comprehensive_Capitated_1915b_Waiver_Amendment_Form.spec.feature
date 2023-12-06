@@ -32,11 +32,10 @@ Feature: Create a waiver Amendment
         Then verify the submit button is disabled
         Then clear "Existing Waiver Number to Amend" input field
         Then into "Existing Waiver Number to Amend" type "MD-2200.R00.00"
-
         Then verify Parent ID error message is not present
         Then verify the submit button is not disabled
         Then clear "Existing Waiver Number to Amend" input field
-        Then into "Existing Waiver Number to Amend" type "MD"
+        Then into "Existing Waiver Number to Amend" type "MD-11"
         Then verify the "Existing Waiver Number to Amend" error message is "The waiver number entered does not appear to match our records. Please enter an approved initial or renewal waiver number, using a dash after the two character state abbreviation."
         Then verify the submit button is disabled
         Then clear "Existing Waiver Number to Amend" input field
@@ -76,15 +75,11 @@ Feature: Create a waiver Amendment
         Then click on 1915b Comprehensive Capitated Waiver Amendment
         Then verify Waiver Authority contains "All other 1915(b) Waivers"
         Then into "Existing Waiver Number to Amend" type "MD-2200.R00.00"
-
         Then into "1915(b) Waiver Amendment Number" type "MD-5533.R00.02"
         Then set "Proposed Effective Date of 1915(b) Waiver Amendment" to 3 months from today
         Then attach "excel.xlsx" file to attachment 2
         Then verify the submit button is disabled
-        #Then Remove file for 1915b Comprehensive Capitated Waiver Cost Effectiveness Spreadsheets
         Then attach "excel.xlsx" file to attachment 1
-        Then verify the submit button is disabled
-        Then attach "excel.xlsx" file to attachment 2
         Then verify the submit button is not disabled
 
     Scenario: create waiver amendment from package dashboard and search it
@@ -95,7 +90,6 @@ Feature: Create a waiver Amendment
         Then click on 1915b Comprehensive Capitated Waiver Amendment
         Then verify Waiver Authority contains "All other 1915(b) Waivers"
         Then into "Existing Waiver Number to Amend" type "MD-2200.R00.00"
-
         Then into "1915(b) Waiver Amendment Number" type "MD-5533.R00.01"
         Then set "Proposed Effective Date of 1915(b) Waiver Amendment" to 3 months from today
         Then attach "excel.xlsx" file to attachment 1
