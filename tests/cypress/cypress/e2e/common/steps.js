@@ -878,11 +878,11 @@ Then("Login with IDM Info Exists", () => {
   OneMacHomePage.verifyloginWithIDMInfoExists();
 });
 
-Then("Attach your documents Exists", () => {
+Then("attach your documents Exists", () => {
   OneMacHomePage.verifyAttachYourDocumentsExists();
 });
 
-Then("Attach your documents info Exists", () => {
+Then("attach your documents info Exists", () => {
   OneMacHomePage.verifyAttachYourDocumentsInfoExists();
 });
 

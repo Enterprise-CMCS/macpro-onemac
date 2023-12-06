@@ -81,7 +81,7 @@ Feature: Create a waiver Amendment
         Then set "Proposed Effective Date of 1915(b) Waiver Amendment" to 3 months from today
         Then attach "excel.xlsx" file to attachment 2
         Then verify the submit button is disabled
-        Then Remove file for 1915b Comprehensive Capitated Waiver Cost Effectiveness Spreadsheets
+        #Then Remove file for 1915b Comprehensive Capitated Waiver Cost Effectiveness Spreadsheets
         Then attach "excel.xlsx" file to attachment 1
         Then verify the submit button is disabled
         Then attach "excel.xlsx" file to attachment 2

@@ -109,7 +109,7 @@ Feature: OY2_Update_Text_on_FAQ_Page
         Then click on 1915b Waiver Actions
         Then click on 1915b Comprehensive Capitated Waiver Authority
         Then click on 1915b Comprehensive Capitated Renewal Waiver
-        Then click link labelled "What is my 1915b Waiver Renewal Number?"
+        Then click link labelled "What is my 1915(b) Waiver Renewal Number?"
         Then verify What format is used to enter a 1915b Waiver Renewal number header is visible
 
     Scenario: Verify the Guides exist in the FAQ
