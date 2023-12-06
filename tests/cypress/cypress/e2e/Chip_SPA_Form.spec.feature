@@ -27,7 +27,7 @@ Feature: Package Dashboard: CHIP SPA Initial Submission
         Then attach "picture.jpg" file to attachment 1
         Then attach "adobe.pdf" file to attachment 2
         Then attach "adobe.pdf" file to attachment 3
-        Then Type Additonal Info Comments in new form
+        Then into "Additional Information" type "This is just a test."
         Then Click on Submit Button
         Then verify submission successful message in the alert bar
         Then verify the SPAs tab is selected

@@ -86,6 +86,10 @@ export class oneMacFormPage {
       .next("div")
       .contains(/^(?!\s*$).+/);
   }
+  verifyErrorMessagesAreNotThere(whichLabel) {
+    cy.get(errorMessageLine1FromLabel[whichLabel]).should("not.exist");
+    cy.get(errorMessageLine2FromLabel[whichLabel]).should("not.exist");
+  }
   verifyErrorMessageContains(whichLabel, whichLine, errorMessage) {
     const errorMessageElement =
       whichLine === "2"
@@ -248,7 +252,7 @@ export class oneMacFormPage {
     }
   }
 
-  verifyMmdlSystenBtn() {
+  verifyMmdlSystemBtn() {
     cy.xpath(enterMmdlBtn).should("be.visible");
     cy.xpath(enterMmdlBtn)
       .parent("a")
@@ -257,6 +261,19 @@ export class oneMacFormPage {
         "href",
         "https://wms-mmdl.cms.gov/MMDL/faces/portal.jsp"
       );
+  }
+  verifyMacProSystemBtn() {
+    cy.xpath(enterMacProBtn).should("be.visible");
+    cy.xpath(enterMacProBtn)
+      .parent("a")
+      .should(
+        "have.attr",
+        "href",
+        "https://www.medicaid.gov/resources-for-states/medicaid-and-chip-program-macpro-portal/index.html#MACPro"
+      );
+  }
+  clickButtonLabelled(buttonLabel) {
+    cy.xpath(`//button[contains(text(),'${buttonLabel}')]`).click();
   }
 }
 export default oneMacFormPage;

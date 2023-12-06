@@ -81,7 +81,7 @@ Feature: Waiver Renewal in Package Dashboard
         Then set "Proposed Effective Date of 1915(b) Waiver Renewal" to 3 months from today
         Then attach "excel.xlsx" file to attachment 1
         Then attach "excel.xlsx" file to attachment 2
-        Then Type Additonal Info Comments in new form
+        Then into "Additional Information" type "This is just a test."
         Then Click on Submit Button
         Then verify submission successful message in the alert bar
         Then verify the Waivers tab is selected

@@ -74,7 +74,7 @@ Feature: Create a waiver Amendment
         Then into "1915(b) Waiver Amendment Number" type "MD-5533.R00.03"
         Then set "Proposed Effective Date of 1915(b) Waiver Amendment" to 3 months from today
         Then attach "picture.jpg" file to attachment 1
-        Then Type Additonal Info Comments in new form
+        Then into "Additional Information" type "This is just a test."
         Then Click on Submit Button
         Then verify submission successful message in the alert bar
         Then verify the Waivers tab is selected

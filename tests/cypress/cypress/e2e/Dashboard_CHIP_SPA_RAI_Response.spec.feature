@@ -38,7 +38,7 @@ Feature: RAI Response for CHIP SPA package view
         Then verify the form is titled Formal Request for Additional Information Response
         Then Add file for Revised Amended State Plan Language
         Then Add file for Official RAI Response
-        Then Type Additonal Info Comments in new form
+        Then into "Additional Information" type "This is just a test."
         Then Click the Submit Button without waiting
         Then verify the modal pop-up is visible
         Then verify the title of the modal pop-up is Do you want to submit your official formal RAI response

@@ -43,7 +43,7 @@ Feature: Package Dashboard Temporary Extension
         Then verify "Approved Initial or Renewal Waiver Number" is prefilled
         Then into "Temporary Extension Request Number" type "MD-5533.R00.TE02"
         Then attach "picture.jpg" file to attachment 1
-        Then Type Additonal Info Comments in new form
+        Then into "Additional Information" type "This is just a test."
         Then Click on Submit Button
         Then verify submission successful message in the alert bar
 
@@ -64,7 +64,7 @@ Feature: Package Dashboard Temporary Extension
         Then verify "Approved Initial or Renewal Waiver Number" is prefilled
         Then into "Temporary Extension Request Number" type "MD-5533.R00.TE03"
         Then attach "picture.jpg" file to attachment 1
-        Then Type Additonal Info Comments in new form
+        Then into "Additional Information" type "This is just a test."
         Then Click on Submit Button
         Then verify submission successful message in the alert bar
 
@@ -85,7 +85,7 @@ Feature: Package Dashboard Temporary Extension
         Then verify "Approved Initial or Renewal Waiver Number" is prefilled
         Then into "Temporary Extension Request Number" type "MD-5533.R00.TE04"
         Then attach "picture.jpg" file to attachment 1
-        Then Type Additonal Info Comments in new form
+        Then into "Additional Information" type "This is just a test."
         Then Click on Submit Button
         Then verify submission successful message in the alert bar
 
@@ -106,6 +106,6 @@ Feature: Package Dashboard Temporary Extension
         Then verify "Approved Initial or Renewal Waiver Number" is prefilled
         Then into "Temporary Extension Request Number" type "MD-5533.R00.TE05"
         Then attach "picture.jpg" file to attachment 1
-        Then Type Additonal Info Comments in new form
+        Then into "Additional Information" type "This is just a test."
         Then Click on Submit Button
         Then verify submission successful message in the alert bar

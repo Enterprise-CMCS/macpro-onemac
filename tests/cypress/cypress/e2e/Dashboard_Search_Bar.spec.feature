@@ -43,7 +43,7 @@ Feature: OY2-11149 Submission Dashboard - Search bar
         Then type "MD-39253.R00.00" into the ID Input box
         Then set "Proposed Effective Date of 1915(b) Initial Waiver" to 3 months from today
         Then attach "picture.jpg" file to attachment 1
-        Then Type Additonal Info Comments in new form
+        Then into "Additional Information" type "This is just a test."
         Then Click on Submit Button
         Then verify submission successful message in the alert bar
         Then search for Initial Waiver Number 2 with 12 Characters

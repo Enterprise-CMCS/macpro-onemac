@@ -6,7 +6,6 @@ import oneMacHomePage from "../../../support/pages/oneMacHomePage";
 import oneMacFormPage from "../../../support/pages/oneMacFormPage";
 import oneMacSubmissionTypePage from "../../../support/pages/oneMacSubmissionTypePage";
 import oneMacNewSubmissionPage from "../../../support/pages/oneMacNewSubmissionPage";
-import oneMacSubmitNewMedicaidSpaPage from "../../../support/pages/oneMacSubmitNewMedicaidSPAPage";
 import oneMacUserManagmentPage from "../../../support/pages/oneMacUserManagmentPage";
 import oneMacMyProfilePage from "../../../support/pages/oneMacMyProfilePage";
 import oneMacFAQPage from "../../../support/pages/oneMacFAQPage";
@@ -23,7 +22,6 @@ const OneMacHomePage = new oneMacHomePage();
 const OneMacFormPage = new oneMacFormPage();
 const OneMacSubmissionTypePage = new oneMacSubmissionTypePage();
 const OneMacNewSubmissionPage = new oneMacNewSubmissionPage();
-const OneMacSubmitNewMedicaidSpaPage = new oneMacSubmitNewMedicaidSpaPage();
 const OneMacUserManagmentPage = new oneMacUserManagmentPage();
 const OneMacMyProfilePage = new oneMacMyProfilePage();
 const OneMacFAQPage = new oneMacFAQPage();
@@ -68,44 +66,6 @@ Then("Click on State Plan Amendment SPA", () => {
 });
 Then("click on Medicaid SPA", () => {
   OneMacSubmissionTypePage.clickMedicaidSPA();
-});
-Then("type in Medicaid SPA ID", () => {
-  cy.fixture("packageDashboardSPAIDs.json").then((d) => {
-    OneMacSubmitNewMedicaidSpaPage.inputSpaID(d.newMedicaidSPAID1);
-  });
-});
-Then("type in Medicaid SPA ID 2", () => {
-  cy.fixture("packageDashboardSPAIDs.json").then((d) => {
-    OneMacSubmitNewMedicaidSpaPage.inputSpaID(d.newMedicaidSPAID2);
-  });
-});
-Then("type in Chip SPA ID", () => {
-  cy.fixture("packageDashboardSPAIDs.json").then((d) => {
-    OneMacSubmitNewMedicaidSpaPage.inputSpaID(d.newChipSPAID1);
-  });
-});
-Then("type in Chip SPA ID 2", () => {
-  cy.fixture("packageDashboardSPAIDs.json").then((d) => {
-    OneMacSubmitNewMedicaidSpaPage.inputSpaID(d.newChipSPAID2);
-  });
-});
-Then("Add file for CMS Form 179", () => {
-  OneMacSubmitNewMedicaidSpaPage.uploadCMSForm179AddFile();
-});
-//OY2-5869
-Then("Add {string} file to form 179", (fileName) => {
-  OneMacSubmitNewMedicaidSpaPage.addFileForForm179(fileName);
-});
-
-//End OY2-5869
-Then("Add file for SPA Pages", () => {
-  OneMacSubmitNewMedicaidSpaPage.uploadSPAPagesAddFile();
-});
-
-Then("Type Additonal Info Comments in new form", () => {
-  OneMacSubmitNewMedicaidSpaPage.additionalInfoTypeComment(
-    "This is just a test"
-  );
 });
 Then("Click on Submit Button", () => {
   OneMacDefaultForms.clicksubmitBTN();
@@ -154,10 +114,10 @@ Then("click modal cancel button", () => {
   OneMacDefaultForms.clickModalCancelBtn();
 });
 Then("click Leave Anyway form button", () => {
-  OneMacSubmitNewMedicaidSpaPage.clickLeaveAnywayBtn();
+  OneMacFormPage.clickButtonLabelled("Leave Anyway");
 });
 Then("click Stay on Page", () => {
-  OneMacSubmitNewMedicaidSpaPage.clickStayOnPageBtn();
+  OneMacFormPage.clickButtonLabelled("Stay on Page");
 });
 Then("verify the success message is {string}", (s) => {
   OneMacDashboardPage.verifySuccessMessageIs(s);
@@ -285,22 +245,9 @@ Then("verify New Submission BTN is Displayed", () => {
 });
 
 //this is for OY2_3900
-Then("verify error message is not present on Medicaid SPA page", () => {
-  OneMacSubmitNewMedicaidSpaPage.verifySPAIDErrorMessageIsNotDisplayed();
+Then("verify {string} has no error messages", (whichLabel) => {
+  OneMacFormPage.verifyErrorMessagesAreNotThere(whichLabel);
 });
-
-Then("clear SPA ID in Medicaid SPA Input box", () => {
-  OneMacSubmitNewMedicaidSpaPage.clearSPAIDInputBox();
-});
-
-Then("type in invalid SPA ID on Medicaid SPA page", () => {
-  OneMacSubmitNewMedicaidSpaPage.typeIncorrectSPAIDAndFormat();
-});
-
-Then("verify that error message for incorrect SPA ID is Displayed", () => {
-  OneMacSubmitNewMedicaidSpaPage.verifySPAIDErrorMessageIsDisplayed();
-});
-
 Then("click on CHIP SPA", () => {
   OneMacSubmissionTypePage.clickChipSPA();
 });
@@ -822,9 +769,6 @@ Then("verify actual Contact Email address Exists", () => {
 });
 Then("Verify page title is {string}", (s) => {
   OneMacFAQPage.VerifyPageTitleIs(s);
-});
-Then("Click on What is my SPA ID link", () => {
-  OneMacSubmitNewMedicaidSpaPage.clickWhatIsMySPAIDLink();
 });
 Then("click link labelled {string}", (linkLabel) => {
   OneMacFormPage.clickLinkWithLabel(linkLabel);
@@ -1741,29 +1685,14 @@ Then("verify user is on new Appendix K page", () => {
 Then("verify user is on new waiver amendment page", () => {
   OneMacSubmissionTypePage.verifyNewWaiverAmendmentPage();
 });
-Then("verify user is on new Medicaid SPA page", () => {
-  OneMacSubmitNewMedicaidSpaPage.verifyNewMedicaidSPAPage();
-});
-Then(
-  "verify user is on Medicaid Eligibility, Enrollment, Administration, and Health Homes page",
-  () => {
-    OneMacSubmitNewMedicaidSpaPage.verifyMedicaidEligibilityPage();
-  }
-);
-Then(
-  "verify user is on Medicaid Alternative Benefits Plans ABP, and Medicaid Premiums and Cost Sharing page",
-  () => {
-    OneMacSubmitNewMedicaidSpaPage.verifyMedicaidAlternativePage();
-  }
-);
 Then("verify the page header is {string}", (pageHeader) => {
   OneMacFormPage.verifyPageHeader(pageHeader);
 });
 Then("verify Enter the MMDL System button is visible and clickable", () => {
-  OneMacFormPage.verifyMmdlSystenBtn();
+  OneMacFormPage.verifyMmdlSystemBtn();
 });
 Then("verify Enter the MACPro system button is visible and clickable", () => {
-  OneMacSubmitNewMedicaidSpaPage.verifyMacProSystenBtn();
+  OneMacFormPage.verifyMacProSystemBtn();
 });
 Then("verify RAI Responses header exists", () => {
   OneMacPackageDetailsPage.verifyRaiResponseHeaderExists();
