@@ -311,8 +311,10 @@ export const buildAnyPackage = async (packageId, config) => {
     // then set sub status to "Withdraw RAI Enabled"
     // and freeze status to pending
     if (
-      putParams.Item?.reverseChrono[0].currentStatus ===
-      ONEMAC_STATUS.WITHDRAW_RAI_ENABLED
+      Array.isArray(putParams.Item?.reverseChrono) &&
+      putParams.Item.reverseChrono.length > 0 &&
+      putParams.Item.reverseChrono[0].currentStatus ===
+        ONEMAC_STATUS.WITHDRAW_RAI_ENABLED
     ) {
       putParams.Item.currentStatus = ONEMAC_STATUS.PENDING;
       putParams.Item.subStatus = ONEMAC_STATUS.WITHDRAW_RAI_ENABLED;
