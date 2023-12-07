@@ -22,12 +22,12 @@ Feature: RAI Response for Initial Waiver - Package View
         Then verify "Waiver Number" is prefilled
         Then verify the attachment info descriptiion
         Then verify the attachment info link is for "Waiver RAI"
-        Then attach "adobe.jpg" file to attachment 1
+        Then attach "adobe.pdf" file to attachment 1
         Then verify the submit button is enabled 
 
     Scenario: validate response to RAI from package details page
         Then click the Waiver Number link in the first row
         Then click on Respond to RAI package action
         Then verify "Waiver Number" is prefilled
-        Then attach "adobe.jpg" file to attachment 1
+        Then attach "adobe.pdf" file to attachment 1
         Then verify the submit button is enabled 

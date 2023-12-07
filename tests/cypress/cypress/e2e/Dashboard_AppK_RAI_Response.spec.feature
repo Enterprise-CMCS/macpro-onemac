@@ -18,7 +18,7 @@ Feature: RAI Response for Appendix K Amendment - Package View
         Then click the actions button in row one
         Then click the Respond to RAI button
         Then verify the Appendix K Amendment in RAI Issued status is pre-populated and uneditable
-        Then attach "adobe.jpg" file to attachment 1
+        Then attach "adobe.pdf" file to attachment 1
         Then Click the Submit Button without waiting
         Then verify the modal pop-up is visible
         Then verify the title of the modal pop-up is Do you want to submit your official formal RAI response
@@ -30,7 +30,7 @@ Feature: RAI Response for Appendix K Amendment - Package View
         Then click the Waiver Number link in the first row
         Then click on Respond to RAI package action
         Then verify the Appendix K Amendment in RAI Issued status is pre-populated and uneditable
-        Then attach "adobe.jpg" file to attachment 1
+        Then attach "adobe.pdf" file to attachment 1
         Then Click the Submit Button without waiting
         Then verify the modal pop-up is visible
         Then verify the title of the modal pop-up is Do you want to submit your official formal RAI response

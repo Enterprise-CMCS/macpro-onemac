@@ -57,7 +57,7 @@ Feature: Verify user can withdraw a package in Under Review Status in the packag
         Then verify the submit button is disabled
         Then into "Additional Information" type "Withdrawal test."
         Then verify the submit button is not disabled
-        Then         attach "adobe.jpg" file to attachment 1
+        Then         attach "adobe.pdf" file to attachment 1
 
         Then verify the submit button is not disabled
         Then clear "Additional Informaiton" input field

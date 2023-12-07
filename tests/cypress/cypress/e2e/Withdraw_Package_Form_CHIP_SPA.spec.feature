@@ -50,7 +50,7 @@ Feature: Verify user can withdraw a package in Under Review Status in the packag
         Then click withdraw package button
         Then into "Additional Information" type "Withdrawal test."
         Then verify the submit button is disabled
-        Then         attach "adobe.jpg" file to attachment 1
+        Then         attach "adobe.pdf" file to attachment 1
 
         Then verify the submit button is not disabled
         Then clear "Additional Informaiton" input field
@@ -60,7 +60,7 @@ Feature: Verify user can withdraw a package in Under Review Status in the packag
         Then click modal cancel button
 
     # Scenario: Demonstrate withdraw package for CHIP SPA in Under Review Status
-    #     Then         attach "adobe.jpg" file to attachment 1
+    #     Then         attach "adobe.pdf" file to attachment 1
 
     #     Then verify the submit button is not disabled
     #     Then Click the Submit Button without waiting
