@@ -124,6 +124,9 @@ export class oneMacFormPage {
   verifyPageHeader(inPageHeader) {
     cy.get("h1").contains(inPageHeader);
   }
+  verifyFormTitle(inFormTitle) {
+    cy.get("h2").contains(inFormTitle);
+  }
   inputAmendmentTitle(s) {
     cy.get(amendmentTitleField).type(s);
   }

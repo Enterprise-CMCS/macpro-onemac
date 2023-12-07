@@ -1660,6 +1660,9 @@ Then("verify user is on new waiver amendment page", () => {
 Then("verify the page header is {string}", (pageHeader) => {
   OneMacFormPage.verifyPageHeader(pageHeader);
 });
+Then("verify the form title is {string}", (pageHeader) => {
+  OneMacFormPage.verifyFormTitle(pageHeader);
+});
 Then("verify Enter the MMDL System button is visible and clickable", () => {
   OneMacFormPage.verifyMmdlSystemBtn();
 });

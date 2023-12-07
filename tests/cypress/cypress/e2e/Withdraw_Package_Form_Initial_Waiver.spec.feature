@@ -16,7 +16,7 @@ Feature: Verify user can withdraw a package in Under Review Status in the packag
     Scenario: Screen Enhance - Validate Initial Waiver Withdrawal Page from dashboard
         Then click the actions button in row one
         Then click withdraw package button
-        Then verify the page header is "Withdraw Waiver"
+        Then verify the form title is "Withdraw Waiver"
         Then verify Form Intro Text is "Complete this action to withdraw this 1915(b) Initial Waiver package. Once completed, you will not be able to resubmit the 1915(b) Initial Waiver package or undo this action."
         Then verify ID Label is "Initial Waiver Number"
         Then verify Type is "1915(b) Initial Waiver"
@@ -36,7 +36,7 @@ Feature: Verify user can withdraw a package in Under Review Status in the packag
         Then click the Waiver Number link in the first row
         Then verify the package details page is visible
         Then click withdraw button
-        Then verify the page header is "Withdraw Waiver"
+        Then verify the form title is "Withdraw Waiver"
         Then verify Form Intro Text is "Complete this action to withdraw this 1915(b) Initial Waiver package. Once completed, you will not be able to resubmit the 1915(b) Initial Waiver package or undo this action."
         Then verify ID Label is "Initial Waiver Number"
         Then verify Type is "1915(b) Initial Waiver"

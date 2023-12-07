@@ -15,7 +15,7 @@ Feature: Verify user can withdraw a package in Under Review Status in the packag
     Scenario: Screen Enhance - Validate CHIP Withdrawal Page from the dashboard
         Then click the actions button in row one
         Then click withdraw package button
-        Then verify the page header is "Withdraw CHIP SPA Package"
+        Then verify the form title is "Withdraw CHIP SPA Package"
         Then verify Form Intro Text is "Complete this action to withdraw this CHIP SPA package. Once completed, you will not be able to resubmit the CHIP SPA package or undo this action."
         Then verify ID Label is "SPA ID"
         Then verify Type is "CHIP SPA"
@@ -32,7 +32,7 @@ Feature: Verify user can withdraw a package in Under Review Status in the packag
         Then click the SPA ID link in the first row
         Then verify the package details page is visible
         Then click withdraw button
-        Then verify the page header is "Withdraw CHIP SPA Package"
+        Then verify the form title is "Withdraw CHIP SPA Package"
         Then verify Form Intro Text is "Complete this action to withdraw this CHIP SPA package. Once completed, you will not be able to resubmit the CHIP SPA package or undo this action."
         Then verify ID Label is "SPA ID"
         Then verify Type is "CHIP SPA"
