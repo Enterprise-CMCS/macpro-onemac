@@ -1,13 +1,20 @@
 const submitBTN = "#form-submission-button";
 const cancelBTN = "#form-cancel-button";
+const idElement = "#componentId";
+const parentIdElement = "#parent-componentId";
 const packageFormPt2ErrorMsg = "#componentIdStatusMsg1";
+const typeHeader = "//h3[text()='Type']";
+
+const modalContainer = "#react-aria-modal-dialog";
+const modalTitle = "#dialog-title";
+const modalText = "#dialog-content";
 const modalCancelBTN =
   "//*[@id='react-aria-modal-dialog']//button[text()='Cancel']";
 const attachmentInfoDescription =
   "//h3[text()='Attachments']/following-sibling::p[1]";
 const enterMmdlBtn = "//button[contains(text(),'Enter the MMDL system')]";
 
-const IDInputBox = "#componentId";
+const IDInputBox = idElement;
 const errorMessageID = "#componentIdStatusMsg0";
 const errorMessageLine2ID = "#componentIdStatusMsg1";
 const parentIDInputBox = "#parent-componentId";
@@ -17,16 +24,20 @@ const amendmentTitleField = "#title";
 const tempExtensionTypeHeader =
   "//h3[contains(text(),'Temporary Extension Type')]";
 const tempExtensionTypeBtn = "#temp-ext-type";
+const formIntroElement = "#form-intro";
 
+const labelElementFromLabel = {
+  "Additional Information": "#additional-information-label",
+};
 const elementFromLabel = {
   // Different forms may have different labels for the ID field
-  "SPA ID": "#componentId",
-  "Temporary Extension Request Number": "#componentId",
-  "Initial Waiver Number": "#componentId",
-  "1915(b) Waiver Amendment Number": "#componentId",
-  "1915(b) Waiver Renewal Number": "#componentId",
-  "Existing Waiver Number to Renew": "#parent-componentId",
-  "Existing Waiver Number to Amend": "#parent-componentId",
+  "SPA ID": idElement,
+  "Temporary Extension Request Number": idElement,
+  "Initial Waiver Number": idElement,
+  "1915(b) Waiver Amendment Number": idElement,
+  "1915(b) Waiver Renewal Number": idElement,
+  "Existing Waiver Number to Renew": parentIdElement,
+  "Existing Waiver Number to Amend": parentIdElement,
   "Additional Information": "#additional-information",
 };
 const errorMessageLine1FromLabel = {
@@ -75,6 +86,11 @@ function caculateMonthsInFuture(numMonths) {
 }
 
 export class oneMacFormPage {
+  verifyInputHeaderIs(inputHeader) {
+    cy.get(labelElementFromLabel[inputHeader])
+      .should("be.visible")
+      .contains(inputHeader);
+  }
   clearInput(whereTo) {
     cy.get(elementFromLabel[whereTo]).clear();
   }
@@ -96,8 +112,7 @@ export class oneMacFormPage {
         ? cy.get(errorMessageLine2FromLabel[whichLabel])
         : cy.get(errorMessageLine1FromLabel[whichLabel]);
 
-    errorMessageElement.should("be.visible");
-    errorMessageElement.contains(errorMessage);
+    errorMessageElement.should("be.visible").contains(errorMessage);
   }
   verifyHintTextContains(whichLabel, hintText) {
     const hintTextElement = cy.get(hintTextFromLabel[whichLabel]);
@@ -125,6 +140,10 @@ export class oneMacFormPage {
   clearIDInputBox() {
     cy.get(IDInputBox).clear();
   }
+  verifyIDLabelIs(idLabel) {
+    elementFromLabel[idLabel] === idElement &&
+      cy.xpath(`//h3[text()='${idLabel}']`).should("be.visible");
+  }
   verifyIDErrorMessageIsNotDisplayed() {
     cy.get(errorMessageID).should("not.exist");
   }
@@ -148,6 +167,9 @@ export class oneMacFormPage {
   verifyParentIDErrorMessageContains(errorMessage) {
     cy.get(errorMessageParentID).should("be.visible");
     cy.get(errorMessageParentID).contains(errorMessage);
+  }
+  verifyTypeIs(s) {
+    cy.xpath(typeHeader).next().contains(s);
   }
   verifyWaiverAuthorityContains(whatAuthority) {
     cy.xpath(waiverAuthorityLabel).next("div").contains(whatAuthority);
@@ -274,6 +296,24 @@ export class oneMacFormPage {
   }
   clickButtonLabelled(buttonLabel) {
     cy.xpath(`//button[contains(text(),'${buttonLabel}')]`).click();
+  }
+  verifyModalContainerExists() {
+    cy.get(modalContainer).should("be.visible");
+  }
+  verifyModalContainerDoesNotExists() {
+    cy.get(modalContainer).should("not.exist");
+  }
+  verifyModalTitleIs(s) {
+    cy.get(modalTitle).contains(s);
+  }
+  verifyModalTextIs(s) {
+    cy.get(modalText).contains(s);
+  }
+  verifyFormIntro(introText) {
+    cy.get(formIntroElement).should("be.visible").contains(introText);
+  }
+  verifyAttachmentType(attachmentType) {
+    cy.xpath(`//h3[text()='${attachmentType}']`).should("be.visible");
   }
 }
 export default oneMacFormPage;

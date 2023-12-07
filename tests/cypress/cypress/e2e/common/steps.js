@@ -1,5 +1,4 @@
 import { Given, When, Then } from "@badeball/cypress-cucumber-preprocessor";
-import MedicaidSPARAIResponsePage from "../../../support/pages/MedicaidSPARAIResponsePage";
 import oneMacDashboardPage from "../../../support/pages/oneMacDashboardPage";
 import oneMacDevLoginPage from "../../../support/pages/oneMacDevLoginPage";
 import oneMacHomePage from "../../../support/pages/oneMacHomePage";
@@ -11,11 +10,7 @@ import oneMacMyProfilePage from "../../../support/pages/oneMacMyProfilePage";
 import oneMacFAQPage from "../../../support/pages/oneMacFAQPage";
 import oneMacRequestARoleChangePage from "../../../support/pages/oneMacRequestARoleChangePage";
 import oneMacPackageDetailsPage from "../../../support/pages/oneMacPackageDetailsPage";
-import oneMacRespondToRAIPage from "../../../support/pages/oneMacRespondToRAIPage";
-import oneMacDefaultForms from "../../../support/pages/oneMacDefaultForms";
-import withdrawPackagePage from "../../../support/pages/WithdrawPackagePage";
 
-const medicaidSPARAIResponsePage = new MedicaidSPARAIResponsePage();
 const OneMacDashboardPage = new oneMacDashboardPage();
 const OneMacDevLoginPage = new oneMacDevLoginPage();
 const OneMacHomePage = new oneMacHomePage();
@@ -27,9 +22,6 @@ const OneMacMyProfilePage = new oneMacMyProfilePage();
 const OneMacFAQPage = new oneMacFAQPage();
 const OneMacRequestARoleChangePage = new oneMacRequestARoleChangePage();
 const OneMacPackageDetailsPage = new oneMacPackageDetailsPage();
-const OneMacRespondToRAIPage = new oneMacRespondToRAIPage();
-const OneMacDefaultForms = new oneMacDefaultForms();
-const WithdrawPackagePage = new withdrawPackagePage();
 
 Given("I am on Login Page", () => {
   OneMacHomePage.launch();
@@ -68,21 +60,21 @@ Then("click on Medicaid SPA", () => {
   OneMacSubmissionTypePage.clickMedicaidSPA();
 });
 Then("Click on Submit Button", () => {
-  OneMacDefaultForms.clicksubmitBTN();
+  OneMacFormPage.clicksubmitBTN();
 });
 Then("Click the Submit Button without waiting", () => {
-  OneMacDefaultForms.clicksubmitBTNWithoutWait();
+  OneMacFormPage.clicksubmitBTNWithoutWait();
 });
 Then("verify the modal pop-up is visible", () => {
-  OneMacRespondToRAIPage.verifyModalContainerExists();
+  OneMacFormPage.verifyModalContainerExists();
 });
 Then("verify the modal pop-up is not visible", () => {
-  OneMacRespondToRAIPage.verifyModalContainerDoesNotExists();
+  OneMacFormPage.verifyModalContainerDoesNotExists();
 });
 Then(
   "verify the title of the modal pop-up is Do you want to submit your official formal RAI response",
   () => {
-    OneMacRespondToRAIPage.verifyModalTitleIs(
+    OneMacFormPage.verifyModalTitleIs(
       "Do you want to submit your official formal RAI response"
     );
   }
@@ -90,7 +82,7 @@ Then(
 Then(
   "verify the detailed text in the modal contains you are submitting your official formal RAI Response to restart the SPA review process and a new 90th day will be identified",
   () => {
-    OneMacRespondToRAIPage.verifyModalTextIs(
+    OneMacFormPage.verifyModalTextIs(
       "you are submitting your official formal RAI Response to restart the SPA review process and a new 90th day will be identified."
     );
   }
@@ -98,20 +90,20 @@ Then(
 Then(
   "verify the detailed text in the modal contains you are submitting your official formal RAI Response to start the 90 day clock review process",
   () => {
-    OneMacRespondToRAIPage.verifyModalTextIs(
+    OneMacFormPage.verifyModalTextIs(
       "you are submitting your official formal RAI Response to start the 90 day clock review process"
     );
   }
 );
 
 Then("verify form cancel button exists", () => {
-  OneMacDefaultForms.verifyCancelBtnExists();
+  OneMacFormPage.verifyCancelBtnExists();
 });
 Then("click form cancel button", () => {
-  OneMacDefaultForms.clickCancelBtn();
+  OneMacFormPage.clickCancelBtn();
 });
 Then("click modal cancel button", () => {
-  OneMacDefaultForms.clickModalCancelBtn();
+  OneMacFormPage.clickModalCancelBtn();
 });
 Then("click Leave Anyway form button", () => {
   OneMacFormPage.clickButtonLabelled("Leave Anyway");
@@ -1670,7 +1662,9 @@ Then("verify a date exists for the Initial Submission Date", () => {
 Then(
   "verify the form is titled Formal Request for Additional Information Response",
   () => {
-    OneMacRespondToRAIPage.verifyPageHeader();
+    OneMacFormPage.verifyPageHeader(
+      "Formal Request for Additional Information Response"
+    );
   }
 );
 Then("verify user is on new initial waiver page", () => {
@@ -1805,9 +1799,6 @@ Then("set {string} to {int} months from today", (whichDate, numMonths) => {
 Then("verify {string} is prefilled", (whereTo) => {
   OneMacFormPage.verifyPrefill(whereTo);
 });
-Then("verify the package ID is prefilled in the form", () => {
-  OneMacRespondToRAIPage.verifyIDIsPrefilled();
-});
 Then("copy the ID from the link in the first row", () => {
   OneMacDashboardPage.copyTheIDFromLinkInFirstRow();
 });
@@ -1892,10 +1883,10 @@ Then(
   }
 );
 Then("verify the submit button is not disabled", () => {
-  OneMacDefaultForms.verifySubmitBtnIsNotDisabled();
+  OneMacFormPage.verifySubmitBtnIsNotDisabled();
 });
 Then("verify the submit button is disabled", () => {
-  OneMacDefaultForms.verifySubmitBtnIsDisabled();
+  OneMacFormPage.verifySubmitBtnIsDisabled();
 });
 Then(
   "verify What format is used to enter a 1915b and 1915c Temporary Extension number header",
@@ -1934,15 +1925,8 @@ Then(
   }
 );
 Then("verify error message contains {string}", (msg) => {
-  OneMacDefaultForms.verifyErrorMsgContains(msg);
+  OneMacFormPage.verifyErrorMsgContains(msg);
 });
-Then(
-  "verify the Appendix K Amendment in RAI Issued status is pre-populated and uneditable",
-  () => {
-    OneMacRespondToRAIPage.verifyAmendmentIDIsPrefilled();
-  }
-);
-
 Then("search for new waiver renewal number {string}", (s) => {
   cy.fixture("packageDashboardWaiverNumbers.json").then((d) => {
     switch (parseInt(s)) {
@@ -2009,50 +1993,20 @@ Then("verify the Temporary Extension Type is {string}", (whichType) => {
 Then("select {string} as the Temporary Extension Type", (whichType) => {
   OneMacFormPage.selectTempExtensionType(whichType);
 });
-Then("verify the header is {string} on the withdrawal form", (string) => {
-  WithdrawPackagePage.verifyWithdrawPageHeader(string);
+Then("verify Form Intro Text is {string}", (introText) => {
+  OneMacFormPage.verifyFormIntro(introText);
 });
-Then(
-  "verify the form intro exists on the {string} withdrawal form",
-  (pkgType) => {
-    WithdrawPackagePage.verifyFormIntroIsVisible(pkgType);
-  }
-);
-Then("verify the SPA ID header exists on the withdrawal form", () => {
-  WithdrawPackagePage.verifySPAIDHeaderExists();
+Then("verify ID Label is {string}", (idLabel) => {
+  OneMacFormPage.verifyIDLabelIs(idLabel);
 });
-Then("verify the SPA ID exists on the withdrawal form", () => {
-  WithdrawPackagePage.verifySPAIDExists();
+Then("verify Type is {string}", (string) => {
+  OneMacFormPage.verifyTypeIs(string);
 });
-Then("verify the Waiver number header exists on the withdrawal form", () => {
-  WithdrawPackagePage.verifyWaiverIDHeaderExists();
+Then("verify {string} is an Attachment Type", (attachmentType) => {
+  OneMacFormPage.verifyAttachmentType(attachmentType);
 });
-Then("verify the Waiver number exists on the withdrawal form", () => {
-  WithdrawPackagePage.verifyWaiverIDExists();
-});
-Then("verify the Type header exists on the withdrawal form", () => {
-  WithdrawPackagePage.verifyTypeHeaderExists();
-});
-Then("verify the type is {string}", (string) => {
-  WithdrawPackagePage.verifyTypeIs(string);
-});
-Then(
-  "verify the Upload Supporting Documentation header exists on the withdrawal form",
-  () => {
-    WithdrawPackagePage.verifyUploadSupportingDocumentationHeaderExists();
-  }
-);
-Then("upload withdrawal documentation", () => {
-  WithdrawPackagePage.uploadWithdrawalLetterAddFile();
-});
-Then("verify the Additional Info header exists on the withdrawal form", () => {
-  WithdrawPackagePage.verifyAdditionalInfoHeaderExists();
-});
-Then("add additional info comment in the withdrawal form", () => {
-  WithdrawPackagePage.addWithdrawalComment();
-});
-Then("clear additional info comment in the withdrawal form", () => {
-  WithdrawPackagePage.clearWithdrawalComment();
+Then("verify label {string} exists on page", (inputHeader) => {
+  OneMacFormPage.verifyInputHeaderIs(inputHeader);
 });
 Then("verify there is a Subject header in the details section", () => {
   OneMacPackageDetailsPage.verifySubjectHeaderExists();
@@ -2076,10 +2030,10 @@ Then("verify description is not visible in the details section", () => {
   OneMacPackageDetailsPage.verifyDescrptionDoesNotExists();
 });
 Then("verify the attachment info descriptiion", () => {
-  OneMacDefaultForms.verifyAttachmentInfoDecription();
+  OneMacFormPage.verifyAttachmentInfoDecription();
 });
 Then("verify the attachment info link is for {string}", (packageType) => {
-  OneMacDefaultForms.verifyAttachmentInfoLinkFor(packageType);
+  OneMacFormPage.verifyAttachmentInfoLinkFor(packageType);
 });
 Then("verify there is a CPOC header in the details section", () => {
   OneMacPackageDetailsPage.verifyCPOCNameHeaderExists();

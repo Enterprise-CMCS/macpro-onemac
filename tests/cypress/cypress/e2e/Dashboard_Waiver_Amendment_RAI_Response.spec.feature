@@ -17,7 +17,7 @@ Feature: RAI Response for 1915B Waiver Amendment - Package View
     Scenario: Respond to RAI from package dashboard
         Then click the actions button in row one
         Then click the Respond to RAI button
-        Then verify the package ID is prefilled in the form
+        Then verify "Waiver Number" is prefilled
         Then verify the attachment info descriptiion
         Then verify the attachment info link is for "Waiver RAI"
         Then Add file for Waiver RAI Response
@@ -31,7 +31,7 @@ Feature: RAI Response for 1915B Waiver Amendment - Package View
     Scenario: Respond to RAI from package details page
         Then click the Waiver Number link in the first row
         Then click on Respond to RAI package action
-        Then verify the package ID is prefilled in the form
+        Then verify "Waiver Number" is prefilled
         Then Add file for Waiver RAI Response
         Then Click the Submit Button without waiting
         Then verify the modal pop-up is visible
