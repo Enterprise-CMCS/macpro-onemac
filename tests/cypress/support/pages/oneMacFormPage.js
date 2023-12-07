@@ -13,6 +13,7 @@ const modalCancelBTN =
 const attachmentInfoDescription =
   "//h3[text()='Attachments']/following-sibling::p[1]";
 const enterMmdlBtn = "//button[contains(text(),'Enter the MMDL system')]";
+const enterMacProBtn = "//button[contains(text(),'Enter the MACPro system')]";
 
 const IDInputBox = idElement;
 const errorMessageID = "#componentIdStatusMsg0";

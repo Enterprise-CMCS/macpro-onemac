@@ -118,16 +118,6 @@ Then("verify submission successful message in the alert bar", () => {
   OneMacDashboardPage.verifySuccessMessage1IsDisplayed();
 });
 
-Then("Add file for RAI Response", () => {
-  medicaidSPARAIResponsePage.uploadRAIResponseAddFile();
-});
-// //this is for the oy2 8616
-// When("Login with cms role approver", () => {
-//   OneMacDevLoginPage.loginAs("CMS Role Approver", "Active");
-// });
-// When("Login with "an Active" "CMS Read Only" user", () => {
-//   OneMacDevLoginPage.loginAsEUACMSReadOnlyUser();
-// });
 Then("i am on User Management Page", () => {
   OneMacUserManagmentPage.verifyWeAreOnUserManagmentPage();
 });
@@ -412,10 +402,6 @@ Then("click All Other CHIP SPA Submissions", () => {
   OneMacSubmissionTypePage.clickAllOtherChip();
 });
 
-Then("Add file for Waiver RAI Response", () => {
-  medicaidSPARAIResponsePage.uploadRAIResponseAddFile();
-});
-
 Then("Click on Request Temporary Extension in Package dashboard", () => {
   OneMacSubmissionTypePage.clickRequestTemporaryExtension();
 });
@@ -534,14 +520,6 @@ Then(
     OneMacFormPage.uploadAttachment(fileName, attachmentIndex);
   }
 );
-
-Then("Add file for Revised Amended State Plan Language", () => {
-  medicaidSPARAIResponsePage.uploadChipSPARAIRESPONSERevisedAmendedStatePlanLanguage();
-});
-
-Then("Add file for Official RAI Response", () => {
-  medicaidSPARAIResponsePage.uploadOfficialRAIResponse();
-});
 
 Then("Verify General Section Exists", () => {
   OneMacFAQPage.verifyGeneralSectionExists();
