@@ -30,7 +30,7 @@ Feature: Create a waiver Amendment
         Then verify the submit button is disabled
         Then clear "Existing Waiver Number to Amend" input field
         Then into "Existing Waiver Number to Amend" type "MD-2200.R00.00"
-        Then verify Parent ID error message is not present
+        Then verify "Existing Waiver Number to Amend" has no error messages
         Then verify the submit button is not disabled
         Then clear "Existing Waiver Number to Amend" input field
         Then into "Existing Waiver Number to Amend" type "MD"
@@ -54,7 +54,7 @@ Feature: Create a waiver Amendment
         Then verify the submit button is disabled
         Then clear "1915(b) Waiver Amendment Number" input field
         Then into "1915(b) Waiver Amendment Number" type "MD-5533.R00.02"
-        Then verify ID error message is not present
+        Then verify "1915(b) Waiver Amendment Number" has no error messages
         Then verify the submit button is not disabled
         Then clear "1915(b) Waiver Amendment Number" input field
         Then into "1915(b) Waiver Amendment Number" type "MD"

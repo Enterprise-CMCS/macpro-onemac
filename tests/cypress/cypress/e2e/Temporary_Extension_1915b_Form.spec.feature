@@ -10,7 +10,6 @@ Feature: Package Dashboard Temporary Extension
         Then Click on Request Temporary Extension in Package dashboard
         Then select "1915(b)" as the Temporary Extension Type
         Then into "Existing Waiver Number to Renew" type "MD-2200.R00.00"
-
         Then into "Temporary Extension Request Number" type "MD-5533.R00.TE00"
         Then attach "picture.jpg" file to attachment 1
         Then into "Additional Information" type "This is just a test"
