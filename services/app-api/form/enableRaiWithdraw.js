@@ -63,9 +63,11 @@ async function getRecordsByGSI1Keys(gsi1pk, gsi1sk) {
 
   try {
     const result = await dynamoDb.query(params);
-    const sortedRecords = result.Items.sort((a, b) =>
-      a.submissionTimestamp.localeCompare(b.submissionTimestamp)
+    console.log("the result Items: ", result.Items);
+    const sortedRecords = result.Items.sort(
+      (a, b) => a.submissionTimestamp > b.submissionTimestamp
     );
+    console.log("the items sorted are: ", sortedRecords);
     return sortedRecords;
   } catch (error) {
     console.error("Error retrieving records:", error);
