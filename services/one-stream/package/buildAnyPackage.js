@@ -307,14 +307,16 @@ export const buildAnyPackage = async (packageId, config) => {
 
     putParams.Item?.reverseChrono.sort((a, b) => b.timestamp - a.timestamp);
 
-    // if the most recent OneMAC event is an enable withdraw RAI Response,
+    // if the most recent RAI Response OneMAC event is an enable withdraw RAI Response,
     // then set sub status to "Withdraw RAI Enabled"
     // and freeze status to pending
+    const raiResponses = putParams.Item?.reverseChrono.filter(
+      (omEvent) => omEvent.type === "Formal RAI Response"
+    );
     if (
-      Array.isArray(putParams.Item?.reverseChrono) &&
-      putParams.Item.reverseChrono.length > 0 &&
-      putParams.Item.reverseChrono[0].currentStatus ===
-        ONEMAC_STATUS.WITHDRAW_RAI_ENABLED
+      Array.isArray(raiResponses) &&
+      raiResponses.length > 0 &&
+      raiResponses[0].currentStatus === ONEMAC_STATUS.WITHDRAW_RAI_ENABLED
     ) {
       putParams.Item.currentStatus = ONEMAC_STATUS.PENDING;
       putParams.Item.subStatus = ONEMAC_STATUS.WITHDRAW_RAI_ENABLED;
