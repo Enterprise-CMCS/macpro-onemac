@@ -79,6 +79,12 @@ export const getDetails = async (event) => {
       ? cmsStatusUIMap[result.Item.currentStatus]
       : stateStatusUIMap[result.Item.currentStatus];
 
+    if (result.Item.subStatus) {
+      result.Item.subStatus = userRoleObj.isCMSUser
+        ? cmsStatusUIMap[result.Item.subStatus]
+        : stateStatusUIMap[result.Item.subStatus];
+    }
+
     if (!userRoleObj.canSeeSubjectAndDescription) {
       if (result.Item.subject) delete result.Item.subject;
       if (result.Item.description) delete result.Item.description;
