@@ -65,7 +65,7 @@ async function getRecordsByGSI1Keys(gsi1pk, gsi1sk) {
     const result = await dynamoDb.query(params);
     console.log("the result Items: ", result.Items);
     const sortedRecords = result.Items.sort(
-      (a, b) => a.submissionTimestamp > b.submissionTimestamp
+      (a, b) => a.submissionTimestamp < b.submissionTimestamp
     );
     console.log("the items sorted are: ", sortedRecords);
     return sortedRecords;
