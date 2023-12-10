@@ -318,7 +318,7 @@ export const buildAnyPackage = async (packageId, config) => {
       putParams.Item.reverseChrono.length > 0
     ) {
       const raiEvents = putParams.Item.reverseChrono.filter(
-        (oneChrono) => oneChrono.type === "Withdrawal Requested"
+        (oneChrono) => oneChrono.type === "Formal RAI Response"
       );
       if (
         Array.isArray(raiEvents) &&
