@@ -36,7 +36,7 @@
     "componentType": "medicaidsparai",
     "eventTimestamp": 1673709577000,
     "transmittalNumberWarningMessage": "",
-    "currentStatus": "RAI Response Withdraw Enabled",
+    "currentStatus": "Withdraw Formal RAI Response Enabled",
     "parentId": "MD-23-7652-VM",
     "attachments": [
       {
@@ -82,7 +82,7 @@
  "cpocEmail": "\"Tester, Chester (CPOC)\" <chesterT@example.gov>",
  "cpocName": "Chester Tester",
  "currentStatus": "Under Review",
- "subStatus": "RAI Response Withdraw Enabled",
+ "subStatus": "Withdraw Formal RAI Response Enabled",
  "description": "package to test RAI withdrawing rebuild",
  "GSI1pk": "OneMAC#spa",
  "GSI1sk": "MD-23-7652-VM",

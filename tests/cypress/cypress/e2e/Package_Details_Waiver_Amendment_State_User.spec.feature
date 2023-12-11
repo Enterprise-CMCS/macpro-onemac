@@ -206,14 +206,14 @@ Feature: Waiver Package Details View: 1915 b Waiver Amendment for a State User
         #Then verify the Initial Submission download all button exists
         #Then verify the additional information section exists
 
-    Scenario: Screen Enhance: 1915 b Waiver Amendment Details View - RAI Response Withdraw Enabled
+    Scenario: Screen Enhance: 1915 b Waiver Amendment Details View - Withdraw Formal RAI Response Enabled
         Then click Under Review checkbox
         Then Click on Filter Button
         Then search for "MD-22204.R00.02"
         Then click the Waiver Number link in the first row
         Then verify the package details page is visible
         Then verify 2 action cards exist
-        Then verify the sub status on the card is RAI Response Withdraw Enabled
+        Then verify the sub status on the card is Withdraw Formal RAI Response Enabled
         Then verify package actions header is visible
         Then verify withdraw package action exists
         Then verify Withdraw Formal RAI Response package action exists
@@ -243,7 +243,7 @@ Scenario: Screen Enhance: 1915 b Waiver Amendment Details View - Withdraw RAI Re
         Then search for "MD-22204.R00.02"
         Then click the Waiver Number link in the first row
         Then verify the package details page is visible
-        Then verify the sub status on the card is RAI Response Withdraw Enabled
+        Then verify the sub status on the card is Withdraw Formal RAI Response Enabled
         Then click Withdraw Formal RAI Response package action
         Then type "Automated test to withdraw the RAI Response." in additional info textarea
         Then Click the Submit Button without waiting

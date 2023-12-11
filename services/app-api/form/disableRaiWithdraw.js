@@ -63,8 +63,8 @@ async function getRecordsByGSI1Keys(gsi1pk, gsi1sk) {
 
   try {
     const result = await dynamoDb.query(params);
-    const sortedRecords = result.Items.sort((a, b) =>
-      a.submissionTimestamp.localeCompare(b.submissionTimestamp)
+    const sortedRecords = result.Items.sort(
+      (a, b) => b.submissionTimestamp - a.submissionTimestamp
     );
     return sortedRecords;
   } catch (error) {

@@ -83,7 +83,7 @@ describe("getActionsForPackage", () => {
   it("returns correct actions for medicaid spa with WITHDRAW_RAI_ENABLED status", () => {
     const packageType = "medicaidspa";
     const packageStatus = "Under Review";
-    const packageSubStatus = "RAI Response Withdraw Enabled";
+    const packageSubStatus = "Withdraw Formal RAI Response Enabled";
     const hasRaiResponse = true;
     const formSource = "detail";
 
