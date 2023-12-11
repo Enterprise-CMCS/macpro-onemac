@@ -88,6 +88,11 @@ export const getMyPackages = async (email, group) => {
                   0,
                   7
                 );
+
+              if (statusMap[oneItem.subStatus]) {
+                oneItem.subStatus = statusMap[oneItem.subStatus];
+              }
+
               if (!statusMap[oneItem.currentStatus])
                 console.log(
                   "%s status of %s not mapped!",

@@ -1239,7 +1239,7 @@ Then("click the Withdrawal Requested checkbox", () => {
 Then("click the Formal RAI Response - Withdrawal Requested checkbox", () => {
   OneMacPackagePage.clickRaiResponseWithdrawalRequestedCheckBox();
 });
-Then("click the RAI Response Withdraw Enabled checkbox", () => {
+Then("click the Withdraw Formal RAI Response Enabled checkbox", () => {
   OneMacPackagePage.clickRaiResponseWithdrawEnabledCheckBox();
 });
 Then("click 1915b Initial Waiver check box", () => {
@@ -2525,7 +2525,7 @@ Then("expand the Withdrawal Requested caret", () => {
   OneMacPackageDetailsPage.expandWithdrawalRequestedCaretBtn();
 });
 Then(
-  "verify the sub status on the card is RAI Response Withdraw Enabled",
+  "verify the sub status on the card is Withdraw Formal RAI Response Enabled",
   () => {
     OneMacPackageDetailsPage.verifyTheSubStatus();
   }
