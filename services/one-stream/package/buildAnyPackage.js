@@ -310,6 +310,7 @@ export const buildAnyPackage = async (packageId, config) => {
     // start with removing subStatus
     delete putParams.Item.subStatus;
 
+    console.log("reverse Chrono Events: ", putParams.Item.reverseChrono);
     // if the most recent RAI Response OneMAC event is enabled,
     // then set sub status to "Withdraw RAI Enabled"
     // and freeze status to pending
@@ -320,6 +321,7 @@ export const buildAnyPackage = async (packageId, config) => {
       const raiEvents = putParams.Item.reverseChrono.filter(
         (oneChrono) => oneChrono.type === "Formal RAI Response"
       );
+      console.log("rai Events: ", raiEvents);
       if (
         Array.isArray(raiEvents) &&
         raiEvents.length > 0 &&
