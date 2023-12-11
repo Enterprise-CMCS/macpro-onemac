@@ -102,7 +102,7 @@
      "url": "https://uploads-oy2-22413-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Abecb694d-f091-42c5-a7b5-d9a974b1c9f6/1689347857918/Screenshot%202023-03-31%20at%204.46.08%20PM.png"
     }
    ],
-   "currentStatus": "RAI Response Withdraw Enabled",
+   "currentStatus": "Withdraw Formal RAI Response Enabled",
    "eventTimestamp": 1692995462549,
    "timestamp": 1673709577000,
    "type": "Formal RAI Response"
@@ -4848,7 +4848,7 @@
         "url": "https://uploads-oy2-22413-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Abecb694d-f091-42c5-a7b5-d9a974b1c9f6/1689347857918/Screenshot%202023-03-31%20at%204.46.08%20PM.png"
        }
       ],
-      "currentStatus": "RAI Response Withdraw Enabled",
+      "currentStatus": "Withdraw Formal RAI Response Enabled",
       "eventTimestamp": 1690923157815,
       "timestamp": 1673709577000,
       "type": "Formal RAI Response"
@@ -5348,7 +5348,7 @@
     "componentType": "chipsparai",
     "eventTimestamp": 1673709577000,
     "transmittalNumberWarningMessage": "",
-    "currentStatus": "RAI Response Withdraw Enabled",
+    "currentStatus": "Withdraw Formal RAI Response Enabled",
     "parentId": "MD-23-7650-VM",
     "attachments": [
       {
@@ -5382,7 +5382,7 @@
     "componentType": "chipspa",
     "componentId": "MD-23-7650-VM",
     "currentStatus": "Under Review",
-    "subStatus": "RAI Response Withdraw Enabled",
+    "subStatus": "Withdraw Formal RAI Response Enabled",
     "subject": "OneMac Connection test",
     "cpocEmail": "\"Tester, Chester (CPOC)\" <chesterT@example.gov>",
     "reverseChrono": [
@@ -5397,7 +5397,7 @@
             "url": "https://uploads-oy2-22413-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Abecb694d-f091-42c5-a7b5-d9a974b1c9f6/1689347857918/Screenshot%202023-03-31%20at%204.46.08%20PM.png"
           }
         ],
-        "currentStatus": "RAI Response Withdraw Enabled",
+        "currentStatus": "Withdraw Formal RAI Response Enabled",
         "action": "Submitted",
         "type": "Formal RAI Response",
         "timestamp": 1673709577000,

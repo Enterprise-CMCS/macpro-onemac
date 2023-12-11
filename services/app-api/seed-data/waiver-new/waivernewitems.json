@@ -7348,7 +7348,7 @@
     "componentType": "waiverrai",
     "eventTimestamp": 1673709577000,
     "transmittalNumberWarningMessage": "",
-    "currentStatus": "RAI Response Withdraw Enabled",
+    "currentStatus": "Withdraw Formal RAI Response Enabled",
     "parentId": "MD-22116.R00.00",
     "attachments": [
       {
@@ -7382,7 +7382,7 @@
     "componentType": "waivernew",
     "componentId": "MD-22116.R00.00",
     "currentStatus": "Under Review",
-    "subStatus": "RAI Response Withdraw Enabled",
+    "subStatus": "Withdraw Formal RAI Response Enabled",
     "subject": "OneMac Connection test",
     "cpocEmail": "\"Tester, Chester (CPOC)\" <chesterT@example.gov>",
     "reverseChrono": [
@@ -7397,7 +7397,7 @@
             "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3Ac052f1db-9f55-42aa-9d43-2d957bfc754b/1672953505887/PackagelistView_ExcelExport_Issues.xlsx"
           }
         ],
-        "currentStatus": "RAI Response Withdraw Enabled",
+        "currentStatus": "Withdraw Formal RAI Response Enabled",
         "action": "Submitted",
         "type": "Formal RAI Response",
         "timestamp": 1673709577000,

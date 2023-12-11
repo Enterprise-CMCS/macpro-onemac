@@ -9475,7 +9475,7 @@
     "clockEndTimestamp": 1680725910479,
     "componentType": "waiverrai",
     "eventTimestamp": 1672953510479,
-    "currentStatus": "RAI Response Withdraw Enabled",
+    "currentStatus": "Withdraw Formal RAI Response Enabled",
     "parentId": "MD-22204.R00.02",
     "attachments": [
       {
@@ -9537,7 +9537,7 @@
             "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3Ac052f1db-9f55-42aa-9d43-2d957bfc754b/1672953505887/PackagelistView_ExcelExport_Issues.xlsx"
           }
         ],
-        "currentStatus": "RAI Response Withdraw Enabled",
+        "currentStatus": "Withdraw Formal RAI Response Enabled",
         "submissionTimestamp": 1672953510479,
         "eventTimestamp": 1690986376374
       }
@@ -9545,7 +9545,7 @@
     "lastEventTimestamp": 1690986376374,
     "componentType": "waiveramendment",
     "currentStatus": "Under Review",
-    "subStatus": "RAI Response Withdraw Enabled",
+    "subStatus": "Withdraw Formal RAI Response Enabled",
     "attachments": [
       {
         "s3Key": "1672269887538/picture.jpg",
@@ -10143,7 +10143,7 @@
        "url": "https://uploads-oy2-24636-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A1cdd699c-f936-49b4-9f01-c4f4e8cfa595/1690811753124/excel.xlsx"
       }
      ],
-     "currentStatus": "RAI Response Withdraw Enabled",
+     "currentStatus": "Withdraw Formal RAI Response Enabled",
      "eventTimestamp": 1693077990875,
      "timestamp": 1675766233000,
      "type": "Formal RAI Response"
