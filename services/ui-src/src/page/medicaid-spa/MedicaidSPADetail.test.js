@@ -171,7 +171,7 @@ describe("Detail View Tests", () => {
 
     PackageApi.getDetail.mockResolvedValue({
       ...testDetail,
-      currentStatus: "RAI Response Withdraw Enabled",
+      currentStatus: "Withdraw Formal RAI Response Enabled",
       actions: ["Withdraw Formal RAI Response"],
     });
 
