@@ -10,6 +10,7 @@ export const withdrawMedicaidSPAFormConfig = {
 };
 
 export const main = handler(async (event) => {
-  await submitAny(event, withdrawMedicaidSPAFormConfig);
+  const lambdaReturn = await submitAny(event, withdrawMedicaidSPAFormConfig);
   await disableRaiResponseWithdraw(event, "withdrawLambda");
+  return lambdaReturn;
 });

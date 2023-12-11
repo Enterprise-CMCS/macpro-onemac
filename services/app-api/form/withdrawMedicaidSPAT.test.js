@@ -1,8 +1,12 @@
 import { submitAny } from "./submitAny";
+import { disableRaiResponseWithdraw } from "./disableRaiWithdraw";
 import { main } from "./withdrawMedicaidSPA";
 
 jest.mock("./submitAny");
 submitAny.mockResolvedValue("yup!");
+
+jest.mock("./disableRaiWithdraw");
+disableRaiResponseWithdraw.mockResolvedValue("yup!");
 
 const testEvent = {
   this: "is an event object",
