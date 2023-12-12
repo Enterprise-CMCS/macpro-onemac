@@ -63,6 +63,7 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
   const [alertCode, setAlertCode] = useState(RESPONSE_CODE.NONE);
   const { activeTerritories, confirmAction } = useAppContext() ?? {};
   const location = useLocation<FormLocationState>();
+  console.log("location state: ", location);
 
   //Reference to the File Uploader.
   const uploader = useRef<FileUploader>(null);

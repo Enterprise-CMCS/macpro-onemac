@@ -13,6 +13,8 @@ export const medicaidSpaWithdrawInfo: OneMACFormConfig = {
 };
 
 const MedicaidSpaWithdraw: FC = () => {
+  console.log("Form Into:", medicaidSpaWithdrawInfo);
+
   return <OneMACForm formConfig={medicaidSpaWithdrawInfo} />;
 };
 
