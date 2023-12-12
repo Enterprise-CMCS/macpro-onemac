@@ -90,7 +90,8 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
     formConfig.parentTypeNice ?? Workflow.ONEMAC_LABEL[presetParentType];
 
   //if location contains parentType and formSource was detail page then override landingpage to type specific detail page
-  formConfig.landingPage = getLandingPage(location, formConfig);
+  const thisLandingPage = getLandingPage(location, formConfig);
+  console.log("thisLandingPage", thisLandingPage);
 
   // if only one waiver Authority choice, it is the default
   const presetWaiverAuthority = formConfig.waiverAuthority?.value;
@@ -362,10 +363,12 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
         uploadedList,
         formConfig.componentType
       );
+      console.log("returnCode: ", returnCode);
+
       if (returnCode in FORM_SUCCESS_RESPONSE_CODES)
         throw new Error(returnCode);
 
-      history.push(formConfig.landingPage, {
+      history.push(thisLandingPage, {
         passCode: returnCode,
       });
     } catch (err) {
@@ -375,7 +378,13 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
       setIsSubmissionReady(false);
       limitSubmit.current = false;
     }
-  }, [formConfig, history, oneMacFormData, componentIdStatusMessages]);
+  }, [
+    componentIdStatusMessages,
+    oneMacFormData,
+    formConfig.componentType,
+    history,
+    thisLandingPage,
+  ]);
 
   const handleSubmit = useCallback(
     async (event: SyntheticEvent) => {
@@ -427,7 +436,7 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
       <PageTitleBar
         heading={formConfig.pageTitle ?? oneMacFormData.componentId ?? ""}
         enableBackNav
-        backTo={getLandingPage(location, formConfig)}
+        backTo={thisLandingPage}
         backNavConfirmationMessage={leavePageConfirmMessage}
       />
       <AlertBar alertCode={alertCode} closeCallback={closedAlert} />
