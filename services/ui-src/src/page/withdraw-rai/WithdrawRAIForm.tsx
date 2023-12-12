@@ -30,7 +30,6 @@ export const withdrawRAIFormInfo: OneMACFormConfig = {
 };
 
 const WithdrawRAIForm: FC = () => {
-  console.log("Form Into:", withdrawRAIFormInfo);
   return <OneMACForm formConfig={withdrawRAIFormInfo} />;
 };
 
