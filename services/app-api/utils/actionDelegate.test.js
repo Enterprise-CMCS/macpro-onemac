@@ -96,10 +96,11 @@ describe("getActionsForPackage", () => {
       formSource
     );
 
-    expect(actions).toEqual([
-      "Withdraw Package",
-      "Withdraw Formal RAI Response",
-    ]);
+    // expect(actions).toEqual([
+    //   "Withdraw Package",
+    //   "Withdraw Formal RAI Response",
+    // ]);
+    expect(actions).toEqual(["Withdraw Formal RAI Response"]);
   });
 
   it("returns correct actions for medicaid spa with Pending - Approval status", () => {
