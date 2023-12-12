@@ -91,7 +91,6 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
 
   //if location contains parentType and formSource was detail page then override landingpage to type specific detail page
   const thisLandingPage = getLandingPage(location, formConfig);
-  console.log("thisLandingPage", thisLandingPage);
 
   // if only one waiver Authority choice, it is the default
   const presetWaiverAuthority = formConfig.waiverAuthority?.value;
@@ -363,7 +362,6 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
         uploadedList,
         formConfig.componentType
       );
-      console.log("returnCode: ", returnCode);
 
       if (returnCode in FORM_SUCCESS_RESPONSE_CODES)
         throw new Error(returnCode);
