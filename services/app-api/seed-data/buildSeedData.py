@@ -18,6 +18,7 @@ if __name__ == "__main__":
 
     for (root, dir, file) in os.walk(args.baseDir):
         for f in file:
+            print("file: " + f)
             if '.json' in f:
                 f1 = open(os.path.join(root, f))
                 all_data.extend(json.load(f1))
