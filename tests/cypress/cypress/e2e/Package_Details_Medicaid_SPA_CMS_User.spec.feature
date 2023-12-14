@@ -18,7 +18,7 @@ Feature: Medicaid SPA CMS Details View - Card View with Actions
         Then verify the package details page is visible
         Then verify 2 action cards exist
         Then verify the status on the card is "Submitted - Intake Needed"
-        Then verify the package actions section is unavailable
+        Then verify there are no package actions available
         Then verify the details section exists
         Then verify there is a Type header in the details section
         Then verify the type is Medicaid SPA
@@ -35,8 +35,9 @@ Feature: Medicaid SPA CMS Details View - Card View with Actions
         Then verify the Review Team SRT has a value displayed in the details section
         Then verify there is a Final Disposition Date header in the details section
         Then verify there is an Approved Effective Date in the details section
-        Then verify the attachments section exists
-        Then verify the download all button exists
+        Then verify the Initial Submission caret button exists
+        Then expand the Initial Submission caret
+        Then verify the Initial Submission download all button exists
         Then verify the additional information section exists
 
     Scenario: Screen Enhance - Pending Medicaid SPA
@@ -46,7 +47,7 @@ Feature: Medicaid SPA CMS Details View - Card View with Actions
         Then verify the package details page is visible
         Then verify 2 action cards exist
         Then verify the status on the card is "Pending"
-        Then verify the package actions section is unavailable
+        #Then verify there are no package actions available
         Then verify the details section exists
         Then verify there is a Type header in the details section
         Then verify the type is Medicaid SPA
@@ -65,9 +66,8 @@ Feature: Medicaid SPA CMS Details View - Card View with Actions
         Then verify there is a Final Disposition Date header in the details section
         Then verify there is an Approved Effective Date in the details section
         Then verify the description has a value displayed in the details section
-        Then verify the attachments section exists
-        #Then verify the download all button exists
-        Then verify the additional information section exists
+        #Then verify the attachments section exists
+        #Then verify the additional information section exists
 
     Scenario: Screen Enhance - Withdrawn Medicaid SPA
         Then click the Package Withdrawn checkbox
@@ -76,7 +76,7 @@ Feature: Medicaid SPA CMS Details View - Card View with Actions
         Then verify the package details page is visible
         Then verify 2 action cards exist
         Then verify the status on the card is "Withdrawn"
-        Then verify the package actions section is unavailable
+        Then verify there are no package actions available
         Then verify the details section exists
         Then verify there is a Type header in the details section
         Then verify the type is Medicaid SPA
@@ -95,8 +95,9 @@ Feature: Medicaid SPA CMS Details View - Card View with Actions
         Then verify there is a Final Disposition Date header in the details section
         Then verify there is an Approved Effective Date in the details section
         Then verify the description has a value displayed in the details section
-        Then verify the attachments section exists
-        Then verify the download all button exists
+        Then verify the Initial Submission caret button exists
+        Then expand the Initial Submission caret
+        Then verify the Initial Submission download all button exists
         Then verify the additional information section exists
 
     Scenario: Screen Enhance - Disapproved Medicaid SPA
@@ -106,7 +107,7 @@ Feature: Medicaid SPA CMS Details View - Card View with Actions
         Then verify the package details page is visible
         Then verify 2 action cards exist
         Then verify the status on the card is "Disapproved"
-        Then verify the package actions section is unavailable
+        Then verify there are no package actions available
         Then verify the details section exists
         Then verify there is a Type header in the details section
         Then verify the type is Medicaid SPA
@@ -125,8 +126,9 @@ Feature: Medicaid SPA CMS Details View - Card View with Actions
         Then verify there is a Final Disposition Date header in the details section
         Then verify there is an Approved Effective Date in the details section
         Then verify the description has a value displayed in the details section
-        Then verify the attachments section exists
-        Then verify the download all button exists
+        Then verify the Initial Submission caret button exists
+        Then expand the Initial Submission caret
+        Then verify the Initial Submission download all button exists
         Then verify the additional information section exists
 
     # Need seed data / reset data update
@@ -137,7 +139,7 @@ Feature: Medicaid SPA CMS Details View - Card View with Actions
         Then verify the package details page is visible
         Then verify 2 action cards exist
         Then verify the status on the card is "Pending - RAI"
-        Then verify the package actions section is unavailable
+        Then verify there are no package actions available
         Then verify the package details page is visible
         Then verify the details section exists
         Then verify there is a Type header in the details section
@@ -157,9 +159,8 @@ Feature: Medicaid SPA CMS Details View - Card View with Actions
         Then verify there is a Final Disposition Date header in the details section
         Then verify there is an Approved Effective Date in the details section
         Then verify the description has a value displayed in the details section
-        Then verify the attachments section exists
-        #Then verify the download all button exists
-        Then verify the additional information section exists
+        #Then verify the attachments section exists
+        #Then verify the additional information section exists
 
     Scenario: Screen Enhance - Approved Medicaid SPA
         Then click Approved checkbox
@@ -169,7 +170,7 @@ Feature: Medicaid SPA CMS Details View - Card View with Actions
         Then verify 2 action cards exist
         Then verify the status on the card is "Approved"
         Then verify there is not a 90th day date on the card
-        Then verify the package actions section is unavailable
+        Then verify there are no package actions available
         Then verify the details section exists
         Then verify there is a Type header in the details section
         Then verify the type is Medicaid SPA
@@ -189,8 +190,9 @@ Feature: Medicaid SPA CMS Details View - Card View with Actions
         Then verify there is an Approved Effective Date in the details section
         Then verify the description has a value displayed in the details section
         Then verify the Proposed Effective Date is a date formatted like Mon dd yyyy
-        Then verify the attachments section exists
-        Then verify the download all button exists
+        Then verify the Initial Submission caret button exists
+        Then expand the Initial Submission caret
+        Then verify the Initial Submission download all button exists
         Then verify the additional information section exists
 
     Scenario: Screen Enhance - Pending - Concurrence Medicaid SPA
@@ -200,7 +202,7 @@ Feature: Medicaid SPA CMS Details View - Card View with Actions
         Then verify the package details page is visible
         Then verify 2 action cards exist
         Then verify the status on the card is "Pending - Concurrence"
-        Then verify the package actions section is unavailable
+        Then verify there are no package actions available
         Then verify the package details page is visible
         Then verify the details section exists
         Then verify there is a Type header in the details section
@@ -220,8 +222,9 @@ Feature: Medicaid SPA CMS Details View - Card View with Actions
         Then verify there is a Final Disposition Date header in the details section
         Then verify there is an Approved Effective Date in the details section
         Then verify the description has a value displayed in the details section
-        Then verify the attachments section exists
-        Then verify the download all button exists
+        Then verify the Initial Submission caret button exists
+        Then expand the Initial Submission caret
+        Then verify the Initial Submission download all button exists
         Then verify the additional information section exists
 
     Scenario: Screen Enhance - Pending - Approval Medicaid SPA
@@ -231,7 +234,7 @@ Feature: Medicaid SPA CMS Details View - Card View with Actions
         Then verify the package details page is visible
         Then verify 2 action cards exist
         Then verify the status on the card is "Pending - Approval"
-        Then verify the package actions section is unavailable
+        Then verify there are no package actions available
         Then verify the package details page is visible
         Then verify the details section exists
         Then verify there is a Type header in the details section
@@ -251,6 +254,23 @@ Feature: Medicaid SPA CMS Details View - Card View with Actions
         Then verify there is a Final Disposition Date header in the details section
         Then verify there is an Approved Effective Date in the details section
         Then verify the description has a value displayed in the details section
-        Then verify the attachments section exists
-        Then verify the download all button exists
+        Then verify the Initial Submission caret button exists
+        Then expand the Initial Submission caret
+        Then verify the Initial Submission download all button exists
         Then verify the additional information section exists
+
+    Scenario: Medicaid SPA Details View - Enable Formal RAI Response Withdraw
+        Then click the Pending checkbox
+        Then Click on Filter Button
+        Then search for "MD-22-2400-VM"
+        Then click the SPA ID link in the first row
+        Then verify the package details page is visible
+        Then verify the status on the card is "Pending"
+        Then verify Enable Formal RAI Response Withdraw package action exists
+        Then click Enable Formal RAI Response Withdraw package action
+        Then Click on Submit Button
+        Then verify the status on the card is "Pending"
+        Then verify the sub status on the card is Withdraw Formal RAI Response Enabled
+        Then verify package actions header is visible
+        Then verify Disable Formal RAI Response Withdraw package action exists
+

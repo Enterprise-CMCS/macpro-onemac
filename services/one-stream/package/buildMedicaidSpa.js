@@ -1,11 +1,11 @@
 import { medicaidSPA } from "cmscommonlib";
+import { defaultEventMapping } from "../lib/default-lib";
 import { buildAnyPackage } from "./buildAnyPackage";
 
-// medicaidSPA.attributeConversions = {
-//     "SEATool": {
-//         "SPW_STATUS": "currentStatus",
-//     }
-// }
+const medicaidSPABuildConfig = {
+  ...medicaidSPA,
+  eventMap: defaultEventMapping,
+};
 
 export const buildMedicaidSpa = async (packageId) =>
-  buildAnyPackage(packageId, medicaidSPA);
+  buildAnyPackage(packageId, medicaidSPABuildConfig);

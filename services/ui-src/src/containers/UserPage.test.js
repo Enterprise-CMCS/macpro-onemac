@@ -333,11 +333,12 @@ describe("access section", () => {
       const stateLabelEl = screen.getByText(territoryMap[territory], {
         selector: "div",
       });
+      const closeButton = stateLabelEl.nextElementSibling;
+      const accessLabel = screen.getAllByText(ACCESS_LABELS[status]);
       expect(stateLabelEl).toBeVisible();
-      expect(stateLabelEl.nextElementSibling.tagName).toBe("EM");
-      expect(stateLabelEl.nextElementSibling).toHaveTextContent(
-        ACCESS_LABELS[status]
-      );
+      expect(closeButton.tagName).toBe("BUTTON");
+      expect(accessLabel).toHaveLength(2);
+      expect(accessLabel[0].tagName).toBe("EM");
     }
     expect(selfRevoke).not.toBeCalled();
   });

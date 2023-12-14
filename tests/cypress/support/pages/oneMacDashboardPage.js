@@ -1,5 +1,5 @@
 const newSubmissionBTN = "#new-submission-button";
-const successMessage = "#alert_3";
+const successMessage = "#alert-bar h2";
 const successMessage1 = "#alert-bar";
 //Element is Xpath use cy.xpath instead of cy.get
 const successMessageAfterRAIResponse =
@@ -8,12 +8,10 @@ const successMessageAfterRAIResponse =
 //Element is Xpath use cy.xpath instead of cy.get
 const IDNUMBER = (id) => `//a[text()="${id}"]`;
 //Element is Xpath use cy.xpath instead of cy.get
-const SecondIDNUMBER = "//tbody/tr[2]/td[1]/a[1]";
 //Element is Xpath use cy.xpath instead of cy.get
 const Type = "//td[@id='type-0']";
 const date = "#submittedAt-0";
 //Element is Xpath use cy.xpath instead of cy.get
-const respondToRAIBTN = "//tbody/tr[1]/td[6]/button[1]";
 //Element is Xpath use cy.xpath instead of cy.get
 //const respondToRAI = '//body/div[@id="simple-menu"]/div[3]/ul[1]/div[1]/li[1]';
 const respondToRAI = '//li[(text()="Respond to RAI")]';
@@ -41,27 +39,18 @@ export class oneMacDashboardPage {
   clickNewSubmission() {
     cy.get(newSubmissionBTN).click();
   }
-
-  verifySuccessMessageIsDisplayed() {
-    cy.get(successMessage).contains("Submission Completed");
+  verifySuccessMessageIs(s) {
+    cy.get(successMessage).contains(s);
   }
   verifySuccessMessage1IsDisplayed() {
     cy.get(successMessage1).contains("Submission Completed");
   }
-
-  verifySuccessMessageIsDisplayedAfterRAIResponse() {
-    cy.xpath(successMessageAfterRAIResponse).contains(
-      "Your submission has been received."
-    );
-  }
-
   verifyIDNumber(s) {
     cy.xpath(IDNUMBER(s)).first().should("exist");
   }
   clickIDNumberLink(s) {
     cy.xpath(IDNUMBER(s)).click({ force: true });
   }
-
   verifyType(s) {
     cy.xpath(Type).contains(s);
   }
@@ -71,53 +60,33 @@ export class oneMacDashboardPage {
   verifyDate() {
     cy.get(date).should("be.visible");
   }
-
   clickOnrespondToRAI(s) {
     cy.xpath(IDNUMBER(s)).parent().siblings().find("button").click();
     cy.xpath(respondToRAI).filter(":visible").click();
   }
-
   verifySPARAIIDNumberMatchesMedicalSPAIDNumber(s) {
     cy.xpath(IDNUMBER(s)).should("be.visible").and("have.length", 2);
   }
-
   verifySPARAIIDNumberMatchesCHIPSPAIDNumber(s) {
     cy.xpath(IDNUMBER(s)).should("be.visible").and("have.length", 2);
   }
-
   clickUserManagementTab() {
     cy.get(userManagementTab).click();
   }
-
   verifyWeAreOnDashboardPage() {
     cy.url().should("include", "/dashboard");
   }
-  verifySubmissionListIsDisplayed() {
-    cy.xpath(submissionList).should("be.visible");
-  }
+
   verifyexportToEXcelCSVBTNIsDisplayed() {
     cy.get(exportToEXcelCSVBTN).should("be.visible");
-  }
-
-  verifyidNumberHeaderIsDisplayed() {
-    cy.get(idNumberHeader).should("be.visible");
-  }
-  verifytypeHeaderIsDisplayed() {
-    cy.get(typeHeader).should("be.visible");
   }
   verifyStateHeaderIsDisplayed() {
     cy.get(stateHeader).should("be.visible");
   }
-  verifyInitialSubmissionDateHeaderIsDisplayed() {
-    cy.get(initialSubmissionDateHeader).should("be.visible");
-  }
-  verifySubmittedByHeadersDisplayed() {
-    cy.get(submittedByHeader).should("be.visible");
-  }
+
   verifyNewSubmissionBTNIsDisplayed() {
     cy.get(newSubmissionBTN).should("be.visible");
   }
-
   verifyIDNumberIsDisplayed(s) {
     cy.xpath(IDNUMBER(s)).should("be.visible");
   }
@@ -127,15 +96,6 @@ export class oneMacDashboardPage {
   navigatetoURL(s) {
     cy.visit(s);
   }
-
-  clickOnSpaID() {
-    cy.get(spaIDLink).click();
-    cy.wait(5000);
-  }
-
-  verifyAttachmentExists(s) {
-    cy.get(uploadedAttachments).contains(s);
-  }
   verifyLogoutBtnExists() {
     cy.xpath(logoutBtn).should("be.visible");
   }
@@ -144,9 +104,6 @@ export class oneMacDashboardPage {
   }
   verifySuccessMessageIsDisplayedForRoleChange() {
     cy.get(rcSuccessMessage).contains("Status Change");
-  }
-  verifyActionsBtnUnvailableOnFirstRow() {
-    cy.get(actionsRowOne).not("button");
   }
   verifyActionsBtnDisabledOnFirstRow() {
     cy.get(actionsRowOne).find("button").should("be.disabled");

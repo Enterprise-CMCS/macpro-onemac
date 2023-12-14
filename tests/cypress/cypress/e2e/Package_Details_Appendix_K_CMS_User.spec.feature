@@ -18,7 +18,7 @@ Feature: Waiver Package Details View: Appendix K Amendment for a CMS User
         Then verify the package details page is visible
         Then verify 2 action cards exist
         Then verify the status on the card is "Submitted - Intake Needed"
-        Then verify the package actions section is unavailable
+        Then verify there are no package actions available
         Then verify the details section exists
         Then verify the package details title contains "Appendix K Amendment Package"
         Then verify the waiver authority header exists
@@ -38,8 +38,9 @@ Feature: Waiver Package Details View: Appendix K Amendment for a CMS User
         Then verify the Review Team SRT has a value displayed in the details section
         Then verify there is a Final Disposition Date header in the details section
         Then verify there is an Approved Effective Date in the details section
-        Then verify the attachments section exists
-        Then verify the download all button exists
+        Then verify the Initial Submission caret button exists
+        Then expand the Initial Submission caret
+        Then verify the Initial Submission download all button exists
         Then verify the additional information section exists
 
     Scenario: Screen Enhance: Appendix K Details View - Pending
@@ -48,7 +49,6 @@ Feature: Waiver Package Details View: Appendix K Amendment for a CMS User
         Then verify the package details page is visible
         Then verify 2 action cards exist
         Then verify the status on the card is "Pending"
-        Then verify the package actions section is unavailable
         Then verify the details section exists
         Then verify the package details title contains "Appendix K Amendment Package"
         Then verify the waiver authority header exists
@@ -72,8 +72,9 @@ Feature: Waiver Package Details View: Appendix K Amendment for a CMS User
         Then verify there is a Final Disposition Date header in the details section
         Then verify there is an Approved Effective Date in the details section
         Then verify the description has a value displayed in the details section
-        Then verify the attachments section exists
-        Then verify the download all button exists
+        Then verify the Initial Submission caret button exists
+        Then expand the Initial Submission caret
+        Then verify the Initial Submission download all button exists
         Then verify the additional information section exists
 
     Scenario: Screen Enhance: Appendix K Details View - Pending - RAI
@@ -82,7 +83,7 @@ Feature: Waiver Package Details View: Appendix K Amendment for a CMS User
         Then verify the package details page is visible
         Then verify 2 action cards exist
         Then verify the status on the card is "Pending - RAI"
-        Then verify the package actions section is unavailable
+        Then verify there are no package actions available
         Then verify the details section exists
         Then verify the package details title contains "Appendix K Amendment Package"
         Then verify the waiver authority header exists
@@ -104,8 +105,9 @@ Feature: Waiver Package Details View: Appendix K Amendment for a CMS User
         Then verify there is a Final Disposition Date header in the details section
         Then verify there is an Approved Effective Date in the details section
         Then verify the description has a value displayed in the details section
-        Then verify the attachments section exists
-        Then verify the download all button exists
+        Then verify the Initial Submission caret button exists
+        Then expand the Initial Submission caret
+        Then verify the Initial Submission download all button exists
         Then verify the additional information section exists
 
 
@@ -115,7 +117,7 @@ Feature: Waiver Package Details View: Appendix K Amendment for a CMS User
         Then verify the package details page is visible
         Then verify 2 action cards exist
         Then verify the status on the card is "Approved"
-        Then verify the package actions section is unavailable
+        Then verify there are no package actions available
         Then verify the details section exists
         Then verify the package details title contains "Appendix K Amendment Package"
         Then verify the waiver authority header exists
@@ -138,8 +140,9 @@ Feature: Waiver Package Details View: Appendix K Amendment for a CMS User
         Then verify there is an Approved Effective Date in the details section
         Then verify the description has a value displayed in the details section
         Then verify the Proposed Effective Date is a date formatted like Mon dd yyyy
-        Then verify the attachments section exists
-        Then verify the download all button exists
+        Then verify the Initial Submission caret button exists
+        Then expand the Initial Submission caret
+        Then verify the Initial Submission download all button exists
         Then verify the additional information section exists
 
     Scenario: Screen Enhance: Appendix K Details View - Disapproved
@@ -148,7 +151,7 @@ Feature: Waiver Package Details View: Appendix K Amendment for a CMS User
         Then verify the package details page is visible
         Then verify 2 action cards exist
         Then verify the status on the card is "Disapproved"
-        Then verify the package actions section is unavailable
+        Then verify there are no package actions available
         Then verify the details section exists
         Then verify the package details title contains "Appendix K Amendment Package"
         Then verify the waiver authority header exists
@@ -170,8 +173,9 @@ Feature: Waiver Package Details View: Appendix K Amendment for a CMS User
         Then verify there is a Final Disposition Date header in the details section
         Then verify there is an Approved Effective Date in the details section
         Then verify the description has a value displayed in the details section
-        Then verify the attachments section exists
-        Then verify the download all button exists
+        Then verify the Initial Submission caret button exists
+        Then expand the Initial Submission caret
+        Then verify the Initial Submission download all button exists
         Then verify the additional information section exists
 
     Scenario: Screen Enhance: Appendix K Details View - Withdrawn
@@ -180,7 +184,7 @@ Feature: Waiver Package Details View: Appendix K Amendment for a CMS User
         Then verify the package details page is visible
         Then verify 2 action cards exist
         Then verify the status on the card is "Package Withdrawn"
-        Then verify the package actions section is unavailable
+        Then verify there are no package actions available
         Then verify the details section exists
         Then verify the package details title contains "Appendix K Amendment Package"
         Then verify the waiver authority header exists
@@ -202,8 +206,9 @@ Feature: Waiver Package Details View: Appendix K Amendment for a CMS User
         Then verify there is a Final Disposition Date header in the details section
         Then verify there is an Approved Effective Date in the details section
         Then verify the description has a value displayed in the details section
-        Then verify the attachments section exists
-        Then verify the download all button exists
+        Then verify the Initial Submission caret button exists
+        Then expand the Initial Submission caret
+        Then verify the Initial Submission download all button exists
         Then verify the additional information section exists
 
     Scenario: Screen Enhance: Appendix K Details View - Pending - Concurrence
@@ -212,7 +217,7 @@ Feature: Waiver Package Details View: Appendix K Amendment for a CMS User
         Then verify the package details page is visible
         Then verify 2 action cards exist
         Then verify the status on the card is "Pending - Concurrence"
-        Then verify the package actions section is unavailable
+        Then verify there are no package actions available
         Then verify the details section exists
         Then verify the package details title contains "Appendix K Amendment Package"
         Then verify the waiver authority header exists
@@ -234,8 +239,9 @@ Feature: Waiver Package Details View: Appendix K Amendment for a CMS User
         Then verify there is a Final Disposition Date header in the details section
         Then verify there is an Approved Effective Date in the details section
         Then verify the description has a value displayed in the details section
-        Then verify the attachments section exists
-        Then verify the download all button exists
+        Then verify the Initial Submission caret button exists
+        Then expand the Initial Submission caret
+        Then verify the Initial Submission download all button exists
         Then verify the additional information section exists
 
     Scenario: Screen Enhance: Appendix K Details View - Pending - Approval
@@ -244,7 +250,7 @@ Feature: Waiver Package Details View: Appendix K Amendment for a CMS User
         Then verify the package details page is visible
         Then verify 2 action cards exist
         Then verify the status on the card is "Pending - Approval"
-        Then verify the package actions section is unavailable
+        Then verify there are no package actions available
         Then verify the details section exists
         Then verify the package details title contains "Appendix K Amendment Package"
         Then verify the waiver authority header exists
@@ -266,6 +272,22 @@ Feature: Waiver Package Details View: Appendix K Amendment for a CMS User
         Then verify there is a Final Disposition Date header in the details section
         Then verify there is an Approved Effective Date in the details section
         Then verify the description has a value displayed in the details section
-        Then verify the attachments section exists
-        Then verify the download all button exists
+        Then verify the Initial Submission caret button exists
+        Then expand the Initial Submission caret
+        Then verify the Initial Submission download all button exists
         Then verify the additional information section exists
+
+    Scenario: Appendix K Details View - Enable Formal RAI Response Withdraw
+        Then click the Pending checkbox
+        Then Click on Filter Button
+        Then search for "MD-22958.R00.01"
+        Then click the Waiver Number link in the first row
+        Then verify the package details page is visible
+        Then verify the status on the card is "Pending"
+        Then verify Enable Formal RAI Response Withdraw package action exists
+        Then click Enable Formal RAI Response Withdraw package action
+        Then Click on Submit Button
+        Then verify the status on the card is "Pending"
+        Then verify the sub status on the card is Withdraw Formal RAI Response Enabled
+        Then verify package actions header is visible
+        Then verify Disable Formal RAI Response Withdraw package action exists

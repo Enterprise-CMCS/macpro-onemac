@@ -19,7 +19,6 @@ const resetIds = [
   "MD-22-0283-9434",
   "MD.12896",
   "MD.12893",
-  "MD.12958",
   "MD.38430",
   "MD.123456",
   "MD-12896.R00.00",
@@ -75,6 +74,19 @@ const snapshotIds = [
   "MD-23-4441-VM",
   "MD-22-2206-VM",
   "MD-22-2207-VM",
+  "MD-23-7650-VM ",
+  "MD-22-2401-VM",
+  "MD-23-7652-VM",
+  "MD-22-2400-VM",
+  "MD-22116.R00.00",
+  "MD-22204.R00.00",
+  "MD-22116.R01.00",
+  "MD-22204.R01.00",
+  "MD-22958.R00.02",
+  "MD-22958.R00.01",
+  "MD-22204.R00.02",
+  "MD-22204.R00.01",
+  "MD-22-2200-VM",
   "MD-12958.R00.02",
   "MD-22002.R00.00",
   "MD-22007.R00.00",
@@ -204,5 +216,6 @@ export const main = async (event) => {
     })
   );
   console.log("lambda thinks " + promiseItems.length + " Items are deleted");
+
   return "Done";
 };

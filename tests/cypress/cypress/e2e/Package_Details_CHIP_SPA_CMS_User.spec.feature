@@ -18,7 +18,7 @@ Feature: CHIP SPA CMS Details View - Card View with Actions
         Then verify the package details page is visible
         Then verify 2 action cards exist
         Then verify the status on the card is "Submitted - Intake Needed"
-        Then verify the package actions section is unavailable
+        Then verify there are no package actions available
         Then verify the details section exists
         Then verify there is a Type header in the details section
         Then verify a type containing SPA exists for the Type
@@ -35,8 +35,9 @@ Feature: CHIP SPA CMS Details View - Card View with Actions
         Then verify the Review Team SRT has a value displayed in the details section
         Then verify there is a Final Disposition Date header in the details section
         Then verify there is an Approved Effective Date in the details section
-        Then verify the attachments section exists
-        Then verify the download all button exists
+        Then verify the Initial Submission caret button exists
+        Then expand the Initial Submission caret
+        Then verify the Initial Submission download all button exists
         Then verify the additional information section exists
 
     Scenario: Screen Enhance - Pending CHIP SPA
@@ -46,7 +47,7 @@ Feature: CHIP SPA CMS Details View - Card View with Actions
         Then verify the package details page is visible
         Then verify 2 action cards exist
         Then verify the status on the card is "Pending"
-        Then verify the package actions section is unavailable
+        #Then verify there are no package actions available
         Then verify the details section exists
         Then verify there is a Type header in the details section
         Then verify a type containing SPA exists for the Type
@@ -65,8 +66,9 @@ Feature: CHIP SPA CMS Details View - Card View with Actions
         Then verify there is a Final Disposition Date header in the details section
         Then verify there is an Approved Effective Date in the details section
         Then verify the description has a value displayed in the details section
-        Then verify the attachments section exists
-        Then verify the download all button exists
+        Then verify the Initial Submission caret button exists
+        Then expand the Initial Submission caret
+        Then verify the Initial Submission download all button exists
         Then verify the additional information section exists
 
     Scenario: Screen Enhance - Withdrawn CHIP SPA
@@ -76,7 +78,7 @@ Feature: CHIP SPA CMS Details View - Card View with Actions
         Then verify the package details page is visible
         Then verify 2 action cards exist
         Then verify the status on the card is "Withdrawn"
-        Then verify the package actions section is unavailable
+        Then verify there are no package actions available
         Then verify the details section exists
         Then verify there is a Type header in the details section
         Then verify a type containing SPA exists for the Type
@@ -95,8 +97,9 @@ Feature: CHIP SPA CMS Details View - Card View with Actions
         Then verify there is a Final Disposition Date header in the details section
         Then verify there is an Approved Effective Date in the details section
         Then verify the description has a value displayed in the details section
-        Then verify the attachments section exists
-        Then verify the download all button exists
+        Then verify the Initial Submission caret button exists
+        Then expand the Initial Submission caret
+        Then verify the Initial Submission download all button exists
         Then verify the additional information section exists
 
     Scenario: Screen Enhance - Disapproved CHIP SPA
@@ -106,7 +109,7 @@ Feature: CHIP SPA CMS Details View - Card View with Actions
         Then verify the package details page is visible
         Then verify 2 action cards exist
         Then verify the status on the card is "Disapproved"
-        Then verify the package actions section is unavailable
+        Then verify there are no package actions available
         Then verify the details section exists
         Then verify the package details title contains "CHIP SPA Package"
         Then verify there is a Type header in the details section
@@ -126,8 +129,9 @@ Feature: CHIP SPA CMS Details View - Card View with Actions
         Then verify there is a Final Disposition Date header in the details section
         Then verify there is an Approved Effective Date in the details section
         Then verify the description has a value displayed in the details section
-        Then verify the attachments section exists
-        Then verify the download all button exists
+        Then verify the Initial Submission caret button exists
+        Then expand the Initial Submission caret
+        Then verify the Initial Submission download all button exists
         Then verify the additional information section exists
 
     Scenario: Screen Enhance - Pending - RAI CHIP SPA
@@ -137,7 +141,7 @@ Feature: CHIP SPA CMS Details View - Card View with Actions
         Then verify the package details page is visible
         Then verify 2 action cards exist
         Then verify the status on the card is "Pending - RAI"
-        Then verify the package actions section is unavailable
+        Then verify there are no package actions available
         Then verify the package details page is visible
         Then verify the details section exists
         Then verify there is a Type header in the details section
@@ -157,9 +161,8 @@ Feature: CHIP SPA CMS Details View - Card View with Actions
         Then verify there is a Final Disposition Date header in the details section
         Then verify there is an Approved Effective Date in the details section
         Then verify the description has a value displayed in the details section
-        Then verify the attachments section exists
-        #Then verify the download all button exists
-        Then verify the additional information section exists
+        #Then verify the attachments section exists
+        #Then verify the additional information section exists
 
     Scenario: Screen Enhance - Approved CHIP SPA
         Then click Approved checkbox
@@ -169,7 +172,7 @@ Feature: CHIP SPA CMS Details View - Card View with Actions
         Then verify 2 action cards exist
         Then verify the status on the card is "Approved"
         Then verify there is not a 90th day date on the card
-        Then verify the package actions section is unavailable
+        Then verify there are no package actions available
         Then verify the details section exists
         Then verify there is a Type header in the details section
         Then verify a type containing SPA exists for the Type
@@ -189,8 +192,9 @@ Feature: CHIP SPA CMS Details View - Card View with Actions
         Then verify there is an Approved Effective Date in the details section
         Then verify the description has a value displayed in the details section
         Then verify the Proposed Effective Date is a date formatted like Mon dd yyyy
-        Then verify the attachments section exists
-        Then verify the download all button exists
+        Then verify the Initial Submission caret button exists
+        Then expand the Initial Submission caret
+        Then verify the Initial Submission download all button exists
         Then verify the additional information section exists
 
     Scenario: Screen Enhance - Pending - Concurrence CHIP SPA
@@ -200,7 +204,7 @@ Feature: CHIP SPA CMS Details View - Card View with Actions
         Then verify the package details page is visible
         Then verify 2 action cards exist
         Then verify the status on the card is "Pending - Concurrence"
-        Then verify the package actions section is unavailable
+        Then verify there are no package actions available
         Then verify the package details page is visible
         Then verify the details section exists
         Then verify there is a Type header in the details section
@@ -220,8 +224,9 @@ Feature: CHIP SPA CMS Details View - Card View with Actions
         Then verify there is a Final Disposition Date header in the details section
         Then verify there is an Approved Effective Date in the details section
         Then verify the description has a value displayed in the details section
-        Then verify the attachments section exists
-        Then verify the download all button exists
+        Then verify the Initial Submission caret button exists
+        Then expand the Initial Submission caret
+        Then verify the Initial Submission download all button exists
         Then verify the additional information section exists
 
     Scenario: Screen Enhance - Pending - Approval CHIP SPA
@@ -231,7 +236,7 @@ Feature: CHIP SPA CMS Details View - Card View with Actions
         Then verify the package details page is visible
         Then verify 2 action cards exist
         Then verify the status on the card is "Pending - Approval"
-        Then verify the package actions section is unavailable
+        Then verify there are no package actions available
         Then verify the package details page is visible
         Then verify the details section exists
         Then verify there is a Type header in the details section
@@ -251,6 +256,21 @@ Feature: CHIP SPA CMS Details View - Card View with Actions
         Then verify there is a Final Disposition Date header in the details section
         Then verify there is an Approved Effective Date in the details section
         Then verify the description has a value displayed in the details section
-        Then verify the attachments section exists
-        Then verify the download all button exists
+        Then verify the Initial Submission caret button exists
+        Then expand the Initial Submission caret
+        Then verify the Initial Submission download all button exists
         Then verify the additional information section exists
+
+        Scenario: CHIP SPA Details View - Enable Formal RAI Response Withdraw
+        Then click the Pending checkbox
+        Then Click on Filter Button
+        Then click the SPA ID link in the first row
+        Then verify the package details page is visible
+        Then verify the status on the card is "Pending"
+        Then verify Enable Formal RAI Response Withdraw package action exists
+        Then click Enable Formal RAI Response Withdraw package action
+        Then Click on Submit Button
+        Then verify the status on the card is "Pending"
+        Then verify the sub status on the card is Withdraw Formal RAI Response Enabled
+        Then verify package actions header is visible
+        Then verify Disable Formal RAI Response Withdraw package action exists

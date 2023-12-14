@@ -5,6 +5,7 @@ import dynamoDb from "./libs/dynamodb-lib";
 import { getUser } from "./getUser";
 import { cmsStatusUIMap, stateStatusUIMap } from "./libs/status-lib";
 import { validateUserReadOnly } from "./utils/validateUser";
+import { getActionsForPackage } from "./utils/actionDelegate";
 
 const s3 = new AWS.S3();
 
@@ -27,20 +28,13 @@ async function generateSignedUrl(item) {
 }
 
 async function assignAttachmentUrls(item) {
-  await generateSignedUrl(item);
-
-  if (item?.raiResponses?.length > 0) {
-    for (const child of item.raiResponses) {
-      await generateSignedUrl(child);
-    }
-  }
-
-  if (item?.withdrawalRequests?.length > 0) {
-    for (const child of item.withdrawalRequests) {
+  if (item?.reverseChrono?.length > 0 && Array.isArray(item.reverseChrono)) {
+    for (const child of item.reverseChrono) {
       await generateSignedUrl(child);
     }
   }
 }
+
 export const getDetails = async (event) => {
   const componentId = event?.pathParameters?.id;
   let userRoleObj;
@@ -80,6 +74,7 @@ export const getDetails = async (event) => {
         7
       );
 
+    const originalStatus = result.Item.currentStatus;
     result.Item.currentStatus = userRoleObj.isCMSUser
       ? cmsStatusUIMap[result.Item.currentStatus]
       : stateStatusUIMap[result.Item.currentStatus];
@@ -91,6 +86,21 @@ export const getDetails = async (event) => {
 
     if (!userRoleObj.isCMSUser && result.Item.reviewTeam)
       delete result.Item.reviewTeam;
+
+    result.Item.actions = getActionsForPackage(
+      result.Item.componentType,
+      originalStatus,
+      !!result.Item.latestRaiResponseTimestamp,
+      result.Item.subStatus,
+      userRoleObj,
+      "detail"
+    );
+
+    if (result.Item.subStatus) {
+      result.Item.subStatus = userRoleObj.isCMSUser
+        ? cmsStatusUIMap[result.Item.subStatus]
+        : stateStatusUIMap[result.Item.subStatus];
+    }
 
     return { ...result.Item };
   } catch (e) {

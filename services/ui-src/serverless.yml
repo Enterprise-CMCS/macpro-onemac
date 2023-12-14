@@ -5,8 +5,13 @@ frameworkVersion: "3"
 plugins:
   - serverless-plugin-scripts
   - serverless-s3-sync
-  - serverless-cloudfront-invalidate
   - serverless-s3-bucket-helper
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: us-east-1
+  stage: dev
 
 custom:
   stage: ${opt:stage, self:provider.stage}
@@ -18,21 +23,15 @@ custom:
   s3_attachments_bucket_region: ${cf:uploads-${self:custom.stage}.Region}
   s3_attachments_bucket_name: ${cf:uploads-${self:custom.stage}.AttachmentsBucketName}
   ui_s3_bucket_name: ${cf:ui-${self:custom.stage}.S3BucketName}
-  ui_cloudfront_distribution_id: ${cf:ui-${self:custom.stage}.CloudFrontDistributionId}
   application_endpoint_url: ${cf:ui-${self:custom.stage}.CloudFrontEndpointUrl}
   cognito_user_pool_client_id: ${cf:ui-auth-${self:custom.stage}.UserPoolClientId}
   cognito_user_pool_client_domain: ${cf:ui-auth-${self:custom.stage}.UserPoolClientDomain}
+  ui_cloudfront_distribution_id: ${cf:ui-${self:custom.stage}.CloudFrontDistributionId}  
 
   s3Sync:
     - bucketName: ${self:custom.ui_s3_bucket_name}
       localDir: ./build
       deleteRemoved: true
-
-  cloudfrontInvalidate:
-    distributionId: ${self:custom.ui_cloudfront_distribution_id}
-    items:
-      - "/*"
-
 
   scripts:
     hooks:
@@ -53,11 +52,6 @@ custom:
         export S3_ATTACHMENTS_BUCKET_NAME=${self:custom.s3_attachments_bucket_name}
         ./env.sh
         cp public/env-config.js build/env-config.js
-
-# The `provider` block defines where your service will be deployed
-provider:
-  name: aws
-  runtime: nodejs14.x
-  region: us-east-1
-  stage: dev
-  
+      deploy:finalize: |
+        set -e
+        aws cloudfront create-invalidation --region ${self:provider.region} --distribution-id ${self:custom.ui_cloudfront_distribution_id} --paths "/*"

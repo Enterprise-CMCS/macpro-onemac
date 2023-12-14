@@ -1,0 +1,76 @@
+[{
+    "pk": "MD-5536.R00.TE01",
+    "sk": "OneMAC#1675108098000",
+    "additionalInformation": "This is just a test",
+    "attachments": [
+     {
+      "contentType": "application/pdf",
+      "filename": "15MB.pdf",
+      "s3Key": "1698684572020/15MB.pdf",
+      "title": "Waiver Extension Request",
+      "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1698684572020/15MB.pdf"
+     }
+    ],
+    "clockEndTimestamp": 1706464175123,
+    "componentId": "MD-5536.R00.TE01",
+    "componentType": "waiverextensionc",
+    "currentStatus": "TE Requested",
+    "eventTimestamp": 1675108098000,
+    "GSI1pk": "OneMAC#submitwaiverextensionc",
+    "GSI1sk": "MD-5536.R00.TE01",
+    "parentId": "MD-2200.R00.00",
+    "parentType": "waivernew",
+    "submissionTimestamp": 1675108098000,
+    "submitterEmail": "statesubmitter@nightwatch.test",
+    "submitterName": "Statesubmitter Nightwatch",
+    "temporaryExtensionType": "1915(b)",
+    "territory": "MD",
+    "transmittalNumberWarningMessage": ""
+   },
+   {
+    "pk": "MD-5536.R00.TE01",
+    "sk": "Package",
+    "adminChanges": [
+    ],
+    "componentId": "MD-5536.R00.TE01",
+    "componentType": "waiverextensionc",
+    "cpocName": "-- --",
+    "currentStatus": "TE Requested",
+    "description": "-- --",
+    "GSI1pk": "OneMAC#waiver",
+    "GSI1sk": "MD-5536.R00.TE01",
+    "GSI2pk": "MD-2200.R00.00",
+    "GSI2sk": "waiverextensionc",
+    "lastEventTimestamp": 1675108098000,
+    "parentId": "MD-2200.R00.00",
+    "parentType": "waivernew",
+    "reverseChrono": [
+     {
+      "action": "Submitted",
+      "additionalInformation": "This is just a test",
+      "attachments": [
+       {
+        "contentType": "application/pdf",
+        "filename": "15MB.pdf",
+        "s3Key": "1698684572020/15MB.pdf",
+        "title": "Waiver Extension Request",
+        "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1698684572020/15MB.pdf"
+       }
+      ],
+      "currentStatus": "TE Requested",
+      "eventTimestamp": 1675108098000,
+      "timestamp": 1675108098000,
+      "type": "Initial Package"
+     }
+    ],
+    "reviewTeam": [
+    ],
+    "reviewTeamEmailList": [
+    ],
+    "subject": "-- --",
+    "submissionTimestamp": 1675108098000,
+    "submitterEmail": "statesubmitter@nightwatch.test",
+    "submitterName": "Statesubmitter Nightwatch",
+    "temporaryExtensionType": "1915(b)"
+   }
+]

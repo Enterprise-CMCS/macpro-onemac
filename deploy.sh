@@ -5,10 +5,10 @@ stage=${1:-dev}
 install_deps() {
   if [ "$CI" == "true" ]; then # If we're in a CI system
     if [ ! -d "node_modules" ]; then # If we don't have any node_modules (CircleCI cache miss scenario), run npm ci.  Otherwise, we're all set, do nothing.
-      npm ci
+      npm ci --legacy-peer-deps
     fi
   else # We're not in a CI system, let's npm install
-    npm install
+    npm install --legacy-peer-deps
   fi
 }
 

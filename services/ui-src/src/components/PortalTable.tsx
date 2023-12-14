@@ -33,6 +33,8 @@ import {
   LOCAL_STORAGE_TABLE_FILTERS_SPA,
   LOCAL_STORAGE_TABLE_FILTERS_WAIVER,
 } from "../utils/StorageKeys";
+import { FilterChipTray } from "./FilterChipTray";
+import { FilterChipProvider } from "../containers/FilterChipContext";
 export { CustomFilterTypes, CustomFilterUi } from "./SearchAndFilter";
 
 export type TableProps<V extends {}> = {
@@ -68,6 +70,7 @@ export default function PortalTable<V extends {} = {}>({
     rows,
     state,
     setAllFilters,
+    setFilter,
     setGlobalFilter,
     prepareRow,
   } = useTable<V>(
@@ -116,16 +119,23 @@ export default function PortalTable<V extends {} = {}>({
   return (
     <>
       {withSearchBar && (
-        <SearchAndFilter
-          internalName={internalName}
-          allRows={preGlobalFilteredRows}
-          // @ts-ignore FIXME remove when react-table types are improved
-          columnsInternal={columns}
-          onSearch={setGlobalFilter}
-          pageContentRef={pageContentRef}
-          searchBarTitle={searchBarTitle}
-          setAllFilters={setAllFilters}
-        />
+        <FilterChipProvider tab={internalName}>
+          <SearchAndFilter
+            internalName={internalName}
+            allRows={preGlobalFilteredRows}
+            // @ts-ignore FIXME remove when react-table types are improved
+            columnsInternal={columns}
+            onSearch={setGlobalFilter}
+            pageContentRef={pageContentRef}
+            searchBarTitle={searchBarTitle}
+            setAllFilters={setAllFilters}
+          />
+          <FilterChipTray
+            recordCount={rows.length}
+            filters={filters}
+            setFilter={setFilter}
+          />
+        </FilterChipProvider>
       )}
       <div className="table-wrapper">
         <table className={props.className} {...getTableProps()}>

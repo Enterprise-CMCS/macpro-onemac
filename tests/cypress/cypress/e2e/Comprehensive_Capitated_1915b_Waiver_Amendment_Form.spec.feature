@@ -122,7 +122,6 @@ Feature: Create a waiver Amendment
     #     Then search for approved Initial Waiver Number 1
     #     Then click the actions button in row one
     #     Then verify the Add Amendment button is displayed
-    #     Then click the Add Amendment button
     #     Then verify All other 1915 b Waivers is displayed under Waiver Authority
     #     Then type new waiver amendment number 6 in 1915b Waiver Amendment Number field
     #     Then select proposed effective date 3 months from today

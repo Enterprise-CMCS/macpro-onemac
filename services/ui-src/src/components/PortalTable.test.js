@@ -11,9 +11,26 @@ import userEvent from "@testing-library/user-event";
 import selectEvent from "react-select-event";
 
 import PortalTable, { CustomFilterTypes, CustomFilterUi } from "./PortalTable";
+import { MemoryRouter } from "react-router-dom";
+import { AppContext } from "../libs/contextLib";
+import { stateSubmitterInitialAuthState } from "../libs/testDataAppContext";
+
+const ContextWrapper = ({ children }) => {
+  return (
+    <MemoryRouter>
+      <AppContext.Provider
+        value={{
+          ...stateSubmitterInitialAuthState,
+        }}
+      >
+        {children}
+      </AppContext.Provider>
+    </MemoryRouter>
+  );
+};
 
 it("renders without crashing", () => {
-  render(<PortalTable columns={[]} data={[]} />);
+  render(<PortalTable columns={[]} data={[]} />, { wrapper: ContextWrapper });
 });
 
 describe("column headers", () => {
@@ -25,7 +42,8 @@ describe("column headers", () => {
           { Header: "Second Column", id: "my-second-column" },
         ]}
         data={[]}
-      />
+      />,
+      { wrapper: ContextWrapper }
     );
 
     expect(screen.getByRole("columnheader", { name: /first/i })).toBeVisible();
@@ -41,7 +59,8 @@ describe("column headers", () => {
         ]}
         data={[]}
         initialState={{ hiddenColumns: ["my-first-column"] }}
-      />
+      />,
+      { wrapper: ContextWrapper }
     );
     expect(screen.queryByRole("columnheader", { name: /first/i })).toBeNull();
     expect(screen.getByRole("columnheader", { name: /second/i })).toBeVisible();
@@ -57,7 +76,9 @@ it("displays rows when tabular data is provided", () => {
     { firstValue: 1, secondValue: "two" },
     { firstValue: 3, secondValue: "four" },
   ];
-  render(<PortalTable columns={columns} data={data} />);
+  render(<PortalTable columns={columns} data={data} />, {
+    wrapper: ContextWrapper,
+  });
 
   const rows = screen.getAllByRole("row");
   expect(rows).toHaveLength(data.length + 1); // includes table header row
@@ -80,12 +101,16 @@ it("displays rows when tabular data is provided", () => {
 describe("search and filter features", () => {
   describe("search", () => {
     it("renders a search bar when passed `withSearchBar` prop", () => {
-      render(<PortalTable columns={[]} data={[]} withSearchBar />);
+      render(<PortalTable columns={[]} data={[]} withSearchBar />, {
+        wrapper: ContextWrapper,
+      });
       expect(screen.getByRole("textbox", { name: /search/i })).toBeVisible();
     });
 
     it("responds to user input in search bar", () => {
-      render(<PortalTable columns={[]} data={[]} withSearchBar />);
+      render(<PortalTable columns={[]} data={[]} withSearchBar />, {
+        wrapper: ContextWrapper,
+      });
 
       const searchBar = screen.getByRole("textbox", { name: /search/i });
       fireEvent.change(searchBar, { target: { value: "foo bar baz" } });
@@ -93,7 +118,9 @@ describe("search and filter features", () => {
     });
 
     it("allows user to clear search bar", () => {
-      render(<PortalTable columns={[]} data={[]} withSearchBar />);
+      render(<PortalTable columns={[]} data={[]} withSearchBar />, {
+        wrapper: ContextWrapper,
+      });
 
       const searchBar = screen.getByRole("textbox", { name: /search/i });
       fireEvent.change(searchBar, { target: { value: "foo bar baz" } });
@@ -109,7 +136,8 @@ describe("search and filter features", () => {
           columns={[{ Header: "Foo", accessor: "foo" }]}
           data={[{ foo: "bbb" }]}
           withSearchBar
-        />
+        />,
+        { wrapper: ContextWrapper }
       );
 
       expect(screen.queryByRole("status")).toBeNull();
@@ -127,7 +155,9 @@ describe("search and filter features", () => {
 
   describe("filter", () => {
     it("renders a button to open filter pane when passed `withSearchBar` prop", () => {
-      render(<PortalTable columns={[]} data={[]} withSearchBar />);
+      render(<PortalTable columns={[]} data={[]} withSearchBar />, {
+        wrapper: ContextWrapper,
+      });
       expect(screen.getByRole("button", { name: /filter/i })).toBeVisible();
     });
 
@@ -141,7 +171,8 @@ describe("search and filter features", () => {
             withSearchBar
             pageContentRef={myRef}
           />
-        </div>
+        </div>,
+        { wrapper: ContextWrapper }
       );
       myRef.current = document.getElementById("myContainer");
 
@@ -165,7 +196,8 @@ describe("search and filter features", () => {
             withSearchBar
             pageContentRef={myRef}
           />
-        </div>
+        </div>,
+        { wrapper: ContextWrapper }
       );
       myRef.current = document.getElementById("myContainer");
 
@@ -205,7 +237,8 @@ describe("search and filter features", () => {
             withSearchBar
             pageContentRef={myRef}
           />
-        </div>
+        </div>,
+        { wrapper: ContextWrapper }
       );
       myRef.current = document.getElementById("myContainer");
 
@@ -265,7 +298,8 @@ describe("search and filter features", () => {
             withSearchBar
             pageContentRef={myRef}
           />
-        </div>
+        </div>,
+        { wrapper: ContextWrapper }
       );
       myRef.current = document.getElementById("myContainer");
 
@@ -330,7 +364,8 @@ describe("search and filter features", () => {
             withSearchBar
             pageContentRef={myRef}
           />
-        </div>
+        </div>,
+        { wrapper: ContextWrapper }
       );
       myRef.current = document.getElementById("myContainer");
       fireEvent.click(screen.getByRole("button", { name: /filter/i }));
@@ -382,7 +417,8 @@ describe("search and filter features", () => {
             withSearchBar
             pageContentRef={myRef}
           />
-        </div>
+        </div>,
+        { wrapper: ContextWrapper }
       );
       myRef.current = document.getElementById("myContainer");
 
@@ -433,7 +469,8 @@ describe("search and filter features", () => {
             withSearchBar
             pageContentRef={myRef}
           />
-        </div>
+        </div>,
+        { wrapper: ContextWrapper }
       );
       myRef.current = document.getElementById("myContainer");
 

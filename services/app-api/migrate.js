@@ -1,72 +1,45 @@
 import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
 
-import { temporaryExtensions } from "./migrateData";
-
-/**
- * Perform data migrations
- */
-
 const tableName = process.env.oneMacTableName;
 
-function constructUpdateParams(pk, sk, value) {
+const oldStatus = "RAI Response Withdraw Enabled"; // The status you want to update from
+const newStatus = "Withdraw Formal RAI Response Enabled"; // The status you want to update to
+
+async function updateItems() {
   const params = {
     TableName: tableName,
-    Key: { pk: pk, sk: sk },
-    UpdateExpression: "set temporaryExtensionType = :t",
+    FilterExpression: "currentStatus = :oldStatus or subStatus = :oldStatus",
     ExpressionAttributeValues: {
-      ":t": value,
+      ":oldStatus": oldStatus,
     },
-    ReturnValues: "UPDATED_NEW",
   };
 
-  if (value === "1915(b)") {
-    params.UpdateExpression += ", componentType = :c, GSI1pk = :gsi1pk";
-    params.ExpressionAttributeValues[":c"] = "waiverextensionb";
-    params.ExpressionAttributeValues[":gsi1pk"] =
-      "OneMAC#submitwaiverextensionb";
-  } else if (value === "1915(c)") {
-    params.UpdateExpression += ", componentType = :c, GSI1pk = :gsi1pk";
-    params.ExpressionAttributeValues[":c"] = "waiverextensionc";
-    params.ExpressionAttributeValues[":gsi1pk"] =
-      "OneMAC#submitwaiverextensionc";
-  }
-
-  return params;
-}
-
-async function updateItemsBasedOnMappedList() {
-  for (const [pk, value] of Object.entries(temporaryExtensions)) {
-    const queryParams = {
-      TableName: tableName,
-      IndexName: "GSI1",
-      KeyConditionExpression: "GSI1pk = :gsi1pk and GSI1sk = :gsi1sk",
-      ExpressionAttributeValues: {
-        ":gsi1pk": "OneMAC#submitwaiverextension",
-        ":gsi1sk": pk,
-      },
-    };
-
-    try {
-      const queryResult = await dynamoDb.query(queryParams);
-      console.log("Query result:", queryResult.Items);
-      if (queryResult.Items.length === 0) {
-        console.log("No items found for pk:", pk);
-        continue;
-      }
-      const sk = queryResult.Items[0].sk;
-      const params = constructUpdateParams(pk, sk, value);
-
-      console.log("Update params:", params);
-      const result = await dynamoDb.update(params);
-      console.log("Update result:", result);
-    } catch (err) {
-      console.log("Error:", err);
+  try {
+    const data = await dynamoDb.scan(params);
+    for (const item of data.Items) {
+      const updateParams = {
+        TableName: tableName,
+        Key: {
+          pk: item.pk,
+          sk: item.sk,
+        },
+        UpdateExpression:
+          item.currentStatus === oldStatus
+            ? "set currentStatus = :newStatus"
+            : "set subStatus = :newStatus",
+        ExpressionAttributeValues: { ":newStatus": newStatus },
+      };
+      console.log("Updating item:", item.pk);
+      console.log("Update params:", updateParams);
+      await dynamoDb.update(updateParams);
     }
+    console.log("Update complete.");
+  } catch (error) {
+    console.error("Error updating items:", error);
   }
 }
 
 export const main = handler(async () => {
-  //update the list of known mapped items first
-  await updateItemsBasedOnMappedList();
+  await updateItems();
 });

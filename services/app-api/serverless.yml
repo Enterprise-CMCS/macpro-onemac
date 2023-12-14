@@ -8,7 +8,7 @@ package:
   individually: true
 
 plugins:
-  - serverless-bundle
+  - serverless-esbuild
   - serverless-dotenv-plugin
   - serverless-plugin-warmup
   - serverless-dynamodb-local
@@ -59,7 +59,7 @@ custom:
       domain:
         sources:
           - table: ${self:custom.oneMacTableName}
-            sources: [./one-seed.json]
+            sources: [./seed-data/all-data.json]
   serverless-offline:
     allowCache: true
   associateWaf:
@@ -332,6 +332,16 @@ functions:
           cors: true
           authorizer: aws_iam
 
+  validateParentOfWithdrawRAI:
+    handler: validation/validateParentOfWithdrawRAI.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: validateParentOfWithdrawRAI/{parentId}
+          method: get
+          cors: true
+          authorizer: aws_iam
+
   withdrawInitialWaiver:
     handler: form/withdrawInitialWaiver.main
     role: LambdaApiRole
@@ -407,6 +417,46 @@ functions:
     events:
       - http:
           path: withdrawWaiverAppendixK
+          method: post
+          cors: true
+          authorizer: aws_iam
+  
+  enableRaiWithdraw:
+    handler: form/enableRaiWithdraw.main
+    role: LambdaApiRole
+    timeout: 30
+    events:
+      - http:
+          path: enableRaiWithdraw
+          method: post
+          cors: true
+          authorizer: aws_iam
+
+  disableRaiWithdraw:
+    handler: form/disableRaiWithdraw.main
+    role: LambdaApiRole
+    timeout: 30
+    events:
+      - http:
+          path: disableRaiWithdraw
+          method: post
+          cors: true
+          authorizer: aws_iam
+
+  withdrawRAIResponse:
+    handler: form/withdrawRAIResponse.main
+    role: LambdaApiRole
+    timeout: 30
+    environment:
+      osgEmail: ${self:custom.reviewerEmail}
+      chipEmail: ${self:custom.reviewerCHIPEmail}
+      chippoEmail: ${self:custom.chipCcEmail}
+      dmcoEmail: ${self:custom.dmcoEmail}
+      dpoEmail: ${self:custom.dpoEmail}
+      dhcboEmail: ${self:custom.dhcbsooEmail}
+    events:
+      - http:
+          path: withdrawRAIResponse
           method: post
           cors: true
           authorizer: aws_iam
