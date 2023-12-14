@@ -556,6 +556,62 @@ export const oneMACFAQContent: FAQContent[] = [
         ),
       },
       {
+        anchorText: "medicaid-spa-withdraw-rai-response",
+        isOpen: false,
+        question: "How do I Withdraw a Formal RAI Response for a Medicaid SPA?",
+        answerJSX: (
+          <div>
+            <p>
+              If a state wishes to withdraw a Formal RAI Response, the state
+              must first contact their CMS Point of Contact so the action can be
+              enabled.
+            </p>
+            <ul>
+              <li>
+                As a CMS user, log in to OneMAC and select the link to the SPA
+                ID from the dashboard
+              </li>
+              <li>
+                Then, under Package Actions, select the Enable Formal RAI
+                Response Withdraw link, and then Select Submit.
+              </li>
+            </ul>
+            <p>
+              After receiving confirmation from your CMS Point of Contact that
+              the Withdraw Formal RAI Response feature has been enabled, locate
+              and select the Medicaid SPA submission package.
+            </p>
+            <p>
+              The package status remains as Under Review and a substatus of RAI
+              Response Withdraw Enabled will be reflected below the status for
+              the SPA or waiver submission package.
+            </p>
+            <p>
+              <b>
+                Note: These submissions will remain on the clock until the
+                package action has been taken.
+              </b>
+            </p>
+            <ul>
+              <li>
+                On the Formal RAI Response Withdraw Details page, upload any
+                supporting documentation and fill out the Additional Information
+                section explaining your need to withdraw the Formal RAI Response
+                (all required information is marked with an asterisk).
+              </li>
+              <li>Select Submit.</li>
+              <ul>
+                <li>
+                  You will receive a confirmation message asking if you are sure
+                  that you want to withdraw the Formal RAI Response. Select Yes,
+                  withdraw response.
+                </li>
+              </ul>
+            </ul>
+          </div>
+        ),
+      },
+      {
         anchorText: "withdraw-medicaid-spa",
         isOpen: false,
         question: "How do I Withdraw a Package for a  Medicaid SPA?",
@@ -637,6 +693,62 @@ export const oneMACFAQContent: FAQContent[] = [
                 Check your entries, as you cannot edit the submission after you
                 select Submit.
               </li>
+            </ul>
+          </div>
+        ),
+      },
+      {
+        anchorText: "chip-spa-withdraw-rai-response",
+        isOpen: false,
+        question: "How do I Withdraw a Formal RAI Response for a CHIP SPA?",
+        answerJSX: (
+          <div>
+            <p>
+              If a state wishes to withdraw a Formal RAI Response, the state
+              must first contact their CMS Point of Contact so the action can be
+              enabled.
+            </p>
+            <ul>
+              <li>
+                As a CMS user, log in to OneMAC and select the link to the SPA
+                ID from the dashboard
+              </li>
+              <li>
+                Then, under Package Actions, select the Enable Formal RAI
+                Response Withdraw link, and then Select Submit.
+              </li>
+            </ul>
+            <p>
+              After receiving confirmation from your CMS Point of Contact that
+              the Withdraw Formal RAI Response feature has been enabled, locate
+              and select the CHIP SPA submission package.
+            </p>
+            <p>
+              The package status remains as Under Review and a substatus of RAI
+              Response Withdraw Enabled will be reflected below the status for
+              the SPA or waiver submission package.
+            </p>
+            <p>
+              <b>
+                Note: These submissions will remain on the clock until the
+                package action has been taken.
+              </b>
+            </p>
+            <ul>
+              <li>
+                On the Formal RAI Response Withdraw Details page, upload any
+                supporting documentation and fill out the Additional Information
+                section explaining your need to withdraw the Formal RAI Response
+                (all required information is marked with an asterisk).
+              </li>
+              <li>Select Submit.</li>
+              <ul>
+                <li>
+                  You will receive a confirmation message asking if you are sure
+                  that you want to withdraw the Formal RAI Response. Select Yes,
+                  withdraw response.
+                </li>
+              </ul>
             </ul>
           </div>
         ),
@@ -1148,6 +1260,63 @@ export const oneMACFAQContent: FAQContent[] = [
                 Check your entries, as you cannot edit the submission after you
                 select Submit.
               </li>
+            </ul>
+          </div>
+        ),
+      },
+      {
+        anchorText: "waiver-withdraw-rai-response",
+        isOpen: false,
+        question:
+          "How do I Withdraw a Formal RAI Response for a Medicaid Waiver?",
+        answerJSX: (
+          <div>
+            <p>
+              If a state wishes to withdraw a Formal RAI Response, the state
+              must first contact their CMS Point of Contact so the action can be
+              enabled.
+            </p>
+            <ul>
+              <li>
+                As a CMS user, log in to OneMAC and select the link to the
+                Waiver number from the dashboard
+              </li>
+              <li>
+                Then, under Package Actions, select the Enable Formal RAI
+                Response Withdraw link, and then Select Submit.
+              </li>
+            </ul>
+            <p>
+              After receiving confirmation from your CMS Point of Contact that
+              the Withdraw Formal RAI Response feature has been enabled, locate
+              and select the Medicaid Waiver submission package.
+            </p>
+            <p>
+              The package status remains as Under Review and a substatus of RAI
+              Response Withdraw Enabled will be reflected below the status for
+              the SPA or waiver submission package.
+            </p>
+            <p>
+              <b>
+                Note: These submissions will remain on the clock until the
+                package action has been taken.
+              </b>
+            </p>
+            <ul>
+              <li>
+                On the Formal RAI Response Withdraw Details page, upload any
+                supporting documentation and fill out the Additional Information
+                section explaining your need to withdraw the Formal RAI Response
+                (all required information is marked with an asterisk).
+              </li>
+              <li>Select Submit.</li>
+              <ul>
+                <li>
+                  You will receive a confirmation message asking if you are sure
+                  that you want to withdraw the Formal RAI Response. Select Yes,
+                  withdraw response.
+                </li>
+              </ul>
             </ul>
           </div>
         ),
