@@ -582,9 +582,9 @@ export const oneMACFAQContent: FAQContent[] = [
               and select the Medicaid SPA submission package.
             </p>
             <p>
-              The package status remains as Under Review and a substatus of RAI
-              Response Withdraw Enabled will be reflected below the status for
-              the SPA or waiver submission package.
+              The package status remains as Under Review and a substatus of
+              Withdraw Formal RAI Response Enabled will be reflected below the
+              status for the SPA or waiver submission package.
             </p>
             <p>
               <b>
@@ -594,10 +594,10 @@ export const oneMACFAQContent: FAQContent[] = [
             </p>
             <ul>
               <li>
-                On the Formal RAI Response Withdraw Details page, upload any
-                supporting documentation and fill out the Additional Information
-                section explaining your need to withdraw the Formal RAI Response
-                (all required information is marked with an asterisk).
+                On the Formal RAI Response Withdraw form, upload any supporting
+                documentation and fill out the Additional Information section
+                explaining your need to withdraw the Formal RAI Response (all
+                required information is marked with an asterisk).
               </li>
               <li>Select Submit.</li>
               <ul>
@@ -724,9 +724,9 @@ export const oneMACFAQContent: FAQContent[] = [
               and select the CHIP SPA submission package.
             </p>
             <p>
-              The package status remains as Under Review and a substatus of RAI
-              Response Withdraw Enabled will be reflected below the status for
-              the SPA or waiver submission package.
+              The package status remains as Under Review and a substatus of
+              Withdraw Formal RAI Response Enabled will be reflected below the
+              status for the SPA or waiver submission package.
             </p>
             <p>
               <b>
@@ -736,10 +736,10 @@ export const oneMACFAQContent: FAQContent[] = [
             </p>
             <ul>
               <li>
-                On the Formal RAI Response Withdraw Details page, upload any
-                supporting documentation and fill out the Additional Information
-                section explaining your need to withdraw the Formal RAI Response
-                (all required information is marked with an asterisk).
+                On the Formal RAI Response Withdraw form, upload any supporting
+                documentation and fill out the Additional Information section
+                explaining your need to withdraw the Formal RAI Response (all
+                required information is marked with an asterisk).
               </li>
               <li>Select Submit.</li>
               <ul>
@@ -1292,9 +1292,9 @@ export const oneMACFAQContent: FAQContent[] = [
               and select the Medicaid Waiver submission package.
             </p>
             <p>
-              The package status remains as Under Review and a substatus of RAI
-              Response Withdraw Enabled will be reflected below the status for
-              the SPA or waiver submission package.
+              The package status remains as Under Review and a substatus of
+              Withdraw Formal RAI Response Enabled will be reflected below the
+              status for the SPA or waiver submission package.
             </p>
             <p>
               <b>
@@ -1304,10 +1304,10 @@ export const oneMACFAQContent: FAQContent[] = [
             </p>
             <ul>
               <li>
-                On the Formal RAI Response Withdraw Details page, upload any
-                supporting documentation and fill out the Additional Information
-                section explaining your need to withdraw the Formal RAI Response
-                (all required information is marked with an asterisk).
+                On the Formal RAI Response Withdraw form, upload any supporting
+                documentation and fill out the Additional Information section
+                explaining your need to withdraw the Formal RAI Response (all
+                required information is marked with an asterisk).
               </li>
               <li>Select Submit.</li>
               <ul>
