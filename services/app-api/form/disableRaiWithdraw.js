@@ -20,7 +20,7 @@ export const disableRaiWithdrawFormConfig = {
     return userRole.isCMSUser;
   },
   appendToSchema: {
-    parentId: Joi.string().required(),
+    parentId: Joi.string(),
     parentType: Joi.string().required(),
     submissionTimestamp: Joi.date().timestamp(),
     adminChanges: Joi.array().items(
