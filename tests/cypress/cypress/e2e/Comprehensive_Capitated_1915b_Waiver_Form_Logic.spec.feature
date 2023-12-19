@@ -32,7 +32,6 @@ Feature: Validate Waiver Form is checking ID format without period
         Then click on 1915b Comprehensive Capitated Waiver Amendment
         Then verify Waiver Authority contains "All other 1915(b) Waivers"
         Then into "Existing Waiver Number to Amend" type "MD-2200.R00.00"
-
         Then type "MD.123456" into the ID Input box
         Then set "Proposed Effective Date of 1915(b) Waiver Amendment" to 3 months from today
         Then verify the "1915(b) Waiver Amendment Number" error message is "The 1915(b) Waiver Amendment Number must be in the format of SS-####.R##.## or SS-#####.R##.##"

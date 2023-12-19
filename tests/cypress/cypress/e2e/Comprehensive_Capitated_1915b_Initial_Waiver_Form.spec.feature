@@ -44,7 +44,7 @@ Feature: 1915b Comprehensive Capitated Initial Waiver
 #        Then Remove file for 1915b Comprehensive Capitated Waiver Cost Effectiveness Spreadsheets
 #        Then attach "excel.xlsx" file to attachment 1
 #        Then verify the submit button is disabled
-        Then attach "excel.xlsx" file to attachment 2
+        Then attach "excel.xlsx" file to attachment 1
         Then verify the submit button is not disabled
 
     Scenario: create initial waiver from package dashboard and search it
