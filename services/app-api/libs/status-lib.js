@@ -10,7 +10,7 @@ export const cmsStatusUIMap = {
   [Workflow.ONEMAC_STATUS.APPROVED]: "Approved",
   [Workflow.ONEMAC_STATUS.DISAPPROVED]: "Disapproved",
   [Workflow.ONEMAC_STATUS.WITHDRAW_RAI_ENABLED]:
-    "RAI Response Withdraw Enabled",
+    "Withdraw Formal RAI Response Enabled",
   [Workflow.ONEMAC_STATUS.WITHDRAW_RAI_REQUESTED]:
     "Formal RAI Response - Withdrawal Requested",
   [Workflow.ONEMAC_STATUS.WITHDRAWAL_REQUESTED]: "Submitted - Intake Needed",
@@ -30,7 +30,7 @@ export const stateStatusUIMap = {
   [Workflow.ONEMAC_STATUS.APPROVED]: "Approved",
   [Workflow.ONEMAC_STATUS.DISAPPROVED]: "Disapproved",
   [Workflow.ONEMAC_STATUS.WITHDRAW_RAI_ENABLED]:
-    "RAI Response Withdraw Enabled",
+    "Withdraw Formal RAI Response Enabled",
   [Workflow.ONEMAC_STATUS.WITHDRAWAL_REQUESTED]: "Withdrawal Requested",
   [Workflow.ONEMAC_STATUS.WITHDRAW_RAI_REQUESTED]:
     "Formal RAI Response - Withdrawal Requested",

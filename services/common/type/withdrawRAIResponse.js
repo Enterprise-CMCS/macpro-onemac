@@ -24,5 +24,5 @@ export const withdrawRAIResponse = {
     "waiveramendment",
     "waiverappk",
   ],
-  allowedParentStatuses: ["RAI Response Withdraw Enabled"],
+  allowedParentStatuses: ["Withdraw Formal RAI Response Enabled"],
 };
