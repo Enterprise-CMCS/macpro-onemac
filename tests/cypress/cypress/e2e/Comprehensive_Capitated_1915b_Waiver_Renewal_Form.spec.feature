@@ -21,7 +21,6 @@ Feature: Waiver Renewal in Package Dashboard
         Then verify the "Existing Waiver Number to Renew" hint text is "Enter the existing waiver number in the format it was approved, using a dash after the two character state abbreviation."
         Then into "Existing Waiver Number to Renew" type "MD"
         Then into "1915(b) Waiver Renewal Number" type "MD-5533.R02.00"
-        Then into "1915(b) Waiver Renewal Number" type "MD-5533.R02.00"
         Then set "Proposed Effective Date of 1915(b) Waiver Renewal" to 3 months from today
         Then attach "excel.xlsx" file to attachment 1
         Then attach "excel.xlsx" file to attachment 2
@@ -70,7 +69,7 @@ Feature: Waiver Renewal in Package Dashboard
 #        Then Remove file for 1915b Comprehensive Capitated Waiver Cost Effectiveness Spreadsheets
 #        Then attach "excel.xlsx" file to attachment 1
 #        Then verify the submit button is disabled
-        Then attach "excel.xlsx" file to attachment 2
+        Then attach "excel.xlsx" file to attachment 1
         Then verify the submit button is not disabled
 
     Scenario: create waiver renewal from package dashboard and search it
