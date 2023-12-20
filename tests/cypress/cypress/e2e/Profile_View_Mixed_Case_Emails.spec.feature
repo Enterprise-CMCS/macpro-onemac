@@ -2,7 +2,7 @@ Feature: OY2-11159 Case sensitive emails causing login error
     Scenario: Verify user is able to login with all lowercase and manipulate url for email to mixedcase and all uppercase characters
         Given I am on Login Page
         When Clicking on Development Login
-        When Login with state submitter user
+        When Login with "an Active" "State Submitter" user
         Then i am on Dashboard Page
         Then navigate to "/profile/statesubmitter@nightwatch.test"
         Then Actual Full Name is Displayed

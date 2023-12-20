@@ -3,7 +3,7 @@ Feature: Helpdesk User
     Scenario: Verify that there are Dashboard and User Management tabs
         Given I am on Login Page
         When Clicking on Development Login
-        When Login with cms Help Desk User
+        When Login with "an Active" "Help Desk" user
         Then i am on Dashboard Page
         Then verify the SPAs tab is selected
         Then verify Export to Excel CSV is Displayed
