@@ -4,7 +4,7 @@ Feature: 2nd Clock in package details
 
     Scenario: Screen Enhance - Valid Pending Package - CMS
         When Clicking on Development Login
-        When Login as EUA CMS Read Only User
+        When Login with "an Active" "CMS Read Only" user
         Then search for "MD-22-2200-VM"
         Then click the SPA ID link in the first row
         Then verify the package details page is visible
@@ -16,7 +16,7 @@ Feature: 2nd Clock in package details
 
     Scenario: Screen Enhance - Valid Pending Package - State
         When Clicking on Development Login
-        When Login with state submitter user
+        When Login with "an Active" "State Submitter" user
         Then search for "MD-22-2200-VM"
         Then click the SPA ID link in the first row
         Then verify the package details page is visible
@@ -27,7 +27,7 @@ Feature: 2nd Clock in package details
 
     Scenario: Screen Enhance - Valid Pending - Concurrence Package - CMS
         When Clicking on Development Login
-        When Login as EUA CMS Read Only User
+        When Login with "an Active" "CMS Read Only" user
         Then search for "MD-22-2303-VM"
         Then click the SPA ID link in the first row
         Then verify the package details page is visible
@@ -39,7 +39,7 @@ Feature: 2nd Clock in package details
     
     Scenario: Screen Enhance - Valid Pending - Concurrence Package - State
         When Clicking on Development Login
-        When Login with state submitter user
+        When Login with "an Active" "State Submitter" user
         Then search for "MD-22-2303-VM"
         Then click the SPA ID link in the first row
         Then verify the package details page is visible
@@ -49,7 +49,7 @@ Feature: 2nd Clock in package details
 
     Scenario: Screen Enhance - Valid Pending - Approval Package - CMS
         When Clicking on Development Login
-        When Login as EUA CMS Read Only User
+        When Login with "an Active" "CMS Read Only" user
         Then click on the Waivers tab
         Then search for "MD-22004.R00.00"
         Then click the Waiver Number link in the first row
@@ -62,7 +62,7 @@ Feature: 2nd Clock in package details
     
     Scenario: Screen Enhance - Valid Pending - Approval Package -  State
         When Clicking on Development Login
-        When Login with state submitter user
+        When Login with "an Active" "State Submitter" user
         Then click on the Waivers tab
         Then search for "MD-22004.R00.00"
         Then click the Waiver Number link in the first row
@@ -73,7 +73,7 @@ Feature: 2nd Clock in package details
 
     Scenario: Screen Enhance - Without RAI Pending Package - CMS
         When Clicking on Development Login
-        When Login as EUA CMS Read Only User
+        When Login with "an Active" "CMS Read Only" user
         Then search for "MD-22-2300-VM"
         Then click the SPA ID link in the first row
         Then verify the package details page is visible
@@ -83,7 +83,7 @@ Feature: 2nd Clock in package details
 
     Scenario: Screen Enhance - Without RAI Pending Package - State
         When Clicking on Development Login
-        When Login with state submitter user
+        When Login with "an Active" "State Submitter" user
         Then search for "MD-22-2300-VM"
         Then click the SPA ID link in the first row
         Then verify the package details page is visible

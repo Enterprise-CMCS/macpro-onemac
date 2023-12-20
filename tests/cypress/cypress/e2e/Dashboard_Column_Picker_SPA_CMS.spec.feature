@@ -2,7 +2,7 @@ Feature: Package Dashboard - SPA Tab Column Picker for CMS User
     Background: Reoccurring steps
         Given I am on Login Page
         When Clicking on Development Login
-        When Login with cms System Admin
+        When Login with "an Active" "CMS System Admin" user
 
     Scenario: SPAs Tab - Screen enhancement
         Then verify show hide columns button exists

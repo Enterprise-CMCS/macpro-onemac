@@ -2,7 +2,7 @@ Feature: Package Dashboard - SPA Tab Column Picker
         Background: Reoccurring steps
         Given I am on Login Page
         When Clicking on Development Login
-        When Login with state submitter user
+        When Login with "an Active" "State Submitter" user
 
     Scenario: SPAs Tab - Screen enhancement
         Then verify show hide columns button exists

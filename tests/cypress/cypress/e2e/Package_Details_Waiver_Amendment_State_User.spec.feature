@@ -2,7 +2,7 @@ Feature: Waiver Package Details View: 1915 b Waiver Amendment for a State User
     Background: Reoccuring Steps
         Given I am on Login Page
         When Clicking on Development Login
-        When Login with state submitter user
+        When Login with "an Active" "State Submitter" user
         Then click on the Waivers tab
         Then Click on Filter Button
         Then click on Type
@@ -245,7 +245,7 @@ Scenario: Screen Enhance: 1915 b Waiver Amendment Details View - Withdraw RAI Re
         Then verify the package details page is visible
         Then verify the sub status on the card is Withdraw Formal RAI Response Enabled
         Then click Withdraw Formal RAI Response package action
-        Then type "Automated test to withdraw the RAI Response." in additional info textarea
+        Then into "Additional Information" type "Automated test to withdraw the RAI Response."
         Then Click the Submit Button without waiting
         Then verify Yes, withdraw response button exists
         Then click Yes, withdraw response button
