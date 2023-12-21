@@ -307,21 +307,29 @@ export const buildAnyPackage = async (packageId, config) => {
 
     putParams.Item?.reverseChrono.sort((a, b) => b.timestamp - a.timestamp);
 
-    // if the most recent OneMAC event is an enable withdraw RAI Response,
+    // start with removing subStatus
+    delete putParams.Item.subStatus;
+
+    console.log("reverse Chrono Events: ", putParams.Item.reverseChrono);
+    // if the most recent RAI Response OneMAC event is enabled,
     // then set sub status to "Withdraw RAI Enabled"
     // and freeze status to pending
     if (
       Array.isArray(putParams.Item?.reverseChrono) &&
-      putParams.Item.reverseChrono.length > 0 &&
-      putParams.Item.reverseChrono[0].currentStatus ===
-        ONEMAC_STATUS.WITHDRAW_RAI_ENABLED
+      putParams.Item.reverseChrono.length > 0
     ) {
-      putParams.Item.currentStatus = ONEMAC_STATUS.PENDING;
-      putParams.Item.subStatus = ONEMAC_STATUS.WITHDRAW_RAI_ENABLED;
-    } else {
-      console.log("setting sub status to null");
-      putParams.Item.subStatus = null;
-      delete putParams.Item.subStatus;
+      const raiEvents = putParams.Item.reverseChrono.filter(
+        (oneChrono) => oneChrono.type === "Formal RAI Response"
+      );
+      console.log("rai Events: ", raiEvents);
+      if (
+        Array.isArray(raiEvents) &&
+        raiEvents.length > 0 &&
+        raiEvents[0].currentStatus === ONEMAC_STATUS.WITHDRAW_RAI_ENABLED
+      ) {
+        putParams.Item.currentStatus = ONEMAC_STATUS.PENDING;
+        putParams.Item.subStatus = ONEMAC_STATUS.WITHDRAW_RAI_ENABLED;
+      }
     }
 
     adminChanges.sort((a, b) => b.changeTimestamp - a.changeTimestamp);

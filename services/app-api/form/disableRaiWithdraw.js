@@ -20,6 +20,7 @@ export const disableRaiWithdrawFormConfig = {
     return userRole.isCMSUser;
   },
   appendToSchema: {
+    parentId: Joi.string(),
     parentType: Joi.string().required(),
     submissionTimestamp: Joi.date().timestamp(),
     adminChanges: Joi.array().items(
@@ -32,7 +33,7 @@ export const disableRaiWithdrawFormConfig = {
   },
 };
 
-async function validate(data) {
+async function validate(data, requestFrom) {
   if (validateSubmission(data, disableRaiWithdrawFormConfig)) {
     throw RESPONSE_CODE.VALIDATION_ERROR;
   }
@@ -43,6 +44,7 @@ async function validate(data) {
     throw RESPONSE_CODE.USER_NOT_FOUND;
   }
   if (
+    requestFrom !== "withdrawLambda" &&
     disableRaiWithdrawFormConfig.hasAuthorizationToSubmit(userRoleObj) !== true
   ) {
     throw RESPONSE_CODE.USER_NOT_AUTHORIZED;
@@ -60,7 +62,6 @@ async function getRecordsByGSI1Keys(gsi1pk, gsi1sk) {
     },
     ScanIndexForward: false, // Sort in descending order by default (latest first)
   };
-
   try {
     const result = await dynamoDb.query(params);
     const sortedRecords = result.Items.sort(
@@ -108,7 +109,7 @@ async function waitForStreamProcessing(componentId, eventTimestamp) {
   }
 }
 
-export const main = handler(async (event) => {
+export const disableRaiResponseWithdraw = async (event, requestFrom) => {
   let data;
   try {
     data = JSON.parse(event.body);
@@ -116,8 +117,9 @@ export const main = handler(async (event) => {
     console.error("Failed to parse body", e);
     return RESPONSE_CODE.USER_SUBMISSION_FAILED;
   }
+
   try {
-    await validate(data);
+    await validate(data, requestFrom);
   } catch (e) {
     console.error("Failed to validate", e);
     return e;
@@ -130,12 +132,16 @@ export const main = handler(async (event) => {
       ? "waiver"
       : data.parentType;
 
+  const whoDisabled =
+    requestFrom === "withdrawLambda"
+      ? "Withdraw Package Action"
+      : data.submitterName;
+
   //get latest rai response - update status and add admin changes
   try {
     const gsi1pk = `OneMAC#submit${parentType}rai`;
     const gsi1sk = data.componentId;
     const records = await getRecordsByGSI1Keys(gsi1pk, gsi1sk);
-
     if (records.length > 0) {
       // the first record is the most recent as they were sorted by submissionTimestamp
       const mostRecentRecord = records[0];
@@ -143,7 +149,7 @@ export const main = handler(async (event) => {
       const checkTimestamp = Date.now();
       const adminChange = {
         changeTimestamp: checkTimestamp,
-        changeMade: `${data.submitterName} has disabled State package action to withdraw Formal RAI Response`,
+        changeMade: `${whoDisabled} has disabled State package action to withdraw Formal RAI Response`,
         changeReason: data.additionalInformation,
       };
       mostRecentRecord.adminChanges = mostRecentRecord.adminChanges
@@ -163,4 +169,8 @@ export const main = handler(async (event) => {
   }
   console.log("returning success response code from disableRaiWithdraw");
   return disableRaiWithdrawFormConfig.successResponseCode;
+};
+
+export const main = handler(async (event) => {
+  return await disableRaiResponseWithdraw(event, "user");
 });
