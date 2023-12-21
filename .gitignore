@@ -20,4 +20,6 @@ tests/cypress/node_modules
 node_modules
 tests/cypress/videos
 tests/cypress/screenshots
-tests/cypress/fixtures/*
+tests/cypress/fixtures/packageDashboardSPAIDs.json
+tests/cypress/fixtures/packageDashboardWaiverNumbers.json
+tests/cypress/fixtures/savedID.json

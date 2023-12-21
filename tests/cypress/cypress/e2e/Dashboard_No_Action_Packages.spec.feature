@@ -2,7 +2,7 @@ Feature: Withdraw package action in package dashboard
     Background: Reoccurring steps
         Given I am on Login Page
         When Clicking on Development Login
-        When Login with state submitter user
+        When Login with "an Active" "State Submitter" user
 
     Scenario: Demonstrate that withdraw a package is not available on SPA with Submitted status
         Then Click on Filter Button

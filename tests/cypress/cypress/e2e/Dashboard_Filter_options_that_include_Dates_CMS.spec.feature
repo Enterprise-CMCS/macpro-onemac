@@ -2,7 +2,7 @@ Feature: Package Dashboard - Filter by Formal RAI Received
     Background: Reoccuring Steps
         Given I am on Login Page
         When Clicking on Development Login
-        When Login with cms System Admin
+        When Login with "an Active" "CMS System Admin" user
 
     Scenario: Filter by Initial Submission Date - Date picker
         Then Click on Filter Button

@@ -2,7 +2,7 @@ Feature: Medicaid SPA CMS Details View - Card View with Actions
     Background: Reoccuring Steps
         Given I am on Login Page
         When Clicking on Development Login
-        When Login as EUA CMS Read Only User
+        When Login with "an Active" "CMS Read Only" user
         Then Click on Filter Button
         Then click on Type
         Then uncheck all of the type checkboxes

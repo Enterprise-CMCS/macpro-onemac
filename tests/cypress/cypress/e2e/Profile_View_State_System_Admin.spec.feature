@@ -2,7 +2,7 @@ Feature: OY2_9990_State_System_Admin_Profile_Screen_Enhancements
     Scenario: State System Admin User Profile Screen Enhancements
         Given I am on Login Page
         When Clicking on Development Login
-        When Login with cms System Admin
+        When Login with "an Active" "CMS System Admin" user
         Then Click on User Management Tab
         Then i am on User Management Page
         Then verify User Management is Displayed

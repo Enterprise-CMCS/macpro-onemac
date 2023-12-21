@@ -17,8 +17,8 @@ Feature: OY2-12297 Home Page Update - Include guidance for CMS User
         Then How to create a submission exists
         Then Login with IDM Exists
         Then Login with IDM Info Exists
-        Then Attach your documents Exists
-        Then Attach your documents info Exists
+        Then attach your documents Exists
+        Then attach your documents info Exists
         Then Receive an email confirmation Exists
         Then Receive an email confirmation details Exists
         Then Submission Types include Exists
