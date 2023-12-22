@@ -13,21 +13,15 @@
     <meta name="theme-color" content="#ffffff" />
     <title>CMS SPA and Waiver Submission Form</title>
     <script src="%PUBLIC_URL%/env-config.js"></script>
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-   <script>
-     var GTag = "checkthis";
-     if (window.location == "https://d28zrd88qbpae2.cloudfront.net") GTag = "G-NJYLSJSMBX";
-     if (window.location == "https://onemac.cms.gov/") GTag = "G-D3GK5GNG3R";
-     if (window.location == "https://onemacval.cms.gov/") GTag = "G-YJVWK0SDMP";
-     if (window.location == "https://d2dr7dgo9g0124.cloudfront.net/") GTag = "G-EXDKL3Q7QL";
-     if (GTag != "checkthis") {
-      document.write("<script type='text/javascript' async src='https://www.googletagmanager.com/gtag/js?id="+ GTag + "'><\/scri" + "pt>");
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', GTag, { 'anonymize_ip': true });
-    }
-   </script>
+   <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NJYLSJSMBX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-NJYLSJSMBX');
+</script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
