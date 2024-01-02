@@ -101,7 +101,7 @@ jobs:
           OKTA_METADATA_URL: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_OKTA_METADATA_URL] || secrets.OKTA_METADATA_URL }}
           COGNITO_TEST_USERS_PASSWORD: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_COGNITO_TEST_USERS_PASSWORD] || secrets.COGNITO_TEST_USERS_PASSWORD }}
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-          REACT_APP_GOOGLE_TAG: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_REACT_APP_GOOGLE_TAG] || 'notag' }}
+          REACT_APP_GOOGLE_TAG: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_REACT_APP_GOOGLE_TAG] || secrets[env.REACT_APP_GOOGLE_TAG] }}
       - name: Configure AWS credentials for GitHub Actions
         uses: aws-actions/configure-aws-credentials@v4
         with:
