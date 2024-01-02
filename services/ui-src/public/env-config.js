@@ -13,4 +13,6 @@ window._env_ = {
   ALLOW_DEV_LOGIN: "true",
   METRICS_USERS: "placeholder",
   IS_OFFLINE: "true",
+  GOOGLE_TAG: "placeholder",
+  REACT_APP_GOOGLE_TAG: "inConfig"
 };
