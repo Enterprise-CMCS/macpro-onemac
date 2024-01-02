@@ -2,7 +2,7 @@ Feature: Package Dashboard - Filter
     Background: Reoccuring Steps
         Given I am on Login Page
         When Clicking on Development Login
-        When Login with cms System Admin
+        When Login with "an Active" "CMS System Admin" user
 
     Scenario: SPAs Tab - Screen enhancement
         Then Verify Filter button exists

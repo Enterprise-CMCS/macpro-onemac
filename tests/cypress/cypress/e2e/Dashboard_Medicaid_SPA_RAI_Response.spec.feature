@@ -2,7 +2,7 @@ Feature: RAI Response for Medicaid SPA package view
     Background: Reoccuring Steps
         Given I am on Login Page
         When Clicking on Development Login
-        When Login with state submitter user
+        When Login with "an Active" "State Submitter" user
         Then Click on Filter Button
         Then click on Type
         Then uncheck all of the type checkboxes
@@ -21,7 +21,7 @@ Feature: RAI Response for Medicaid SPA package view
         Then verify the form is titled Formal Request for Additional Information Response
         Then verify the attachment info descriptiion
         Then verify the attachment info link is for "Medicaid RAI"
-        Then Add file for RAI Response
+        Then attach "adobe.pdf" file to attachment 1
         Then Click the Submit Button without waiting
         Then verify the modal pop-up is visible
         Then verify the title of the modal pop-up is Do you want to submit your official formal RAI response
@@ -33,8 +33,8 @@ Feature: RAI Response for Medicaid SPA package view
         Then verify the Respond to RAI button is displayed
         Then click the Respond to RAI button
         Then verify the form is titled Formal Request for Additional Information Response
-        Then Add file for RAI Response
-        Then Type Additonal Info Comments in new form
+        Then attach "adobe.pdf" file to attachment 1
+        Then into "Additional Information" type "This is just a test."
         Then Click the Submit Button without waiting
         Then verify the modal pop-up is visible
         Then verify the title of the modal pop-up is Do you want to submit your official formal RAI response
