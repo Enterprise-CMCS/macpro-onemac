@@ -13,12 +13,12 @@ const oneMacTableName = process.env.IS_OFFLINE
 
 export const main = async (event) => {
   await Promise.all(
-    gsipksToRebuild.map(async (oneTopic) => {
+    skbeginswith.map(async (onesk) => {
       const processParams = {
         TableName: oneMacTableName,
         Item: {
           pk: "Process",
-          sk: skbeginswith,
+          sk: onesk,
           action: "delete",
           reason: event.reason,
         },
