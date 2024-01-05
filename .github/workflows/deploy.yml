@@ -122,7 +122,6 @@ jobs:
             services/uploads/node_modules
             services/app-api/node_modules
             services/one-stream/node_modules
-            services/stream-functions/node_modules
             services/ui/node_modules
             services/ui-auth/node_modules
             services/ui-src/node_modules
@@ -218,7 +217,6 @@ jobs:
             services/uploads/node_modules
             services/app-api/node_modules
             services/one-stream/node_modules
-            services/stream-functions/node_modules
             services/ui/node_modules
             services/ui-auth/node_modules
             services/ui-src/node_modules
@@ -368,7 +366,6 @@ jobs:
           path: |
             services/uploads/node_modules
             services/app-api/node_modules
-            services/stream-functions/node_modules
             services/ui/node_modules
             services/ui-auth/node_modules
             services/ui-src/node_modules
@@ -470,7 +467,6 @@ jobs:
           path: |
             services/app-api/node_modules
             services/uploads/node_modules
-            services/stream-functions/node_modules
             services/ui/node_modules
             services/ui-auth/node_modules
             services/ui-src/node_modules
