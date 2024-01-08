@@ -136,15 +136,16 @@ export const main = async () => {
   console.log("toDelete: ", toDelete);
   await Promise.all(
     toDelete.map(async (item) => {
-      await dynamoDb
-        .delete({
-          TableName: oneMacTableName,
-          Key: {
-            pk: item.pk,
-            sk: item.sk,
-          },
-        })
-        .promise();
+      if (item.pk != "Process")
+        await dynamoDb
+          .delete({
+            TableName: oneMacTableName,
+            Key: {
+              pk: item.pk,
+              sk: item.sk,
+            },
+          })
+          .promise();
     })
   );
 };
