@@ -93,6 +93,16 @@ functions:
     maximumRetryAttempts: 2
     timeout: 600
 
+  deleteOutdatedItems:
+    handler: deleteOutdatedItems.main
+    role: LambdaOneStreamRole
+    environment:
+      STAGE: ${self:custom.stage}
+      oneMacTableName: ${self:custom.oneMacTableName}
+      localTableName: ${self:custom.localTableName}
+    maximumRetryAttempts: 2
+    timeout: 600
+
 resources:
   Conditions:
     CreatePermissionsBoundary:

@@ -15,8 +15,5 @@ env-config.js
 coverage/
 build/
 
-# not ours to mess with
-/services/stream-functions/
-
 # contains invalid syntax
 stateSubmitterTemplate.json
