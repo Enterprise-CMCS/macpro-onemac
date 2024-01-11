@@ -48,7 +48,7 @@ resources:
     EmailSubscription:
       Type: AWS::SNS::Subscription
       Properties:
-        Topic: !Ref EmailTopic
+        TopicArn: !Ref EmailTopic
         Endpoint: !GetAtt ProcessEmailsLambdaFunction.Arn
         Protocol: lambda
 
