@@ -42,12 +42,13 @@ resources:
       Type: AWS::SNS::Topic
       Properties:
         DisplayName: Distributing the sending of emails
+        TopicName: Emails-${self:service}-${sls:stage}
         KmsMasterKeyId: EmailTopicKey
 
     EmailSubscription:
       Type: AWS::SNS::Subscription
       Properties:
-        TopicArn: !Ref EmailTopic.Arn
+        Topic: !Ref EmailTopic
         Endpoint: !GetAtt ProcessEmailsLambdaFunction.Arn
         Protocol: lambda
 
