@@ -1,0 +1,12 @@
+Resources:
+  EmailTopic:
+    Type: AWS::SNS::Topic
+    Properties:
+      DisplayName: Distributing the sending of emails
+      KmsMasterKeyId: EmailTopicKey
+
+Outputs:
+  EmailTopic:
+    Value: !Ref EmailTopic
+  EmailTopicArn:
+    Value: !GetAtt EmailTopic.Arn
