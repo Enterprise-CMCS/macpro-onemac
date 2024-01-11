@@ -47,7 +47,7 @@ resources:
       Type: AWS::SNS::Subscription
       Properties:
         TopicArn: !Ref EmailTopic.Arn
-        Endpoint: !GetAtt processEmails.Arn
+        Endpoint: !GetAtt processEmailsLambdaFunction.Arn
         Protocol: lambda
 
     EmailTopicPolicy:
@@ -65,4 +65,4 @@ resources:
                 AWS: "*"
               Condition:
                 ArnLike:
-                  AWS:SourceArn: !GetAtt sendToSNS.Arn
+                  AWS:SourceArn: !GetAtt sendToSNSLambdaFunction.Arn
