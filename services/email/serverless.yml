@@ -11,6 +11,7 @@ plugins:
   - serverless-esbuild
   - serverless-dotenv-plugin
   - serverless-s3-bucket-helper
+  - serverless-offline
 custom:
   stage: ${opt:stage, self:provider.stage}
   iamPath: ${ssm:/configuration/${self:custom.stage}/iam/path, ssm:/configuration/default/iam/path}
@@ -51,15 +52,15 @@ resources:
         Protocol: lambda
 
     EmailTopicPolicy:
-      Type: "AWS::SNS::TopicPolicy"
+      Type: AWS::SNS::TopicPolicy
       Properties:
-        Topics:
-          - !Ref EmailTopic
         PolicyDocument:
-          Version: "2012-10-17"
           Statement:
             - Effect: Allow
-              Action: "sns:Publish"
-              Resource: !Ref EmailTopic
               Principal:
-                AWS: !GetAtt SendToSNSLambdaFunction.Arn
+                Service:
+                  - lambda.amazonaws.com
+              Action: sns:Publish
+              Resource: !Ref EmailTopic
+        Topics:
+          - !Ref EmailTopic
