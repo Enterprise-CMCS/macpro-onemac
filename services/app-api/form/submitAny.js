@@ -29,6 +29,7 @@ import { stateSubmissionReceipt } from "../email/stateSubmissionReceipt";
 export const submitAny = async (event, config) => {
   let data, doneBy;
   const warningsInCMSNotice = [];
+  const rightNowNormalized = Date.now();
 
   try {
     data = JSON.parse(event.body);
@@ -95,7 +96,6 @@ export const submitAny = async (event, config) => {
 
   try {
     // Add the details from this submission action
-    const rightNowNormalized = Date.now();
     data.submissionTimestamp = rightNowNormalized;
     data.eventTimestamp = rightNowNormalized;
 
