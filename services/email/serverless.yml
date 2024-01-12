@@ -74,6 +74,7 @@ resources:
                   - lambda.amazonaws.com
               Action: 
                 - sns:Publish
+                - sns:Subscribe
               Resource: !Ref OldEmailTopic
         Topics:
           - !Ref OldEmailTopic
