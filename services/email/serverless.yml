@@ -43,7 +43,7 @@ resources:
       Properties:
         DisplayName: Distributing the sending of emails
         TopicName: Emails-${self:service}-${sls:stage}
-        KmsMasterKeyId: EmailTopicKey
+        KmsMasterKeyId: alias/aws/sns
 
     EmailSubscription:
       Type: AWS::SNS::Subscription
@@ -61,7 +61,9 @@ resources:
               Principal:
                 Service:
                   - lambda.amazonaws.com
-              Action: sns:Publish
+              Action: 
+                - sns:Publish
+                - sns:Subscribe
               Resource: !Ref EmailTopic
         Topics:
           - !Ref EmailTopic
