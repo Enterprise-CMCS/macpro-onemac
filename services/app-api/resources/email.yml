@@ -19,6 +19,13 @@ Resources:
               - sns:Publish
               - sns:Subscribe
             Resource: !Ref EmailTopic
+          - Effect: Allow
+            Principal:
+              Service:
+                - sns.amazonaws.com
+            Action: 
+              - lambda:InvokeLambda
+            Resource: "*"
       Topics:
         - !Ref EmailTopic
 
