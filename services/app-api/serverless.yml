@@ -604,3 +604,6 @@ resources:
   
   # CloudWatch Alarms
   - ${file(resources/cloudwatch.yml)}
+
+  # SNS for Emails
+  - ${file(resources/email.yml)}

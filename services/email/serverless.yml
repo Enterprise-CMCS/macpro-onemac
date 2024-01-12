@@ -16,6 +16,9 @@ custom:
   stage: ${opt:stage, self:provider.stage}
   iamPath: ${ssm:/configuration/${self:custom.stage}/iam/path, ssm:/configuration/default/iam/path}
   iamPermissionsBoundaryPolicy: ${ssm:/configuration/${self:custom.stage}/iam/permissionsBoundaryPolicy, ssm:/configuration/default/iam/permissionsBoundaryPolicy, ""}
+  oneMacTableName: ${cf:app-api-${self:custom.stage}.OneMacTableName, ""}
+  oneMacTableArn: ${cf:app-api-${self:custom.stage}.OneMacTableArn, ""}
+  emailTopicArn: ${cf:app-api-${self:custom.stage}.EmailTopicArn, ""}
 
 provider:
   name: aws
@@ -38,21 +41,21 @@ functions:
 
 resources:
   Resources:
-    EmailTopic:
+    OldEmailTopic:
       Type: AWS::SNS::Topic
       Properties:
+        TopicName: OldEmails-${self:service}-${sls:stage}
         DisplayName: Distributing the sending of emails
-        TopicName: Emails-${self:service}-${sls:stage}
         KmsMasterKeyId: alias/aws/sns
 
     EmailSubscription:
       Type: AWS::SNS::Subscription
       Properties:
-        TopicArn: !Ref EmailTopic
+        TopicArn: ${self:custom.emailTopicArn}
         Endpoint: !GetAtt ProcessEmailsLambdaFunction.Arn
         Protocol: lambda
 
-    EmailTopicPolicy:
+    OldEmailTopicPolicy:
       Type: AWS::SNS::TopicPolicy
       Properties:
         PolicyDocument:
@@ -64,6 +67,6 @@ resources:
               Action: 
                 - sns:Publish
                 - sns:Subscribe
-              Resource: !Ref EmailTopic
+              Resource: !Ref OldEmailTopic
         Topics:
-          - !Ref EmailTopic
+          - !Ref OldEmailTopic
