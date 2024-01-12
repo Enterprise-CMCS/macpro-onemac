@@ -25,6 +25,7 @@ provider:
   runtime: nodejs14.x
   region: us-east-1
   stage: dev
+  timeout: 600
   iam:
     role:
       path: ${self:custom.iamPath}
@@ -33,11 +34,11 @@ provider:
 functions:
   processEmails:
     handler: handlers/processEmails.main
-    timeout: 600
+    events:
+      - sns: ${self:custom.emailTopic}
 
   sendToSNS:
     handler: handlers/sendToSNS.main
-    timeout: 600
 
 resources:
   Resources:
