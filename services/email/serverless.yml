@@ -37,44 +37,11 @@ functions:
     events:
       - sns: ${self:custom.emailTopic}
 
-  sendToSNS:
-    handler: handlers/sendToSNS.main
-
 resources:
   Resources:
-    OldEmailTopic:
-      Type: AWS::SNS::Topic
-      Properties:
-        TopicName: OldEmails-${self:service}-${sls:stage}
-        DisplayName: Distributing the sending of emails
-        KmsMasterKeyId: alias/aws/sns
-
     EmailSubscription:
       Type: AWS::SNS::Subscription
       Properties:
         TopicArn: ${self:custom.emailTopic}
         Endpoint: !GetAtt ProcessEmailsLambdaFunction.Arn
         Protocol: lambda
-
-    OldEmailSubscription:
-      Type: AWS::SNS::Subscription
-      Properties:
-        TopicArn: !Ref OldEmailTopic
-        Endpoint: !GetAtt ProcessEmailsLambdaFunction.Arn
-        Protocol: lambda
-
-    OldEmailTopicPolicy:
-      Type: AWS::SNS::TopicPolicy
-      Properties:
-        PolicyDocument:
-          Statement:
-            - Effect: Allow
-              Principal:
-                Service:
-                  - lambda.amazonaws.com
-              Action: 
-                - sns:Publish
-                - sns:Subscribe
-              Resource: !Ref OldEmailTopic
-        Topics:
-          - !Ref OldEmailTopic

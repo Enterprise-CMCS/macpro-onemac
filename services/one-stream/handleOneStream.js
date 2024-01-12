@@ -35,7 +35,7 @@ export const main = async (eventBatch) => {
 
       const [eventSource, , offset] = inSK.split("#");
       if (offset) {
-        console.log("%s ignoring old %s event: ", inPK, inSK, newEventData);
+        console.log("%s ignoring %s event: ", inPK, inSK, newEventData);
         return;
       }
 
