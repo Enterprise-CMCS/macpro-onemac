@@ -141,6 +141,8 @@ export const submitAny = async (event, config) => {
       stateEmail = await config.buildStateReceipt(data, config, doneBy);
     } else stateEmail = stateSubmissionReceipt(data, config);
     await sendEmail(stateEmail);
+    stateEmail.componentId = data.componentId;
+    stateEmail.eventTimestamp = rightNowNormalized;
     await saveEmail(`submit${config.componentType}`, "State", stateEmail);
   } catch (error) {
     console.log(

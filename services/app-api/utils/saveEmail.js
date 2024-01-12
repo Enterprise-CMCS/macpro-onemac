@@ -1,6 +1,6 @@
 import dynamoDb from "../libs/dynamodb-lib";
 
-export const saveEmail = async (eventName, data) => {
+export const saveEmail = async (eventName, stateOrCMS, data) => {
   const putParams = {
     TableName: process.env.oneMacTableName,
     Item: {
