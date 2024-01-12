@@ -18,7 +18,7 @@ custom:
   iamPermissionsBoundaryPolicy: ${ssm:/configuration/${self:custom.stage}/iam/permissionsBoundaryPolicy, ssm:/configuration/default/iam/permissionsBoundaryPolicy, ""}
   oneMacTableName: ${cf:app-api-${self:custom.stage}.OneMacTableName, ""}
   oneMacTableArn: ${cf:app-api-${self:custom.stage}.OneMacTableArn, ""}
-  emailTopicArn: ${cf:app-api-${self:custom.stage}.EmailTopicArn, ""}
+  emailTopic: ${cf:app-api-${self:custom.stage}.EmailTopic, ""}
 
 provider:
   name: aws
@@ -51,7 +51,14 @@ resources:
     EmailSubscription:
       Type: AWS::SNS::Subscription
       Properties:
-        TopicArn: ${self:custom.emailTopicArn}
+        TopicArn: ${self:custom.emailTopic}
+        Endpoint: !GetAtt ProcessEmailsLambdaFunction.Arn
+        Protocol: lambda
+
+    OldEmailSubscription:
+      Type: AWS::SNS::Subscription
+      Properties:
+        TopicArn: !Ref OldEmailTopic
         Endpoint: !GetAtt ProcessEmailsLambdaFunction.Arn
         Protocol: lambda
 

@@ -25,5 +25,3 @@ Resources:
 Outputs:
   EmailTopic:
     Value: !Ref EmailTopic
-  EmailTopicArn:
-    Value: !GetAtt EmailTopic.Arn
