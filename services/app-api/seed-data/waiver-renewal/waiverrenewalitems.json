@@ -6747,7 +6747,7 @@
   "componentType": "waiverrai",
   "eventTimestamp": 1673709577000,
   "transmittalNumberWarningMessage": "",
-  "currentStatus": "RAI Response Withdraw Enabled",
+  "currentStatus": "Withdraw Formal RAI Response Enabled",
   "parentId": "MD-22116.R01.00",
   "attachments": [
     {
@@ -6793,7 +6793,7 @@
   "cpocEmail": "\"Tester, Chester (CPOC)\" <chesterT@example.gov>",
   "cpocName": "Chester Tester",
   "currentStatus": "Under Review",
-  "subStatus": "RAI Response Withdraw Enabled",
+  "subStatus": "Withdraw Formal RAI Response Enabled",
   "description": "package to test RAI withdrawing rebuild",
   "GSI1pk": "OneMAC#waiver",
   "GSI1sk": "MD-22116.R01.00",
@@ -6817,7 +6817,7 @@
       "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3Ac052f1db-9f55-42aa-9d43-2d957bfc754b/1672953505887/PackagelistView_ExcelExport_Issues.xlsx"
      }
     ],
-    "currentStatus": "RAI Response Withdraw Enabled",
+    "currentStatus": "Withdraw Formal RAI Response Enabled",
     "eventTimestamp": 1690982903782,
     "timestamp": 1673709577000,
     "type": "Formal RAI Response"
@@ -7742,7 +7742,7 @@
        "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3Ac052f1db-9f55-42aa-9d43-2d957bfc754b/1672953505887/PackagelistView_ExcelExport_Issues.xlsx"
       }
      ],
-     "currentStatus": "RAI Response Withdraw Enabled",
+     "currentStatus": "Withdraw Formal RAI Response Enabled",
      "eventTimestamp": 1692995861025,
      "timestamp": 1672953510479,
      "type": "Formal RAI Response"

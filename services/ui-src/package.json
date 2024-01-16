@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "dependencies": {
     "@babel/polyfill": "^7.12.1",
-    "@cmsgov/design-system": "2.7.1",
+    "@cmsgov/design-system": "2.13.0",
     "@material-ui/core": "^4.11.3",
     "@material-ui/data-grid": "^4.0.0-alpha.22",
     "@react-spring/web": "^9.4.2",
@@ -23,7 +23,7 @@
     "isomorphic-fetch": "^3.0.0",
     "jszip": "^3.6.0",
     "jwt-decode": "^3.1.2",
-    "promise-polyfill": "8.2.0",
+    "promise-polyfill": "8.3.0",
     "react": "^16.13.1",
     "react-bootstrap": "^0.33.1",
     "react-collapsible": "^2.8.3",
