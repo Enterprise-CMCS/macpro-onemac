@@ -127,6 +127,8 @@ export const submitAny = async (event, config) => {
       CMSEmail = await config.buildCMSNotice(data, config, doneBy);
     } else CMSEmail = CMSSubmissionNotice(data, config, warningsInCMSNotice);
     await sendEmail(CMSEmail);
+    CMSEmail.componentId = data.componentId;
+    CMSEmail.eventTimestamp = rightNowNormalized;
     await saveEmail(`submit${config.componentType}`, "CMS", CMSEmail);
   } catch (error) {
     console.log("%s Error is: ", data.componentId, error);
