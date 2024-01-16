@@ -2,7 +2,7 @@ Feature: OY2-13094 Package Dashboard - Filter by State
     Background: Reoccuring Steps
         Given I am on Login Page
         When Clicking on Development Login
-        When Login with state submitter user
+        When Login with "an Active" "State Submitter" user
         Then click show hide columns button
         Then click state checkbox
         Then click show hide columns button

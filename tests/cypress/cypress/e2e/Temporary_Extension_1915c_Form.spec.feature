@@ -2,17 +2,18 @@ Feature: Package Dashboard Temporary Extension
     Background: reoccurring steps
         Given I am on Login Page
         When Clicking on Development Login
-        When Login with state submitter user
+        When Login with "an Active" "State Submitter" user
 
     Scenario: Verify user can create a temporary extension from new submission button
         Then click on New Submission
         Then Click on Waiver Action
         Then Click on Request Temporary Extension in Package dashboard
-        Then select the 1915c Temporary Extension Type button
-        Then type approved Initial Waiver number into Existing Waiver Number to Renew field
-        Then Type Temporary Extension Number "2"
-        Then upload Waiver Extension Request
-        Then type "This is just a test" in additional info textarea
+        Then select "1915(c)" as the Temporary Extension Type
+        Then into "Existing Waiver Number to Renew" type "MD-2200.R00.00"
+
+        Then into "Temporary Extension Request Number" type "MD-5533.R00.TE01"
+        Then attach "picture.jpg" file to attachment 1
+        Then into "Additional Information" type "This is just a test"
         Then Click on Submit Button
         Then verify submission successful message in the alert bar
         Then search for "MD-5533.R00.TE01"

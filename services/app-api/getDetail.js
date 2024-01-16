@@ -96,6 +96,12 @@ export const getDetails = async (event) => {
       "detail"
     );
 
+    if (result.Item.subStatus) {
+      result.Item.subStatus = userRoleObj.isCMSUser
+        ? cmsStatusUIMap[result.Item.subStatus]
+        : stateStatusUIMap[result.Item.subStatus];
+    }
+
     return { ...result.Item };
   } catch (e) {
     console.log("Error is: ", e);

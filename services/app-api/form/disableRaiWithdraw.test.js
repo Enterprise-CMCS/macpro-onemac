@@ -81,7 +81,7 @@ const GSIQueryReturn = {
       clockEndTimestamp: 1697123859496,
       componentId: "MD-22-2200-KG",
       componentType: "medicaidsparai",
-      currentStatus: "RAI Response Withdraw Enabled",
+      currentStatus: "Withdraw Formal RAI Response Enabled",
       eventTimestamp: 1673709577000,
       GSI1pk: "OneMAC#submitmedicaidsparai",
       GSI1sk: "MD-22-2200-KG",
