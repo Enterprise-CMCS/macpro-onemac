@@ -2,7 +2,7 @@ Feature: OY2_12596_CMSUserDenied
     Background: Reoccuring Steps
         Given I am on Login Page
         When Clicking on Development Login
-        When Login with cms role approver Denied
+        When Login with "a Denied" "CMS Role Approver" user
 
     Scenario: Screen Enhance - Denied CMS user can see the text and profile information
         Then i am on Dashboard Page

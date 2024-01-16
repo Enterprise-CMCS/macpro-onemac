@@ -2,7 +2,7 @@ Feature: Waiver Package Details View: 1915 b Waiver Amendment for a CMS User
     Background: Reoccuring Steps
         Given I am on Login Page
         When Clicking on Development Login
-        When Login as EUA CMS Read Only User
+        When Login with "an Active" "CMS Read Only" user
         Then click on the Waivers tab
         Then Click on Filter Button
         Then click on Type
@@ -260,6 +260,6 @@ Feature: Waiver Package Details View: 1915 b Waiver Amendment for a CMS User
         Then click Enable Formal RAI Response Withdraw package action
         Then Click on Submit Button
         Then verify the status on the card is "Pending"
-        Then verify the sub status on the card is RAI Response Withdraw Enabled
+        Then verify the sub status on the card is Withdraw Formal RAI Response Enabled
         Then verify package actions header is visible
         Then verify Disable Formal RAI Response Withdraw package action exists

@@ -2,7 +2,7 @@ Feature: OY2_9990_State_Submitter_Profile_Screen_Enhancements
     Scenario: State Submitter User Profile Screen Enhancements
         Given I am on Login Page
         When Clicking on Development Login
-        When Login with state submitter user
+        When Login with "an Active" "State Submitter" user
         Then i am on Dashboard Page
         Then verify New Submission BTN is Displayed
         Then verify IDNumber column exists

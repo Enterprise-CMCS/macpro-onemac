@@ -2,7 +2,7 @@ Feature: Package Dashboard - Waiver Tab Column Picker for CMS User
     Background: Reoccurring steps
         Given I am on Login Page
         When Clicking on Development Login
-        When Login with cms System Admin
+        When Login with "an Active" "CMS System Admin" user
     
     Scenario: Waivers Tab - Screen enhancement
         Then click on the Waivers tab

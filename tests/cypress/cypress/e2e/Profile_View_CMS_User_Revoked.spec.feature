@@ -2,7 +2,7 @@ Feature: CMS User Revoked
     Background: Reoccuring Steps
         Given I am on Login Page
         When Clicking on Development Login
-        When Login with cms role approver Revoked
+        When Login with "a Revoked" "CMS Role Approver" user
 
     Scenario: Screen Enhance - Revoked CMS user can see the text and profile information
         Then i am on Dashboard Page

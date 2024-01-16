@@ -2,7 +2,7 @@ Feature: OY2_8618_CMS_Approver
     Scenario: CMS Role Approver user can see the text, profile information and status card
         Given I am on Login Page
         When Clicking on Development Login
-        When Login with cms role approver
+        When Login with "an Active" "CMS Role Approver" user
         Then i am on User Management Page
         Then Click on My Account
         Then Click on Manage Profile

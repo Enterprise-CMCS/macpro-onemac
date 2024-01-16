@@ -356,7 +356,7 @@ export class oneMacPackageDetailsPage {
       });
   }
   verifyTheSubStatus() {
-    cy.get(subStatus).contains("RAI Response Withdraw Enabled");
+    cy.get(subStatus).contains("Withdraw Formal RAI Response Enabled");
   }
 }
 export default oneMacPackageDetailsPage;

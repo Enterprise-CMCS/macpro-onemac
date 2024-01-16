@@ -50,7 +50,7 @@ export const ONEMAC_STATUS = {
   WITHDRAWAL_REQUESTED: "Withdrawal Requested",
   TE_REQUESTED: "TE Requested",
   TERMINATED: "Waiver Terminated",
-  WITHDRAW_RAI_ENABLED: "RAI Response Withdraw Enabled",
+  WITHDRAW_RAI_ENABLED: "Withdraw Formal RAI Response Enabled",
   WITHDRAW_RAI_REQUESTED: "Formal RAI Response - Withdrawal Requested",
   UNKNOWN: "-- --",
 };

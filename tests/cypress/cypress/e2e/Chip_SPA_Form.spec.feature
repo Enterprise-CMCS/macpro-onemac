@@ -1,38 +1,33 @@
-Feature: Package Dashboard: CHIP SPA Forms
+Feature: Package Dashboard: CHIP SPA Initial Submission
     Background: Reoccurring steps
         Given I am on Login Page
         When Clicking on Development Login
-        When Login with state submitter user
+        When Login with "an Active" "State Submitter" user
         Then click on New Submission
-        Then Click on State Plan Amendment SPA
+        Then click on "State Plan Amendment (SPA)" choice
+        Then verify "CHIP SPA" choice goes to "/choices/spa/chip"
+        Then click on "CHIP SPA" choice
 
-    Scenario: Screen Enhance - All Other CHIP SPA
-        Then verify CHIP SPA is a clickable option
-        Then click on CHIP SPA
-        Then verify All Other CHIP SPA Submissions is a clickable option
-        Then click All Other CHIP SPA Submissions
-        Then verify user is on new CHIP SPA page
-        Then verify the attachment info descriptiion
-        Then verify the attachment info link is for "CHIP SPA"
-
-    Scenario: Screen Enhance - CHIP Eligibility
-        Then verify CHIP SPA is a clickable option
-        Then click on CHIP SPA
-        Then verify CHIP Eligibility is a clickable option
-        Then click CHIP Eligibility
-        Then verify user is on CHIP Eligibility page
+    Scenario: Screen Enhance - CHIP Eligibility is Outside of OneMAC
+        Then verify "CHIP Eligibility" choice goes to "/chip-eligibility"
+        Then click on "CHIP Eligibility" choice
+        Then verify page url contains "/chip-eligibility"
         Then verify the page header is "CHIP Eligibility SPAs"
         Then verify Enter the MMDL System button is visible and clickable
 
-    Scenario: Create All Other CHIP SPA Submission from package dashboard and search it
-        Then click on CHIP SPA
-        Then click All Other CHIP SPA Submissions
-        Then type in Chip SPA ID
-        Then select proposed effective date 3 months from today
-        Then Add file for Current State Plan
-        Then Add file for Amended State Plan Language
-        Then Add file for Cover Letter
-        Then Type Additonal Info Comments in new form
+    Scenario: Create CHIP SPA Initial Submission in OneMAC using the All Other CHIP SPA Submissions choice
+        Then verify "All Other CHIP SPA Submissions" choice goes to "/chip-spa"
+        Then click on "All Other CHIP SPA Submissions" choice
+        Then verify page url contains "/chip-spa"
+        Then verify the page header is "Submit New CHIP SPA"
+        Then type "MD-22-0283-9434" into the ID Input box
+        Then set "Proposed Effective Date of CHIP SPA" to 3 months from today
+        Then verify the attachment info descriptiion
+        Then verify the attachment info link is for "CHIP SPA"
+        Then attach "picture.jpg" file to attachment 1
+        Then attach "adobe.pdf" file to attachment 2
+        Then attach "adobe.pdf" file to attachment 3
+        Then into "Additional Information" type "This is just a test."
         Then Click on Submit Button
         Then verify submission successful message in the alert bar
         Then verify the SPAs tab is selected
