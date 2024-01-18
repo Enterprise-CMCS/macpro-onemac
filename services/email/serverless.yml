@@ -39,8 +39,6 @@ functions:
 
   processEmailEvents:
     handler: handlers/processEmailEvents.main
-    events:
-      - sns: "Email-Receipts"
 
 resources:
   Resources:
