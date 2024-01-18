@@ -40,7 +40,7 @@ functions:
   processEmailEvents:
     handler: handlers/processEmailEvents.main
     events:
-      - sns: !Ref EmailEventTopic
+      - sns: "Email-Receipts"
 
 resources:
   Resources:
