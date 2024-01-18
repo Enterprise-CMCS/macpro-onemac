@@ -51,13 +51,6 @@ resources:
         Endpoint: !GetAtt ProcessEmailsLambdaFunction.Arn
         Protocol: lambda
 
-    EmailEventTopic:
-      Type: AWS::SNS::Topic
-      Properties:
-        TopicName: Email-Receipts
-        DisplayName: Handle the email events
-        KmsMasterKeyId: alias/aws/sns
-
     EmailEventTopicPolicy:
       Type: AWS::SNS::TopicPolicy
       Properties:
