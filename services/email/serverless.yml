@@ -19,7 +19,6 @@ custom:
   oneMacTableName: ${cf:app-api-${self:custom.stage}.OneMacTableName, ""}
   oneMacTableArn: ${cf:app-api-${self:custom.stage}.OneMacTableArn, ""}
   emailTopic: ${cf:app-api-${self:custom.stage}.EmailTopic, ""}
-  emailEventTopic: ${cf:email-${self:custom.stage}.EmailEventTopic}
 
 provider:
   name: aws
@@ -41,7 +40,7 @@ functions:
   processEmailEvents:
     handler: handlers/processEmailEvents.main
     events:
-      - sns: ${self:custom.emailEventTopic}
+      - sns: !Ref EmailEventTopic
 
 resources:
   Resources:
