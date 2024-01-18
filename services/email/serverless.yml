@@ -19,6 +19,7 @@ custom:
   oneMacTableName: ${cf:app-api-${self:custom.stage}.OneMacTableName, ""}
   oneMacTableArn: ${cf:app-api-${self:custom.stage}.OneMacTableArn, ""}
   emailTopic: ${cf:app-api-${self:custom.stage}.EmailTopic, ""}
+  emailEventTopic: ${cf:email-${self:custom.stage}.EmailEventTopic}
 
 provider:
   name: aws
@@ -37,6 +38,11 @@ functions:
     events:
       - sns: ${self:custom.emailTopic}
 
+  processEmailEvents:
+    handler: handlers/processEmailEvents.main
+    events:
+      - sns: ${self:custom.emailEventTopic}
+
 resources:
   Resources:
     EmailSubscription:
@@ -45,3 +51,34 @@ resources:
         TopicArn: ${self:custom.emailTopic}
         Endpoint: !GetAtt ProcessEmailsLambdaFunction.Arn
         Protocol: lambda
+
+    EmailEventTopic:
+      Type: AWS::SNS::Topic
+      Properties:
+        TopicName: Email-Receipts
+        DisplayName: Handle the email events
+        KmsMasterKeyId: alias/aws/sns
+
+    EmailEventTopicPolicy:
+      Type: AWS::SNS::TopicPolicy
+      Properties:
+        PolicyDocument:
+          Statement:
+            - Effect: Allow
+              Principal:
+                Service:
+                  - lambda.amazonaws.com
+              Action: 
+                - sns:Publish
+                - sns:Subscribe
+              Resource: !Ref EmailEventTopic
+        Topics:
+          - !Ref EmailEventTopic
+
+    EmailEventSubscription:
+      Type: AWS::SNS::Subscription
+      Properties:
+        TopicArn: ${self:custom.emailEventTopic}
+        Endpoint: !GetAtt ProcessEventEmailsLambdaFunction.Arn
+        Protocol: lambda
+
