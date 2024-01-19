@@ -60,7 +60,7 @@ resources:
     EmailEventConfigurationSetEventDestination:
       Type: AWS::SES::ConfigurationSetEventDestination
       Properties:
-        ConfigurationSetName: !GetAtt EmailEventConfigurationSet.Name
+        ConfigurationSetName: !Ref EmailEventConfigurationSet
         EventDestination: 
           Enabled: true
           Name: 'email-${self:custom.stage}'
