@@ -19,6 +19,7 @@ custom:
   oneMacTableName: ${cf:app-api-${self:custom.stage}.OneMacTableName, ""}
   oneMacTableArn: ${cf:app-api-${self:custom.stage}.OneMacTableArn, ""}
   emailTopic: ${cf:app-api-${self:custom.stage}.EmailTopic, ""}
+  emailEventTopic: ${cf:app-api-${self:custom.stage}.EmailEventTopic, ""}
 
 provider:
   name: aws
@@ -39,6 +40,8 @@ functions:
 
   processEmailEvents:
     handler: handlers/processEmailEvents.main
+    events:
+      - sns: ${self:custom.emailEventTopic}
 
 resources:
   Resources:
@@ -48,3 +51,22 @@ resources:
         TopicArn: ${self:custom.emailTopic}
         Endpoint: !GetAtt ProcessEmailsLambdaFunction.Arn
         Protocol: lambda
+
+    EmailEventConfigurationSet:
+      Type: AWS::SES::ConfigurationSet
+      Properties:
+        DeliveryOptions: 
+          DeliveryOptions
+        Name: 'email-${self:custom.stage}'
+
+    EmailEventConfigurationSetEventDestination:
+      Type: AWS::SES::ConfigurationSetEventDestination
+      Properties:
+        ConfigurationSetName: !GetAtt EmailEventConfigurationSet.Name
+        EventDestination: 
+          Enabled: true
+          Name: 'email-${self:custom.stage}'
+          SnsDestination: 
+            TopicArn: ${self:custom.emailEventTopic}
+
+
