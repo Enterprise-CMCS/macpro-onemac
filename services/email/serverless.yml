@@ -65,6 +65,6 @@ resources:
           Enabled: true
           Name: 'email-${self:custom.stage}'
           SnsDestination: 
-            TopicArn: ${self:custom.emailEventTopic}
+            TopicARN: ${self:custom.emailEventTopic}
 
 
