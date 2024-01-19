@@ -147,6 +147,16 @@ jobs:
           pushd services
           echo "::notice::Endpoint URL - `./output.sh ui ApplicationEndpointUrl $STAGE_PREFIX$branch_name`"
           popd
+      - name: Set Site URL
+        id: deployment-data
+        run: |
+          echo ${{ startsWith(github.ref_name, 'snyk-') && 'snyk' || github.ref_name }}
+          echo "APPURL=$(
+            aws cloudformation \
+            --region us-east-1 describe-stacks \
+            --stack-name $STAGE_PREFIX$branch_name \
+            --query Stacks[0].Outputs[0].OutputValue
+          )" | tr -d \'\" >> $GITHUB_OUTPUT
   configure:
     name: Configure
     needs:

@@ -55,8 +55,6 @@ resources:
     EmailEventConfigurationSet:
       Type: AWS::SES::ConfigurationSet
       Properties:
-        DeliveryOptions: 
-          DeliveryOptions
         Name: 'email-${self:custom.stage}'
 
     EmailEventConfigurationSetEventDestination:
