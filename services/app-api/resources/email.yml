@@ -35,10 +35,16 @@ Resources:
       PolicyDocument:
         Statement:
           - Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+                - ses.amazonaws.com
             Action: 
               - sns:Subscribe
               - sns:Publish
             Resource: !Ref EmailEventTopic
+      Topics:
+        - !Ref EmailEventTopic
 
 Outputs:
   EmailTopic:
