@@ -39,8 +39,14 @@ Resources:
               Service:
                 - lambda.amazonaws.com
             Action: 
-              - sns:Publish
               - sns:Subscribe
+            Resource: !Ref EmailEventTopic
+          - Effect: Allow
+            Principal:
+              Service:
+                - ses.amazonaws.com
+            Action: 
+              - sns:Publish
             Resource: !Ref EmailEventTopic
       Topics:
         - !Ref EmailEventTopic
