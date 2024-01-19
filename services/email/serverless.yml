@@ -64,6 +64,17 @@ resources:
         EventDestination: 
           Enabled: true
           Name: 'email-${self:custom.stage}'
+          MatchingEventTypes:
+            - "Hard bounces"
+            - "Clicks"
+            - "Complaints"
+            - "Deliveries"
+            - "Delivery delays"
+            - "Opens"
+            - "Rejects"
+            - "Rendering failures"
+            - "Sends"
+            - "Subscriptions"
           SnsDestination: 
             TopicARN: ${self:custom.emailEventTopic}
 
