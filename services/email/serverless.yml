@@ -52,6 +52,13 @@ resources:
         Endpoint: !GetAtt ProcessEmailsLambdaFunction.Arn
         Protocol: lambda
 
+    EmailEventSubscription:
+      Type: AWS::SNS::Subscription
+      Properties:
+        TopicArn: ${self:custom.emailEventTopic}
+        Endpoint: !GetAtt ProcessEmailEventsLambdaFunction.Arn
+        Protocol: lambda
+
     EmailEventConfigurationSet:
       Type: AWS::SES::ConfigurationSet
       Properties:
