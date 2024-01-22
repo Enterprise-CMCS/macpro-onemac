@@ -27,6 +27,7 @@ provider:
   region: us-east-1
   stage: dev
   timeout: 600
+  role: LambdaEmailEventRole
   environment:
     NODE_OPTIONS: "--enable-source-maps"
     oneMacTableName: ${self:custom.oneMacTableName}
@@ -48,6 +49,13 @@ functions:
       - sns: ${self:custom.emailEventTopic}
 
 resources:
+  Conditions:
+    CreatePermissionsBoundary:
+      Fn::Not:
+        - Fn::Equals:
+          - ""
+          - ${self:custom.iamPermissionsBoundaryPolicy}
+
   Resources:
     EmailSubscription:
       Type: AWS::SNS::Subscription
@@ -88,3 +96,58 @@ resources:
             - "subscription"
           SnsDestination: 
             TopicARN: ${self:custom.emailEventTopic}
+
+    LambdaEmailEventRole: # Why isn't this with the function as an iamRoleStatements?  https://github.com/serverless/serverless/issues/6485
+      Type: 'AWS::IAM::Role'
+      Properties:
+        AssumeRolePolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+          - Effect: 'Allow'
+            Principal:
+              Service: 'lambda.amazonaws.com'
+            Action: 'sts:AssumeRole'
+        Path: ${self:custom.iamPath}
+        PermissionsBoundary:
+          Fn::If:
+            - CreatePermissionsBoundary
+            - Fn::Join:
+              - ''
+              -
+                - 'arn:aws:iam::'
+                - Ref: AWS::AccountId
+                - ':policy'
+                - '${self:custom.iamPermissionsBoundaryPolicy}'
+            - Ref: AWS::NoValue
+        Policies:
+          - PolicyName: 'LambdaRolePolicy'
+            PolicyDocument:
+              Version: '2012-10-17'
+              Statement:
+              - Effect: 'Allow'
+                Action:
+                - logs:CreateLogGroup
+                - logs:CreateLogStream
+                - logs:PutLogEvents
+                Resource: 'arn:aws:logs:*:*:*'
+              - Effect: "Allow"
+                Action:
+                  - dynamodb:GetItem
+                  - dynamodb:Query
+                  - dynamodb:Scan
+                  - dynamodb:PutItem
+                  - dynamodb:UpdateItem
+                  - dynamodb:DeleteItem
+                Resource: arn:aws:dynamodb:*:*:table/${self:custom.oneMacTableName}
+              - Effect: Allow
+                Action:
+                  - dynamodb:Query
+                Resource:
+                  - arn:aws:dynamodb:*:*:table/${self:custom.oneMacTableName}/index/*
+              - Effect: 'Allow'
+                Action:
+                - dynamodb:DescribeStream
+                - dynamodb:GetRecords
+                - dynamodb:GetShardIterator
+                - dynamodb:ListStreams
+                Resource: ${self:custom.oneMacTableStreamArn}
