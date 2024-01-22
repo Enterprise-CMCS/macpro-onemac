@@ -49,7 +49,7 @@ Resources:
   EmailEventConfigurationSet:
     Type: AWS::SES::ConfigurationSet
     Properties:
-      Name: 'email-${self:custom.stage}'
+      Name: 'Email-Config-${self:custom.stage}'
 
 Outputs:
   EmailTopic:
