@@ -10,13 +10,13 @@ const oneMacTableName = process.env.IS_OFFLINE
 
 console.log("Loading processEmailEvents");
 
-const createEmailEvent = (inEvent) => {};
-
 export const main = async (event, context, callback) => {
   console.log("Received email event:", JSON.stringify(event, null, 4));
 
   var message = event.Records[0].Sns.Message;
   console.log("Message received from SNS:", message);
+  console.log("Message.mail is:", message.mail);
+  console.log("Message.mail.messageId:", message.mail.messageId);
 
   // need to get the Key for the email from the message Id
   const queryParams = {
@@ -48,7 +48,9 @@ export const main = async (event, context, callback) => {
         "SET eventList = list_append(:newEvent,if_not_exists(eventList,:emptyList))",
       ExpressionAttributeValues: {
         ":newEvent":
-          event[event.eventType[0].toLowerCase() + event.eventType.slice(1)],
+          message[
+            message.eventType[0].toLowerCase() + message.eventType.slice(1)
+          ],
       },
     };
     console.log("Update Params: ", updateParams);
