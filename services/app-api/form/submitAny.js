@@ -130,7 +130,12 @@ export const submitAny = async (event, config) => {
     console.log("CMS sendEmail returns: ", emailReturn);
     CMSEmail.componentId = data.componentId;
     CMSEmail.eventTimestamp = rightNowNormalized;
-    await saveEmail(`submit${config.componentType}`, "CMS", CMSEmail);
+    await saveEmail(
+      emailReturn.MessageId,
+      `submit${config.componentType}`,
+      "CMS",
+      CMSEmail
+    );
   } catch (error) {
     console.log("%s Error is: ", data.componentId, error);
     return RESPONSE_CODE.EMAIL_NOT_SENT;
@@ -147,7 +152,12 @@ export const submitAny = async (event, config) => {
     console.log("State sendEmail returns: ", emailReturn);
     stateEmail.componentId = data.componentId;
     stateEmail.eventTimestamp = rightNowNormalized;
-    await saveEmail(`submit${config.componentType}`, "State", stateEmail);
+    await saveEmail(
+      emailReturn.MessageId,
+      `submit${config.componentType}`,
+      "State",
+      stateEmail
+    );
   } catch (error) {
     console.log(
       "%s Warning: There was an error sending the user acknowledgement email.",

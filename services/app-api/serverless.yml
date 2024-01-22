@@ -85,6 +85,7 @@ provider:
     testingEmail: ${self:custom.testingEmail}
     applicationEndpoint: ${self:custom.applicationEndpoint}
     attachmentsBucket: ${self:custom.attachmentsBucket}
+    configurationSetName: 'email-${self:custom.stage}'
   tracing:
     apiGateway: true
     lambda: true
