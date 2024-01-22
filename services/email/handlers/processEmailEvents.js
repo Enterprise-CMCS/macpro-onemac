@@ -13,10 +13,10 @@ console.log("Loading processEmailEvents");
 export const main = async (event, context, callback) => {
   console.log("Received email event:", JSON.stringify(event, null, 4));
 
-  var message = event.Records[0].Sns.Message;
+  const message = { ...event.Records[0].Sns.Message };
+  const messageId = event.Records[0].Sns.MessageId;
   console.log("Message received from SNS:", message);
-  console.log("Message.mail is:", message.mail);
-  console.log("Message.mail.messageId:", message.mail.messageId);
+  console.log("MessageId received from SNS is:", messageId);
 
   // need to get the Key for the email from the message Id
   const queryParams = {
@@ -24,7 +24,7 @@ export const main = async (event, context, callback) => {
     IndexName: "GSI1",
     KeyConditionExpression: "GSI1pk = :pk",
     ExpressionAttributeValues: {
-      ":pk": message.mail.messageId,
+      ":pk": messageId,
     },
   };
   try {
@@ -38,6 +38,7 @@ export const main = async (event, context, callback) => {
       );
       return;
     }
+    console.log("message.eventType is: ", message.eventType);
     const updateParams = {
       TableName: oneMacTableName,
       Key: {
