@@ -144,10 +144,3 @@ resources:
                   - dynamodb:Query
                 Resource:
                   - arn:aws:dynamodb:*:*:table/${self:custom.oneMacTableName}/index/*
-              - Effect: 'Allow'
-                Action:
-                - dynamodb:DescribeStream
-                - dynamodb:GetRecords
-                - dynamodb:GetShardIterator
-                - dynamodb:ListStreams
-                Resource: ${self:custom.oneMacTableStreamArn}
