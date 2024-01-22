@@ -59,6 +59,11 @@ resources:
         Endpoint: !GetAtt ProcessEmailEventsLambdaFunction.Arn
         Protocol: lambda
 
+    EmailEventConfigurationSet:
+      Type: AWS::SES::ConfigurationSet
+      Properties:
+        Name: 'email-${self:custom.stage}'
+
     EmailEventConfigurationSetEventDestination:
       Type: AWS::SES::ConfigurationSetEventDestination
       Properties:
@@ -79,5 +84,3 @@ resources:
             - "subscription"
           SnsDestination: 
             TopicARN: ${self:custom.emailEventTopic}
-
-

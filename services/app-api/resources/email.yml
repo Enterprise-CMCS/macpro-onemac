@@ -46,15 +46,8 @@ Resources:
       Topics:
         - !Ref EmailEventTopic
 
-  EmailEventConfigurationSet:
-    Type: AWS::SES::ConfigurationSet
-    Properties:
-      Name: 'Email-Config-${self:custom.stage}'
-
 Outputs:
   EmailTopic:
     Value: !Ref EmailTopic
   EmailEventTopic:
     Value: !Ref EmailEventTopic
-  EmailEventConfigurationSet:
-    Value: !Ref EmailEventConfigurationSet
