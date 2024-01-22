@@ -126,7 +126,8 @@ export const submitAny = async (event, config) => {
     if (config?.buildCMSNotice) {
       CMSEmail = await config.buildCMSNotice(data, config, doneBy);
     } else CMSEmail = CMSSubmissionNotice(data, config, warningsInCMSNotice);
-    await sendEmail(CMSEmail);
+    const emailReturn = await sendEmail(CMSEmail);
+    console.log("CMS sendEmail returns: ", emailReturn);
     CMSEmail.componentId = data.componentId;
     CMSEmail.eventTimestamp = rightNowNormalized;
     await saveEmail(`submit${config.componentType}`, "CMS", CMSEmail);
@@ -142,7 +143,8 @@ export const submitAny = async (event, config) => {
     if (config?.buildStateReceipt) {
       stateEmail = await config.buildStateReceipt(data, config, doneBy);
     } else stateEmail = stateSubmissionReceipt(data, config);
-    await sendEmail(stateEmail);
+    const emailReturn = await sendEmail(stateEmail);
+    console.log("State sendEmail returns: ", emailReturn);
     stateEmail.componentId = data.componentId;
     stateEmail.eventTimestamp = rightNowNormalized;
     await saveEmail(`submit${config.componentType}`, "State", stateEmail);
