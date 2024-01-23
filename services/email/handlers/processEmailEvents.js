@@ -52,6 +52,7 @@ export const main = async (event, context, callback) => {
           message[
             message.eventType[0].toLowerCase() + message.eventType.slice(1)
           ],
+        ":emptyList": [],
       },
     };
     console.log("Update Params: ", updateParams);
