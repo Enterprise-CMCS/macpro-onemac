@@ -156,12 +156,7 @@ jobs:
         id: deployment-data
         run: |
           echo ${{ startsWith(github.ref_name, 'snyk-') && 'snyk' || github.ref_name }}
-          echo "APPURL=$(
-            aws cloudformation \
-            --region us-east-1 describe-stacks \
-            --stack-name ui-$branch_name \
-            --query Stacks[0].Outputs[1].OutputValue
-          )" | tr -d \'\" >> $GITHUB_OUTPUT
+          echo "APPURL=$(./output.sh ui ApplicationEndpointUrl $STAGE_PREFIX$branch_name)" | tr -d \'\" >> $GITHUB_OUTPUT
   configure:
     name: Configure
     needs:
