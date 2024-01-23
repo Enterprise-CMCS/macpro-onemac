@@ -13,10 +13,9 @@ console.log("Loading processEmailEvents");
 export const main = async (event, context, callback) => {
   console.log("Received email event:", JSON.stringify(event, null, 4));
 
-  const message = { ...event.Records[0].Sns.Message };
-  const messageId = event.Records[0].Sns.MessageId;
-  console.log("Message received from SNS:", message);
-  console.log("MessageId received from SNS is:", messageId);
+  const message = JSON.parse(event.Records[0].Sns.Message);
+  //console.log("Message received from SNS:", message);
+  console.log("MessageId received from SNS is:", message.mail.MessageId);
 
   // need to get the Key for the email from the message Id
   const queryParams = {
@@ -24,7 +23,7 @@ export const main = async (event, context, callback) => {
     IndexName: "GSI1",
     KeyConditionExpression: "GSI1pk = :pk",
     ExpressionAttributeValues: {
-      ":pk": messageId,
+      ":pk": message.mail.MessageId,
     },
   };
   try {
