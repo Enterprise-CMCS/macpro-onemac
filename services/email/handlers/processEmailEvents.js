@@ -20,7 +20,7 @@ export const main = async (event, context, callback) => {
   const message = JSON.parse(event.Records[0].Sns.Message);
   console.log("Message received from SNS:", message);
   console.log("Message mail section: ", message.mail);
-  console.log("MessageId received from SNS is:", message.mail.MessageId);
+  console.log("MessageId received from SNS is:", message.mail.messageId);
 
   // need to get the Key for the email from the message Id
   const queryParams = {
@@ -28,7 +28,7 @@ export const main = async (event, context, callback) => {
     IndexName: "GSI1",
     KeyConditionExpression: "GSI1pk = :pk",
     ExpressionAttributeValues: {
-      ":pk": message.mail.MessageId,
+      ":pk": message.mail.messageId,
     },
   };
   try {

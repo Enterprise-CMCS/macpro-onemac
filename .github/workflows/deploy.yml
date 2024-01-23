@@ -159,7 +159,7 @@ jobs:
           echo "APPURL=$(
             aws cloudformation \
             --region us-east-1 describe-stacks \
-            --stack-name $STAGE_PREFIX$branch_name \
+            --stack-name ui-src-$branch_name \
             --query Stacks[0].Outputs[0].OutputValue
           )" | tr -d \'\" >> $GITHUB_OUTPUT
   configure:
