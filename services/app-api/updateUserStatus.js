@@ -8,6 +8,7 @@ import {
 } from "cmscommonlib";
 import handler from "./libs/handler-lib";
 import sendEmail from "./libs/email-lib";
+import { saveEmail } from "../utils/saveEmail";
 
 import { getUser } from "./getUser";
 import { changeUserStatus } from "./utils/changeUserStatus";
@@ -58,7 +59,6 @@ export const doUpdate = async (body, doneBy, doneTo) => {
   try {
     await changeUserStatus({
       ...body,
-      date: Date.now(),
       doneByName: doneBy.fullName,
       fullName: doneTo.fullName,
     });
@@ -83,6 +83,8 @@ export const doUpdate = async (body, doneBy, doneTo) => {
 
 export const updateUserStatus = async (event) => {
   let body;
+  const rightNowNormalized = Date.now();
+
   try {
     body = JSON.parse(event.body);
   } catch (e) {
@@ -90,6 +92,7 @@ export const updateUserStatus = async (event) => {
     return RESPONSE_CODE.USER_SUBMISSION_FAILED;
   }
 
+  body.date = rightNowNormalized;
   let doneBy, doneTo;
   try {
     [doneBy, doneTo] = await Promise.all([
@@ -141,7 +144,15 @@ export const updateUserStatus = async (event) => {
         doneTo.fullName,
         approverList
       );
-      await sendEmail(selfRevokeEmail);
+      const emailReturn = await sendEmail(selfRevokeEmail);
+      selfRevokeEmail.componentId = body.email;
+      selfRevokeEmail.eventTimestamp = rightNowNormalized;
+      await saveEmail(
+        emailReturn.MessageId,
+        `updateUserStatus`,
+        "CMS",
+        selfRevokeEmail
+      );
     }
   } catch (e) {
     console.log("failed to send email: ", e);

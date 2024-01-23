@@ -11,7 +11,6 @@ const oneMacTableName = process.env.IS_OFFLINE
 console.log("Loading processEmailEvents");
 
 export const main = async (event, context, callback) => {
-  console.log("the basic event: ", event);
   console.log(
     "Received email event, stringified:",
     JSON.stringify(event, null, 4)
@@ -19,8 +18,6 @@ export const main = async (event, context, callback) => {
 
   const message = JSON.parse(event.Records[0].Sns.Message);
   console.log("Message received from SNS:", message);
-  console.log("Message mail section: ", message.mail);
-  console.log("MessageId received from SNS is:", message.mail.messageId);
 
   // need to get the Key for the email from the message Id
   const queryParams = {
@@ -32,7 +29,6 @@ export const main = async (event, context, callback) => {
     },
   };
   try {
-    console.log("queryParams: ", queryParams);
     const result = await dynamoDb.query(queryParams).promise();
     console.log("results are: ", result);
     if (result?.Items.length != 1) {
@@ -46,8 +42,8 @@ export const main = async (event, context, callback) => {
     const updateParams = {
       TableName: oneMacTableName,
       Key: {
-        pk: emailItem.pk,
-        sk: emailItem.sk,
+        pk: result.Items[0].pk,
+        sk: result.Items[0].sk,
       },
       UpdateExpression:
         "SET eventList = list_append(:newEvent,if_not_exists(eventList,:emptyList))",
