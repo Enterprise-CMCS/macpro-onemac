@@ -38,12 +38,14 @@ export const main = async (event, context, callback) => {
       return;
     }
     console.log("message.eventType is: ", message.eventType);
-    const eventItem = {
-      eventType: message.eventType,
-      ...message[
-        message.eventType[0].toLowerCase() + message.eventType.slice(1)
-      ],
-    };
+    const eventItem = [
+      {
+        eventType: message.eventType,
+        ...message[
+          message.eventType[0].toLowerCase() + message.eventType.slice(1)
+        ],
+      },
+    ];
     const updateParams = {
       TableName: oneMacTableName,
       Key: {
