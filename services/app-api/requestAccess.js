@@ -7,7 +7,7 @@ import {
 
 import handler from "./libs/handler-lib";
 import sendEmail from "./libs/email-lib";
-import { saveEmail } from "../utils/saveEmail";
+import { saveEmail } from "./utils/saveEmail";
 
 import { getCMSDateFormat } from "./utils/date-utils";
 

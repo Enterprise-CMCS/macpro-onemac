@@ -8,7 +8,7 @@ import {
 } from "cmscommonlib";
 import handler from "./libs/handler-lib";
 import sendEmail from "./libs/email-lib";
-import { saveEmail } from "../utils/saveEmail";
+import { saveEmail } from "./utils/saveEmail";
 
 import { getUser } from "./getUser";
 import { changeUserStatus } from "./utils/changeUserStatus";
