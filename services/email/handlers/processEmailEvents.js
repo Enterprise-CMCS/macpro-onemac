@@ -1,6 +1,5 @@
 import AWS from "aws-sdk";
 import { dynamoConfig } from "cmscommonlib";
-import { update } from "lodash";
 
 const dynamoDb = new AWS.DynamoDB.DocumentClient(dynamoConfig);
 
@@ -39,6 +38,12 @@ export const main = async (event, context, callback) => {
       return;
     }
     console.log("message.eventType is: ", message.eventType);
+    const eventItem = {
+      eventType: message.eventType,
+      ...message[
+        message.eventType[0].toLowerCase() + message.eventType.slice(1)
+      ],
+    };
     const updateParams = {
       TableName: oneMacTableName,
       Key: {
@@ -48,10 +53,7 @@ export const main = async (event, context, callback) => {
       UpdateExpression:
         "SET eventList = list_append(:newEvent,if_not_exists(eventList,:emptyList))",
       ExpressionAttributeValues: {
-        ":newEvent":
-          message[
-            message.eventType[0].toLowerCase() + message.eventType.slice(1)
-          ],
+        ":newEvent": eventItem,
         ":emptyList": [],
       },
     };
