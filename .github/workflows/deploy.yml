@@ -57,9 +57,6 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: ${{ startsWith(github.ref_name, 'snyk-') && 'snyk' || github.ref_name }}
-      url: ${{ steps.deployment-data.outputs.APPURL }}
-    outputs:
-      app-url: ${{ steps.deployment-data.outputs.APPURL }}
     steps:
       - name: set branch_name
         run: echo "branch_name=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
@@ -152,11 +149,6 @@ jobs:
           pushd services
           echo "::notice::Endpoint URL - `./output.sh ui ApplicationEndpointUrl $STAGE_PREFIX$branch_name`"
           popd
-      - name: Set Site URL
-        id: deployment-data
-        run: |
-          echo ${{ startsWith(github.ref_name, 'snyk-') && 'snyk' || github.ref_name }}
-          echo "APPURL=$(./output.sh ui ApplicationEndpointUrl $STAGE_PREFIX$branch_name)" | tr -d \'\" >> $GITHUB_OUTPUT
   configure:
     name: Configure
     needs:
