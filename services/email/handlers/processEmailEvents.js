@@ -11,10 +11,15 @@ const oneMacTableName = process.env.IS_OFFLINE
 console.log("Loading processEmailEvents");
 
 export const main = async (event, context, callback) => {
-  console.log("Received email event:", JSON.stringify(event, null, 4));
+  console.log("the basic event: ", event);
+  console.log(
+    "Received email event, stringified:",
+    JSON.stringify(event, null, 4)
+  );
 
   const message = JSON.parse(event.Records[0].Sns.Message);
-  //console.log("Message received from SNS:", message);
+  console.log("Message received from SNS:", message);
+  console.log("Message mail section: ", message.mail);
   console.log("MessageId received from SNS is:", message.mail.MessageId);
 
   // need to get the Key for the email from the message Id
