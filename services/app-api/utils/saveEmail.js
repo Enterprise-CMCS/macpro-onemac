@@ -6,8 +6,10 @@ export const saveEmail = async (messageId, eventName, stateOrCMS, data) => {
     Item: {
       pk: data.componentId,
       sk: `Email#${stateOrCMS}#${eventName}#${data.eventTimestamp}`,
-      GSI1pk: messageId,
-      GSI1sk: eventName,
+      GSI1pk: "Email",
+      GSI1sk: messageId,
+      GSI2pk: "Created",
+      GSI2sk: `Email#${stateOrCMS}#${eventName}#${data.eventTimestamp}`,
       ...data,
     },
   };

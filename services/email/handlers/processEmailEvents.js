@@ -7,8 +7,6 @@ const oneMacTableName = process.env.IS_OFFLINE
   ? process.env.localTableName
   : process.env.oneMacTableName;
 
-console.log("Loading processEmailEvents");
-
 export const main = async (event, context, callback) => {
   console.log(
     "Received email event, stringified:",
@@ -22,9 +20,10 @@ export const main = async (event, context, callback) => {
   const queryParams = {
     TableName: oneMacTableName,
     IndexName: "GSI1",
-    KeyConditionExpression: "GSI1pk = :pk",
+    KeyConditionExpression: "GSI1pk = :pk AND GSI1sk = :sk",
     ExpressionAttributeValues: {
-      ":pk": message.mail.messageId,
+      ":pk": "Email",
+      ":sk": message.mail.messageId,
     },
   };
   try {
@@ -41,6 +40,7 @@ export const main = async (event, context, callback) => {
     const eventItem = [
       {
         eventType: message.eventType,
+        eventTimestamp: Date.now(),
         ...message[
           message.eventType[0].toLowerCase() + message.eventType.slice(1)
         ],
@@ -53,10 +53,11 @@ export const main = async (event, context, callback) => {
         sk: result.Items[0].sk,
       },
       UpdateExpression:
-        "SET eventList = list_append(:newEvent,if_not_exists(eventList,:emptyList))",
+        "SET eventList = list_append(:newEvent,if_not_exists(eventList,:emptyList)), GSI2pk = :eventType",
       ExpressionAttributeValues: {
         ":newEvent": eventItem,
         ":emptyList": [],
+        ":eventType": message.eventType,
       },
     };
     console.log("Update Params: ", updateParams);

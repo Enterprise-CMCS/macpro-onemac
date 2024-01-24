@@ -41,7 +41,8 @@ functions:
   processEmails:
     handler: handlers/processEmails.main
     events:
-      - sns: ${self:custom.emailTopic}
+      - schedule:
+          rate: rate(30 minutes)
 
   processEmailEvents:
     handler: handlers/processEmailEvents.main
