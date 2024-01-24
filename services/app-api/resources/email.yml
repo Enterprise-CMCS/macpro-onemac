@@ -1,27 +1,4 @@
 Resources:
-  EmailTopic:
-    Type: AWS::SNS::Topic
-    Properties:
-      TopicName: Emails-${self:service}-${sls:stage}
-      DisplayName: Distributing the sending of emails
-      KmsMasterKeyId: alias/aws/sns
-
-  EmailTopicPolicy:
-    Type: AWS::SNS::TopicPolicy
-    Properties:
-      PolicyDocument:
-        Statement:
-          - Effect: Allow
-            Principal:
-              Service:
-                - lambda.amazonaws.com
-            Action: 
-              - sns:Publish
-              - sns:Subscribe
-            Resource: !Ref EmailTopic
-      Topics:
-        - !Ref EmailTopic
-
   EmailEventTopic:
     Type: AWS::SNS::Topic
     Properties:
@@ -47,7 +24,5 @@ Resources:
         - !Ref EmailEventTopic
 
 Outputs:
-  EmailTopic:
-    Value: !Ref EmailTopic
   EmailEventTopic:
     Value: !Ref EmailEventTopic

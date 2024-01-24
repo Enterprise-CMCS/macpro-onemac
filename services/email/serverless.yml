@@ -58,13 +58,6 @@ resources:
           - ${self:custom.iamPermissionsBoundaryPolicy}
 
   Resources:
-    EmailSubscription:
-      Type: AWS::SNS::Subscription
-      Properties:
-        TopicArn: ${self:custom.emailTopic}
-        Endpoint: !GetAtt ProcessEmailsLambdaFunction.Arn
-        Protocol: lambda
-
     EmailEventSubscription:
       Type: AWS::SNS::Subscription
       Properties:
