@@ -129,6 +129,7 @@ export const submitAny = async (event, config) => {
     const emailReturn = await sendEmail(CMSEmail);
     CMSEmail.componentId = data.componentId;
     CMSEmail.eventTimestamp = rightNowNormalized;
+    console.log("email return is: ", emailReturn);
     await saveEmail(
       emailReturn.MessageId,
       `submit${config.componentType}`,

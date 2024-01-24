@@ -57,6 +57,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: ${{ startsWith(github.ref_name, 'snyk-') && 'snyk' || github.ref_name }}
+      url: "https://onemac.cms.gov"
     steps:
       - name: set branch_name
         run: echo "branch_name=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV

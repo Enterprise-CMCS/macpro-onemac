@@ -4,7 +4,6 @@ Resources:
     Properties:
       TopicName: Email-Events-${self:service}-${sls:stage}
       DisplayName: Monitoring the sending of emails
-#      KmsMasterKeyId: alias/aws/sns
 
   EmailEventTopicPolicy:
     Type: AWS::SNS::TopicPolicy
