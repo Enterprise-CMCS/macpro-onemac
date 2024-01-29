@@ -18,8 +18,7 @@ custom:
   iamPermissionsBoundaryPolicy: ${ssm:/configuration/${self:custom.stage}/iam/permissionsBoundaryPolicy, ssm:/configuration/default/iam/permissionsBoundaryPolicy, ""}
   oneMacTableName: ${cf:app-api-${self:custom.stage}.OneMacTableName, ""}
   oneMacTableArn: ${cf:app-api-${self:custom.stage}.OneMacTableArn, ""}
-  emailTopic: ${cf:app-api-${self:custom.stage}.EmailTopic, ""}
-  emailEventTopic: ${cf:app-api-${self:custom.stage}.EmailEventTopic, ""}
+  emailEventTopicName: ${self:service}-${sls:stage}-email-events
 
 provider:
   name: aws
@@ -47,7 +46,9 @@ functions:
   processEmailEvents:
     handler: handlers/processEmailEvents.main
     events:
-      - sns: ${self:custom.emailEventTopic}
+      - sns:
+          arn: !Ref EmailEventTopic
+          topicName: ${self:custom.emailEventTopicName}
 
 resources:
   Conditions:
@@ -61,7 +62,7 @@ resources:
     EmailEventTopic:
       Type: AWS::SNS::Topic
       Properties:
-        TopicName: Email-Events-${self:service}-${sls:stage}
+        TopicName: ${self:custom.emailEventTopicName}
         DisplayName: Monitoring the sending of emails
         KmsMasterKeyId: !Ref KmsKeyForEmails
 
