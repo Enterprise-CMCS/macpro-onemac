@@ -12,6 +12,7 @@ import { getUser } from "../getUser";
 import { validateSubmission } from "./validateSubmission";
 import packageExists from "../utils/packageExists";
 import { newEvent } from "../utils/newEvent";
+import { saveEmail } from "../utils/saveEmail";
 import { getPackageType } from "../utils/getPackageType";
 
 import { CMSSubmissionNotice } from "../email/CMSSubmissionNotice";
@@ -28,6 +29,7 @@ import { stateSubmissionReceipt } from "../email/stateSubmissionReceipt";
 export const submitAny = async (event, config) => {
   let data, doneBy;
   const warningsInCMSNotice = [];
+  const rightNowNormalized = Date.now();
 
   try {
     data = JSON.parse(event.body);
@@ -94,7 +96,6 @@ export const submitAny = async (event, config) => {
 
   try {
     // Add the details from this submission action
-    const rightNowNormalized = Date.now();
     data.submissionTimestamp = rightNowNormalized;
     data.eventTimestamp = rightNowNormalized;
 
@@ -120,12 +121,21 @@ export const submitAny = async (event, config) => {
   }
 
   try {
-    // Now send the CMS email
+    let CMSEmail;
+    // Send the CMS email
     if (config?.buildCMSNotice) {
-      const CMSEmail = await config.buildCMSNotice(data, config, doneBy);
-      await sendEmail(CMSEmail);
-    } else
-      await sendEmail(CMSSubmissionNotice(data, config, warningsInCMSNotice));
+      CMSEmail = await config.buildCMSNotice(data, config, doneBy);
+    } else CMSEmail = CMSSubmissionNotice(data, config, warningsInCMSNotice);
+    const emailReturn = await sendEmail(CMSEmail);
+    CMSEmail.componentId = data.componentId;
+    CMSEmail.eventTimestamp = rightNowNormalized;
+    console.log("email return is: ", emailReturn);
+    await saveEmail(
+      emailReturn.MessageId,
+      `submit${config.componentType}`,
+      "CMS",
+      CMSEmail
+    );
   } catch (error) {
     console.log("%s Error is: ", data.componentId, error);
     return RESPONSE_CODE.EMAIL_NOT_SENT;
@@ -133,11 +143,21 @@ export const submitAny = async (event, config) => {
 
   //An error sending the user email is not a failure.
   try {
+    let stateEmail;
     // send the submission "reciept" to the State Submitter
     if (config?.buildStateReceipt) {
-      const stateEmail = await config.buildStateReceipt(data, config, doneBy);
-      await sendEmail(stateEmail);
-    } else await sendEmail(stateSubmissionReceipt(data, config));
+      stateEmail = await config.buildStateReceipt(data, config, doneBy);
+    } else stateEmail = stateSubmissionReceipt(data, config);
+    const emailReturn = await sendEmail(stateEmail);
+    console.log("State sendEmail returns: ", emailReturn);
+    stateEmail.componentId = data.componentId;
+    stateEmail.eventTimestamp = rightNowNormalized;
+    await saveEmail(
+      emailReturn.MessageId,
+      `submit${config.componentType}`,
+      "State",
+      stateEmail
+    );
   } catch (error) {
     console.log(
       "%s Warning: There was an error sending the user acknowledgement email.",

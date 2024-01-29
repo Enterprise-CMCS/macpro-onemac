@@ -26,6 +26,7 @@ services=(
   'ui'
   'uploads'
   'app-api'
+  'email'
   'one-stream'
   'seatool-sink'
   'ui-waf-log-assoc'

@@ -55,6 +55,9 @@ jobs:
       - lint
       - unit-test
     runs-on: ubuntu-latest
+    environment:
+      name: ${{ startsWith(github.ref_name, 'snyk-') && 'snyk' || github.ref_name }}
+      url: "https://onemac.cms.gov"
     steps:
       - name: set branch_name
         run: echo "branch_name=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
@@ -121,6 +124,7 @@ jobs:
             services/seatool-sink/node_modules
             services/uploads/node_modules
             services/app-api/node_modules
+            services/email/node_modules
             services/one-stream/node_modules
             services/ui/node_modules
             services/ui-auth/node_modules
@@ -216,6 +220,7 @@ jobs:
             services/seatool-sink/node_modules
             services/uploads/node_modules
             services/app-api/node_modules
+            services/email/node_modules
             services/one-stream/node_modules
             services/ui/node_modules
             services/ui-auth/node_modules

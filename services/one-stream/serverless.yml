@@ -34,8 +34,6 @@ custom:
       concurrency: 5
       folderName: node_modules/serverless-bundle/src/_warmup
       cleanFolder: false
-    configureConnectors:
-      enabled: false
   localTableName: onemac-dev-one
   oneMacTableStreamArn: ${cf:app-api-${self:custom.stage}.OneMacTableStreamArn, ""}
   oneMacTableName: ${cf:app-api-${self:custom.stage}.OneMacTableName, ""}
