@@ -134,7 +134,7 @@ resources:
     EmailEventSubscription:
       Type: AWS::SNS::Subscription
       Properties:
-        TopicArn: ${self:custom.emailEventTopicName}
+        TopicArn: !Ref EmailEventTopic
         Endpoint: !GetAtt ProcessEmailEventsLambdaFunction.Arn
         Protocol: lambda
 
