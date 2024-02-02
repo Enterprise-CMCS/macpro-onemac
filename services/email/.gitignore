@@ -1,0 +1,35 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Coverage directory used by testing tools
+coverage
+
+# Dependency directories
+node_modules
+jspm_packages
+
+# Optional npm cache directory
+.npm
+
+# Optional REPL history
+.node_repl_history
+
+# vim
+.*.sw*
+Session.vim
+
+# Serverless
+.webpack
+.serverless
+.esbuild
+
+# env
+env.yml
+.env
+
+# Jetbrains IDEs
+.idea
+
+.dynamodb

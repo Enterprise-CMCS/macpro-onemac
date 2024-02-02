@@ -22,13 +22,12 @@ deploy() {
 install_deps
 
 # Run deploy for each folder
-# skip   'stream-functions' while bigMAC is down
 services=(
   'ui'
   'uploads'
   'app-api'
+  'email'
   'one-stream'
-  #'stream-functions'
   'seatool-sink'
   'ui-waf-log-assoc'
   'ui-auth'

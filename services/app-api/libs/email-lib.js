@@ -8,6 +8,7 @@ const sender = new AWS.SES({ region: "us-east-1" });
  */
 function getSESEmailParams(email) {
   const emailParams = {
+    ConfigurationSetName: process.env.configurationSetName,
     Destination: {
       ToAddresses: email.ToAddresses,
       CcAddresses: email.CcAddresses,
