@@ -9,16 +9,41 @@ import { getActionsForPackage } from "./utils/actionDelegate";
 
 const s3 = new AWS.S3();
 
+async function getVirusScanStatusOfAttachments(attachments) {
+  for (const attachment of attachments) {
+    try {
+      const data = await s3
+        .getObjectTagging({
+          Bucket: process.env.attachmentsBucket,
+          Key: decodeURIComponent(attachment.url.split("amazonaws.com/")[1]),
+        })
+        .promise();
+
+      console.log("Tags: ", data);
+      attachment.virusScanStatus =
+        data.TagSet.find((tag) => tag.Key === "virusScanStatus")?.Value || null;
+    } catch (err) {
+      console.log("Error getting tags: ", err);
+      attachment.virusScanStatus = null;
+    }
+  }
+}
+
 async function generateSignedUrl(item) {
   if (Array.isArray(item.attachments)) {
+    await getVirusScanStatusOfAttachments(item.attachments);
     const attachmentURLs = await Promise.all(
-      item?.attachments.map(({ url }) =>
-        s3.getSignedUrlPromise("getObject", {
-          Bucket: process.env.attachmentsBucket,
-          Key: decodeURIComponent(url.split("amazonaws.com/")[1]),
-          Expires: 3600,
-        })
-      )
+      item.attachments.map((attachment) => {
+        if (attachment.virusScanStatus !== "CLEAN") {
+          return Promise.resolve(null); // return null for attachments that are not clean
+        } else {
+          return s3.getSignedUrlPromise("getObject", {
+            Bucket: process.env.attachmentsBucket,
+            Key: decodeURIComponent(attachment.url.split("amazonaws.com/")[1]),
+            Expires: 3600,
+          });
+        }
+      })
     );
 
     attachmentURLs.forEach((url, idx) => {
