@@ -3,7 +3,6 @@
   "description": "",
   "version": "1.0.0",
   "devDependencies": {
-    "aws-sdk": "^2.752.0",
     "aws-sdk-client-mock": "^0.5.6",
     "esbuild": "^0.19.4",
     "serverless-dotenv-plugin": "^3.12.2",
@@ -14,6 +13,7 @@
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.43.0",
     "@aws-sdk/lib-dynamodb": "^3.454.0",
+    "aws-sdk": "^2.1559.0",
     "cmscommonlib": "file:../common",
     "csvtojson": "^2.0.10",
     "date-fns": "^2.16.1"
