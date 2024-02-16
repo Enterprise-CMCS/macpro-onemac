@@ -6,11 +6,13 @@ import { withdrawMedicaidSPAFormConfig } from "./withdrawMedicaidSPA";
 import { waiverTemporaryExtensionFormConfig } from "./submitWaiverExtension";
 import packageExists from "../utils/packageExists";
 import { newEvent } from "../utils/newEvent";
+import { saveEmail } from "../utils/saveEmail";
 import sendEmail from "../libs/email-lib";
 
 jest.mock("../getUser");
 jest.mock("../utils/packageExists");
 jest.mock("../utils/newEvent");
+jest.mock("../utils/saveEmail");
 jest.mock("../libs/email-lib");
 
 const testDoneBy = {
@@ -156,8 +158,12 @@ beforeEach(() => {
 
   getUser.mockResolvedValue(testDoneBy);
   packageExists.mockResolvedValue(false);
-  sendEmail.mockResolvedValue(null);
+  sendEmail.mockResolvedValue({
+    ResponseMetadata: { RequestId: "aRequestId" },
+    MessageId: "aMessageId",
+  });
   newEvent.mockResolvedValue({});
+  saveEmail.mockResolvedValue(null);
 });
 
 it("catches a badly parsed event", async () => {
@@ -220,7 +226,10 @@ it("returns error code when CMS email fails", async () => {
 
 it("returns success code even when State email fails", async () => {
   sendEmail.mockImplementationOnce(() => {
-    return null; //success - first email is CMS email
+    return {
+      ResponseMetadata: { RequestId: "aRequestId" },
+      MessageId: "aMessageId",
+    }; //success - first email is CMS email
   });
   sendEmail.mockImplementationOnce(() => {
     throw new Error("Email error"); //second email is state email
