@@ -39,8 +39,8 @@ custom:
           cd node_modules/serverless-bundle/src/_warmup
           sed '/Generated/d' index.js > index.js.sub && mv -f index.js.sub index.js
         fi
-      deploy:finalize: |
-        serverless invoke --stage ${self:custom.stage} --function configureConnectors
+      # deploy:finalize: |
+      #   serverless invoke --stage ${self:custom.stage} --function configureConnectors
 
 provider:
   name: aws
