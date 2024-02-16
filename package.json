@@ -51,6 +51,7 @@
     ]
   },
   "dependencies": {
+    "aws-sdk": "^2.1559.0",
     "dynamodb-local": "^0.0.32",
     "serverless-esbuild": "^1.50.1"
   }

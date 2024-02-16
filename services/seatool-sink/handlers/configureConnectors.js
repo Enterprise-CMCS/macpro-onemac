@@ -1,4 +1,4 @@
-import aws from "aws-sdk";
+const aws = require("aws-sdk");
 const lodash = require("lodash");
 const http = require("http");
 
