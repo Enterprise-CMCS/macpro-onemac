@@ -4,6 +4,7 @@
     "version": "1.0.0",
     "scripts": {},
     "dependencies": {
+        "aws-sdk": "^2.1559.0",
         "cmscommonlib": "file:../common",
         "kafka-node": "^5.0.0",
         "kafkajs": "^1.14.0",

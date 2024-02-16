@@ -30,11 +30,11 @@
       // See https://github.com/facebook/react/issues/20829#issuecomment-802088260
       if (!crossOriginIsolated) SharedArrayBuffer = ArrayBuffer;
     </script>
-    <!-- Legacy browser (IE11) -->
+    <!-- Legacy browser (IE11)
     <script nomodule src="webcomponents-loader.js"></script>
     <script nomodule src="index.js"></script>
     <script src="https://sdk.amazonaws.com/js/aws-sdk-2.797.0.min.js"></script>
-    <reference types="aws-sdk" />
+    <reference types="aws-sdk" /> -->
     <!-- Modern browser -->
     <script type="module" src="index.es6.js"></script>
     <div id="root"></div>
