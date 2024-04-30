@@ -4,6 +4,8 @@ frameworkVersion: "3"
 
 package:
   individually: true
+  include:
+    - 'node_modules/aws-sdk/**'
 
 plugins:
   - serverless-esbuild
