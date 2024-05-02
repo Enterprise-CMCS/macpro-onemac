@@ -4,8 +4,6 @@ frameworkVersion: "3"
 
 package:
   individually: true
-  include:
-    - 'node_modules/**'
 
 plugins:
   - serverless-esbuild
@@ -15,7 +13,7 @@ plugins:
 
 custom:
   esbuild:
-    external: [] # Default is ['aws-sdk'] but we want to force inclusion of aws-sdk
+    exclude: []
   stage: ${opt:stage, self:provider.stage}
   iamPath: ${ssm:/configuration/${self:custom.stage}/iam/path, ssm:/configuration/default/iam/path}
   iamPermissionsBoundaryPolicy: ${ssm:/configuration/${self:custom.stage}/iam/permissionsBoundaryPolicy, ssm:/configuration/default/iam/permissionsBoundaryPolicy, ""}

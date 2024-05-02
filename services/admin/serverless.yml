@@ -6,14 +6,14 @@ useDotenv: true
 
 package:
   individually: true
-  include:
-    - 'node_modules/**'
 
 plugins:
   - serverless-esbuild
   - serverless-dotenv-plugin
   - serverless-s3-bucket-helper
 custom:
+  esbuild:
+    exclude: []
   stage: ${opt:stage, self:provider.stage}
   iamPermissionsBoundaryPolicy: ${ssm:/configuration/${self:custom.stage}/iam/permissionsBoundaryPolicy, ssm:/configuration/default/iam/permissionsBoundaryPolicy, ""}
   oneMacTableName: onemac-${self:custom.stage}-one
