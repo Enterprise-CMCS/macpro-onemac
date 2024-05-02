@@ -17,6 +17,9 @@ plugins:
   - serverless-iam-helper
   - serverless-s3-bucket-helper
 custom:
+  esbuild:
+    external: []
+    include: ['aws-sdk']
   stage: ${opt:stage, self:provider.stage}
   oneMacTableName: onemac-${self:custom.stage}-one
   iamPath: ${ssm:/configuration/${self:custom.stage}/iam/path, ssm:/configuration/default/iam/path, "/"}
