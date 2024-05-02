@@ -6,8 +6,6 @@ useDotenv: true
 
 package:
   individually: true
-  include:
-    - 'node_modules/**'
 
 plugins:
   - serverless-esbuild
