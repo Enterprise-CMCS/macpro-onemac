@@ -17,6 +17,8 @@ plugins:
   - serverless-iam-helper
   - serverless-s3-bucket-helper
 custom:
+  esbuild:
+    exclude: []
   stage: ${opt:stage, self:provider.stage}
   oneMacTableName: onemac-${self:custom.stage}-one
   iamPath: ${ssm:/configuration/${self:custom.stage}/iam/path, ssm:/configuration/default/iam/path, "/"}
@@ -68,7 +70,7 @@ custom:
 
 provider:
   name: aws
-  runtime: nodejs16.x
+  runtime: nodejs20.x
   region: us-east-1
   stage: dev
   iam:
