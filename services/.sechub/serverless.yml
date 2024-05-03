@@ -16,6 +16,8 @@ plugins:
   - serverless-online
 
 custom:
+  esbuild:
+    exclude: []
   stage: ${opt:stage, self:provider.stage}
   region: ${opt:region, self:provider.region}
   serverlessTerminationProtection:
