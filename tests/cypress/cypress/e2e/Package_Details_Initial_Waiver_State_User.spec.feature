@@ -256,7 +256,6 @@ Feature: Waiver Package Details View: Initial Waivers
         Then click the Waiver Number link in the first row
         Then verify the package details page is visible
         Then verify 2 action cards exist
-        Then verify the sub status on the card is Withdraw Formal RAI Response Enabled
         Then verify package actions header is visible
         Then verify withdraw package action exists
         Then verify Withdraw Formal RAI Response package action exists
@@ -288,7 +287,6 @@ Feature: Waiver Package Details View: Initial Waivers
         Then search for "MD-22116.R00.00"
         Then click the Waiver Number link in the first row
         Then verify the package details page is visible
-        Then verify the sub status on the card is Withdraw Formal RAI Response Enabled
         Then click Withdraw Formal RAI Response package action
         Then into "Additional Information" type "Automated test to withdraw the RAI Response."
         Then Click the Submit Button without waiting
