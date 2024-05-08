@@ -46,7 +46,7 @@ Feature: Validate Waiver Form is checking ID format without period
         Then verify the "1915(b) Waiver Amendment Number" error message line 2 is "For amendments, the last two digits start with ‘01’ and ascends."
         Then verify the submit button is disabled
         Then clear the ID Input box
-        Then into "1915(b) Waiver Amendment Number" type "MD-12323.R01.01"
+        Then into "1915(b) Waiver Amendment Number" type "MD-12323.R01.03"
         Then verify ID error message is not present
         Then verify the submit button is not disabled 
 
