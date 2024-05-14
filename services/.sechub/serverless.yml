@@ -16,6 +16,8 @@ plugins:
   - serverless-online
 
 custom:
+  esbuild:
+    exclude: []
   stage: ${opt:stage, self:provider.stage}
   region: ${opt:region, self:provider.region}
   serverlessTerminationProtection:
@@ -32,7 +34,7 @@ custom:
 
 provider:
   name: aws
-  runtime: nodejs16.x
+  runtime: nodejs20.x
   region: us-east-1
   iam:
     role:

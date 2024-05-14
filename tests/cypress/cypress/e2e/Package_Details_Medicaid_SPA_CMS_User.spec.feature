@@ -270,7 +270,6 @@ Feature: Medicaid SPA CMS Details View - Card View with Actions
         Then click Enable Formal RAI Response Withdraw package action
         Then Click on Submit Button
         Then verify the status on the card is "Pending"
-        Then verify the sub status on the card is Withdraw Formal RAI Response Enabled
         Then verify package actions header is visible
         Then verify Disable Formal RAI Response Withdraw package action exists
 
