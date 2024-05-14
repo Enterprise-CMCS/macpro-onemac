@@ -90,7 +90,7 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
     formConfig.parentTypeNice ?? Workflow.ONEMAC_LABEL[presetParentType];
 
   //if location contains parentType and formSource was detail page then override landingpage to type specific detail page
-  formConfig.landingPage = getLandingPage(location, formConfig);
+  const thisLandingPage = getLandingPage(location, formConfig);
 
   // if only one waiver Authority choice, it is the default
   const presetWaiverAuthority = formConfig.waiverAuthority?.value;
@@ -365,10 +365,11 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
         uploadedList,
         formConfig.componentType
       );
+
       if (returnCode in FORM_SUCCESS_RESPONSE_CODES)
         throw new Error(returnCode);
 
-      history.push(formConfig.landingPage, {
+      history.push(thisLandingPage, {
         passCode: returnCode,
       });
     } catch (err) {
@@ -378,22 +379,37 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
       setIsSubmissionReady(false);
       limitSubmit.current = false;
     }
-  }, [formConfig, history, oneMacFormData, componentIdStatusMessages]);
+  }, [
+    componentIdStatusMessages,
+    oneMacFormData,
+    formConfig.componentType,
+    history,
+    thisLandingPage,
+  ]);
 
   const handleSubmit = useCallback(
     async (event: SyntheticEvent) => {
       event.preventDefault();
       if (isSubmissionReady && !limitSubmit.current) {
         if (formConfig.confirmSubmit) {
+          const confirmHeading: string = formConfig.confirmSubmit.buildHeading
+            ? formConfig.confirmSubmit.buildHeading(
+                presetParentTypeNice ?? "this"
+              )
+            : formConfig.confirmSubmit.confirmSubmitHeading ??
+              "Placeholder heading";
           const confirmMessage: JSX.Element | string = formConfig.confirmSubmit
             .buildMessage
-            ? formConfig.confirmSubmit.buildMessage(oneMacFormData.componentId)
+            ? formConfig.confirmSubmit.buildMessage(
+                oneMacFormData.componentId,
+                presetParentTypeNice ?? ""
+              )
             : formConfig.confirmSubmit.confirmSubmitMessage ??
               "Placeholder message";
 
           confirmAction &&
             confirmAction(
-              formConfig.confirmSubmit.confirmSubmitHeading,
+              confirmHeading,
               formConfig.confirmSubmit.confirmSubmitYesButton ?? "Yes, Submit",
               "Cancel",
               confirmMessage,
@@ -409,6 +425,7 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
     [
       isSubmissionReady,
       formConfig.confirmSubmit,
+      presetParentTypeNice,
       confirmAction,
       doSubmit,
       oneMacFormData.componentId,
@@ -420,7 +437,7 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
       <PageTitleBar
         heading={formConfig.pageTitle ?? oneMacFormData.componentId ?? ""}
         enableBackNav
-        backTo={getLandingPage(location, formConfig)}
+        backTo={thisLandingPage}
         backNavConfirmationMessage={leavePageConfirmMessage}
       />
       <AlertBar alertCode={alertCode} closeCallback={closedAlert} />
@@ -430,26 +447,29 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
             {formConfig.detailsHeaderFull ??
               formConfig.detailsHeader + " Details"}
           </h2>
-          {formConfig.introJSX ?? (
-            <>
-              <p>
-                <span className="required-mark">*</span>
-                indicates required field.
-              </p>
-              <p id="form-intro">
-                Once you submit this form, a confirmation email is sent to you
-                and to CMS. CMS will use this content to review your package,
-                and you will not be able to edit this form. If CMS needs any
-                additional information, they will follow up by email.
-                <b>
-                  {" "}
-                  If you leave this page, you will lose your progress on this
-                  form.
-                </b>
-                {formConfig.addlIntroJSX ?? ""}
-              </p>
-            </>
-          )}
+          {formConfig.buildIntroJSX
+            ? formConfig.buildIntroJSX(presetParentTypeNice ?? "this")
+            : formConfig.introJSX ?? (
+                <>
+                  <p>
+                    <span className="required-mark">*</span>
+                    indicates required field.
+                  </p>
+                  <p id="form-intro">
+                    Once you submit this form, a confirmation email is sent to
+                    you and to CMS. CMS will use this content to review your
+                    package, and you will not be able to edit this form. If CMS
+                    needs any additional information, they will follow up by
+                    email.
+                    <b>
+                      {" "}
+                      If you leave this page, you will lose your progress on
+                      this form.
+                    </b>
+                    {formConfig.addlIntroJSX ?? ""}
+                  </p>
+                </>
+              )}
           {formConfig.titleLabel && (
             <TextField
               name="title"
@@ -552,40 +572,44 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
               ></FileUploader>
             </>
           )}
-          <TextField
-            name="additionalInformation"
-            labelClassName={
-              formConfig.addlInfoRequired ? "addl-info-required" : ""
-            }
-            label={formConfig.addlInfoTitle}
-            labelId="additional-information-label"
-            id="additional-information"
-            hint={
-              formConfig.addlInfoText ??
-              "Add anything else that you would like to share with CMS."
-            }
-            disabled={isSubmitting}
-            fieldClassName="summary-field required"
-            multiline
-            onChange={(e) => {
-              handleInputChange(e);
-            }}
-            value={oneMacFormData.additionalInformation}
-            maxLength={config.MAX_ADDITIONAL_INFO_LENGTH}
-            aria-describedby="character-count"
-            aria-live="off"
-            aria-multiline={true}
-          ></TextField>
-          <span
-            tabIndex={0}
-            id="character-count"
-            aria-label="character-count"
-            aria-live="polite"
-          >
-            {`${
-              4000 - oneMacFormData.additionalInformation.length
-            } characters remaining`}
-          </span>
+          {!formConfig?.noText && (
+            <>
+              <TextField
+                name="additionalInformation"
+                labelClassName={
+                  formConfig.addlInfoRequired ? "addl-info-required" : ""
+                }
+                label={formConfig.addlInfoTitle}
+                labelId="additional-information-label"
+                id="additional-information"
+                hint={
+                  formConfig.addlInfoText ??
+                  "Add anything else that you would like to share with CMS."
+                }
+                disabled={isSubmitting}
+                fieldClassName="summary-field required"
+                multiline
+                onChange={(e) => {
+                  handleInputChange(e);
+                }}
+                value={oneMacFormData.additionalInformation}
+                maxLength={config.MAX_ADDITIONAL_INFO_LENGTH}
+                aria-describedby="character-count"
+                aria-live="off"
+                aria-multiline={true}
+              ></TextField>
+              <span
+                tabIndex={0}
+                id="character-count"
+                aria-label="character-count"
+                aria-live="polite"
+              >
+                {`${
+                  4000 - oneMacFormData.additionalInformation.length
+                } characters remaining`}
+              </span>
+            </>
+          )}
 
           {formConfig.submitInstructionsJSX ?? ""}
 

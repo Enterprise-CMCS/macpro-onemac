@@ -7,9 +7,10 @@
     "cmscommonlib": "file:../common"
   },
   "devDependencies": {
-    "serverless-bundle": "^6.0.0",
+    "esbuild": "^0.19.4",
     "serverless-dotenv-plugin": "^3.12.2",
-    "serverless-offline": "^12.0.4",
+    "serverless-esbuild": "^1.48.4",
+    "serverless-offline": "^13.5.0",
     "serverless-plugin-offline-dynamodb-stream": "^1.0.20",
     "serverless-plugin-scripts": "^1.0.2",
     "serverless-plugin-warmup": "^7.1.0"

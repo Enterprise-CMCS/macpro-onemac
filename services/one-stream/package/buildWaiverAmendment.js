@@ -7,6 +7,7 @@ import {
   withdrawalRequestedAction,
   subsequentSubmissionType,
 } from "../lib/default-lib";
+import { defaultRnAWaiverEventMapping } from "../lib/default-lib";
 import { buildAnyPackage } from "./buildAnyPackage";
 
 const waiverAmendmentBuildConfig = {
@@ -24,6 +25,7 @@ const waiverAmendmentBuildConfig = {
     submitwaiveramendmentwithdraw: withdrawalRequestedAction,
     submitrairesponsewithdraw: withdrawalRequestedAction,
   },
+  eventMap: defaultRnAWaiverEventMapping,
 };
 
 export const buildWaiverAmendment = async (packageId) =>

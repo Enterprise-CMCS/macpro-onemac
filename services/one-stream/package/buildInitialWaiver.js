@@ -7,6 +7,7 @@ import {
   submitAction,
   withdrawalRequestedAction,
 } from "../lib/default-lib";
+import { defaultWaiverEventMapping } from "../lib/default-lib";
 import { buildAnyPackage } from "./buildAnyPackage";
 
 const initialWaiverBuildConfig = {
@@ -24,6 +25,7 @@ const initialWaiverBuildConfig = {
     submitwaivernewwithdraw: withdrawalRequestedAction,
     submitrairesponsewithdraw: withdrawalRequestedAction,
   },
+  eventMap: defaultWaiverEventMapping,
 };
 
 export const buildInitialWaiver = async (packageId) =>

@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "main": "handler.js",
   "scripts": {
-    "test": "serverless-bundle test --passWithNoTests"
+    "test": "npx jest"
   },
   "author": "",
   "license": "CC0-1.0",
@@ -13,23 +13,26 @@
     "url": "https://github.com/AnomalyInnovations/serverless-nodejs-starter.git"
   },
   "devDependencies": {
-    "aws-sdk": "^2.752.0",
+    "@types/jest": "^29.5.5",
     "aws-sdk-client-mock": "^0.5.6",
+    "esbuild": "^0.19.4",
+    "esbuild-jest": "^0.5.0",
+    "jest": "^29.7.0",
     "serverless-associate-waf": "^1.2.1",
-    "serverless-bundle": "^5.3.0",
     "serverless-dotenv-plugin": "^3.12.2",
+    "serverless-esbuild": "^1.48.4",
     "serverless-iam-helper": "file:../../plugins/serverless-iam-helper",
-    "serverless-offline": "^8.5.0",
+    "serverless-offline": "^13.5.0",
     "serverless-plugin-warmup": "^7.1.0",
     "xstate": "^4.26.0"
   },
   "dependencies": {
-    "@aws-sdk/client-dynamodb": "^3.43.0",
-    "@aws-sdk/lib-dynamodb": "^3.43.0",
+    "aws-sdk": "^2.752.0",
+    "@aws-sdk/client-dynamodb": "^3.454.0",
+    "@aws-sdk/lib-dynamodb": "^3.454.0",
     "cmscommonlib": "file:../common",
     "date-fns": "^2.16.1",
     "dynamodb-local": "^0.0.32",
-    "esbuild": "^0.16.7",
     "joi": "^17.4.0",
     "luxon": "^1.25.0",
     "serverless-dynamodb-local": "^0.2.39",
@@ -50,6 +53,9 @@
     "moduleNameMapper": {
       "react-spring/renderprops": "<rootDir>/node_modules/react-spring/renderprops.cjs",
       "react-spring": "<rootDir>/node_modules/react-spring/web.cjs"
+    },
+    "transform": {
+      "^.+\\.(j|t)sx?$": "esbuild-jest"
     }
   }
 }

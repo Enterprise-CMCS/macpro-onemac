@@ -2,7 +2,7 @@ Feature: Package Dashboard - Filter
     Background: Reoccuring Steps
         Given I am on Login Page
         When Clicking on Development Login
-        When Login with state submitter user
+        When Login with "an Active" "State Submitter" user
 
     Scenario: SPAs Tab - Screen enhancement
         Then Verify Filter button exists
@@ -11,17 +11,13 @@ Feature: Package Dashboard - Filter
         Then verify Close Exists
         Then verify reset Exists
         Then verify state dropdown filter exists
-        Then verify Type Exists
-        Then verify status Dropdown Filter exists
+        Then verify type dropdown filter exists
+        Then verify status DropDown Filter exists
         Then verify Initial Submission Date filter dropdown exists
         Then click on Initial Submission Date filter dropdown
         Then verify Initial Submission Date date picker filter exists
-        Then verify Latest Package Activity dropdown filter exists
-        Then click on Latest Package Activity filter dropdown
-        Then verify Latest Package Activity date picker filter exists
         Then verify Formal RAI Received dropdown filter exists
-        Then click on Formal RAI Received filter dropdown
-        Then verify Formal RAI Received date picker filter exists
+        Then verify Final Disposition dropdown filter exists
         Then Click on My Account
         Then click the logout button
 
@@ -33,17 +29,13 @@ Feature: Package Dashboard - Filter
         Then verify Close Exists
         Then verify reset Exists
         Then verify state dropdown filter exists
-        Then verify Type Exists
-        Then verify status Dropdown Filter exists
+        Then verify type dropdown filter exists
+        Then verify status DropDown Filter exists
         Then verify Initial Submission Date filter dropdown exists
         Then click on Initial Submission Date filter dropdown
         Then verify Initial Submission Date date picker filter exists
-        Then verify Latest Package Activity dropdown filter exists
-        Then click on Latest Package Activity filter dropdown
-        Then verify Latest Package Activity date picker filter exists
         Then verify Formal RAI Received dropdown filter exists
-        Then click on Formal RAI Received filter dropdown
-        Then verify Formal RAI Received date picker filter exists
+        Then verify Final Disposition dropdown filter exists
         Then Click on My Account
         Then click the logout button
 

@@ -49,14 +49,23 @@ export const COLUMN_ID = {
   STATUS: "packageStatus",
   SUBMISSION_TIMESTAMP: "submissionTimestamp",
   ACTIVITY_TIMESTAMP: "lastActivityTimestamp",
+  FINAL_DISPOSITION_DATE: "finalDispositionDate",
   LATEST_RAI_TIMESTAMP: "latestRaiResponseTimestamp",
   CPOC_NAME: "cpocName",
   SUBMITTER: "submitter",
   ACTIONS: "packageActions",
 };
 
-const defaultStateHiddenCols = [COLUMN_ID.TERRITORY, COLUMN_ID.CPOC_NAME];
-const defaultCMSHiddenCols = [COLUMN_ID.SUBMITTER, COLUMN_ID.CPOC_NAME];
+const defaultStateHiddenCols = [
+  COLUMN_ID.TERRITORY,
+  COLUMN_ID.CPOC_NAME,
+  COLUMN_ID.FINAL_DISPOSITION_DATE,
+];
+const defaultCMSHiddenCols = [
+  COLUMN_ID.SUBMITTER,
+  COLUMN_ID.CPOC_NAME,
+  COLUMN_ID.FINAL_DISPOSITION_DATE,
+];
 
 const DEFAULT_COLUMNS = {
   [USER_ROLE.STATE_SUBMITTER]: defaultStateHiddenCols,
@@ -68,10 +77,35 @@ const DEFAULT_COLUMNS = {
   [USER_ROLE.DEFAULT_CMS_USER]: defaultCMSHiddenCols,
 };
 
+const shortMonth = [
+  "none",
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
+];
+
 const renderDate = ({ value }) =>
   typeof value === "number" && value > 0
     ? format(value, "MMM d, yyyy")
     : "-- --";
+
+const renderStringDate = ({ value }) => {
+  let returnValue = "-- --";
+  if (value && value !== "-- --") {
+    const [year, month, day] = value.split("-");
+    returnValue = `${shortMonth[Number(month)]} ${day}, ${year}`;
+  }
+  return returnValue;
+};
 
 export const getState = ({ componentId }) =>
   componentId ? componentId.toString().substring(0, 2) : "--";
@@ -166,7 +200,17 @@ const PackageList = () => {
   );
 
   const renderStatus = useCallback(
-    ({ value }) => <span className="status-bandage">{value}</span>,
+    ({ value, row }) => (
+      <span className="status-bandage">
+        {value}
+        {row.original.subStatus ? (
+          <>
+            <br />
+            {row.original.subStatus}
+          </>
+        ) : null}
+      </span>
+    ),
     []
   );
 
@@ -250,6 +294,14 @@ const PackageList = () => {
           Header: "Latest Package Activity",
           accessor: COLUMN_ID.ACTIVITY_TIMESTAMP,
           Cell: renderDate,
+          disableFilters: false,
+          filter: CustomFilterTypes.DateRange,
+          Filter: CustomFilterUi.DateRangeInPast,
+        },
+        {
+          Header: "Final Disposition",
+          accessor: COLUMN_ID.FINAL_DISPOSITION_DATE,
+          Cell: renderStringDate,
           disableFilters: false,
           filter: CustomFilterTypes.DateRange,
           Filter: CustomFilterUi.DateRangeInPast,

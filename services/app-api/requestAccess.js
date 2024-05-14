@@ -7,6 +7,7 @@ import {
 
 import handler from "./libs/handler-lib";
 import sendEmail from "./libs/email-lib";
+import { saveEmail } from "./utils/saveEmail";
 
 import { getCMSDateFormat } from "./utils/date-utils";
 
@@ -43,6 +44,8 @@ export const adminNotice = (territory, fullName, approverList, role) => {
 
 export const requestAccess = async (event) => {
   let body;
+  const rightNowNormalized = Date.now();
+
   try {
     body = JSON.parse(event.body);
   } catch (e) {
@@ -63,7 +66,7 @@ export const requestAccess = async (event) => {
   for (const territory of body.territories ?? ["N/A"]) {
     try {
       await changeUserStatus({
-        date: Date.now(),
+        date: rightNowNormalized,
         doneByEmail: body.email,
         doneByName: user.fullName,
         email: body.email,
@@ -86,7 +89,15 @@ export const requestAccess = async (event) => {
           approverList,
           body.role
         );
-        await sendEmail(toAdminEmail);
+        const emailReturn = await sendEmail(toAdminEmail);
+        toAdminEmail.componentId = body.email;
+        toAdminEmail.eventTimestamp = rightNowNormalized;
+        await saveEmail(
+          emailReturn.MessageId,
+          `updateUserStatus`,
+          "CMS",
+          toAdminEmail
+        );
       }
 
       const toSelfEmail = accessPendingNotice(
@@ -94,7 +105,15 @@ export const requestAccess = async (event) => {
         body.role,
         user.email
       );
-      await sendEmail(toSelfEmail);
+      const emailReturn = await sendEmail(toSelfEmail);
+      toSelfEmail.componentId = body.email;
+      toSelfEmail.eventTimestamp = rightNowNormalized;
+      await saveEmail(
+        emailReturn.MessageId,
+        `updateUserStatus`,
+        "AllRoles",
+        toSelfEmail
+      );
     } catch (e) {
       console.log("failed to send email: ", e);
     }

@@ -17,6 +17,7 @@ export type OneMACFormConfig = {
   idFAQLink?: string;
   pageTitle?: string;
   introJSX?: JSX.Element;
+  buildIntroJSX?: (packageType: string) => JSX.Element;
   addlIntroJSX?: JSX.Element;
   detailsHeader?: string;
   detailsHeaderFull?: string;
@@ -27,6 +28,7 @@ export type OneMACFormConfig = {
   addlInfoTitle?: string;
   addlInfoText?: string | React.ReactNode;
   addlInfoRequired?: boolean;
+  noText?: boolean;
   requireUploadOrAdditionalInformation?: boolean;
   landingPage: string;
   confirmSubmit?: ConfirmSubmitType;
@@ -47,9 +49,10 @@ type ParentPackageType = {
 };
 
 type ConfirmSubmitType = {
-  confirmSubmitHeading: string;
+  confirmSubmitHeading?: string;
   confirmSubmitMessage?: JSX.Element | string;
-  buildMessage?: (toConfirm: string) => JSX.Element;
+  buildHeading?: (packageType: string) => string;
+  buildMessage?: (toConfirm: string, packageType: string) => JSX.Element;
   confirmSubmitYesButton?: string;
 };
 
@@ -188,17 +191,24 @@ export const defaultConfirmSubsequentSubmission: ConfirmSubmitType = {
   ),
 };
 
-export const defaultConfirmSubmitHeadingWithdraw = "Withdraw Package?";
-export const defaultConfirmSubmitMessageWithdraw = (toConfirm: string) => (
+export const defaultConfirmSubmitHeadingWithdraw = (packageType: string) =>
+  `Withdraw ${packageType} Package?`;
+export const defaultConfirmSubmitMessageWithdraw = (
+  toConfirm: string,
+  packageType: string
+) => (
   <p>
-    You are about to withdraw {toConfirm}. Once complete, you will not be able
-    to resubmit this package. CMS will be notified.
+    You are about to withdraw {packageType} {toConfirm}. Completing this action
+    will conclude the review of this {packageType} package. If you are not sure
+    this is the correct action to select, contact your CMS point of contact for
+    assistance.
   </p>
 );
 
 export const defaultConfirmSubmitWithdraw = {
-  confirmSubmitHeading: defaultConfirmSubmitHeadingWithdraw,
-  confirmSubmitMessage: defaultConfirmSubmitMessageWithdraw("this package"),
+  confirmSubmitHeading: defaultConfirmSubmitHeadingWithdraw(""),
+  confirmSubmitMessage: defaultConfirmSubmitMessageWithdraw("this package", ""),
+  buildHeading: defaultConfirmSubmitHeadingWithdraw,
   buildMessage: defaultConfirmSubmitMessageWithdraw,
   confirmSubmitYesButton: "Yes, withdraw package",
 };
@@ -207,6 +217,7 @@ export type PackageType = {
   whichTab?: string;
   componentType: string;
   typeLabel: string;
+  packageLabel?: string;
   idLabel: string;
   idRegex: string;
   idMustExist: boolean;
@@ -261,6 +272,14 @@ export const buildMustNotExistMessage = (formConfig: OneMACFormConfig) => ({
   statusMessage: `According to our records, this ${formConfig.idLabel} already exists. Please check the ${formConfig.idLabel} and try entering it again.`,
 });
 
+export const defaultWithdrawIntroJSX = (packageLabel: string) => (
+  <p id="form-intro">
+    Complete this action to withdraw this {packageLabel} package. Once
+    completed, you will not be able to resubmit the {packageLabel} package or
+    undo this action.
+  </p>
+);
+
 export const defaultWithdrawConfig = {
   introJSX: (
     <p id="form-intro">
@@ -271,6 +290,7 @@ export const defaultWithdrawConfig = {
       email.
     </p>
   ),
+  buildIntroJSX: defaultWithdrawIntroJSX,
   confirmSubmit: defaultConfirmSubmitWithdraw,
   attachmentsTitle: "Upload Supporting Documentation",
   attachmentIntroJSX: (

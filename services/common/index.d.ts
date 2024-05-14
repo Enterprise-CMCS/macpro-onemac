@@ -86,6 +86,7 @@ export namespace Workflow {
     REQUEST_TEMPORARY_EXTENSION = "Request a Temporary Extension",
     ADD_AMENDMENT = "Add Amendment",
     ENABLE_RAI_WITHDRAWAL = "Enable Formal RAI Response Withdraw",
+    DISABLE_RAI_WITHDRAWAL = "Disable Formal RAI Response Withdraw",
   }
   export const ONEMAC_TYPE: Record<string, string>;
   export const ONEMAC_LABEL: Record<string, string>;
@@ -159,6 +160,7 @@ export { chipSPAWithdraw } from "./type/chipSPAWithdraw.js";
 export { chipSPASubsequentSubmission } from "./type/chipSPASubsequentSubmission.js";
 export { waiverAppKSubsequentSubmission } from "./type/waiverAppKSubsequentSubmission.js";
 export { enableRaiWithdraw } from "./type/enableRaiWithdraw.js";
+export { disableRaiWithdraw } from "./type/disableRaiWithdraw.js";
 export { withdrawRAIResponse } from "./type/withdrawRAIResponse.js";
 export {
   initialWaiverSubsequentSubmission,

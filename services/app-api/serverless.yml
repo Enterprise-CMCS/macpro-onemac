@@ -8,7 +8,7 @@ package:
   individually: true
 
 plugins:
-  - serverless-bundle
+  - serverless-esbuild
   - serverless-dotenv-plugin
   - serverless-plugin-warmup
   - serverless-dynamodb-local
@@ -17,6 +17,8 @@ plugins:
   - serverless-iam-helper
   - serverless-s3-bucket-helper
 custom:
+  esbuild:
+    exclude: []
   stage: ${opt:stage, self:provider.stage}
   oneMacTableName: onemac-${self:custom.stage}-one
   iamPath: ${ssm:/configuration/${self:custom.stage}/iam/path, ssm:/configuration/default/iam/path, "/"}
@@ -59,7 +61,7 @@ custom:
       domain:
         sources:
           - table: ${self:custom.oneMacTableName}
-            sources: [./one-seed.json]
+            sources: [./seed-data/all-data.json]
   serverless-offline:
     allowCache: true
   associateWaf:
@@ -68,7 +70,7 @@ custom:
 
 provider:
   name: aws
-  runtime: nodejs14.x
+  runtime: nodejs20.x
   region: us-east-1
   stage: dev
   iam:
@@ -85,6 +87,7 @@ provider:
     testingEmail: ${self:custom.testingEmail}
     applicationEndpoint: ${self:custom.applicationEndpoint}
     attachmentsBucket: ${self:custom.attachmentsBucket}
+    configurationSetName: 'email-${self:custom.stage}-configuration'
   tracing:
     apiGateway: true
     lambda: true
@@ -494,6 +497,17 @@ functions:
     events:
       - http:
           path: enableRaiWithdraw
+          method: post
+          cors: true
+          authorizer: aws_iam
+
+  disableRaiWithdraw:
+    handler: form/disableRaiWithdraw.main
+    role: LambdaApiRole
+    timeout: 30
+    events:
+      - http:
+          path: disableRaiWithdraw
           method: post
           cors: true
           authorizer: aws_iam

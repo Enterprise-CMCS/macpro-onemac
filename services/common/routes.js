@@ -94,6 +94,7 @@ export const ONEMAC_ROUTES = {
   FORMS_DESCRIBE: "/forms-describe",
   EVENT: "/event",
   ENABLE_RAI_WITHDRAW: "/enable-rai-withdraw",
+  DISABLE_RAI_WITHDRAW: "/disable-rai-withdraw",
 };
 
 export const TYPE_TO_DETAIL_ROUTE = {

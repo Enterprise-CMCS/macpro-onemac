@@ -31,16 +31,6 @@ export const waiverTemporaryExtension = {
     "parentType",
     "temporaryExtensionType",
   ],
-  packageAttributes: [
-    "submissionTimestamp",
-    "currentStatus",
-    "submitterName",
-    "submitterEmail",
-    "waiverAuthority",
-    "parentId",
-    "parentType",
-    "temporaryExtensionType",
-  ],
 };
 
 export const waiverTemporaryExtension1915b = {

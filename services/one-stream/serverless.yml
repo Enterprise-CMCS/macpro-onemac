@@ -7,7 +7,7 @@ package:
   individually: true
 
 plugins:
-  - serverless-bundle
+  - serverless-esbuild
   - serverless-dotenv-plugin
   - serverless-plugin-scripts
   - serverless-plugin-warmup
@@ -15,6 +15,8 @@ plugins:
   - serverless-plugin-offline-dynamodb-stream
   - serverless-offline
 custom:
+  esbuild:
+    exclude: []
   stage: ${opt:stage, self:provider.stage}
   iamPath: ${ssm:/configuration/${self:custom.stage}/iam/path, ssm:/configuration/default/iam/path}
   iamPermissionsBoundaryPolicy: ${ssm:/configuration/${self:custom.stage}/iam/permissionsBoundaryPolicy, ssm:/configuration/default/iam/permissionsBoundaryPolicy, ""}
@@ -34,8 +36,6 @@ custom:
       concurrency: 5
       folderName: node_modules/serverless-bundle/src/_warmup
       cleanFolder: false
-    configureConnectors:
-      enabled: false
   localTableName: onemac-dev-one
   oneMacTableStreamArn: ${cf:app-api-${self:custom.stage}.OneMacTableStreamArn, ""}
   oneMacTableName: ${cf:app-api-${self:custom.stage}.OneMacTableName, ""}
@@ -51,7 +51,7 @@ custom:
 
 provider:
   name: aws
-  runtime: nodejs14.x
+  runtime: nodejs20.x
   region: us-east-1
   stage: dev
 
@@ -85,6 +85,16 @@ functions:
 
   rebuildPackages:
     handler: rebuildPackages.main
+    role: LambdaOneStreamRole
+    environment:
+      STAGE: ${self:custom.stage}
+      oneMacTableName: ${self:custom.oneMacTableName}
+      localTableName: ${self:custom.localTableName}
+    maximumRetryAttempts: 2
+    timeout: 600
+
+  deleteOutdatedItems:
+    handler: deleteOutdatedItems.main
     role: LambdaOneStreamRole
     environment:
       STAGE: ${self:custom.stage}

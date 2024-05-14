@@ -2,7 +2,7 @@ Feature: Waiver Package Details View: Waiver Renewals for a State User
     Background: Reoccuring Steps
         Given I am on Login Page
         When Clicking on Development Login
-        When Login with state submitter user
+        When Login with "an Active" "State Submitter" user
         Then click on the Waivers tab
         Then Click on Filter Button
         Then click on Type
@@ -254,12 +254,13 @@ Feature: Waiver Package Details View: Waiver Renewals for a State User
         Then verify there is a Final Disposition Date header in the details section
         Then verify there is an Approved Effective Date in the details section
 
-    Scenario: Screen Enhance: Waiver Renewal Details View - RAI Response Withdraw Enabled
-        Then click the RAI Response Withdraw Enabled checkbox
+    Scenario: Screen Enhance: Waiver Renewal Details View - Withdraw Formal RAI Response Enabled
+        Then click Under Review checkbox
+        Then Click on Filter Button
+        Then search for "MD-22116.R01.00"
         Then click the Waiver Number link in the first row
         Then verify the package details page is visible
         Then verify 2 action cards exist
-        Then verify the status on the card is "RAI Response Withdraw Enabled"
         Then verify package actions header is visible
         Then verify withdraw package action exists
         Then verify Withdraw Formal RAI Response package action exists
@@ -286,13 +287,13 @@ Feature: Waiver Package Details View: Waiver Renewals for a State User
         Then verify there is an Approved Effective Date in the details section
 
     Scenario: Waiver Renewal Details View - Withdraw RAI Response
-        Then click the RAI Response Withdraw Enabled checkbox
+        Then click Under Review checkbox
+        Then Click on Filter Button
         Then search for "MD-22116.R01.00"
         Then click the Waiver Number link in the first row
         Then verify the package details page is visible
-        Then verify the status on the card is "RAI Response Withdraw Enabled"
         Then click Withdraw Formal RAI Response package action
-        Then type "Automated test to withdraw the RAI Response." in additional info textarea
+        Then into "Additional Information" type "Automated test to withdraw the RAI Response."
         Then Click the Submit Button without waiting
         Then verify Yes, withdraw response button exists
         Then click Yes, withdraw response button

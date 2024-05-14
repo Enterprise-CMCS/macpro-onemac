@@ -68,6 +68,7 @@ import InitialWaiverSubsequentSubmissionForm from "./page/initial-waiver/Initial
 import WaiverRenewalSubsequentSubmissionForm from "./page/waiver-renewal/WaiverRenewalSubsequentSubmissionForm";
 import WaiverAmendmentSubsequentSubmissionForm from "./page/waiver-amendment/WaiverAmendmentSubsequentSubmissionForm";
 import WaiverAppKSubsequentSubmissionForm from "./page/waiver-appendix-k/WaiverAppKSubsequentSubmissionForm";
+import DisableRaiWithdrawForm from "./page/disable-rai-withdraw/DisableRaiWithdrawForm";
 
 type RouteSpec = {
   path: string;
@@ -310,6 +311,10 @@ const ROUTE_LIST: RouteSpec[] = [
     {
       path: ONEMAC_ROUTES.ENABLE_RAI_WITHDRAW,
       component: EnableRaiWithdrawForm,
+    },
+    {
+      path: ONEMAC_ROUTES.DISABLE_RAI_WITHDRAW,
+      component: DisableRaiWithdrawForm,
     },
   ].map(({ path, ...rest }) => ({
     path,

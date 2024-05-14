@@ -1,0 +1,82 @@
+[  {
+  "dataFrom": "app-api/seed-data/user/statesystemadmindenied.json",
+  "notes": "this test user account (available through Development Login) provides insight into the denied user experience",
+  "sk": "ContactInfo",
+  "fullName": "Daniel Denied",
+  "pk": "statesystemadmindenied@cms.hhs.local",
+  "email": "statesystemadmindenied@cms.hhs.local"
+},
+{
+    "doneByName": "Teresa Test",
+    "status": "denied",
+    "Latest": "1",
+    "GSI1sk": "cmsroleapprover",
+    "email": "statesystemadmindenied@cms.hhs.local",
+    "fullName": "Daniel Denied",
+    "doneByEmail": "systemadmintest@cms.hhs.local",
+    "GSI1pk": "USER",
+    "GSI2pk": "statesystemadmin#MI",
+    "GSI2sk": "denied",
+    "date": 1617149287000,
+    "role": "statesystemadmin",
+    "territory": "MI",
+    "sk": "v0#statesystemadmin#MI",
+    "pk": "statesystemadmindenied@cms.hhs.local"
+  },
+  {
+    "doneByName": "Teresa Test",
+    "status": "denied",
+    "Latest": "1",
+    "GSI1sk": "cmsroleapprover",
+    "email": "statesystemadmindenied@cms.hhs.local",
+    "fullName": "Daniel Denied",
+    "doneByEmail": "systemadmintest@cms.hhs.local",
+    "GSI1pk": "USER",
+    "GSI2pk": "statesystemadmin#VA",
+    "GSI2sk": "denied",
+    "date": 1617149287000,
+    "role": "statesystemadmin",
+    "territory": "VA",
+    "sk": "v0#statesystemadmin#VA",
+    "pk": "statesystemadmindenied@cms.hhs.local"
+  },
+  {
+    "doneByEmail": "statesystemadmindenied@cms.hhs.local",
+    "doneByName": "Daniel Denied",
+    "date": 1617149286000,
+    "role": "statesystemadmin",
+    "territory": "MI",
+    "status": "pending",
+    "sk": "v1#statesystemadmin#MI",
+    "pk": "statesystemadmindenied@cms.hhs.local"
+  },
+  {
+    "doneByEmail": "systemadmintest@cms.hhs.local",
+    "doneByName": "Teresa Test",
+    "date": 1617149287000,
+    "role": "statesystemadmin",
+    "territory": "MI",
+    "status": "denied",
+    "sk": "v2#statesystemadmin#MI",
+    "pk": "statesystemadmindenied@cms.hhs.local"
+  },
+  {
+    "doneByEmail": "statesystemadmindenied@cms.hhs.local",
+    "doneByName": "Daniel Denied",
+    "date": 1617149286000,
+    "role": "statesystemadmin",
+    "territory": "VA",
+    "status": "denied",
+    "sk": "v1#statesystemadmin#VA",
+    "pk": "statesystemadmindenied@cms.hhs.local"
+  },
+  {
+    "doneByEmail": "systemadmintest@cms.hhs.local",
+    "doneByName": "Teresa Test",
+    "date": 1617149287000,
+    "role": "statesystemadmin",
+    "territory": "VA",
+    "status": "denied",
+    "sk": "v2#statesystemadmin#VA",
+    "pk": "statesystemadmindenied@cms.hhs.local"
+  }]

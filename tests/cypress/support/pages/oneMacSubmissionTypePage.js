@@ -22,8 +22,6 @@ const chipEligibility = ':contains("CHIP Eligibility")';
 //Element is Xpath use cy.xpath instead of cy.get
 const allOtherChip = ':contains("All Other CHIP SPA Submissions")';
 //Element is Xpath use cy.xpath instead of cy.get
-const waiverActionWaiverAction =
-  '//p[contains(text(),"Submit 1915(b) waivers, amendments, and renewals")]';
 const ffsSelectiveAuthority =
   "//div[contains(text(),'1915(b)(4) FFS Selective Contracting Waivers')]";
 const comprehensiveCapitatedWaiverAuthority =
@@ -35,10 +33,6 @@ const AppendixKAmendment = '//div[text()="1915(c) Appendix K Amendment"]';
 //Element is Xpath use cy.xpath instead of cy.get
 const respondToMedicaidSPARAI =
   '//div[text()="Respond to Formal Medicaid SPA RAI"]';
-//Element is Xpath use cy.xpath instead of cy.get
-const respondToCHIPSPARAI = '//div[text()="Respond to Formal CHIP SPA RAI"]';
-//Element is Xpath use cy.xpath instead of cy.get
-const respondToWaiverRAI = "//a//div[text()='Respond to Waiver RAI']";
 //Element is Xpath use cy.xpath instead of cy.get
 const initialWaiver1915b4 =
   ":contains('1915(b)(4) FFS Selective Contracting New Initial Waiver')";
@@ -64,12 +58,6 @@ const cardLink = "//a[@data-testid='link-wrapper']";
 export class oneMacSubmissionTypePage {
   clickStatePlanAmendmentSPA() {
     cy.xpath(statePlanAmendmentSPA).click();
-  }
-  verifyNewWaiverPage() {
-    cy.url().should("include", "/newwaiver");
-  }
-  verifyNewSPAPage() {
-    cy.url().should("include", "/newspa");
   }
   verifyNewInitialWaiverPage() {
     cy.url().should("include", "/initial-waiver");
@@ -98,32 +86,20 @@ export class oneMacSubmissionTypePage {
   clickMedicaidSPA() {
     cy.xpath(cardLink).filter(medicaidSPA).click();
   }
-
   clickChipSPA() {
     cy.xpath(cardLink).filter(chipSPA).click();
   }
-
   clickWaiverActionUnderWaiverAction() {
     cy.xpath(waiverActionWaiverAction).click();
   }
-
   clickRequestTemporaryExtension() {
     cy.xpath(RequestTemporaryExtension).click();
-  }
-  clickRequestExtensionBtn() {
-    cy.xpath(RequestExtensionBtn).click();
   }
   clickAppendixKAmendment() {
     cy.xpath(AppendixKAmendment).click();
   }
   clickRespondToMedicaidSPARAI() {
     cy.xpath(respondToMedicaidSPARAI).click();
-  }
-  clickRespondToCHIPSPARAI() {
-    cy.xpath(respondToCHIPSPARAI).click();
-  }
-  clickRespondToWaiverRAI() {
-    cy.xpath(respondToWaiverRAI).click();
   }
   clickInitialWaiver() {
     cy.xpath(cardLink).filter(initialWaiver1915b4).click();

@@ -2,3 +2,4 @@
 *.test.js
 /services/*/build/
 /services/app-api/_warmup/
+/services/email/

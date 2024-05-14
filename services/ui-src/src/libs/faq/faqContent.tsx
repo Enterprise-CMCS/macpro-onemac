@@ -5,8 +5,9 @@ import { stateSystemOverviewTranscript } from "./stateSystemOverviewTranscript";
 import { FILE_TYPES, FileTypesFAQListItem } from "../../utils/fileTypes";
 import config from "../../utils/config";
 
-interface QuestionAnswer {
+export interface QuestionAnswer {
   anchorText: string;
+  isOpen: boolean;
   question: string;
   answerJSX: JSX.Element;
 }
@@ -25,6 +26,7 @@ export const oneMACFAQContent: FAQContent[] = [
     qanda: [
       {
         anchorText: "system",
+        isOpen: false,
         question: "Which system should I use for my state’s submission?",
         answerJSX: (
           <>
@@ -48,6 +50,7 @@ export const oneMACFAQContent: FAQContent[] = [
       },
       {
         anchorText: "browsers",
+        isOpen: false,
         question: "What browsers can I use to access the system?",
         answerJSX: (
           <p>
@@ -58,6 +61,7 @@ export const oneMACFAQContent: FAQContent[] = [
       },
       {
         anchorText: "confirm-email",
+        isOpen: false,
         question: "What should we do if we don’t receive a confirmation email?",
         answerJSX: (
           <p>
@@ -72,6 +76,7 @@ export const oneMACFAQContent: FAQContent[] = [
       },
       {
         anchorText: "is-official",
+        isOpen: false,
         question: "Is this considered the official state submission?",
         answerJSX: (
           <p>
@@ -88,6 +93,7 @@ export const oneMACFAQContent: FAQContent[] = [
       },
       {
         anchorText: "onemac-roles",
+        isOpen: false,
         question: "What are the OneMAC user roles?",
         answerJSX: (
           <table className="faq-table">
@@ -134,6 +140,7 @@ export const oneMACFAQContent: FAQContent[] = [
       },
       {
         anchorText: "acceptable-file-formats",
+        isOpen: false,
         question: "What are the kinds of file formats I can upload into OneMAC",
         answerJSX: (
           <section>
@@ -157,6 +164,7 @@ export const oneMACFAQContent: FAQContent[] = [
       },
       {
         anchorText: "onboarding-materials",
+        isOpen: false,
         question: "Onboarding Materials",
         answerJSX: (
           <>
@@ -198,6 +206,7 @@ export const oneMACFAQContent: FAQContent[] = [
     qanda: [
       {
         anchorText: "spa-id-format",
+        isOpen: false,
         question: "What format is used to enter a SPA ID?",
         answerJSX: (
           <>
@@ -221,6 +230,7 @@ export const oneMACFAQContent: FAQContent[] = [
       },
       {
         anchorText: "medicaid-spa-attachments",
+        isOpen: false,
         question: "What are the attachments for a Medicaid SPA?",
         answerJSX: (
           <>
@@ -320,6 +330,7 @@ export const oneMACFAQContent: FAQContent[] = [
       },
       {
         anchorText: "medicaid-spa-rai-attachments",
+        isOpen: false,
         question:
           "What are the attachments for a Medicaid response to Request for Additional Information (RAI)?",
         answerJSX: (
@@ -354,6 +365,7 @@ export const oneMACFAQContent: FAQContent[] = [
       },
       {
         anchorText: "chip-spa-attachments",
+        isOpen: false,
         question: "What are the attachments for a CHIP SPA?",
         answerJSX: (
           <>
@@ -422,6 +434,7 @@ export const oneMACFAQContent: FAQContent[] = [
       },
       {
         anchorText: "chip-spa-rai-attachments",
+        isOpen: false,
         question:
           "What are the attachments for a CHIP SPA response to Request for Additional Information (RAI)?",
         answerJSX: (
@@ -486,6 +499,7 @@ export const oneMACFAQContent: FAQContent[] = [
       },
       {
         anchorText: "public-health-emergency",
+        isOpen: false,
         question:
           "Can I submit SPAs relating to the Public Health Emergency (PHE) in OneMAC?",
         answerJSX: (
@@ -495,6 +509,290 @@ export const oneMACFAQContent: FAQContent[] = [
           </p>
         ),
       },
+      {
+        anchorText: "medicaid-spa-rai-response",
+        isOpen: false,
+        question:
+          "How do I submit a Formal Request for Additional Information (RAI) Response for a  Medicaid SPA?",
+        answerJSX: (
+          <div>
+            <p>
+              When necessary, states will receive an RAI via email from CMS.
+            </p>
+            <ul>
+              <li>The state will respond to the RAI through OneMAC.</li>
+              <li>
+                A Request for Additional Information (RAI) stops the 90-day
+                clock, is a formal request for additional information from CMS.
+              </li>
+              <li>
+                Packages pending an official RAI response from the state will
+                have a Status of <b>RAI Issued</b>.
+              </li>
+            </ul>
+            <p>
+              To respond to a Medicaid SPA RAI, select the SPA Tab view from the
+              Package Dashboard.
+            </p>
+            <ul>
+              <li>
+                Select the link to the SPA ID. Packages which are in need of an
+                RAI response from the state will have a Status of{" "}
+                <b>RAI Issued</b>.
+              </li>
+              <li>
+                Then, under Package Actions, select the Respond to RAI link.
+              </li>
+              <li>
+                After attaching any required files, you may include additional
+                notes prior to clicking on the submit button.
+              </li>
+              <li>
+                Check your entries, as you cannot edit the submission after you
+                select Submit.
+              </li>
+            </ul>
+          </div>
+        ),
+      },
+      {
+        anchorText: "medicaid-spa-withdraw-rai-response",
+        isOpen: false,
+        question: "How do I Withdraw a Formal RAI Response for a Medicaid SPA?",
+        answerJSX: (
+          <div>
+            <p>
+              If a state wishes to withdraw a Formal RAI Response, the state
+              must first contact their CMS Point of Contact so the action can be
+              enabled.
+            </p>
+            <ul>
+              <li>
+                As a CMS user, log in to OneMAC and select the link to the SPA
+                ID from the dashboard
+              </li>
+              <li>
+                Then, under Package Actions, select the Enable Formal RAI
+                Response Withdraw link, and then Select Submit.
+              </li>
+            </ul>
+            <p>
+              After receiving confirmation from your CMS Point of Contact that
+              the Withdraw Formal RAI Response feature has been enabled, locate
+              and select the Medicaid SPA submission package.
+            </p>
+            <p>
+              The package status remains as Under Review and a substatus of
+              Withdraw Formal RAI Response Enabled will be reflected below the
+              status for the SPA or waiver submission package.
+            </p>
+            <p>
+              <b>
+                Note: These submissions will remain on the clock until the
+                package action has been taken.
+              </b>
+            </p>
+            <ul>
+              <li>
+                On the Formal RAI Response Withdraw form, upload any supporting
+                documentation and fill out the Additional Information section
+                explaining your need to withdraw the Formal RAI Response (all
+                required information is marked with an asterisk).
+              </li>
+              <li>Select Submit.</li>
+              <ul>
+                <li>
+                  You will receive a confirmation message asking if you are sure
+                  that you want to withdraw the Formal RAI Response. Select Yes,
+                  withdraw response.
+                </li>
+              </ul>
+            </ul>
+          </div>
+        ),
+      },
+      {
+        anchorText: "withdraw-medicaid-spa",
+        isOpen: false,
+        question: "How do I Withdraw a Package for a  Medicaid SPA?",
+        answerJSX: (
+          <div>
+            <p>
+              A state can withdraw a submission package if it is in the Under
+              Review or RAI Issued status. However, please note that once
+              withdrawn, a submission package cannot be resubmitted to CMS.{" "}
+              <b>
+                Completing this action will conclude the review of this SPA
+                package.
+              </b>
+            </p>
+            <p>
+              There are two methods you can use to withdraw a submission
+              package:
+            </p>
+            <ul>
+              <li>
+                In OneMAC, Locate and select the link to the SPA ID. Then, under
+                Package Actions, select the Withdraw Package link.
+              </li>
+              <li>
+                Alternatively, the Withdraw Package action can be accessed by
+                selecting the three dots icon in the Actions column on the
+                Package Dashboard. Then, select Withdraw Package from the
+                drop-down list.
+              </li>
+            </ul>
+            <p>
+              A warning message will appear letting you know that if the package
+              is withdrawn, it cannot be resubmitted and this action will
+              conclude the review of this package. Select Yes, withdraw package
+              to complete the task.
+            </p>
+          </div>
+        ),
+      },
+      {
+        anchorText: "chip-spa-rai-response",
+        isOpen: false,
+        question:
+          "How do I submit a Formal Request for Additional Information (RAI) Response for a CHIP SPA?",
+        answerJSX: (
+          <div>
+            <p>
+              When necessary, states will receive an RAI via email from CMS.
+            </p>
+            <ul>
+              <li>The state will respond to the RAI through OneMAC.</li>
+              <li>
+                A Request for Additional Information (RAI) stops the 90-day
+                clock, is a formal request for additional information from CMS.
+              </li>
+              <li>
+                Packages pending an official RAI response from the state will
+                have a Status of <b>RAI Issued</b>.
+              </li>
+            </ul>
+            <p>
+              To respond to a CHIP SPA RAI, select the SPA Tab view from the
+              Package Dashboard.
+            </p>
+            <ul>
+              <li>
+                Select the link to the SPA ID. Packages which are in need of an
+                RAI response from the state will have a Status of{" "}
+                <b>RAI Issued</b>.
+              </li>
+              <li>
+                Then, under Package Actions, select the Respond to RAI link.
+              </li>
+              <li>
+                After attaching any required files, you may include additional
+                notes prior to clicking on the submit button.
+              </li>
+              <li>
+                Check your entries, as you cannot edit the submission after you
+                select Submit.
+              </li>
+            </ul>
+          </div>
+        ),
+      },
+      {
+        anchorText: "chip-spa-withdraw-rai-response",
+        isOpen: false,
+        question: "How do I Withdraw a Formal RAI Response for a CHIP SPA?",
+        answerJSX: (
+          <div>
+            <p>
+              If a state wishes to withdraw a Formal RAI Response, the state
+              must first contact their CMS Point of Contact so the action can be
+              enabled.
+            </p>
+            <ul>
+              <li>
+                As a CMS user, log in to OneMAC and select the link to the SPA
+                ID from the dashboard
+              </li>
+              <li>
+                Then, under Package Actions, select the Enable Formal RAI
+                Response Withdraw link, and then Select Submit.
+              </li>
+            </ul>
+            <p>
+              After receiving confirmation from your CMS Point of Contact that
+              the Withdraw Formal RAI Response feature has been enabled, locate
+              and select the CHIP SPA submission package.
+            </p>
+            <p>
+              The package status remains as Under Review and a substatus of
+              Withdraw Formal RAI Response Enabled will be reflected below the
+              status for the SPA or waiver submission package.
+            </p>
+            <p>
+              <b>
+                Note: These submissions will remain on the clock until the
+                package action has been taken.
+              </b>
+            </p>
+            <ul>
+              <li>
+                On the Formal RAI Response Withdraw form, upload any supporting
+                documentation and fill out the Additional Information section
+                explaining your need to withdraw the Formal RAI Response (all
+                required information is marked with an asterisk).
+              </li>
+              <li>Select Submit.</li>
+              <ul>
+                <li>
+                  You will receive a confirmation message asking if you are sure
+                  that you want to withdraw the Formal RAI Response. Select Yes,
+                  withdraw response.
+                </li>
+              </ul>
+            </ul>
+          </div>
+        ),
+      },
+      {
+        anchorText: "withdraw-chip-spa",
+        isOpen: false,
+        question: "How do I Withdraw a Package for a CHIP SPA?",
+        answerJSX: (
+          <div>
+            <p>
+              A state can withdraw a submission package if it is in the Under
+              Review or RAI Issued status. However, please note that once
+              withdrawn, a submission package cannot be resubmitted to CMS.{" "}
+              <b>
+                Completing this action will conclude the review of this SPA
+                package.
+              </b>
+            </p>
+            <p>
+              There are two methods you can use to withdraw a submission
+              package:
+            </p>
+            <ul>
+              <li>
+                In OneMAC, Locate and select the link to the CHIP SPA ID. Then,
+                under Package Actions, select the Withdraw Package link.
+              </li>
+              <li>
+                Alternatively, the Withdraw Package action can be accessed by
+                selecting the three dots icon in the Actions column on the
+                Package Dashboard. Then, select Withdraw Package from the
+                drop-down list.
+              </li>
+            </ul>
+            <p>
+              A warning message will appear letting you know that if the package
+              is withdrawn, it cannot be resubmitted and this action will
+              conclude the review of this package. Select Yes, withdraw package
+              to complete the task.
+            </p>
+          </div>
+        ),
+      },
     ],
   },
   {
@@ -502,6 +800,7 @@ export const oneMACFAQContent: FAQContent[] = [
     qanda: [
       {
         anchorText: "initial-waiver-id-format",
+        isOpen: false,
         question:
           "What format is used to enter a 1915(b) Initial Waiver number?",
         answerJSX: (
@@ -528,6 +827,7 @@ export const oneMACFAQContent: FAQContent[] = [
       },
       {
         anchorText: "waiver-renewal-id-format",
+        isOpen: false,
         question:
           "What format is used to enter a 1915(b) Waiver Renewal number?",
         answerJSX: (
@@ -554,6 +854,7 @@ export const oneMACFAQContent: FAQContent[] = [
       },
       {
         anchorText: "waiver-amendment-id-format",
+        isOpen: false,
         question:
           "What format is used to enter a 1915(b) Waiver Amendment number?",
         answerJSX: (
@@ -581,6 +882,7 @@ export const oneMACFAQContent: FAQContent[] = [
       },
       {
         anchorText: "waiver-id-help",
+        isOpen: false,
         question:
           "Who can I contact to help me figure out the correct 1915(b) Waiver Number?",
         answerJSX: (
@@ -595,6 +897,7 @@ export const oneMACFAQContent: FAQContent[] = [
       },
       {
         anchorText: "waiver-c-id",
+        isOpen: false,
         question: "What format is used to enter a 1915(c) waiver number?",
         answerJSX: (
           <>
@@ -624,6 +927,7 @@ export const oneMACFAQContent: FAQContent[] = [
       },
       {
         anchorText: "waiverb-attachments",
+        isOpen: false,
         question:
           "What attachments are needed to submit a 1915(b) waiver action?",
         answerJSX: (
@@ -707,6 +1011,7 @@ export const oneMACFAQContent: FAQContent[] = [
       },
       {
         anchorText: "waiverb-rai-attachments",
+        isOpen: false,
         question:
           "What are the attachments for a 1915(b) Waiver response to Request for Additional Information (RAI)?",
         answerJSX: (
@@ -743,6 +1048,7 @@ export const oneMACFAQContent: FAQContent[] = [
       },
       {
         anchorText: "waiver-extension-id-format",
+        isOpen: false,
         question:
           "What format is used to enter a 1915(b) and 1915(c) Temporary Extension number?",
         answerJSX: (
@@ -776,6 +1082,7 @@ export const oneMACFAQContent: FAQContent[] = [
       },
       {
         anchorText: "waiver-extension-status",
+        isOpen: false,
         question:
           "Why does the status of my Temporary Extension Request continue to show as 'Submitted'?",
         answerJSX: (
@@ -791,6 +1098,7 @@ export const oneMACFAQContent: FAQContent[] = [
       },
       {
         anchorText: "waiverb-extension-attachments",
+        isOpen: false,
         question:
           "What are the attachments for a 1915(b) Waiver - Request for Temporary Extension?",
         answerJSX: (
@@ -826,6 +1134,7 @@ export const oneMACFAQContent: FAQContent[] = [
       },
       {
         anchorText: "waiverc-extension-attachments",
+        isOpen: false,
         question:
           "What are the attachments for a 1915(c) Waiver - Request for Temporary Extension",
         answerJSX: (
@@ -861,6 +1170,7 @@ export const oneMACFAQContent: FAQContent[] = [
       },
       {
         anchorText: "appk",
+        isOpen: false,
         question: "Can I submit Appendix K amendments in OneMAC?",
         answerJSX: (
           <p>
@@ -871,6 +1181,7 @@ export const oneMACFAQContent: FAQContent[] = [
       },
       {
         anchorText: "appk-attachments",
+        isOpen: false,
         question: "What are the attachments for a 1915(c) Appendix K Waiver?",
         answerJSX: (
           <>
@@ -905,6 +1216,149 @@ export const oneMACFAQContent: FAQContent[] = [
               </tbody>
             </table>
           </>
+        ),
+      },
+      {
+        anchorText: "waiver-rai-response",
+        isOpen: false,
+        question:
+          "How do I submit a Formal Request for Additional Information (RAI) Response for a Waiver?",
+        answerJSX: (
+          <div>
+            <p>
+              When necessary, states will receive an RAI via email from CMS.
+            </p>
+            <ul>
+              <li>The state will respond to the RAI through OneMAC.</li>
+              <li>
+                A Request for Additional Information (RAI) stops the 90-day
+                clock, is a formal request for additional information from CMS.
+              </li>
+              <li>
+                Packages pending an official RAI response from the state will
+                have a Status of <b>RAI Issued</b>.
+              </li>
+            </ul>
+            <p>
+              To respond to a Waiver RAI, select the Waiver Tab view from the
+              Package Dashboard.
+            </p>
+            <ul>
+              <li>
+                Select the link to the Waiver ID. Packages which are in need of
+                an RAI response from the state will have a Status of{" "}
+                <b>RAI Issued</b>.
+              </li>
+              <li>
+                Then, under Package Actions, select the Respond to RAI link.
+              </li>
+              <li>
+                After attaching any required files, you may include additional
+                notes prior to clicking on the submit button.
+              </li>
+              <li>
+                Check your entries, as you cannot edit the submission after you
+                select Submit.
+              </li>
+            </ul>
+          </div>
+        ),
+      },
+      {
+        anchorText: "waiver-withdraw-rai-response",
+        isOpen: false,
+        question:
+          "How do I Withdraw a Formal RAI Response for a Medicaid Waiver?",
+        answerJSX: (
+          <div>
+            <p>
+              If a state wishes to withdraw a Formal RAI Response, the state
+              must first contact their CMS Point of Contact so the action can be
+              enabled.
+            </p>
+            <ul>
+              <li>
+                As a CMS user, log in to OneMAC and select the link to the
+                Waiver number from the dashboard
+              </li>
+              <li>
+                Then, under Package Actions, select the Enable Formal RAI
+                Response Withdraw link, and then Select Submit.
+              </li>
+            </ul>
+            <p>
+              After receiving confirmation from your CMS Point of Contact that
+              the Withdraw Formal RAI Response feature has been enabled, locate
+              and select the Medicaid Waiver submission package.
+            </p>
+            <p>
+              The package status remains as Under Review and a substatus of
+              Withdraw Formal RAI Response Enabled will be reflected below the
+              status for the SPA or waiver submission package.
+            </p>
+            <p>
+              <b>
+                Note: These submissions will remain on the clock until the
+                package action has been taken.
+              </b>
+            </p>
+            <ul>
+              <li>
+                On the Formal RAI Response Withdraw form, upload any supporting
+                documentation and fill out the Additional Information section
+                explaining your need to withdraw the Formal RAI Response (all
+                required information is marked with an asterisk).
+              </li>
+              <li>Select Submit.</li>
+              <ul>
+                <li>
+                  You will receive a confirmation message asking if you are sure
+                  that you want to withdraw the Formal RAI Response. Select Yes,
+                  withdraw response.
+                </li>
+              </ul>
+            </ul>
+          </div>
+        ),
+      },
+      {
+        anchorText: "withdraw-waiver",
+        isOpen: false,
+        question: "How do I Withdraw a Package for a Waiver?",
+        answerJSX: (
+          <div>
+            <p>
+              A state can withdraw a submission package if it is in the Under
+              Review or RAI Issued status. However, please note that once
+              withdrawn, a submission package cannot be resubmitted to CMS.{" "}
+              <b>
+                Completing this action will conclude the review of this Waiver
+                package.
+              </b>
+            </p>
+            <p>
+              There are two methods you can use to withdraw a submission
+              package:
+            </p>
+            <ul>
+              <li>
+                In OneMAC, Locate and select the link to the Waiver ID. Then,
+                under Package Actions, select the Withdraw Package link.
+              </li>
+              <li>
+                Alternatively, the Withdraw Package action can be accessed by
+                selecting the three dots icon in the Actions column on the
+                Package Dashboard. Then, select Withdraw Package from the
+                drop-down list.
+              </li>
+            </ul>
+            <p>
+              A warning message will appear letting you know that if the package
+              is withdrawn, it cannot be resubmitted and this action will
+              conclude the review of this package. Select Yes, withdraw package
+              to complete the task.
+            </p>
+          </div>
         ),
       },
     ],

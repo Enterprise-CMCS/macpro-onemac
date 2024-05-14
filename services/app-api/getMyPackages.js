@@ -29,7 +29,10 @@ export const getMyPackages = async (email, group) => {
         ? cmsStatusUIMap
         : stateStatusUIMap;
 
-      if (!userRoleObj.canAccessDashboard || territoryList === []) {
+      if (
+        !userRoleObj.canAccessDashboard ||
+        (Array.isArray(territoryList) && territoryList.length === 0)
+      ) {
         throw RESPONSE_CODE.USER_NOT_AUTHORIZED;
       }
 
@@ -39,7 +42,7 @@ export const getMyPackages = async (email, group) => {
         ExclusiveStartKey: null,
         ScanIndexForward: false,
         ProjectionExpression:
-          "componentId,componentType,currentStatus,submissionTimestamp,latestRaiResponseTimestamp,lastActivityTimestamp,submitterName,submitterEmail,waiverAuthority, cpocName",
+          "componentId,componentType,currentStatus,submissionTimestamp,latestRaiResponseTimestamp,lastActivityTimestamp,submitterName,submitterEmail,waiverAuthority, cpocName, reviewTeam, subStatus, finalDispositionDate",
       };
       const grouppk = "OneMAC#" + group;
       let paramList = [];
@@ -76,6 +79,7 @@ export const getMyPackages = async (email, group) => {
                 oneItem.componentType,
                 oneItem.currentStatus,
                 !!oneItem.latestRaiResponseTimestamp,
+                oneItem.subStatus,
                 userRoleObj,
                 "package"
               );
@@ -84,6 +88,11 @@ export const getMyPackages = async (email, group) => {
                   0,
                   7
                 );
+
+              if (statusMap[oneItem.subStatus]) {
+                oneItem.subStatus = statusMap[oneItem.subStatus];
+              }
+
               if (!statusMap[oneItem.currentStatus])
                 console.log(
                   "%s status of %s not mapped!",

@@ -26,6 +26,7 @@ export const ONEMAC_TYPE = {
   WAIVER_APP_K_WITHDRAW: "waiverappkwithdraw",
   WAIVER_APP_K_SUBSEQUENT_SUBMISSION: "waiverappksubsequent",
   ENABLE_RAI_WITHDRAW: "enableraiwithdraw",
+  DISABLE_RAI_WITHDRAW: "disableraiwithdraw",
   RAI_RESPONSE_WITHDRAW: "rairesponsewithdraw",
 };
 
@@ -55,7 +56,7 @@ export const ONEMAC_STATUS = {
   WITHDRAWAL_REQUESTED: "Withdrawal Requested",
   TE_REQUESTED: "TE Requested",
   TERMINATED: "Waiver Terminated",
-  WITHDRAW_RAI_ENABLED: "RAI Response Withdraw Enabled",
+  WITHDRAW_RAI_ENABLED: "Withdraw Formal RAI Response Enabled",
   WITHDRAW_RAI_REQUESTED: "Formal RAI Response - Withdrawal Requested",
   UNKNOWN: "-- --",
 };
@@ -81,6 +82,7 @@ export const PACKAGE_ACTION = {
   ADD_AMENDMENT: "Add Amendment",
   ENABLE_RAI_WITHDRAWAL: "Enable Formal RAI Response Withdraw",
   SUBSEQUENT_SUBMISSION: "Upload Subsequent Documents",
+  DISABLE_RAI_WITHDRAWAL: "Disable Formal RAI Response Withdraw",
 };
 
 export const PACKAGE_GROUP = {

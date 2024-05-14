@@ -2,7 +2,7 @@ Feature: Verify user can withdraw a package in Under Review Status in the packag
     Background: Reoccurring steps
         Given I am on Login Page
         When Clicking on Development Login
-        When Login with state submitter user
+        When Login with "an Active" "State Submitter" user
         Then click on Packages
         Then Click on Filter Button
         Then click on Status
@@ -15,14 +15,12 @@ Feature: Verify user can withdraw a package in Under Review Status in the packag
        Scenario: Screen Enhance - Validate Medicaid Withdrawal Page from dashboard
         Then click the actions button in row one
         Then click withdraw package button
-        Then verify the header is "Withdraw Medicaid SPA Package" on the withdrawal form
-        Then verify the form intro exists on the withdrawal form
-        Then verify the SPA ID header exists on the withdrawal form
-        Then verify the SPA ID exists on the withdrawal form
-        Then verify the Type header exists on the withdrawal form
-        Then verify the type is "Medicaid SPA"
-        Then verify the Upload Supporting Documentation header exists on the withdrawal form
-        Then verify the Additional Info header exists on the withdrawal form
+        Then verify the form title is "Withdraw Medicaid SPA Package"
+        Then verify Form Intro Text is "Complete this action to withdraw this Medicaid SPA package. Once completed, you will not be able to resubmit the Medicaid SPA package or undo this action."
+        Then verify ID Label is "SPA ID"
+        Then verify Type is "Medicaid SPA"
+        Then verify "Upload Supporting Documentation" is an Attachment Type
+        Then verify label "Additional Information" exists on page
         Then verify the submit button is disabled
         Then verify form cancel button exists
         Then click form cancel button
@@ -36,14 +34,12 @@ Feature: Verify user can withdraw a package in Under Review Status in the packag
         Then click the SPA ID link in the first row
         Then verify the package details page is visible
         Then click withdraw button
-        Then verify the header is "Withdraw Medicaid SPA Package" on the withdrawal form
-        Then verify the form intro exists on the withdrawal form
-        Then verify the SPA ID header exists on the withdrawal form
-        Then verify the SPA ID exists on the withdrawal form
-        Then verify the Type header exists on the withdrawal form
-        Then verify the type is "Medicaid SPA"
-        Then verify the Upload Supporting Documentation header exists on the withdrawal form
-        Then verify the Additional Info header exists on the withdrawal form
+        Then verify the form title is "Withdraw Medicaid SPA Package"
+        Then verify Form Intro Text is "Complete this action to withdraw this Medicaid SPA package. Once completed, you will not be able to resubmit the Medicaid SPA package or undo this action."
+        Then verify ID Label is "SPA ID"
+        Then verify Type is "Medicaid SPA"
+        Then verify "Upload Supporting Documentation" is an Attachment Type
+        Then verify label "Additional Information" exists on page
         Then verify the submit button is disabled
         Then verify form cancel button exists
         Then click form cancel button
@@ -57,11 +53,12 @@ Feature: Verify user can withdraw a package in Under Review Status in the packag
         Then click the actions button in row one
         Then click withdraw package button
         Then verify the submit button is disabled
-        Then add additional info comment in the withdrawal form
+        Then into "Additional Information" type "Withdrawal test."
         Then verify the submit button is not disabled
-        Then upload withdrawal documentation
+        Then         attach "adobe.pdf" file to attachment 1
+
         Then verify the submit button is not disabled
-        Then clear additional info comment in the withdrawal form
+        Then clear "Additional Information" input field
         Then verify the submit button is not disabled
         Then Click the Submit Button without waiting
         Then verify yes, withdraw package button exists

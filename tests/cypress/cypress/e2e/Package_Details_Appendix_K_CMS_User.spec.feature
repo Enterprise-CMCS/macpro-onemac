@@ -2,7 +2,7 @@ Feature: Waiver Package Details View: Appendix K Amendment for a CMS User
     Background: Reoccuring Steps
         Given I am on Login Page
         When Clicking on Development Login
-        When Login as EUA CMS Read Only User
+        When Login with "an Active" "CMS Read Only" user
         Then click on the Waivers tab
         Then Click on Filter Button
         Then click on Type
@@ -115,9 +115,6 @@ Feature: Waiver Package Details View: Appendix K Amendment for a CMS User
         Then expand the Initial Submission caret
         Then verify the Initial Submission download all button exists
         Then verify the additional information section exists
-        #Then verify the Formal RAI Response caret button exists
-        #Then expand the Formal RAI Response caret button
-        #Then verify the Formal RAI Response download all button exists
 
 
     Scenario: Screen Enhance: Appendix K Details View - Approved
@@ -303,8 +300,7 @@ Feature: Waiver Package Details View: Appendix K Amendment for a CMS User
         Then verify the status on the card is "Pending"
         Then verify Enable Formal RAI Response Withdraw package action exists
         Then click Enable Formal RAI Response Withdraw package action
-        Then type "Automated test to enable an RAI Response withdrawal." in additional info textarea
         Then Click on Submit Button
-        Then verify the status on the card is "RAI Response Withdraw Enabled"
+        Then verify the status on the card is "Pending"
         Then verify package actions header is visible
-        Then verify there are no package actions available
+        Then verify Disable Formal RAI Response Withdraw package action exists

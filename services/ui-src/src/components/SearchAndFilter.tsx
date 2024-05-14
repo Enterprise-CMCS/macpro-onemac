@@ -210,9 +210,17 @@ const filterFromMultiCheckbox = <
     filterValue.includes(cellValue)
   );
 
-const betweenDates = (dateA: Date, dateB: Date, epoch: number) => {
-  const dateFromValue = new Date(epoch);
-  return dateFromValue > dateA && dateFromValue < dateB;
+const betweenDates = (dateA: Date, dateB: Date, epoch: number | string) => {
+  let dateFromValue;
+
+  if (typeof epoch === "string" && epoch !== "-- --") {
+    const [year, month, day] = epoch.split("-");
+    // in Date objects, month is an index (starts at 0), year and day are not
+    dateFromValue = new Date(Number(year), Number(month) - 1, Number(day));
+  } else {
+    dateFromValue = new Date(epoch);
+  }
+  return dateFromValue >= dateA && dateFromValue <= dateB;
 };
 
 const filterFromDateRange = <
@@ -487,6 +495,11 @@ function FilterPane<V extends {}>({
   setAllFilters,
 }: FilterPaneProps<V>) {
   const [showFilters, toggleShowFilters] = useToggle(false);
+  const { state: filterChips } = useFilterChipContext();
+  const filterCount = useMemo(
+    () => filterChips.filter((chipVal) => chipVal.label !== null).length,
+    [filterChips]
+  );
   const { dispatch: updateFilterChips } = useFilterChipContext();
   const onResetFilters = useCallback(() => {
     // Resets filter chips state to no chips showing
@@ -524,7 +537,7 @@ function FilterPane<V extends {}>({
 
   return (
     <>
-      <Button onClick={toggleShowFilters}>Filter</Button>
+      <Button onClick={toggleShowFilters}>Filter ({filterCount})</Button>
 
       {transitionFilterPane((style, showFilters) =>
         showFilters

@@ -24,5 +24,4 @@ export const waiverAppendixKWithdraw = {
     "Pending - Approval",
     "RAI Issued",
   ],
-  packageAttributes: ["currentStatus"],
 };

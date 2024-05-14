@@ -2,7 +2,7 @@ Feature: Waiver Package Details View:  Temporary Extension for a State User
     Background: Reoccuring Steps
         Given I am on Login Page
         When Clicking on Development Login
-        When Login with state submitter user
+        When Login with "an Active" "State Submitter" user
         Then click on the Waivers tab
         Then Click on Filter Button
         Then click on Type
@@ -80,5 +80,4 @@ Feature: Waiver Package Details View:  Temporary Extension for a State User
     #     Then verify there is an Initial Submission Date header in the details section
     #     Then verify a date exists for the Initial Submission Date
     #     Then verify the attachments section exists
-    #     Then verify the download all button exists
     #     Then verify the additional information section exists

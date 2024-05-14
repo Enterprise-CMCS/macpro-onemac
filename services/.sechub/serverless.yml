@@ -8,7 +8,7 @@ package:
   individually: true
 
 plugins:
-  - serverless-bundle
+  - serverless-esbuild
   - serverless-stack-termination-protection
   - serverless-idempotency-helper
   - serverless-iam-helper
@@ -16,6 +16,8 @@ plugins:
   - serverless-online
 
 custom:
+  esbuild:
+    exclude: []
   stage: ${opt:stage, self:provider.stage}
   region: ${opt:region, self:provider.region}
   serverlessTerminationProtection:
@@ -32,7 +34,7 @@ custom:
 
 provider:
   name: aws
-  runtime: nodejs14.x
+  runtime: nodejs20.x
   region: us-east-1
   iam:
     role:

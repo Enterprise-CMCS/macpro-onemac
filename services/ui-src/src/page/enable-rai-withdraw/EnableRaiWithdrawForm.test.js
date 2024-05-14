@@ -1,12 +1,10 @@
 import React from "react";
-import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import { render } from "@testing-library/react";
 import { createMemoryHistory } from "history";
-import { Router, MemoryRouter } from "react-router-dom";
+import { Router } from "react-router-dom";
 import { systemAdminInitialAuthState } from "../../libs/testDataAppContext";
 
 import { ONEMAC_ROUTES } from "cmscommonlib";
-import ChipSpaWithdraw from "../chip-spa/ChipSpaWithdraw";
 import { AppContext } from "../../libs/contextLib";
 import EnableRaiWithdrawForm, {
   enableRaiWithdrawFormInfo,

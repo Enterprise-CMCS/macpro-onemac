@@ -170,7 +170,10 @@ export const DetailSection = ({
              latestRaiResponseTimestamp is present */}
             {pageConfig.secondClockStatuses &&
               pageConfig.secondClockStatuses.includes(detail.currentStatus) &&
-              detail?.latestRaiResponseTimestamp && <span>2nd Clock</span>}
+              detail?.latestRaiResponseTimestamp && (
+                <span id="secondclock">2nd Clock</span>
+              )}
+            {detail.subStatus && <div id="substatus">{detail.subStatus}</div>}
             {pageConfig.show90thDayInfo && ninetyDayText !== "N/A" && (
               <Review heading="90th Day">
                 {Number(ninetyDayText)
@@ -301,12 +304,16 @@ export const DetailSection = ({
                     <Review className="preserve-spacing" heading="Change Made">
                       {adminChange.changeMade}
                     </Review>
-                    <Review
-                      className="preserve-spacing"
-                      heading="Change Reason"
-                    >
-                      {adminChange.changeReason}
-                    </Review>
+                    {!adminChange.changeMade.includes(
+                      "abled State package action to withdraw Formal RAI Response"
+                    ) && (
+                      <Review
+                        className="preserve-spacing"
+                        heading="Change Reason"
+                      >
+                        {adminChange.changeReason}
+                      </Review>
+                    )}
                   </AccordionItem>
                 );
               })}

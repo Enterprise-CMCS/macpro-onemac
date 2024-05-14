@@ -6,6 +6,8 @@ import {
   submitAction,
   withdrawalRequestedAction,
   subsequentSubmissionType,
+  defaultRnAWaiverEventMapping,
+  defaultRnAWaiverInitialSubmissionMap,
 } from "../lib/default-lib";
 import { buildAnyPackage } from "./buildAnyPackage";
 
@@ -23,6 +25,16 @@ const waiverAppendixKBuildConfig = {
     submitwaiverappkrai: submitAction,
     submitwaiverappkwithdraw: withdrawalRequestedAction,
     submitrairesponsewithdraw: withdrawalRequestedAction,
+  },
+  eventMap: {
+    ...defaultRnAWaiverEventMapping,
+    submit: {
+      ...defaultRnAWaiverInitialSubmissionMap,
+      packageAttributes: [
+        ...defaultRnAWaiverInitialSubmissionMap.packageAttributes,
+        "title",
+      ],
+    },
   },
 };
 

@@ -55,13 +55,5 @@ export class oneMacMyProfilePage {
   verifyAccessStatus() {
     cy.xpath(accessStatus).should("be.visible");
   }
-
-  verifyAccessStatusDenied() {
-    cy.xpath(accessStatusDenied).should("be.visible");
-  }
-
-  verifyAccessStatusRevoked() {
-    cy.xpath(accessStatusRevoked).should("be.visible");
-  }
 }
 export default oneMacMyProfilePage;

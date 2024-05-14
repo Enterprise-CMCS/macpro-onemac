@@ -14,8 +14,8 @@ import { ONEMAC_TYPE } from "cmscommonlib/workflow";
 
 export const enableRaiWithdrawFormConfig = {
   ...defaultFormConfig,
+  successResponseCode: RESPONSE_CODE.RAI_RESPONSE_WITHDRAW_ENABLE_SUCCESS,
   ...enableRaiWithdraw,
-  newStatus: Workflow.ONEMAC_STATUS.WITHDRAW_RAI_ENABLED,
   hasAuthorizationToSubmit: (userRole) => {
     return userRole.isCMSUser;
   },
@@ -63,9 +63,11 @@ async function getRecordsByGSI1Keys(gsi1pk, gsi1sk) {
 
   try {
     const result = await dynamoDb.query(params);
-    const sortedRecords = result.Items.sort((a, b) =>
-      a.submissionTimestamp.localeCompare(b.submissionTimestamp)
+    console.log("the result Items: ", result.Items);
+    const sortedRecords = result.Items.sort(
+      (a, b) => b.submissionTimestamp - a.submissionTimestamp
     );
+    console.log("the items sorted are: ", sortedRecords);
     return sortedRecords;
   } catch (error) {
     console.error("Error retrieving records:", error);
@@ -140,9 +142,8 @@ export const main = handler(async (event) => {
       const mostRecentRecord = records[0];
       mostRecentRecord.currentStatus =
         Workflow.ONEMAC_STATUS.WITHDRAW_RAI_ENABLED;
-      mostRecentRecord.eventTimestamp = Date.now();
       const adminChange = {
-        changeTimestamp: mostRecentRecord.eventTimestamp,
+        changeTimestamp: Date.now(),
         changeMade: `${data.submitterName} has enabled State package action to withdraw Formal RAI Response`,
         changeReason: data.additionalInformation,
       };

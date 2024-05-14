@@ -7,6 +7,7 @@ import {
   submitAction,
   withdrawalRequestedAction,
 } from "../lib/default-lib";
+import { defaultEventMapping } from "../lib/default-lib";
 import { buildAnyPackage } from "./buildAnyPackage";
 
 const medicaidSPABuildConfig = {
@@ -24,6 +25,7 @@ const medicaidSPABuildConfig = {
     submitmedicaidspawithdraw: withdrawalRequestedAction,
     submitrairesponsewithdraw: withdrawalRequestedAction,
   },
+  eventMap: defaultEventMapping,
 };
 
 export const buildMedicaidSpa = async (packageId) =>

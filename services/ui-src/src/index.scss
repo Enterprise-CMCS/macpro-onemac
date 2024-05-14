@@ -2947,3 +2947,8 @@ article.form-container {
   max-width: 540px;
   margin: 3rem 0;
 }
+
+.faqButtonLink {
+  @extend .ds-c-button;
+  margin: 10px;
+}

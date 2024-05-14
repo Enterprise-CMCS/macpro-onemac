@@ -2,6 +2,7 @@ import { Workflow } from "cmscommonlib";
 function getDefaultActions(
   packageStatus,
   hasRaiResponse,
+  packageSubStatus,
   userRole,
   formSource
 ) {
@@ -12,7 +13,12 @@ function getDefaultActions(
         actions.push(Workflow.PACKAGE_ACTION.WITHDRAW);
         actions.push(Workflow.PACKAGE_ACTION.SUBSEQUENT_SUBMISSION);
       }
-      if (userRole.isCMSUser && hasRaiResponse && formSource === "detail") {
+      if (
+        userRole.isCMSUser &&
+        hasRaiResponse &&
+        packageSubStatus !== Workflow.ONEMAC_STATUS.WITHDRAW_RAI_ENABLED &&
+        formSource === "detail"
+      ) {
         actions.push(Workflow.PACKAGE_ACTION.ENABLE_RAI_WITHDRAWAL);
       }
       break;
@@ -29,14 +35,16 @@ function getDefaultActions(
           Workflow.PACKAGE_ACTION.RESPOND_TO_RAI
         );
       break;
-    case Workflow.ONEMAC_STATUS.WITHDRAW_RAI_ENABLED:
-      if (userRole.canAccessForms)
-        actions.push(
-          Workflow.PACKAGE_ACTION.WITHDRAW,
-          Workflow.PACKAGE_ACTION.WITHDRAW_RAI
-        );
-      break;
   }
+
+  if (packageSubStatus === Workflow.ONEMAC_STATUS.WITHDRAW_RAI_ENABLED) {
+    if (userRole.canAccessForms)
+      actions.push(Workflow.PACKAGE_ACTION.WITHDRAW_RAI);
+    if (userRole.isCMSUser && formSource === "detail") {
+      actions.push(Workflow.PACKAGE_ACTION.DISABLE_RAI_WITHDRAWAL);
+    }
+  }
+
   return actions;
 }
 
@@ -69,39 +77,23 @@ export function getActionsForPackage(
   packageType,
   packageStatus,
   hasRaiResponse,
+  packageSubStatus,
   userRole,
   formSource
 ) {
-  let actions = [];
+  let actions = getDefaultActions(
+    packageStatus,
+    hasRaiResponse,
+    packageSubStatus,
+    userRole,
+    formSource
+  );
+
   switch (packageType) {
-    case Workflow.ONEMAC_TYPE.CHIP_SPA:
-    case Workflow.ONEMAC_TYPE.MEDICAID_SPA:
-    case Workflow.ONEMAC_TYPE.WAIVER_AMENDMENT:
-    case Workflow.ONEMAC_TYPE.WAIVER_APP_K:
-    case Workflow.ONEMAC_TYPE.WAIVER_RAI:
-    case Workflow.ONEMAC_TYPE.CHIP_SPA_RAI:
-    case Workflow.ONEMAC_TYPE.MEDICAID_SPA_RAI:
-      actions.push(
-        ...getDefaultActions(
-          packageStatus,
-          hasRaiResponse,
-          userRole,
-          formSource
-        )
-      );
-      break;
     case Workflow.ONEMAC_TYPE.WAIVER:
     case Workflow.ONEMAC_TYPE.WAIVER_INITIAL:
     case Workflow.ONEMAC_TYPE.WAIVER_RENEWAL:
-      actions.push(
-        ...getDefaultActions(
-          packageStatus,
-          hasRaiResponse,
-          userRole,
-          formSource
-        ),
-        ...getWaiverActions(packageStatus, userRole)
-      );
+      actions.push(...getWaiverActions(packageStatus, userRole));
       break;
     case Workflow.ONEMAC_TYPE.WAIVER_EXTENSION:
     case Workflow.ONEMAC_TYPE.WAIVER_EXTENSION_B:

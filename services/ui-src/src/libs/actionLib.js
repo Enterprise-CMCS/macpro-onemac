@@ -7,6 +7,7 @@ import WithdrawRAI from "../page/action/WithdrawRAI";
 import AddAmendment from "../page/action/AddAmendment";
 import EnableWithdraw from "../page/action/EnableWithdraw";
 import SubsequentSubmission from "../page/action/SubsequentSubmission";
+import DisableWithdraw from "../page/action/DisableWithdraw";
 
 export const actionComponent = {
   [Workflow.PACKAGE_ACTION.WITHDRAW]: (theComponent, formSource) => (
@@ -32,5 +33,8 @@ export const actionComponent = {
     formSource
   ) => (
     <SubsequentSubmission theComponent={theComponent} formSource={formSource} />
+  ),
+  [Workflow.PACKAGE_ACTION.DISABLE_RAI_WITHDRAWAL]: (theComponent) => (
+    <DisableWithdraw theComponent={theComponent} />
   ),
 };

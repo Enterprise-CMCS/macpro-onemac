@@ -25,6 +25,7 @@ const SUBMIT_API_CALL = {
   [Workflow.ONEMAC_TYPE.WAIVER_AMENDMENT_WITHDRAW]: "withdrawWaiverAmendment",
   [Workflow.ONEMAC_TYPE.WAIVER_RAI]: "submitWaiverRAIResponse",
   [Workflow.ONEMAC_TYPE.ENABLE_RAI_WITHDRAW]: "enableRaiWithdraw",
+  [Workflow.ONEMAC_TYPE.DISABLE_RAI_WITHDRAW]: "disableRaiWithdraw",
   [Workflow.ONEMAC_TYPE.RAI_RESPONSE_WITHDRAW]: "withdrawRAIResponse",
   [Workflow.ONEMAC_TYPE.WAIVER_INITIAL_SUBSEQUENT_SUBMISSION]:
     "submitInitialWaiverSubsequent",

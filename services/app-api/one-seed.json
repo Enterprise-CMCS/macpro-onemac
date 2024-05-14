@@ -2030,92 +2030,91 @@
     ],
     "submitterName": "Statesubmitter Nightwatch"
   },
-{
- "pk": "MD-22-2205-VM",
- "sk": "Package",
- "adminChanges": [
   {
-   "changeMade": "ID changed from MD-22-2205-KG to MD-22-2205-VM",
-   "changeReason": "Per request from Susan Jester in Help Desk ticket INC324\n\nThis RAI Repsonse is for MD-22-2205-VM, not MD-22-2205-KG.",
-   "changeTimestamp": 1675989200000
+    "componentType": "medicaidspa",
+    "componentId": "MD-22-2205-VM",
+    "currentStatus": "Submitted",
+    "subject": "OneMac Connection test",
+    "latestRaiResponseTimestamp": 1673973536912,
+    "cpocEmail": "\"Tester, Chester (CPOC)\" <chesterT@example.gov>",
+    "reverseChrono": [
+      {
+        "additionalInformation": "",
+        "attachments": [
+          {
+            "s3Key": "1673973534414/adobe.pdf",
+            "filename": "adobe.pdf",
+            "title": "RAI Response",
+            "contentType": "application/pdf",
+            "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1673973534414/adobe.pdf"
+          }
+        ],
+        "currentStatus": "Submitted",
+        "action": "Submitted",
+        "type": "Formal RAI Response",
+        "timestamp": 1673973536912,
+        "eventTimestamp": 1673973536912
+      },
+      {
+        "additionalInformation": "test",
+        "attachments": [
+          {
+            "s3Key": "1672290820800/excel.xlsx",
+            "filename": "excel.xlsx",
+            "title": "CMS Form 179",
+            "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1672290820800/excel.xlsx"
+          },
+          {
+            "s3Key": "1672290820801/textnotes.txt",
+            "filename": "textnotes.txt",
+            "title": "SPA Pages",
+            "contentType": "text/plain",
+            "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1672290820801/textnotes.txt"
+          }
+        ],
+        "currentStatus": "Submitted",
+        "action": "Submitted",
+        "type": "Initial Package",
+        "timestamp": 1672290821990,
+        "eventTimestamp": 1672290821990
+      }
+    ],
+    "description": "pending-rai",
+    "reviewTeam": [
+      "Lester Tester",
+      "Super Tester",
+      "Jimmy Tester"
+    ],
+    "submissionTimestamp": 1672290821990,
+    "reviewTeamEmailList": [
+      "\"Tester, Lester (SRT)\" <lesterT@example.gov>",
+      "\"Tester, Super (SRT)\" <SuperT@example.gov>",
+      "\"Tester, Jimmy (SRT)\" <jimmyT@example.gov>"
+    ],
+    "proposedEffectiveDate": "-- --",
+    "GSI1pk": "OneMAC#spa",
+    "adminChanges": [
+      {
+        "changeReason": "Per request from Susan Jester in Help Desk ticket INC324\n\nThis RAI Repsonse is for MD-22-2205-VM, not MD-22-2205-KG.",
+        "changeTimestamp": 1675989200000,
+        "changeMade": "ID changed from MD-22-2205-KG to MD-22-2205-VM"
+      },
+      {
+        "changeReason": "Per request from Charlie Tester in Help Desk ticket INC34224\n\nThis ID should be for year 2022.",
+        "changeTimestamp": 1675987200000,
+        "changeMade": "ID changed from MD-21-2205-VM to MD-22-2205-VM"
+      }
+    ],
+    "GSI1sk": "MD-22-2205-VM",
+    "lastEventTimestamp": 1673973536912,
+    "sk": "Package",
+    "approvedEffectiveDate": "-- --",
+    "pk": "MD-22-2205-VM",
+    "submitterName": "Statesubmitter Nightwatch",
+    "cpocName": "Chester Tester",
+    "submitterEmail": "statesubmitter@nightwatch.test"
   },
-  {
-   "changeMade": "ID changed from MD-21-2205-VM to MD-22-2205-VM",
-   "changeReason": "Per request from Charlie Tester in Help Desk ticket INC34224\n\nThis ID should be for year 2022.",
-   "changeTimestamp": 1675987200000
-  }
- ],
- "approvedEffectiveDate": "-- --",
- "componentId": "MD-22-2205-VM",
- "componentType": "medicaidspa",
- "cpocEmail": "\"Tester, Chester (CPOC)\" <chesterT@example.gov>",
- "cpocName": "Chester Tester",
- "currentStatus": "RAI Issued",
- "description": "pending-rai seed marker",
- "finalDispositionDate": "-- --",
- "GSI1pk": "OneMAC#spa",
- "GSI1sk": "MD-22-2205-VM",
- "lastEventTimestamp": 1675444241667,
- "latestRaiResponseTimestamp": 1673973536912,
- "proposedEffectiveDate": "2023-04-06",
- "reverseChrono": [
-  {
-   "action": "Submitted",
-   "additionalInformation": "",
-   "attachments": [
-    {
-     "contentType": "application/pdf",
-     "filename": "adobe.pdf",
-     "s3Key": "1673973534414/adobe.pdf",
-     "title": "RAI Response",
-     "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1673973534414/adobe.pdf"
-    }
-   ],
-   "currentStatus": "Submitted",
-   "eventTimestamp": 1673973536912,
-   "timestamp": 1673973536912,
-   "type": "Formal RAI Response"
-  },
-  {
-   "action": "Submitted",
-   "additionalInformation": "test",
-   "attachments": [
-    {
-     "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-     "filename": "excel.xlsx",
-     "s3Key": "1672290820800/excel.xlsx",
-     "title": "CMS Form 179",
-     "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1672290820800/excel.xlsx"
-    },
-    {
-     "contentType": "text/plain",
-     "filename": "textnotes.txt",
-     "s3Key": "1672290820801/textnotes.txt",
-     "title": "SPA Pages",
-     "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1672290820801/textnotes.txt"
-    }
-   ],
-   "currentStatus": "Submitted",
-   "eventTimestamp": 1672290821990,
-   "timestamp": 1672290821990,
-   "type": "Initial Package"
-  }
- ],
- "reviewTeam": [
-  "Lester Tester",
-  "Super Tester",
-  "Jimmy Tester"
- ],
- "reviewTeamEmailList": [
-  "\"Tester, Lester (SRT)\" <lesterT@example.gov>",
-  "\"Tester, Super (SRT)\" <SuperT@example.gov>",
-  "\"Tester, Jimmy (SRT)\" <jimmyT@example.gov>"
- ],
- "subject": "OneMac Connection testing",
- "submissionTimestamp": 1673973536912,
- "submitterEmail": "statesubmitter@nightwatch.test",
- "submitterName": "Statesubmitter Nightwatch"
-},
   {
     "PRIORITY_COMPLEXITY": null,
     "STATES": [
@@ -2414,57 +2413,67 @@
     "submitterName": "Statesubmitter Nightwatch"
   },
   {
-    "clockEndTimestamp": 1680063073531,
+    "finalDispositionDate": "-- --",
     "componentType": "medicaidspa",
-    "currentStatus": "Under Review",
-    "waiverExtensions": [],
-    "attachments": [
-      {
-        "s3Key": "1672290671436/excel.xlsx",
-        "filename": "excel.xlsx",
-        "title": "CMS Form 179",
-        "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-        "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1672290671436/excel.xlsx"
-      },
-      {
-        "s3Key": "1672290671438/textnotes.txt",
-        "filename": "textnotes.txt",
-        "title": "SPA Pages",
-        "contentType": "text/plain",
-        "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1672290671438/textnotes.txt"
-      }
-    ],
-    "proposedEffectiveDate": "2023-02-03",
-    "GSI1sk": "MD-22-2200-VM",
-    "additionalInformation": "test",
-    "submissionTimestamp": 1672290673531,
-    "GSI1pk": "OneMAC#spa",
-    "submitterEmail": "statesubmitter@nightwatch.test",
-    "sk": "Package",
-    "cpocName": "Chester Tester",
-    "reviewTeam": ["Lester Tester", "Super Tester", "Jimmy Tester"],
     "componentId": "MD-22-2200-VM",
-    "raiResponses": [
+    "currentStatus": "Under Review",
+    "subject": "OneMac Connection test",
+    "cpocEmail": "\"Tester, Chester (CPOC)\" <chesterT@example.gov>",
+    "reverseChrono": [
       {
-        "additionalInformation": "Testing the RAI Response connection",
+        "additionalInformation": "test",
         "attachments": [
           {
+            "s3Key": "1672290671436/excel.xlsx",
+            "filename": "excel.xlsx",
+            "title": "CMS Form 179",
             "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-            "filename": "OneMACInactivated.xlsx",
-            "s3Key": "1673472581115/OneMACInactivated.xlsx",
-            "title": "Waiver RAI Response",
-            "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1673472581115/OneMACInactivated.xlsx"
+            "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1672290671436/excel.xlsx"
+          },
+          {
+            "s3Key": "1672290671438/textnotes.txt",
+            "filename": "textnotes.txt",
+            "title": "SPA Pages",
+            "contentType": "text/plain",
+            "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1672290671438/textnotes.txt"
           }
         ],
-        "submissionTimestamp": 1675987200000
+        "currentStatus": "Submitted",
+        "action": "Submitted",
+        "type": "Initial Package",
+        "timestamp": 1672290673531,
+        "eventTimestamp": 1672290673531
       }
     ],
-    "latestRaiResponseTimestamp": 1675987200000,
+    "description": "pending status",
+    "reviewTeam": [
+      "Lester Tester",
+      "Super Tester",
+      "Jimmy Tester",
+      "Lester2 Tester",
+      "Super2 Tester",
+      "Jimmy2 Tester"
+    ],
+    "submissionTimestamp": 1672290673531,
+    "reviewTeamEmailList": [
+      "\"Tester, Lester (SRT)\" <lesterT@example.gov>",
+      "\"Tester, Super (SRT)\" <SuperT@example.gov>",
+      "\"Tester, Jimmy (SRT)\" <jimmyT@example.gov>",
+      "\"Tester, Lester2 (SRT)\" <lesterT2@example.gov>",
+      "\"Tester, Super2 (SRT)\" <SuperT2@example.gov>",
+      "\"Tester, Jimmy2 (SRT)\" <jimmyT2@example.gov>"
+    ],
+    "proposedEffectiveDate": "-- --",
+    "GSI1pk": "OneMAC#spa",
+    "adminChanges": [],
+    "GSI1sk": "MD-22-2200-VM",
     "lastEventTimestamp": 1672291290683,
+    "sk": "Package",
+    "approvedEffectiveDate": "-- --",
     "pk": "MD-22-2200-VM",
-    "subject": "test subject",
-    "description": "test description",
-    "submitterName": "Statesubmitter Nightwatch"
+    "submitterName": "Statesubmitter Nightwatch",
+    "cpocName": "Chester Tester",
+    "submitterEmail": "statesubmitter@nightwatch.test"
   },
   {
     "PRIORITY_COMPLEXITY": null,
@@ -3305,7 +3314,7 @@
     "GSI1pk": "OneMAC#submitwaivernew",
     "adminChanges": [{
       "changeTimestamp": 1674637174000,
-      "changeMade": "Type changed from Waiver Renewal to Waiver Amendment",
+      "changeMade": "Type changed from Waiver Renewal to Initial Waiver",
       "changeReason": "Per request from Bester Tester in Help Desk ticket INC354"
     }],
     "convertTimestamp": 1674574260442,
@@ -3320,7 +3329,7 @@
  "sk": "Package",
  "adminChanges": [
   {
-   "changeMade": "Type changed from Waiver Renewal to Waiver Amendment",
+   "changeMade": "Type changed from Waiver Renewal to Initial Waiver",
    "changeReason": "Per request from Bester Tester in Help Desk ticket INC354",
    "changeTimestamp": 1674637174000
   }
@@ -3520,74 +3529,6 @@
     "submitterName": "Statesubmitter Nightwatch"
   },
   {
-    "clockEndTimestamp": 1668008887407,
-    "componentType": "waiverextension",
-    "eventTimestamp": 1660229287407,
-    "currentStatus": "Submitted",
-    "parentId": "MD-12893.R00.00",
-    "attachments": [
-      {
-        "s3Key": "1660229285982/Mr. Scott_ State of KS_SPA KS 21-0002 Signed.pdf",
-        "filename": "Mr. Scott_ State of KS_SPA KS 21-0002 Signed.pdf",
-        "title": "Waiver Extension Request",
-        "contentType": "application/pdf",
-        "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1660229285982/Mr.%20Scott_%20State%20of%20KS_SPA%20KS%2021-0002%20Signed.pdf"
-      }
-    ],
-    "proposedEffectiveDate": "-- --",
-    "GSI1sk": "MD-0093.R00.TE03",
-    "additionalInformation": "",
-    "submissionTimestamp": 1660229287407,
-    "GSI1pk": "OneMAC#submitwaiverextension",
-    "adminChanges": [{
-      "changeTimestamp": 1674637174000,
-      "changeMade": "ID changed from MD-0093.R00.03 to MD-0093.R00.TE03",
-      "changeReason": "Per request from Valerie Tester in Help Desk ticket INC354045"
-    }],
-    "convertTimestamp": 1673973225066,
-    "submitterEmail": "statesubmitter@nightwatch.test",
-    "sk": "OneMAC#1660229287407",
-    "componentId": "MD-0093.R00.TE03",
-    "pk": "MD-0093.R00.TE03",
-    "submitterName": "Statesubmitter Nightwatch"
-  },
-  {
-    "componentType": "waiverextension",
-    "currentStatus": "Submitted",
-    "waiverExtensions": [],
-    "parentId": "MD-12893.R00.00",
-    "attachments": [
-      {
-        "s3Key": "1660229285982/Mr. Scott_ State of KS_SPA KS 21-0002 Signed.pdf",
-        "filename": "Mr. Scott_ State of KS_SPA KS 21-0002 Signed.pdf",
-        "title": "Waiver Extension Request",
-        "contentType": "application/pdf",
-        "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1660229285982/Mr.%20Scott_%20State%20of%20KS_SPA%20KS%2021-0002%20Signed.pdf"
-      }
-    ],
-    "GSI1sk": "MD-0093.R00.TE03",
-    "submissionTimestamp": 1660229287407,
-    "GSI2sk": "waiverextension",
-    "GSI2pk": "MD-12893.R00.00",
-    "GSI1pk": "OneMAC#waiver",
-    "submitterEmail": "statesubmitter@nightwatch.test",
-    "sk": "Package",
-    "adminChanges": [{
-      "changeTimestamp": 1674637174000,
-      "changeMade": "ID changed from MD-0093.R00.03 to MD-0093.R00.TE03",
-      "changeReason": "Per request from Valerie Tester in Help Desk ticket INC354045"
-    }],
-    "cpocName": "Chester Tester",
-    "reviewTeam": ["Lester Tester", "Super Tester", "Jimmy Tester"],
-    "componentId": "MD-0093.R00.TE03",
-    "raiResponses": [],
-    "lastEventTimestamp": 1660229287407,
-    "pk": "MD-0093.R00.TE03",
-    "subject": "test subject",
-    "description": "test description",
-    "submitterName": "Statesubmitter Nightwatch"
-  },
-  {
     "clockEndTimestamp": 1680107936125,
     "componentType": "chipspa",
     "eventTimestamp": 1672335536125,
@@ -3634,54 +3575,74 @@
     "submitterName": "MDSTATE SUBMITTERNK"
   },
   {
-    "clockEndTimestamp": 1680107936125,
+    "finalDispositionDate": "-- --",
     "componentType": "chipspa",
+    "componentId": "MD-22-2300-VM",
     "currentStatus": "Under Review",
-    "waiverExtensions": [],
-    "attachments": [
+    "subject": "Sample Title Name",
+    "cpocEmail": "\"Tester, Chester (CPOC)\" <chesterT@example.gov>",
+    "reverseChrono": [
       {
-        "s3Key": "1672335534412/excel.xlsx",
-        "filename": "excel.xlsx",
-        "title": "Current State Plan",
-        "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-        "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A30413432-e223-4a6d-bfe1-7ed87236ff55/1672335534412/excel.xlsx"
-      },
-      {
-        "s3Key": "1672335534414/file.docx",
-        "filename": "file.docx",
-        "title": "Amended State Plan Language",
-        "contentType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-        "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A30413432-e223-4a6d-bfe1-7ed87236ff55/1672335534414/file.docx"
-      },
-      {
-        "s3Key": "1672335534414/picture.jpg",
-        "filename": "picture.jpg",
-        "title": "Cover Letter",
-        "contentType": "image/jpeg",
-        "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A30413432-e223-4a6d-bfe1-7ed87236ff55/1672335534414/picture.jpg"
+        "additionalInformation": "test",
+        "attachments": [
+          {
+            "s3Key": "1672335534412/excel.xlsx",
+            "filename": "excel.xlsx",
+            "title": "Current State Plan",
+            "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A30413432-e223-4a6d-bfe1-7ed87236ff55/1672335534412/excel.xlsx"
+          },
+          {
+            "s3Key": "1672335534414/file.docx",
+            "filename": "file.docx",
+            "title": "Amended State Plan Language",
+            "contentType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+            "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A30413432-e223-4a6d-bfe1-7ed87236ff55/1672335534414/file.docx"
+          },
+          {
+            "s3Key": "1672335534414/picture.jpg",
+            "filename": "picture.jpg",
+            "title": "Cover Letter",
+            "contentType": "image/jpeg",
+            "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A30413432-e223-4a6d-bfe1-7ed87236ff55/1672335534414/picture.jpg"
+          }
+        ],
+        "currentStatus": "Submitted",
+        "action": "Submitted",
+        "type": "Initial Package",
+        "timestamp": 1672335536125,
+        "eventTimestamp": 1672335536125
       }
     ],
-    "proposedEffectiveDate": "-- --",
-    "GSI1sk": "MD-22-2300-VM",
-    "additionalInformation": "test",
+    "description": "Sample Summary Memo ",
+    "reviewTeam": [
+      "Lester Tester",
+      "Super Tester",
+      "Jimmy Tester"
+    ],
     "submissionTimestamp": 1672335536125,
+    "reviewTeamEmailList": [
+      "\"Tester, Lester (SRT)\" <lesterT@example.gov>",
+      "\"Tester, Super (SRT)\" <SuperT@example.gov>",
+      "\"Tester, Jimmy (SRT)\" <jimmyT@example.gov>"
+    ],
+    "proposedEffectiveDate": "-- --",
     "GSI1pk": "OneMAC#spa",
-    "submitterEmail": "mdstateonemac@gmail.com",
-    "sk": "Package",
-    "adminChanges": [{
-      "changeTimestamp": 1673513974000,
-      "changeMade": "Type changed from Medicaid SPA to CHIP SPA",
-      "changeReason": "Per request from Samson Tester in Help Desk ticket INC32245"
-    }],
-    "cpocName": "Chester Tester",
-    "reviewTeam": ["Lester Tester", "Super Tester", "Jimmy Tester"],
-    "componentId": "MD-22-2300-VM",
-    "raiResponses": [],
+    "adminChanges": [
+      {
+        "changeReason": "Per request from Samson Tester in Help Desk ticket INC32245",
+        "changeTimestamp": 1673513974000,
+        "changeMade": "Type changed from Medicaid SPA to CHIP SPA"
+      }
+    ],
+    "GSI1sk": "MD-22-2300-VM",
     "lastEventTimestamp": 1673560321983,
+    "sk": "Package",
+    "approvedEffectiveDate": "-- --",
     "pk": "MD-22-2300-VM",
-    "subject": "test subject",
-    "description": "test description",
-    "submitterName": "MDSTATE SUBMITTERNK"
+    "submitterName": "MDSTATE SUBMITTERNK",
+    "cpocName": "Chester Tester",
+    "submitterEmail": "mdstateonemac@gmail.com"
   },
   {
     "PRIORITY_COMPLEXITY": null,
@@ -7282,77 +7243,85 @@
  "changedByName": "Statesubmitter Nightwatch",
  "componentId": "MD-22-2307-VM",
  "componentType": "chipspa",
- "currentStatus": "Withdrawal Requested",
+ "currentStatus": "Submitted",
  "eventTimestamp": 1676103563000,
- "GSI1pk": "OneMAC#withdrawchipspa",
+ "GSI1pk": "OneMAC#submitchipspawithdraw",
  "GSI1sk": "MD-22-2307-VM",
  "lastModifiedEmail": "statesubmitter@nightwatch.test",
  "lastModifiedName": "Statesubmitter Nightwatch",
  "submissionTimestamp": 1676103563000
 },
 {
- "pk": "MD-22-2307-VM",
- "sk": "Package",
- "adminChanges": [
- ],
- "approvedEffectiveDate": "-- --",
- "componentId": "MD-22-2307-VM",
- "componentType": "chipspa",
- "cpocEmail": "\"Tester, Chester (CPOC)\" <chesterT@example.gov>",
- "cpocName": "Chester Tester",
- "currentStatus": "Withdrawal Requested",
- "description": null,
- "GSI1pk": "OneMAC#spa",
- "GSI1sk": "MD-22-2307-VM",
- "lastEventTimestamp": 1676103563000,
- "proposedEffectiveDate": "-- --",
- "reverseChrono": [
-  {
-   "action": "Submitted",
-   "additionalInformation": "Initial submission event for the package to test the withdrawal requested status",
-   "attachments": [
+  "componentType": "chipspa",
+  "componentId": "MD-22-2307-VM",
+  "currentStatus": "Withdrawal Requested",
+  "subject": "Sample Title Name ",
+  "cpocEmail": "\"Tester, Chester (CPOC)\" <chesterT@example.gov>",
+  "reverseChrono": [
     {
-     "contentType": "image/jpeg",
-     "filename": "picture.jpg",
-     "s3Key": "1673562407449/picture.jpg",
-     "title": "Current State Plan",
-     "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A30413432-e223-4a6d-bfe1-7ed87236ff55/1673562407449/picture.jpg"
+      "additionalInformation": "The withdrawal requested event.",
+      "attachments": [],
+      "currentStatus": "Withdrawal Requested",
+      "action": "Withdrawal Requested",
+      "type": "Package",
+      "timestamp": 1676103563000,
+      "eventTimestamp": 1676103563000
     },
     {
-     "contentType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-     "filename": "file.docx",
-     "s3Key": "1673562407450/file.docx",
-     "title": "Amended State Plan Language",
-     "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A30413432-e223-4a6d-bfe1-7ed87236ff55/1673562407450/file.docx"
-    },
-    {
-     "contentType": "text/plain",
-     "filename": "textnotes.txt",
-     "s3Key": "1673562407451/textnotes.txt",
-     "title": "Cover Letter",
-     "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A30413432-e223-4a6d-bfe1-7ed87236ff55/1673562407451/textnotes.txt"
+      "additionalInformation": "Initial submission event for the package to test the withdrawal requested status",
+      "attachments": [
+        {
+          "s3Key": "1673562407449/picture.jpg",
+          "filename": "picture.jpg",
+          "title": "Current State Plan",
+          "contentType": "image/jpeg",
+          "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A30413432-e223-4a6d-bfe1-7ed87236ff55/1673562407449/picture.jpg"
+        },
+        {
+          "s3Key": "1673562407450/file.docx",
+          "filename": "file.docx",
+          "title": "Amended State Plan Language",
+          "contentType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+          "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A30413432-e223-4a6d-bfe1-7ed87236ff55/1673562407450/file.docx"
+        },
+        {
+          "s3Key": "1673562407451/textnotes.txt",
+          "filename": "textnotes.txt",
+          "title": "Cover Letter",
+          "contentType": "text/plain",
+          "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A30413432-e223-4a6d-bfe1-7ed87236ff55/1673562407451/textnotes.txt"
+        }
+      ],
+      "currentStatus": "Submitted",
+      "action": "Submitted",
+      "type": "Initial Package",
+      "timestamp": 1673562408356,
+      "eventTimestamp": 1673562408356
     }
-   ],
-   "currentStatus": "Submitted",
-   "eventTimestamp": 1673562408356,
-   "timestamp": 1673562408356,
-   "type": "Initial Package"
-  }
- ],
- "reviewTeam": [
-  "Lester Tester",
-  "Super Tester",
-  "Jimmy Tester"
- ],
- "reviewTeamEmailList": [
-  "\"Tester, Lester (SRT)\" <lesterT@example.gov>",
-  "\"Tester, Super (SRT)\" <SuperT@example.gov>",
-  "\"Tester, Jimmy (SRT)\" <jimmyT@example.gov>"
- ],
- "subject": null,
- "submissionTimestamp": 1676103563000,
- "submitterEmail": "mdstateonemac@gmail.com",
- "submitterName": "MDSTATE SUBMITTERNK"
+  ],
+  "description": "Sample Summary Memo",
+  "reviewTeam": [
+    "Lester Tester",
+    "Super Tester",
+    "Jimmy Tester"
+  ],
+  "submissionTimestamp": 1673562408356,
+  "reviewTeamEmailList": [
+    "\"Tester, Lester (SRT)\" <lesterT@example.gov>",
+    "\"Tester, Super (SRT)\" <SuperT@example.gov>",
+    "\"Tester, Jimmy (SRT)\" <jimmyT@example.gov>"
+  ],
+  "proposedEffectiveDate": "-- --",
+  "GSI1pk": "OneMAC#spa",
+  "adminChanges": [],
+  "GSI1sk": "MD-22-2307-VM",
+  "lastEventTimestamp": 1676103563000,
+  "sk": "Package",
+  "approvedEffectiveDate": "-- --",
+  "pk": "MD-22-2307-VM",
+  "submitterName": "MDSTATE SUBMITTERNK",
+  "cpocName": "Chester Tester",
+  "submitterEmail": "mdstateonemac@gmail.com"
 },
   {
     "PRIORITY_COMPLEXITY": null,
@@ -7618,25 +7587,42 @@
     "pk": "MD-23-4441-VM"
   },
   {
+    "finalDispositionDate": "-- --",
     "componentType": "chipspa",
-    "currentStatus": "RAI Issued",
-    "waiverExtensions": [],
-    "attachments": [],
-    "proposedEffectiveDate": "2023-04-03",
-    "GSI1sk": "MD-23-4441-VM",
-    "submissionTimestamp": 1675926000000,
-    "GSI1pk": "OneMAC#spa",
-    "submitterEmail": "-- --",
-    "sk": "Package",
-    "cpocName": "Chester Tester",
-    "reviewTeam": ["Lester Tester", "Super Tester", "Jimmy Tester"],
     "componentId": "MD-23-4441-VM",
-    "raiResponses": [],
+    "currentStatus": "RAI Issued",
+    "subject": "OneMac Connection test",
+    "cpocEmail": "\"Tester, Chester (CPOC)\" <chesterT@example.gov>",
+    "reverseChrono": [],
+    "description": "NOSO list rai with response",
+    "reviewTeam": [
+      "Lester Tester",
+      "Super Tester",
+      "Jimmy Tester"
+    ],
+    "submissionTimestamp": 1675926000000,
+    "reviewTeamEmailList": [
+      "\"Tester, Lester (SRT)\" <lesterT@example.gov>",
+      "\"Tester, Super (SRT)\" <SuperT@example.gov>",
+      "\"Tester, Jimmy (SRT)\" <jimmyT@example.gov>"
+    ],
+    "proposedEffectiveDate": "2023-04-19",
+    "GSI1pk": "OneMAC#spa",
+    "adminChanges": [
+      {
+        "changeReason": "This is a Not Originally Submitted in OneMAC (NOSO) package that users need to see in OneMAC.",
+        "changeTimestamp": 1684154035362,
+        "changeMade": "OneMAC submission created from SEA Tool entry"
+      }
+    ],
+    "GSI1sk": "MD-23-4441-VM",
     "lastEventTimestamp": 1676477951800,
+    "sk": "Package",
+    "approvedEffectiveDate": "-- --",
     "pk": "MD-23-4441-VM",
-    "subject": "test subject",
-    "description": "test description",
-    "submitterName": "-- --"
+    "submitterName": "-- --",
+    "cpocName": "Chester Tester",
+    "submitterEmail": "-- --"
   },
   {
     "PRIORITY_COMPLEXITY": null,
@@ -8383,6 +8369,26 @@
     },
     "pk": "MD-23-4441-VM",
     "RO_ANALYST": null
+  },
+  {
+    "ID_Number": "MD-23-4441-VM",
+    "replica_id": 2528,
+    "sk": "SEATool#RAI#2519",
+    "RAI_Received_Date": 1676246400000,
+    "replica_timestamp": 1676471000990,
+    "pk": "MD-23-4441-VM",
+    "RAI_Requested_Date": 1675987200000,
+    "RAI_Withdrawn_Date": null
+  },
+  {
+    "ID_Number": "MD-23-4441-VM",
+    "replica_id": 2529,
+    "sk": "SEATool#RAI#2520",
+    "RAI_Received_Date": null,
+    "replica_timestamp": 1676477951817,
+    "pk": "MD-23-4441-VM",
+    "RAI_Requested_Date": 1675987200000,
+    "RAI_Withdrawn_Date": null
   },
   {
     "componentType": "medicaidspa",
@@ -9851,15 +9857,15 @@
       }
     ],
     "proposedEffectiveDate": "-- --",
-    "GSI1sk": "MD-22-2213-VM",
+    "GSI1sk": "MD-22-2203-VM",
     "additionalInformation": "test",
     "submissionTimestamp": 1672290978919,
     "GSI1pk": "OneMAC#submitmedicaidspa",
     "convertTimestamp": 1674854067000,
     "submitterEmail": "mdstateonemac@gmail.com",
     "sk": "OneMAC#1672290978919",
-    "componentId": "MD-22-2213-VM",
-    "pk": "MD-22-2213-VM",
+    "componentId": "MD-22-2203-VM",
+    "pk": "MD-22-2203-VM",
     "submitterName": "MDSTATE SUBMITTERNK"
   },
 {
@@ -9972,7 +9978,7 @@
       "REGION_ID": "3",
       "BACKUP_PROGRAM_ANALYST_ID": null,
       "DATE_SENT_PSCCAS": null,
-      "ID_NUMBER": "MD-22-2213-VM",
+      "ID_NUMBER": "MD-22-2203-VM",
       "APPROVAL_STATUS_TYPE": null,
       "COMPANION_LETTER_REQUESTED_DATE": null,
       "TITLE_NAME": "Sample Title Name",
@@ -10010,7 +10016,7 @@
     },
     "STATE_PLAN_SERVICETYPES": null,
     "REVIEW_POSITION": null,
-    "GSI1sk": "MD-22-2213-VM",
+    "GSI1sk": "MD-22-2203-VM",
     "FM_ANALYST": null,
     "LEAD_ANALYST": [
   {
@@ -10121,21 +10127,21 @@
       "EARLYALERT": [
         {
           "YES_NO_VAL": null,
-          "ID_NUMBER": "MD-22-2213-VM",
+          "ID_NUMBER": "MD-22-2203-VM",
           "EA_FIELD_ID": 25,
           "EMAIL_SENT": null,
           "TEXT_DD_VAL": null
         },
         {
           "YES_NO_VAL": null,
-          "ID_NUMBER": "MD-22-2213-VM",
+          "ID_NUMBER": "MD-22-2203-VM",
           "EA_FIELD_ID": 26,
           "EMAIL_SENT": null,
           "TEXT_DD_VAL": null
         }
       ]
     },
-    "pk": "MD-22-2213-VM",
+    "pk": "MD-22-2203-VM",
     "RO_ANALYST": null
   },
   {
@@ -10195,7 +10201,7 @@
       "REGION_ID": "3",
       "BACKUP_PROGRAM_ANALYST_ID": null,
       "DATE_SENT_PSCCAS": null,
-      "ID_NUMBER": "MD-22-2213-VM",
+      "ID_NUMBER": "MD-22-2203-VM",
       "APPROVAL_STATUS_TYPE": null,
       "COMPANION_LETTER_REQUESTED_DATE": null,
       "TITLE_NAME": "OneMac Connection test",
@@ -10233,12 +10239,12 @@
     },
     "STATE_PLAN_SERVICETYPES": [
       {
-        "ID_NUMBER": "MD-22-2213-VM",
+        "ID_NUMBER": "MD-22-2203-VM",
         "SERVICE_TYPE_ID": 98
       }
     ],
     "REVIEW_POSITION": null,
-    "GSI1sk": "MD-22-2213-VM",
+    "GSI1sk": "MD-22-2203-VM",
     "FM_ANALYST": null,
     "LEAD_ANALYST": [
   {
@@ -10277,7 +10283,7 @@
     "STATE_PLAN_SERVICE_SUBTYPES": [
       {
         "SERVICE_SUBTYPE_ID": 950,
-        "ID_NUMBER": "MD-22-2213-VM"
+        "ID_NUMBER": "MD-22-2203-VM"
       }
     ],
     "RAI": null,
@@ -10317,7 +10323,7 @@
     "SP_IMPACT_FUNDING": [
       {
         "OTHER": null,
-        "ID_NUMBER": "MD-22-2213-VM",
+        "ID_NUMBER": "MD-22-2203-VM",
         "IMPACT_YEAR_2_VALUE": null,
         "IMPACT_YEAR_3": null,
         "PROVIDER_TAX": null,
@@ -10380,21 +10386,21 @@
       "EARLYALERT": [
         {
           "YES_NO_VAL": true,
-          "ID_NUMBER": "MD-22-2213-VM",
+          "ID_NUMBER": "MD-22-2203-VM",
           "EA_FIELD_ID": 25,
           "EMAIL_SENT": null,
           "TEXT_DD_VAL": null
         },
         {
           "YES_NO_VAL": false,
-          "ID_NUMBER": "MD-22-2213-VM",
+          "ID_NUMBER": "MD-22-2203-VM",
           "EA_FIELD_ID": 26,
           "EMAIL_SENT": null,
           "TEXT_DD_VAL": null
         }
       ]
     },
-    "pk": "MD-22-2213-VM",
+    "pk": "MD-22-2203-VM",
     "RO_ANALYST": null
   },
   {
@@ -10991,50 +10997,44 @@
     "componentId": "MD-23-3331-VM",
     "pk": "MD-23-3331-VM"
   },
-{
- "pk": "MD-23-3331-VM",
- "sk": "Package",
- "adminChanges": [
   {
-   "changeMade": "OneMAC submission created from SEA Tool entry",
-   "changeReason": "This is a Not Originally Submitted in OneMAC (NOSO) package that users need to see in OneMAC.",
-   "changeTimestamp": 1684154035362
+    "finalDispositionDate": "-- --",
+    "componentType": "medicaidspa",
+    "componentId": "MD-23-3331-VM",
+    "currentStatus": "RAI Issued",
+    "subject": "OneMac Connection test ",
+    "cpocEmail": "\"Tester, Chester (CPOC)\" <chesterT@example.gov>",
+    "reverseChrono": [],
+    "description": "NOSO list rai with response build",
+    "reviewTeam": [
+      "Lester Tester",
+      "Super Tester",
+      "Jimmy Tester"
+    ],
+    "submissionTimestamp": 1674235779000,
+    "reviewTeamEmailList": [
+      "\"Tester, Lester (SRT)\" <lesterT@example.gov>",
+      "\"Tester, Super (SRT)\" <SuperT@example.gov>",
+      "\"Tester, Jimmy (SRT)\" <jimmyT@example.gov>"
+    ],
+    "proposedEffectiveDate": "2023-04-19",
+    "GSI1pk": "OneMAC#spa",
+    "adminChanges": [
+      {
+        "changeReason": "This is a Not Originally Submitted in OneMAC (NOSO) package that users need to see in OneMAC.",
+        "changeTimestamp": 1674235779000,
+        "changeMade": "OneMAC submission created from SEA Tool entry"
+      }
+    ],
+    "GSI1sk": "MD-23-3331-VM",
+    "lastEventTimestamp": 1676103563000,
+    "sk": "Package",
+    "approvedEffectiveDate": "-- --",
+    "pk": "MD-23-3331-VM",
+    "submitterName": "-- --",
+    "cpocName": "Chester Tester",
+    "submitterEmail": "-- --"
   },
-  {
-   "changeMade": "OneMAC submission created from SEA Tool entry",
-   "changeReason": "This is a Not Originally Submitted in OneMAC (NOSO) package that users need to see in OneMAC.",
-   "changeTimestamp": 1674235779000
-  }
- ],
- "approvedEffectiveDate": "-- --",
- "componentId": "MD-23-3331-VM",
- "componentType": "medicaidspa",
- "cpocEmail": "\"Tester, Chester (CPOC)\" <chesterT@example.gov>",
- "cpocName": "Chester Tester",
- "currentStatus": "RAI Issued",
- "description": "NOSO list rai with response - seed marker",
- "finalDispositionDate": "-- --",
- "GSI1pk": "OneMAC#spa",
- "GSI1sk": "MD-23-3331-VM",
- "lastEventTimestamp": 1676103563000,
- "proposedEffectiveDate": "2023-04-20",
- "reverseChrono": [
- ],
- "reviewTeam": [
-  "Lester Tester",
-  "Super Tester",
-  "Jimmy Tester"
- ],
- "reviewTeamEmailList": [
-  "\"Tester, Lester (SRT)\" <lesterT@example.gov>",
-  "\"Tester, Super (SRT)\" <SuperT@example.gov>",
-  "\"Tester, Jimmy (SRT)\" <jimmyT@example.gov>"
- ],
- "subject": "OneMac Connection test",
- "submissionTimestamp": 1675926000000,
- "submitterEmail": "-- --",
- "submitterName": "-- --"
-},
 {
  "pk": "MD-23-3331-VM",
  "sk": "SEATool#1676103563000",
@@ -12154,54 +12154,82 @@
   },
   {
     "componentType": "medicaidspa",
-    "eventTimestamp": 1674139679117,
-    "currentStatus": "Withdrawal Requested",
-    "GSI1sk": "MD-22-2207-VM",
-    "GSI1pk": "OneMAC#withdrawmedicaidspa",
     "lastModifiedEmail": "statesubmitter@nightwatch.test",
-    "changedByName": "Statesubmitter Nightwatch",
-    "changedByEmail": "statesubmitter@nightwatch.test",
-    "sk": "OneMAC#1674139679117",
     "componentId": "MD-22-2207-VM",
+    "currentStatus": "Withdrawal Requested",
+    "lastModifiedName": "Statesubmitter Nightwatch",
+    "submissionTimestamp": 1674139679117,
+    "GSI1pk": "OneMAC#submitmedicaidspawithdraw",
+    "GSI1sk": "MD-22-2207-VM",
+    "sk": "OneMAC#1674139679117",
+    "changedByEmail": "statesubmitter@nightwatch.test",
     "pk": "MD-22-2207-VM",
-    "lastModifiedName": "Statesubmitter Nightwatch"
+    "eventTimestamp": 1674139679117,
+    "changedByName": "Statesubmitter Nightwatch"
   },
   {
-    "clockEndTimestamp": 1681911308182,
     "componentType": "medicaidspa",
+    "componentId": "MD-22-2207-VM",
     "currentStatus": "Withdrawal Requested",
-    "waiverExtensions": [],
-    "attachments": [
+    "subject": "OneMac Connection test",
+    "cpocEmail": "\"Tester, Chester (CPOC)\" <chesterT@example.gov>",
+    "reverseChrono": [
       {
-        "s3Key": "1674138907094/textnotes.txt",
-        "filename": "textnotes.txt",
-        "title": "CMS Form 179",
-        "contentType": "text/plain",
-        "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A35b18373-d59d-4d36-8d7f-2ca368f6a6c1/1674138907094/textnotes.txt"
+        "action": "Withdrawal Requested",
+        "attachments": [],
+        "type": "Package",
+        "currentStatus": "Withdrawal Requested",
+        "timestamp": 1674139679117,
+        "eventTimestamp": 1674139679117
       },
       {
-        "s3Key": "1674138907096/picture.jpg",
-        "filename": "picture.jpg",
-        "title": "SPA Pages",
-        "contentType": "image/jpeg",
-        "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A35b18373-d59d-4d36-8d7f-2ca368f6a6c1/1674138907096/picture.jpg"
+        "additionalInformation": "",
+        "attachments": [
+          {
+            "s3Key": "1674138907094/textnotes.txt",
+            "filename": "textnotes.txt",
+            "title": "CMS Form 179",
+            "contentType": "text/plain",
+            "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A35b18373-d59d-4d36-8d7f-2ca368f6a6c1/1674138907094/textnotes.txt"
+          },
+          {
+            "s3Key": "1674138907096/picture.jpg",
+            "filename": "picture.jpg",
+            "title": "SPA Pages",
+            "contentType": "image/jpeg",
+            "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A35b18373-d59d-4d36-8d7f-2ca368f6a6c1/1674138907096/picture.jpg"
+          }
+        ],
+        "currentStatus": "Submitted",
+        "action": "Submitted",
+        "type": "Initial Package",
+        "timestamp": 1674138908182,
+        "eventTimestamp": 1674138908182
       }
     ],
-    "proposedEffectiveDate": "-- --",
-    "GSI1sk": "MD-22-2207-VM",
+    "description": "withdrawal requested (pending status)",
+    "reviewTeam": [
+      "Lester Tester",
+      "Super Tester",
+      "Jimmy Tester"
+    ],
     "submissionTimestamp": 1674138908182,
+    "reviewTeamEmailList": [
+      "\"Tester, Lester (SRT)\" <lesterT@example.gov>",
+      "\"Tester, Super (SRT)\" <SuperT@example.gov>",
+      "\"Tester, Jimmy (SRT)\" <jimmyT@example.gov>"
+    ],
+    "proposedEffectiveDate": "-- --",
     "GSI1pk": "OneMAC#spa",
-    "submitterEmail": "statesubmitter@nightwatch.test",
-    "sk": "Package",
-    "cpocName": "Chester Tester",
-    "reviewTeam": ["Lester Tester", "Super Tester", "Jimmy Tester"],
-    "componentId": "MD-22-2207-VM",
-    "raiResponses": [],
+    "adminChanges": [],
+    "GSI1sk": "MD-22-2207-VM",
     "lastEventTimestamp": 1674139679117,
+    "sk": "Package",
+    "approvedEffectiveDate": "-- --",
     "pk": "MD-22-2207-VM",
-    "subject": "test subject",
-    "description": "test description",
-    "submitterName": "Statesubmitter Nightwatch"
+    "submitterName": "Statesubmitter Nightwatch",
+    "cpocName": "Chester Tester",
+    "submitterEmail": "statesubmitter@nightwatch.test"
   },
   {
     "PRIORITY_COMPLEXITY": null,
@@ -12717,58 +12745,72 @@
     "submitterName": "MDSTATE SUBMITTERNK",
     "title": "New Title for App K "
   },
-{
- "pk": "MD-12958.R00.02",
- "sk": "Package",
- "additionalInformation": "created new APP k ",
- "attachments": [
   {
-   "contentType": "text/csv",
-   "filename": "Report_UserList(1).csv",
-   "s3Key": "1674158150631/Report_UserList(1).csv",
-   "title": "1915(c) Appendix K Amendment Waiver Template",
-   "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A30413432-e223-4a6d-bfe1-7ed87236ff55/1674158150631/Report_UserList%281%29.csv"
+    "finalDispositionDate": "-- --",
+    "componentType": "waiverappk",
+    "componentId": "MD-12958.R00.02",
+    "waiverAuthority": "1915(c)",
+    "currentStatus": "Under Review",
+    "subject": "test",
+    "cpocEmail": "\"Tester, Chester (CPOC)\" <chesterT@example.gov>",
+    "reverseChrono": [
+      {
+        "additionalInformation": "created new APP k ",
+        "attachments": [
+          {
+            "s3Key": "1674158150631/Report_UserList(1).csv",
+            "filename": "Report_UserList(1).csv",
+            "title": "1915(c) Appendix K Amendment Waiver Template",
+            "contentType": "text/csv",
+            "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A30413432-e223-4a6d-bfe1-7ed87236ff55/1674158150631/Report_UserList%281%29.csv"
+          },
+          {
+            "s3Key": "1674158150632/Report_spaList(5).csv",
+            "filename": "Report_spaList(5).csv",
+            "title": "1915(c) Appendix K Amendment Waiver Template",
+            "contentType": "text/csv",
+            "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A30413432-e223-4a6d-bfe1-7ed87236ff55/1674158150632/Report_spaList%285%29.csv"
+          },
+          {
+            "s3Key": "1674158150632/Report_waiverList(8).csv",
+            "filename": "Report_waiverList(8).csv",
+            "title": "Other",
+            "contentType": "text/csv",
+            "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A30413432-e223-4a6d-bfe1-7ed87236ff55/1674158150632/Report_waiverList%288%29.csv"
+          }
+        ],
+        "currentStatus": "Submitted",
+        "action": "Submitted",
+        "type": "Initial Package",
+        "timestamp": 1674158175838,
+        "eventTimestamp": 1674158175838
+      }
+    ],
+    "description": "test",
+    "title": "New Title for App K ",
+    "reviewTeam": [
+      "Lester Tester",
+      "Super Tester",
+      "Jimmy Tester"
+    ],
+    "submissionTimestamp": 1674158175838,
+    "reviewTeamEmailList": [
+      "\"Tester, Lester (SRT)\" <lesterT@example.gov>",
+      "\"Tester, Super (SRT)\" <SuperT@example.gov>",
+      "\"Tester, Jimmy (SRT)\" <jimmyT@example.gov>"
+    ],
+    "proposedEffectiveDate": "2023-01-19",
+    "GSI1pk": "OneMAC#waiver",
+    "adminChanges": [],
+    "GSI1sk": "MD-12958.R00.02",
+    "lastEventTimestamp": 1674158680503,
+    "sk": "Package",
+    "approvedEffectiveDate": "-- --",
+    "pk": "MD-12958.R00.02",
+    "submitterName": "MDSTATE SUBMITTERNK",
+    "cpocName": "Chester Tester",
+    "submitterEmail": "mdstateonemac@gmail.com"
   },
-  {
-   "contentType": "text/csv",
-   "filename": "Report_spaList(5).csv",
-   "s3Key": "1674158150632/Report_spaList(5).csv",
-   "title": "1915(c) Appendix K Amendment Waiver Template",
-   "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A30413432-e223-4a6d-bfe1-7ed87236ff55/1674158150632/Report_spaList%285%29.csv"
-  },
-  {
-   "contentType": "text/csv",
-   "filename": "Report_waiverList(8).csv",
-   "s3Key": "1674158150632/Report_waiverList(8).csv",
-   "title": "Other",
-   "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A30413432-e223-4a6d-bfe1-7ed87236ff55/1674158150632/Report_waiverList%288%29.csv"
-  }
- ],
- "clockEndTimestamp": 1681930575838,
- "componentId": "MD-12958.R00.02",
- "componentType": "waiverappk",
- "cpocName": "Chester Tester",
- "currentStatus": "Under Review",
- "description": "test description",
- "GSI1pk": "OneMAC#waiver",
- "GSI1sk": "MD-12958.R00.02",
- "lastEventTimestamp": 1674158680503,
- "proposedEffectiveDate": "2023-01-20",
- "raiResponses": [
- ],
- "reviewTeam": [
-  "Lester Tester",
-  "Super Tester",
-  "Jimmy Tester"
- ],
- "subject": "test subject",
- "submissionTimestamp": 1674158175838,
- "submitterEmail": "mdstateonemac@gmail.com",
- "submitterName": "MDSTATE SUBMITTERNK",
- "waiverAuthority": "1915(c)",
- "waiverExtensions": [
- ]
-},
   {
     "PRIORITY_COMPLEXITY": null,
     "STATES": [
@@ -14711,36 +14753,17 @@
     "submitterName": "TestAdmin TestFamily"
   },
   {
-    "clockEndTimestamp": 1680042265465,
+    "finalDispositionDate": "2023-01-18",
     "componentType": "waivernew",
-    "currentStatus": "Package Withdrawn",
-    "waiverExtensions": [],
-    "attachments": [
-      {
-        "s3Key": "1672269864615/file.docx",
-        "filename": "file.docx",
-        "title": "1915(b)(4) FFS Selective Contracting (Streamlined) waiver application pre-print (Initial, Renewal, Amendment)",
-        "contentType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-        "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A30413432-e223-4a6d-bfe1-7ed87236ff55/1672269864615/file.docx"
-      }
-    ],
-    "proposedEffectiveDate": "2022-12-28",
-    "GSI1sk": "MD-22003.R00.00",
-    "additionalInformation": "test",
-    "submissionTimestamp": 1672269865465,
-    "waiverAuthority": "1915(b)",
-    "GSI1pk": "OneMAC#waiver",
-    "submitterEmail": "mdstateonemac@gmail.com",
-    "sk": "Package",
-    "cpocName": "Chester Tester",
-    "reviewTeam": ["Lester Tester", "Super Tester", "Jimmy Tester"],
-    "subject": "test subject",
-    "description": "test description",
     "componentId": "MD-22003.R00.00",
-    "raiResponses": [
+    "waiverAuthority": "1915(b)",
+    "currentStatus": "Package Withdrawn",
+    "subject": "test ",
+    "latestRaiResponseTimestamp": 1673024976385,
+    "cpocEmail": "\"Tester, Chester (CPOC)\" <chesterT@example.gov>",
+    "reverseChrono": [
       {
         "additionalInformation": "3rd one ",
-        "submissionTimestamp": 1673024976385,
         "attachments": [
           {
             "s3Key": "1673024970449/Report_waiverList(5).csv",
@@ -14749,11 +14772,15 @@
             "contentType": "text/csv",
             "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3Ac052f1db-9f55-42aa-9d43-2d957bfc754b/1673024970449/Report_waiverList%285%29.csv"
           }
-        ]
+        ],
+        "currentStatus": "Submitted",
+        "action": "Submitted",
+        "type": "Formal RAI Response",
+        "timestamp": 1673024976385,
+        "eventTimestamp": 1673024976385
       },
       {
         "additionalInformation": "2nd RAI on 6th jan  2023",
-        "submissionTimestamp": 1673024518375,
         "attachments": [
           {
             "s3Key": "1673024512050/Report_waiverList(5).csv",
@@ -14762,11 +14789,15 @@
             "contentType": "text/csv",
             "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3Ac052f1db-9f55-42aa-9d43-2d957bfc754b/1673024512050/Report_waiverList%285%29.csv"
           }
-        ]
+        ],
+        "currentStatus": "Submitted",
+        "action": "Submitted",
+        "type": "Formal RAI Response",
+        "timestamp": 1673024518375,
+        "eventTimestamp": 1673024518375
       },
       {
         "additionalInformation": "Jan 5 did the rai response for this waiver to verify the migration process.",
-        "submissionTimestamp": 1672953510479,
         "attachments": [
           {
             "s3Key": "1672953505887/PackagelistView_ExcelExport_Issues.xlsx",
@@ -14775,12 +14806,48 @@
             "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
             "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3Ac052f1db-9f55-42aa-9d43-2d957bfc754b/1672953505887/PackagelistView_ExcelExport_Issues.xlsx"
           }
-        ]
+        ],
+        "currentStatus": "Submitted",
+        "action": "Submitted",
+        "type": "Formal RAI Response",
+        "timestamp": 1672953510479,
+        "eventTimestamp": 1672953510479
+      },
+      {
+        "additionalInformation": "test",
+        "attachments": [
+          {
+            "s3Key": "1672269864615/file.docx",
+            "filename": "file.docx",
+            "title": "1915(b)(4) FFS Selective Contracting (Streamlined) waiver application pre-print (Initial, Renewal, Amendment)",
+            "contentType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+            "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A30413432-e223-4a6d-bfe1-7ed87236ff55/1672269864615/file.docx"
+          }
+        ],
+        "currentStatus": "Submitted",
+        "action": "Submitted",
+        "type": "Initial Package",
+        "timestamp": 1672269865465,
+        "eventTimestamp": 1672269865465
       }
     ],
+    "description": "test",
+    "reviewTeam": [
+      "Candice aaa"
+    ],
+    "submissionTimestamp": 1672269865465,
+    "reviewTeamEmailList": [],
+    "proposedEffectiveDate": "2022-12-27",
+    "GSI1pk": "OneMAC#waiver",
+    "adminChanges": [],
+    "GSI1sk": "MD-22003.R00.00",
     "lastEventTimestamp": 1674139861333,
+    "sk": "Package",
+    "approvedEffectiveDate": "-- --",
     "pk": "MD-22003.R00.00",
-    "submitterName": "MDSTATE SUBMITTERNK"
+    "submitterName": "MDSTATE SUBMITTERNK",
+    "cpocName": "Chester Tester",
+    "submitterEmail": "mdstateonemac@gmail.com"
   },
   {
     "PRIORITY_COMPLEXITY": null,
@@ -20227,36 +20294,55 @@
     "submitterName": "MDSTATE SUBMITTERNK"
   },
   {
-    "clockEndTimestamp": 1680108898763,
+    "finalDispositionDate": "-- --",
     "componentType": "waiverrenewal",
+    "componentId": "MD-22001.R01.00",
+    "waiverAuthority": "1915(b)",
     "currentStatus": "Under Review",
-    "waiverExtensions": [],
-    "attachments": [
+    "subject": "Sample Title Name",
+    "cpocEmail": "\"Tester, Chester (CPOC)\" <chesterT@example.gov>",
+    "reverseChrono": [
       {
-        "s3Key": "1672336497128/picture.jpg",
-        "filename": "picture.jpg",
-        "title": "1915(b)(4) FFS Selective Contracting (Streamlined) waiver application pre-print (Initial, Renewal, Amendment)",
-        "contentType": "image/jpeg",
-        "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A30413432-e223-4a6d-bfe1-7ed87236ff55/1672336497128/picture.jpg"
+        "additionalInformation": "test",
+        "attachments": [
+          {
+            "s3Key": "1672336497128/picture.jpg",
+            "filename": "picture.jpg",
+            "title": "1915(b)(4) FFS Selective Contracting (Streamlined) waiver application pre-print (Initial, Renewal, Amendment)",
+            "contentType": "image/jpeg",
+            "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A30413432-e223-4a6d-bfe1-7ed87236ff55/1672336497128/picture.jpg"
+          }
+        ],
+        "currentStatus": "Submitted",
+        "action": "Submitted",
+        "type": "Initial Package",
+        "timestamp": 1672336498763,
+        "eventTimestamp": 1672336498763
       }
     ],
-    "proposedEffectiveDate": "-- --",
-    "GSI1sk": "MD-22001.R01.00",
-    "additionalInformation": "test",
+    "description": "Sample Summary Memo ",
+    "reviewTeam": [
+      "Lester Tester",
+      "Super Tester",
+      "Jimmy Tester"
+    ],
     "submissionTimestamp": 1672336498763,
-    "waiverAuthority": "1915(b)",
+    "reviewTeamEmailList": [
+      "\"Tester, Lester (SRT)\" <lesterT@example.gov>",
+      "\"Tester, Super (SRT)\" <SuperT@example.gov>",
+      "\"Tester, Jimmy (SRT)\" <jimmyT@example.gov>"
+    ],
+    "proposedEffectiveDate": "-- --",
     "GSI1pk": "OneMAC#waiver",
-    "submitterEmail": "mdstateonemac@gmail.com",
-    "sk": "Package",
-    "cpocName": "Chester Tester",
-    "reviewTeam": ["Lester Tester", "Super Tester", "Jimmy Tester"],
-    "subject": "test subject",
-    "description": "test description",
-    "componentId": "MD-22001.R01.00",
-    "raiResponses": [],
+    "adminChanges": [],
+    "GSI1sk": "MD-22001.R01.00",
     "lastEventTimestamp": 1673565420973,
+    "sk": "Package",
+    "approvedEffectiveDate": "-- --",
     "pk": "MD-22001.R01.00",
-    "submitterName": "MDSTATE SUBMITTERNK"
+    "submitterName": "MDSTATE SUBMITTERNK",
+    "cpocName": "Chester Tester",
+    "submitterEmail": "mdstateonemac@gmail.com"
   },
   {
     "PRIORITY_COMPLEXITY": null,
@@ -25123,7 +25209,7 @@
     ],
     "proposedEffectiveDate": "-- --",
     "GSI1sk": "MD-22008.R01.00",
-    "additionalInformation": "pending-approval test for automation.",
+    "additionalInformation": "withdrawal requested status test for automation.",
     "submissionTimestamp": 1673283794312,
     "waiverAuthority": "1915(b)(4)",
     "GSI1pk": "OneMAC#submitwaiverrenewal",
@@ -25135,312 +25221,95 @@
     "submitterName": "Statesubmitter Nightwatch"
   },
   {
-    "componentType": "waiverrenewal",
-    "eventTimestamp": 1674227307357,
-    "currentStatus": "Withdrawal Requested",
+    "clockEndTimestamp": 1704890633689,
+    "componentType": "waiverrenewalwithdraw",
+    "eventTimestamp": 1673285749653,
+    "transmittalNumberWarningMessage": "",
+    "currentStatus": "Submitted",
+    "parentId": "MD-22008.R01.00",
+    "attachments": [
+      {
+        "filename": "Screenshot 2023-03-31 at 4.46.08 PM.png",
+        "s3Key": "1697111032196/Screenshot 2023-03-31 at 4.46.08 PM.png",
+        "title": "Supporting Documentation",
+        "contentType": "image/png",
+        "url": "https://uploads-pi2-25581-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Aff3489cb-dea4-43b2-a907-06fb25c2e1fb/1697111032196/Screenshot%202023-03-31%20at%204.46.08%20PM.png"
+      }
+    ],
+    "parentType": "waiverrenewal",
     "GSI1sk": "MD-22008.R01.00",
-    "GSI1pk": "OneMAC#withdrawwaiverrenewal",
-    "lastModifiedEmail": "statesubmitter@nightwatch.test",
-    "changedByName": "Statesubmitter Nightwatch",
-    "changedByEmail": "statesubmitter@nightwatch.test",
-    "sk": "OneMAC#1674227307357",
+    "additionalInformation": "State requests to withdraw this waiver renewal package",
+    "submissionTimestamp": 1673285749653,
+    "GSI1pk": "OneMAC#submitwaiverrenewalwithdraw",
+    "submitterEmail": "statesubmitter@nightwatch.test",
+    "territory": "MD",
+    "sk": "OneMAC#1673285749653",
     "componentId": "MD-22008.R01.00",
     "pk": "MD-22008.R01.00",
-    "lastModifiedName": "Statesubmitter Nightwatch"
+    "submitterName": "StateSubmitter Nightwatch"
   },
   {
+    "subject": "OneMac Connection test",
     "componentType": "waiverrenewal",
-    "eventTimestamp": 1674655457190,
     "currentStatus": "Withdrawal Requested",
+    "reviewTeamEmailList": [
+      "\"Test1, Demo1 (SRT)\" <abc@exampl.com>"
+    ],
+    "reviewTeam": [
+      "Demo1 Test1"
+    ],
+    "proposedEffectiveDate": "2023-03-28",
     "GSI1sk": "MD-22008.R01.00",
-    "GSI1pk": "OneMAC#withdrawwaiverrenewal",
-    "lastModifiedEmail": "statesubmitter@nightwatch.test",
-    "changedByName": "Statesubmitter Nightwatch",
-    "changedByEmail": "statesubmitter@nightwatch.test",
-    "sk": "OneMAC#1674655457190",
+    "reverseChrono": [
+      {
+        "additionalInformation": "State requests to withdraw this waiver renewal package",
+        "attachments": [
+          {
+            "filename": "Screenshot 2023-03-31 at 4.46.08 PM.png",
+            "s3Key": "1697111032196/Screenshot 2023-03-31 at 4.46.08 PM.png",
+            "title": "Supporting Documentation",
+            "contentType": "image/png",
+            "url": "https://uploads-pi2-25581-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Aff3489cb-dea4-43b2-a907-06fb25c2e1fb/1697111032196/Screenshot%202023-03-31%20at%204.46.08%20PM.png"
+          }
+        ],
+        "currentStatus": "Withdrawal Requested",
+        "action": "Withdrawal Requested",
+        "type": "Package",
+        "timestamp": 1673285749653,
+        "eventTimestamp": 1673285749653
+      },
+      {
+        "additionalInformation": "withdrawal requested status test for automation.",
+        "attachments": [
+          {
+            "s3Key": "1673283793325/textnotes.txt",
+            "filename": "textnotes.txt",
+            "title": "1915(b)(4) FFS Selective Contracting (Streamlined) waiver application pre-print (Initial, Renewal, Amendment)",
+            "contentType": "text/plain",
+            "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A35b18373-d59d-4d36-8d7f-2ca368f6a6c1/1673283793325/textnotes.txt"
+          }
+        ],
+        "currentStatus": "Submitted",
+        "action": "Submitted",
+        "type": "Initial Package",
+        "timestamp": 1673283794312,
+        "eventTimestamp": 1673283794312
+      }
+    ],
+    "submissionTimestamp": 1673283794312,
+    "waiverAuthority": "1915(b)(4)",
+    "GSI1pk": "OneMAC#waiver",
+    "adminChanges": [],
+    "submitterEmail": "statesubmitter@nightwatch.test",
+    "approvedEffectiveDate": "2023-03-28",
+    "cpocName": "Test1 Test2",
+    "sk": "Package",
     "componentId": "MD-22008.R01.00",
+    "cpocEmail": "\"Test2, Test1 (CPOC)\" <null>",
+    "description": "Pending from SEA Tool to attain package withdrawal requested status",
+    "lastEventTimestamp": 1673285749653,
     "pk": "MD-22008.R01.00",
-    "lastModifiedName": "Statesubmitter Nightwatch"
-  },
-{
- "pk": "MD-22008.R01.00",
- "sk": "Package",
- "adminChanges": [
- ],
- "approvedEffectiveDate": "-- --",
- "componentId": "MD-22008.R01.00",
- "componentType": "waiverrenewal",
- "cpocEmail": "\"Tester, Chester (CPOC)\" <chesterT@example.gov>",
- "cpocName": "Chester Tester",
- "currentStatus": "Withdrawal Requested",
- "description": "withdrawal requested (pending) rebuild",
- "GSI1pk": "OneMAC#waiver",
- "GSI1sk": "MD-22008.R01.00",
- "lastEventTimestamp": 1674655457190,
- "proposedEffectiveDate": "2023-03-15",
- "reverseChrono": [
-  {
-   "action": "Submitted",
-   "additionalInformation": "pending-approval test for automation.",
-   "attachments": [
-    {
-     "contentType": "text/plain",
-     "filename": "textnotes.txt",
-     "s3Key": "1673283793325/textnotes.txt",
-     "title": "1915(b)(4) FFS Selective Contracting (Streamlined) waiver application pre-print (Initial, Renewal, Amendment)",
-     "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A35b18373-d59d-4d36-8d7f-2ca368f6a6c1/1673283793325/textnotes.txt"
-    }
-   ],
-   "currentStatus": "Submitted",
-   "eventTimestamp": 1673283794312,
-   "timestamp": 1673283794312,
-   "type": "Initial Package"
-  }
- ],
- "reviewTeam": [
-  "Lester Tester",
-  "Super Tester",
-  "Jimmy Tester"
- ],
- "reviewTeamEmailList": [
-  "\"Tester, Lester (SRT)\" <lesterT@example.gov>",
-  "\"Tester, Super (SRT)\" <SuperT@example.gov>",
-  "\"Tester, Jimmy (SRT)\" <jimmyT@example.gov>"
- ],
- "subject": "OneMac Connection test",
- "submissionTimestamp": 1673283794312,
- "submitterEmail": "statesubmitter@nightwatch.test",
- "submitterName": "Statesubmitter Nightwatch",
- "waiverAuthority": "1915(b)(4)"
-},
-  {
-    "PRIORITY_COMPLEXITY": null,
-    "STATES": [
-      {
-        "REGION_ID": "3",
-        "STATE_NAME": "Maryland",
-        "PRIORITY_FLAG": false,
-        "STATE_CODE": "MD"
-      }
-    ],
-    "STATE_PLAN": {
-      "LEAD_ANALYST_ID": 3743,
-      "TEMPLATE_ISSUES": null,
-      "BLOCKING_SPAS_MEMO": null,
-      "CALL_HELD_REASON_ID": null,
-      "FRT_DATE": null,
-      "CURRENT_WAIVER_EXPIRES_DATE": null,
-      "END_DATE": null,
-      "CALL_HELD": null,
-      "TEMPLATE_ISSUES_RESOLVED": null,
-      "ALERT_MILESTONE2_DAYS": null,
-      "SUMMARY_MEMO": "Sample Summary Memo",
-      "SPW_STATUS_ID": 1,
-      "BUDGET_NEUTRALITY_ESTABLISHED_FLAG": false,
-      "FISCAL_QUARTER": null,
-      "STATUS_MEMO": null,
-      "PROPOSED_DATE": null,
-      "ALERT_MILESTONE1_DAYS": null,
-      "ALERT_90_DAYS_DATE": 1680998400000,
-      "PRIORITY_CODE_ID": null,
-      "BUDGET_IMPACT": null,
-      "RO_ANALYST_ID": null,
-      "GAP3": null,
-      "UUID": null,
-      "GAP2": null,
-      "ATTACHED_SPA": null,
-      "BUDGET_NEUTRALITY_STATUS_MEMO": null,
-      "START_CLOCK_DATE": 1673222400000,
-      "BACKUP_FM_ANALYST_ID": null,
-      "SUBMISSION_DATE": 1673222400000,
-      "STATUS_DATE": 1674172800000,
-      "COMPANION_LETTER_RECEIVED_DATE": null,
-      "GAP3_NA": null,
-      "REMARKS_MEMO": null,
-      "TYPE_ID": null,
-      "TE_END_DATE": null,
-      "GAP": null,
-      "DAYS_EXTENSION_NUMBER": null,
-      "OCD_REVIEW_ID": 2,
-      "ACTUAL_EFFECTIVE_DATE": null,
-      "FISCAL_YEAR": null,
-      "PLAN_TYPE": 122,
-      "GAP_NA": null,
-      "SUBMISSION_TYPE": null,
-      "REGION_ID": "3",
-      "BACKUP_PROGRAM_ANALYST_ID": null,
-      "DATE_SENT_PSCCAS": null,
-      "ID_NUMBER": "MD-22008.R01.00",
-      "APPROVAL_STATUS_TYPE": null,
-      "COMPANION_LETTER_REQUESTED_DATE": null,
-      "TITLE_NAME": "Sample Title Name",
-      "ALERT_MILESTONE4_DAYS": null,
-      "CO_SUBMISSION_DATE": null,
-      "CHANGED_DATE": 1674224708607,
-      "UPL_ACCEPTED": null,
-      "GAP2_NA": null,
-      "OCD_REVIEW_COMMENTS_MEMO": null,
-      "MMDL_IMPORT": null,
-      "TEMPLATE_ISSUES_MEMO": null,
-      "GUIDANCE_DOCS_SUBMITTED": null,
-      "APPROVED_EFFECTIVE_DATE": null,
-      "INITIAL_SUBMISSION_COMPLETE": null,
-      "ADDED_COST": null,
-      "MISSING_INFORMATION": null,
-      "PRIORITY_COMPLEXITY_ID": null,
-      "ACTION_TYPE": 76,
-      "PENDING_CONCURRENCE_DATE": null,
-      "PUBLICHEALTH_STATEEMERGENCY": null,
-      "COMPONENT_ID": null,
-      "BUDGET_IMPACT_VALUE": null,
-      "ALERT_MILESTONE3_DAYS": null,
-      "CODE_AFTER_INIT_ASSESS_ID": null,
-      "STATE_CODE": "MD",
-      "DATE_OF_CODING_CHANGE": null,
-      "APPROVAL_DOCS_RECEIVED": null,
-      "PRIORITY_COMMENTS_MEMO": null,
-      "ORGANIZATION_CHANGE": null,
-      "SPW_IMPORT": false,
-      "REVIEW_POSITION_ID": null,
-      "SPA_TYPE_ID": null,
-      "ELIMINATED_COST": null,
-      "CURRENT_WAIVER_TE": null
-    },
-    "STATE_PLAN_SERVICETYPES": null,
-    "REVIEW_POSITION": null,
-    "GSI1sk": "MD-22008.R01.00",
-    "FM_ANALYST": null,
-    "LEAD_ANALYST": [
-  {
-   "EMAIL": "chesterT@example.gov",
-   "FIRST_NAME": "Chester",
-   "INITIALS": null,
-   "LAST_NAME": "Tester",
-   "OFFICER_ID": 3743,
-   "POSITION_ID": 538,
-   "TELEPHONE": "(410) 555-5445"
-  }
- ],
-    "SP_APD": null,
-    "OCD_REVIEW": [
-      {
-        "OCD_REVIEW_DESCRIPTION": "No",
-        "OCD_REVIEW_ID": 2
-      }
-    ],
-    "PROGRAM_ANALYST": null,
-    "CALLHELDREASONS": null,
-    "SPA_TYPE": null,
-    "SPW_STATUS": [
-      {
-        "SPW_STATUS_ID": 1,
-        "SPW_STATUS_DESC": "Pending"
-      }
-    ],
-    "ACTIONTYPES": [
-      {
-       "ACTION_ID": 76,
-       "ACTION_NAME": "Renew",
-       "PLAN_TYPE_ID": 122
-      }
-     ],
-    "SP_TYPE": null,
-    "SP_APD_SUB_TYPE": null,
-    "STATE_PLAN_SERVICE_SUBTYPES": null,
-    "RAI": null,
-    "sk": "SEATool#1674224708607",
-    "ACTION_OFFICERS": [
-  {
-   "EMAIL": "lesterT@example.gov",
-   "FIRST_NAME": "Lester",
-   "INITIALS": null,
-   "LAST_NAME": "Tester",
-   "OFFICER_ID": 3740,
-   "POSITION_ID": 538,
-   "TELEPHONE": "(410) 555-5445"
-  },{
-   "EMAIL": "SuperT@example.gov",
-   "FIRST_NAME": "Super",
-   "INITIALS": null,
-   "LAST_NAME": "Tester",
-   "OFFICER_ID": 3741,
-   "POSITION_ID": 538,
-   "TELEPHONE": "(410) 555-5445"
-  },{
-   "EMAIL": "jimmyT@example.gov",
-   "FIRST_NAME": "Jimmy",
-   "INITIALS": null,
-   "LAST_NAME": "Tester",
-   "OFFICER_ID": 3742,
-   "POSITION_ID": 538,
-   "TELEPHONE": "(410) 555-5445"
-  }
- ],
-    "SP1115": null,
-    "COMPONENTS_SP": null,
-    "PLAN_TYPES": [
-      {
-        "PLAN_TYPE_ID": 122,
-        "PLAN_TYPE_NAME": "1915(b)"
-      }
-    ],
-    "PRIORITY_CODES": null,
-    "SP_IMPACT_FUNDING": null,
-    "GSI1pk": "SEATool#1915b_waivers",
-    "CODEAFTERINITACCESS": null,
-    "STOP_RESUME_DATES": null,
-    "COMPONENTS": null,
-    "REGION": [
-      {
-        "REGION_ID": "3",
-        "REGION_NAME": "Philadelphia",
-        "ALERTS_INBOX_ADDRESS": "SPA_Waivers_Philadelphia_R03@cms.hhs.gov"
-      }
-    ],
-    "SP_EARLY_ALERTS": {
-      "ALERTFIELD": [
-        {
-          "EA_LABEL": "Meets expedited criteria",
-          "EA_TYPE_ID": 1,
-          "EA_DROP_DOWN_VALUES": null,
-          "ACTIVE": true,
-          "EA_FIELD_ID": 25,
-          "PRIORITY_VALUE": "true",
-          "PRIORITY_OPERATOR": null,
-          "PRIORITY_CODE_ID": 3,
-          "IS_APD": null
-        },
-        {
-          "EA_LABEL": "Customary action",
-          "EA_TYPE_ID": 1,
-          "EA_DROP_DOWN_VALUES": null,
-          "ACTIVE": true,
-          "EA_FIELD_ID": 26,
-          "PRIORITY_VALUE": "true",
-          "PRIORITY_OPERATOR": null,
-          "PRIORITY_CODE_ID": 2,
-          "IS_APD": null
-        }
-      ],
-      "EARLYALERT": [
-        {
-          "YES_NO_VAL": null,
-          "ID_NUMBER": "MD-22008.R01.00",
-          "EA_FIELD_ID": 25,
-          "EMAIL_SENT": null,
-          "TEXT_DD_VAL": null
-        },
-        {
-          "YES_NO_VAL": null,
-          "ID_NUMBER": "MD-22008.R01.00",
-          "EA_FIELD_ID": 26,
-          "EMAIL_SENT": null,
-          "TEXT_DD_VAL": null
-        }
-      ]
-    },
-    "pk": "MD-22008.R01.00",
-    "RO_ANALYST": null
+    "submitterName": "Statesubmitter Nightwatch"
   },
   {
     "PRIORITY_COMPLEXITY": null,
@@ -25453,7 +25322,7 @@
       }
     ],
     "STATE_PLAN": {
-      "LEAD_ANALYST_ID": 3743,
+      "LEAD_ANALYST_ID": 3993,
       "TEMPLATE_ISSUES": null,
       "BLOCKING_SPAS_MEMO": null,
       "CALL_HELD_REASON_ID": null,
@@ -25463,103 +25332,107 @@
       "CALL_HELD": null,
       "TEMPLATE_ISSUES_RESOLVED": null,
       "ALERT_MILESTONE2_DAYS": null,
-      "SUMMARY_MEMO": "withdrawal requested (pending)",
+      "SUMMARY_MEMO": "Pending from SEA Tool to attain package withdrawal requested status",
       "SPW_STATUS_ID": 1,
       "BUDGET_NEUTRALITY_ESTABLISHED_FLAG": false,
       "FISCAL_QUARTER": null,
       "STATUS_MEMO": null,
-      "PROPOSED_DATE": 1678838400000,
+      "PROPOSED_DATE": 1679961600000,
       "ALERT_MILESTONE1_DAYS": null,
       "ALERT_90_DAYS_DATE": 1680998400000,
-      "PRIORITY_CODE_ID": null,
+      "PRIORITY_CODE_ID": 3,
       "BUDGET_IMPACT": null,
-      "RO_ANALYST_ID": null,
       "GAP3": null,
-      "UUID": null,
+      "RO_ANALYST_ID": 3996,
+      "UUID": "646EA91A-C7AC-464B-AD6D-E059CF6FE041",
       "GAP2": null,
       "ATTACHED_SPA": null,
       "BUDGET_NEUTRALITY_STATUS_MEMO": null,
       "START_CLOCK_DATE": 1673222400000,
       "BACKUP_FM_ANALYST_ID": null,
       "SUBMISSION_DATE": 1673222400000,
-      "STATUS_DATE": 1674172800000,
-      "COMPANION_LETTER_RECEIVED_DATE": null,
+      "STATUS_DATE": 1673266749587,
+      "COMPANION_LETTER_RECEIVED_DATE": 1673222400000,
       "GAP3_NA": null,
       "REMARKS_MEMO": null,
       "TYPE_ID": null,
       "TE_END_DATE": null,
       "GAP": null,
       "DAYS_EXTENSION_NUMBER": null,
-      "OCD_REVIEW_ID": 2,
-      "ACTUAL_EFFECTIVE_DATE": null,
+      "OCD_REVIEW_ID": 1,
+      "ACTUAL_EFFECTIVE_DATE": 1679961600000,
       "FISCAL_YEAR": null,
-      "PLAN_TYPE": 122,
       "GAP_NA": null,
+      "PLAN_TYPE": 122,
       "SUBMISSION_TYPE": null,
-      "REGION_ID": "3",
       "BACKUP_PROGRAM_ANALYST_ID": null,
+      "REGION_ID": "3",
       "DATE_SENT_PSCCAS": null,
-      "ID_NUMBER": "MD-22008.R01.00",
       "APPROVAL_STATUS_TYPE": null,
-      "COMPANION_LETTER_REQUESTED_DATE": null,
+      "ID_NUMBER": "MD-22008.R01.00",
+      "COMPANION_LETTER_REQUESTED_DATE": 1673222400000,
       "TITLE_NAME": "OneMac Connection test",
       "ALERT_MILESTONE4_DAYS": null,
-      "CO_SUBMISSION_DATE": null,
-      "CHANGED_DATE": 1674224750490,
+      "CO_SUBMISSION_DATE": 1673222400000,
+      "CHANGED_DATE": 1673284749653,
       "UPL_ACCEPTED": null,
       "GAP2_NA": null,
-      "OCD_REVIEW_COMMENTS_MEMO": null,
+      "OCD_REVIEW_COMMENTS_MEMO": "test",
+      "GUIDANCE_DOCS_SUBMITTED": null,
       "MMDL_IMPORT": null,
       "TEMPLATE_ISSUES_MEMO": null,
-      "GUIDANCE_DOCS_SUBMITTED": null,
       "APPROVED_EFFECTIVE_DATE": null,
-      "INITIAL_SUBMISSION_COMPLETE": null,
       "ADDED_COST": null,
+      "INITIAL_SUBMISSION_COMPLETE": true,
       "MISSING_INFORMATION": null,
       "PRIORITY_COMPLEXITY_ID": null,
       "ACTION_TYPE": 75,
       "PENDING_CONCURRENCE_DATE": null,
       "PUBLICHEALTH_STATEEMERGENCY": null,
-      "COMPONENT_ID": null,
       "BUDGET_IMPACT_VALUE": null,
+      "COMPONENT_ID": 76,
       "ALERT_MILESTONE3_DAYS": null,
-      "CODE_AFTER_INIT_ASSESS_ID": null,
+      "CODE_AFTER_INIT_ASSESS_ID": 3,
+      "DATE_OF_CODING_CHANGE": 1673222400000,
       "STATE_CODE": "MD",
-      "DATE_OF_CODING_CHANGE": null,
       "APPROVAL_DOCS_RECEIVED": false,
       "PRIORITY_COMMENTS_MEMO": "test",
       "ORGANIZATION_CHANGE": null,
       "SPW_IMPORT": false,
       "REVIEW_POSITION_ID": null,
-      "SPA_TYPE_ID": null,
       "ELIMINATED_COST": null,
+      "SPA_TYPE_ID": null,
       "CURRENT_WAIVER_TE": null
     },
     "STATE_PLAN_SERVICETYPES": [
       {
         "ID_NUMBER": "MD-22008.R01.00",
-        "SERVICE_TYPE_ID": 116
+        "SERVICE_TYPE_ID": 111
       }
     ],
     "REVIEW_POSITION": null,
     "GSI1sk": "MD-22008.R01.00",
     "FM_ANALYST": null,
     "LEAD_ANALYST": [
-  {
-   "EMAIL": "chesterT@example.gov",
-   "FIRST_NAME": "Chester",
-   "INITIALS": null,
-   "LAST_NAME": "Tester",
-   "OFFICER_ID": 3743,
-   "POSITION_ID": 538,
-   "TELEPHONE": "(410) 555-5445"
-  }
- ],
+      {
+        "INITIALS": null,
+        "TELEPHONE": null,
+        "POSITION_ID": null,
+        "OFFICER_ID": 3993,
+        "LAST_NAME": "Test2",
+        "EMAIL": null,
+        "FIRST_NAME": "Test1"
+      }
+    ],
     "SP_APD": null,
     "OCD_REVIEW": [
       {
         "OCD_REVIEW_DESCRIPTION": "No",
         "OCD_REVIEW_ID": 2
+      },
+      {
+        "OCD_REVIEW_DESCRIPTION": "Yes",
+        "OCD_REVIEW_ID": 1
       }
     ],
     "PROGRAM_ANALYST": null,
@@ -25567,8 +25440,8 @@
     "SPA_TYPE": null,
     "SPW_STATUS": [
       {
-        "SPW_STATUS_ID": 1,
-        "SPW_STATUS_DESC": "Pending"
+        "SPW_STATUS_DESC": "Pending",
+        "SPW_STATUS_ID": 1
       }
     ],
     "ACTIONTYPES": [
@@ -25582,53 +25455,60 @@
     "SP_APD_SUB_TYPE": null,
     "STATE_PLAN_SERVICE_SUBTYPES": [
       {
-        "SERVICE_SUBTYPE_ID": 832,
+        "SERVICE_SUBTYPE_ID": 820,
         "ID_NUMBER": "MD-22008.R01.00"
       }
     ],
     "RAI": null,
-    "sk": "SEATool#1674224750490",
+    "sk": "SEATool#1673284749653",
     "ACTION_OFFICERS": [
-  {
-   "EMAIL": "lesterT@example.gov",
-   "FIRST_NAME": "Lester",
-   "INITIALS": null,
-   "LAST_NAME": "Tester",
-   "OFFICER_ID": 3740,
-   "POSITION_ID": 538,
-   "TELEPHONE": "(410) 555-5445"
-  },{
-   "EMAIL": "SuperT@example.gov",
-   "FIRST_NAME": "Super",
-   "INITIALS": null,
-   "LAST_NAME": "Tester",
-   "OFFICER_ID": 3741,
-   "POSITION_ID": 538,
-   "TELEPHONE": "(410) 555-5445"
-  },{
-   "EMAIL": "jimmyT@example.gov",
-   "FIRST_NAME": "Jimmy",
-   "INITIALS": null,
-   "LAST_NAME": "Tester",
-   "OFFICER_ID": 3742,
-   "POSITION_ID": 538,
-   "TELEPHONE": "(410) 555-5445"
-  }
- ],
+      {
+        "INITIALS": "A",
+        "TELEPHONE": null,
+        "POSITION_ID": null,
+        "OFFICER_ID": 3996,
+        "LAST_NAME": "Test1",
+        "EMAIL": "abc@exampl.com",
+        "FIRST_NAME": "Demo1"
+      }
+    ],
     "SP1115": null,
-    "COMPONENTS_SP": null,
+    "COMPONENTS_SP": [
+      {
+        "ALERTS_INBOX_ADDRESS": "Test#2",
+        "COMPONENT_ID": 119,
+        "COMPONENT_NAME": "Test-5"
+      }
+    ],
     "PLAN_TYPES": [
       {
         "PLAN_TYPE_ID": 122,
         "PLAN_TYPE_NAME": "1915(b)"
       }
     ],
-    "PRIORITY_CODES": null,
+    "PRIORITY_CODES": [
+      {
+        "PRIORITY_CODE": "P3",
+        "PRIORITY_CODE_DESCRIPTION": "Routine action test",
+        "PRIORITY_CODE_ID": 3
+      }
+    ],
     "SP_IMPACT_FUNDING": null,
     "GSI1pk": "SEATool#1915b_waivers",
-    "CODEAFTERINITACCESS": null,
+    "CODEAFTERINITACCESS": [
+      {
+        "CODE_AFTER_INIT_ASSESS_ID": 3,
+        "CODE_AFTER_INIT_ASSESS_DESC": "Same"
+      }
+    ],
     "STOP_RESUME_DATES": null,
-    "COMPONENTS": null,
+    "COMPONENTS": [
+      {
+        "ALERTS_INBOX_ADDRESS": null,
+        "COMPONENT_ID": 76,
+        "COMPONENT_NAME": "Test 9"
+      }
+    ],
     "REGION": [
       {
         "REGION_ID": "3",
@@ -25639,543 +25519,57 @@
     "SP_EARLY_ALERTS": {
       "ALERTFIELD": [
         {
+          "EA_LABEL": "Reduced Eligibility",
+          "EA_TYPE_ID": 1,
+          "EA_DROP_DOWN_VALUES": null,
+          "ACTIVE": true,
+          "EA_FIELD_ID": 11,
+          "PRIORITY_VALUE": "true",
+          "PRIORITY_OPERATOR": null,
+          "PRIORITY_CODE_ID": 1,
+          "IS_APD": false
+        },
+        {
           "EA_LABEL": "Meets expedited criteria",
           "EA_TYPE_ID": 1,
           "EA_DROP_DOWN_VALUES": null,
           "ACTIVE": true,
-          "EA_FIELD_ID": 25,
+          "EA_FIELD_ID": 24,
           "PRIORITY_VALUE": "true",
           "PRIORITY_OPERATOR": null,
           "PRIORITY_CODE_ID": 3,
-          "IS_APD": null
-        },
-        {
-          "EA_LABEL": "Customary action",
-          "EA_TYPE_ID": 1,
-          "EA_DROP_DOWN_VALUES": null,
-          "ACTIVE": true,
-          "EA_FIELD_ID": 26,
-          "PRIORITY_VALUE": "true",
-          "PRIORITY_OPERATOR": null,
-          "PRIORITY_CODE_ID": 2,
           "IS_APD": null
         }
       ],
       "EARLYALERT": [
         {
-          "YES_NO_VAL": null,
+          "YES_NO_VAL": false,
           "ID_NUMBER": "MD-22008.R01.00",
-          "EA_FIELD_ID": 25,
+          "EA_FIELD_ID": 11,
           "EMAIL_SENT": null,
           "TEXT_DD_VAL": null
         },
         {
-          "YES_NO_VAL": null,
+          "YES_NO_VAL": true,
           "ID_NUMBER": "MD-22008.R01.00",
-          "EA_FIELD_ID": 26,
+          "EA_FIELD_ID": 24,
           "EMAIL_SENT": null,
           "TEXT_DD_VAL": null
         }
       ]
     },
     "pk": "MD-22008.R01.00",
-    "RO_ANALYST": null
-  },
-  {
-    "PRIORITY_COMPLEXITY": null,
-    "STATES": [
+    "RO_ANALYST": [
       {
-        "REGION_ID": "3",
-        "STATE_NAME": "Maryland",
-        "PRIORITY_FLAG": false,
-        "STATE_CODE": "MD"
+        "INITIALS": "A",
+        "TELEPHONE": null,
+        "POSITION_ID": null,
+        "OFFICER_ID": 3996,
+        "LAST_NAME": "Test1",
+        "EMAIL": "abc@exampl.com",
+        "FIRST_NAME": "Demo1"
       }
-    ],
-    "STATE_PLAN": {
-      "LEAD_ANALYST_ID": 3743,
-      "TEMPLATE_ISSUES": null,
-      "BLOCKING_SPAS_MEMO": null,
-      "CALL_HELD_REASON_ID": null,
-      "FRT_DATE": null,
-      "CURRENT_WAIVER_EXPIRES_DATE": null,
-      "END_DATE": null,
-      "CALL_HELD": null,
-      "TEMPLATE_ISSUES_RESOLVED": null,
-      "ALERT_MILESTONE2_DAYS": null,
-      "SUMMARY_MEMO": "withdrawal requested (pending)",
-      "SPW_STATUS_ID": 8,
-      "BUDGET_NEUTRALITY_ESTABLISHED_FLAG": false,
-      "FISCAL_QUARTER": null,
-      "STATUS_MEMO": null,
-      "PROPOSED_DATE": 1678838400000,
-      "ALERT_MILESTONE1_DAYS": null,
-      "ALERT_90_DAYS_DATE": 1680998400000,
-      "PRIORITY_CODE_ID": null,
-      "BUDGET_IMPACT": null,
-      "RO_ANALYST_ID": null,
-      "GAP3": null,
-      "UUID": null,
-      "GAP2": null,
-      "ATTACHED_SPA": null,
-      "BUDGET_NEUTRALITY_STATUS_MEMO": null,
-      "START_CLOCK_DATE": 1673222400000,
-      "BACKUP_FM_ANALYST_ID": null,
-      "SUBMISSION_DATE": 1673222400000,
-      "STATUS_DATE": 1674172800000,
-      "COMPANION_LETTER_RECEIVED_DATE": null,
-      "GAP3_NA": null,
-      "REMARKS_MEMO": null,
-      "TYPE_ID": null,
-      "TE_END_DATE": null,
-      "GAP": null,
-      "DAYS_EXTENSION_NUMBER": null,
-      "OCD_REVIEW_ID": 2,
-      "ACTUAL_EFFECTIVE_DATE": null,
-      "FISCAL_YEAR": null,
-      "PLAN_TYPE": 122,
-      "GAP_NA": null,
-      "SUBMISSION_TYPE": null,
-      "REGION_ID": "3",
-      "BACKUP_PROGRAM_ANALYST_ID": null,
-      "DATE_SENT_PSCCAS": null,
-      "ID_NUMBER": "MD-22008.R01.00",
-      "APPROVAL_STATUS_TYPE": null,
-      "COMPANION_LETTER_REQUESTED_DATE": null,
-      "TITLE_NAME": "OneMac Connection test",
-      "ALERT_MILESTONE4_DAYS": null,
-      "CO_SUBMISSION_DATE": null,
-      "CHANGED_DATE": 1674243800610,
-      "UPL_ACCEPTED": null,
-      "GAP2_NA": null,
-      "OCD_REVIEW_COMMENTS_MEMO": null,
-      "MMDL_IMPORT": null,
-      "TEMPLATE_ISSUES_MEMO": null,
-      "GUIDANCE_DOCS_SUBMITTED": null,
-      "APPROVED_EFFECTIVE_DATE": null,
-      "INITIAL_SUBMISSION_COMPLETE": null,
-      "ADDED_COST": null,
-      "MISSING_INFORMATION": null,
-      "PRIORITY_COMPLEXITY_ID": null,
-      "ACTION_TYPE": 75,
-      "PENDING_CONCURRENCE_DATE": 1674172800000,
-      "PUBLICHEALTH_STATEEMERGENCY": null,
-      "COMPONENT_ID": null,
-      "BUDGET_IMPACT_VALUE": null,
-      "ALERT_MILESTONE3_DAYS": null,
-      "CODE_AFTER_INIT_ASSESS_ID": null,
-      "STATE_CODE": "MD",
-      "DATE_OF_CODING_CHANGE": null,
-      "APPROVAL_DOCS_RECEIVED": false,
-      "PRIORITY_COMMENTS_MEMO": "test",
-      "ORGANIZATION_CHANGE": null,
-      "SPW_IMPORT": false,
-      "REVIEW_POSITION_ID": null,
-      "SPA_TYPE_ID": null,
-      "ELIMINATED_COST": null,
-      "CURRENT_WAIVER_TE": null
-    },
-    "STATE_PLAN_SERVICETYPES": [
-      {
-        "ID_NUMBER": "MD-22008.R01.00",
-        "SERVICE_TYPE_ID": 116
-      }
-    ],
-    "REVIEW_POSITION": null,
-    "GSI1sk": "MD-22008.R01.00",
-    "FM_ANALYST": null,
-    "LEAD_ANALYST": [
-  {
-   "EMAIL": "chesterT@example.gov",
-   "FIRST_NAME": "Chester",
-   "INITIALS": null,
-   "LAST_NAME": "Tester",
-   "OFFICER_ID": 3743,
-   "POSITION_ID": 538,
-   "TELEPHONE": "(410) 555-5445"
-  }
- ],
-    "SP_APD": null,
-    "OCD_REVIEW": [
-      {
-        "OCD_REVIEW_DESCRIPTION": "No",
-        "OCD_REVIEW_ID": 2
-      }
-    ],
-    "PROGRAM_ANALYST": null,
-    "CALLHELDREASONS": null,
-    "SPA_TYPE": null,
-    "SPW_STATUS": [
-      {
-        "SPW_STATUS_ID": 1,
-        "SPW_STATUS_DESC": "Pending"
-      },
-      {
-        "SPW_STATUS_ID": 8,
-        "SPW_STATUS_DESC": "Pending-Concurrence"
-      }
-    ],
-    "ACTIONTYPES": [
-      {
-        "PLAN_TYPE_ID": 122,
-        "ACTION_NAME": "Renew",
-        "ACTION_ID": 75
-      },
-      {
-        "PLAN_TYPE_ID": 122,
-        "ACTION_NAME": "Amend",
-        "ACTION_ID": 73
-      }
-    ],
-    "SP_TYPE": null,
-    "SP_APD_SUB_TYPE": null,
-    "STATE_PLAN_SERVICE_SUBTYPES": [
-      {
-        "SERVICE_SUBTYPE_ID": 832,
-        "ID_NUMBER": "MD-22008.R01.00"
-      }
-    ],
-    "RAI": null,
-    "sk": "SEATool#1674243800610",
-    "ACTION_OFFICERS": [
-  {
-   "EMAIL": "lesterT@example.gov",
-   "FIRST_NAME": "Lester",
-   "INITIALS": null,
-   "LAST_NAME": "Tester",
-   "OFFICER_ID": 3740,
-   "POSITION_ID": 538,
-   "TELEPHONE": "(410) 555-5445"
-  },{
-   "EMAIL": "SuperT@example.gov",
-   "FIRST_NAME": "Super",
-   "INITIALS": null,
-   "LAST_NAME": "Tester",
-   "OFFICER_ID": 3741,
-   "POSITION_ID": 538,
-   "TELEPHONE": "(410) 555-5445"
-  },{
-   "EMAIL": "jimmyT@example.gov",
-   "FIRST_NAME": "Jimmy",
-   "INITIALS": null,
-   "LAST_NAME": "Tester",
-   "OFFICER_ID": 3742,
-   "POSITION_ID": 538,
-   "TELEPHONE": "(410) 555-5445"
-  }
- ],
-    "SP1115": null,
-    "COMPONENTS_SP": null,
-    "PLAN_TYPES": [
-      {
-        "PLAN_TYPE_ID": 122,
-        "PLAN_TYPE_NAME": "1915(b)"
-      }
-    ],
-    "PRIORITY_CODES": null,
-    "SP_IMPACT_FUNDING": null,
-    "GSI1pk": "SEATool#1915b_waivers",
-    "CODEAFTERINITACCESS": null,
-    "STOP_RESUME_DATES": null,
-    "COMPONENTS": null,
-    "REGION": [
-      {
-        "REGION_ID": "3",
-        "REGION_NAME": "Philadelphia",
-        "ALERTS_INBOX_ADDRESS": "SPA_Waivers_Philadelphia_R03@cms.hhs.gov"
-      }
-    ],
-    "SP_EARLY_ALERTS": {
-      "ALERTFIELD": [
-        {
-          "EA_LABEL": "Meets expedited criteria",
-          "EA_TYPE_ID": 1,
-          "EA_DROP_DOWN_VALUES": null,
-          "ACTIVE": true,
-          "EA_FIELD_ID": 25,
-          "PRIORITY_VALUE": "true",
-          "PRIORITY_OPERATOR": null,
-          "PRIORITY_CODE_ID": 3,
-          "IS_APD": null
-        },
-        {
-          "EA_LABEL": "Customary action",
-          "EA_TYPE_ID": 1,
-          "EA_DROP_DOWN_VALUES": null,
-          "ACTIVE": true,
-          "EA_FIELD_ID": 26,
-          "PRIORITY_VALUE": "true",
-          "PRIORITY_OPERATOR": null,
-          "PRIORITY_CODE_ID": 2,
-          "IS_APD": null
-        }
-      ],
-      "EARLYALERT": [
-        {
-          "YES_NO_VAL": null,
-          "ID_NUMBER": "MD-22008.R01.00",
-          "EA_FIELD_ID": 25,
-          "EMAIL_SENT": null,
-          "TEXT_DD_VAL": null
-        },
-        {
-          "YES_NO_VAL": null,
-          "ID_NUMBER": "MD-22008.R01.00",
-          "EA_FIELD_ID": 26,
-          "EMAIL_SENT": null,
-          "TEXT_DD_VAL": null
-        }
-      ]
-    },
-    "pk": "MD-22008.R01.00",
-    "RO_ANALYST": null
-  },
-  {
-    "PRIORITY_COMPLEXITY": null,
-    "STATES": [
-      {
-        "REGION_ID": "3",
-        "STATE_NAME": "Maryland",
-        "PRIORITY_FLAG": false,
-        "STATE_CODE": "MD"
-      }
-    ],
-    "STATE_PLAN": {
-      "LEAD_ANALYST_ID": 3743,
-      "TEMPLATE_ISSUES": null,
-      "BLOCKING_SPAS_MEMO": null,
-      "CALL_HELD_REASON_ID": null,
-      "FRT_DATE": null,
-      "CURRENT_WAIVER_EXPIRES_DATE": null,
-      "END_DATE": null,
-      "CALL_HELD": null,
-      "TEMPLATE_ISSUES_RESOLVED": null,
-      "ALERT_MILESTONE2_DAYS": null,
-      "SUMMARY_MEMO": "withdrawal requested (pending)",
-      "SPW_STATUS_ID": 8,
-      "BUDGET_NEUTRALITY_ESTABLISHED_FLAG": false,
-      "FISCAL_QUARTER": null,
-      "STATUS_MEMO": null,
-      "PROPOSED_DATE": 1678838400000,
-      "ALERT_MILESTONE1_DAYS": null,
-      "ALERT_90_DAYS_DATE": 1680998400000,
-      "PRIORITY_CODE_ID": null,
-      "BUDGET_IMPACT": null,
-      "RO_ANALYST_ID": null,
-      "GAP3": null,
-      "UUID": null,
-      "GAP2": null,
-      "ATTACHED_SPA": null,
-      "BUDGET_NEUTRALITY_STATUS_MEMO": null,
-      "START_CLOCK_DATE": 1673222400000,
-      "BACKUP_FM_ANALYST_ID": null,
-      "SUBMISSION_DATE": 1673222400000,
-      "STATUS_DATE": 1674172800000,
-      "COMPANION_LETTER_RECEIVED_DATE": null,
-      "GAP3_NA": null,
-      "REMARKS_MEMO": null,
-      "TYPE_ID": null,
-      "TE_END_DATE": null,
-      "GAP": null,
-      "DAYS_EXTENSION_NUMBER": null,
-      "OCD_REVIEW_ID": 2,
-      "ACTUAL_EFFECTIVE_DATE": null,
-      "FISCAL_YEAR": null,
-      "PLAN_TYPE": 122,
-      "GAP_NA": null,
-      "SUBMISSION_TYPE": null,
-      "REGION_ID": "3",
-      "BACKUP_PROGRAM_ANALYST_ID": null,
-      "DATE_SENT_PSCCAS": null,
-      "ID_NUMBER": "MD-22008.R01.00",
-      "APPROVAL_STATUS_TYPE": null,
-      "COMPANION_LETTER_REQUESTED_DATE": null,
-      "TITLE_NAME": "OneMac Connection test",
-      "ALERT_MILESTONE4_DAYS": null,
-      "CO_SUBMISSION_DATE": null,
-      "CHANGED_DATE": 1674243913907,
-      "UPL_ACCEPTED": null,
-      "GAP2_NA": null,
-      "OCD_REVIEW_COMMENTS_MEMO": null,
-      "MMDL_IMPORT": null,
-      "TEMPLATE_ISSUES_MEMO": null,
-      "GUIDANCE_DOCS_SUBMITTED": null,
-      "APPROVED_EFFECTIVE_DATE": null,
-      "INITIAL_SUBMISSION_COMPLETE": null,
-      "ADDED_COST": null,
-      "MISSING_INFORMATION": null,
-      "PRIORITY_COMPLEXITY_ID": null,
-      "ACTION_TYPE": 75,
-      "PENDING_CONCURRENCE_DATE": 1674172800000,
-      "PUBLICHEALTH_STATEEMERGENCY": null,
-      "COMPONENT_ID": null,
-      "BUDGET_IMPACT_VALUE": null,
-      "ALERT_MILESTONE3_DAYS": null,
-      "CODE_AFTER_INIT_ASSESS_ID": null,
-      "STATE_CODE": "MD",
-      "DATE_OF_CODING_CHANGE": null,
-      "APPROVAL_DOCS_RECEIVED": false,
-      "PRIORITY_COMMENTS_MEMO": "test",
-      "ORGANIZATION_CHANGE": null,
-      "SPW_IMPORT": false,
-      "REVIEW_POSITION_ID": null,
-      "SPA_TYPE_ID": null,
-      "ELIMINATED_COST": null,
-      "CURRENT_WAIVER_TE": null
-    },
-    "STATE_PLAN_SERVICETYPES": [
-      {
-        "ID_NUMBER": "MD-22008.R01.00",
-        "SERVICE_TYPE_ID": 116
-      }
-    ],
-    "REVIEW_POSITION": null,
-    "GSI1sk": "MD-22008.R01.00",
-    "FM_ANALYST": null,
-    "LEAD_ANALYST": [
-  {
-   "EMAIL": "chesterT@example.gov",
-   "FIRST_NAME": "Chester",
-   "INITIALS": null,
-   "LAST_NAME": "Tester",
-   "OFFICER_ID": 3743,
-   "POSITION_ID": 538,
-   "TELEPHONE": "(410) 555-5445"
-  }
- ],
-    "SP_APD": null,
-    "OCD_REVIEW": [
-      {
-        "OCD_REVIEW_DESCRIPTION": "No",
-        "OCD_REVIEW_ID": 2
-      }
-    ],
-    "PROGRAM_ANALYST": null,
-    "CALLHELDREASONS": null,
-    "SPA_TYPE": null,
-    "SPW_STATUS": [
-      {
-        "SPW_STATUS_ID": 1,
-        "SPW_STATUS_DESC": "Pending"
-      },
-      {
-        "SPW_STATUS_ID": 8,
-        "SPW_STATUS_DESC": "Pending-Concurrence"
-      }
-    ],
-    "ACTIONTYPES": [
-      {
-        "PLAN_TYPE_ID": 122,
-        "ACTION_NAME": "Amend",
-        "ACTION_ID": 73
-      },
-      {
-        "PLAN_TYPE_ID": 122,
-        "ACTION_NAME": "Renew",
-        "ACTION_ID": 75
-      }
-    ],
-    "SP_TYPE": null,
-    "SP_APD_SUB_TYPE": null,
-    "STATE_PLAN_SERVICE_SUBTYPES": [
-      {
-        "SERVICE_SUBTYPE_ID": 832,
-        "ID_NUMBER": "MD-22008.R01.00"
-      }
-    ],
-    "RAI": null,
-    "sk": "SEATool#1674243913907",
-    "ACTION_OFFICERS": [
-  {
-   "EMAIL": "lesterT@example.gov",
-   "FIRST_NAME": "Lester",
-   "INITIALS": null,
-   "LAST_NAME": "Tester",
-   "OFFICER_ID": 3740,
-   "POSITION_ID": 538,
-   "TELEPHONE": "(410) 555-5445"
-  },{
-   "EMAIL": "SuperT@example.gov",
-   "FIRST_NAME": "Super",
-   "INITIALS": null,
-   "LAST_NAME": "Tester",
-   "OFFICER_ID": 3741,
-   "POSITION_ID": 538,
-   "TELEPHONE": "(410) 555-5445"
-  },{
-   "EMAIL": "jimmyT@example.gov",
-   "FIRST_NAME": "Jimmy",
-   "INITIALS": null,
-   "LAST_NAME": "Tester",
-   "OFFICER_ID": 3742,
-   "POSITION_ID": 538,
-   "TELEPHONE": "(410) 555-5445"
-  }
- ],
-    "SP1115": null,
-    "COMPONENTS_SP": null,
-    "PLAN_TYPES": [
-      {
-        "PLAN_TYPE_ID": 122,
-        "PLAN_TYPE_NAME": "1915(b)"
-      }
-    ],
-    "PRIORITY_CODES": null,
-    "SP_IMPACT_FUNDING": null,
-    "GSI1pk": "SEATool#1915b_waivers",
-    "CODEAFTERINITACCESS": null,
-    "STOP_RESUME_DATES": null,
-    "COMPONENTS": null,
-    "REGION": [
-      {
-        "REGION_ID": "3",
-        "REGION_NAME": "Philadelphia",
-        "ALERTS_INBOX_ADDRESS": "SPA_Waivers_Philadelphia_R03@cms.hhs.gov"
-      }
-    ],
-    "SP_EARLY_ALERTS": {
-      "ALERTFIELD": [
-        {
-          "EA_LABEL": "Meets expedited criteria",
-          "EA_TYPE_ID": 1,
-          "EA_DROP_DOWN_VALUES": null,
-          "ACTIVE": true,
-          "EA_FIELD_ID": 25,
-          "PRIORITY_VALUE": "true",
-          "PRIORITY_OPERATOR": null,
-          "PRIORITY_CODE_ID": 3,
-          "IS_APD": null
-        },
-        {
-          "EA_LABEL": "Customary action",
-          "EA_TYPE_ID": 1,
-          "EA_DROP_DOWN_VALUES": null,
-          "ACTIVE": true,
-          "EA_FIELD_ID": 26,
-          "PRIORITY_VALUE": "true",
-          "PRIORITY_OPERATOR": null,
-          "PRIORITY_CODE_ID": 2,
-          "IS_APD": null
-        }
-      ],
-      "EARLYALERT": [
-        {
-          "YES_NO_VAL": null,
-          "ID_NUMBER": "MD-22008.R01.00",
-          "EA_FIELD_ID": 25,
-          "EMAIL_SENT": null,
-          "TEXT_DD_VAL": null
-        },
-        {
-          "YES_NO_VAL": null,
-          "ID_NUMBER": "MD-22008.R01.00",
-          "EA_FIELD_ID": 26,
-          "EMAIL_SENT": null,
-          "TEXT_DD_VAL": null
-        }
-      ]
-    },
-    "pk": "MD-22008.R01.00",
-    "RO_ANALYST": null
+    ]
   },
   {
     "clockEndTimestamp": 1681924066347,
@@ -26244,9 +25638,10 @@
   {
     "componentType": "waiverrenewal",
     "eventTimestamp": 1674156634255,
+    "submissionTimestamp": 1674156634255,
     "currentStatus": "Withdrawal Requested",
     "GSI1sk": "MD-12958.R01.00",
-    "GSI1pk": "OneMAC#withdrawwaiverrenewal",
+    "GSI1pk": "OneMAC#submitwaiverrenewalwithdraw",
     "lastModifiedEmail": "mdstateonemac@gmail.com",
     "changedByName": "MDSTATE SUBMITTERNK",
     "changedByEmail": "MDSTATEONEMAC@gmail.com",
@@ -26256,46 +25651,32 @@
     "lastModifiedName": "MDSTATE SUBMITTERNK"
   },
   {
-    "clockEndTimestamp": 1681924066347,
+    "componentId": "MD-12958.R01.00",
+    "waiverAuthority": "1915(b)",
+    "subject": "test",
+    "latestRaiResponseTimestamp": 1674156100252,
+    "description": "test",
+    "submissionTimestamp": 1674151666347,
+    "reviewTeamEmailList": [],
+    "proposedEffectiveDate": "2023-01-22",
+    "GSI2sk": "waiverrenewal",
+    "GSI1sk": "MD-12958.R01.00",
+    "sk": "Package",
+    "finalDispositionDate": "2023-01-18",
     "componentType": "waiverrenewal",
     "currentStatus": "Approved",
-    "waiverExtensions": [],
-    "parentId": "MD-12958.R00.00",
-    "attachments": [
+    "cpocEmail": "\"Tester, Chester (CPOC)\" <chesterT@example.gov>",
+    "reverseChrono": [
       {
-        "s3Key": "1674151641079/Report_UserList(1).csv",
-        "filename": "Report_UserList(1).csv",
-        "title": "1915(b) Comprehensive (Capitated) Waiver Cost effectiveness spreadsheets (Initial, Renewal, Amendment)",
-        "contentType": "text/csv",
-        "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A30413432-e223-4a6d-bfe1-7ed87236ff55/1674151641079/Report_UserList%281%29.csv"
+        "action": "Withdrawal Requested",
+        "attachments": [],
+        "type": "Package",
+        "currentStatus": "Withdrawal Requested",
+        "timestamp": 1674156634255,
+        "eventTimestamp": 1674156634255
       },
       {
-        "s3Key": "1674151641081/Report_SubmissionList(1).csv",
-        "filename": "Report_SubmissionList(1).csv",
-        "title": "Tribal Consultation (Initial, Renewal, Amendment)",
-        "contentType": "text/csv",
-        "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A30413432-e223-4a6d-bfe1-7ed87236ff55/1674151641081/Report_SubmissionList%281%29.csv"
-      }
-    ],
-    "proposedEffectiveDate": "2023-01-23",
-    "GSI1sk": "MD-12958.R01.00",
-    "additionalInformation": "this is the new renewal on an approved initial waiver.",
-    "submissionTimestamp": 1674151666347,
-    "GSI2sk": "waiverrenewal",
-    "waiverAuthority": "1915(b)",
-    "GSI2pk": "MD-12958.R00.00",
-    "GSI1pk": "OneMAC#waiver",
-    "submitterEmail": "mdstateonemac@gmail.com",
-    "sk": "Package",
-    "cpocName": "Chester Tester",
-    "reviewTeam": ["Lester Tester", "Super Tester", "Jimmy Tester"],
-    "subject": "test subject",
-    "description": "test description",
-    "componentId": "MD-12958.R01.00",
-    "raiResponses": [
-      {
         "additionalInformation": "rai response ",
-        "submissionTimestamp": 1674156100252,
         "attachments": [
           {
             "s3Key": "1674156075134/Report_waiverList(7).csv",
@@ -26304,12 +25685,51 @@
             "contentType": "text/csv",
             "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A30413432-e223-4a6d-bfe1-7ed87236ff55/1674156075134/Report_waiverList%287%29.csv"
           }
-        ]
+        ],
+        "currentStatus": "Submitted",
+        "action": "Submitted",
+        "type": "Formal RAI Response",
+        "timestamp": 1674156100252,
+        "eventTimestamp": 1674156100252
+      },
+      {
+        "additionalInformation": "this is the new renewal on an approved initial waiver.",
+        "attachments": [
+          {
+            "s3Key": "1674151641079/Report_UserList(1).csv",
+            "filename": "Report_UserList(1).csv",
+            "title": "1915(b) Comprehensive (Capitated) Waiver Cost effectiveness spreadsheets (Initial, Renewal, Amendment)",
+            "contentType": "text/csv",
+            "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A30413432-e223-4a6d-bfe1-7ed87236ff55/1674151641079/Report_UserList%281%29.csv"
+          },
+          {
+            "s3Key": "1674151641081/Report_SubmissionList(1).csv",
+            "filename": "Report_SubmissionList(1).csv",
+            "title": "Tribal Consultation (Initial, Renewal, Amendment)",
+            "contentType": "text/csv",
+            "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A30413432-e223-4a6d-bfe1-7ed87236ff55/1674151641081/Report_SubmissionList%281%29.csv"
+          }
+        ],
+        "currentStatus": "Submitted",
+        "action": "Submitted",
+        "type": "Initial Package",
+        "timestamp": 1674151666347,
+        "eventTimestamp": 1674151666347
       }
     ],
+    "GSI2pk": "MD-12958.R00.00",
+    "reviewTeam": [
+      "Brett aaa"
+    ],
+    "parentId": "MD-12958.R00.00",
+    "GSI1pk": "OneMAC#waiver",
+    "adminChanges": [],
     "lastEventTimestamp": 1674157537257,
+    "approvedEffectiveDate": "2023-01-22",
     "pk": "MD-12958.R01.00",
-    "submitterName": "MDSTATE SUBMITTERNK"
+    "submitterName": "MDSTATE SUBMITTERNK",
+    "cpocName": "Chester Tester",
+    "submitterEmail": "mdstateonemac@gmail.com"
   },
   {
     "PRIORITY_COMPLEXITY": null,
@@ -38552,33 +37972,6 @@
     "RO_ANALYST": null
   },
   {
-    "clockEndTimestamp": 1680536492247,
-    "componentType": "waiverappk",
-    "eventTimestamp": 1672764092247,
-    "currentStatus": "Submitted",
-    "originallyFrom": "cms-spa-form-master-change-requests",
-    "attachments": [
-      {
-        "s3Key": "1672764091622/textnotes.txt",
-        "filename": "textnotes.txt",
-        "title": "1915(c) Appendix K Amendment Waiver Template",
-        "contentType": "text/plain",
-        "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A30413432-e223-4a6d-bfe1-7ed87236ff55/1672764091622/textnotes.txt"
-      }
-    ],
-    "proposedEffectiveDate": "-- --",
-    "GSI1sk": "MD-22102.R00.01",
-    "additionalInformation": "test",
-    "submissionTimestamp": 1672764092247,
-    "GSI1pk": "OneMAC#submitwaiverappk",
-    "convertTimestamp": 1674854066803,
-    "submitterEmail": "mdstateonemac@gmail.com",
-    "sk": "OneMAC#1672764092247",
-    "componentId": "MD-22102.R00.01",
-    "pk": "MD-22102.R00.01",
-    "submitterName": "MDSTATE SUBMITTERNK"
-  },
-  {
     "clockEndTimestamp": 1681919477050,
     "componentType": "waiverappk",
     "eventTimestamp": 1674147077050,
@@ -38605,74 +37998,56 @@
     "pk": "MD-22102.R00.01",
     "submitterName": "Statesubmitter Nightwatch"
   },
-{
- "pk": "MD-22102.R00.01",
- "sk": "Package",
- "adminChanges": [
- ],
- "approvedEffectiveDate": "-- --",
- "componentId": "MD-22102.R00.01",
- "componentType": "waiverappk",
- "cpocEmail": "\"Tester, Chester (CPOC)\" <chesterT@example.gov>",
- "cpocName": "Chester Tester",
- "currentStatus": "Pending - Concurrence",
- "description": "pending-concurrence rebuild",
- "finalDispositionDate": "-- --",
- "GSI1pk": "OneMAC#waiver",
- "GSI1sk": "MD-22102.R00.01",
- "lastEventTimestamp": 1675448274253,
- "proposedEffectiveDate": "-- --",
- "reverseChrono": [
   {
-   "action": "Submitted",
-   "additionalInformation": "pending-concurrence status test",
-   "attachments": [
-    {
-     "contentType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-     "filename": "file.docx",
-     "s3Key": "1674147076130/file.docx",
-     "title": "1915(c) Appendix K Amendment Waiver Template",
-     "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A35b18373-d59d-4d36-8d7f-2ca368f6a6c1/1674147076130/file.docx"
-    }
-   ],
-   "currentStatus": "Submitted",
-   "eventTimestamp": 1674147077050,
-   "timestamp": 1674147077050,
-   "type": "Initial Package"
+    "finalDispositionDate": "-- --",
+    "componentType": "waiverappk",
+    "componentId": "MD-22102.R00.01",
+    "currentStatus": "Pending - Concurrence",
+    "subject": "OneMac Connection test",
+    "cpocEmail": "\"Tester, Chester (CPOC)\" <chesterT@example.gov>",
+    "reverseChrono": [
+      {
+        "additionalInformation": "pending-concurrence status test",
+        "attachments": [
+          {
+            "s3Key": "1674147076130/file.docx",
+            "filename": "file.docx",
+            "title": "1915(c) Appendix K Amendment Waiver Template",
+            "contentType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+            "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A35b18373-d59d-4d36-8d7f-2ca368f6a6c1/1674147076130/file.docx"
+          }
+        ],
+        "currentStatus": "Submitted",
+        "action": "Submitted",
+        "type": "Initial Package",
+        "timestamp": 1674147077050,
+        "eventTimestamp": 1674147077050
+      }
+    ],
+    "description": "pending-concurrence",
+    "reviewTeam": [
+      "Lester Tester",
+      "Super Tester",
+      "Jimmy Tester"
+    ],
+    "submissionTimestamp": 1674147077050,
+    "reviewTeamEmailList": [
+      "\"Tester, Lester (SRT)\" <lesterT@example.gov>",
+      "\"Tester, Super (SRT)\" <SuperT@example.gov>",
+      "\"Tester, Jimmy (SRT)\" <jimmyT@example.gov>"
+    ],
+    "proposedEffectiveDate": "2023-02-14",
+    "GSI1pk": "OneMAC#waiver",
+    "adminChanges": [],
+    "GSI1sk": "MD-22102.R00.01",
+    "lastEventTimestamp": 1674226356523,
+    "sk": "Package",
+    "approvedEffectiveDate": "2023-02-28",
+    "pk": "MD-22102.R00.01",
+    "submitterName": "Statesubmitter Nightwatch",
+    "cpocName": "Chester Tester",
+    "submitterEmail": "statesubmitter@nightwatch.test"
   },
-  {
-   "action": "Submitted",
-   "additionalInformation": "test",
-   "attachments": [
-    {
-     "contentType": "text/plain",
-     "filename": "textnotes.txt",
-     "s3Key": "1672764091622/textnotes.txt",
-     "title": "1915(c) Appendix K Amendment Waiver Template",
-     "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A30413432-e223-4a6d-bfe1-7ed87236ff55/1672764091622/textnotes.txt"
-    }
-   ],
-   "currentStatus": "Submitted",
-   "eventTimestamp": 1672764092247,
-   "timestamp": 1672764092247,
-   "type": "Initial Package"
-  }
- ],
- "reviewTeam": [
-  "Lester Tester",
-  "Super Tester",
-  "Jimmy Tester"
- ],
- "reviewTeamEmailList": [
-  "\"Tester, Lester (SRT)\" <lesterT@example.gov>",
-  "\"Tester, Super (SRT)\" <SuperT@example.gov>",
-  "\"Tester, Jimmy (SRT)\" <jimmyT@example.gov>"
- ],
- "subject": "OneMac Connection test",
- "submissionTimestamp": 1674147077050,
- "submitterEmail": "statesubmitter@nightwatch.test",
- "submitterName": "Statesubmitter Nightwatch"
-},
   {
     "PRIORITY_COMPLEXITY": null,
     "STATES": [
@@ -40467,546 +39842,6 @@
     "RO_ANALYST": null
   },
   {
-    "clockEndTimestamp": 1682427994077,
-    "componentType": "waiverappk",
-    "eventTimestamp": 1674655594077,
-    "currentStatus": "Submitted",
-    "originallyFrom": "cms-spa-form-master-change-requests",
-    "attachments": [
-      {
-        "s3Key": "1674655593188/textnotes.txt",
-        "filename": "textnotes.txt",
-        "title": "1915(c) Appendix K Amendment Waiver Template",
-        "contentType": "text/plain",
-        "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A35b18373-d59d-4d36-8d7f-2ca368f6a6c1/1674655593188/textnotes.txt"
-      }
-    ],
-    "proposedEffectiveDate": "-- --",
-    "GSI1sk": "MD-22103.R01.01",
-    "additionalInformation": "test",
-    "submissionTimestamp": 1674655594077,
-    "GSI1pk": "OneMAC#submitwaiverappk",
-    "convertTimestamp": 1674854063700,
-    "submitterEmail": "statesubmitter@nightwatch.test",
-    "sk": "OneMAC#1674655594077",
-    "componentId": "MD-22103.R01.01",
-    "pk": "MD-22103.R01.01",
-    "submitterName": "Statesubmitter Nightwatch"
-  },
-  {
-    "componentType": "waiverappk",
-    "eventTimestamp": 1677001123370,
-    "currentStatus": "Withdrawal Requested",
-    "GSI1sk": "MD-22103.R01.01",
-    "GSI1pk": "OneMAC#withdrawwaiverappk",
-    "lastModifiedEmail": "statesubmitter@nightwatch.test",
-    "changedByName": "Statesubmitter Nightwatch",
-    "changedByEmail": "statesubmitter@nightwatch.test",
-    "sk": "OneMAC#1677001123370",
-    "componentId": "MD-22103.R01.01",
-    "pk": "MD-22103.R01.01",
-    "lastModifiedName": "Statesubmitter Nightwatch"
-  },
-  {
-    "clockEndTimestamp": 1682427994077,
-    "componentType": "waiverappk",
-    "currentStatus": "Withdrawal Requested",
-    "waiverExtensions": [],
-    "attachments": [
-      {
-        "s3Key": "1674655593188/textnotes.txt",
-        "filename": "textnotes.txt",
-        "title": "1915(c) Appendix K Amendment Waiver Template",
-        "contentType": "text/plain",
-        "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A35b18373-d59d-4d36-8d7f-2ca368f6a6c1/1674655593188/textnotes.txt"
-      }
-    ],
-    "proposedEffectiveDate": "2023-03-15",
-    "GSI1sk": "MD-22103.R01.01",
-    "additionalInformation": "test",
-    "submissionTimestamp": 1674655594077,
-    "GSI1pk": "OneMAC#waiver",
-    "submitterEmail": "statesubmitter@nightwatch.test",
-    "sk": "Package",
-    "cpocName": "Chester Tester",
-    "reviewTeam": ["Lester Tester", "Super Tester", "Jimmy Tester"],
-    "subject": "test subject",
-    "description": "test description",
-    "componentId": "MD-22103.R01.01",
-    "raiResponses": [],
-    "lastEventTimestamp": 1677001123370,
-    "pk": "MD-22103.R01.01",
-    "submitterName": "Statesubmitter Nightwatch"
-  },
-  {
-    "PRIORITY_COMPLEXITY": null,
-    "STATES": [
-      {
-        "REGION_ID": "3",
-        "STATE_NAME": "Maryland",
-        "PRIORITY_FLAG": false,
-        "STATE_CODE": "MD"
-      }
-    ],
-    "STATE_PLAN": {
-      "LEAD_ANALYST_ID": 3743,
-      "TEMPLATE_ISSUES": null,
-      "BLOCKING_SPAS_MEMO": null,
-      "CALL_HELD_REASON_ID": null,
-      "FRT_DATE": null,
-      "CURRENT_WAIVER_EXPIRES_DATE": null,
-      "END_DATE": null,
-      "CALL_HELD": null,
-      "TEMPLATE_ISSUES_RESOLVED": null,
-      "ALERT_MILESTONE2_DAYS": null,
-      "SUMMARY_MEMO": "Sample Summary Memo",
-      "SPW_STATUS_ID": 1,
-      "BUDGET_NEUTRALITY_ESTABLISHED_FLAG": false,
-      "FISCAL_QUARTER": null,
-      "STATUS_MEMO": null,
-      "PROPOSED_DATE": null,
-      "ALERT_MILESTONE1_DAYS": null,
-      "ALERT_90_DAYS_DATE": 1682380800000,
-      "PRIORITY_CODE_ID": null,
-      "BUDGET_IMPACT": null,
-      "RO_ANALYST_ID": null,
-      "GAP3": null,
-      "UUID": null,
-      "GAP2": null,
-      "ATTACHED_SPA": null,
-      "BUDGET_NEUTRALITY_STATUS_MEMO": null,
-      "START_CLOCK_DATE": 1674604800000,
-      "BACKUP_FM_ANALYST_ID": null,
-      "SUBMISSION_DATE": 1674604800000,
-      "STATUS_DATE": 1674604800000,
-      "COMPANION_LETTER_RECEIVED_DATE": null,
-      "GAP3_NA": null,
-      "REMARKS_MEMO": null,
-      "TYPE_ID": null,
-      "TE_END_DATE": null,
-      "GAP": null,
-      "DAYS_EXTENSION_NUMBER": null,
-      "OCD_REVIEW_ID": 2,
-      "ACTUAL_EFFECTIVE_DATE": null,
-      "FISCAL_YEAR": null,
-      "PLAN_TYPE": 123,
-      "GAP_NA": null,
-      "SUBMISSION_TYPE": null,
-      "REGION_ID": "3",
-      "BACKUP_PROGRAM_ANALYST_ID": null,
-      "DATE_SENT_PSCCAS": null,
-      "ID_NUMBER": "MD-22103.R01.01",
-      "APPROVAL_STATUS_TYPE": null,
-      "COMPANION_LETTER_REQUESTED_DATE": null,
-      "TITLE_NAME": "Sample Title Name",
-      "ALERT_MILESTONE4_DAYS": null,
-      "CO_SUBMISSION_DATE": null,
-      "CHANGED_DATE": 1674656635480,
-      "UPL_ACCEPTED": null,
-      "GAP2_NA": null,
-      "OCD_REVIEW_COMMENTS_MEMO": null,
-      "MMDL_IMPORT": null,
-      "TEMPLATE_ISSUES_MEMO": null,
-      "GUIDANCE_DOCS_SUBMITTED": null,
-      "APPROVED_EFFECTIVE_DATE": null,
-      "INITIAL_SUBMISSION_COMPLETE": null,
-      "ADDED_COST": null,
-      "MISSING_INFORMATION": null,
-      "PRIORITY_COMPLEXITY_ID": null,
-      "ACTION_TYPE": 76,
-      "PENDING_CONCURRENCE_DATE": null,
-      "PUBLICHEALTH_STATEEMERGENCY": null,
-      "COMPONENT_ID": null,
-      "BUDGET_IMPACT_VALUE": null,
-      "ALERT_MILESTONE3_DAYS": null,
-      "CODE_AFTER_INIT_ASSESS_ID": null,
-      "STATE_CODE": "MD",
-      "DATE_OF_CODING_CHANGE": null,
-      "APPROVAL_DOCS_RECEIVED": null,
-      "PRIORITY_COMMENTS_MEMO": null,
-      "ORGANIZATION_CHANGE": null,
-      "SPW_IMPORT": false,
-      "REVIEW_POSITION_ID": null,
-      "SPA_TYPE_ID": null,
-      "ELIMINATED_COST": null,
-      "CURRENT_WAIVER_TE": null
-    },
-    "STATE_PLAN_SERVICETYPES": null,
-    "REVIEW_POSITION": null,
-    "GSI1sk": "MD-22103.R01.01",
-    "FM_ANALYST": null,
-    "LEAD_ANALYST": [
-  {
-   "EMAIL": "chesterT@example.gov",
-   "FIRST_NAME": "Chester",
-   "INITIALS": null,
-   "LAST_NAME": "Tester",
-   "OFFICER_ID": 3743,
-   "POSITION_ID": 538,
-   "TELEPHONE": "(410) 555-5445"
-  }
- ],
-    "SP_APD": null,
-    "OCD_REVIEW": [
-      {
-        "OCD_REVIEW_DESCRIPTION": "No",
-        "OCD_REVIEW_ID": 2
-      }
-    ],
-    "PROGRAM_ANALYST": null,
-    "CALLHELDREASONS": null,
-    "SPA_TYPE": null,
-    "SPW_STATUS": [
-      {
-        "SPW_STATUS_ID": 1,
-        "SPW_STATUS_DESC": "Pending"
-      }
-    ],
-    "ACTIONTYPES": [
-      {
-       "ACTION_ID": 76,
-       "ACTION_NAME": "Amend",
-       "PLAN_TYPE_ID": 122
-      }
-     ],
-    "SP_TYPE": null,
-    "SP_APD_SUB_TYPE": null,
-    "STATE_PLAN_SERVICE_SUBTYPES": null,
-    "RAI": null,
-    "sk": "SEATool#1674656635480",
-    "ACTION_OFFICERS": [
-  {
-   "EMAIL": "lesterT@example.gov",
-   "FIRST_NAME": "Lester",
-   "INITIALS": null,
-   "LAST_NAME": "Tester",
-   "OFFICER_ID": 3740,
-   "POSITION_ID": 538,
-   "TELEPHONE": "(410) 555-5445"
-  },{
-   "EMAIL": "SuperT@example.gov",
-   "FIRST_NAME": "Super",
-   "INITIALS": null,
-   "LAST_NAME": "Tester",
-   "OFFICER_ID": 3741,
-   "POSITION_ID": 538,
-   "TELEPHONE": "(410) 555-5445"
-  },{
-   "EMAIL": "jimmyT@example.gov",
-   "FIRST_NAME": "Jimmy",
-   "INITIALS": null,
-   "LAST_NAME": "Tester",
-   "OFFICER_ID": 3742,
-   "POSITION_ID": 538,
-   "TELEPHONE": "(410) 555-5445"
-  }
- ],
-    "SP1115": null,
-    "COMPONENTS_SP": null,
-    "PLAN_TYPES": [
-      {
-        "PLAN_TYPE_ID": 123,
-        "PLAN_TYPE_NAME": "1915(c)"
-      }
-    ],
-    "PRIORITY_CODES": null,
-    "SP_IMPACT_FUNDING": null,
-    "GSI1pk": "SEATool#1915c_waivers",
-    "CODEAFTERINITACCESS": null,
-    "STOP_RESUME_DATES": null,
-    "COMPONENTS": null,
-    "REGION": [
-      {
-        "REGION_ID": "3",
-        "REGION_NAME": "Philadelphia",
-        "ALERTS_INBOX_ADDRESS": "SPA_Waivers_Philadelphia_R03@cms.hhs.gov"
-      }
-    ],
-    "SP_EARLY_ALERTS": {
-      "ALERTFIELD": [
-        {
-          "EA_LABEL": "Meets expedited criteria",
-          "EA_TYPE_ID": 1,
-          "EA_DROP_DOWN_VALUES": null,
-          "ACTIVE": true,
-          "EA_FIELD_ID": 25,
-          "PRIORITY_VALUE": "true",
-          "PRIORITY_OPERATOR": null,
-          "PRIORITY_CODE_ID": 3,
-          "IS_APD": null
-        },
-        {
-          "EA_LABEL": "Customary action",
-          "EA_TYPE_ID": 1,
-          "EA_DROP_DOWN_VALUES": null,
-          "ACTIVE": true,
-          "EA_FIELD_ID": 26,
-          "PRIORITY_VALUE": "true",
-          "PRIORITY_OPERATOR": null,
-          "PRIORITY_CODE_ID": 2,
-          "IS_APD": null
-        }
-      ],
-      "EARLYALERT": [
-        {
-          "YES_NO_VAL": null,
-          "ID_NUMBER": "MD-22103.R01.01",
-          "EA_FIELD_ID": 25,
-          "EMAIL_SENT": null,
-          "TEXT_DD_VAL": null
-        },
-        {
-          "YES_NO_VAL": null,
-          "ID_NUMBER": "MD-22103.R01.01",
-          "EA_FIELD_ID": 26,
-          "EMAIL_SENT": null,
-          "TEXT_DD_VAL": null
-        }
-      ]
-    },
-    "pk": "MD-22103.R01.01",
-    "RO_ANALYST": null
-  },
-  {
-    "PRIORITY_COMPLEXITY": null,
-    "STATES": [
-      {
-        "REGION_ID": "3",
-        "STATE_NAME": "Maryland",
-        "PRIORITY_FLAG": false,
-        "STATE_CODE": "MD"
-      }
-    ],
-    "STATE_PLAN": {
-      "LEAD_ANALYST_ID": 3743,
-      "TEMPLATE_ISSUES": null,
-      "BLOCKING_SPAS_MEMO": null,
-      "CALL_HELD_REASON_ID": null,
-      "FRT_DATE": null,
-      "CURRENT_WAIVER_EXPIRES_DATE": null,
-      "END_DATE": null,
-      "CALL_HELD": null,
-      "TEMPLATE_ISSUES_RESOLVED": null,
-      "ALERT_MILESTONE2_DAYS": null,
-      "SUMMARY_MEMO": "test",
-      "SPW_STATUS_ID": 1,
-      "BUDGET_NEUTRALITY_ESTABLISHED_FLAG": false,
-      "FISCAL_QUARTER": null,
-      "STATUS_MEMO": null,
-      "PROPOSED_DATE": 1678838400000,
-      "ALERT_MILESTONE1_DAYS": null,
-      "ALERT_90_DAYS_DATE": 1682380800000,
-      "PRIORITY_CODE_ID": null,
-      "BUDGET_IMPACT": null,
-      "RO_ANALYST_ID": null,
-      "GAP3": null,
-      "UUID": null,
-      "GAP2": null,
-      "ATTACHED_SPA": null,
-      "BUDGET_NEUTRALITY_STATUS_MEMO": null,
-      "START_CLOCK_DATE": 1674604800000,
-      "BACKUP_FM_ANALYST_ID": null,
-      "SUBMISSION_DATE": 1674604800000,
-      "STATUS_DATE": 1674604800000,
-      "COMPANION_LETTER_RECEIVED_DATE": null,
-      "GAP3_NA": null,
-      "REMARKS_MEMO": null,
-      "TYPE_ID": null,
-      "TE_END_DATE": null,
-      "GAP": null,
-      "DAYS_EXTENSION_NUMBER": null,
-      "OCD_REVIEW_ID": 2,
-      "ACTUAL_EFFECTIVE_DATE": null,
-      "FISCAL_YEAR": null,
-      "PLAN_TYPE": 123,
-      "GAP_NA": null,
-      "SUBMISSION_TYPE": null,
-      "REGION_ID": "3",
-      "BACKUP_PROGRAM_ANALYST_ID": null,
-      "DATE_SENT_PSCCAS": null,
-      "ID_NUMBER": "MD-22103.R01.01",
-      "APPROVAL_STATUS_TYPE": null,
-      "COMPANION_LETTER_REQUESTED_DATE": null,
-      "TITLE_NAME": "OneMac Connection test",
-      "ALERT_MILESTONE4_DAYS": null,
-      "CO_SUBMISSION_DATE": null,
-      "CHANGED_DATE": 1674656687933,
-      "UPL_ACCEPTED": null,
-      "GAP2_NA": null,
-      "OCD_REVIEW_COMMENTS_MEMO": null,
-      "MMDL_IMPORT": null,
-      "TEMPLATE_ISSUES_MEMO": null,
-      "GUIDANCE_DOCS_SUBMITTED": null,
-      "APPROVED_EFFECTIVE_DATE": 1680220800000,
-      "INITIAL_SUBMISSION_COMPLETE": null,
-      "ADDED_COST": null,
-      "MISSING_INFORMATION": null,
-      "PRIORITY_COMPLEXITY_ID": null,
-      "ACTION_TYPE": 76,
-      "PENDING_CONCURRENCE_DATE": null,
-      "PUBLICHEALTH_STATEEMERGENCY": null,
-      "COMPONENT_ID": null,
-      "BUDGET_IMPACT_VALUE": null,
-      "ALERT_MILESTONE3_DAYS": null,
-      "CODE_AFTER_INIT_ASSESS_ID": null,
-      "STATE_CODE": "MD",
-      "DATE_OF_CODING_CHANGE": null,
-      "APPROVAL_DOCS_RECEIVED": false,
-      "PRIORITY_COMMENTS_MEMO": "test",
-      "ORGANIZATION_CHANGE": null,
-      "SPW_IMPORT": false,
-      "REVIEW_POSITION_ID": null,
-      "SPA_TYPE_ID": null,
-      "ELIMINATED_COST": null,
-      "CURRENT_WAIVER_TE": null
-    },
-    "STATE_PLAN_SERVICETYPES": [
-      {
-        "ID_NUMBER": "MD-22103.R01.01",
-        "SERVICE_TYPE_ID": 117
-      }
-    ],
-    "REVIEW_POSITION": null,
-    "GSI1sk": "MD-22103.R01.01",
-    "FM_ANALYST": null,
-    "LEAD_ANALYST": [
-  {
-   "EMAIL": "chesterT@example.gov",
-   "FIRST_NAME": "Chester",
-   "INITIALS": null,
-   "LAST_NAME": "Tester",
-   "OFFICER_ID": 3743,
-   "POSITION_ID": 538,
-   "TELEPHONE": "(410) 555-5445"
-  }
- ],
-    "SP_APD": null,
-    "OCD_REVIEW": [
-      {
-        "OCD_REVIEW_DESCRIPTION": "No",
-        "OCD_REVIEW_ID": 2
-      }
-    ],
-    "PROGRAM_ANALYST": null,
-    "CALLHELDREASONS": null,
-    "SPA_TYPE": null,
-    "SPW_STATUS": [
-      {
-        "SPW_STATUS_ID": 1,
-        "SPW_STATUS_DESC": "Pending"
-      }
-    ],
-    "ACTIONTYPES": [
-      {
-        "PLAN_TYPE_ID": 123,
-        "ACTION_NAME": "Amend",
-        "ACTION_ID": 76
-      }
-    ],
-    "SP_TYPE": null,
-    "SP_APD_SUB_TYPE": null,
-    "STATE_PLAN_SERVICE_SUBTYPES": [
-      {
-        "SERVICE_SUBTYPE_ID": 841,
-        "ID_NUMBER": "MD-22103.R01.01"
-      }
-    ],
-    "RAI": null,
-    "sk": "SEATool#1674656687933",
-    "ACTION_OFFICERS": [
-  {
-   "EMAIL": "lesterT@example.gov",
-   "FIRST_NAME": "Lester",
-   "INITIALS": null,
-   "LAST_NAME": "Tester",
-   "OFFICER_ID": 3740,
-   "POSITION_ID": 538,
-   "TELEPHONE": "(410) 555-5445"
-  },{
-   "EMAIL": "SuperT@example.gov",
-   "FIRST_NAME": "Super",
-   "INITIALS": null,
-   "LAST_NAME": "Tester",
-   "OFFICER_ID": 3741,
-   "POSITION_ID": 538,
-   "TELEPHONE": "(410) 555-5445"
-  },{
-   "EMAIL": "jimmyT@example.gov",
-   "FIRST_NAME": "Jimmy",
-   "INITIALS": null,
-   "LAST_NAME": "Tester",
-   "OFFICER_ID": 3742,
-   "POSITION_ID": 538,
-   "TELEPHONE": "(410) 555-5445"
-  }
- ],
-    "SP1115": null,
-    "COMPONENTS_SP": null,
-    "PLAN_TYPES": [
-      {
-        "PLAN_TYPE_ID": 123,
-        "PLAN_TYPE_NAME": "1915(c)"
-      }
-    ],
-    "PRIORITY_CODES": null,
-    "SP_IMPACT_FUNDING": null,
-    "GSI1pk": "SEATool#1915c_waivers",
-    "CODEAFTERINITACCESS": null,
-    "STOP_RESUME_DATES": null,
-    "COMPONENTS": null,
-    "REGION": [
-      {
-        "REGION_ID": "3",
-        "REGION_NAME": "Philadelphia",
-        "ALERTS_INBOX_ADDRESS": "SPA_Waivers_Philadelphia_R03@cms.hhs.gov"
-      }
-    ],
-    "SP_EARLY_ALERTS": {
-      "ALERTFIELD": [
-        {
-          "EA_LABEL": "Meets expedited criteria",
-          "EA_TYPE_ID": 1,
-          "EA_DROP_DOWN_VALUES": null,
-          "ACTIVE": true,
-          "EA_FIELD_ID": 25,
-          "PRIORITY_VALUE": "true",
-          "PRIORITY_OPERATOR": null,
-          "PRIORITY_CODE_ID": 3,
-          "IS_APD": null
-        },
-        {
-          "EA_LABEL": "Customary action",
-          "EA_TYPE_ID": 1,
-          "EA_DROP_DOWN_VALUES": null,
-          "ACTIVE": true,
-          "EA_FIELD_ID": 26,
-          "PRIORITY_VALUE": "true",
-          "PRIORITY_OPERATOR": null,
-          "PRIORITY_CODE_ID": 2,
-          "IS_APD": null
-        }
-      ],
-      "EARLYALERT": [
-        {
-          "YES_NO_VAL": null,
-          "ID_NUMBER": "MD-22103.R01.01",
-          "EA_FIELD_ID": 25,
-          "EMAIL_SENT": null,
-          "TEXT_DD_VAL": null
-        },
-        {
-          "YES_NO_VAL": null,
-          "ID_NUMBER": "MD-22103.R01.01",
-          "EA_FIELD_ID": 26,
-          "EMAIL_SENT": null,
-          "TEXT_DD_VAL": null
-        }
-      ]
-    },
-    "pk": "MD-22103.R01.01",
-    "RO_ANALYST": null
-  },
-  {
     "clockEndTimestamp": 1680108898763,
     "componentType": "waivernew",
     "eventTimestamp": 1672336498763,
@@ -41026,7 +39861,7 @@
     "additionalInformation": "test",
     "submissionTimestamp": 1672336498763,
     "waiverAuthority": "1915(b)",
-    "GSI1pk": "OneMAC#submitwaiverrenewal",
+    "GSI1pk": "OneMAC#submitwaivernew",
     "convertTimestamp": 1674854066999,
     "submitterEmail": "mdstateonemac@gmail.com",
     "sk": "OneMAC#1672336498763",
@@ -41035,38 +39870,55 @@
     "submitterName": "MDSTATE SUBMITTERNK"
   },
   {
-    "clockEndTimestamp": 1680108898763,
+    "finalDispositionDate": "-- --",
     "componentType": "waivernew",
+    "componentId": "MD-0909.R00.00",
+    "waiverAuthority": "1915(b)",
     "currentStatus": "Under Review",
-    "waiverExtensions": [],
-    "attachments": [
+    "subject": "Sample Title Name",
+    "cpocEmail": "\"Tester, Chester (CPOC)\" <chesterT@example.gov>",
+    "reverseChrono": [
       {
-        "s3Key": "1672336497128/picture.jpg",
-        "filename": "picture.jpg",
-        "title": "1915(b)(4) FFS Selective Contracting (Streamlined) waiver application pre-print (Initial, Renewal, Amendment)",
-        "contentType": "image/jpeg",
-        "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A30413432-e223-4a6d-bfe1-7ed87236ff55/1672336497128/picture.jpg"
+        "additionalInformation": "test",
+        "attachments": [
+          {
+            "s3Key": "1672336497128/picture.jpg",
+            "filename": "picture.jpg",
+            "title": "1915(b)(4) FFS Selective Contracting (Streamlined) waiver application pre-print (Initial, Renewal, Amendment)",
+            "contentType": "image/jpeg",
+            "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A30413432-e223-4a6d-bfe1-7ed87236ff55/1672336497128/picture.jpg"
+          }
+        ],
+        "currentStatus": "Submitted",
+        "action": "Submitted",
+        "type": "Initial Package",
+        "timestamp": 1672336498763,
+        "eventTimestamp": 1672336498763
       }
     ],
-    "proposedEffectiveDate": "2008-07-01",
-    "approvedEffectiveDate": "2008-07-01",
-    "finalDispositionDate": "2008-06-11",
-    "GSI1sk": "MD-0909.R00.00",
-    "additionalInformation": "test",
+    "description": "Sample Summary Memo ",
+    "reviewTeam": [
+      "Lester Tester",
+      "Super Tester",
+      "Jimmy Tester"
+    ],
     "submissionTimestamp": 1672336498763,
-    "waiverAuthority": "1915(b)",
+    "reviewTeamEmailList": [
+      "\"Tester, Lester (SRT)\" <lesterT@example.gov>",
+      "\"Tester, Super (SRT)\" <SuperT@example.gov>",
+      "\"Tester, Jimmy (SRT)\" <jimmyT@example.gov>"
+    ],
+    "proposedEffectiveDate": "2023-02-02",
     "GSI1pk": "OneMAC#waiver",
-    "submitterEmail": "mdstateonemac@gmail.com",
-    "sk": "Package",
-    "cpocName": "Chester Tester",
-    "reviewTeam": ["Lester Tester", "Super Tester", "Jimmy Tester"],
-    "subject": "test subject",
-    "description": "test description",
-    "componentId": "MD-0909.R00.00",
-    "raiResponses": [],
+    "adminChanges": [],
+    "GSI1sk": "MD-0909.R00.00",
     "lastEventTimestamp": 1673565420973,
+    "sk": "Package",
+    "approvedEffectiveDate": "-- --",
     "pk": "MD-0909.R00.00",
-    "submitterName": "MDSTATE SUBMITTERNK"
+    "submitterName": "MDSTATE SUBMITTERNK",
+    "cpocName": "Chester Tester",
+    "submitterEmail": "mdstateonemac@gmail.com"
   },
   {
     "PRIORITY_COMPLEXITY": null,
@@ -44361,50 +43213,6 @@
     "STOP_RESUME_DATES": null
    },
    {
-    "pk": "MD-10330.R01.00",
-    "sk": "Package",
-    "cpocName": "Chester Tester",
-    "reviewTeam": ["Lester Tester", "Super Tester", "Jimmy Tester"],
-    "attachments": [
-     {
-      "contentType": "application/pdf",
-      "filename": "Attachment 3.1-A, #4b, Page 3f Clean.pdf",
-      "s3Key": "1652815530531/Attachment 3.1-A, #4b, Page 3f Clean.pdf",
-      "title": "1915(b)(4) FFS Selective Contracting (Streamlined) and 1915(b) Comprehensive (Capitated) Waiver Independent Assessment (first two renewals only)",
-      "url": "https://uploads-oy2-17509-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Ac84c445b-a748-47dc-b39a-b06c3075b5a5/1652815530531/Attachment%203.1-A%2C%20%234b%2C%20Page%203f%20Clean.pdf"
-     }
-    ],
-    "clockEndTimestamp": 1660591531339,
-    "componentId": "MD-10330.R01.00",
-    "componentType": "waiverrenewal",
-    "currentStatus": "Submitted",
-    "GSI1pk": "OneMAC#waiver",
-    "GSI1sk": "MD-10330.R01.00",
-    "lastEventTimestamp": 1673472581869,
-    "proposedEffectiveDate": "-- --",
-    "raiResponses": [
-     {
-      "additionalInformation": "Testing the RAI Response connections to Waivers",
-      "attachments": [
-       {
-        "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-        "filename": "OneMACInactivated.xlsx",
-        "s3Key": "1673472581115/OneMACInactivated.xlsx",
-        "title": "Waiver RAI Response",
-        "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1673472581115/OneMACInactivated.xlsx"
-       }
-      ],
-      "submissionTimestamp": 1673472581869
-     }
-    ],
-    "submissionTimestamp": 1652815531339,
-    "submitterEmail": "statesubmitter@nightwatch.test",
-    "submitterName": "StateSubmitter Nightwatch",
-    "waiverAuthority": "1915(b)(4)",
-    "waiverExtensions": [
-    ]
-   },
-   {
     "clockEndTimestamp": 1667843096578,
     "componentType": "waiveramendment",
     "eventTimestamp": 1660063496578,
@@ -44703,7 +43511,7 @@
     "componentType": "medicaidsparai",
     "eventTimestamp": 1690921532851,
     "transmittalNumberWarningMessage": "",
-    "currentStatus": "RAI Response Withdraw Enabled",
+    "currentStatus": "Withdraw Formal RAI Response Enabled",
     "parentId": "MD-22-2200-KG",
     "attachments": [
       {
@@ -44748,7 +43556,7 @@
  "componentType": "medicaidspa",
  "cpocEmail": "\"Tester, Chester (CPOC)\" <chesterT@example.gov>",
  "cpocName": "Chester Tester",
- "currentStatus": "RAI Response Withdraw Enabled",
+ "currentStatus": "Withdraw Formal RAI Response Enabled",
  "description": "Sample Summary Memo",
  "GSI1pk": "OneMAC#spa",
  "GSI1sk": "MD-22-2200-KG",
@@ -44768,7 +43576,7 @@
      "url": "https://uploads-oy2-22413-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Abecb694d-f091-42c5-a7b5-d9a974b1c9f6/1689347857918/Screenshot%202023-03-31%20at%204.46.08%20PM.png"
     }
    ],
-   "currentStatus": "RAI Response Withdraw Enabled",
+   "currentStatus": "Withdraw Formal RAI Response Enabled",
    "eventTimestamp": 1690921532851,
    "timestamp": 1673709577000,
    "type": "Formal RAI Response"
@@ -45578,7 +44386,7 @@
     "componentType": "chipsparai",
     "eventTimestamp": 1690923157815,
     "transmittalNumberWarningMessage": "",
-    "currentStatus": "RAI Response Withdraw Enabled",
+    "currentStatus": "Withdraw Formal RAI Response Enabled",
     "parentId": "MD-22-2201-KG",
     "attachments": [
       {
@@ -45623,7 +44431,7 @@
     "componentType": "chipspa",
     "cpocEmail": "\"Tester, Chester (CPOC)\" <chesterT@example.gov>",
     "cpocName": "Chester Tester",
-    "currentStatus": "RAI Response Withdraw Enabled",
+    "currentStatus": "Withdraw Formal RAI Response Enabled",
     "description": "Sample Summary Memo",
     "GSI1pk": "OneMAC#spa",
     "GSI1sk": "MD-22-2201-KG",
@@ -45643,7 +44451,7 @@
         "url": "https://uploads-oy2-22413-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Abecb694d-f091-42c5-a7b5-d9a974b1c9f6/1689347857918/Screenshot%202023-03-31%20at%204.46.08%20PM.png"
        }
       ],
-      "currentStatus": "RAI Response Withdraw Enabled",
+      "currentStatus": "Withdraw Formal RAI Response Enabled",
       "eventTimestamp": 1690923157815,
       "timestamp": 1673709577000,
       "type": "Formal RAI Response"
@@ -45683,108 +44491,30 @@
      "\"Tester, Super (SRT)\" <SuperT@example.gov>",
      "\"Tester, Jimmy (SRT)\" <jimmyT@example.gov>"
     ],
-    "subject": "Sample Title Name",
+    "subject": "Sample Title Name test",
     "submissionTimestamp": 1673709577000,
     "submitterEmail": "statesubmitter@nightwatch.test",
     "submitterName": "StateSubmitter Nightwatch"
    },
   {
-    "PRIORITY_COMPLEXITY": null,
-    "STATES": [
-      {
-        "REGION_ID": "3",
-        "STATE_NAME": "Maryland",
-        "PRIORITY_FLAG": false,
-        "STATE_CODE": "MD"
-      }
-    ],
     "STATE_PLAN": {
       "LEAD_ANALYST_ID": 3743,
-      "TEMPLATE_ISSUES": null,
-      "BLOCKING_SPAS_MEMO": null,
-      "CALL_HELD_REASON_ID": null,
-      "FRT_DATE": null,
-      "CURRENT_WAIVER_EXPIRES_DATE": null,
-      "END_DATE": null,
-      "CALL_HELD": null,
-      "TEMPLATE_ISSUES_RESOLVED": null,
-      "ALERT_MILESTONE2_DAYS": null,
-      "SUMMARY_MEMO": "Sample Summary Memo",
+      "SUMMARY_MEMO": "Sample Summary Memo did this get added from seed??",
       "SPW_STATUS_ID": 1,
-      "BUDGET_NEUTRALITY_ESTABLISHED_FLAG": false,
-      "FISCAL_QUARTER": null,
-      "STATUS_MEMO": null,
       "PROPOSED_DATE": 1675382400000,
-      "ALERT_MILESTONE1_DAYS": null,
       "ALERT_90_DAYS_DATE": 1680048000000,
-      "PRIORITY_CODE_ID": null,
-      "BUDGET_IMPACT": null,
-      "RO_ANALYST_ID": null,
-      "GAP3": null,
-      "UUID": "01686843-7867-4BCC-B0A2-81CB3C9C2281",
-      "GAP2": null,
-      "ATTACHED_SPA": null,
-      "BUDGET_NEUTRALITY_STATUS_MEMO": null,
       "START_CLOCK_DATE": 1672272000000,
-      "BACKUP_FM_ANALYST_ID": null,
       "SUBMISSION_DATE": 1672272000000,
       "STATUS_DATE": 1672272000000,
-      "COMPANION_LETTER_RECEIVED_DATE": null,
-      "GAP3_NA": null,
-      "REMARKS_MEMO": null,
-      "TYPE_ID": null,
-      "TE_END_DATE": null,
-      "GAP": null,
-      "DAYS_EXTENSION_NUMBER": null,
-      "OCD_REVIEW_ID": 2,
-      "ACTUAL_EFFECTIVE_DATE": null,
-      "FISCAL_YEAR": null,
       "PLAN_TYPE": 125,
-      "GAP_NA": null,
-      "SUBMISSION_TYPE": null,
-      "REGION_ID": "3",
-      "BACKUP_PROGRAM_ANALYST_ID": null,
-      "DATE_SENT_PSCCAS": null,
       "ID_NUMBER": "MD-22-2201-KG",
-      "APPROVAL_STATUS_TYPE": null,
-      "COMPANION_LETTER_REQUESTED_DATE": null,
       "TITLE_NAME": "Sample Title Name",
-      "ALERT_MILESTONE4_DAYS": null,
-      "CO_SUBMISSION_DATE": null,
       "CHANGED_DATE": 1672291244320,
-      "UPL_ACCEPTED": null,
-      "GAP2_NA": null,
-      "OCD_REVIEW_COMMENTS_MEMO": null,
-      "MMDL_IMPORT": null,
-      "TEMPLATE_ISSUES_MEMO": null,
-      "GUIDANCE_DOCS_SUBMITTED": null,
       "APPROVED_EFFECTIVE_DATE": null,
-      "INITIAL_SUBMISSION_COMPLETE": null,
-      "ADDED_COST": null,
-      "MISSING_INFORMATION": null,
-      "PRIORITY_COMPLEXITY_ID": null,
-      "ACTION_TYPE": null,
-      "PENDING_CONCURRENCE_DATE": null,
-      "PUBLICHEALTH_STATEEMERGENCY": null,
-      "COMPONENT_ID": null,
-      "BUDGET_IMPACT_VALUE": null,
-      "ALERT_MILESTONE3_DAYS": null,
-      "CODE_AFTER_INIT_ASSESS_ID": null,
-      "STATE_CODE": "MD",
-      "DATE_OF_CODING_CHANGE": null,
-      "APPROVAL_DOCS_RECEIVED": null,
-      "PRIORITY_COMMENTS_MEMO": null,
-      "ORGANIZATION_CHANGE": null,
-      "SPW_IMPORT": false,
-      "REVIEW_POSITION_ID": null,
-      "SPA_TYPE_ID": null,
-      "ELIMINATED_COST": null,
-      "CURRENT_WAIVER_TE": null
+      "ACTION_TYPE": 76,
+      "STATE_CODE": "MD"
     },
-    "STATE_PLAN_SERVICETYPES": null,
-    "REVIEW_POSITION": null,
     "GSI1sk": "MD-22-2201-KG",
-    "FM_ANALYST": null,
     "LEAD_ANALYST": [
       {
         "INITIALS": null,
@@ -45796,27 +44526,19 @@
         "FIRST_NAME": "Chester"
       }
     ],
-    "SP_APD": null,
-    "OCD_REVIEW": [
-      {
-        "OCD_REVIEW_DESCRIPTION": "No",
-        "OCD_REVIEW_ID": 2
-      }
-    ],
-    "PROGRAM_ANALYST": null,
-    "CALLHELDREASONS": null,
-    "SPA_TYPE": null,
     "SPW_STATUS": [
       {
         "SPW_STATUS_ID": 1,
         "SPW_STATUS_DESC": "Pending"
       }
     ],
-    "ACTIONTYPES": null,
-    "SP_TYPE": null,
-    "SP_APD_SUB_TYPE": null,
-    "STATE_PLAN_SERVICE_SUBTYPES": null,
-    "RAI": null,
+    "ACTIONTYPES": [
+      {
+        "PLAN_TYPE_ID": 122,
+        "ACTION_NAME": "New",
+        "ACTION_ID": 76
+      }
+    ],
     "sk": "SEATool#1672291244320",
     "ACTION_OFFICERS": [
       {
@@ -45847,174 +44569,34 @@
         "FIRST_NAME": "Jimmy"
       }
     ],
-    "SP1115": null,
-    "COMPONENTS_SP": null,
     "PLAN_TYPES": [
       {
         "PLAN_TYPE_ID": 125,
         "PLAN_TYPE_NAME": "CHIP SPA"
       }
     ],
-    "PRIORITY_CODES": null,
-    "SP_IMPACT_FUNDING": null,
     "GSI1pk": "SEATool#CHIP_SPA",
-    "CODEAFTERINITACCESS": null,
-    "STOP_RESUME_DATES": null,
-    "COMPONENTS": null,
-    "REGION": [
-      {
-        "REGION_ID": "3",
-        "REGION_NAME": "Philadelphia",
-        "ALERTS_INBOX_ADDRESS": "SPA_Waivers_Philadelphia_R03@cms.hhs.gov"
-      }
-    ],
-    "SP_EARLY_ALERTS": {
-      "ALERTFIELD": [
-        {
-          "EA_LABEL": "Reduced Eligibility",
-          "EA_TYPE_ID": 1,
-          "EA_DROP_DOWN_VALUES": null,
-          "ACTIVE": true,
-          "EA_FIELD_ID": 11,
-          "PRIORITY_VALUE": "true",
-          "PRIORITY_OPERATOR": null,
-          "PRIORITY_CODE_ID": 1,
-          "IS_APD": false
-        },
-        {
-          "EA_LABEL": "Meets expedited criteria",
-          "EA_TYPE_ID": 1,
-          "EA_DROP_DOWN_VALUES": null,
-          "ACTIVE": true,
-          "EA_FIELD_ID": 24,
-          "PRIORITY_VALUE": "true",
-          "PRIORITY_OPERATOR": null,
-          "PRIORITY_CODE_ID": 3,
-          "IS_APD": null
-        }
-      ],
-      "EARLYALERT": [
-        {
-          "YES_NO_VAL": null,
-          "ID_NUMBER": "MD-22-2201-KG",
-          "EA_FIELD_ID": 11,
-          "EMAIL_SENT": null,
-          "TEXT_DD_VAL": null
-        },
-        {
-          "YES_NO_VAL": null,
-          "ID_NUMBER": "MD-22-2201-KG",
-          "EA_FIELD_ID": 24,
-          "EMAIL_SENT": null,
-          "TEXT_DD_VAL": null
-        }
-      ]
-    },
-    "pk": "MD-22-2201-KG",
-    "RO_ANALYST": null
+    "pk": "MD-22-2201-KG"
   },
   {
-    "PRIORITY_COMPLEXITY": null,
-    "STATES": [
-      {
-        "REGION_ID": "3",
-        "STATE_NAME": "Maryland",
-        "PRIORITY_FLAG": false,
-        "STATE_CODE": "MD"
-      }
-    ],
     "STATE_PLAN": {
       "LEAD_ANALYST_ID": 3743,
-      "TEMPLATE_ISSUES": null,
-      "BLOCKING_SPAS_MEMO": null,
-      "CALL_HELD_REASON_ID": null,
-      "FRT_DATE": null,
-      "CURRENT_WAIVER_EXPIRES_DATE": null,
-      "END_DATE": null,
-      "CALL_HELD": null,
-      "TEMPLATE_ISSUES_RESOLVED": null,
-      "ALERT_MILESTONE2_DAYS": null,
-      "SUMMARY_MEMO": "package to test RAI withdrawing rebuild",
+      "SUMMARY_MEMO": "package to test RAI withdrawing rebuild another from seed",
       "SPW_STATUS_ID": 1,
-      "BUDGET_NEUTRALITY_ESTABLISHED_FLAG": false,
-      "FISCAL_QUARTER": null,
-      "STATUS_MEMO": null,
       "PROPOSED_DATE": null,
-      "ALERT_MILESTONE1_DAYS": null,
       "ALERT_90_DAYS_DATE": 1680048000000,
-      "PRIORITY_CODE_ID": null,
-      "BUDGET_IMPACT": null,
-      "GAP3": null,
-      "RO_ANALYST_ID": null,
-      "UUID": "01686843-7867-4BCC-B0A2-81CB3C9C2281",
-      "GAP2": null,
-      "ATTACHED_SPA": null,
-      "BUDGET_NEUTRALITY_STATUS_MEMO": null,
       "START_CLOCK_DATE": 1672272000000,
-      "BACKUP_FM_ANALYST_ID": null,
       "SUBMISSION_DATE": 1672272000000,
-      "STATUS_DATE": 1672272000000,
-      "COMPANION_LETTER_RECEIVED_DATE": null,
-      "GAP3_NA": null,
-      "REMARKS_MEMO": null,
-      "TYPE_ID": null,
-      "TE_END_DATE": null,
-      "GAP": null,
-      "DAYS_EXTENSION_NUMBER": null,
-      "OCD_REVIEW_ID": 2,
+      "STATUS_DATE": 1674749577000,
       "ACTUAL_EFFECTIVE_DATE": null,
-      "FISCAL_YEAR": null,
-      "GAP_NA": null,
       "PLAN_TYPE": 125,
-      "SUBMISSION_TYPE": null,
-      "BACKUP_PROGRAM_ANALYST_ID": null,
-      "REGION_ID": "3",
-      "DATE_SENT_PSCCAS": null,
-      "APPROVAL_STATUS_TYPE": null,
       "ID_NUMBER": "MD-22-2201-KG",
-      "COMPANION_LETTER_REQUESTED_DATE": null,
       "TITLE_NAME": "OneMac Connection test",
-      "ALERT_MILESTONE4_DAYS": null,
-      "CO_SUBMISSION_DATE": null,
-      "CHANGED_DATE": 1672291290683,
-      "UPL_ACCEPTED": null,
-      "GAP2_NA": null,
-      "OCD_REVIEW_COMMENTS_MEMO": null,
-      "GUIDANCE_DOCS_SUBMITTED": null,
-      "MMDL_IMPORT": null,
-      "TEMPLATE_ISSUES_MEMO": null,
+      "CHANGED_DATE": 1674749577000,
       "APPROVED_EFFECTIVE_DATE": null,
-      "ADDED_COST": null,
-      "INITIAL_SUBMISSION_COMPLETE": true,
-      "MISSING_INFORMATION": null,
-      "PRIORITY_COMPLEXITY_ID": null,
-      "ACTION_TYPE": null,
-      "PENDING_CONCURRENCE_DATE": null,
-      "PUBLICHEALTH_STATEEMERGENCY": null,
-      "BUDGET_IMPACT_VALUE": null,
-      "COMPONENT_ID": null,
-      "ALERT_MILESTONE3_DAYS": null,
-      "CODE_AFTER_INIT_ASSESS_ID": null,
-      "DATE_OF_CODING_CHANGE": null,
-      "STATE_CODE": "MD",
-      "APPROVAL_DOCS_RECEIVED": false,
-      "PRIORITY_COMMENTS_MEMO": "test",
-      "ORGANIZATION_CHANGE": null,
-      "SPW_IMPORT": false,
-      "REVIEW_POSITION_ID": null,
-      "ELIMINATED_COST": null,
-      "SPA_TYPE_ID": null,
-      "CURRENT_WAIVER_TE": null
+      "ACTION_TYPE": 76
     },
-    "STATE_PLAN_SERVICETYPES": [
-      {
-        "ID_NUMBER": "MD-22-2201-KG",
-        "SERVICE_TYPE_ID": 93
-      }
-    ],
-    "REVIEW_POSITION": null,
     "GSI1sk": "MD-22-2201-KG",
-    "FM_ANALYST": null,
     "LEAD_ANALYST": [
       {
         "INITIALS": null,
@@ -46026,32 +44608,20 @@
         "FIRST_NAME": "Chester"
       }
     ],
-    "SP_APD": null,
-    "OCD_REVIEW": [
-      {
-        "OCD_REVIEW_DESCRIPTION": "No",
-        "OCD_REVIEW_ID": 2
-      }
-    ],
     "PROGRAM_ANALYST": null,
-    "CALLHELDREASONS": null,
-    "SPA_TYPE": null,
     "SPW_STATUS": [
       {
-        "SPW_STATUS_DESC": "Pending-RAI",
+        "SPW_STATUS_DESC": "Pending",
         "SPW_STATUS_ID": 1
       }
     ],
-    "ACTIONTYPES": null,
-    "SP_TYPE": null,
-    "SP_APD_SUB_TYPE": null,
-    "STATE_PLAN_SERVICE_SUBTYPES": [
+    "ACTIONTYPES": [
       {
-        "SERVICE_SUBTYPE_ID": 967,
-        "ID_NUMBER": "MD-22-2201-KG"
+        "PLAN_TYPE_ID": 122,
+        "ACTION_NAME": "New",
+        "ACTION_ID": 76
       }
     ],
-    "RAI": null,
     "sk": "SEATool#1672291290683",
     "ACTION_OFFICERS": [
       {
@@ -46109,86 +44679,14 @@
         "FIRST_NAME": "Jimmy2"
       }
     ],
-    "SP1115": null,
-    "COMPONENTS_SP": null,
     "PLAN_TYPES": [
       {
         "PLAN_TYPE_ID": 125,
         "PLAN_TYPE_NAME": "CHIP SPA"
       }
     ],
-    "PRIORITY_CODES": null,
-    "SP_IMPACT_FUNDING": [
-      {
-        "OTHER": null,
-        "ID_NUMBER": "MD-22-2201-KG",
-        "IMPACT_YEAR_2_VALUE": null,
-        "IMPACT_YEAR_3": null,
-        "PROVIDER_TAX": null,
-        "IMPACT_YEAR_2": null,
-        "IMPACT_YEAR_1": null,
-        "IGT": null,
-        "IMPACT_YEAR_3_VALUE": null,
-        "CPE": null,
-        "IMPACT_YEAR_1_VALUE": null,
-        "APPROPRIATIONS": null
-      }
-    ],
     "GSI1pk": "SEATool#CHIP_SPA",
-    "CODEAFTERINITACCESS": null,
-    "STOP_RESUME_DATES": null,
-    "COMPONENTS": null,
-    "REGION": [
-      {
-        "REGION_ID": "3",
-        "REGION_NAME": "Philadelphia",
-        "ALERTS_INBOX_ADDRESS": "SPA_Waivers_Philadelphia_R03@cms.hhs.gov"
-      }
-    ],
-    "SP_EARLY_ALERTS": {
-      "ALERTFIELD": [
-        {
-          "EA_LABEL": "Reduced Eligibility",
-          "EA_TYPE_ID": 1,
-          "EA_DROP_DOWN_VALUES": null,
-          "ACTIVE": true,
-          "EA_FIELD_ID": 11,
-          "PRIORITY_VALUE": "true",
-          "PRIORITY_OPERATOR": null,
-          "PRIORITY_CODE_ID": 1,
-          "IS_APD": false
-        },
-        {
-          "EA_LABEL": "Meets expedited criteria",
-          "EA_TYPE_ID": 1,
-          "EA_DROP_DOWN_VALUES": null,
-          "ACTIVE": true,
-          "EA_FIELD_ID": 24,
-          "PRIORITY_VALUE": "true",
-          "PRIORITY_OPERATOR": null,
-          "PRIORITY_CODE_ID": 3,
-          "IS_APD": null
-        }
-      ],
-      "EARLYALERT": [
-        {
-          "YES_NO_VAL": null,
-          "ID_NUMBER": "MD-22-2201-KG",
-          "EA_FIELD_ID": 11,
-          "EMAIL_SENT": null,
-          "TEXT_DD_VAL": null
-        },
-        {
-          "YES_NO_VAL": null,
-          "ID_NUMBER": "MD-22-2201-KG",
-          "EA_FIELD_ID": 24,
-          "EMAIL_SENT": null,
-          "TEXT_DD_VAL": null
-        }
-      ]
-    },
-    "pk": "MD-22-2201-KG",
-    "RO_ANALYST": null
+    "pk": "MD-22-2201-KG"
   },
   {
     "PRIORITY_COMPLEXITY": null,
@@ -46453,7 +44951,7 @@
     "componentType": "chipsparai",
     "eventTimestamp": 1675348646000,
     "transmittalNumberWarningMessage": "",
-    "currentStatus": "RAI Response Withdraw Enabled",
+    "currentStatus": "Withdraw Formal RAI Response Enabled",
     "parentId": "MD-23-7650-VM",
     "attachments": [
       {
@@ -46484,34 +44982,12 @@
     "submitterName": "StateSubmitter Nightwatch"
   },
   {
+    "componentType": "chipspa",
+    "componentId": "MD-23-7650-VM",
+    "currentStatus": "Withdraw Formal RAI Response Enabled",
     "subject": "OneMac Connection test",
-    "clockEndTimestamp": 1680063073531,
-    "withdrawalRequests": [],
-    "waiverExtensions": [],
-    "reviewTeamEmailList": [
-      "\"Tester, Lester\" <lesterT@example.gov>",
-      "\"Tester, Super\" <SuperT@example.gov>",
-      "\"Tester, Jimmy\" <jimmyT@example.gov>",
-      "\"Tester, Lester2\" <lesterT2@example.gov>",
-      "\"Tester, Super2\" <SuperT2@example.gov>",
-      "\"Tester, Jimmy2\" <jimmyT2@example.gov>"
-    ],
-    "reviewTeam": [
-      "Lester Tester",
-      "Super Tester",
-      "Jimmy Tester",
-      "Lester2 Tester",
-      "Super2 Tester",
-      "Jimmy2 Tester"
-    ],
-    "proposedEffectiveDate": "-- --",
-    "GSI1sk": "MD-23-7650-VM",
-    "additionalInformation": "test",
-    "submissionTimestamp": 1672290673531,
-    "submitterEmail": "statesubmitter@nightwatch.test",
-    "approvedEffectiveDate": "-- --",
-    "sk": "Package",
-    "raiResponses": [
+    "cpocEmail": "\"Tester, Chester (CPOC)\" <chesterT@example.gov>",
+    "reverseChrono": [
       {
         "additionalInformation": "Here is the official RAI Response",
         "attachments": [
@@ -46523,44 +44999,72 @@
             "url": "https://uploads-oy2-22413-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Abecb694d-f091-42c5-a7b5-d9a974b1c9f6/1689347857918/Screenshot%202023-03-31%20at%204.46.08%20PM.png"
           }
         ],
-        "currentStatus": "RAI Response Withdraw Enabled",
-        "submissionTimestamp": 1673709577000,
-        "eventTimestamp": 1690985787634
-      }
-    ],
-    "lastEventTimestamp": 1690985787634,
-    "componentType": "chipspa",
-    "currentStatus": "RAI Response Withdraw Enabled",
-    "attachments": [
-      {
-        "s3Key": "1672290671436/excel.xlsx",
-        "filename": "excel.xlsx",
-        "title": "CMS Form 179",
-        "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-        "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1672290671436/excel.xlsx"
+        "currentStatus": "Withdraw Formal RAI Response Enabled",
+        "action": "Submitted",
+        "type": "Formal RAI Response",
+        "timestamp": 1673709577000,
+        "eventTimestamp": 1675348646000
       },
       {
-        "s3Key": "1672290671438/textnotes.txt",
-        "filename": "textnotes.txt",
-        "title": "SPA Pages",
-        "contentType": "text/plain",
-        "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1672290671438/textnotes.txt"
+        "additionalInformation": "test",
+        "attachments": [
+          {
+            "s3Key": "1672290671436/excel.xlsx",
+            "filename": "excel.xlsx",
+            "title": "CMS Form 179",
+            "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1672290671436/excel.xlsx"
+          },
+          {
+            "s3Key": "1672290671438/textnotes.txt",
+            "filename": "textnotes.txt",
+            "title": "SPA Pages",
+            "contentType": "text/plain",
+            "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1672290671438/textnotes.txt"
+          }
+        ],
+        "currentStatus": "Submitted",
+        "action": "Submitted",
+        "type": "Initial Package",
+        "timestamp": 1672290673531,
+        "eventTimestamp": 1672290673531
       }
     ],
+    "description": "package to test RAI withdrawing",
+    "reviewTeam": [
+      "Lester Tester",
+      "Super Tester",
+      "Jimmy Tester",
+      "Lester2 Tester",
+      "Super2 Tester",
+      "Jimmy2 Tester"
+    ],
+    "submissionTimestamp": 1672290673531,
+    "reviewTeamEmailList": [
+      "\"Tester, Lester (SRT)\" <lesterT@example.gov>",
+      "\"Tester, Super (SRT)\" <SuperT@example.gov>",
+      "\"Tester, Jimmy (SRT)\" <jimmyT@example.gov>",
+      "\"Tester, Lester2 (SRT)\" <lesterT2@example.gov>",
+      "\"Tester, Super2 (SRT)\" <SuperT2@example.gov>",
+      "\"Tester, Jimmy2 (SRT)\" <jimmyT2@example.gov>"
+    ],
+    "proposedEffectiveDate": "-- --",
     "GSI1pk": "OneMAC#spa",
     "adminChanges": [
       {
         "changeReason": "Enable RAI Response withdraw for automated testing",
-        "changeTimestamp": 1690985787634,
+        "changeTimestamp": 1675348646000,
         "changeMade": "Systemadmin Nightwatch has enabled State package action to withdraw Formal RAI Response"
       }
     ],
-    "cpocName": "Chester Tester",
-    "componentId": "MD-23-7650-VM",
-    "description": "package to test RAI withdrawing",
+    "GSI1sk": "MD-23-7650-VM",
+    "lastEventTimestamp": 1675348646000,
+    "sk": "Package",
+    "approvedEffectiveDate": "-- --",
     "pk": "MD-23-7650-VM",
-    "cpocEmail": "\"Tester, Chester\" <chesterT@example.gov>",
-    "submitterName": "Statesubmitter Nightwatch"
+    "submitterName": "Statesubmitter Nightwatch",
+    "cpocName": "Chester Tester",
+    "submitterEmail": "statesubmitter@nightwatch.test"
   },
   {
     "PRIORITY_COMPLEXITY": null,
@@ -47379,7 +45883,7 @@
     "componentType": "medicaidsparai",
     "eventTimestamp": 1690980331889,
     "transmittalNumberWarningMessage": "",
-    "currentStatus": "RAI Response Withdraw Enabled",
+    "currentStatus": "Withdraw Formal RAI Response Enabled",
     "parentId": "MD-23-7652-VM",
     "attachments": [
       {
@@ -47424,7 +45928,7 @@
  "componentType": "medicaidspa",
  "cpocEmail": "\"Tester, Chester (CPOC)\" <chesterT@example.gov>",
  "cpocName": "Chester Tester",
- "currentStatus": "RAI Response Withdraw Enabled",
+ "currentStatus": "Withdraw Formal RAI Response Enabled",
  "description": "package to test RAI withdrawing rebuild",
  "GSI1pk": "OneMAC#spa",
  "GSI1sk": "MD-23-7652-VM",
@@ -47443,7 +45947,7 @@
      "url": "https://uploads-oy2-22413-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Abecb694d-f091-42c5-a7b5-d9a974b1c9f6/1689347857918/Screenshot%202023-03-31%20at%204.46.08%20PM.png"
     }
    ],
-   "currentStatus": "RAI Response Withdraw Enabled",
+   "currentStatus": "Withdraw Formal RAI Response Enabled",
    "eventTimestamp": 1690980331889,
    "timestamp": 1673709577000,
    "type": "Formal RAI Response"
@@ -48296,25 +46800,42 @@
     "pk": "MD-23-7653-VM"
   },
   {
+    "finalDispositionDate": "-- --",
     "componentType": "medicaidspa",
-    "currentStatus": "RAI Issued",
-    "waiverExtensions": [],
-    "attachments": [],
-    "proposedEffectiveDate": "2023-04-20",
-    "GSI1sk": "MD-23-7653-VM",
-    "submissionTimestamp": 1675926000000,
-    "GSI1pk": "OneMAC#spa",
-    "submitterEmail": "-- --",
-    "sk": "Package",
-    "cpocName": "Chester Tester",
-    "reviewTeam": ["Lester Tester", "Super Tester", "Jimmy Tester"],
     "componentId": "MD-23-7653-VM",
-    "raiResponses": [],
+    "currentStatus": "RAI Issued",
+    "subject": "OneMac Connection test",
+    "cpocEmail": "\"Tester, Chester (CPOC)\" <chesterT@example.gov>",
+    "reverseChrono": [],
+    "description": "NOSO list rai with response",
+    "reviewTeam": [
+      "Lester Tester",
+      "Super Tester",
+      "Jimmy Tester"
+    ],
+    "submissionTimestamp": 1675926000000,
+    "reviewTeamEmailList": [
+      "\"Tester, Lester (SRT)\" <lesterT@example.gov>",
+      "\"Tester, Super (SRT)\" <SuperT@example.gov>",
+      "\"Tester, Jimmy (SRT)\" <jimmyT@example.gov>"
+    ],
+    "proposedEffectiveDate": "2023-04-19",
+    "GSI1pk": "OneMAC#spa",
+    "adminChanges": [
+      {
+        "changeReason": "This is a Not Originally Submitted in OneMAC (NOSO) package that users need to see in OneMAC.",
+        "changeTimestamp": 1684154035362,
+        "changeMade": "OneMAC submission created from SEA Tool entry"
+      }
+    ],
+    "GSI1sk": "MD-23-7653-VM",
     "lastEventTimestamp": 1676477951800,
+    "sk": "Package",
+    "approvedEffectiveDate": "-- --",
     "pk": "MD-23-7653-VM",
-    "subject": "test subject",
-    "description": "test description",
-    "submitterName": "-- --"
+    "submitterName": "-- --",
+    "cpocName": "Chester Tester",
+    "submitterEmail": "-- --"
   },
   {
     "PRIORITY_COMPLEXITY": null,
@@ -49084,7 +47605,7 @@
     "componentType": "waiverrai",
     "eventTimestamp": 1690982549456,
     "transmittalNumberWarningMessage": "",
-    "currentStatus": "RAI Response Withdraw Enabled",
+    "currentStatus": "Withdraw Formal RAI Response Enabled",
     "parentId": "MD-22116.R00.00",
     "attachments": [
       {
@@ -49115,34 +47636,12 @@
     "submitterName": "StateSubmitter Nightwatch"
   },
   {
+    "componentType": "waivernew",
+    "componentId": "MD-22116.R00.00",
+    "currentStatus": "Withdraw Formal RAI Response Enabled",
     "subject": "OneMac Connection test",
-    "clockEndTimestamp": 1680063073531,
-    "withdrawalRequests": [],
-    "waiverExtensions": [],
-    "reviewTeamEmailList": [
-      "\"Tester, Lester\" <lesterT@example.gov>",
-      "\"Tester, Super\" <SuperT@example.gov>",
-      "\"Tester, Jimmy\" <jimmyT@example.gov>",
-      "\"Tester, Lester2\" <lesterT2@example.gov>",
-      "\"Tester, Super2\" <SuperT2@example.gov>",
-      "\"Tester, Jimmy2\" <jimmyT2@example.gov>"
-    ],
-    "reviewTeam": [
-      "Lester Tester",
-      "Super Tester",
-      "Jimmy Tester",
-      "Lester2 Tester",
-      "Super2 Tester",
-      "Jimmy2 Tester"
-    ],
-    "proposedEffectiveDate": "-- --",
-    "GSI1sk": "MD-22116.R00.00",
-    "additionalInformation": "test",
-    "submissionTimestamp": 1672290673531,
-    "submitterEmail": "statesubmitter@nightwatch.test",
-    "approvedEffectiveDate": "-- --",
-    "sk": "Package",
-    "raiResponses": [
+    "cpocEmail": "\"Tester, Chester (CPOC)\" <chesterT@example.gov>",
+    "reverseChrono": [
       {
         "additionalInformation": "Here is the official RAI Response",
         "attachments": [
@@ -49154,23 +47653,49 @@
             "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3Ac052f1db-9f55-42aa-9d43-2d957bfc754b/1672953505887/PackagelistView_ExcelExport_Issues.xlsx"
           }
         ],
-        "currentStatus": "RAI Response Withdraw Enabled",
-        "submissionTimestamp": 1673709577000,
+        "currentStatus": "Withdraw Formal RAI Response Enabled",
+        "action": "Submitted",
+        "type": "Formal RAI Response",
+        "timestamp": 1673709577000,
         "eventTimestamp": 1690982549456
-      }
-    ],
-    "lastEventTimestamp": 1690982549456,
-    "componentType": "waivernew",
-    "currentStatus": "RAI Response Withdraw Enabled",
-    "attachments": [
+      },
       {
-        "s3Key": "1672269864615/file.docx",
-        "filename": "file.docx",
-        "title": "1915(b)(4) FFS Selective Contracting (Streamlined) waiver application pre-print (Initial, Renewal, Amendment)",
-        "contentType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-        "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A30413432-e223-4a6d-bfe1-7ed87236ff55/1672269864615/file.docx"
+        "additionalInformation": "test",
+        "attachments": [
+          {
+            "s3Key": "1672269864615/file.docx",
+            "filename": "file.docx",
+            "title": "1915(b)(4) FFS Selective Contracting (Streamlined) waiver application pre-print (Initial, Renewal, Amendment)",
+            "contentType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+            "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A30413432-e223-4a6d-bfe1-7ed87236ff55/1672269864615/file.docx"
+          }
+        ],
+        "currentStatus": "Submitted",
+        "action": "Submitted",
+        "type": "Initial Package",
+        "timestamp": 1672290673531,
+        "eventTimestamp": 1672290673531
       }
     ],
+    "description": "package to test RAI withdrawing rebuild",
+    "reviewTeam": [
+      "Lester Tester",
+      "Super Tester",
+      "Jimmy Tester",
+      "Lester2 Tester",
+      "Super2 Tester",
+      "Jimmy2 Tester"
+    ],
+    "submissionTimestamp": 1672290673531,
+    "reviewTeamEmailList": [
+      "\"Tester, Lester (SRT)\" <lesterT@example.gov>",
+      "\"Tester, Super (SRT)\" <SuperT@example.gov>",
+      "\"Tester, Jimmy (SRT)\" <jimmyT@example.gov>",
+      "\"Tester, Lester2 (SRT)\" <lesterT2@example.gov>",
+      "\"Tester, Super2 (SRT)\" <SuperT2@example.gov>",
+      "\"Tester, Jimmy2 (SRT)\" <jimmyT2@example.gov>"
+    ],
+    "proposedEffectiveDate": "-- --",
     "GSI1pk": "OneMAC#waiver",
     "adminChanges": [
       {
@@ -49179,12 +47704,14 @@
         "changeMade": "Systemadmin Nightwatch has enabled State package action to withdraw Formal RAI Response"
       }
     ],
-    "cpocName": "Chester Tester",
-    "componentId": "MD-22116.R00.00",
-    "description": "package to test RAI withdrawing rebuild",
+    "GSI1sk": "MD-22116.R00.00",
+    "lastEventTimestamp": 1690982549456,
+    "sk": "Package",
+    "approvedEffectiveDate": "-- --",
     "pk": "MD-22116.R00.00",
-    "cpocEmail": "\"Tester, Chester\" <chesterT@example.gov>",
-    "submitterName": "Statesubmitter Nightwatch"
+    "submitterName": "Statesubmitter Nightwatch",
+    "cpocName": "Chester Tester",
+    "submitterEmail": "statesubmitter@nightwatch.test"
   },
   {
     "PRIORITY_COMPLEXITY": null,
@@ -50554,7 +49081,7 @@
   "componentType": "waiverrai",
   "eventTimestamp": 1690982903782,
   "transmittalNumberWarningMessage": "",
-  "currentStatus": "RAI Response Withdraw Enabled",
+  "currentStatus": "Withdraw Formal RAI Response Enabled",
   "parentId": "MD-22116.R01.00",
   "attachments": [
     {
@@ -50599,7 +49126,7 @@
   "componentType": "waiverrenewal",
   "cpocEmail": "\"Tester, Chester (CPOC)\" <chesterT@example.gov>",
   "cpocName": "Chester Tester",
-  "currentStatus": "RAI Response Withdraw Enabled",
+  "currentStatus": "Withdraw Formal RAI Response Enabled",
   "description": "package to test RAI withdrawing rebuild",
   "GSI1pk": "OneMAC#waiver",
   "GSI1sk": "MD-22116.R01.00",
@@ -50623,7 +49150,7 @@
       "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3Ac052f1db-9f55-42aa-9d43-2d957bfc754b/1672953505887/PackagelistView_ExcelExport_Issues.xlsx"
      }
     ],
-    "currentStatus": "RAI Response Withdraw Enabled",
+    "currentStatus": "Withdraw Formal RAI Response Enabled",
     "eventTimestamp": 1690982903782,
     "timestamp": 1673709577000,
     "type": "Formal RAI Response"
@@ -52389,58 +50916,85 @@
   "submitterName": "StateSubmitter Nightwatch"
 },
 {
-  "clockEndTimestamp": 1680063073531,
+  "finalDispositionDate": "-- --",
   "componentType": "medicaidspa",
-  "currentStatus": "Under Review",
-  "waiverExtensions": [],
-  "attachments": [
-    {
-      "s3Key": "1672290671436/excel.xlsx",
-      "filename": "excel.xlsx",
-      "title": "CMS Form 179",
-      "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-      "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1672290671436/excel.xlsx"
-    },
-    {
-      "s3Key": "1672290671438/textnotes.txt",
-      "filename": "textnotes.txt",
-      "title": "SPA Pages",
-      "contentType": "text/plain",
-      "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1672290671438/textnotes.txt"
-    }
-  ],
-  "proposedEffectiveDate": "2023-02-03",
-  "GSI1sk": "MD-22-2400-VM",
-  "additionalInformation": "test",
-  "submissionTimestamp": 1672290673531,
-  "GSI1pk": "OneMAC#spa",
-  "submitterEmail": "statesubmitter@nightwatch.test",
-  "sk": "Package",
-  "cpocName": "Chester Tester",
-  "reviewTeam": ["Lester Tester", "Super Tester", "Jimmy Tester"],
   "componentId": "MD-22-2400-VM",
-  "raiResponses": [
+  "currentStatus": "Under Review",
+  "subject": "OneMac Connection test",
+  "latestRaiResponseTimestamp": 1675987200000,
+  "cpocEmail": "\"Tester, Chester (CPOC)\" <chesterT@example.gov>",
+  "reverseChrono": [
     {
-      "additionalInformation": "Testing the RAI Response connection",
+      "additionalInformation": "Here is the official RAI Response",
       "attachments": [
         {
-          "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-          "filename": "OneMACInactivated.xlsx",
-          "s3Key": "1673472581115/OneMACInactivated.xlsx",
-          "title": "SPA RAI Response",
-          "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1673472581115/OneMACInactivated.xlsx"
+          "filename": "Screenshot 2023-03-31 at 4.46.08 PM.png",
+          "s3Key": "1689347857918/Screenshot 2023-03-31 at 4.46.08 PM.png",
+          "title": "RAI Response",
+          "contentType": "image/png",
+          "url": "https://uploads-oy2-22413-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Abecb694d-f091-42c5-a7b5-d9a974b1c9f6/1689347857918/Screenshot%202023-03-31%20at%204.46.08%20PM.png"
         }
       ],
       "currentStatus": "Submitted",
-      "submissionTimestamp": 1675987200000
+      "action": "Submitted",
+      "type": "Formal RAI Response",
+      "timestamp": 1675987200000,
+      "eventTimestamp": 1675987200000
+    },
+    {
+      "additionalInformation": "test",
+      "attachments": [
+        {
+          "s3Key": "1672290671436/excel.xlsx",
+          "filename": "excel.xlsx",
+          "title": "CMS Form 179",
+          "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+          "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1672290671436/excel.xlsx"
+        },
+        {
+          "s3Key": "1672290671438/textnotes.txt",
+          "filename": "textnotes.txt",
+          "title": "SPA Pages",
+          "contentType": "text/plain",
+          "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1672290671438/textnotes.txt"
+        }
+      ],
+      "currentStatus": "Submitted",
+      "action": "Submitted",
+      "type": "Initial Package",
+      "timestamp": 1672290673531,
+      "eventTimestamp": 1672290673531
     }
   ],
-  "latestRaiResponseTimestamp": 1675987200000,
-  "lastEventTimestamp": 1672291290683,
+  "description": "pending status",
+  "reviewTeam": [
+    "Lester Tester",
+    "Super Tester",
+    "Jimmy Tester",
+    "Lester2 Tester",
+    "Super2 Tester",
+    "Jimmy2 Tester"
+  ],
+  "submissionTimestamp": 1672290673531,
+  "reviewTeamEmailList": [
+    "\"Tester, Lester (SRT)\" <lesterT@example.gov>",
+    "\"Tester, Super (SRT)\" <SuperT@example.gov>",
+    "\"Tester, Jimmy (SRT)\" <jimmyT@example.gov>",
+    "\"Tester, Lester2 (SRT)\" <lesterT2@example.gov>",
+    "\"Tester, Super2 (SRT)\" <SuperT2@example.gov>",
+    "\"Tester, Jimmy2 (SRT)\" <jimmyT2@example.gov>"
+  ],
+  "proposedEffectiveDate": "-- --",
+  "GSI1pk": "OneMAC#spa",
+  "adminChanges": [],
+  "GSI1sk": "MD-22-2400-VM",
+  "lastEventTimestamp": 1676204246000,
+  "sk": "Package",
+  "approvedEffectiveDate": "-- --",
   "pk": "MD-22-2400-VM",
-  "subject": "test subject",
-  "description": "test description",
-  "submitterName": "Statesubmitter Nightwatch"
+  "submitterName": "Statesubmitter Nightwatch",
+  "cpocName": "Chester Tester",
+  "submitterEmail": "statesubmitter@nightwatch.test"
 },
 {
   "PRIORITY_COMPLEXITY": null,
@@ -53860,7 +52414,7 @@
  "componentType": "chipspa",
  "cpocEmail": "\"Tester, Chester (CPOC)\" <chesterT@example.gov>",
  "cpocName": "Chester Tester",
- "currentStatus": "RAI Response Withdraw Enabled",
+ "currentStatus": "Withdraw Formal RAI Response Enabled",
  "description": "pending status",
  "GSI1pk": "OneMAC#spa",
  "GSI1sk": "MD-22-2401-VM",
@@ -53880,7 +52434,7 @@
      "url": "https://uploads-oy2-22413-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Abecb694d-f091-42c5-a7b5-d9a974b1c9f6/1689347857918/Screenshot%202023-03-31%20at%204.46.08%20PM.png"
     }
    ],
-   "currentStatus": "RAI Response Withdraw Enabled",
+   "currentStatus": "Withdraw Formal RAI Response Enabled",
    "eventTimestamp": 1692995462549,
    "timestamp": 1673709577000,
    "type": "Formal RAI Response"
@@ -53959,229 +52513,6 @@
     "CALL_HELD": null,
     "TEMPLATE_ISSUES_RESOLVED": null,
     "ALERT_MILESTONE2_DAYS": null,
-    "SUMMARY_MEMO": "Sample Summary Memo",
-    "SPW_STATUS_ID": 1,
-    "BUDGET_NEUTRALITY_ESTABLISHED_FLAG": false,
-    "FISCAL_QUARTER": null,
-    "STATUS_MEMO": null,
-    "PROPOSED_DATE": 1675382400000,
-    "ALERT_MILESTONE1_DAYS": null,
-    "ALERT_90_DAYS_DATE": 1680048000000,
-    "PRIORITY_CODE_ID": null,
-    "BUDGET_IMPACT": null,
-    "RO_ANALYST_ID": null,
-    "GAP3": null,
-    "UUID": "01686843-7867-4BCC-B0A2-81CB3C9C2281",
-    "GAP2": null,
-    "ATTACHED_SPA": null,
-    "BUDGET_NEUTRALITY_STATUS_MEMO": null,
-    "START_CLOCK_DATE": 1672272000000,
-    "BACKUP_FM_ANALYST_ID": null,
-    "SUBMISSION_DATE": 1672272000000,
-    "STATUS_DATE": 1672272000000,
-    "COMPANION_LETTER_RECEIVED_DATE": null,
-    "GAP3_NA": null,
-    "REMARKS_MEMO": null,
-    "TYPE_ID": null,
-    "TE_END_DATE": null,
-    "GAP": null,
-    "DAYS_EXTENSION_NUMBER": null,
-    "OCD_REVIEW_ID": 2,
-    "ACTUAL_EFFECTIVE_DATE": null,
-    "FISCAL_YEAR": null,
-    "PLAN_TYPE": 125,
-    "GAP_NA": null,
-    "SUBMISSION_TYPE": null,
-    "REGION_ID": "3",
-    "BACKUP_PROGRAM_ANALYST_ID": null,
-    "DATE_SENT_PSCCAS": null,
-    "ID_NUMBER": "MD-22-2401-VM",
-    "APPROVAL_STATUS_TYPE": null,
-    "COMPANION_LETTER_REQUESTED_DATE": null,
-    "TITLE_NAME": "Sample Title Name",
-    "ALERT_MILESTONE4_DAYS": null,
-    "CO_SUBMISSION_DATE": null,
-    "CHANGED_DATE": 1672291244320,
-    "UPL_ACCEPTED": null,
-    "GAP2_NA": null,
-    "OCD_REVIEW_COMMENTS_MEMO": null,
-    "MMDL_IMPORT": null,
-    "TEMPLATE_ISSUES_MEMO": null,
-    "GUIDANCE_DOCS_SUBMITTED": null,
-    "APPROVED_EFFECTIVE_DATE": null,
-    "INITIAL_SUBMISSION_COMPLETE": null,
-    "ADDED_COST": null,
-    "MISSING_INFORMATION": null,
-    "PRIORITY_COMPLEXITY_ID": null,
-    "ACTION_TYPE": null,
-    "PENDING_CONCURRENCE_DATE": null,
-    "PUBLICHEALTH_STATEEMERGENCY": null,
-    "COMPONENT_ID": null,
-    "BUDGET_IMPACT_VALUE": null,
-    "ALERT_MILESTONE3_DAYS": null,
-    "CODE_AFTER_INIT_ASSESS_ID": null,
-    "STATE_CODE": "MD",
-    "DATE_OF_CODING_CHANGE": null,
-    "APPROVAL_DOCS_RECEIVED": null,
-    "PRIORITY_COMMENTS_MEMO": null,
-    "ORGANIZATION_CHANGE": null,
-    "SPW_IMPORT": false,
-    "REVIEW_POSITION_ID": null,
-    "SPA_TYPE_ID": null,
-    "ELIMINATED_COST": null,
-    "CURRENT_WAIVER_TE": null
-  },
-  "STATE_PLAN_SERVICETYPES": null,
-  "REVIEW_POSITION": null,
-  "GSI1sk": "MD-22-2401-VM",
-  "FM_ANALYST": null,
-  "LEAD_ANALYST": [
-{
- "EMAIL": "chesterT@example.gov",
- "FIRST_NAME": "Chester",
- "INITIALS": null,
- "LAST_NAME": "Tester",
- "OFFICER_ID": 3743,
- "POSITION_ID": 538,
- "TELEPHONE": "(410) 555-5445"
-}
-],
-  "SP_APD": null,
-  "OCD_REVIEW": [
-    {
-      "OCD_REVIEW_DESCRIPTION": "No",
-      "OCD_REVIEW_ID": 2
-    }
-  ],
-  "PROGRAM_ANALYST": null,
-  "CALLHELDREASONS": null,
-  "SPA_TYPE": null,
-  "SPW_STATUS": [
-    {
-      "SPW_STATUS_ID": 1,
-      "SPW_STATUS_DESC": "Pending"
-    }
-  ],
-  "ACTIONTYPES": null,
-  "SP_TYPE": null,
-  "SP_APD_SUB_TYPE": null,
-  "STATE_PLAN_SERVICE_SUBTYPES": null,
-  "RAI": null,
-  "sk": "SEATool#1672291244320",
-  "ACTION_OFFICERS": [
-{
- "EMAIL": "lesterT@example.gov",
- "FIRST_NAME": "Lester",
- "INITIALS": null,
- "LAST_NAME": "Tester",
- "OFFICER_ID": 3740,
- "POSITION_ID": 538,
- "TELEPHONE": "(410) 555-5445"
-},{
- "EMAIL": "SuperT@example.gov",
- "FIRST_NAME": "Super",
- "INITIALS": null,
- "LAST_NAME": "Tester",
- "OFFICER_ID": 3741,
- "POSITION_ID": 538,
- "TELEPHONE": "(410) 555-5445"
-},{
- "EMAIL": "jimmyT@example.gov",
- "FIRST_NAME": "Jimmy",
- "INITIALS": null,
- "LAST_NAME": "Tester",
- "OFFICER_ID": 3742,
- "POSITION_ID": 538,
- "TELEPHONE": "(410) 555-5445"
-}
-],
-  "SP1115": null,
-  "COMPONENTS_SP": null,
-  "PLAN_TYPES": [
-    {
-      "PLAN_TYPE_ID": 125,
-      "PLAN_TYPE_NAME": "CHIP SPA"
-    }
-  ],
-  "PRIORITY_CODES": null,
-  "SP_IMPACT_FUNDING": null,
-  "GSI1pk": "SEATool#CHIP_SPA",
-  "CODEAFTERINITACCESS": null,
-  "STOP_RESUME_DATES": null,
-  "COMPONENTS": null,
-  "REGION": [
-    {
-      "REGION_ID": "3",
-      "REGION_NAME": "Philadelphia",
-      "ALERTS_INBOX_ADDRESS": "SPA_Waivers_Philadelphia_R03@cms.hhs.gov"
-    }
-  ],
-  "SP_EARLY_ALERTS": {
-    "ALERTFIELD": [
-      {
-        "EA_LABEL": "Reduced Eligibility",
-        "EA_TYPE_ID": 1,
-        "EA_DROP_DOWN_VALUES": null,
-        "ACTIVE": true,
-        "EA_FIELD_ID": 11,
-        "PRIORITY_VALUE": "true",
-        "PRIORITY_OPERATOR": null,
-        "PRIORITY_CODE_ID": 1,
-        "IS_APD": false
-      },
-      {
-        "EA_LABEL": "Meets expedited criteria",
-        "EA_TYPE_ID": 1,
-        "EA_DROP_DOWN_VALUES": null,
-        "ACTIVE": true,
-        "EA_FIELD_ID": 24,
-        "PRIORITY_VALUE": "true",
-        "PRIORITY_OPERATOR": null,
-        "PRIORITY_CODE_ID": 3,
-        "IS_APD": null
-      }
-    ],
-    "EARLYALERT": [
-      {
-        "YES_NO_VAL": null,
-        "ID_NUMBER": "MD-22-2401-VM",
-        "EA_FIELD_ID": 11,
-        "EMAIL_SENT": null,
-        "TEXT_DD_VAL": null
-      },
-      {
-        "YES_NO_VAL": null,
-        "ID_NUMBER": "MD-22-2401-VM",
-        "EA_FIELD_ID": 24,
-        "EMAIL_SENT": null,
-        "TEXT_DD_VAL": null
-      }
-    ]
-  },
-  "pk": "MD-22-2401-VM",
-  "RO_ANALYST": null
-},
-{
-  "PRIORITY_COMPLEXITY": null,
-  "STATES": [
-    {
-      "REGION_ID": "3",
-      "STATE_NAME": "Maryland",
-      "PRIORITY_FLAG": false,
-      "STATE_CODE": "MD"
-    }
-  ],
-  "STATE_PLAN": {
-    "LEAD_ANALYST_ID": 3743,
-    "TEMPLATE_ISSUES": null,
-    "BLOCKING_SPAS_MEMO": null,
-    "CALL_HELD_REASON_ID": null,
-    "FRT_DATE": null,
-    "CURRENT_WAIVER_EXPIRES_DATE": null,
-    "END_DATE": null,
-    "CALL_HELD": null,
-    "TEMPLATE_ISSUES_RESOLVED": null,
-    "ALERT_MILESTONE2_DAYS": null,
     "SUMMARY_MEMO": "pending status",
     "SPW_STATUS_ID": 1,
     "BUDGET_NEUTRALITY_ESTABLISHED_FLAG": false,
@@ -54201,7 +52532,7 @@
     "START_CLOCK_DATE": 1672272000000,
     "BACKUP_FM_ANALYST_ID": null,
     "SUBMISSION_DATE": 1672272000000,
-    "STATUS_DATE": 1672272000000,
+    "STATUS_DATE": 1673749577000,
     "COMPANION_LETTER_RECEIVED_DATE": null,
     "GAP3_NA": null,
     "REMARKS_MEMO": null,
@@ -54224,7 +52555,7 @@
     "TITLE_NAME": "OneMac Connection test",
     "ALERT_MILESTONE4_DAYS": null,
     "CO_SUBMISSION_DATE": null,
-    "CHANGED_DATE": 1672291290683,
+    "CHANGED_DATE": 1673749577000,
     "UPL_ACCEPTED": null,
     "GAP2_NA": null,
     "OCD_REVIEW_COMMENTS_MEMO": null,
@@ -54300,7 +52631,7 @@
     }
   ],
   "RAI": null,
-  "sk": "SEATool#1672291290683",
+  "sk": "SEATool#1673749577000",
   "ACTION_OFFICERS": [
 {
  "EMAIL": "lesterT@example.gov",
@@ -55018,9 +53349,7 @@
 {
   "clockEndTimestamp": 1680725910479,
   "componentType": "waiverrai",
-  "eventTimestamp": 1672953510479,
   "currentStatus": "Submitted",
-  "originallyFrom": "cms-spa-form-master-change-requests",
   "parentId": "MD-22204.R01.00",
   "attachments": [
     {
@@ -55037,6 +53366,7 @@
   "additionalInformation": "Jan 5 did the rai response for this waiver to verify the migration process.",
   "submissionTimestamp": 1672953510479,
   "GSI1pk": "OneMAC#submitwaiverrai",
+  "adminChanges": [],
   "convertTimestamp": 1674854067202,
   "submitterEmail": "statesystemadmin@nightwatch.test",
   "sk": "OneMAC#1672953510479",
@@ -55045,77 +53375,69 @@
   "submitterName": "undefined undefined"
 },
 {
- "pk": "MD-22204.R01.00",
- "sk": "Package",
- "adminChanges": [
-  {
-   "changeMade": "Valencia McMurray has enabled State package action to withdraw Formal RAI Response",
-   "changeReason": "Automated test to enable an RAI Response withdrawal.",
-   "changeTimestamp": 1692995861025
-  }
- ],
- "approvedEffectiveDate": "2023-03-02",
- "componentId": "MD-22204.R01.00",
- "componentType": "waiverrenewal",
- "cpocEmail": "\"Tester, Chester (CPOC)\" <chesterT@example.gov>",
- "cpocName": "Chester Tester",
- "currentStatus": "RAI Response Withdraw Enabled",
- "description": "pending-rai",
- "GSI1pk": "OneMAC#waiver",
- "GSI1sk": "MD-22204.R01.00",
- "GSI2pk": "MD-22204.R01.00",
- "GSI2sk": "waiverrai",
- "lastEventTimestamp": 1692995861025,
- "latestRaiResponseTimestamp": 1692995861025,
- "parentId": "MD-22204.R01.00",
- "parentType": "waiverrenewal",
- "proposedEffectiveDate": "2023-03-02",
- "reverseChrono": [
-  {
-   "action": "Submitted",
-   "additionalInformation": "Jan 5 did the rai response for this waiver to verify the migration process.",
-   "attachments": [
+  "subject": "OneMac Connection test",
+  "reviewTeamEmailList": [],
+  "reviewTeam": [
+    "Test Test"
+  ],
+  "proposedEffectiveDate": "2023-03-02",
+  "GSI1sk": "MD-22204.R01.00",
+  "submissionTimestamp": 1672269888263,
+  "GSI2sk": "waiverrenewal",
+  "waiverAuthority": "1915(b)",
+  "submitterEmail": "mdstateonemac@gmail.com",
+  "approvedEffectiveDate": "2023-03-02",
+  "latestRaiResponseTimestamp": 1672953510479,
+  "finalDispositionDate": "-- --",
+  "sk": "Package",
+  "lastEventTimestamp": 1673622793000,
+  "componentType": "waiverrenewal",
+  "currentStatus": "Under Review",
+  "parentId": "MD-22204.R00.00",
+  "reverseChrono": [
     {
-     "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-     "filename": "PackagelistView_ExcelExport_Issues.xlsx",
-     "s3Key": "1672953505887/PackagelistView_ExcelExport_Issues.xlsx",
-     "title": "Waiver RAI Response",
-     "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3Ac052f1db-9f55-42aa-9d43-2d957bfc754b/1672953505887/PackagelistView_ExcelExport_Issues.xlsx"
-    }
-   ],
-   "currentStatus": "RAI Response Withdraw Enabled",
-   "eventTimestamp": 1692995861025,
-   "timestamp": 1672953510479,
-   "type": "Formal RAI Response"
-  },
-  {
-   "action": "Submitted",
-   "additionalInformation": "test",
-   "attachments": [
+      "action": "Submitted",
+      "additionalInformation": "Jan 5 did the rai response for this waiver to verify the migration process.",
+      "attachments": [
+        {
+          "s3Key": "1672953505887/PackagelistView_ExcelExport_Issues.xlsx",
+          "filename": "PackagelistView_ExcelExport_Issues.xlsx",
+          "title": "Waiver RAI Response",
+          "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+          "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3Ac052f1db-9f55-42aa-9d43-2d957bfc754b/1672953505887/PackagelistView_ExcelExport_Issues.xlsx"
+        }
+      ],
+      "type": "Formal RAI Response",
+      "currentStatus": "Submitted",
+      "timestamp": 1672953510479
+    },
     {
-     "contentType": "image/jpeg",
-     "filename": "picture.jpg",
-     "s3Key": "1672269887538/picture.jpg",
-     "title": "1915(b)(4) FFS Selective Contracting (Streamlined) waiver application pre-print (Initial, Renewal, Amendment)",
-     "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A30413432-e223-4a6d-bfe1-7ed87236ff55/1672269887538/picture.jpg"
+      "additionalInformation": "test",
+      "attachments": [
+        {
+          "s3Key": "1672269887538/picture.jpg",
+          "filename": "picture.jpg",
+          "title": "1915(b)(4) FFS Selective Contracting (Streamlined) waiver application pre-print (Initial, Renewal, Amendment)",
+          "contentType": "image/jpeg",
+          "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A30413432-e223-4a6d-bfe1-7ed87236ff55/1672269887538/picture.jpg"
+        }
+      ],
+      "currentStatus": "Submitted",
+      "action": "Submitted",
+      "type": "Initial Package",
+      "timestamp": 1672269888263,
+      "eventTimestamp": 1672269888263
     }
-   ],
-   "currentStatus": "Submitted",
-   "eventTimestamp": 1672269888263,
-   "timestamp": 1672269888263,
-   "type": "Initial Package"
-  }
- ],
- "reviewTeam": [
-  "Test Test"
- ],
- "reviewTeamEmailList": [
- ],
- "subject": "OneMac Connection test",
- "submissionTimestamp": 1672953510479,
- "submitterEmail": "statesystemadmin@nightwatch.test",
- "submitterName": "undefined undefined",
- "waiverAuthority": "1915(b)"
+  ],
+  "GSI2pk": "MD-22204.R00.00",
+  "GSI1pk": "OneMAC#waiver",
+  "adminChanges": [],
+  "cpocName": "Chester Tester",
+  "componentId": "MD-22204.R01.00",
+  "description": "pending-rai ",
+  "cpocEmail": "\"Tester, Chester (CPOC)\" <chesterT@example.gov>",
+  "pk": "MD-22204.R01.00",
+  "submitterName": "MDSTATE SUBMITTERNK"
 },
 {
   "PRIORITY_COMPLEXITY": null,
@@ -55615,7 +53937,7 @@
     "CALL_HELD": true,
     "TEMPLATE_ISSUES_RESOLVED": null,
     "ALERT_MILESTONE2_DAYS": null,
-    "SUMMARY_MEMO": "pending-rai",
+    "SUMMARY_MEMO": "pending-rai ",
     "SPW_STATUS_ID": 11,
     "BUDGET_NEUTRALITY_ESTABLISHED_FLAG": false,
     "FISCAL_QUARTER": null,
@@ -56491,66 +54813,88 @@
   "submitterName": "undefined undefined"
 },
 {
-  "clockEndTimestamp": 1681930575838,
+  "componentId": "MD-22958.R00.01",
+  "waiverAuthority": "1915(c)",
+  "subject": "test",
+  "latestRaiResponseTimestamp": 1672953510479,
+  "description": "test",
+  "title": "App K test",
+  "submissionTimestamp": 1672680579000,
+  "reviewTeamEmailList": [
+    "\"Tester, Lester (SRT)\" <lesterT@example.gov>",
+    "\"Tester, Super (SRT)\" <SuperT@example.gov>",
+    "\"Tester, Jimmy (SRT)\" <jimmyT@example.gov>"
+  ],
+  "proposedEffectiveDate": "2023-01-19",
+  "GSI1sk": "MD-22958.R00.01",
+  "sk": "Package",
+  "finalDispositionDate": "-- --",
   "componentType": "waiverappk",
   "currentStatus": "Under Review",
-  "waiverExtensions": [],
-  "attachments": [
+  "cpocEmail": "\"Tester, Chester (CPOC)\" <chesterT@example.gov>",
+  "reverseChrono": [
     {
-      "s3Key": "1674158150631/Report_UserList(1).csv",
-      "filename": "Report_UserList(1).csv",
-      "title": "1915(c) Appendix K Amendment Waiver Template",
-      "contentType": "text/csv",
-      "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A30413432-e223-4a6d-bfe1-7ed87236ff55/1674158150631/Report_UserList%281%29.csv"
-    },
-    {
-      "s3Key": "1674158150632/Report_spaList(5).csv",
-      "filename": "Report_spaList(5).csv",
-      "title": "1915(c) Appendix K Amendment Waiver Template",
-      "contentType": "text/csv",
-      "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A30413432-e223-4a6d-bfe1-7ed87236ff55/1674158150632/Report_spaList%285%29.csv"
-    },
-    {
-      "s3Key": "1674158150632/Report_waiverList(8).csv",
-      "filename": "Report_waiverList(8).csv",
-      "title": "Other",
-      "contentType": "text/csv",
-      "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A30413432-e223-4a6d-bfe1-7ed87236ff55/1674158150632/Report_waiverList%288%29.csv"
-    }
-  ],
-  "proposedEffectiveDate": "2023-01-20",
-  "GSI1sk": "MD-22958.R00.01",
-  "additionalInformation": "created new APP k ",
-  "submissionTimestamp": 1674158175838,
-  "waiverAuthority": "1915(c)",
-  "GSI1pk": "OneMAC#waiver",
-  "submitterEmail": "mdstateonemac@gmail.com",
-  "sk": "Package",
-  "cpocName": "Chester Tester",
-  "reviewTeam": ["Lester Tester", "Super Tester", "Jimmy Tester"],
-  "componentId": "MD-22958.R00.01",
-  "raiResponses": [
-    {
-      "additionalInformation": "Testing the RAI Response connections to Waivers",
+      "additionalInformation": "Did the rai response for this waiver to verify the migration process.",
       "attachments": [
         {
-          "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-          "filename": "OneMACInactivated.xlsx",
-          "s3Key": "1673472581115/OneMACInactivated.xlsx",
+          "s3Key": "1672953505887/PackagelistView_ExcelExport_Issues.xlsx",
+          "filename": "PackagelistView_ExcelExport_Issues.xlsx",
           "title": "Waiver RAI Response",
-          "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1673472581115/OneMACInactivated.xlsx"
+          "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+          "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3Ac052f1db-9f55-42aa-9d43-2d957bfc754b/1672953505887/PackagelistView_ExcelExport_Issues.xlsx"
         }
       ],
       "currentStatus": "Submitted",
-      "submissionTimestamp": 1675987200000
+      "action": "Submitted",
+      "type": "Formal RAI Response",
+      "timestamp": 1672953510479,
+      "eventTimestamp": 1672953510479
+    },
+    {
+      "additionalInformation": "created new APP k ",
+      "attachments": [
+        {
+          "s3Key": "1674158150631/Report_UserList(1).csv",
+          "filename": "Report_UserList(1).csv",
+          "title": "1915(c) Appendix K Amendment Waiver Template",
+          "contentType": "text/csv",
+          "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A30413432-e223-4a6d-bfe1-7ed87236ff55/1674158150631/Report_UserList%281%29.csv"
+        },
+        {
+          "s3Key": "1674158150632/Report_spaList(5).csv",
+          "filename": "Report_spaList(5).csv",
+          "title": "1915(c) Appendix K Amendment Waiver Template",
+          "contentType": "text/csv",
+          "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A30413432-e223-4a6d-bfe1-7ed87236ff55/1674158150632/Report_spaList%285%29.csv"
+        },
+        {
+          "s3Key": "1674158150632/Report_waiverList(8).csv",
+          "filename": "Report_waiverList(8).csv",
+          "title": "Other",
+          "contentType": "text/csv",
+          "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A30413432-e223-4a6d-bfe1-7ed87236ff55/1674158150632/Report_waiverList%288%29.csv"
+        }
+      ],
+      "currentStatus": "Submitted",
+      "action": "Submitted",
+      "type": "Initial Package",
+      "timestamp": 1672680579000,
+      "eventTimestamp": 1672680579000
     }
   ],
-  "latestRaiResponseTimestamp": 1675987200000,
+  "reviewTeam": [
+    "Lester Tester",
+    "Super Tester",
+    "Jimmy Tester"
+  ],
+  "GSI1pk": "OneMAC#waiver",
+  "adminChanges": [],
   "lastEventTimestamp": 1674158680503,
+  "approvedEffectiveDate": "-- --",
   "pk": "MD-22958.R00.01",
-  "subject": "test subject",
-  "description": "test description",
-  "submitterName": "MDSTATE SUBMITTERNK"
+  "submitterName": "MDSTATE SUBMITTERNK",
+  "cpocName": "Chester Tester",
+  "submitterEmail": "mdstateonemac@gmail.com"
 },
 {
   "PRIORITY_COMPLEXITY": null,
@@ -56964,7 +55308,7 @@
   ],
   "PRIORITY_CODES": null,
   "SP_IMPACT_FUNDING": null,
-  "GSI1pk": "SEATool#1915b_waivers",
+  "GSI1pk": "SEATool#1915c_waivers",
   "CODEAFTERINITACCESS": null,
   "STOP_RESUME_DATES": null,
   "COMPONENTS": null,
@@ -57208,7 +55552,7 @@
   ],
   "PRIORITY_CODES": null,
   "SP_IMPACT_FUNDING": null,
-  "GSI1pk": "SEATool#1915b_waivers",
+  "GSI1pk": "SEATool#1915c_waivers",
   "CODEAFTERINITACCESS": null,
   "STOP_RESUME_DATES": null,
   "COMPONENTS": null,
@@ -57312,7 +55656,7 @@
   "componentType": "waiverappkrai",
   "eventTimestamp": 1673198609000,
   "transmittalNumberWarningMessage": "",
-  "currentStatus": "RAI Response Withdraw Enabled",
+  "currentStatus": "Withdraw Formal RAI Response Enabled",
   "parentId": "MD-22958.R00.02",
   "attachments": [
     {
@@ -58086,7 +56430,7 @@
   "clockEndTimestamp": 1680725910479,
   "componentType": "waiverrai",
   "eventTimestamp": 1676136209000,
-  "currentStatus": "RAI Response Withdraw Enabled",
+  "currentStatus": "Withdraw Formal RAI Response Enabled",
   "parentId": "MD-22204.R00.02",
   "attachments": [
     {
@@ -58147,14 +56491,14 @@
           "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3Ac052f1db-9f55-42aa-9d43-2d957bfc754b/1672953505887/PackagelistView_ExcelExport_Issues.xlsx"
         }
       ],
-      "currentStatus": "RAI Response Withdraw Enabled",
+      "currentStatus": "Withdraw Formal RAI Response Enabled",
       "submissionTimestamp": 1672953510479,
       "eventTimestamp": 1690986376374
     }
   ],
   "lastEventTimestamp": 1690986376374,
   "componentType": "waiveramendment",
-  "currentStatus": "RAI Response Withdraw Enabled",
+  "currentStatus": "Withdraw Formal RAI Response Enabled",
   "attachments": [
     {
       "s3Key": "1672269887538/picture.jpg",
@@ -58728,7 +57072,7 @@
  "componentType": "waiveramendment",
  "cpocEmail": "\"Beasley, Michelle (CPOC)\" <Michelle.Beasley@example.com>",
  "cpocName": "Michelle Beasley",
- "currentStatus": "RAI Response Withdraw Enabled",
+ "currentStatus": "Withdraw Formal RAI Response Enabled",
  "description": "RAI response withdrawal test. rebuild",
  "GSI1pk": "OneMAC#waiver",
  "GSI1sk": "MD-2200.R00.10",
@@ -58752,7 +57096,7 @@
      "url": "https://uploads-oy2-24636-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A1cdd699c-f936-49b4-9f01-c4f4e8cfa595/1690811753124/excel.xlsx"
     }
    ],
-   "currentStatus": "RAI Response Withdraw Enabled",
+   "currentStatus": "Withdraw Formal RAI Response Enabled",
    "eventTimestamp": 1693077990875,
    "timestamp": 1675766233000,
    "type": "Formal RAI Response"
@@ -59490,5 +57834,357 @@
   ],
   "withdrawalRequests": [
   ]
- }
+ },
+ {
+  "clockEndTimestamp": 1682427994077,
+  "componentType": "waiverappk",
+  "eventTimestamp": 1674655594077,
+  "currentStatus": "Submitted",
+  "originallyFrom": "cms-spa-form-master-change-requests",
+  "attachments": [
+    {
+      "s3Key": "1674655593188/textnotes.txt",
+      "filename": "textnotes.txt",
+      "title": "1915(c) Appendix K Amendment Waiver Template",
+      "contentType": "text/plain",
+      "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A35b18373-d59d-4d36-8d7f-2ca368f6a6c1/1674655593188/textnotes.txt"
+    }
+  ],
+  "proposedEffectiveDate": "-- --",
+  "GSI1sk": "MD-22103.R01.02",
+  "additionalInformation": "test",
+  "submissionTimestamp": 1674655594077,
+  "GSI1pk": "OneMAC#submitwaiverappk",
+  "convertTimestamp": 1674854063700,
+  "submitterEmail": "statesubmitter@nightwatch.test",
+  "sk": "OneMAC#1674655594077",
+  "componentId": "MD-22103.R01.02",
+  "pk": "MD-22103.R01.02",
+  "submitterName": "Statesubmitter Nightwatch"
+},
+{
+  "clockEndTimestamp": 1704889871968,
+  "componentType": "waiverappkwithdraw",
+  "eventTimestamp": 1674656687733,
+  "transmittalNumberWarningMessage": "",
+  "currentStatus": "Submitted",
+  "parentId": "MD-22103.R01.02",
+  "attachments": [
+    {
+      "filename": "Screenshot 2023-03-31 at 4.46.08 PM.png",
+      "s3Key": "1697110270561/Screenshot 2023-03-31 at 4.46.08 PM.png",
+      "title": "Supporting Documentation",
+      "contentType": "image/png",
+      "url": "https://uploads-pi2-25581-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Aff3489cb-dea4-43b2-a907-06fb25c2e1fb/1697110270561/Screenshot%202023-03-31%20at%204.46.08%20PM.png"
+    }
+  ],
+  "parentType": "waiverappk",
+  "GSI1sk": "MD-22103.R01.02",
+  "additionalInformation": "Withdraw Package test for App K",
+  "submissionTimestamp": 1674656687733,
+  "GSI1pk": "OneMAC#submitwaiverappkwithdraw",
+  "submitterEmail": "statesubmitter@nightwatch.test",
+  "territory": "MD",
+  "sk": "OneMAC#1674656687733",
+  "componentId": "MD-22103.R01.02",
+  "pk": "MD-22103.R01.02",
+  "submitterName": "StateSubmitter Nightwatch"
+},
+{
+  "subject": "Sample Title Name",
+  "componentType": "waiverappk",
+  "currentStatus": "Withdrawal Requested",
+  "reviewTeamEmailList": [
+    "\"Tester, Lester (SRT)\" <lesterT@example.gov>",
+    "\"Tester, Super (SRT)\" <SuperT@example.gov>",
+    "\"Tester, Jimmy (SRT)\" <jimmyT@example.gov>"
+  ],
+  "reviewTeam": [
+    "Lester Tester",
+    "Super Tester",
+    "Jimmy Tester"
+  ],
+  "proposedEffectiveDate": "-- --",
+  "GSI1sk": "MD-22103.R01.02",
+  "reverseChrono": [
+    {
+      "additionalInformation": "Withdraw Package test for App K",
+      "attachments": [
+        {
+          "filename": "Screenshot 2023-03-31 at 4.46.08 PM.png",
+          "s3Key": "1697110270561/Screenshot 2023-03-31 at 4.46.08 PM.png",
+          "title": "Supporting Documentation",
+          "contentType": "image/png",
+          "url": "https://uploads-pi2-25581-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Aff3489cb-dea4-43b2-a907-06fb25c2e1fb/1697110270561/Screenshot%202023-03-31%20at%204.46.08%20PM.png"
+        }
+      ],
+      "currentStatus": "Withdrawal Requested",
+      "action": "Withdrawal Requested",
+      "type": "Package",
+      "timestamp": 1674656687733,
+      "eventTimestamp": 1674656687733
+    },
+    {
+      "additionalInformation": "test",
+      "attachments": [
+        {
+          "s3Key": "1674655593188/textnotes.txt",
+          "filename": "textnotes.txt",
+          "title": "1915(c) Appendix K Amendment Waiver Template",
+          "contentType": "text/plain",
+          "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A35b18373-d59d-4d36-8d7f-2ca368f6a6c1/1674655593188/textnotes.txt"
+        }
+      ],
+      "currentStatus": "Submitted",
+      "action": "Submitted",
+      "type": "Initial Package",
+      "timestamp": 1674655594077,
+      "eventTimestamp": 1674655594077
+    }
+  ],
+  "submissionTimestamp": 1674655594077,
+  "GSI1pk": "OneMAC#waiver",
+  "adminChanges": [],
+  "submitterEmail": "statesubmitter@nightwatch.test",
+  "approvedEffectiveDate": "-- --",
+  "cpocName": "Chester Tester",
+  "sk": "Package",
+  "componentId": "MD-22103.R01.02",
+  "description": "Sample Summary Memo ",
+  "lastEventTimestamp": 1674656687733,
+  "pk": "MD-22103.R01.02",
+  "cpocEmail": "\"Tester, Chester (CPOC)\" <chesterT@example.gov>",
+  "submitterName": "Statesubmitter Nightwatch"
+},
+{
+  "PRIORITY_COMPLEXITY": null,
+  "STATES": [
+    {
+      "REGION_ID": "3",
+      "STATE_NAME": "Maryland",
+      "PRIORITY_FLAG": false,
+      "STATE_CODE": "MD"
+    }
+  ],
+  "STATE_PLAN": {
+    "LEAD_ANALYST_ID": 3743,
+    "TEMPLATE_ISSUES": null,
+    "BLOCKING_SPAS_MEMO": null,
+    "CALL_HELD_REASON_ID": null,
+    "FRT_DATE": null,
+    "CURRENT_WAIVER_EXPIRES_DATE": null,
+    "END_DATE": null,
+    "CALL_HELD": null,
+    "TEMPLATE_ISSUES_RESOLVED": null,
+    "ALERT_MILESTONE2_DAYS": null,
+    "SUMMARY_MEMO": "Sample Summary Memo ",
+    "SPW_STATUS_ID": 1,
+    "BUDGET_NEUTRALITY_ESTABLISHED_FLAG": false,
+    "FISCAL_QUARTER": null,
+    "STATUS_MEMO": null,
+    "PROPOSED_DATE": null,
+    "ALERT_MILESTONE1_DAYS": null,
+    "ALERT_90_DAYS_DATE": 1682380800000,
+    "PRIORITY_CODE_ID": null,
+    "BUDGET_IMPACT": null,
+    "GAP3": null,
+    "RO_ANALYST_ID": null,
+    "UUID": null,
+    "GAP2": null,
+    "ATTACHED_SPA": null,
+    "BUDGET_NEUTRALITY_STATUS_MEMO": null,
+    "START_CLOCK_DATE": 1674604800000,
+    "BACKUP_FM_ANALYST_ID": null,
+    "SUBMISSION_DATE": 1674604800000,
+    "STATUS_DATE": 1674604800000,
+    "COMPANION_LETTER_RECEIVED_DATE": null,
+    "GAP3_NA": null,
+    "REMARKS_MEMO": null,
+    "TYPE_ID": null,
+    "TE_END_DATE": null,
+    "GAP": null,
+    "DAYS_EXTENSION_NUMBER": null,
+    "OCD_REVIEW_ID": 2,
+    "ACTUAL_EFFECTIVE_DATE": null,
+    "FISCAL_YEAR": null,
+    "GAP_NA": null,
+    "PLAN_TYPE": 123,
+    "SUBMISSION_TYPE": null,
+    "BACKUP_PROGRAM_ANALYST_ID": null,
+    "REGION_ID": "3",
+    "DATE_SENT_PSCCAS": null,
+    "APPROVAL_STATUS_TYPE": null,
+    "ID_NUMBER": "MD-22103.R01.02",
+    "COMPANION_LETTER_REQUESTED_DATE": null,
+    "TITLE_NAME": "Sample Title Name",
+    "ALERT_MILESTONE4_DAYS": null,
+    "CO_SUBMISSION_DATE": null,
+    "CHANGED_DATE": 1674656635480,
+    "UPL_ACCEPTED": null,
+    "GAP2_NA": null,
+    "OCD_REVIEW_COMMENTS_MEMO": null,
+    "GUIDANCE_DOCS_SUBMITTED": null,
+    "MMDL_IMPORT": null,
+    "TEMPLATE_ISSUES_MEMO": null,
+    "APPROVED_EFFECTIVE_DATE": null,
+    "ADDED_COST": null,
+    "INITIAL_SUBMISSION_COMPLETE": null,
+    "MISSING_INFORMATION": null,
+    "PRIORITY_COMPLEXITY_ID": null,
+    "ACTION_TYPE": 76,
+    "PENDING_CONCURRENCE_DATE": null,
+    "PUBLICHEALTH_STATEEMERGENCY": null,
+    "BUDGET_IMPACT_VALUE": null,
+    "COMPONENT_ID": null,
+    "ALERT_MILESTONE3_DAYS": null,
+    "CODE_AFTER_INIT_ASSESS_ID": null,
+    "DATE_OF_CODING_CHANGE": null,
+    "STATE_CODE": "MD",
+    "APPROVAL_DOCS_RECEIVED": null,
+    "PRIORITY_COMMENTS_MEMO": null,
+    "ORGANIZATION_CHANGE": null,
+    "SPW_IMPORT": false,
+    "REVIEW_POSITION_ID": null,
+    "ELIMINATED_COST": null,
+    "SPA_TYPE_ID": null,
+    "CURRENT_WAIVER_TE": null
+  },
+  "STATE_PLAN_SERVICETYPES": null,
+  "REVIEW_POSITION": null,
+  "GSI1sk": "MD-22103.R01.02",
+  "FM_ANALYST": null,
+  "LEAD_ANALYST": [
+    {
+      "INITIALS": null,
+      "TELEPHONE": "(410) 555-5445",
+      "POSITION_ID": 538,
+      "OFFICER_ID": 3743,
+      "EMAIL": "chesterT@example.gov",
+      "LAST_NAME": "Tester",
+      "FIRST_NAME": "Chester"
+    }
+  ],
+  "SP_APD": null,
+  "OCD_REVIEW": [
+    {
+      "OCD_REVIEW_DESCRIPTION": "No",
+      "OCD_REVIEW_ID": 2
+    }
+  ],
+  "PROGRAM_ANALYST": null,
+  "CALLHELDREASONS": null,
+  "SPA_TYPE": null,
+  "SPW_STATUS": [
+    {
+      "SPW_STATUS_ID": 1,
+      "SPW_STATUS_DESC": "Pending"
+    }
+  ],
+  "ACTIONTYPES": [
+    {
+      "PLAN_TYPE_ID": 122,
+      "ACTION_NAME": "Amend",
+      "ACTION_ID": 76
+    }
+  ],
+  "SP_TYPE": null,
+  "SP_APD_SUB_TYPE": null,
+  "STATE_PLAN_SERVICE_SUBTYPES": null,
+  "RAI": null,
+  "sk": "SEATool#1674656635480",
+  "ACTION_OFFICERS": [
+    {
+      "INITIALS": null,
+      "TELEPHONE": "(410) 555-5445",
+      "POSITION_ID": 538,
+      "OFFICER_ID": 3740,
+      "EMAIL": "lesterT@example.gov",
+      "LAST_NAME": "Tester",
+      "FIRST_NAME": "Lester"
+    },
+    {
+      "INITIALS": null,
+      "TELEPHONE": "(410) 555-5445",
+      "POSITION_ID": 538,
+      "OFFICER_ID": 3741,
+      "EMAIL": "SuperT@example.gov",
+      "LAST_NAME": "Tester",
+      "FIRST_NAME": "Super"
+    },
+    {
+      "INITIALS": null,
+      "TELEPHONE": "(410) 555-5445",
+      "POSITION_ID": 538,
+      "OFFICER_ID": 3742,
+      "EMAIL": "jimmyT@example.gov",
+      "LAST_NAME": "Tester",
+      "FIRST_NAME": "Jimmy"
+    }
+  ],
+  "SP1115": null,
+  "COMPONENTS_SP": null,
+  "PLAN_TYPES": [
+    {
+      "PLAN_TYPE_ID": 123,
+      "PLAN_TYPE_NAME": "1915(c)"
+    }
+  ],
+  "PRIORITY_CODES": null,
+  "SP_IMPACT_FUNDING": null,
+  "GSI1pk": "SEATool#1915c_waivers",
+  "CODEAFTERINITACCESS": null,
+  "STOP_RESUME_DATES": null,
+  "COMPONENTS": null,
+  "REGION": [
+    {
+      "REGION_ID": "3",
+      "REGION_NAME": "Philadelphia",
+      "ALERTS_INBOX_ADDRESS": "SPA_Waivers_Philadelphia_R03@cms.hhs.gov"
+    }
+  ],
+  "SP_EARLY_ALERTS": {
+    "ALERTFIELD": [
+      {
+        "EA_LABEL": "Meets expedited criteria",
+        "EA_TYPE_ID": 1,
+        "EA_DROP_DOWN_VALUES": null,
+        "ACTIVE": true,
+        "EA_FIELD_ID": 25,
+        "PRIORITY_VALUE": "true",
+        "PRIORITY_OPERATOR": null,
+        "PRIORITY_CODE_ID": 3,
+        "IS_APD": null
+      },
+      {
+        "EA_LABEL": "Customary action",
+        "EA_TYPE_ID": 1,
+        "EA_DROP_DOWN_VALUES": null,
+        "ACTIVE": true,
+        "EA_FIELD_ID": 26,
+        "PRIORITY_VALUE": "true",
+        "PRIORITY_OPERATOR": null,
+        "PRIORITY_CODE_ID": 2,
+        "IS_APD": null
+      }
+    ],
+    "EARLYALERT": [
+      {
+        "YES_NO_VAL": null,
+        "ID_NUMBER": "MD-22103.R01.02",
+        "EA_FIELD_ID": 25,
+        "EMAIL_SENT": null,
+        "TEXT_DD_VAL": null
+      },
+      {
+        "YES_NO_VAL": null,
+        "ID_NUMBER": "MD-22103.R01.02",
+        "EA_FIELD_ID": 26,
+        "EMAIL_SENT": null,
+        "TEXT_DD_VAL": null
+      }
+    ]
+  },
+  "pk": "MD-22103.R01.02",
+  "RO_ANALYST": null
+}
 ]

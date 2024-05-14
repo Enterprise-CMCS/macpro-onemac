@@ -2,7 +2,7 @@ Feature: Medicaid SPA CMS Details View - Card View with Actions
     Background: Reoccuring Steps
         Given I am on Login Page
         When Clicking on Development Login
-        When Login as EUA CMS Read Only User
+        When Login with "an Active" "CMS Read Only" user
         Then Click on Filter Button
         Then click on Type
         Then uncheck all of the type checkboxes
@@ -71,7 +71,6 @@ Feature: Medicaid SPA CMS Details View - Card View with Actions
         Then verify there is an Approved Effective Date in the details section
         Then verify the description has a value displayed in the details section
         #Then verify the attachments section exists
-        #Then verify the download all button exists
         #Then verify the additional information section exists
 
     Scenario: Screen Enhance - Withdrawn Medicaid SPA
@@ -170,7 +169,6 @@ Feature: Medicaid SPA CMS Details View - Card View with Actions
         Then verify there is an Approved Effective Date in the details section
         Then verify the description has a value displayed in the details section
         #Then verify the attachments section exists
-        #Then verify the download all button exists
         #Then verify the additional information section exists
 
     Scenario: Screen Enhance - Approved Medicaid SPA
@@ -283,8 +281,8 @@ Feature: Medicaid SPA CMS Details View - Card View with Actions
         Then verify the status on the card is "Pending"
         Then verify Enable Formal RAI Response Withdraw package action exists
         Then click Enable Formal RAI Response Withdraw package action
-        Then type "Automated test to enable an RAI Response withdrawal." in additional info textarea
         Then Click on Submit Button
-        Then verify the status on the card is "RAI Response Withdraw Enabled"
+        Then verify the status on the card is "Pending"
         Then verify package actions header is visible
-        Then verify there are no package actions available
+        Then verify Disable Formal RAI Response Withdraw package action exists
+
