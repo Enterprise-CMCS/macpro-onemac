@@ -14,7 +14,6 @@ import packageExists from "../utils/packageExists";
 import { newEvent } from "../utils/newEvent";
 import { getPackage } from "../utils/getPackage";
 import { saveEmail } from "../utils/saveEmail";
-import { getPackageType } from "../utils/getPackageType";
 
 import { CMSSubmissionNotice } from "../email/CMSSubmissionNotice";
 import { stateSubmissionReceipt } from "../email/stateSubmissionReceipt";
