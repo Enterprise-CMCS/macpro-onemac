@@ -46,7 +46,7 @@ Feature: OY2-12679 Users can request a role change in OneMAC
         Given I am on Login Page
         When Clicking on Development Login
         When Login with "an Active" "CMS Role Approver" user
-        Then i am on User Management Page
+        Then I am on the User Management Page
         Then Click on My Account
         Then verify that Request a Role Change button exists
         Then click on Request a Role Change button

@@ -1,44 +1,27 @@
 import { Given, When, Then } from "@badeball/cypress-cucumber-preprocessor";
-import MedicaidSPARAIResponsePage from "../../../support/pages/MedicaidSPARAIResponsePage";
 import oneMacDashboardPage from "../../../support/pages/oneMacDashboardPage";
 import oneMacDevLoginPage from "../../../support/pages/oneMacDevLoginPage";
 import oneMacHomePage from "../../../support/pages/oneMacHomePage";
+import oneMacFormPage from "../../../support/pages/oneMacFormPage";
 import oneMacSubmissionTypePage from "../../../support/pages/oneMacSubmissionTypePage";
-import oneMacSubmitNewMedicaidSpaPage from "../../../support/pages/oneMacSubmitNewMedicaidSPAPage";
+import oneMacNewSubmissionPage from "../../../support/pages/oneMacNewSubmissionPage";
 import oneMacUserManagmentPage from "../../../support/pages/oneMacUserManagmentPage";
 import oneMacMyProfilePage from "../../../support/pages/oneMacMyProfilePage";
-import oneMacCHIPSPAPage from "../../../support/pages/oneMacCHIPSPAPage";
-import oneMacSubmitNewWaiverActionPage from "../../../support/pages/oneMacSubmitNewWaiverActionPage";
-import oneMacRequestWaiverTemporaryExtension from "../../../support/pages/oneMacRequestWaiverTemporaryExtension";
-import oneMacAppendixKAmendmentPage from "../../../support/pages/oneMacAppendixKAmendmentPage";
-import oneMacPackagePage from "../../../support/pages/oneMacPackagePage";
 import oneMacFAQPage from "../../../support/pages/oneMacFAQPage";
 import oneMacRequestARoleChangePage from "../../../support/pages/oneMacRequestARoleChangePage";
 import oneMacPackageDetailsPage from "../../../support/pages/oneMacPackageDetailsPage";
-import oneMacRespondToRAIPage from "../../../support/pages/oneMacRespondToRAIPage";
-import oneMacDefaultForms from "../../../support/pages/oneMacDefaultForms";
-import withdrawPackagePage from "../../../support/pages/WithdrawPackagePage";
 
-const medicaidSPARAIResponsePage = new MedicaidSPARAIResponsePage();
 const OneMacDashboardPage = new oneMacDashboardPage();
 const OneMacDevLoginPage = new oneMacDevLoginPage();
 const OneMacHomePage = new oneMacHomePage();
+const OneMacFormPage = new oneMacFormPage();
 const OneMacSubmissionTypePage = new oneMacSubmissionTypePage();
-const OneMacSubmitNewMedicaidSpaPage = new oneMacSubmitNewMedicaidSpaPage();
+const OneMacNewSubmissionPage = new oneMacNewSubmissionPage();
 const OneMacUserManagmentPage = new oneMacUserManagmentPage();
 const OneMacMyProfilePage = new oneMacMyProfilePage();
-const OneMacCHIPSPAPage = new oneMacCHIPSPAPage();
-const OneMacSubmitNewWaiverActionPage = new oneMacSubmitNewWaiverActionPage();
-const OneMacRequestWaiverTemporaryExtension =
-  new oneMacRequestWaiverTemporaryExtension();
-const OneMacPackagePage = new oneMacPackagePage();
-const OneMacAppendixKAmendmentPage = new oneMacAppendixKAmendmentPage();
 const OneMacFAQPage = new oneMacFAQPage();
 const OneMacRequestARoleChangePage = new oneMacRequestARoleChangePage();
 const OneMacPackageDetailsPage = new oneMacPackageDetailsPage();
-const OneMacRespondToRAIPage = new oneMacRespondToRAIPage();
-const OneMacDefaultForms = new oneMacDefaultForms();
-const WithdrawPackagePage = new withdrawPackagePage();
 
 Given("I am on Login Page", () => {
   OneMacHomePage.launch();
@@ -54,12 +37,21 @@ When("Clicking on Development Login", () => {
 When("Clicking on FAQ Tab", () => {
   OneMacHomePage.clickFAQPage();
 });
-
-When("Login with state submitter user", () => {
-  OneMacDevLoginPage.loginAsStateSubmiiter();
+When("Login with {string} {string} user", (status, userRole) => {
+  const realStatus = status.replace("a ", "").replace("an ", "");
+  OneMacDevLoginPage.loginAs(userRole, realStatus);
 });
 Then("click on New Submission", () => {
   OneMacDashboardPage.clickNewSubmission();
+});
+Then(
+  "verify {string} choice goes to {string}",
+  (choiceText, destinationUrl) => {
+    OneMacNewSubmissionPage.verifyChoiceGoesTo(choiceText, destinationUrl);
+  }
+);
+Then("click on {string} choice", (choiceText) => {
+  OneMacNewSubmissionPage.clickChoice(choiceText);
 });
 Then("Click on State Plan Amendment SPA", () => {
   OneMacSubmissionTypePage.clickStatePlanAmendmentSPA();
@@ -67,144 +59,41 @@ Then("Click on State Plan Amendment SPA", () => {
 Then("click on Medicaid SPA", () => {
   OneMacSubmissionTypePage.clickMedicaidSPA();
 });
-Then("type in Medicaid SPA ID", () => {
-  cy.fixture("packageDashboardSPAIDs.json").then((d) => {
-    OneMacSubmitNewMedicaidSpaPage.inputSpaID(d.newMedicaidSPAID1);
-  });
-});
-Then("type in Medicaid SPA ID 2", () => {
-  cy.fixture("packageDashboardSPAIDs.json").then((d) => {
-    OneMacSubmitNewMedicaidSpaPage.inputSpaID(d.newMedicaidSPAID2);
-  });
-});
-Then("type in Chip SPA ID", () => {
-  cy.fixture("packageDashboardSPAIDs.json").then((d) => {
-    OneMacSubmitNewMedicaidSpaPage.inputSpaID(d.newChipSPAID1);
-  });
-});
-Then("type in Chip SPA ID 2", () => {
-  cy.fixture("packageDashboardSPAIDs.json").then((d) => {
-    OneMacSubmitNewMedicaidSpaPage.inputSpaID(d.newChipSPAID2);
-  });
-});
-Then("Add file for CMS Form 179", () => {
-  OneMacSubmitNewMedicaidSpaPage.uploadCMSForm179AddFile();
-});
-//OY2-5869
-Then("Add {string} file to form 179", (fileName) => {
-  OneMacSubmitNewMedicaidSpaPage.addFileForForm179(fileName);
-});
-
-Then("Verify {string} is added to form 179", (fileName) => {
-  OneMacSubmitNewMedicaidSpaPage.verifyFileAddedForForm179(fileName);
-});
-
-Then("Verify {string} is not added to form 179", (fileName) => {
-  OneMacSubmitNewMedicaidSpaPage.verifyFileNotAddedForForm179(fileName);
-});
-
-Then("Delete file from form 179", () => {
-  OneMacSubmitNewMedicaidSpaPage.deleteFileFromForm179();
-});
-
-//End OY2-5869
-Then("Add file for SPA Pages", () => {
-  OneMacSubmitNewMedicaidSpaPage.uploadSPAPagesAddFile();
-});
-
-Then("Add file {string} for SPA Pages", (fileName) => {
-  OneMacSubmitNewMedicaidSpaPage.addFilesToSpaPages(fileName);
-});
-
-Then("Add no files to SPA Pages", () => {
-  OneMacSubmitNewMedicaidSpaPage.addNoFilesToSpaPages();
-});
-
-Then("Verify no files added to SPA Pages", () => {
-  OneMacSubmitNewMedicaidSpaPage.verifyNoFilesAttachedToSpaPages();
-});
-
-Then("Verify {string} is added to SPA Pages", (fileName) => {
-  OneMacSubmitNewMedicaidSpaPage.verifyFileAddedForSpaPages(fileName);
-});
-
-Then("Verify file {string} exists in Spa Pages", (fileName) => {
-  OneMacSubmitNewMedicaidSpaPage.verifyFileNameExistsInSpaPages(fileName);
-});
-
-Then("Type Additonal Information Comments", () => {
-  OneMacSubmitNewMedicaidSpaPage.AdditionalInformationTypeComment(
-    "This is just a test"
-  );
-});
-Then("Type Additonal Info Comments in new form", () => {
-  OneMacSubmitNewMedicaidSpaPage.additionalInfoTypeComment(
-    "This is just a test"
-  );
-});
 Then("Click on Submit Button", () => {
-  OneMacDefaultForms.clicksubmitBTN();
+  OneMacFormPage.clicksubmitBTN();
 });
 Then("Click the Submit Button without waiting", () => {
-  OneMacDefaultForms.clicksubmitBTNWithoutWait();
+  OneMacFormPage.clicksubmitBTNWithoutWait();
 });
 Then("verify the modal pop-up is visible", () => {
-  OneMacRespondToRAIPage.verifyModalContainerExists();
+  OneMacFormPage.verifyModalContainerExists();
 });
 Then("verify the modal pop-up is not visible", () => {
-  OneMacRespondToRAIPage.verifyModalContainerDoesNotExists();
+  OneMacFormPage.verifyModalContainerDoesNotExists();
 });
 Then(
   "verify the title of the modal pop-up is Do you want to submit your official formal RAI response",
   () => {
-    OneMacRespondToRAIPage.verifyModalTitleIs(
+    OneMacFormPage.verifyModalTitleIs(
       "Do you want to submit your official formal RAI response"
     );
   }
 );
-Then(
-  "verify the detailed text in the modal contains you are submitting your official formal RAI Response to restart the SPA review process and a new 90th day will be identified",
-  () => {
-    OneMacRespondToRAIPage.verifyModalTextIs(
-      "you are submitting your official formal RAI Response to restart the SPA review process and a new 90th day will be identified."
-    );
-  }
-);
-Then(
-  "verify the detailed text in the modal contains you are submitting your official formal RAI Response to start the 90 day clock review process",
-  () => {
-    OneMacRespondToRAIPage.verifyModalTextIs(
-      "you are submitting your official formal RAI Response to start the 90 day clock review process"
-    );
-  }
-);
 
-Then("click yes, submit RAI response button", () => {
-  OneMacRespondToRAIPage.clickYesSubmitBTN();
-});
-Then("verify submission warning text is visible", () => {
-  OneMacSubmitNewMedicaidSpaPage.verifySubmissionWarningTextIsVisible();
-});
-Then("verify submission warning text", () => {
-  OneMacSubmitNewMedicaidSpaPage.verifySubmissionWarningText();
-});
-Then("verify the form Submit Button exists", () => {
-  OneMacDefaultForms.verifySubmitBtnExists();
-});
 Then("verify form cancel button exists", () => {
-  OneMacDefaultForms.verifyCancelBtnExists();
+  OneMacFormPage.verifyCancelBtnExists();
 });
 Then("click form cancel button", () => {
-  OneMacDefaultForms.clickCancelBtn();
+  OneMacFormPage.clickCancelBtn();
 });
 Then("click modal cancel button", () => {
-  OneMacDefaultForms.clickModalCancelBtn();
+  OneMacFormPage.clickModalCancelBtn();
 });
 Then("click Leave Anyway form button", () => {
-  OneMacSubmitNewMedicaidSpaPage.clickLeaveAnywayBtn();
+  OneMacFormPage.clickButtonLabelled("Leave Anyway");
 });
 Then("click Stay on Page", () => {
-  OneMacSubmitNewMedicaidSpaPage.clickStayOnPageBtn();
+  OneMacFormPage.clickButtonLabelled("Stay on Page");
 });
 Then("verify the success message is {string}", (s) => {
   OneMacDashboardPage.verifySuccessMessageIs(s);
@@ -212,37 +101,12 @@ Then("verify the success message is {string}", (s) => {
 Then("verify submission successful message in the alert bar", () => {
   OneMacDashboardPage.verifySuccessMessage1IsDisplayed();
 });
-Then("verify submission date", () => {
-  OneMacDashboardPage.verifyDate();
-});
-Then("Verify submission type", () => {
-  OneMacDashboardPage.verifyType("Medicaid SPA");
-});
 
-Then("Verify submission Waiver type", () => {
-  OneMacDashboardPage.verifyType("Waiver");
-});
-Then("Add file for RAI Response", () => {
-  medicaidSPARAIResponsePage.uploadRAIResponseAddFile();
-});
-Then("Add Additional Comments", () => {
-  medicaidSPARAIResponsePage.addCommentsRAIRespone();
-});
-Then("verify submission Successful message after RAI", () => {
-  OneMacDashboardPage.verifySuccessMessageIsDisplayedAfterRAIResponse();
-});
-//this is for the oy2 8616
-When("Login with cms role approver", () => {
-  OneMacDevLoginPage.loginAsCMSRoleApprover();
-});
-When("Login as EUA CMS Read Only User", () => {
-  OneMacDevLoginPage.loginAsEUACMSReadOnlyUser();
-});
-Then("i am on User Management Page", () => {
+Then("I am on the User Management Page", () => {
   OneMacUserManagmentPage.verifyWeAreOnUserManagmentPage();
 });
 Then("Click on My Account", () => {
-  OneMacUserManagmentPage.clickMyAccountDropdown();
+  OneMacUserManagmentPage.clickMyAccountDropDown();
 });
 Then("Click on Manage Profile", () => {
   OneMacUserManagmentPage.clickmanageProfileBTN();
@@ -263,9 +127,6 @@ Then("Role text is Displayed", () => {
   OneMacMyProfilePage.verifyRoleHeader();
 });
 Then("Actual Role is Displayed", () => {
-  OneMacMyProfilePage.verifyRole();
-});
-Then("User Role is Read Only User", () => {
   OneMacMyProfilePage.verifyRole();
 });
 Then("Email text is Displayed", () => {
@@ -290,49 +151,25 @@ Then("Actual Status is Displayed with Access Granted", () => {
   OneMacMyProfilePage.verifyAccessStatus();
 });
 
-// this uis for 8616
-When("Login with cms System Admin", () => {
-  OneMacDevLoginPage.loginAsCMSSystemAdmin();
-});
+// // this uis for 8616
+// When("Login with an Active CMS System Admin user", () => {
+//   OneMacDevLoginPage.loginAsCMSSystemAdmin();
+// });
 Then("Click on User Management Tab", () => {
   OneMacDashboardPage.clickUserManagementTab();
 });
 // this is for oy2_10093
-When("Login with cms Help Desk User", () => {
-  OneMacDevLoginPage.loginAsHelpDeskUser();
-});
-When("Login as a State System Admin", () => {
-  OneMacDevLoginPage.loginAsStateSystemAdmin();
-});
+// When("Login with cms Help Desk User", () => {
+//   OneMacDevLoginPage.loginAsHelpDeskUser();
+// });
+// When("Login as a State System Admin", () => {
+//   OneMacDevLoginPage.loginAsStateSystemAdmin();
+// });
 Then("i am on Dashboard Page", () => {
   OneMacDashboardPage.verifyWeAreOnDashboardPage();
 });
-Then("verify Submission List is Displayed", () => {
-  OneMacDashboardPage.verifySubmissionListIsDisplayed();
-});
 Then("verify Export to Excel CSV is Displayed", () => {
   OneMacDashboardPage.verifyexportToEXcelCSVBTNIsDisplayed();
-});
-Then("verify IDNumber is Displayed", () => {
-  OneMacDashboardPage.verifyidNumberHeaderIsDisplayed();
-});
-Then("verify Type is Displayed", () => {
-  OneMacDashboardPage.verifytypeHeaderIsDisplayed();
-});
-Then("verify state is Displaed", () => {
-  OneMacDashboardPage.verifyStateHeaderIsDisplayed();
-});
-Then("verify Initial Submission Date is Displayed", () => {
-  OneMacDashboardPage.verifyInitialSubmissionDateHeaderIsDisplayed();
-});
-Then("verify Submitted By is Displayed", () => {
-  OneMacDashboardPage.verifySubmittedByHeadersDisplayed();
-});
-Then("Click on the SPA ID Link", () => {
-  OneMacDashboardPage.clickOnSpaID();
-});
-Then("Verify {string} exists in the attachments", (fileName) => {
-  OneMacDashboardPage.verifyAttachmentExists(fileName);
 });
 Then("verify User Management is Displayed", () => {
   OneMacUserManagmentPage.verifyUserManagmentHeaderIsDisplayed();
@@ -374,47 +211,63 @@ Then("verify New Submission BTN is Displayed", () => {
 });
 
 //this is for OY2_3900
-Then("verify error message is not present on Medicaid SPA page", () => {
-  OneMacSubmitNewMedicaidSpaPage.verifySPAIDErrorMessageIsNotDisplayed();
+Then("verify {string} has no error messages", (whichLabel) => {
+  OneMacFormPage.verifyErrorMessagesAreNotThere(whichLabel);
 });
-
-Then("clear SPA ID in Medicaid SPA Input box", () => {
-  OneMacSubmitNewMedicaidSpaPage.clearSPAIDInputBox();
-});
-
-Then("Return to dashboard Page", () => {
-  OneMacSubmitNewMedicaidSpaPage.clickOnDashboardTab();
-});
-
-Then("type in invalid SPA ID on Medicaid SPA page", () => {
-  OneMacSubmitNewMedicaidSpaPage.typeIncorrectSPAIDAndFormat();
-});
-
-Then("verify that error message for incorrect SPA ID is Displayed", () => {
-  OneMacSubmitNewMedicaidSpaPage.verifySPAIDErrorMessageIsDisplayed();
-});
-
 Then("click on CHIP SPA", () => {
   OneMacSubmissionTypePage.clickChipSPA();
 });
 
-Then("verify error message is not present on Submit New CHIP SPA Page", () => {
-  OneMacCHIPSPAPage.verifyErrorMessageIsNotDisplayed();
+Then("clear the ID Input box", () => {
+  OneMacFormPage.clearIDInputBox();
 });
-Then("clear SPA ID Input box CHIP SPA page", () => {
-  OneMacCHIPSPAPage.clearSPAIDInputBox();
+Then("type {string} into the ID Input box", (newID) => {
+  OneMacFormPage.inputID(newID);
+});
+Then("into {string} type {string}", (whereTo, newValue) => {
+  OneMacFormPage.inputInto(whereTo, newValue);
+});
+Then("clear {string} input field", (whereTo, newValue) => {
+  OneMacFormPage.clearInput(whereTo);
 });
 
-Then("type in invalid SPA ID on CHIP SPA page", () => {
-  OneMacCHIPSPAPage.inputIncorrectSPAIDFormat();
+Then("verify ID error message is not present", () => {
+  OneMacFormPage.verifyIDErrorMessageIsNotDisplayed();
 });
-
+Then("verify the ID error message is {string}", (chkErrorMessage) => {
+  OneMacFormPage.verifyIDErrorMessageContains(chkErrorMessage);
+});
+//
 Then(
-  "verify that error message for incorrect SPA ID is Displayed on CHIP SPA Page",
-  () => {
-    OneMacCHIPSPAPage.verifyErrorMessageIsDisplayed();
+  "verify the {string} error message is {string}",
+  (whichLabel, chkErrorMessage) => {
+    OneMacFormPage.verifyErrorMessageContains(whichLabel, "1", chkErrorMessage);
   }
 );
+Then(
+  "verify the {string} error message line 2 is {string}",
+  (whichLabel, chkErrorMessage) => {
+    OneMacFormPage.verifyErrorMessageContains(whichLabel, "2", chkErrorMessage);
+  }
+);
+Then(
+  "verify the ID error message has a second line with {string}",
+  (chkErrorMessage) => {
+    OneMacFormPage.verifyIDErrorMessage2Contains(chkErrorMessage);
+  }
+);
+Then("clear the Parent ID Input box", () => {
+  OneMacFormPage.clearParentIDInputBox();
+});
+Then("type {string} into the Parent ID Input box", (newID) => {
+  OneMacFormPage.inputParentID(newID);
+});
+Then("verify Parent ID error message is not present", () => {
+  OneMacFormPage.verifyParentIDErrorMessageIsNotDisplayed();
+});
+Then("verify the Parent ID error message is {string}", (chkErrorMessage) => {
+  OneMacFormPage.verifyParentIDErrorMessageContains(chkErrorMessage);
+});
 
 Then("Click on Waiver Action", () => {
   OneMacSubmissionTypePage.clickwaiverAction();
@@ -427,10 +280,6 @@ Then("click on 1915b 4 FFS Selective Contracting waivers", () => {
 });
 Then("click on 1915b Comprehensive Capitated Waiver Authority", () => {
   OneMacSubmissionTypePage.click1915bComprehensiveCapitatedWaiverAuthority();
-});
-
-Then("click on Waiver Action on Waiver Action Type page", () => {
-  OneMacSubmissionTypePage.clickWaiverActionUnderWaiverAction();
 });
 
 Then("click on 1915b 4 FFS Selective Contracting New Initial Waiver", () => {
@@ -536,253 +385,65 @@ Then("verify All Other CHIP SPA Submissions is a clickable option", () => {
 Then("click All Other CHIP SPA Submissions", () => {
   OneMacSubmissionTypePage.clickAllOtherChip();
 });
-Then("select Action Type New Waiver", () => {
-  OneMacSubmitNewWaiverActionPage.selectNewWaiverUnderActionType();
-});
 
-Then("select 1915b 4 FFS Selective Contracting waivers", () => {
-  OneMacSubmitNewWaiverActionPage.select1915b4FFSSelectiveContractingwaiversUnderWaiverAuthority();
-});
-
-Then(
-  "Add file for 1915b 4 FFS Selective Contracting waiver application pre-print",
-  () => {
-    OneMacSubmitNewWaiverActionPage.upload1915BFFSPrePrintFile();
-  }
-);
-
-Then("Add file for Waiver RAI Response", () => {
-  medicaidSPARAIResponsePage.uploadRAIResponseAddFile();
-});
-
-Then("Click on Waiver Action under Waiver Type", () => {
-  OneMacSubmissionTypePage.clickWaiverActionUnderWaiverAction();
-});
-
-Then("Click on New Waiver under Action type", () => {
-  OneMacSubmitNewWaiverActionPage.selectNewWaiverUnderActionType();
-});
-
-Then("verify error message is not present on New Waiver Page", () => {
-  OneMacSubmitNewWaiverActionPage.verifyErrorMessageIsNotDisplayed();
-});
-Then("verify parent error message is not present on New Waiver Page", () => {
-  OneMacSubmitNewWaiverActionPage.verifyParentErrorMessageIsNotDisplayed();
-});
-
-Then("clear Waiver Number Input box in new form", () => {
-  OneMacSubmitNewWaiverActionPage.clearWaiverNumberInputBoxNewForms();
-});
-Then("type in invalid Waiver Number", () => {
-  OneMacSubmitNewWaiverActionPage.inputWaiverNumber("MD.123456");
-});
-
-Then("Click the Request Extension button", () => {
-  OneMacSubmissionTypePage.clickRequestExtensionBtn();
-});
 Then("Click on Request Temporary Extension in Package dashboard", () => {
   OneMacSubmissionTypePage.clickRequestTemporaryExtension();
 });
-
-Then(
-  "type waiver number with state abbreviation different from user on Request Waiver Temporary Extenstion Page",
-  () => {
-    OneMacRequestWaiverTemporaryExtension.inputWaiverNumber("JK");
-  }
-);
-
-Then(
-  "verify error message is not present on Request Waiver Temporary Extenstion Page",
-  () => {
-    OneMacRequestWaiverTemporaryExtension.verifyErrorMessageIsNotDisplayed();
-  }
-);
-
-Then(
-  "clear Waiver Number Input box on Request Waiver Temporary Extenstion Page",
-  () => {
-    OneMacRequestWaiverTemporaryExtension.clearWaiverNumberInputBox();
-  }
-);
-
-Then(
-  "Type waiver number with 5 characters on Request Waiver Temporary Extenstion Page",
-  () => {
-    OneMacRequestWaiverTemporaryExtension.inputWaiverNumber("MD.12345");
-  }
-);
-
-Then(
-  "type in invalid Waiver Number on Request Waiver Temporary Extenstion Page",
-  () => {
-    OneMacRequestWaiverTemporaryExtension.inputWaiverNumber("MD.123");
-  }
-);
-
-Then(
-  "verify that error message for incorrect Waiver Number is Displayed",
-  () => {
-    OneMacRequestWaiverTemporaryExtension.verifyErrorMessageIsDisplayed();
-  }
-);
 
 Then("Click on Appendix K Amendment", () => {
   OneMacSubmissionTypePage.clickAppendixKAmendment();
 });
 
-Then("verify error message is not present on Appendix K Amendment Page", () => {
-  OneMacAppendixKAmendmentPage.verifyErrorMessageIsNotDisplayed();
-});
-Then("clear Waiver Number Input box on Appendix K Amendment Page", () => {
-  OneMacAppendixKAmendmentPage.clearWaiverNumberInputBox();
-});
-Then(
-  "type in Waiver Number with 5 characters on Appendix K Amendment Page",
-  () => {
-    OneMacAppendixKAmendmentPage.inputWaiverNumber(`MD-22106.R01.02`);
-  }
-);
-
-Then(
-  "type in unused Waiver Number with 5 characters on Appendix K Amendment Page",
-  () => {
-    OneMacAppendixKAmendmentPage.inputWaiverNumber(`MD-22106.R01.03`);
-  }
-);
-
-Then("type in invalid Waiver Number on Appendix K Amendment Page", () => {
-  OneMacAppendixKAmendmentPage.inputWaiverNumber("MD.123");
-});
-
-Then(
-  "verify that error message for incorrect Waiver Number is Displayed on Appendix K Amendment Page",
-  () => {
-    OneMacAppendixKAmendmentPage.verifyErrorMessageIsDisplayed();
-  }
-);
-
 //this is for oy2_4807
-Then(
-  "verify 1915 b 4 FFS Selective Contracting waivers is displayed under Waiver Authority",
-  () => {
-    OneMacSubmitNewWaiverActionPage.verify1915b4FFSSelectiveContractingwaiversUnderWaiverAuthority();
-  }
-);
+Then("verify Waiver Authority contains {string}", (whatAuthority) => {
+  OneMacFormPage.verifyWaiverAuthorityContains(whatAuthority);
+});
 
-Then(
-  "Add file for 1915b Comprehensive Capitated Waiver Application Pre-print",
-  () => {
-    OneMacSubmitNewWaiverActionPage.upload1915BComprehensivePrePrintFile();
-  }
-);
-Then(
-  "Add file for 1915b Comprehensive Capitated Waiver Cost Effectiveness Spreadsheets",
-  () => {
-    OneMacSubmitNewWaiverActionPage.upload1915BComprehensiveSpreadsheetFile();
-  }
-);
 Then(
   "Remove file for 1915b Comprehensive Capitated Waiver Application Pre-print",
   () => {
-    OneMacSubmitNewWaiverActionPage.remove1915BComprehensivePrePrintFile();
+    OneMacFormPage.removeFirstAttachment(1);
   }
 );
 Then(
   "Remove file for 1915b Comprehensive Capitated Waiver Cost Effectiveness Spreadsheets",
   () => {
-    OneMacSubmitNewWaiverActionPage.remove1915BComprehensiveSpreadsheetFile();
+    OneMacFormPage.removeFirstAttachment(2);
   }
 );
-
-Then("upload Waiver Extension Request", () => {
-  OneMacRequestWaiverTemporaryExtension.uploadWaiverExtensionRequest();
-});
-
-Then("Type {string} in Summary Box", (Comments) => {
-  OneMacSubmitNewWaiverActionPage.inputComments(Comments);
-});
-Then("type {string} in additional info textarea", (Comments) => {
-  OneMacSubmitNewWaiverActionPage.inputAdditionalInfoText(Comments);
-});
-
-Then(
-  "verify All other 1915 b Waivers is displayed under Waiver Authority",
-  () => {
-    OneMacSubmitNewWaiverActionPage.verifyAllOther1915bWaiversUnderWaiverAuthority();
-  }
-);
-
-Then("Click on Waiver Amendment under Action type", () => {
-  OneMacSubmitNewWaiverActionPage.selectWaiverAmendmentUnderActionType();
-});
-
-Then("Click on Request for waiver renewal from Action Type", () => {
-  OneMacSubmitNewWaiverActionPage.selectRequestForWaiverRenewalUnderActionType();
-});
-
-Then("type in Existing Waiver Number in new form", () => {
-  OneMacSubmitNewWaiverActionPage.inputExistingWaiverNumberNewForms();
-});
-Then("Type Initial Waiver Number in format SS-#####.R00.00", () => {
-  cy.fixture("packageDashboardWaiverNumbers.json").then((d) => {
-    OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
-      d.newInitialWaiverNumber1
-    );
-  });
-});
-Then("Type Initial Waiver Number 3 in format SS-#####.R00.00", () => {
-  cy.fixture("packageDashboardWaiverNumbers.json").then((d) => {
-    OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
-      d.newInitialWaiverNumber3
-    );
-  });
-});
-Then(
-  "Type a valid and unused Initial Waiver Number in format SS-#####.R00.00",
-  () => {
-    OneMacSubmitNewWaiverActionPage.inputWaiverNumber("MD-99331.R00.00");
-  }
-);
-Then("Type Initial Waiver Number 2 in format SS-#####.R00.00", () => {
-  cy.fixture("packageDashboardWaiverNumbers.json").then((d) => {
-    OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
-      d.newInitialWaiverNumber2
-    );
-  });
-});
 Then("search for Initial Waiver Number 1 with 12 Characters", () => {
   cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
-    OneMacPackagePage.searchFor(data.newInitialWaiverNumber1);
+    OneMacDashboardPage.searchFor(data.newInitialWaiverNumber1);
   });
   cy.wait(1000);
 });
 Then("search for Initial Waiver Number 3 with 12 Characters", () => {
   cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
-    OneMacPackagePage.searchFor(data.newInitialWaiverNumber3);
+    OneMacDashboardPage.searchFor(data.newInitialWaiverNumber3);
   });
   cy.wait(1000);
 });
 Then("search for approved Initial Waiver Number 1", () => {
   cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
-    OneMacPackagePage.searchFor(data.approvedInitialWaiverNum1);
+    OneMacDashboardPage.searchFor(data.approvedInitialWaiverNum1);
   });
   cy.wait(1000);
 });
 Then("search for Initial Waiver Number 2 with 12 Characters", () => {
   cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
-    OneMacPackagePage.searchFor(data.newInitialWaiverNumber2);
+    OneMacDashboardPage.searchFor(data.newInitialWaiverNumber2);
   });
   cy.wait(1000);
 });
 Then("search for Medicaid SPA ID", () => {
   cy.fixture("packageDashboardSPAIDs.json").then((data) => {
-    OneMacPackagePage.searchFor(data.newMedicaidSPAID1);
+    OneMacDashboardPage.searchFor(data.newMedicaidSPAID1);
   });
   cy.wait(1000);
 });
 Then("search for CHIP SPA ID", () => {
   cy.fixture("packageDashboardSPAIDs.json").then((data) => {
-    OneMacPackagePage.searchFor(data.newChipSPAID1);
+    OneMacDashboardPage.searchFor(data.newChipSPAID1);
   });
   cy.wait(1000);
 });
@@ -790,7 +451,7 @@ Then(
   "verify id number in the first row matches Initial Waiver Number 1",
   () => {
     cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
-      OneMacPackagePage.verifyIDNumberInFirstRowIs(
+      OneMacDashboardPage.verifyIDNumberInFirstRowIs(
         data.newInitialWaiverNumber1
       );
     });
@@ -800,7 +461,7 @@ Then(
   "verify id number in the first row matches Initial Waiver Number 3",
   () => {
     cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
-      OneMacPackagePage.verifyIDNumberInFirstRowIs(
+      OneMacDashboardPage.verifyIDNumberInFirstRowIs(
         data.newInitialWaiverNumber3
       );
     });
@@ -808,30 +469,23 @@ Then(
 );
 Then("verify id number in the first row matches Medicaid SPA ID", () => {
   cy.fixture("packageDashboardSPAIDs.json").then((data) => {
-    OneMacPackagePage.verifyIDNumberInFirstRowIs(data.newMedicaidSPAID1);
+    OneMacDashboardPage.verifyIDNumberInFirstRowIs(data.newMedicaidSPAID1);
   });
 });
 Then("verify id number in the first row matches CHIP SPA ID", () => {
   cy.fixture("packageDashboardSPAIDs.json").then((data) => {
-    OneMacPackagePage.verifyIDNumberInFirstRowIs(data.newChipSPAID1);
+    OneMacDashboardPage.verifyIDNumberInFirstRowIs(data.newChipSPAID1);
   });
-});
-Then("verify success message for Withdrawal", () => {
-  OneMacPackagePage.verifyPackageWithdrawalMessageIsDisplayed();
 });
 
 Then("click on Packages", () => {
   OneMacDashboardPage.clickPackageTab();
 });
 
-When("Login with CMS Reviewer User", () => {
-  OneMacDevLoginPage.loginAsCMSReviewer();
-});
-
 Then(
   "verify that value of the column for the ID is NA Pending or a date",
   () => {
-    OneMacPackagePage.verifyValue();
+    OneMacDashboardPage.verifyValue();
   }
 );
 
@@ -841,51 +495,15 @@ Then("navigate to {string}", (s) => {
 Then(
   "verify Expiration Date column is available to the immediate left to the status column",
   () => {
-    OneMacPackagePage.verifyexpirationDateColumnHeaderExists();
+    OneMacDashboardPage.verifyexpirationDateColumnHeaderExists();
   }
 );
-Then("expiration date on MD.32560 is Oct 14, 2026", () => {
-  OneMacPackagePage.verifyMD32560ExpirationDateIsSetTooct142026();
-});
-Then("Expiration Date value for generated Record is {string}", (s) => {
-  OneMacPackagePage.verifyExpirationDateFirstValue(s);
-});
-Then("Add file for Current State Plan", () => {
-  OneMacCHIPSPAPage.uploadCurrentStatePlanFile();
-});
-Then("Add file for Amended State Plan Language", () => {
-  OneMacCHIPSPAPage.uploadAmendedStatePlanLanguageFile();
-});
-Then("Add file for Cover Letter", () => {
-  OneMacCHIPSPAPage.uploadCoverLetterFile();
-});
-
-Then("Add file for Revised Amended State Plan Language", () => {
-  medicaidSPARAIResponsePage.uploadChipSPARAIRESPONSERevisedAmendedStatePlanLanguage();
-});
-
-Then("Add file for Official RAI Response", () => {
-  medicaidSPARAIResponsePage.uploadOfficialRAIResponse();
-});
-Then("Add file for 1915c Appendix K Amendment Waiver Template", () => {
-  OneMacAppendixKAmendmentPage.uploadAppKAmendmentWaiverTemplate();
-});
-
-When("Login with cms role approver Revoked", () => {
-  OneMacDevLoginPage.loginAsCMSUserRevoked();
-});
-
-When("Login with cms role approver Denied", () => {
-  OneMacDevLoginPage.loginAsCMSUserDenied();
-});
-
-Then("Actual Status is Displayed with Access Revoked", () => {
-  OneMacMyProfilePage.verifyAccessStatusRevoked();
-});
-
-Then("Actual Status is Displayed with Access Denied", () => {
-  OneMacMyProfilePage.verifyAccessStatusDenied();
-});
+Then(
+  "attach {string} file to attachment {int}",
+  (fileName, attachmentIndex) => {
+    OneMacFormPage.uploadAttachment(fileName, attachmentIndex);
+  }
+);
 
 Then("Verify General Section Exists", () => {
   OneMacFAQPage.verifyGeneralSectionExists();
@@ -1097,23 +715,17 @@ Then("Verify Phone Number Exists", () => {
 Then("Verify actual Phone Number Exists", () => {
   OneMacFAQPage.verifyActualphoneNumberExists();
 });
-Then("Verify Email Exists", () => {
-  OneMacFAQPage.verifyemailExists();
+Then("verify Contact Email label Exists", () => {
+  OneMacFAQPage.verifyEmailExists();
 });
-Then("Verify actual Email Exists", () => {
-  OneMacFAQPage.verifyActualemailExists();
+Then("verify actual Contact Email address Exists", () => {
+  OneMacFAQPage.verifyActualEmailExists();
 });
-Then("Verify page title is FAQ", () => {
-  OneMacFAQPage.VerifypagetitleisFAQ();
+Then("Verify page title is {string}", (s) => {
+  OneMacFAQPage.VerifyPageTitleIs(s);
 });
-Then("Verify Frequently Asked Questions Exists", () => {
-  OneMacFAQPage.VerifyFrequentlyAskedQuestionsExists();
-});
-Then("Click on What is my SPA ID link", () => {
-  OneMacSubmitNewMedicaidSpaPage.clickWhatIsMySPAIDLink();
-});
-Then("Click on What is my Waiver ID Link", () => {
-  OneMacSubmitNewWaiverActionPage.clickWhatIsMyWaiverIdLink();
+Then("click link labelled {string}", (linkLabel) => {
+  OneMacFormPage.clickLinkWithLabel(linkLabel);
 });
 
 Then("Home tab exists", () => {
@@ -1164,11 +776,11 @@ Then("Login with IDM Info Exists", () => {
   OneMacHomePage.verifyloginWithIDMInfoExists();
 });
 
-Then("Attach your documents Exists", () => {
+Then("attach your documents Exists", () => {
   OneMacHomePage.verifyAttachYourDocumentsExists();
 });
 
-Then("Attach your documents info Exists", () => {
+Then("attach your documents info Exists", () => {
   OneMacHomePage.verifyAttachYourDocumentsInfoExists();
 });
 
@@ -1268,610 +880,457 @@ Then(
     OneMacHomePage.verifyCMSBullet6Exists();
   }
 );
-
-Then("type in search bar expiration status “pending”", () => {
-  OneMacPackagePage.typePendingInSearchBar();
-});
 Then("verify Error message displayed should be No Results Found", () => {
-  OneMacPackagePage.noResultsFoundErrorMessage();
+  OneMacDashboardPage.noResultsFoundErrorMessage();
 });
 Then("verify user exists with id number searched", () => {
   cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
-    OneMacPackagePage.verifyIDNumberExists(data.newInitialWaiverNumber2);
+    OneMacDashboardPage.verifyIDNumberExists(data.newInitialWaiverNumber2);
   });
 });
 Then("clear search bar", () => {
-  OneMacPackagePage.clearSearchBar();
-});
-Then("type in submitters name", () => {
-  OneMacPackagePage.typeSubmittersName();
-});
-Then("search existing user with all upper case", () => {
-  OneMacPackagePage.typeSubmittersNameAllUpperCase();
-});
-Then("search existing user with dash", () => {
-  OneMacPackagePage.typedashInSearchBar();
+  OneMacDashboardPage.clearSearchBar();
 });
 Then("verify search bar exists", () => {
-  OneMacPackagePage.verifySearchBarExists();
+  OneMacDashboardPage.verifySearchBarExists();
 });
 Then(
   "verify Search by Package ID, CPOC Name, or Submitter Name is displayed on top of search bar",
   () => {
-    OneMacPackagePage.verifySearchisDisplayed();
+    OneMacDashboardPage.verifySearchisDisplayed();
   }
 );
 Then("verify x in search bar exists to clear search and click it", () => {
-  OneMacPackagePage.verifyxexistsandClickIt();
+  OneMacDashboardPage.verifyxexistsandClickIt();
 });
 Then("verify Error message details is displayed", () => {
-  OneMacPackagePage.verifyErrorMessageDetails();
+  OneMacDashboardPage.verifyErrorMessageDetails();
 });
 Then("type in search bar not existing ID in search bar", () => {
-  OneMacPackagePage.typeNinExistingID();
+  OneMacDashboardPage.typeNinExistingID();
 });
 Then("Verify State Column Exists", () => {
-  OneMacPackagePage.verifyStateColumnExists();
+  OneMacDashboardPage.verifyStateColumnExists();
 });
 Then("Verify State Column is sortable", () => {
-  OneMacPackagePage.verifyStateColumnIsSortable();
+  OneMacDashboardPage.verifyStateColumnIsSortable();
 });
 Then("Verify Filter button exists", () => {
-  OneMacPackagePage.verifyfilterButtonExists();
+  OneMacDashboardPage.verifyfilterButtonExists();
 });
 Then("Click on Filter Button", () => {
-  OneMacPackagePage.clickOnfilterButton();
+  OneMacDashboardPage.clickOnfilterButton();
 });
 Then("verify Filter By Exists", () => {
-  OneMacPackagePage.verifyfilterByExists();
+  OneMacDashboardPage.verifyfilterByExists();
 });
 Then("verify Close Exists", () => {
-  OneMacPackagePage.verifycloseButtonExists();
+  OneMacDashboardPage.verifycloseButtonExists();
 });
-Then("verify Type Exists", () => {
-  OneMacPackagePage.verifytypeDropdownExists();
-});
-Then("verify Status Exists", () => {
-  OneMacPackagePage.verifystatusDropdownExists();
-});
-Then("verify CPOC Name dropdown button exists", () => {
-  OneMacPackagePage.verifyCPOCNameDropdownExists();
+Then("verify type dropdown filter exists", () => {
+  OneMacDashboardPage.verifytypeDropDownExists();
 });
 Then("verify reset Exists", () => {
-  OneMacPackagePage.verifyresetButtonExists();
+  OneMacDashboardPage.verifyresetButtonExists();
 });
 Then("click on Type", () => {
-  OneMacPackagePage.clickTypeDropdown();
+  OneMacDashboardPage.clickTypeDropDown();
 });
 Then("verify 1915b Initial Waiver exists", () => {
-  OneMacPackagePage.verifyInitialWaiver1915bCheckBoxExists();
+  OneMacDashboardPage.verifyInitialWaiver1915bCheckBoxExists();
 });
 Then("verify 1915b Intial Waiver exists in list", () => {
-  OneMacPackagePage.verifyInitialWaiverInListExists();
+  OneMacDashboardPage.verifyInitialWaiverInListExists();
 });
 Then("verify 1915b Waiver Renewal exists", () => {
-  OneMacPackagePage.verifyWaiverRenewal1915bCheckBoxExists();
+  OneMacDashboardPage.verifyWaiverRenewal1915bCheckBoxExists();
 });
 Then("verify 1915b Waiver Amendment check box exists", () => {
-  OneMacPackagePage.verify1915bWaiverAmendmentCheckBox();
+  OneMacDashboardPage.verify1915bWaiverAmendmentCheckBox();
 });
 Then("verify 1915c Appendix K Amendment check box exists", () => {
-  OneMacPackagePage.verify1915cAppendixKAmendmentCheckBox();
+  OneMacDashboardPage.verify1915cAppendixKAmendmentCheckBox();
 });
 Then("verify 1915b Temporary Extension exists", () => {
-  OneMacPackagePage.verify1915bTemporaryExtensionCheckBoxExists();
+  OneMacDashboardPage.verify1915bTemporaryExtensionCheckBoxExists();
 });
 Then("verify 1915c Temporary Extension exists", () => {
-  OneMacPackagePage.verify1915cTemporaryExtensionCheckBoxExists();
+  OneMacDashboardPage.verify1915cTemporaryExtensionCheckBoxExists();
 });
 Then("verify CHIP SPA Exists", () => {
-  OneMacPackagePage.verifyCHIPSPACheckBoxExists();
+  OneMacDashboardPage.verifyCHIPSPACheckBoxExists();
 });
 Then("verify Medicaid SPA Exists", () => {
-  OneMacPackagePage.verifyMedicaidSPACheckBoxExists();
+  OneMacDashboardPage.verifyMedicaidSPACheckBoxExists();
 });
 Then("click on Status", () => {
-  OneMacPackagePage.clickstatusDropdown();
-});
-Then("verify rai response submitted exists", () => {
-  OneMacPackagePage.verifyraiResponseSubmittedCheckBoxExists();
+  OneMacDashboardPage.clickstatusDropDown();
 });
 Then("verify Under Review checkbox exists", () => {
-  OneMacPackagePage.verifyUnderReviewCheckBoxExists();
+  OneMacDashboardPage.verifyUnderReviewCheckBoxExists();
 });
 Then("verify Approved checkbox exists", () => {
-  OneMacPackagePage.verifyApprovedCheckboxExists();
+  OneMacDashboardPage.verifyApprovedCheckboxExists();
 });
 Then("verify Disapproved checkbox exists", () => {
-  OneMacPackagePage.verifyDisapprovedCheckboxExists();
+  OneMacDashboardPage.verifyDisapprovedCheckboxExists();
 });
 Then("verify Submitted status checkbox exists", () => {
-  OneMacPackagePage.verifySubmittedCheckboxExists();
+  OneMacDashboardPage.verifySubmittedCheckboxExists();
 });
 Then("verify Package Withdrawn status checkbox exists", () => {
-  OneMacPackagePage.verifyWithdrawnCheckBoxExists();
+  OneMacDashboardPage.verifyWithdrawnCheckBoxExists();
 });
 Then("verify RAI Issued status checkbox exists", () => {
-  OneMacPackagePage.verifyRaiIssuedCheckboxExists();
+  OneMacDashboardPage.verifyRaiIssuedCheckboxExists();
 });
 Then("click Under Review checkbox", () => {
-  OneMacPackagePage.clickUnderReviewCheckBox();
+  OneMacDashboardPage.clickUnderReviewCheckBox();
 });
 Then("click Waiver Terminated checkbox", () => {
-  OneMacPackagePage.clickWaiverTerminatedCheckBox();
-});
-Then("verify the Withdrawal Requested checkbox exists", () => {
-  OneMacPackagePage.verifyWithdrawalRequestedCheckBoxExists();
+  OneMacDashboardPage.clickWaiverTerminatedCheckBox();
 });
 Then("click the Withdrawal Requested checkbox", () => {
-  OneMacPackagePage.clickWithdrawalRequestedCheckBox();
+  OneMacDashboardPage.clickWithdrawalRequestedCheckBox();
 });
-Then(
-  "verify the Formal RAI Response - Withdrawal Requested checkbox exists",
-  () => {
-    OneMacPackagePage.verifyRaiResponseWithdrawalRequestedCheckBoxExists();
-  }
-);
 Then("click the Formal RAI Response - Withdrawal Requested checkbox", () => {
-  OneMacPackagePage.clickRaiResponseWithdrawalRequestedCheckBox();
+  OneMacDashboardPage.clickRaiResponseWithdrawalRequestedCheckBox();
 });
-Then("verify the RAI Response Withdraw Enabled checkbox exists", () => {
-  OneMacPackagePage.verifyRaiResponseWithdrawEnabledCheckBoxExists();
-});
-Then("click the RAI Response Withdraw Enabled checkbox", () => {
+Then("click the Withdraw Formal RAI Response Enabled checkbox", () => {
   OneMacPackagePage.clickRaiResponseWithdrawEnabledCheckBox();
 });
 Then("click 1915b Initial Waiver check box", () => {
-  OneMacPackagePage.clickInitialWaiver1915bCheckBox();
+  OneMacDashboardPage.clickInitialWaiver1915bCheckBox();
 });
 Then("click 1915b Waiver Renewal check box", () => {
-  OneMacPackagePage.clickWaiverRenewal1915bCheckBox();
+  OneMacDashboardPage.clickWaiverRenewal1915bCheckBox();
 });
 Then("click 1915c Appendix K Amendment check box", () => {
-  OneMacPackagePage.click1915cAppendixKAmendmentCheckBox();
+  OneMacDashboardPage.click1915cAppendixKAmendmentCheckBox();
 });
 Then("click 1915b Waiver Amendment check box", () => {
-  OneMacPackagePage.click1915bWaiverAmendmentCheckBox();
+  OneMacDashboardPage.click1915bWaiverAmendmentCheckBox();
 });
 Then("click 1915b Temporary Extension check box", () => {
-  OneMacPackagePage.click1915bTemporaryExtensionCheckBox();
+  OneMacDashboardPage.click1915bTemporaryExtensionCheckBox();
 });
 Then("click 1915c Temporary Extension check box", () => {
-  OneMacPackagePage.click1915cTemporaryExtensionCheckBox();
+  OneMacDashboardPage.click1915cTemporaryExtensionCheckBox();
 });
 Then("click CHIP SPA check box", () => {
-  OneMacPackagePage.clickCHIPSPACheckBox();
+  OneMacDashboardPage.clickCHIPSPACheckBox();
 });
 Then("click Medicaid SPA check box", () => {
-  OneMacPackagePage.clickMedicaidSPACheckBox();
+  OneMacDashboardPage.clickMedicaidSPACheckBox();
 });
 Then("verify Medicaid SPA Exists in list", () => {
-  OneMacPackagePage.verifyMedicaidSPAInListExists();
+  OneMacDashboardPage.verifyMedicaidSPAInListExists();
 });
 Then("verify show hide columns button exists", () => {
-  OneMacPackagePage.verifyShowHideColumnsBTNExists();
+  OneMacDashboardPage.verifyShowHideColumnsBTNExists();
 });
 Then("click show hide columns button", () => {
-  OneMacPackagePage.clickShowHideColumnsBTN();
+  OneMacDashboardPage.clickShowHideColumnsBTN();
 });
-Then("verify Initial Submission Date exists", () => {
-  OneMacPackagePage.verifycheckBoxInitialSubmissionDateExists();
+Then("verify Initial Submission Date checkbox exists", () => {
+  OneMacDashboardPage.verifycheckBoxInitialSubmissionDateExists();
 });
-Then("verify expiration date exists", () => {
-  OneMacPackagePage.verifycheckBoxexpirationDateBTNExists();
+Then("verify state checkbox exists", () => {
+  OneMacDashboardPage.verifycheckboxStateExists();
 });
-Then("verify state exists", () => {
-  OneMacPackagePage.verifycheckboxStateExists();
+Then("verify status checkbox exists", () => {
+  OneMacDashboardPage.verifycheckBoxStatusExists();
 });
-Then("verify status exists", () => {
-  OneMacPackagePage.verifycheckBoxStatusExists();
+Then("verify submitted by checkbox exists", () => {
+  OneMacDashboardPage.verifycheckBoxSubmittedByExists();
 });
-Then("verify submitted by exists", () => {
-  OneMacPackagePage.verifycheckBoxSubmittedByExists();
+Then("verify type checkbox exists", () => {
+  OneMacDashboardPage.verifycheckBoxTypeExists();
 });
-Then("verify type exists", () => {
-  OneMacPackagePage.verifycheckBoxTypeExists();
-});
-Then("verify CPOC Name exists", () => {
-  OneMacPackagePage.verifycheckBoxCPOCNameExists();
+Then("verify CPOC Name checkbox exists", () => {
+  OneMacDashboardPage.verifycheckBoxCPOCNameExists();
 });
 Then("verify Formal RAI Received checkbox exists", () => {
-  OneMacPackagePage.verifyFormalRAIReceivedCheckboxExists();
+  OneMacDashboardPage.verifyFormalRAIReceivedCheckboxExists();
 });
-Then("verify Formal RAI Received checkbox does not exist", () => {
-  OneMacPackagePage.verifyFormalRAIReceivedCheckboxDoesNotExist();
-});
-Then("verify Latest Package Activity checkbox exists", () => {
-  OneMacPackagePage.verifyLatestPackageActivityCheckboxExists();
+Then("verify Final Disposition checkbox exists", () => {
+  OneMacDashboardPage.verifyFinalDispositionCheckBoxExists();
 });
 Then("verify Initial Submission Date column exists", () => {
-  OneMacPackagePage.verifyinitialSubmissionDateColumnExists();
-});
-Then("verify Latest Package Activity column exists", () => {
-  OneMacPackagePage.verifyLatestPackageActivityColumnExists();
-});
-Then("verify Latest Package Activity column does not exist", () => {
-  OneMacPackagePage.verifyLatestPackageActivityDoesNotExist();
+  OneMacDashboardPage.verifyinitialSubmissionDateColumnExists();
 });
 Then("verify state column exists", () => {
-  OneMacPackagePage.verifystateColumnExists();
+  OneMacDashboardPage.verifystateColumnExists();
 });
 Then("verify status column exists", () => {
-  OneMacPackagePage.verifystatusColumnExists();
+  OneMacDashboardPage.verifystatusColumnExists();
 });
 Then("verify submitted by column exists", () => {
-  OneMacPackagePage.verifysubmittedByColumnExists();
+  OneMacDashboardPage.verifysubmittedByColumnExists();
 });
 Then("verify type column exists", () => {
-  OneMacPackagePage.verifytypeColumnExists();
+  OneMacDashboardPage.verifytypeColumnExists();
 });
 Then("verify IDNumber column exists", () => {
-  OneMacPackagePage.verifyIDNumberColumnExists();
+  OneMacDashboardPage.verifyIDNumberColumnExists();
 });
 Then("verify actions column exists", () => {
-  OneMacPackagePage.verifyactionsColumnExists();
+  OneMacDashboardPage.verifyactionsColumnExists();
 });
 Then("verify Formal RAI Received column exists", () => {
-  OneMacPackagePage.verifyFormalRAIReceivedColumnExists();
+  OneMacDashboardPage.verifyFormalRAIReceivedColumnExists();
 });
 Then("verify Formal RAI Received column does not exist", () => {
-  OneMacPackagePage.verifyFormalRAIReceivedColumnDoesNotExist();
+  OneMacDashboardPage.verifyFormalRAIReceivedColumnDoesNotExist();
 });
 Then("verify CPOC Name column exists", () => {
-  OneMacPackagePage.verifyCPOCNameColumnExists();
+  OneMacDashboardPage.verifyCPOCNameColumnExists();
 });
 Then("verify CPOC Name column does not exist", () => {
-  OneMacPackagePage.verifyCPOCNameColumnDoesNotExist();
+  OneMacDashboardPage.verifyCPOCNameColumnDoesNotExist();
+});
+Then("verify Final Disposition column exists", () => {
+  OneMacDashboardPage.verifyFinalDispositionColumnExists();
+});
+Then("verify Final Disposition column does not exist", () => {
+  OneMacDashboardPage.verifyFinalDispositionColumnDoesNotExist();
 });
 Then("click Initial Submission Date checkbox", () => {
-  OneMacPackagePage.clickCheckBoxInitialSubmissionDate();
-});
-Then("click Latest Package Activity checkbox", () => {
-  OneMacPackagePage.clickCheckBoxLatestPackageActivity();
+  OneMacDashboardPage.clickCheckBoxInitialSubmissionDate();
 });
 Then("click state checkbox", () => {
-  OneMacPackagePage.clickCheckboxState();
+  OneMacDashboardPage.clickCheckboxState();
 });
 Then("click status checkbox", () => {
-  OneMacPackagePage.clickCheckboxStatus();
+  OneMacDashboardPage.clickCheckboxStatus();
 });
 Then("click submitted by checkbox", () => {
-  OneMacPackagePage.clickCheckBoxSubmittedBy();
+  OneMacDashboardPage.clickCheckBoxSubmittedBy();
 });
 Then("click type checkbox", () => {
-  OneMacPackagePage.clickCheckBoxType();
+  OneMacDashboardPage.clickCheckBoxType();
 });
 Then("click CPOC Name checkbox", () => {
-  OneMacPackagePage.clickCPOCNameCheckBox();
+  OneMacDashboardPage.clickCPOCNameCheckBox();
 });
 Then("click Formal RAI Received checkbox", () => {
-  OneMacPackagePage.clickFormalRAIReceivedCheckbox();
+  OneMacDashboardPage.clickFormalRAIReceivedCheckbox();
+});
+Then("click Final Disposition checkbox", () => {
+  OneMacDashboardPage.clickFinalDispositionDateCheckBox();
 });
 Then("verify type column does not exist", () => {
-  OneMacPackagePage.verifytypeColumnDoesNotExist();
+  OneMacDashboardPage.verifytypeColumnDoesNotExist();
 });
 Then("verify state column does not exist", () => {
-  OneMacPackagePage.verifystateColumnDoesNotExist();
-});
-Then("verify expiration date column does not exist", () => {
-  OneMacPackagePage.verifyexpirationDateColumnDoesNotExist();
+  OneMacDashboardPage.verifyStateColumnDoesNotExist();
 });
 Then("verify status column does not exist", () => {
-  OneMacPackagePage.verifystatusColumnDoesNotExist();
+  OneMacDashboardPage.verifystatusColumnDoesNotExist();
 });
 Then("verify Initial Submission Date column does not exist", () => {
-  OneMacPackagePage.verifyinitialSubmissionDateColumnDoesNotExist();
+  OneMacDashboardPage.verifyinitialSubmissionDateColumnDoesNotExist();
 });
 Then("verify submitted by column does not exist", () => {
-  OneMacPackagePage.verifysubmittedByColumnDoesNotExist();
+  OneMacDashboardPage.verifysubmittedByColumnDoesNotExist();
 });
 Then("verify the type on row one exists", () => {
-  OneMacPackagePage.verifypackageRowOneTypeExists();
+  OneMacDashboardPage.verifypackageRowOneTypeExists();
 });
 Then("verify the type on row one is Medicaid SPA", () => {
-  OneMacPackagePage.verifypackageRowOneTypeHasTextMedicaidSPA();
-});
-Then("type partial existing ID in search bar", () => {
-  OneMacPackagePage.typePartialExistingID();
+  OneMacDashboardPage.verifypackageRowOneTypeHasTextMedicaidSPA();
 });
 Then("verify the state on row one exists", () => {
-  OneMacPackagePage.verifypackageRowOneStateExists();
-});
-
-Then("verify that the 3 dots next to Approved status is not clickable", () => {
-  OneMacPackagePage.checkforApprovedIsNotClickable();
-});
-Then(
-  "verify that the 3 dots next to Disapproved status is not clickable",
-  () => {
-    OneMacPackagePage.checkforDisapprovedIsNotClickable();
-  }
-);
-Then("verify that the 3 dots next to Withdrawn status is not clickable", () => {
-  OneMacPackagePage.checkforWithdrawnIsNotClickable();
-});
-Then(
-  "verify that the 3 dots next to Terminated status is not clickable",
-  () => {
-    OneMacPackagePage.checkforTerminatedIsNotClickable();
-  }
-);
-Then(
-  "verify that the 3 dots next to Unsubmitted status is not clickable",
-  () => {
-    OneMacPackagePage.checkforUnsubmittedIsNotClickable();
-  }
-);
-Then("verify expiration date filter dropdown exists", () => {
-  OneMacPackagePage.verifyExpirationDateFilterDropdownExists();
+  OneMacDashboardPage.verifypackageRowOneStateExists();
 });
 Then("verify Initial Submission Date filter dropdown exists", () => {
-  OneMacPackagePage.verifyInitialSubmissionDateFilterDropdownExists();
-});
-Then("click on expiration date filter dropdown", () => {
-  OneMacPackagePage.clickOnExpirationDateFilterDropdown();
-});
-Then("verify expiration date date picker exists", () => {
-  OneMacPackagePage.verifyExpirationDateDatePickerFilterExists();
-});
-Then("click on expiration date date picker filter", () => {
-  OneMacPackagePage.clickOnExpirationDateDatePickerFilter();
+  OneMacDashboardPage.verifyInitialSubmissionDateFilterDropDownExists();
 });
 Then("click on Initial Submission Date filter dropdown", () => {
-  OneMacPackagePage.clickOnInitialSubmissionDateFilterDropdown();
+  OneMacDashboardPage.clickOnInitialSubmissionDateFilterDropDown();
 });
 Then("verify Initial Submission Date date picker filter exists", () => {
-  OneMacPackagePage.verifyInitialSubmissionDateDatePickerFilterExists();
+  OneMacDashboardPage.verifyInitialSubmissionDateDatePickerFilterExists();
 });
 Then("click on Initial Submission Date date picker filter", () => {
-  OneMacPackagePage.clickOnInitialSubmissionDateDatePickerFilter();
-});
-Then("click on Formal RAI Received filter dropdown", () => {
-  OneMacPackagePage.clickOnInitialSubmissionDateFilterDropdown();
-});
-Then("verify Formal RAI Received date picker filter exists", () => {
-  OneMacPackagePage.verifyFormalRAIReceivedDatePickerFilterExists();
-});
-Then("verify Formal RAI Received date picker filter does not exist", () => {
-  OneMacPackagePage.verifyFormalRAIReceivedDatePickerFilterDoesNotExist();
+  OneMacDashboardPage.clickOnInitialSubmissionDateDatePickerFilter();
 });
 Then("click on Formal RAI Received date picker filter", () => {
-  OneMacPackagePage.clickOnFormalRAIReceivedDatePickerFilter();
+  OneMacDashboardPage.clickOnFormalRAIReceivedDatePickerFilter();
 });
-Then("click on Latest Package Activity filter dropdown", () => {
-  OneMacPackagePage.clickOnLatestPackageActivityFilterDropdown();
-});
-Then("verify Latest Package Activity date picker filter exists", () => {
-  OneMacPackagePage.verifyLatestPackageActivityDatePickerFilterExists();
-});
-Then("click on Latest Package Activity date picker filter", () => {
-  OneMacPackagePage.clickOnLatestPackageActivityDatePickerFilter();
+Then("click on Final Disposition date picker filter", () => {
+  OneMacDashboardPage.clickOnFinalDispositionDatePickerFilter();
 });
 Then("click on this quarter date picker button", () => {
-  OneMacPackagePage.clickOnThisQuarterDatePickerBtn();
+  OneMacDashboardPage.clickOnThisQuarterDatePickerBtn();
 });
 Then("click on quarter to date date picker button", () => {
-  OneMacPackagePage.clickOnQuarterToDateDatePickerBtn();
-});
-Then("click on OK date picker button", () => {
-  OneMacPackagePage.clickOnOkDatePickerBtn();
-});
-Then("click on today date picker button", () => {
-  OneMacPackagePage.clickOntodayPickerBtn();
+  OneMacDashboardPage.clickOnQuarterToDateDatePickerBtn();
 });
 Then("click on reset button", () => {
-  OneMacPackagePage.clickOnResetButton();
+  OneMacDashboardPage.clickOnResetButton();
 });
 Then("verify package row one exists", () => {
-  OneMacPackagePage.verifyPackageRowOneExists();
-});
-Then("verify 90th day column one is not na", () => {
-  if (OneMacPackagePage.checkIfPackageListResultsExist()) {
-    OneMacPackagePage.verify90thDayRowOneIsNotNA();
-  }
-});
-Then("verify 90th day column one is not Pending", () => {
-  if (OneMacPackagePage.checkIfPackageListResultsExist()) {
-    OneMacPackagePage.verify90thDayRowOneIsNotPending();
-  }
+  OneMacDashboardPage.verifyPackageRowOneExists();
 });
 Then("verify Initial Submission Date column one date is this quarter", () => {
-  if (OneMacPackagePage.checkIfPackageListResultsExist()) {
-    OneMacPackagePage.verifypackageRowOneInitialSubmissionDateIsThisQuarter();
-  }
-});
-Then("verify Formal RAI Received column one date is this quarter", () => {
-  if (OneMacPackagePage.checkIfPackageListResultsExist()) {
-    OneMacPackagePage.verifypackageRowOneInitialSubmissionDateIsThisQuarter();
-  }
-});
-Then("verify Latest Package Activity column one date is this quarter", () => {
-  if (OneMacPackagePage.checkIfPackageListResultsExist()) {
-    OneMacPackagePage.verifypackageRowOneLatestPackageActivityIsThisQuarter();
+  if (OneMacDashboardPage.checkIfPackageListResultsExist()) {
+    OneMacDashboardPage.verifypackageRowOneInitialSubmissionDateIsThisQuarter();
   }
 });
 Then("verify states selected includes {string}", (state) => {
-  OneMacPackagePage.verifyStatesSelectedIncludes(state);
+  OneMacDashboardPage.verifyStatesSelectedIncludes(state);
 });
 Then("verify state dropdown filter exists", () => {
-  OneMacPackagePage.verifyStateDropdownFilterExists();
+  OneMacDashboardPage.verifyStateDropdownFilterExists();
 });
 Then("click on state dropdown filter", () => {
-  OneMacPackagePage.clickStateDropdownFilter();
+  OneMacDashboardPage.clickStateDropdownFilter();
 });
 Then("verify Formal RAI Received dropdown filter exists", () => {
-  OneMacPackagePage.verifyFormalRAIReceivedDateFilterDropdownExists();
+  OneMacDashboardPage.verifyFormalRAIReceivedDateFilterDropdownExists();
 });
 Then("click on Formal RAI Received dropdown filter", () => {
-  OneMacPackagePage.clickOnFormalRAIReceivedDateFilterDropdown();
+  OneMacDashboardPage.clickOnFormalRAIReceivedDateFilterDropdownDropDown();
 });
-Then("verify Latest Package Activity dropdown filter exists", () => {
-  OneMacPackagePage.verifyLatestPackageActivityDateFilterDropdownExists();
+Then("verify Final Disposition dropdown filter exists", () => {
+  OneMacDashboardPage.verifyFinalDispositionDateFilterDropdownExists();
 });
-Then("click on Latest Package Activity dropdown filter", () => {
-  OneMacPackagePage.clickOnLatestPackageActivityFilterDropdown();
+Then("click on Final Disposition dropdown filter", () => {
+  OneMacDashboardPage.clickOnFinalDispositionDateFilterDropdownDropDown();
 });
 Then("verify state filter select exists", () => {
-  OneMacPackagePage.verifyStateFilterSelectExists();
-});
-Then("click on state filter select", () => {
-  OneMacPackagePage.clickStateFilterSelect();
+  OneMacDashboardPage.verifyStateFilterSelectExists();
 });
 Then("verify no states are selected", () => {
-  OneMacPackagePage.verifyStateFilterSelectIsEmpty();
+  OneMacDashboardPage.verifyStateFilterSelectIsEmpty();
 });
 Then("set value on state filter select to {string}", (state) => {
-  OneMacPackagePage.typeStateToSelect(state + "{enter}");
+  OneMacDashboardPage.typeStateToSelect(state + "{enter}");
 });
 Then("verify {string} is showing in the state column", (state) => {
-  OneMacPackagePage.verifypackageRowOneValueIs(state);
+  OneMacDashboardPage.verifypackageRowOneValueIs(state);
 });
 Then("verify remove {string} button exists", (state) => {
-  OneMacPackagePage.verifyremoveBtnExistsFor(state);
+  OneMacDashboardPage.verifyremoveBtnExistsFor(state);
 });
 Then("click remove {string} button", (state) => {
-  OneMacPackagePage.clickRemoveBtnFor(state);
+  OneMacDashboardPage.clickRemoveBtnFor(state);
 });
 Then("verify the Waivers tab exists", () => {
-  OneMacPackagePage.verifyWaiversTabExists();
+  OneMacDashboardPage.verifyWaiversTabExists();
 });
 Then("click on the Waivers tab", () => {
-  OneMacPackagePage.clickOnWaiversTab();
+  OneMacDashboardPage.clickOnWaiversTab();
 });
 Then("verify the SPAs tab exists", () => {
-  OneMacPackagePage.verifySPAsTabExists();
-});
-Then("click on SPAs tab", () => {
-  OneMacPackagePage.clickOnSPAsTab();
+  OneMacDashboardPage.verifySPAsTabExists();
 });
 Then("verify SPA ID column exists", () => {
-  OneMacPackagePage.verifySPAIDColumnExists();
+  OneMacDashboardPage.verifySPAIDColumnExists();
 });
 Then("verify Waiver Number column exists", () => {
-  OneMacPackagePage.verifyWaiverNumberColumnExists();
+  OneMacDashboardPage.verifyWaiverNumberColumnExists();
 });
-Then("verify status Dropdown Filter exists", () => {
-  OneMacPackagePage.verifystatusDropdownFilterExists();
+Then("verify status DropDown Filter exists", () => {
+  OneMacDashboardPage.verifystatusDropDownFilterExists();
 });
 Then("verify the SPAs tab is selected", () => {
   //if it's disabled then it is selected.
-  OneMacPackagePage.verifySPAsTabIsDisabled();
-});
-Then("verify the SPAs tab is clickable", () => {
-  //if it's disabled then it is selected.
-  OneMacPackagePage.verifySPAsTabIsClickable();
+  OneMacDashboardPage.verifySPAsTabIsDisabled();
 });
 Then("verify the Waivers tab is selected", () => {
   //if it's disabled then it is selected.
-  OneMacPackagePage.verifyWaiversTabIsDisabled();
+  OneMacDashboardPage.verifyWaiversTabIsDisabled();
 });
 Then("verify the Waivers tab is clickable", () => {
-  OneMacPackagePage.verifyWaiversTabIsClickable();
+  OneMacDashboardPage.verifyWaiversTabIsClickable();
 });
 Then("refresh the page", () => {
   cy.reload();
 });
-
-Then("verify that Clock Stopped checkbox exists", () => {
-  OneMacPackagePage.verifyNinetiethDayClockStoppedCheckboxExists();
-});
 Then("check all of the status checkboxes", () => {
-  OneMacPackagePage.checkAllStatusFilterCheckboxes();
+  OneMacDashboardPage.checkAllStatusFilterCheckboxes();
 });
 Then("uncheck all of the status checkboxes", () => {
-  OneMacPackagePage.uncheckAllStatusFilterCheckboxes();
+  OneMacDashboardPage.uncheckAllStatusFilterCheckboxes();
 });
 Then("check all of the type checkboxes", () => {
-  OneMacPackagePage.checkAllTypeFilterCheckboxes();
+  OneMacDashboardPage.checkAllTypeFilterCheckboxes();
 });
 Then("uncheck all of the type checkboxes", () => {
-  OneMacPackagePage.uncheckAllTypeFilterCheckboxes();
+  OneMacDashboardPage.uncheckAllTypeFilterCheckboxes();
 });
 Then("click RAI Issued checkbox", () => {
-  OneMacPackagePage.clickRaiIssuedCheckbox();
+  OneMacDashboardPage.clickRaiIssuedCheckbox();
 });
 Then("click Pending - RAI checkbox", () => {
-  OneMacPackagePage.clickPendingRaiCheckbox();
+  OneMacDashboardPage.clickPendingRaiCheckbox();
 });
 Then("verify Pending - RAI status checkbox exists", () => {
-  OneMacPackagePage.verifyPendingRaiCheckboxExists();
+  OneMacDashboardPage.verifyPendingRaiCheckboxExists();
 });
 Then("click the Pending - Concurrence checkbox", () => {
-  OneMacPackagePage.clickPendingConcurrenceCheckbox();
+  OneMacDashboardPage.clickPendingConcurrenceCheckbox();
 });
 Then("verify the Pending - Concurrence status checkbox exists", () => {
-  OneMacPackagePage.verifyPendingConcurrenceCheckboxExists();
+  OneMacDashboardPage.verifyPendingConcurrenceCheckboxExists();
 });
 Then("click the Pending - Approval checkbox", () => {
-  OneMacPackagePage.clickPendingApprovalCheckbox();
+  OneMacDashboardPage.clickPendingApprovalCheckbox();
 });
 Then("verify the Pending - Approval status checkbox exists", () => {
-  OneMacPackagePage.verifyPendingApprovalCheckboxExists();
+  OneMacDashboardPage.verifyPendingApprovalCheckboxExists();
 });
-Then(
-  "verify that the value of the column for the 90th day is Clock Stopped",
-  () => {
-    OneMacPackagePage.verify90thDayRowOneIsClockStopped();
-  }
-);
 Then("click Approved checkbox", () => {
-  OneMacPackagePage.clickApprovedCheckbox();
-});
-Then("verify that the value of the column for the 90th day is NA", () => {
-  OneMacPackagePage.verify90thDayRowOneIsNA();
+  OneMacDashboardPage.clickApprovedCheckbox();
 });
 Then("click Disapproved checkbox", () => {
-  OneMacPackagePage.clickDisapprovedCheckbox();
+  OneMacDashboardPage.clickDisapprovedCheckbox();
 });
 Then("click the SPA ID link in the first row", () => {
-  OneMacPackagePage.clickSPAIDLinkInFirstRow();
+  OneMacDashboardPage.clickSPAIDLinkInFirstRow();
 });
 Then("click the Waiver Number link in the first row", () => {
-  OneMacPackagePage.clickWaiverNumberLinkInFirstRow();
+  OneMacDashboardPage.clickWaiverNumberLinkInFirstRow();
 });
 Then("click the Package Withdrawn checkbox", () => {
-  OneMacPackagePage.clickWithdrawnCheckBoxExists();
-});
-Then("verify that the value of the column for the 90th day is Pending", () => {
-  OneMacPackagePage.verify90thDayRowOneIsPending();
+  OneMacDashboardPage.clickWithdrawnCheckBoxExists();
 });
 Then("click Unsubmitted checkbox", () => {
-  OneMacPackagePage.clickUnsubmittedCheckbox();
+  OneMacDashboardPage.clickUnsubmittedCheckbox();
 });
 Then("click Submitted checkbox", () => {
-  OneMacPackagePage.clickSubmittedCheckbox();
+  OneMacDashboardPage.clickSubmittedCheckbox();
 });
 Then("click Submitted - Intake Needed checkbox", () => {
-  OneMacPackagePage.clickSubmittedIntakeNeededCheckbox();
+  OneMacDashboardPage.clickSubmittedIntakeNeededCheckbox();
 });
 Then("verify Submitted - Intake Needed status checkbox exists", () => {
-  OneMacPackagePage.verifySubmittedIntakeNeededCheckboxExists();
+  OneMacDashboardPage.verifySubmittedIntakeNeededCheckboxExists();
 });
 Then("click Requested checkbox", () => {
-  OneMacPackagePage.clickDoubleDashCheckbox();
+  OneMacDashboardPage.clickDoubleDashCheckbox();
 });
 Then("click the Pending checkbox", () => {
-  OneMacPackagePage.clickPendingCheckbox();
-});
-Then("verify the type in row one is some kind of 1915 Waiver", () => {
-  OneMacPackagePage.verifypackageRowOneTypeContains1915Waiver();
+  OneMacDashboardPage.clickPendingCheckbox();
 });
 Then("verify the type in row one is Initial Waiver", () => {
-  OneMacPackagePage.verifypackageRowOneTypeHasTextInitialWaiver();
+  OneMacDashboardPage.verifypackageRowOneTypeHasTextInitialWaiver();
 });
 Then("verify the type in row one is Waiver Renewal", () => {
-  OneMacPackagePage.verifypackageRowOneTypeHasTextWaiverRenewal();
+  OneMacDashboardPage.verifypackageRowOneTypeHasTextWaiverRenewal();
 });
 Then(
   "verify the waiver number format in row one is SS.#### or SS.#####",
   () => {
-    OneMacPackagePage.verifypackageRowOneIDInitialWaiverFormat();
+    OneMacDashboardPage.verifypackageRowOneIDInitialWaiverFormat();
   }
 );
 Then(
   "verify the waiver number format in row one is SS.#####.S## or SS.####.S##",
   () => {
-    OneMacPackagePage.verifypackageRowOneIDWaiverRenewalFormat();
+    OneMacDashboardPage.verifypackageRowOneIDWaiverRenewalFormat();
   }
 );
 Then("verify Onboarding Materials exists", () => {
@@ -1895,9 +1354,6 @@ Then("verify OneMAC IDM Guide link exists", () => {
 Then("verify OneMAC State User Guide link exists", () => {
   OneMacFAQPage.verifyStateSubmitterGuideLinkExists();
 });
-Then("verify OneMAC State Administrator Guide link exists", () => {
-  OneMacFAQPage.verifyStateAdminGuideLinkExists();
-});
 Then("verify OneMAC CMS User Guide link exists", () => {
   OneMacFAQPage.verifyCmsUserGuideLinkExists();
 });
@@ -1910,35 +1366,11 @@ Then("verify OneMAC IDM Guide is valid", () => {
 Then("verify OneMAC State User Guide is valid", () => {
   OneMacFAQPage.verifyStateSubmitterGuideLinkIsValid();
 });
-Then("verify OneMAC State Administrator Guide is valid", () => {
-  OneMacFAQPage.verifyStateAdminGuideLinkIsValid();
-});
 Then("verify OneMAC CMS User Guide is valid", () => {
   OneMacFAQPage.verifyCmsUserGuideLinkIsValid();
 });
-Then("click on Respond to Medicaid SPA RAI", () => {
-  OneMacSubmissionTypePage.clickRespondToMedicaidSPARAI();
-});
-Then("click on Respond to CHIP SPA RAI", () => {
-  OneMacSubmissionTypePage.clickRespondToCHIPSPARAI();
-});
-Then("click on Respond to Waiver RAI", () => {
-  OneMacSubmissionTypePage.clickRespondToWaiverRAI();
-});
-Then("verify ID field is empty and not disabled", () => {
-  medicaidSPARAIResponsePage.verifySPAIDFieldIsEmptyThenNotDisabled();
-});
-
 Then("search for {string}", (part) => {
-  OneMacPackagePage.searchFor(part);
-  cy.wait(1000);
-});
-Then("search for CPOC named Chester Tester", () => {
-  OneMacPackagePage.searchFor("Chester Tester");
-  cy.wait(1000);
-});
-Then("search for Appendix K number", () => {
-  OneMacPackagePage.searchFor("MD-10330.R00.12");
+  OneMacDashboardPage.searchFor(part);
   cy.wait(1000);
 });
 Then("verify that Request a Role Change button exists", () => {
@@ -1986,11 +1418,9 @@ Then("verify the submit button is enabled", () => {
 Then("verify there is no error message", () => {
   OneMacRequestARoleChangePage.verifyErrorMsgDoesNotExist();
 });
-
 Then("click on cancel", () => {
   OneMacRequestARoleChangePage.clickCancelBtn();
 });
-
 Then("verify the cancel button is clickable", () => {
   OneMacRequestARoleChangePage.verifyCancelBtnIsEnabled();
 });
@@ -2036,29 +1466,29 @@ Then("verify that Request a Role Change button does not exist", () => {
 Then(
   "verify withdraw package button is visible for package in package dashboard",
   () => {
-    OneMacPackagePage.verifyWithdrawPackageBtnExists();
-  }
-);
-Then(
-  "verify withdraw package button is not visible for package in package dashboard",
-  () => {
-    OneMacPackagePage.verifyWithdrawPackageBtnDoesNotExist();
+    OneMacDashboardPage.verifyWithdrawPackageBtnExists();
   }
 );
 Then("click withdraw package button", () => {
-  OneMacPackagePage.clickWithdrawPackageBtn();
+  OneMacDashboardPage.clickWithdrawPackageBtn();
 });
 Then("click yes, withdraw package button", () => {
-  OneMacPackagePage.clickConfirmWithdrawPackageBtn();
+  OneMacDashboardPage.clickConfirmWithdrawPackageBtn();
 });
 Then("verify yes, withdraw package button exists", () => {
-  OneMacPackagePage.verifyConfirmWithdrawPackageBtnExists();
+  OneMacDashboardPage.verifyConfirmWithdrawPackageBtnExists();
 });
 Then("click Yes, withdraw response button", () => {
-  OneMacPackagePage.clickConfirmWithdrawResponseBtn();
+  OneMacDashboardPage.clickConfirmWithdrawResponseBtn();
 });
 Then("verify Yes, withdraw response button exists", () => {
-  OneMacPackagePage.verifyConfirmWithdrawResponseBtnExists();
+  OneMacDashboardPage.verifyConfirmWithdrawResponseBtnExists();
+});
+Then("click the yes, submit modal button", () => {
+  OneMacFormPage.clickYesSubmitBTN();
+});
+Then("verify the yes, submit modal button is visible and clickable", () => {
+  OneMacFormPage.verifyModalSubmitExistsAndClickable();
 });
 Then("verify the package details page is visible", () => {
   OneMacPackageDetailsPage.verifyPackageDetailsPageIsVisible();
@@ -2117,6 +1547,12 @@ Then("verify Enable Formal RAI Response Withdraw package action exists", () => {
 Then("click Enable Formal RAI Response Withdraw package action", () => {
   OneMacPackageDetailsPage.clickEnableRAIResponseWithdrawAction();
 });
+Then(
+  "verify Disable Formal RAI Response Withdraw package action exists",
+  () => {
+    OneMacPackageDetailsPage.verifyDisableRAIResponseWithdrawActionExists();
+  }
+);
 Then("click on Respond to RAI package action", () => {
   OneMacPackageDetailsPage.clickRespondToRAIAction();
 });
@@ -2126,12 +1562,7 @@ Then("verify the details section exists", () => {
 Then("verify the package details title contains {string}", (string) => {
   OneMacPackageDetailsPage.verifyTitleContains(string);
 });
-Then("verify there is a SPA ID header in the details section", () => {
-  OneMacPackageDetailsPage.verifyCHIPSPAIDHeaderExists();
-});
-Then("verify an ID exists for the SPA ID", () => {
-  OneMacPackageDetailsPage.verifyIDExists();
-});
+
 Then("verify there is a Type header in the details section", () => {
   OneMacPackageDetailsPage.verifyTypeHeaderExists();
 });
@@ -2140,9 +1571,6 @@ Then("verify a type containing SPA exists for the Type", () => {
 });
 Then("verify the type is Medicaid SPA", () => {
   OneMacPackageDetailsPage.verifyTypeContainsMedicaidSPA();
-});
-Then("verify the type is CHIP SPA", () => {
-  OneMacPackageDetailsPage.verifyTypeContainsCHIPSPA();
 });
 Then("verify the type is Initial Waiver", () => {
   OneMacPackageDetailsPage.verifyTypeContainsInitialWaiver();
@@ -2158,9 +1586,6 @@ Then("verify the type is 1915b Temporary Extension", () => {
 });
 Then("verify the type is 1915b Waiver Amendment", () => {
   OneMacPackageDetailsPage.verifyTypeContains1915bWaiverAmendment();
-});
-Then("verify the type is 1915c Appendix K Amendment", () => {
-  OneMacPackageDetailsPage.verifyTypeContains191cbAppendixKAmendment();
 });
 Then(
   "verify there is a Approved Initial or Renewal Number header in the details section",
@@ -2184,18 +1609,6 @@ Then("verify there is a State header in the details section", () => {
 Then("verify a state exists for the State", () => {
   OneMacPackageDetailsPage.verifyStateExists();
 });
-Then(
-  "verify there is a Latest Package Activity header in the details section",
-  () => {
-    OneMacPackageDetailsPage.verifyLatestPackageActivityHeaderExists();
-  }
-);
-Then(
-  "verify a full date and time entry exists for the Latest Package Activity",
-  () => {
-    OneMacPackageDetailsPage.verifyLatestPackageActivityDateExists();
-  }
-);
 Then("verify there is an Amendment Title header in the details section", () => {
   OneMacPackageDetailsPage.verifyAmendmentTitleHeaderExists();
 });
@@ -2217,21 +1630,11 @@ Then("verify a date exists for the Initial Submission Date", () => {
 Then(
   "verify the form is titled Formal Request for Additional Information Response",
   () => {
-    OneMacRespondToRAIPage.verifyPageHeader();
+    OneMacFormPage.verifyPageHeader(
+      "Formal Request for Additional Information Response"
+    );
   }
 );
-Then("click back arrow", () => {
-  OneMacRespondToRAIPage.clickBackArrow();
-});
-Then("click Leave, anyway", () => {
-  OneMacRespondToRAIPage.clickLeaveAnyway();
-});
-Then("verify user is on new spa page", () => {
-  OneMacSubmissionTypePage.verifyNewSPAPage();
-});
-Then("verify user is on new waiver page", () => {
-  OneMacSubmissionTypePage.verifyNewWaiverPage();
-});
 Then("verify user is on new initial waiver page", () => {
   OneMacSubmissionTypePage.verifyNewInitialWaiverPage();
 });
@@ -2244,35 +1647,17 @@ Then("verify user is on new Appendix K page", () => {
 Then("verify user is on new waiver amendment page", () => {
   OneMacSubmissionTypePage.verifyNewWaiverAmendmentPage();
 });
-Then("verify user is on new Medicaid SPA page", () => {
-  OneMacSubmitNewMedicaidSpaPage.verifyNewMedicaidSPAPage();
+Then("verify the page header is {string}", (pageHeader) => {
+  OneMacFormPage.verifyPageHeader(pageHeader);
 });
-Then(
-  "verify user is on Medicaid Eligibility, Enrollment, Administration, and Health Homes page",
-  () => {
-    OneMacSubmitNewMedicaidSpaPage.verifyMedicaidEligibilityPage();
-  }
-);
-Then(
-  "verify user is on Medicaid Alternative Benefits Plans ABP, and Medicaid Premiums and Cost Sharing page",
-  () => {
-    OneMacSubmitNewMedicaidSpaPage.verifyMedicaidAlternativePage();
-  }
-);
-Then("verify user is on new CHIP SPA page", () => {
-  OneMacCHIPSPAPage.verifyNewChipSPAPage();
-});
-Then("verify user is on CHIP Eligibility page", () => {
-  OneMacCHIPSPAPage.verifyChipEligibilityPage();
-});
-Then("verify the page header is {string}", (string) => {
-  OneMacCHIPSPAPage.verifyPageH1Is(string);
+Then("verify the form title is {string}", (pageHeader) => {
+  OneMacFormPage.verifyFormTitle(pageHeader);
 });
 Then("verify Enter the MMDL System button is visible and clickable", () => {
-  OneMacCHIPSPAPage.verifyMmdlSystenBtn();
+  OneMacFormPage.verifyMmdlSystemBtn();
 });
 Then("verify Enter the MACPro system button is visible and clickable", () => {
-  OneMacSubmitNewMedicaidSpaPage.verifyMacProSystenBtn();
+  OneMacFormPage.verifyMacProSystemBtn();
 });
 Then("verify RAI Responses header exists", () => {
   OneMacPackageDetailsPage.verifyRaiResponseHeaderExists();
@@ -2280,113 +1665,23 @@ Then("verify RAI Responses header exists", () => {
 Then("verify RAI Responses header does not exist", () => {
   OneMacPackageDetailsPage.verifyRaiResponseHeaderDoesNotExist();
 });
-Then(
-  "verify the Medicaid RAI Responses caret at the top of the list exists and is enabled",
-  () => {
-    OneMacPackageDetailsPage.verifyMedicaidTopRaiRespCaretExistsThenEnabled();
-  }
-);
-Then(
-  "verify the CHIP RAI Responses caret at the top of the list exists and is enabled",
-  () => {
-    OneMacPackageDetailsPage.verifyCHIPTopRaiRespCaretExistsThenEnabled();
-  }
-);
-Then(
-  "verify the Appendix K RAI Responses caret at the top of the list exists and is enabled",
-  () => {
-    OneMacPackageDetailsPage.verifyAppKTopRaiRespCaretExistsThenEnabled();
-  }
-);
-Then(
-  "verify the title of the Medicaid RAI Responses caret at the top of the list is in Submitted on format",
-  () => {
-    OneMacPackageDetailsPage.verifyMedicaidTopRaiRespCaretTitle();
-  }
-);
-Then(
-  "verify the title of the CHIP RAI Responses caret at the top of the list is in Submitted on format",
-  () => {
-    OneMacPackageDetailsPage.verifyCHIPTopRaiRespCaretTitle();
-  }
-);
-Then(
-  "verify the title of the Appendix K RAI Responses caret at the top of the list is in Submitted on format",
-  () => {
-    OneMacPackageDetailsPage.verifyAppKTopRaiRespCaretTitle();
-  }
-);
-Then(
-  "verify the Medicaid RAI response card at the top of the list exists",
-  () => {
-    OneMacPackageDetailsPage.verifyMedicaidTopRaiRespCardExists();
-  }
-);
-Then("verify the CHIP RAI response card at the top of the list exists", () => {
-  OneMacPackageDetailsPage.verifyCHIPTopRaiRespCardExists();
-});
-Then(
-  "verify the Appendix K RAI response card at the top of the list exists",
-  () => {
-    OneMacPackageDetailsPage.verifyAppKTopRaiRespCardExists();
-  }
-);
-Then(
-  "verify the download button for the Medicaid RAI response at the top of the list exists",
-  () => {
-    OneMacPackageDetailsPage.verifyMedicaidTopRaiRespDownloadBtnExistsThenEnabled();
-  }
-);
-Then(
-  "verify the download button for the CHIP RAI response at the top of the list exists",
-  () => {
-    OneMacPackageDetailsPage.verifyCHIPTopRaiRespDownloadBtnExistsThenEnabled();
-  }
-);
-Then(
-  "verify the download button for the Appendix K RAI response at the top of the list exists",
-  () => {
-    OneMacPackageDetailsPage.verifyAppKTopRaiRespDownloadBtnxistsThenEnabled();
-  }
-);
-Then("verify the first RAI response does not have Additional Info", () => {
-  OneMacPackageDetailsPage.verifyTopRaiRespAddInfoDoesNotExist();
-});
-Then("verify the first RAI response has Additional Info", () => {
-  OneMacPackageDetailsPage.verifyTopRaiRespAddInfoExists();
-});
 Then("click the actions button in row one", () => {
-  OneMacPackagePage.clickPackageRowOneActionsBtn();
+  OneMacDashboardPage.clickPackageRowOneActionsBtn();
 });
 Then("click the Respond to RAI button", () => {
-  OneMacPackagePage.clickRespondToRAIBtn();
+  OneMacDashboardPage.clickRespondToRAIBtn();
 });
 Then("click the Request Temporary Extension button", () => {
-  OneMacPackagePage.clickRequestTempExtensionBtn();
+  OneMacDashboardPage.clickRequestTempExtensionBtn();
 });
 Then("verify the Request Temporary Extension button is displayed", () => {
-  OneMacPackagePage.verifyRequestTempExtensionBtnExists();
-});
-Then("click the Add Amendment button", () => {
-  OneMacPackagePage.clickAddAmendmentBtn();
+  OneMacDashboardPage.verifyRequestTempExtensionBtnExists();
 });
 Then("verify the Add Amendment button is displayed", () => {
-  OneMacPackagePage.verifyAddAmendmentBtnExists();
+  OneMacDashboardPage.verifyAddAmendmentBtnExists();
 });
 Then("verify the Respond to RAI button is displayed", () => {
-  OneMacPackagePage.verifyRespondToRAIBtnExists();
-});
-Then("verify Package Overview navigation button exists", () => {
-  OneMacPackageDetailsPage.verifyPackageOverviewNavBtnExists();
-});
-Then("verify Package Overview navigation button is enabled", () => {
-  OneMacPackageDetailsPage.verifyPackageOverviewNavBtnIsEnabled();
-});
-Then("verify Package Overview navigation button is expanded", () => {
-  OneMacPackageDetailsPage.verifyPackageOverviewNavBtnIsExpanded();
-});
-Then("verify Package Details is listed under Package Overview", () => {
-  OneMacPackageDetailsPage.verifyPackageDetailsNavBtnExists();
+  OneMacDashboardPage.verifyRespondToRAIBtnExists();
 });
 Then("click the pending user action button", () => {
   OneMacUserManagmentPage.clickPendingUserActionBtn();
@@ -2406,12 +1701,6 @@ Then(
     OneMacPackageDetailsPage.verifyProposedEffectiveDateHeaderExists();
   }
 );
-Then("verify the Proposed Effective Date is NA", () => {
-  OneMacPackageDetailsPage.verifyproposedEffectiveDateHeaderContainsNA();
-});
-Then("verify the Proposed Effective Date is Pending", () => {
-  OneMacPackageDetailsPage.verifyproposedEffectiveDateHeaderContainsPending();
-});
 Then(
   "verify the Proposed Effective Date is a date formatted like Mon dd yyyy",
   () => {
@@ -2431,12 +1720,6 @@ Then(
   }
 );
 Then(
-  "verify the Final Disposition Date is a date formatted like Mon dd yyyy",
-  () => {
-    OneMacPackageDetailsPage.verifyFinalDispositionDateHeaderContainsDate();
-  }
-);
-Then(
   "verify there is an Approved Effective Date in the details section",
   () => {
     OneMacPackageDetailsPage.verifyApprovedEffectiveDateHeaderExists();
@@ -2449,39 +1732,9 @@ Then(
   }
 );
 Then(
-  "verify the Approved Effective Date is a date formatted like Mon dd yyyy",
-  () => {
-    OneMacPackageDetailsPage.verifyApprovedEffectiveDateHeaderContainsDate();
-  }
-);
-Then(
-  "verify there is an Actual Effective Date header in the details section",
-  () => {
-    OneMacPackageDetailsPage.verifyActualEffectiveDateHeaderExists();
-  }
-);
-Then(
-  "verify there is not an Actual Effective Date header in the details section",
-  () => {
-    OneMacPackageDetailsPage.verifyActualEffectiveDateHeaderDoesNotExists();
-  }
-);
-Then(
-  "verify the Actual Effective Date is a date formatted like Mon dd yyyy",
-  () => {
-    OneMacPackageDetailsPage.verifyActualEffectiveDateHeaderContainsDate();
-  }
-);
-Then(
   "verify there is an Formal RAI Received Date header in the details section",
   () => {
     OneMacPackageDetailsPage.verifyFormalRAIReceivedDateHeaderExists();
-  }
-);
-Then(
-  "verify there is not an Formal RAI Received Date header in the details section",
-  () => {
-    OneMacPackageDetailsPage.verifyFormalRAIReceivedDateHeaderDoesNotExists();
   }
 );
 Then(
@@ -2490,9 +1743,6 @@ Then(
     OneMacPackageDetailsPage.verifyFormalRAIReceivedDateHeaderContainsDate();
   }
 );
-Then("verify the Amendment Number header exists", () => {
-  OneMacPackageDetailsPage.verifyAmendmentNumberHeaderExists();
-});
 Then("verify the waiver authority header exists", () => {
   OneMacPackageDetailsPage.verifyWaiverAuthorityHeaderExists();
 });
@@ -2502,148 +1752,43 @@ Then("verify the waiver authority is 1915c HCBS", () => {
 Then("verify the attachments section exists", () => {
   OneMacPackageDetailsPage.verifyAttachmentsSectionExists();
 });
-Then("verify the download all button exists", () => {
-  OneMacPackageDetailsPage.verifyDownloadAllBtnExists();
-});
 Then("verify the additional information section exists", () => {
   OneMacPackageDetailsPage.verifyAdditionalInfoSectionExists();
 });
 Then("verify the Administrative Package Changes section exists", () => {
   OneMacPackageDetailsPage.verifyAdministrativePackageChangesSectionExists();
 });
-Then("verify the Formal RAI Responses section exists", () => {
-  OneMacPackageDetailsPage.verifyFormalRAIResponsesSectionExists();
-});
 Then("click withdraw button", () => {
   OneMacPackageDetailsPage.clickWithdrawBtn();
-});
-Then("click withdraw confirmation", () => {
-  OneMacPackageDetailsPage.clickWithdrawConfirmationBtn();
-});
-Then("verify submission message for withdrawn amendment", () => {
-  OneMacPackageDetailsPage.verifySubmissionMsgForWithdrawnAmendment();
-});
-Then("verify the amendment details section exists", () => {
-  OneMacPackageDetailsPage.verifyAmendmentDetailSectionExists();
 });
 Then("verify success message for denied role", () => {
   OneMacDashboardPage.verifySuccessMessageIsDisplayedForRoleChange();
 });
-Then("select proposed effective date 3 months from today", () => {
-  OneMacSubmitNewWaiverActionPage.setProposedEffectiveDateThreeMonthsAway();
+Then("set {string} to {int} months from today", (whichDate, numMonths) => {
+  OneMacFormPage.addMonthsTo(whichDate, numMonths);
 });
-Then("Type Temporary Extension Number {string}", (s) => {
-  cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
-    switch (parseInt(s)) {
-      case 1:
-        OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
-          data.newTemporaryExtensionNumber1
-        );
-        break;
-      case 2:
-        OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
-          data.newTemporaryExtensionNumber2
-        );
-        break;
-      case 3:
-        OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
-          data.newTemporaryExtensionNumber3
-        );
-        break;
-      case 4:
-        OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
-          data.newTemporaryExtensionNumber4
-        );
-        break;
-      case 5:
-        OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
-          data.newTemporaryExtensionNumber5
-        );
-        break;
-      case 6:
-        OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
-          data.newTemporaryExtensionNumber6
-        );
-        break;
-      case 7:
-        OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
-          data.newTemporaryExtensionNumber7
-        );
-        break;
-      case 8:
-        OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
-          data.newTemporaryExtensionNumber8
-        );
-        break;
-      case 9:
-        OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
-          data.newTemporaryExtensionNumber9
-        );
-        break;
-      case 10:
-        OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
-          data.newTemporaryExtensionNumber10
-        );
-        break;
-    }
-  });
-});
-Then("click on the link for temporary extension number 1", () => {
-  cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
-    OneMacPackageDetailsPage.clickTempExtensionID(
-      data.newTemporaryExtensionNumber1
-    );
-  });
-});
-Then("verify the initial waiver parent ID is prefilled in the form", () => {
-  OneMacSubmitNewWaiverActionPage.verifyParentInitialIDIsPrefilled();
-});
-Then("verify the renewal waiver parent ID is prefilled in the form", () => {
-  OneMacSubmitNewWaiverActionPage.verifyParentRenewalIDIsPrefilled();
-});
-Then("verify the package ID is prefilled in the form", () => {
-  OneMacRespondToRAIPage.verifyIDIsPrefilled();
-});
-
-Then("verify the temporary extension exists", () => {
-  cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
-    OneMacPackageDetailsPage.verifyTempExtensionIDExists(
-      data.newTemporaryExtensionNumber1
-    );
-  });
-});
-Then("click the action button for temporary extension 2", () => {
-  cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
-    OneMacPackageDetailsPage.clickTempExtensionActionBtn(
-      data.newTemporaryExtensionNumber2
-    );
-  });
-});
-Then("click withdraw button on the temp extension page", () => {
-  OneMacPackageDetailsPage.clickWithdrawBtnOnTempExt();
-});
-Then("click on the Temporary Extension nav button", () => {
-  OneMacPackageDetailsPage.clickTempExtensionsNavBtn();
+Then("verify {string} is prefilled", (whereTo) => {
+  OneMacFormPage.verifyPrefill(whereTo);
 });
 Then("copy the ID from the link in the first row", () => {
-  OneMacPackagePage.copyTheIDFromLinkInFirstRow();
+  OneMacDashboardPage.copyTheIDFromLinkInFirstRow();
 });
 Then("search for the ID copied from the link in the first row", () => {
   cy.fixture("savedID.json").then((data) => {
-    OneMacPackagePage.searchFor(data.savedID);
+    OneMacDashboardPage.searchFor(data.savedID);
   });
   cy.wait(1000);
 });
 Then("verify the ID searched for is the ID in the first result", () => {
   cy.fixture("savedID.json").then((data) => {
-    OneMacPackagePage.compareSearchIDToFirstLinkID(data.savedID);
+    OneMacDashboardPage.compareSearchIDToFirstLinkID(data.savedID);
   });
   cy.wait(1000);
 });
 Then(
   "verify the CPOC searched for is Chester Tester in the first result",
   () => {
-    OneMacPackagePage.verifyCPOCInFirstRow();
+    OneMacDashboardPage.verifyCPOCInFirstRow();
     cy.wait(1000);
   }
 );
@@ -2663,18 +1808,11 @@ Then("reset EUA CMS Read Only User state if needed", () => {
       }
     });
 });
-
-Then(
-  "verify the actions button is unavailable in the submission dashboard",
-  () => {
-    OneMacDashboardPage.verifyActionsBtnUnvailableOnFirstRow();
-  }
-);
 Then("verify the actions button is disabled in the package dashboard", () => {
   OneMacDashboardPage.verifyActionsBtnDisabledOnFirstRow();
 });
 Then("verify actions column is unavailable", () => {
-  OneMacPackagePage.verifyActionsColumnDoesNotExist();
+  OneMacDashboardPage.verifyActionsColumnDoesNotExist();
 });
 Then("verify the first RAI Response header is titled", () => {
   OneMacPackageDetailsPage.verifyRaiResponseHeaderTitle();
@@ -2716,32 +1854,11 @@ Then(
   }
 );
 Then("verify the submit button is not disabled", () => {
-  OneMacDefaultForms.verifySubmitBtnIsNotDisabled();
+  OneMacFormPage.verifySubmitBtnIsNotDisabled();
 });
 Then("verify the submit button is disabled", () => {
-  OneMacDefaultForms.verifySubmitBtnIsDisabled();
+  OneMacFormPage.verifySubmitBtnIsDisabled();
 });
-Then("type in valid waiver amendment number", () => {
-  OneMacSubmitNewWaiverActionPage.inputWaiverNumber("MD-12323.R01.01");
-});
-Then("type initial waiver number in old format SS.####.R00.00", () => {
-  OneMacSubmitNewWaiverActionPage.inputWaiverNumber("MD.1055.R00.00");
-});
-Then("type initial waiver number in old format SS.#####.R00.00", () => {
-  OneMacSubmitNewWaiverActionPage.inputWaiverNumber("MD.10555.R00.00");
-});
-Then(
-  "verify error message is present on package dashboard New Waiver Page",
-  () => {
-    OneMacSubmitNewWaiverActionPage.verifyErrorMessageIsDisplayed();
-  }
-);
-Then(
-  "verify parent error message is present on package dashboard New Waiver Page",
-  () => {
-    OneMacSubmitNewWaiverActionPage.verifyParentErrorMessageIsDisplayed();
-  }
-);
 Then(
   "verify What format is used to enter a 1915b and 1915c Temporary Extension number header",
   () => {
@@ -2778,196 +1895,21 @@ Then(
     OneMacFAQPage.verifyAttachmentsFor1915cRequestTempExtBody();
   }
 );
-Then(
-  "Type {string} into Approved Initial or Renewal Waiver Number field",
-  (n) => {
-    OneMacRequestWaiverTemporaryExtension.inputApprovedBaseOrRenewalWaiverNumber(
-      n
-    );
-  }
-);
-Then(
-  "verify Approved Initial or Renewal Waiver Number error message is displayed",
-  () => {
-    OneMacRequestWaiverTemporaryExtension.verifyParentErrorMessageIsDisplayed();
-  }
-);
-Then(
-  "verify Approved Initial or Renewal Waiver Number error message text is correct",
-  () => {
-    OneMacRequestWaiverTemporaryExtension.verifyParentErrorMessageText();
-  }
-);
-Then(
-  "verify Approved Initial or Renewal Waiver Number error message is not displayed",
-  () => {
-    OneMacRequestWaiverTemporaryExtension.verifyParentErrorMessageIsNotDisplayed();
-  }
-);
-Then("clear Approved Initial or Renewal Waiver Number input box", () => {
-  OneMacRequestWaiverTemporaryExtension.clearApprovedBaseOrRenewalWaiverNumberInputBox();
-});
-Then("wait for {string} miliseconds", (s) => {
-  cy.wait(parseInt(s));
-});
 Then("verify error message contains {string}", (msg) => {
-  OneMacDefaultForms.verifyErrorMsgContains(msg);
+  OneMacFormPage.verifyErrorMsgContains(msg);
 });
-Then("search for Initial Waiver in RAI Issued status", () => {
-  cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
-    OneMacPackagePage.searchFor(data.initialWaiverInRAIStatus);
-  });
-  cy.wait(1000);
-});
-Then(
-  "verify the Initial Waiver Number in RAI Issued status is pre-populated and uneditable",
-  () => {
-    cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
-      OneMacRespondToRAIPage.verifyWaiverNumberMatchesID(
-        data.initialWaiverInRAIStatus
-      );
-    });
-    cy.wait(1000);
-  }
-);
-Then("search for the Appendix K Amendment in RAI Issued status", () => {
-  cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
-    OneMacPackagePage.searchFor(data.appKInRAIStatus);
-  });
-  cy.wait(1000);
-});
-Then(
-  "verify the Appendix K Amendment in RAI Issued status is pre-populated and uneditable",
-  () => {
-    OneMacRespondToRAIPage.verifyAmendmentIDIsPrefilled();
-  }
-);
-Then(
-  "verify the Waiver Amendment in RAI Issued status is pre-populated and uneditable",
-  () => {
-    OneMacRespondToRAIPage.verifyAmendmentIDIsPrefilled();
-  }
-);
-Then(
-  "type new waiver renewal number {string} in 1915b Waiver Renewal Number field",
-  (s) => {
-    cy.fixture("packageDashboardWaiverNumbers.json").then((d) => {
-      switch (parseInt(s)) {
-        case 1:
-          OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
-            d.newWaiverRenewalNum1
-          );
-          break;
-        case 2:
-          OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
-            d.newWaiverRenewalNum2
-          );
-          break;
-        case 3:
-          OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
-            d.newWaiverRenewalNum3
-          );
-          break;
-      }
-    });
-  }
-);
-Then(
-  "type new waiver amendment number {string} in 1915b Waiver Amendment Number field",
-  (s) => {
-    cy.fixture("packageDashboardWaiverNumbers.json").then((d) => {
-      switch (parseInt(s)) {
-        case 1:
-          OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
-            d.newWaiverAmendmentNum1
-          );
-          break;
-        case 2:
-          OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
-            d.newWaiverAmendmentNum2
-          );
-          break;
-        case 3:
-          OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
-            d.newWaiverAmendmentNum3
-          );
-          break;
-        case 4:
-          OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
-            d.newWaiverAmendmentNum4
-          );
-          break;
-      }
-    });
-  }
-);
 Then("search for new waiver renewal number {string}", (s) => {
   cy.fixture("packageDashboardWaiverNumbers.json").then((d) => {
     switch (parseInt(s)) {
       case 1:
-        OneMacPackagePage.searchFor(d.newWaiverRenewalNum1);
+        OneMacDashboardPage.searchFor(d.newWaiverRenewalNum1);
         break;
       case 3:
-        OneMacPackagePage.searchFor(d.newWaiverRenewalNum3);
+        OneMacDashboardPage.searchFor(d.newWaiverRenewalNum3);
         break;
     }
   });
   cy.wait(1000);
-});
-
-Then("search for new waiver amendment number 1", () => {
-  cy.fixture("packageDashboardWaiverNumbers.json").then((d) => {
-    OneMacPackagePage.searchFor(d.newWaiverAmendmentNum1);
-  });
-  cy.wait(1000);
-});
-Then(
-  "type approved Initial Waiver number into Existing Waiver Number to Renew field",
-  () => {
-    cy.fixture("packageDashboardWaiverNumbers.json").then((d) => {
-      OneMacSubmitNewWaiverActionPage.inputWaiverParentNumber(
-        d.approvedInitialWaiverNum1
-      );
-    });
-  }
-);
-Then(
-  "type approved Initial Waiver number into Existing Waiver Number to Amend field",
-  () => {
-    cy.fixture("packageDashboardWaiverNumbers.json").then((d) => {
-      OneMacSubmitNewWaiverActionPage.inputWaiverParentNumber(
-        d.approvedInitialWaiverNum1
-      );
-    });
-  }
-);
-Then("clear Existing Waiver Number to Renew field", () => {
-  OneMacSubmitNewWaiverActionPage.clearWaiverParentNumber();
-  cy.wait(1500);
-});
-Then("clear Existing Waiver Number to Amend field", () => {
-  OneMacSubmitNewWaiverActionPage.clearWaiverParentNumber();
-  cy.wait(1500);
-});
-Then("clear 1915b Waiver Renewal Number field", () => {
-  OneMacSubmitNewWaiverActionPage.clearWaiverNumberInputBoxNewForms();
-  cy.wait(1500);
-});
-Then("clear 1915b Waiver Amendment Number field", () => {
-  OneMacSubmitNewWaiverActionPage.clearWaiverNumberInputBoxNewForms();
-  cy.wait(1500);
-});
-Then("type bad format into Existing Waiver Number to Renew field", () => {
-  OneMacSubmitNewWaiverActionPage.inputWaiverParentNumber("MD");
-});
-Then("type bad format into Existing Waiver Number to Amend field", () => {
-  OneMacSubmitNewWaiverActionPage.inputWaiverParentNumber("MD");
-});
-Then("type bad format into 1915b Waiver Renewal Number field", () => {
-  OneMacSubmitNewWaiverActionPage.inputWaiverNumber("MD");
-});
-Then("type bad format into 1915b Waiver Amendment Number field", () => {
-  OneMacSubmitNewWaiverActionPage.inputWaiverNumber("MD");
 });
 Then(
   "verify id number in the first row matches new waiver renewal number {string}",
@@ -2975,12 +1917,12 @@ Then(
     cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
       switch (parseInt(s)) {
         case 1:
-          OneMacPackagePage.verifyIDNumberInFirstRowIs(
+          OneMacDashboardPage.verifyIDNumberInFirstRowIs(
             data.newWaiverRenewalNum1
           );
           break;
         case 3:
-          OneMacPackagePage.verifyIDNumberInFirstRowIs(
+          OneMacDashboardPage.verifyIDNumberInFirstRowIs(
             data.newWaiverRenewalNum3
           );
           break;
@@ -2994,12 +1936,12 @@ Then(
     cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
       switch (parseInt(s)) {
         case 1:
-          OneMacPackagePage.verifyIDNumberInFirstRowIs(
+          OneMacDashboardPage.verifyIDNumberInFirstRowIs(
             data.newWaiverAmendmentNum1
           );
           break;
         case 3:
-          OneMacPackagePage.verifyIDNumberInFirstRowIs(
+          OneMacDashboardPage.verifyIDNumberInFirstRowIs(
             data.newWaiverAmendmentNum3
           );
           break;
@@ -3007,84 +1949,35 @@ Then(
     });
   }
 );
-Then("verify id number in the first row matches approved waiver number", () => {
-  cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
-    OneMacPackagePage.verifyIDNumberInFirstRowIs(
-      data.approvedInitialWaiverNum1
-    );
-  });
+Then("type {string} into Amendment Title field", (amendmentTitle) => {
+  OneMacFormPage.inputAmendmentTitle(amendmentTitle);
 });
-Then("type Appendix K Submission 1 into Amendment Title field", () => {
-  OneMacAppendixKAmendmentPage.inputAmendmentTitle("Appendix K Submission 1");
-});
-Then("verify id number in the first row matches Appendix K number", () => {
-  OneMacPackagePage.verifyIDNumberInFirstRowIs("MD-10330.R00.12");
-});
-
 Then("verify id number in the first row matches {string}", (s) => {
-  OneMacPackagePage.verifyIDNumberInFirstRowIs(s);
+  OneMacDashboardPage.verifyIDNumberInFirstRowIs(s);
 });
-
-Then("verify help text under Existing Waiver Number to Renew field", () => {
-  OneMacSubmitNewWaiverActionPage.verifyParentFieldHelpText();
+Then("verify the {string} hint text is {string}", (whichLabel, hintText) => {
+  OneMacFormPage.verifyHintTextContains(whichLabel, hintText);
 });
-
-Then(
-  "verify the error message for renewals includes For renewals, the “R##” starts with ‘01’ and ascends.",
-  () => {
-    OneMacSubmitNewWaiverActionPage.verifyRenewalWaiverErrorMsgPt2();
-  }
-);
-Then("verify the 1915b Temporary Extension is prefilled under type", () => {
-  OneMacRequestWaiverTemporaryExtension.option1915bIsPrefilled();
+Then("verify the Temporary Extension Type is {string}", (whichType) => {
+  OneMacFormPage.verifyTempExtensionType(whichType);
 });
-Then("select the 1915b Temporary Extension Type button", () => {
-  OneMacRequestWaiverTemporaryExtension.selectOption1915bInTempExtensionType();
+Then("select {string} as the Temporary Extension Type", (whichType) => {
+  OneMacFormPage.selectTempExtensionType(whichType);
 });
-Then("select the 1915c Temporary Extension Type button", () => {
-  OneMacRequestWaiverTemporaryExtension.selectOption1915cInTempExtensionType();
+Then("verify Form Intro Text is {string}", (introText) => {
+  OneMacFormPage.verifyFormIntro(introText);
 });
-Then("verify the header is {string} on the withdrawal form", (string) => {
-  WithdrawPackagePage.verifyWithdrawPageHeader(string);
+Then("verify ID Label is {string}", (idLabel) => {
+  OneMacFormPage.verifyIDLabelIs(idLabel);
 });
-Then("verify the form intro exists on the withdrawal form", () => {
-  WithdrawPackagePage.verifyFormIntroIsVisible();
+Then("verify Type is {string}", (string) => {
+  OneMacFormPage.verifyTypeIs(string);
 });
-Then("verify the SPA ID header exists on the withdrawal form", () => {
-  WithdrawPackagePage.verifySPAIDHeaderExists();
+Then("verify {string} is an Attachment Type", (attachmentType) => {
+  OneMacFormPage.verifyAttachmentType(attachmentType);
 });
-Then("verify the SPA ID exists on the withdrawal form", () => {
-  WithdrawPackagePage.verifySPAIDExists();
-});
-Then("verify the Waiver number header exists on the withdrawal form", () => {
-  WithdrawPackagePage.verifyWaiverIDHeaderExists();
-});
-Then("verify the Waiver number exists on the withdrawal form", () => {
-  WithdrawPackagePage.verifyWaiverIDExists();
-});
-Then("verify the Type header exists on the withdrawal form", () => {
-  WithdrawPackagePage.verifyTypeHeaderExists();
-});
-Then("verify the type is {string}", (string) => {
-  WithdrawPackagePage.verifyTypeIs(string);
-});
-Then(
-  "verify the Upload Supporting Documentation header exists on the withdrawal form",
-  () => {
-    WithdrawPackagePage.verifyUploadSupportingDocumentationHeaderExists();
-  }
-);
-Then("upload withdrawal documentation", () => {
-  WithdrawPackagePage.uploadWithdrawalLetterAddFile();
-});
-Then("verify the Additional Info header exists on the withdrawal form", () => {
-  WithdrawPackagePage.verifyAdditionalInfoHeaderExists();
-});
-Then("add additional info comment in the withdrawal form", () => {
-  WithdrawPackagePage.addWithdrawalComment();
-});
-Then("clear additional info comment in the withdrawal form", () => {
-  WithdrawPackagePage.clearWithdrawalComment();
+Then("verify label {string} exists on page", (inputHeader) => {
+  OneMacFormPage.verifyInputHeaderIs(inputHeader);
 });
 Then("verify there is a Subject header in the details section", () => {
   OneMacPackageDetailsPage.verifySubjectHeaderExists();
@@ -3108,10 +2001,10 @@ Then("verify description is not visible in the details section", () => {
   OneMacPackageDetailsPage.verifyDescrptionDoesNotExists();
 });
 Then("verify the attachment info descriptiion", () => {
-  OneMacDefaultForms.verifyAttachmentInfoDecription();
+  OneMacFormPage.verifyAttachmentInfoDecription();
 });
 Then("verify the attachment info link is for {string}", (packageType) => {
-  OneMacDefaultForms.verifyAttachmentInfoLinkFor(packageType);
+  OneMacFormPage.verifyAttachmentInfoLinkFor(packageType);
 });
 Then("verify there is a CPOC header in the details section", () => {
   OneMacPackageDetailsPage.verifyCPOCNameHeaderExists();
@@ -3134,77 +2027,14 @@ Then(
 Then("verify Review Team SRT is not visible in the details section", () => {
   OneMacPackageDetailsPage.verifyReviewTeamSRTDoesNotExists();
 });
-Then("verify Upload Subsequent Documents action exists", () => {
-  OneMacPackageDetailsPage.verifyUploadSubsequentDocumentsActionBtnExists();
-});
-Then("click the Upload Subsequent Documents action button", () => {
-  OneMacPackageDetailsPage.clickUploadSubsequentDocumentsActionBtn();
-});
-Then("verify the form title is {string}", (string) => {
-  OneMacDefaultForms.verifyFormHeader1Is(string);
-});
-Then("verify the form header is {string}", (string) => {
-  OneMacDefaultForms.verifyFormHeader2Is(string);
-});
-Then("verify the ID is prefilled", () => {
-  OneMacDefaultForms.verifyIDIsPrefilled();
-});
-Then("verify the Waiver Number is prefilled", () => {
-  OneMacDefaultForms.verifyWaiverNumberIsPrefilled();
-});
-Then("verify the Subsequent {string} Documents section exists", (type) => {
-  OneMacDefaultForms.verifySubsequentDocumentsSectionExistsWith(type);
-});
-Then("verify the Cover Letter attachment is not listed", () => {
-  OneMacDefaultForms.verifyCoverLetterDoesNotExist();
-});
-Then("verify the Additional Information header exists", () => {
-  OneMacDefaultForms.verifyAdditionalInfoHeaderExists();
-});
-Then("verify the detailed text in the modal contains {string}", (s) => {
-  OneMacDefaultForms.verifyModalTextIs(s);
-});
-Then("click the yes, submit modal button", () => {
-  OneMacDefaultForms.clickYesSubmitBTN();
-});
-Then("verify the yes, submit modal button is visible and clickable", () => {
-  OneMacDefaultForms.verifyModalSubmitExistsAndClickable();
-});
-Then("Add file for Subsequent Submission", () => {
-  OneMacDefaultForms.uploadFirstAddFile();
-});
-Then("verify the Formal RAI Response caret button exists", () => {
-  OneMacPackageDetailsPage.verifyFormalRAIResponseCaretBtnExists();
-});
-Then("expand the Formal RAI Response caret button", () => {
-  OneMacPackageDetailsPage.expandFormalRAIResponseCaretBtn();
-});
-Then("collapse the Formal RAI Response caret button", () => {
-  OneMacPackageDetailsPage.collapseFormalRAIResponseCaretBtn();
-});
-Then("click the Formal RAI Response caret button", () => {
-  OneMacPackageDetailsPage.clickFormalRAIResponseCaretBtn();
-});
-Then("verify the Formal RAI Response download all button exists", () => {
-  OneMacPackageDetailsPage.verifyFormalRAIResponseDownloadAllBtnExists();
-});
-Then("click the Formal RAI Response download all button", () => {
-  OneMacPackageDetailsPage.clickFormalRAIResponseDownloadAllBtn();
-});
 Then("verify the Initial Submission caret button exists", () => {
   OneMacPackageDetailsPage.verifyInitialSubmissionCaretBtnExists();
 });
 Then("expand the Initial Submission caret", () => {
   OneMacPackageDetailsPage.expandInitialSubmissionCaretBtn();
 });
-Then("collapse the Initial Submission caret button", () => {
-  OneMacPackageDetailsPage.collapseInitialSubmissionCaretBtn();
-});
 Then("verify the Initial Submission download all button exists", () => {
   OneMacPackageDetailsPage.verifyInitialSubmissionDownloadAllBtnExists();
-});
-Then("click the Initial Submission download all button", () => {
-  OneMacPackageDetailsPage.clickInitialSubmissionDownloadAllBtn();
 });
 Then("verify the Withdrawal Requested caret button exists", () => {
   OneMacPackageDetailsPage.verifyWithdrawalRequestedCaretBtnExists();
@@ -3212,14 +2042,26 @@ Then("verify the Withdrawal Requested caret button exists", () => {
 Then("expand the Withdrawal Requested caret", () => {
   OneMacPackageDetailsPage.expandWithdrawalRequestedCaretBtn();
 });
-Then("collapse the Withdrawal Requested caret button", () => {
-  OneMacPackageDetailsPage.collapseWithdrawalRequestedCaretBtn();
+Then(
+  "verify the sub status on the card is Withdraw Formal RAI Response Enabled",
+  () => {
+    OneMacPackageDetailsPage.verifyTheSubStatus();
+  }
+);
+Then("verify the expand all button is visible", () => {
+  OneMacFAQPage.verifyExpandAllBtnExists();
 });
-Then("verify the Withdrawal Requested download all button exists", () => {
-  OneMacPackageDetailsPage.verifyWithdrawalRequestedDownloadAllBtnExists();
+Then("click the expand all button", () => {
+  OneMacFAQPage.clickExpandAllBtn();
 });
-Then("click the Withdrawal Requested download all button", () => {
-  OneMacPackageDetailsPage.clickWithdrawalRequestedDownloadAllBtn();
+Then("verify all sections are collapsed", () => {
+  OneMacFAQPage.verifyAllSectionsAreCollapsed();
+});
+Then("verify all sections are expanded", () => {
+  OneMacFAQPage.verifyAllSectionsAreExpanded();
+});
+Then("verify page url contains {string}", (checkUrl) => {
+  OneMacDashboardPage.verifyPageByURL(checkUrl);
 });
 Then("verify the Subsequent Documentation Uploaded caret button exists", () => {
   OneMacPackageDetailsPage.verifySubsequentSubmissionCaretBtnExists();
@@ -3232,4 +2074,19 @@ Then("verify the Subsequent Documentation download all button exists", () => {
 });
 Then("click the Subsequent Documentation download all button", () => {
   OneMacPackageDetailsPage.clickSubsequentSubmissionDownloadAllBtn();
+});
+Then("verify Upload Subsequent Documents action exists", () => {
+  OneMacPackageDetailsPage.verifyUploadSubsequentDocumentsActionBtnExists();
+});
+Then("click the Upload Subsequent Documents action button", () => {
+  OneMacPackageDetailsPage.clickUploadSubsequentDocumentsActionBtn();
+});
+Then("verify the Subsequent {string} Documents section exists", (type) => {
+  OneMacFormPage.verifySubsequentDocumentsSectionExistsWith(type);
+});
+Then("verify the detailed text in the modal contains {string}", (s) => {
+  OneMacFormPage.verifyModalTextIs(s);
+});
+Then("verify the Cover Letter attachment is not listed", () => {
+  OneMacFormPage.verifyCoverLetterDoesNotExist();
 });

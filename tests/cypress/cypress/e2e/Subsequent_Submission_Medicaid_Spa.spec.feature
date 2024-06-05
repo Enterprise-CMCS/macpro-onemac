@@ -2,7 +2,7 @@ Feature: Medicaid SPA State Details View - Card View with Actions
     Background: Reoccuring Steps
         Given I am on Login Page
         When Clicking on Development Login
-        When Login with state submitter user
+        When Login with "an Active" "State Submitter" user
         Then Click on Filter Button
         Then click on Type
         Then uncheck all of the type checkboxes
@@ -18,18 +18,17 @@ Feature: Medicaid SPA State Details View - Card View with Actions
         Then verify the package details page is visible
         Then verify Upload Subsequent Documents action exists
         Then click the Upload Subsequent Documents action button
-        Then verify the form title is "Upload Subsequent Medicaid SPA Documentation"
-        Then verify the form header is "Medicaid SPA Subsequent Submission Details"
-        Then verify the ID is prefilled
-        Then verify the type is Medicaid SPA
+        Then verify the page header is "Upload Subsequent Medicaid SPA Documentation"
+        Then verify the form title is "Medicaid SPA Subsequent Submission Details"
+        Then verify "SPA ID" is prefilled
+        Then verify Type is "Medicaid SPA"
         Then verify the Subsequent "Medicaid SPA" Documents section exists
         Then verify the Cover Letter attachment is not listed
-        Then verify the Additional Information header exists
-        Then verify the form Submit Button exists
+        Then verify the additional information section exists
         Then verify the submit button is disabled
         Then verify form cancel button exists
-        Then Add file for Subsequent Submission
-        Then Type Additonal Info Comments in new form
+        Then attach "adobe.pdf" file to attachment 1
+        Then into "Additional Information" type "This is an automated subsequent submission test."
         Then Click the Submit Button without waiting
         Then verify the modal pop-up is visible
         Then verify the detailed text in the modal contains "OneMAC is solely for file submission purposes."
@@ -43,18 +42,17 @@ Feature: Medicaid SPA State Details View - Card View with Actions
         Then click the actions button in row one
         Then verify Upload Subsequent Documents action exists
         Then click the Upload Subsequent Documents action button
-        Then verify the form title is "Upload Subsequent Medicaid SPA Documentation"
-        Then verify the form header is "Medicaid SPA Subsequent Submission Details"
-        Then verify the ID is prefilled
-        Then verify the type is Medicaid SPA
+        Then verify the page header is "Upload Subsequent Medicaid SPA Documentation"
+        Then verify the form title is "Medicaid SPA Subsequent Submission Details"
+        Then verify "SPA ID" is prefilled
+        Then verify Type is "Medicaid SPA"
         Then verify the Subsequent "Medicaid SPA" Documents section exists
         Then verify the Cover Letter attachment is not listed
-        Then verify the Additional Information header exists
-        Then verify the form Submit Button exists
+        Then verify the additional information section exists
         Then verify the submit button is disabled
         Then verify form cancel button exists
-        Then Add file for Subsequent Submission
-        Then Type Additonal Info Comments in new form
+        Then attach "adobe.pdf" file to attachment 1
+        Then into "Additional Information" type "This is an automated subsequent submission test."
         Then Click the Submit Button without waiting
         Then verify the modal pop-up is visible
         Then verify the detailed text in the modal contains "OneMAC is solely for file submission purposes."
@@ -67,10 +65,10 @@ Feature: Medicaid SPA State Details View - Card View with Actions
     Scenario: Upload Subsequent Documents from the package dashboard
         Then click the actions button in row one
         Then click the Upload Subsequent Documents action button
-        Then verify the form title is "Upload Subsequent Medicaid SPA Documentation"
-        Then verify the ID is prefilled
+        Then verify the page header is "Upload Subsequent Medicaid SPA Documentation"
+        Then verify "SPA ID" is prefilled
         Then Add file for SPA Pages
-        Then Type Additonal Info Comments in new form
+        Then into "Additional Information" type "This is an automated subsequent submission test."
         Then Click the Submit Button without waiting
         Then verify the modal pop-up is visible
         Then verify the detailed text in the modal contains "OneMAC is solely for file submission purposes."
@@ -84,10 +82,10 @@ Feature: Medicaid SPA State Details View - Card View with Actions
         Then click the SPA ID link in the first row
         Then verify the package details page is visible
         Then click the Upload Subsequent Documents action button
-        Then verify the form title is "Upload Subsequent Medicaid SPA Documentation"
-        Then verify the ID is prefilled
+        Then verify the page header is "Upload Subsequent Medicaid SPA Documentation"
+        Then verify "SPA ID" is prefilled
         Then Add file for CMS Form 179
-        Then Type Additonal Info Comments in new form
+        Then into "Additional Information" type "This is an automated subsequent submission test."
         Then Click the Submit Button without waiting
         Then verify the modal pop-up is visible
         Then verify the detailed text in the modal contains "OneMAC is solely for file submission purposes."

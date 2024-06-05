@@ -25,7 +25,7 @@ Feature: RAI Response for Medicaid SPA package view
         Then Click the Submit Button without waiting
         Then verify the modal pop-up is visible
         Then verify the title of the modal pop-up is Do you want to submit your official formal RAI response
-        Then verify the detailed text in the modal contains you are submitting your official formal RAI Response to start the 90 day clock review process
+        Then verify the detailed text in the modal contains "you are submitting your official formal RAI Response to start the 90 day clock review process"
 
     Scenario: validate response to RAI from package dashboard
         Then copy the ID from the link in the first row
@@ -38,4 +38,4 @@ Feature: RAI Response for Medicaid SPA package view
         Then Click the Submit Button without waiting
         Then verify the modal pop-up is visible
         Then verify the title of the modal pop-up is Do you want to submit your official formal RAI response
-        Then verify the detailed text in the modal contains you are submitting your official formal RAI Response to start the 90 day clock review process
+        Then verify the detailed text in the modal contains "you are submitting your official formal RAI Response to start the 90 day clock review process"
