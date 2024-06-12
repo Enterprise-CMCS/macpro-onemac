@@ -17,6 +17,17 @@ export const defaultInitialSubmissionMap = {
   ],
 };
 
+export const defaultSubsequentSubmissionMap = {
+  type: subsequentSubmissionType,
+  action: submitAction,
+  packageAttributes: [
+    "submissionTimestamp",
+    "currentStatus",
+    "submitterName",
+    "submitterEmail",
+  ],
+};
+
 export const defaultCreateMap = {
   type: null,
   action: null,
@@ -68,6 +79,7 @@ export const defaultEventMapping = {
   submitrai: defaultRAIResponseMap,
   submitwithdraw: defaultWithdrawPackageMap,
   submitrairesponsewithdraw: defaultWithdrawRAIResponseMap,
+  submitsubsequent: defaultSubsequentSubmissionMap,
 };
 
 export const defaultWaiverEventMapping = {
