@@ -9,7 +9,10 @@ function getDefaultActions(
   const actions = [];
   switch (packageStatus) {
     case Workflow.ONEMAC_STATUS.PENDING:
-      if (userRole.canAccessForms)
+      if (
+        userRole.canAccessForms &&
+        packageSubStatus !== Workflow.ONEMAC_STATUS.WITHDRAW_RAI_ENABLED
+      )
         actions.push(Workflow.PACKAGE_ACTION.WITHDRAW);
       if (
         userRole.isCMSUser &&
