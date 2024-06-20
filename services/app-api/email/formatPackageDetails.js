@@ -56,13 +56,57 @@ export const formatPackageDetails = (data, config) => {
     Array.isArray(data.attachments) &&
     data.attachments.length > 0
   ) {
+    // using Mako Title map, to correctly display title names
+    const attachmentTitleMap = {
+      // SPA
+      cmsForm179: "CMS Form 179",
+      currentStatePlan: "Current State Plan",
+      spaPages: "SPA Pages",
+      coverLetter: "Cover Letter",
+      tribalEngagement: "Document Demonstrating Good-Faith Tribal Engagement",
+      existingStatePlanPages: "Existing State Plan Page(s)",
+      publicNotice: "Public Notice",
+      sfq: "Standard Funding Questions (SFQs)",
+      tribalConsultation: "Tribal Consultation",
+      amendedLanguage: "Amended State Plan Language",
+      budgetDocuments: "Budget Documents",
+      officialWithdrawalLetter: "Official Withdrawal Letter",
+      // ISSUE RAI
+      formalRaiLetter: "Formal RAI Letter",
+      // RAI RESPONSE
+      raiResponseLetter: "RAI Response Letter",
+      raiResponseLetterWaiver: "Waiver RAI Response",
+      revisedAmendedStatePlanLanguage: "Revised Amended State Plan Language",
+      officialRaiResponse: "Official RAI Response",
+      // MISC
+      other: "Other",
+      // RAI WITHDRAW
+      supportingDocumentation: "Supporting Documentation",
+      bCapWaiverApplication:
+        "1915(b) Comprehensive (Capitated) Waiver Application Pre-print",
+      bCapCostSpreadsheets:
+        "1915(b) Comprehensive (Capitated) Waiver Cost Effectiveness Spreadsheets",
+      bCapIndependentAssessment:
+        "1915(b) Comprehensive (Capitated) Waiver Independent Assessment (first two renewals only)",
+      b4WaiverApplication:
+        "1915(b)(4) FFS Selective Contracting (Streamlined) Waiver Application Pre-print",
+      b4IndependentAssessment:
+        "1915(b)(4) FFS Selective Contracting (Streamlined) Independent Assessment (first two renewals only)",
+      appk: "1915(c) Appendix K Amendment Waiver Template",
+      waiverExtensionRequest: "Waiver Extension Request",
+    };
     detailText += `
             <p>
             <b>Files</b>:
             <ul>
             ${data.attachments
               .filter((u) => u && u.title && u.filename)
-              .map(({ title, filename }) => `<li>${title}: ${filename}</li>`)
+              .map(
+                ({ title, filename }) =>
+                  `<li>${title}: ${
+                    attachmentTitleMap[filename] ?? filename
+                  }</li>`
+              )
               .join("")}
             </ul>
             </p>
