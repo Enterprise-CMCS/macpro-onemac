@@ -27,7 +27,6 @@ const detailSection =
   "//section[@class='detail-section']//h2[contains(.,'Details')]";
 const disableRAIResponseWithdrawAction =
   "//a[text()='Disable Formal RAI Response Withdraw']";
-const CHIPSPAIDHeader = "//h3[contains(text(),'SPA ID')]";
 const typeHeader = "//h3[contains(text(),'Type')]";
 const parentWaiverNumberHeader =
   "//h3[contains(text(),'Approved Initial or Renewal Number')]";
@@ -67,6 +66,7 @@ const subsequentSubmissionCaretBtn =
   '//h2//button[contains(@id,"Subsequent Documentation Uploaded")]';
 const subsequentSubmissionDownloadAllBtn =
   '//button[contains(@id,"dl_Subsequent Documentation Uploaded")]';
+const latestActivityHeader = "//h3[text()='Latest Package Activity']";
 
 export class oneMacPackageDetailsPage {
   verifyPackageDetailsPageIsVisible() {
@@ -383,6 +383,14 @@ export class oneMacPackageDetailsPage {
   }
   clickSubsequentSubmissionDownloadAllBtn() {
     cy.xpath(subsequentSubmissionDownloadAllBtn).click();
+  }
+  verifyLatestPackageActivityDateExists() {
+    cy.xpath(latestActivityHeader)
+      .next()
+      .contains(/^[a-zA-Z]{3}.\d{2}.\d{4}||^[a-zA-Z]{3}.\d{1}.\d{4}/);
+  }
+  verifyLatestPackageActivityHeaderExists() {
+    cy.xpath(latestActivityHeader).should("be.visible");
   }
 }
 export default oneMacPackageDetailsPage;

@@ -67,7 +67,7 @@ Feature: Medicaid SPA State Details View - Card View with Actions
         Then click the Upload Subsequent Documents action button
         Then verify the page header is "Upload Subsequent Medicaid SPA Documentation"
         Then verify "SPA ID" is prefilled
-        Then Add file for SPA Pages
+        Then attach "adobe.pdf" file to attachment 1
         Then into "Additional Information" type "This is an automated subsequent submission test."
         Then Click the Submit Button without waiting
         Then verify the modal pop-up is visible
@@ -84,7 +84,7 @@ Feature: Medicaid SPA State Details View - Card View with Actions
         Then click the Upload Subsequent Documents action button
         Then verify the page header is "Upload Subsequent Medicaid SPA Documentation"
         Then verify "SPA ID" is prefilled
-        Then Add file for CMS Form 179
+        Then attach "adobe.pdf" file to attachment 1
         Then into "Additional Information" type "This is an automated subsequent submission test."
         Then Click the Submit Button without waiting
         Then verify the modal pop-up is visible

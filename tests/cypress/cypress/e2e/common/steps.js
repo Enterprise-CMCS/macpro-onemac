@@ -2090,3 +2090,46 @@ Then("verify the detailed text in the modal contains {string}", (s) => {
 Then("verify the Cover Letter attachment is not listed", () => {
   OneMacFormPage.verifyCoverLetterDoesNotExist();
 });
+Then("verify Latest Package Activity checkbox exists", () => {
+  OneMacDashboardPage.verifyLatestPackageActivityCheckboxExists();
+});
+Then("click Latest Package Activity checkbox", () => {
+  OneMacDashboardPage.clickCheckBoxLatestPackageActivity();
+});
+Then("verify Latest Package Activity column exists", () => {
+  OneMacDashboardPage.verifyLatestPackageActivityColumnExists();
+});
+Then("verify Latest Package Activity column does not exist", () => {
+  OneMacDashboardPage.verifyLatestPackageActivityDoesNotExist();
+});
+Then("click on Latest Package Activity filter dropdown", () => {
+  OneMacDashboardPage.clickOnLatestPackageActivityFilterDropdown();
+});
+Then("verify Latest Package Activity date picker filter exists", () => {
+  OneMacDashboardPage.verifyLatestPackageActivityDatePickerFilterExists();
+});
+Then("click on Latest Package Activity date picker filter", () => {
+  OneMacDashboardPage.clickOnLatestPackageActivityDatePickerFilter();
+});
+Then("verify Latest Package Activity dropdown filter exists", () => {
+  OneMacDashboardPage.verifyLatestPackageActivityDateFilterDropdownExists();
+});
+Then("click on Latest Package Activity dropdown filter", () => {
+  OneMacDashboardPage.clickOnLatestPackageActivityFilterDropdown();
+});
+
+Then("click on Latest Package Activity dropdown filter", () => {
+  OneMacDashboardPage.clickOnLatestPackageActivityFilterDropdown();
+});
+Then(
+  "verify there is a Latest Package Activity header in the details section",
+  () => {
+    OneMacPackageDetailsPage.verifyLatestPackageActivityHeaderExists();
+  }
+);
+Then(
+  "verify a full date and time entry exists for the Latest Package Activity",
+  () => {
+    OneMacPackageDetailsPage.verifyLatestPackageActivityDateExists();
+  }
+);

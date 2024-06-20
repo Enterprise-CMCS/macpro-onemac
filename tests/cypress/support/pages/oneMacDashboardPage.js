@@ -2,10 +2,6 @@ const newSubmissionBTN = "#new-submission-button";
 const successMessage = "#alert-bar h2";
 const successMessage1 = "#alert-bar";
 //Element is Xpath use cy.xpath instead of cy.get
-const successMessageAfterRAIResponse =
-  '//*[contains(text(),"Your submission has been received.")]';
-
-//Element is Xpath use cy.xpath instead of cy.get
 const IDNUMBER = (id) => `//a[text()="${id}"]`;
 //Element is Xpath use cy.xpath instead of cy.get
 //Element is Xpath use cy.xpath instead of cy.get
@@ -227,20 +223,9 @@ const unsubmittedCheckbox =
   "//label[contains(@for,'checkbox_packageStatus-Unsubmitted')]";
 const packageRowOneID = "#componentId-0";
 const packageRowTwoID = "#componentId-1";
-const packageRowTwoInitialSubmissionDate = "#submissionTimestamp-1";
-const packageRowTwo90thDay = "#ninetiethDay-1";
-const packageRowTwoType = "#componentType-1";
-const packageRowTwoState = "#territory-1";
 const packageRowTwoStatus = "#packageStatus-1";
 //Element is Xpath use cy.xpath instead of cy.get
-const parentRowExpander = "//tr[1]//button[@aria-label='Expand row']";
-const rowTwo = "tbody > tr:nth-child(2)";
-const packageRowTwoSubmittedBy = "#submitter-1";
-const packageRowTwoActions = "#packageActions-1";
-//Element is Xpath use cy.xpath instead of cy.get
-const packageRowTwoExpirationDate = "#expirationTimestamp-1";
-//Element is Xpath use cy.xpath instead of cy.get
-const childRows = "//tr[@class = 'child-row-expanded']";
+
 const withdrawPackageBtn = "//a[text()='Withdraw Package']";
 const withdrawPackageConfirmBtn =
   "//button[contains(text(),'Yes, withdraw package')]";
@@ -256,6 +241,13 @@ const respondToRAIBtn =
 const RequestTempExtensionBtn = "//a[text()='Request Temporary Extension']";
 const addAmendmentBtn = "//a[text()='Add Amendment']";
 const waiverNumLink = (n) => `//a[text()="${n}"]`;
+const latestPackageActivityCheckbox =
+  "//label[contains(@for,'checkbox_columnPicker-Latest Package Activity')]";
+const latestPackageActivityDateFilterDropdown = "#lastActivityTimestamp-button";
+const latestPackageActivityDatePickerFilter =
+  "#lastActivityTimestamp-date-filter";
+const packageRowOneLatestPackageActivity = "#lastActivityTimestamp-0";
+const latestPackageActivityColumn = "#lastActivityTimestampColHeader";
 
 export class oneMacDashboardPage {
   verifyPageByURL(expectedUrl) {
@@ -996,6 +988,32 @@ export class oneMacDashboardPage {
   }
   verifyFinalDispositionColumnDoesNotExist() {
     cy.get(finalDispositionColumn).should("not.exist");
+  }
+  verifyLatestPackageActivityCheckboxExists() {
+    cy.xpath(latestPackageActivityCheckbox).should("exist");
+  }
+  clickCheckBoxLatestPackageActivity() {
+    cy.xpath(latestPackageActivityCheckbox).click();
+  }
+  verifyLatestPackageActivityColumnExists() {
+    cy.get(latestPackageActivityColumn).should("be.visible");
+  }
+  verifyLatestPackageActivityDoesNotExist() {
+    cy.get(latestPackageActivityColumn).should("not.exist");
+  }
+  clickOnLatestPackageActivityFilterDropdown() {
+    cy.get(latestPackageActivityDateFilterDropdown).wait(1000);
+    cy.get(latestPackageActivityDateFilterDropdown).click();
+  }
+  verifyLatestPackageActivityDatePickerFilterExists() {
+    cy.get(latestPackageActivityDatePickerFilter).last().should("exist");
+  }
+  clickOnLatestPackageActivityDatePickerFilter() {
+    cy.get(latestPackageActivityDatePickerFilter).wait(1000);
+    cy.get(latestPackageActivityDatePickerFilter).last().click();
+  }
+  verifyLatestPackageActivityDateFilterDropdownExists() {
+    cy.get(latestPackageActivityDateFilterDropdown).should("be.visible");
   }
 }
 export default oneMacDashboardPage;
