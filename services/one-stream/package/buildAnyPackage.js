@@ -84,7 +84,10 @@ export const buildAnyPackage = async (packageId, config) => {
 
     result.Items.forEach((anEvent) => {
       // we ignore all other v's and Email records
-      if (anEvent.sk.substring(0, 1) === "v" || anEvent.sk === "Email") {
+      if (
+        anEvent.sk.substring(0, 1) === "v" ||
+        anEvent.sk.startsWith("Email")
+      ) {
         console.log("ignoring: ", anEvent.sk);
         return;
       }
