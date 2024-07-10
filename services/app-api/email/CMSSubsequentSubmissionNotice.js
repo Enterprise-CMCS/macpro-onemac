@@ -18,15 +18,16 @@ export const CMSSubsequentSubmissionNotice = async (data, config) => {
   return {
     ToAddresses: ToAddresses,
     CcAddresses: [],
-    Subject: `Subsequent Documentation for ${config.typeLabel} ${data.componentId}`,
+    Subject: `Action required: review new documents for ${config.typeLabel} ${data.componentId}`,
     HTML: `
-        <p>The OneMAC Submission Portal received subsequent documentation materials for this ${
-          config.typeLabel
-        }:</p>
-        <ul>
+        <p>New documents have been submitted for ${config.typeLabel} ${
+      data.componentId
+    } in OneMAC.</p>
+        ${formatPackageDetails(data, config)}
+        <br>
+         <ul>
             <li>
-            The submission can be accessed in the OneMAC application, which you can
-            find at <a href="${
+            These documents can be found in OneMAC through <a href="${
               process.env.applicationEndpoint
             }/dashboard">this link</a>.
             </li>
@@ -41,8 +42,6 @@ export const CMSSubsequentSubmissionNotice = async (data, config) => {
             its details by clicking on its ID number.
             </li>
         </ul>
-        ${formatPackageDetails(data, config)}
-        <br>
         <p>If the contents of this email seem suspicious, do not open them, and instead forward this email to <a href="mailto:SPAM@cms.hhs.gov">SPAM@cms.hhs.gov</a>.</p>
         <p>Thank you!</p>
         `,
