@@ -15,7 +15,7 @@ export const stateSubsequentSubmissionReceipt = (data, config) => {
     HTML: `
     <p>	You’ve successfully submitted the following to CMS reviewers for ${
       config.typeLabel
-    } ${data.componentId}</p>
+    } ${data.componentId}:</p>
     ${formatPackageDetails(data, config)}
     <br>
     <p>If you have questions or did not expect this email, please contact <a href="mailto:spa@cms.hhs.gov">SPA@CMS.HHS.gov</a>.</p>
