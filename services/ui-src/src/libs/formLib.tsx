@@ -132,6 +132,12 @@ export const defaultOneMACFormConfig = {
   submitInstructionsJSX: defaultSubmitInstructionsJSX,
 };
 
+export const defaultSubsequentSubmissionFormConfig = {
+  ...defaultOneMACFormConfig,
+  addlInfoTitle: "Reason for subsequent submission",
+  addlInfoText: "Explain why additional documents are being submitted.",
+};
+
 export const defaultWaiverAuthority = [
   { label: "-- select a waiver authority --", value: "" },
 ];

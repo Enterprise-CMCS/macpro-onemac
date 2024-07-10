@@ -2,8 +2,8 @@ import React, { FC } from "react";
 import OneMACForm from "../OneMACForm";
 import {
   defaultConfirmSubsequentSubmission,
-  defaultOneMACFormConfig,
   defaultSubsequentAttachmentInstructionsJSX,
+  defaultSubsequentSubmissionFormConfig,
   defaultSubsequentSubmissionIntroJSX,
   OneMACFormConfig,
 } from "../../libs/formLib";
@@ -14,7 +14,7 @@ import {
 } from "cmscommonlib";
 
 export const waiverAppKSubsequentSubmissionFormInfo: OneMACFormConfig = {
-  ...defaultOneMACFormConfig,
+  ...defaultSubsequentSubmissionFormConfig,
   ...waiverAppKSubsequentSubmission,
   pageTitle: "Upload Subsequent 1915(c) Appendix K Documentation",
   detailsHeader: "1915(c) Appendix K Subsequent Submission",

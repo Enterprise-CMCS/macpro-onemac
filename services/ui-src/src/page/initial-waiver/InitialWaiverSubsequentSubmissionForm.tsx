@@ -2,8 +2,8 @@ import React, { FC } from "react";
 import OneMACForm from "../OneMACForm";
 import {
   defaultConfirmSubsequentSubmission,
-  defaultOneMACFormConfig,
   defaultSubsequentAttachmentInstructionsJSX,
+  defaultSubsequentSubmissionFormConfig,
   defaultSubsequentSubmissionIntroJSX,
   OneMACFormConfig,
 } from "../../libs/formLib";
@@ -20,7 +20,7 @@ import { FormLocationState } from "../../domain-types";
 import { useLocation } from "react-router-dom";
 
 export const initialWaiverSubsequentSubmissionFormInfo: OneMACFormConfig = {
-  ...defaultOneMACFormConfig,
+  ...defaultSubsequentSubmissionFormConfig,
   ...initialWaiverSubsequentSubmission,
   pageTitle: "Upload Subsequent Waiver Documentation",
   detailsHeader: "Initial Waiver Subsequent Submission",
