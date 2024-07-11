@@ -175,19 +175,12 @@ export const defaultConfirmSubmitMessageSubsequentSubmission = (
 );
 
 export const defaultConfirmSubsequentSubmission: ConfirmSubmitType = {
-  confirmSubmitHeading: "",
+  confirmSubmitHeading: "OneMAC only for document submission",
   confirmSubmitMessage: (
-    <>
-      <p>
-        <b>Please Note:</b> OneMAC is solely for file submission purposes.
-      </p>
-      <p>
-        <b>
-          Communication between State and CMS users will be completed offline
-        </b>{" "}
-        through email.
-      </p>
-    </>
+    <p>
+      States and CMS reviewers will communicate about the submission through
+      email.
+    </p>
   ),
 };
 
