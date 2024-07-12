@@ -6,10 +6,8 @@ import { formatPackageDetails } from "./formatPackageDetails.js";
  * @returns {Object} email parameters in generic format.
  */
 export const stateSubsequentSubmissionReceipt = (data, config) => {
-  //  ToAddresses: [`${data.submitterName} <${data.submitterEmail}>`],
-
   return {
-    ToAddresses: [`aswift@fearless.tech`],
+    ToAddresses: [`${data.submitterName} <${data.submitterEmail}>`],
     CcAddresses: [],
     Subject: `Additional documents submitted for ${config.typeLabel} ${data.componentId}`,
     HTML: `
