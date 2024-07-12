@@ -6,10 +6,10 @@ import { formatPackageDetails } from "./formatPackageDetails.js";
  * @returns {Object} email parameters in generic format.
  */
 export const stateSubsequentSubmissionReceipt = (data, config) => {
-  data.attachments = {}; //remove attachments because we dont want them listed in the state email
+  //  ToAddresses: [`${data.submitterName} <${data.submitterEmail}>`],
 
   return {
-    ToAddresses: [`${data.submitterName} <${data.submitterEmail}>`],
+    ToAddresses: [`aswift@fearless.tech`],
     CcAddresses: [],
     Subject: `Additional documents submitted for ${config.typeLabel} ${data.componentId}`,
     HTML: `
@@ -17,8 +17,7 @@ export const stateSubsequentSubmissionReceipt = (data, config) => {
       config.typeLabel
     } ${data.componentId}:</p>
     ${formatPackageDetails(data, config)}
-    <br>
     <p>If you have questions or did not expect this email, please contact <a href="mailto:spa@cms.hhs.gov">SPA@CMS.HHS.gov</a>.</p>
-    <p>Thank you!</p>`,
+    <p>Thank you.</p>`,
   };
 };
