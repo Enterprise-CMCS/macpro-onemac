@@ -26,7 +26,7 @@ export const CMSSubsequentSubmissionNotice = async (data, config) => {
       data.componentId
     } in OneMAC.</p>
         ${formatPackageDetails(data, config)}
-        <br>
+        <p><b>How to access:</b></p>
          <ul>
             <li>
             These documents can be found in OneMAC through <a href="${
@@ -44,6 +44,7 @@ export const CMSSubsequentSubmissionNotice = async (data, config) => {
             its details by clicking on its ID number.
             </li>
         </ul>
+        <br>
         <p>If the contents of this email seem suspicious, do not open them, and instead forward this email to <a href="mailto:SPAM@cms.hhs.gov">SPAM@cms.hhs.gov</a>.</p>
         <p>Thank you!</p>
         `,
