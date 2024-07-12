@@ -40,8 +40,8 @@ export const ALERTS_MSG: Record<
   // Success
   SUBSEQUENT_SUBMISSION_SUCCESS: {
     type: ALERT_TYPES.SUCCESS,
-    heading: "Attachments have been successfully submitted.",
-    text: "If CMS needs any additional information, they will follow up by email.",
+    heading: "Documents submitted",
+    text: "CMS reviewers will follow up by email if additional information is needed.",
   },
 
   WITHDRAW_REQUESTED: {
