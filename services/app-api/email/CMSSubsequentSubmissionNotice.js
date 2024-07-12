@@ -16,10 +16,8 @@ export const CMSSubsequentSubmissionNotice = async (data, config) => {
 
   CMSEmailItem?.cpocEmail && ToAddresses.push(CMSEmailItem.cpocEmail);
 
-  // ToAddresses: ToAddresses,
-
   return {
-    ToAddresses: ["aswift@fearless.tech"],
+    ToAddresses: ToAddresses,
     CcAddresses: [],
     Subject: `Action required: review new documents for ${config.typeLabel} ${data.componentId}`,
     HTML: `
