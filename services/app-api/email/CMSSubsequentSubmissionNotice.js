@@ -7,6 +7,7 @@ import { getCPOCandSRTEmailAddresses } from "../utils/getCpocAndSrtEmail.js";
  * @returns {Object} email parameters in generic format.
  */
 export const CMSSubsequentSubmissionNotice = async (data, config) => {
+  data.submitterName = ""; // remove this bc we dont want it on the cms email
   const CMSEmailItem = await getCPOCandSRTEmailAddresses(data.componentId);
 
   const ToAddresses = CMSEmailItem.reviewTeamEmailList
