@@ -21,19 +21,25 @@ export const main = async (eventBatch) => {
 
   await Promise.all(
     eventBatch.Records.map(async (event) => {
+      console.log("Event Name: ", event.eventName);
       let newEventData;
       if (event.eventName === "REMOVE") newEventData = event.dynamodb.OldImage;
+      console.log("Old Image: ", event.dynamodb.OldImage);
       if (event.eventName === "INSERT" || event.eventName === "MODIFY")
         newEventData = event.dynamodb.NewImage;
 
       const inPK = newEventData.pk.S;
+      console.log("inPK: ", newEventData.pk.S);
       const inSK = newEventData.sk.S;
+      console.log("inSK: ", newEventData.sk.S);
       const packageToBuild = {
         type: "",
         id: inPK,
       };
 
       const [eventSource, , offset] = inSK.split("#");
+      console.log("eventSource: ", eventSource);
+      console.log("offset: ", offset);
       if (offset) {
         console.log("%s ignoring %s event: ", inPK, inSK, newEventData);
         return;
@@ -45,9 +51,14 @@ export const main = async (eventBatch) => {
           packageToBuild.id = newEventData?.parentId?.S;
           break;
         case "OneMAC":
-          if (buildParentPackageTypes.includes(newEventData.componentType.S))
+          console.log("made it inside OneMac case");
+          if (buildParentPackageTypes.includes(newEventData.componentType.S)) {
             packageToBuild.type = newEventData?.parentType?.S;
-          else packageToBuild.type = newEventData.componentType.S;
+            console.log("first if packageToBuild.type: ", packageToBuild.type);
+          } else {
+            onsole.log("else packageToBuild.type: ", packageToBuild.type);
+            packageToBuild.type = newEventData.componentType.S;
+          }
           break;
         case "SEATool": {
           const [, topic] = newEventData.GSI1pk.S.split("#");
