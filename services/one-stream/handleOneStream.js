@@ -56,7 +56,7 @@ export const main = async (eventBatch) => {
             packageToBuild.type = newEventData?.parentType?.S;
             console.log("first if packageToBuild.type: ", packageToBuild.type);
           } else {
-            onsole.log("else packageToBuild.type: ", packageToBuild.type);
+            console.log("else packageToBuild.type: ", packageToBuild.type);
             packageToBuild.type = newEventData.componentType.S;
           }
           break;
