@@ -24,9 +24,14 @@ export const main = async (eventBatch) => {
       console.log("Event Name: ", event.eventName);
       let newEventData;
       if (event.eventName === "REMOVE") newEventData = event.dynamodb.OldImage;
-      console.log("Old Image: ", event.dynamodb.OldImage);
-      if (event.eventName === "INSERT" || event.eventName === "MODIFY")
+
+      if (event.eventName === "INSERT" || event.eventName === "MODIFY") {
         newEventData = event.dynamodb.NewImage;
+        console.log(
+          "newEventData from inside INSERTY if: ",
+          event.dynamodb.OldImage
+        );
+      }
 
       const inPK = newEventData.pk.S;
       console.log("inPK: ", newEventData.pk.S);
@@ -47,8 +52,11 @@ export const main = async (eventBatch) => {
 
       switch (eventSource) {
         case "Package":
+          console.log("made it inside Package case");
           packageToBuild.type = newEventData?.parentType?.S;
+          console.log("packageToBuild.type: ", packageToBuild.type);
           packageToBuild.id = newEventData?.parentId?.S;
+          console.log("packageToBuild.id: ", packageToBuild.id);
           break;
         case "OneMAC":
           console.log("made it inside OneMac case");
@@ -103,6 +111,8 @@ export const main = async (eventBatch) => {
           packageToBuild.id = null;
           break;
       }
+      console.log("pachageToBuildType: ", packageToBuild.type);
+      console.log("pachageToBuildId: ", packageToBuild.id);
       if (!packageToBuild.type || !packageToBuild.id) {
         console.log(
           "%s did not map? source: %s packageToBuild: %s",
