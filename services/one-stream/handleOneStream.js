@@ -54,18 +54,14 @@ export const main = async (eventBatch) => {
         case "Package":
           console.log("made it inside Package case");
           // packageToBuild.type = newEventData?.parentType?.S;
-          packageToBuild.type = newEventData.parentType.S;
+          packageToBuild.type = newEventData.componentType.S;
           console.log(
             "wthout question marks parent type: ",
-            newEventData.parentType.S
+            newEventData.componentType.S
           );
-          console.log("packageToBuild.type: ", packageToBuild.type);
           // packageToBuild.id = newEventData?.parentId?.S;
-          console.log(
-            "wthout question marks parent Id: ",
-            newEventData.parentId.S
-          );
-          console.log("packageToBuild.id: ", packageToBuild.id);
+          packageToBuild.id = newEventData.componentId.S;
+          console.log("packageToBuild.id: ", newEventData.componentId.S);
           break;
         case "OneMAC":
           console.log("made it inside OneMac case");
