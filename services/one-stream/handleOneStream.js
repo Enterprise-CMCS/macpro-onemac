@@ -53,9 +53,18 @@ export const main = async (eventBatch) => {
       switch (eventSource) {
         case "Package":
           console.log("made it inside Package case");
-          packageToBuild.type = newEventData?.parentType?.S;
+          // packageToBuild.type = newEventData?.parentType?.S;
+          packageToBuild.type = newEventData.parentType.S;
+          console.log(
+            "wthout question marks parent type: ",
+            newEventData.parentType.S
+          );
           console.log("packageToBuild.type: ", packageToBuild.type);
-          packageToBuild.id = newEventData?.parentId?.S;
+          // packageToBuild.id = newEventData?.parentId?.S;
+          console.log(
+            "wthout question marks parent Id: ",
+            newEventData.parentId.S
+          );
           console.log("packageToBuild.id: ", packageToBuild.id);
           break;
         case "OneMAC":
