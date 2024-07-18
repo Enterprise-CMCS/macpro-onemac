@@ -6,6 +6,9 @@ import { formatPackageDetails } from "./formatPackageDetails.js";
  * @returns {Object} email parameters in generic format.
  */
 export const stateSubsequentSubmissionReceipt = (data, config) => {
+  // changing config to match the docs in this one instance
+  if (config.idLabel === "SPA ID") config.idLabel = "Medicaid SPA Package ID";
+
   return {
     ToAddresses: [`${data.submitterName} <${data.submitterEmail}>`],
     CcAddresses: [],
