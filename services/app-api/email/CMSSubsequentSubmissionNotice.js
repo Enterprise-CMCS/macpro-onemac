@@ -15,6 +15,8 @@ export const CMSSubsequentSubmissionNotice = async (data, config) => {
     : [];
 
   CMSEmailItem?.cpocEmail && ToAddresses.push(CMSEmailItem.cpocEmail);
+  // change the config idLabel to match the docs in this instance
+  if (config.idLabel === "SPA ID") config.idLabel = "Medicaid SPA Package ID";
 
   return {
     ToAddresses: ToAddresses,
