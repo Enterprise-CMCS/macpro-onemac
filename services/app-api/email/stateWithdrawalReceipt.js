@@ -1,38 +1,33 @@
 import dynamoDb from "../libs/dynamodb-lib";
-import { USER_ROLE, USER_STATUS, Workflow } from "cmscommonlib";
+import { USER_STATUS, Workflow } from "cmscommonlib";
 
 export const getAllActiveStateUserEmailAddresses = async (territory) => {
-  const stateSubmittingUserRoles = [
-    USER_ROLE.STATE_SUBMITTER,
-    USER_ROLE.STATE_SYSTEM_ADMIN,
-  ];
-  const stateSubmittingUsers = [];
+  const qParams = {
+    TableName: process.env.oneMacTableName,
+    IndexName: "GSI1",
+    KeyConditionExpression: "GSI1pk = :pk",
+    FilterExpression: "#status = :status and territory = :territory",
+    ExpressionAttributeNames: {
+      "#status": "status",
+    },
+    ExpressionAttributeValues: {
+      ":pk": "USER",
+      ":territory": territory,
+      ":status": USER_STATUS.ACTIVE,
+    },
+    ProjectionExpression: "email, fullName",
+  };
 
-  await Promise.all(
-    stateSubmittingUserRoles.map(async (role) => {
-      const qParams = {
-        TableName: process.env.oneMacTableName,
-        IndexName: "GSI2",
-        KeyConditionExpression: "GSI2pk = :pk and GSI2sk = :sk",
-        ExpressionAttributeValues: {
-          ":pk": `${role}#${territory}`,
-          ":sk": USER_STATUS.ACTIVE,
-        },
-        ProjectionExpression: "email, fullName",
-      };
-      try {
-        const results = await dynamoDb.query(qParams);
-        stateSubmittingUsers.push(
-          results.Items.map(({ fullName, email }) => `${fullName} <${email}>`)
-        );
-      } catch (e) {
-        console.log("query error: ", e.message);
-      }
-    })
-  );
-  const returnUsers = stateSubmittingUsers.flat();
-
-  return returnUsers;
+  try {
+    const results = await dynamoDb.query(qParams);
+    const returnUsers = results.Items.map(
+      ({ fullName, email }) => `${fullName} <${email}>`
+    );
+    return returnUsers;
+  } catch (e) {
+    console.log("query error: ", e.message);
+    return [];
+  }
 };
 
 /**

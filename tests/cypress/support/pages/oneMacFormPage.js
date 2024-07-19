@@ -96,7 +96,7 @@ export class oneMacFormPage {
     cy.get(elementFromLabel[whereTo]).clear();
   }
   inputInto(whereTo, newValue) {
-    cy.get(elementFromLabel[whereTo]).type(newValue);
+    cy.get(elementFromLabel[whereTo]).type(newValue, { delay: 200 });
   }
   verifyPrefill(whereTo) {
     cy.xpath(`//h3[text()='${whereTo}']`)

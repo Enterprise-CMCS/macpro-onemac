@@ -17,6 +17,8 @@ plugins:
   - serverless-iam-helper
   - serverless-s3-bucket-helper
 custom:
+  esbuild:
+    exclude: []
   stage: ${opt:stage, self:provider.stage}
   oneMacTableName: onemac-${self:custom.stage}-one
   iamPath: ${ssm:/configuration/${self:custom.stage}/iam/path, ssm:/configuration/default/iam/path, "/"}
@@ -68,7 +70,8 @@ custom:
 
 provider:
   name: aws
-  runtime: nodejs14.x
+  runtime: nodejs20.x
+  timeout: 150
   region: us-east-1
   stage: dev
   iam:
@@ -99,7 +102,6 @@ functions:
   submitInitialWaiver:
     handler: form/submitInitialWaiver.main
     role: LambdaApiRole
-    timeout: 30
     events:
       - http:
           path: submitInitialWaiver
@@ -110,7 +112,6 @@ functions:
   submitMedicaidSpa:
     handler: form/submitMedicaidSPA.main
     role: LambdaApiRole
-    timeout: 30
     events:
       - http:
           path: submitMedicaidSPA
@@ -121,7 +122,6 @@ functions:
   submitMedicaidSpaRaiResponse:
     handler: form/submitMedicaidSPARAIResponse.main
     role: LambdaApiRole
-    timeout: 30
     events:
       - http:
           path: submitMedicaidSPARAIResponse
@@ -132,7 +132,6 @@ functions:
   submitChipSpa:
     handler: form/submitCHIPSPA.main
     role: LambdaApiRole
-    timeout: 30
     environment:
       reviewerEmail: ${self:custom.reviewerCHIPEmail}
       ccEmail: ${self:custom.chipCcEmail}
@@ -146,7 +145,6 @@ functions:
   submitCHIPSPARAIResponse:
     handler: form/submitCHIPSPARAIResponse.main
     role: LambdaApiRole
-    timeout: 30
     environment:
       reviewerEmail: ${self:custom.reviewerCHIPEmail}
       ccEmail: ${self:custom.chipCcEmail}
@@ -160,7 +158,6 @@ functions:
   submitWaiverExtension:
     handler: form/submitWaiverExtension.main
     role: LambdaApiRole
-    timeout: 30
     events:
       - http:
           path: submitWaiverExtension
@@ -171,7 +168,6 @@ functions:
   submitWaiverRaiResponse:
     handler: form/submitWaiverRAIResponse.main
     role: LambdaApiRole
-    timeout: 30
     events:
       - http:
           path: submitWaiverRAIResponse
@@ -182,7 +178,6 @@ functions:
   submitWaiverRenewal:
     handler: form/submitWaiverRenewal.main
     role: LambdaApiRole
-    timeout: 30
     events:
       - http:
           path: submitWaiverRenewal
@@ -193,7 +188,6 @@ functions:
   submitWaiverAmendment:
     handler: form/submitWaiverAmendment.main
     role: LambdaApiRole
-    timeout: 30
     events:
       - http:
           path: submitWaiverAmendment
@@ -204,7 +198,6 @@ functions:
   submitWaiverAppendixK:
     handler: form/submitWaiverAppendixK.main
     role: LambdaApiRole
-    timeout: 30
     events:
       - http:
           path: submitWaiverAppendixK
@@ -215,7 +208,6 @@ functions:
   submitWaiverAppendixKRAIResponse:
     handler: form/submitWaiverAppendixKRAIResponse.main
     role: LambdaApiRole
-    timeout: 30
     events:
       - http:
           path: submitWaiverAppendixKRAIResponse
@@ -346,7 +338,6 @@ functions:
   withdrawInitialWaiver:
     handler: form/withdrawInitialWaiver.main
     role: LambdaApiRole
-    timeout: 30
     environment:
       ccEmail: ${self:custom.dmcoEmail}
     events:
@@ -359,7 +350,6 @@ functions:
   withdrawMedicaidSPA:
     handler: form/withdrawMedicaidSPA.main
     role: LambdaApiRole
-    timeout: 30
     environment:
       ccEmail: ${self:custom.dpoEmail}
     events:
@@ -372,7 +362,6 @@ functions:
   withdrawCHIPSPA:
     handler: form/withdrawCHIPSPA.main
     role: LambdaApiRole
-    timeout: 30
     environment:
       reviewerEmail: ${self:custom.reviewerCHIPEmail}
       ccEmail: ${self:custom.chipCcEmail}
@@ -386,7 +375,6 @@ functions:
   withdrawWaiverRenewal:
     handler: form/withdrawWaiverRenewal.main
     role: LambdaApiRole
-    timeout: 30
     environment:
       ccEmail: ${self:custom.dmcoEmail}
     events:
@@ -399,7 +387,6 @@ functions:
   withdrawWaiverAmendment:
     handler: form/withdrawWaiverAmendment.main
     role: LambdaApiRole
-    timeout: 30
     environment:
       ccEmail: ${self:custom.dmcoEmail}
     events:
@@ -412,7 +399,6 @@ functions:
   withdrawWaiverAppendixK:
     handler: form/withdrawWaiverAppendixK.main
     role: LambdaApiRole
-    timeout: 30
     environment:
       ccEmail: ${self:custom.dhcbsooEmail}
     events:
@@ -425,7 +411,6 @@ functions:
   enableRaiWithdraw:
     handler: form/enableRaiWithdraw.main
     role: LambdaApiRole
-    timeout: 30
     events:
       - http:
           path: enableRaiWithdraw
@@ -436,7 +421,6 @@ functions:
   disableRaiWithdraw:
     handler: form/disableRaiWithdraw.main
     role: LambdaApiRole
-    timeout: 30
     events:
       - http:
           path: disableRaiWithdraw
@@ -447,7 +431,6 @@ functions:
   withdrawRAIResponse:
     handler: form/withdrawRAIResponse.main
     role: LambdaApiRole
-    timeout: 30
     environment:
       osgEmail: ${self:custom.reviewerEmail}
       chipEmail: ${self:custom.reviewerCHIPEmail}
@@ -557,7 +540,6 @@ functions:
   updateUserStatus:
     handler: updateUserStatus.main
     role: LambdaApiRole
-    timeout: 30
     environment:
       userAccessEmailSource: ${self:custom.userAccessEmailSource}
     events:
@@ -570,7 +552,6 @@ functions:
   setUserPhoneNumber:
     handler: putPhoneNumber.main
     role: LambdaApiRole
-    timeout: 30
     events:
       - http:
           path: phoneNumber

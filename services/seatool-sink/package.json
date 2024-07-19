@@ -5,6 +5,7 @@
     "scripts": {},
     "dependencies": {
         "cmscommonlib": "file:../common",
+        "aws-sdk": "^2.752.0",
         "kafka-node": "^5.0.0",
         "kafkajs": "^1.14.0",
         "lodash": "^4.17.20"

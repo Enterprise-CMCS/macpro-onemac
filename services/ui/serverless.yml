@@ -15,7 +15,7 @@ custom:
 
 provider:
   name: aws
-  runtime: nodejs14.x
+  runtime: nodejs20.x
   region: us-east-1
   stage: dev
 
@@ -234,6 +234,8 @@ resources:
             var headers = response.headers;
             headers['strict-transport-security'] = { value: 'max-age=63072000; includeSubdomains; preload'};
             headers['x-frame-options'] = { value: 'SAMEORIGIN'};
+            headers['x-frame-options'] = { value: 'DENY'};
+            headers['x-content-type-options'] = { value: 'nosniff' };
             return response;
           }
         FunctionConfig:

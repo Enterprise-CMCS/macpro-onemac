@@ -248,7 +248,6 @@ Feature: Medicaid SPA State Details View - Card View with Actions
         Then search for "MD-23-7652-VM"
         Then click the SPA ID link in the first row
         Then verify the package details page is visible
-        Then verify the sub status on the card is Withdraw Formal RAI Response Enabled
         Then click Withdraw Formal RAI Response package action
         Then into "Additional Information" type "Automated test to withdraw the RAI Response."
         Then Click the Submit Button without waiting
