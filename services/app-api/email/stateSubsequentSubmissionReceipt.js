@@ -7,7 +7,13 @@ import { formatPackageDetails } from "./formatPackageDetails.js";
  */
 export const stateSubsequentSubmissionReceipt = (data, config) => {
   // changing config to match the docs in this one instance
-  if (config.idLabel === "SPA ID") config.idLabel = "Medicaid SPA Package ID";
+  if (config.idLabel === "SPA ID") {
+    const typeLabel = config.typeLabel;
+    // cut the type label at sub sub and set that at the new idLabel
+    config.idLabel = typeLabel
+      .substring(0, typeLabel.indexOf("Subsequent Submission"))
+      .trim();
+  }
 
   return {
     ToAddresses: [`${data.submitterName} <${data.submitterEmail}>`],
