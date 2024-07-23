@@ -13,7 +13,7 @@ export const stateSubsequentSubmissionReceipt = (data, config) => {
     typeLabel = typeLabel
       .substring(0, typeLabel.indexOf("Subsequent Submission"))
       .trim();
-    config.typeLabel = `${typeLabel} Package ID`;
+    config.idLabel = `${typeLabel} Package ID`;
   }
 
   return {
