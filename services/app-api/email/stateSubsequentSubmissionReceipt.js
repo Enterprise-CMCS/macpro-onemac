@@ -6,19 +6,26 @@ import { formatPackageDetails } from "./formatPackageDetails.js";
  * @returns {Object} email parameters in generic format.
  */
 export const stateSubsequentSubmissionReceipt = (data, config) => {
-  data.attachments = {}; //remove attachments because we dont want them listed in the state email
+  // changing config to match the docs in this one instance
+  if (config.idLabel === "SPA ID") {
+    let typeLabel = config.typeLabel;
+    // cut the type label at sub sub and set that at the new idLabel
+    typeLabel = typeLabel
+      .substring(0, typeLabel.indexOf("Subsequent Submission"))
+      .trim();
+    config.idLabel = `${typeLabel} Package ID`;
+  }
 
   return {
     ToAddresses: [`${data.submitterName} <${data.submitterEmail}>`],
     CcAddresses: [],
-    Subject: `Subsequent Documentation for ${config.typeLabel} ${data.componentId}`,
+    Subject: `Additional documents submitted for ${config.typeLabel} ${data.componentId}`,
     HTML: `
-    <p>	This is confirmation that you submitted ${
+    <p>	You’ve successfully submitted the following to CMS reviewers for ${
       config.typeLabel
-    } materials to CMS for review:</p>
+    } ${data.componentId}:</p>
     ${formatPackageDetails(data, config)}
-    <br>
     <p>If you have questions or did not expect this email, please contact <a href="mailto:spa@cms.hhs.gov">SPA@CMS.HHS.gov</a>.</p>
-    <p>Thank you!</p>`,
+    <p>Thank you.</p>`,
   };
 };
