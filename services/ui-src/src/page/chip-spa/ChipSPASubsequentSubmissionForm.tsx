@@ -2,8 +2,8 @@ import React, { FC } from "react";
 import OneMACForm from "../OneMACForm";
 import {
   defaultConfirmSubsequentSubmission,
-  defaultOneMACFormConfig,
   defaultSubsequentAttachmentInstructionsJSX,
+  defaultSubsequentSubmissionFormConfig,
   defaultSubsequentSubmissionIntroJSX,
   OneMACFormConfig,
 } from "../../libs/formLib";
@@ -14,7 +14,7 @@ import {
 } from "cmscommonlib";
 
 export const chipSPASubsequentSubmissionFormInfo: OneMACFormConfig = {
-  ...defaultOneMACFormConfig,
+  ...defaultSubsequentSubmissionFormConfig,
   ...chipSPASubsequentSubmission,
   pageTitle: "Upload Subsequent CHIP SPA Documentation",
   detailsHeader: "CHIP SPA Subsequent Submission",

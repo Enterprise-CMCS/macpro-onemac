@@ -1,8 +1,8 @@
 import React, { FC } from "react";
 import OneMACForm from "../OneMACForm";
 import {
+  defaultSubsequentSubmissionFormConfig,
   defaultConfirmSubsequentSubmission,
-  defaultOneMACFormConfig,
   defaultSubsequentAttachmentInstructionsJSX,
   defaultSubsequentSubmissionIntroJSX,
   OneMACFormConfig,
@@ -14,7 +14,7 @@ import {
 } from "cmscommonlib";
 
 export const medicaidSPASubsequentSubmissionFormInfo: OneMACFormConfig = {
-  ...defaultOneMACFormConfig,
+  ...defaultSubsequentSubmissionFormConfig,
   ...medicaidSPASubsequentSubmission,
   pageTitle: "Upload Subsequent Medicaid SPA Documentation",
   detailsHeader: "Medicaid SPA Subsequent Submission",
