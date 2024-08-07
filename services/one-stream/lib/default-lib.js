@@ -20,12 +20,7 @@ export const defaultInitialSubmissionMap = {
 export const defaultSubsequentSubmissionMap = {
   type: subsequentSubmissionType,
   action: submitAction,
-  packageAttributes: [
-    "submissionTimestamp",
-    "currentStatus",
-    "submitterName",
-    "submitterEmail",
-  ],
+  packageAttributes: ["currentStatus", "submitterName", "submitterEmail"],
 };
 
 export const defaultCreateMap = {
