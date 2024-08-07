@@ -125,6 +125,10 @@ export const buildAnyPackage = async (packageId, config) => {
           return;
         showPackageOnDashboard = true;
 
+        if (anEvent.eventTimestamp > putParams.Item.lastActivityTimestamp) {
+          putParams.Item.lastActivityTimestamp = anEvent.eventTimestamp;
+        }
+
         // the normalized eventLabel is the GSI1pk without the source and componentType
         // but waiver rai should only remove waiver part
         const eventLabel = anEvent.GSI1pk.replace("OneMAC#", "")
