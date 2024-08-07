@@ -1296,8 +1296,10 @@ article.form-container {
         color: rgba($color-base-inverse, 0.8);
       }
 
-      &:active {
+      &:active,
+      &:focus {
         color: rgba($color-base-inverse, 0.6);
+        background-color: transparent;
       }
     }
   }
@@ -1359,6 +1361,7 @@ article.form-container {
   text-decoration-thickness: 4px;
   text-decoration-skip-ink: none;
 }
+
 .usa-bar {
   background-color: $color-gray-lightest;
   font-size: 14px;

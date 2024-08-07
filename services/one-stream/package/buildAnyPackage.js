@@ -83,7 +83,7 @@ export const buildAnyPackage = async (packageId, config) => {
     let adminChanges = [];
 
     result.Items.forEach((anEvent) => {
-      // we ignore all other v's and Email records
+      // we ignore all other v's (for now) and any email events
       if (
         anEvent.sk.substring(0, 1) === "v" ||
         anEvent.sk.startsWith("Email")
