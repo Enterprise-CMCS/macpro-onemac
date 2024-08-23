@@ -52,6 +52,22 @@ do
     echo `aws s3api delete-objects --bucket $x --delete "$(aws s3api list-object-versions --bucket $x --query='{Objects: DeleteMarkers[].{Key:Key,VersionId:VersionId}}')"`
     #delete any unversioned files
     echo `aws s3 rm s3://$x/ --recursive`
+    #turn off writes to bucket
+    echo `aws s3api put-bucket-policy --bucket $x --policy '{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Deny",
+            "Principal": "*",
+            "Action": [
+                "s3:PutObject"
+            ],
+            "Resource": "arn:aws:s3:::'"$x"'/*"
+        }
+      ]
+    }'`
+    #force delete the bucket
+    echo `aws s3api rb s3://$x --force`
   done
   echo 'deleting stack: ' $i
   echo `aws cloudformation delete-stack --stack-name $i`
