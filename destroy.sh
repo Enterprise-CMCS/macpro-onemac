@@ -53,6 +53,7 @@ do
     #delete any unversioned files
     echo `aws s3 rm s3://$x/ --recursive`
     #turn off writes to bucket
+    echo 'Denying writes to bucket ' $x
     echo `aws s3api put-bucket-policy --bucket $x --policy '{
     "Version": "2012-10-17",
     "Statement": [
@@ -67,6 +68,7 @@ do
       ]
     }'`
     #force delete the bucket
+    echo 'Deleting bucket ' $x
     echo `aws s3api rb s3://$x --force`
   done
   echo 'deleting stack: ' $i
