@@ -69,7 +69,7 @@ do
     }'`
     #force delete the bucket
     echo 'Deleting bucket ' $x
-    echo `aws s3api rb s3://$x --force`
+    echo `aws s3 rb s3://$x --force`
   done
   echo 'deleting stack: ' $i
   echo `aws cloudformation delete-stack --stack-name $i`
