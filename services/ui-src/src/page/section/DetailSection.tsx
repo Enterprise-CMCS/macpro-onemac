@@ -157,6 +157,7 @@ export const DetailSection = ({
   );
 
   const actions = detail.actions;
+  const subSubType = "Subsequent Documentation Uploaded";
 
   return (
     <>
@@ -266,6 +267,7 @@ export const DetailSection = ({
                       </>
                     )}
                     <AdditionalInfoSection
+                      isSubSub={anEvent.type === subSubType}
                       additionalInfo={anEvent.additionalInformation}
                       id={"addl-info-chrono-" + index}
                     />

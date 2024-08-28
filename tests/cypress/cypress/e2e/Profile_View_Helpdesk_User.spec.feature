@@ -12,7 +12,7 @@ Feature: Helpdesk User
         Then verify state column does not exist
         Then verify submitted by column exists
         Then Click on User Management Tab
-        Then i am on User Management Page
+        Then I am on the User Management Page
         Then verify User Management is Displayed
         Then verify Export to Excel CSV is Displayed
         Then verify Name is Displayed

@@ -62,6 +62,12 @@ import WaiverAmendmentBForm from "./page/waiver-amendment/WaiverAmendmentBForm";
 import WithdrawRAIForm from "./page/withdraw-rai/WithdrawRAIForm";
 import { clearTableStateStorageKeys } from "./utils/StorageKeys";
 import EnableRaiWithdrawForm from "./page/enable-rai-withdraw/EnableRaiWithdrawForm";
+import MedicaidSPASubsequentSubmissionForm from "./page/medicaid-spa/MedicaidSPASubsequentSubmissionForm";
+import ChipSPASubsequentSubmissionForm from "./page/chip-spa/ChipSPASubsequentSubmissionForm";
+import InitialWaiverSubsequentSubmissionForm from "./page/initial-waiver/InitialWaiverSubsequentSubmissionForm";
+import WaiverRenewalSubsequentSubmissionForm from "./page/waiver-renewal/WaiverRenewalSubsequentSubmissionForm";
+import WaiverAmendmentSubsequentSubmissionForm from "./page/waiver-amendment/WaiverAmendmentSubsequentSubmissionForm";
+import WaiverAppKSubsequentSubmissionForm from "./page/waiver-appendix-k/WaiverAppKSubsequentSubmissionForm";
 import DisableRaiWithdrawForm from "./page/disable-rai-withdraw/DisableRaiWithdrawForm";
 
 type RouteSpec = {
@@ -207,12 +213,37 @@ const ROUTE_LIST: RouteSpec[] = [
     { path: ONEMAC_ROUTES.MEDICAID_SPA, component: MedicaidSpaForm },
     { path: ONEMAC_ROUTES.CHIP_SPA, component: ChipSpaForm },
     { path: ONEMAC_ROUTES.MEDICAID_SPA_RAI, component: MedicaidSPARAIForm },
-    { path: ONEMAC_ROUTES.CHIP_SPA_RAI, component: CHIPSPARAIForm },
-    { path: ONEMAC_ROUTES.CHIP_SPA_WITHDRAW, component: ChipSpaWithdraw },
+    {
+      path: ONEMAC_ROUTES.MEDICAID_SPA_SUBSEQUENT_SUBMSISSION,
+      component: MedicaidSPASubsequentSubmissionForm,
+    },
+    {
+      path: ONEMAC_ROUTES.INITIAL_WAIVER_SUBSEQUENT_SUBMSISSION,
+      component: InitialWaiverSubsequentSubmissionForm,
+    },
+    {
+      path: ONEMAC_ROUTES.WAIVER_RENEWAL_SUBSEQUENT_SUBMSISSION,
+      component: WaiverRenewalSubsequentSubmissionForm,
+    },
+    {
+      path: ONEMAC_ROUTES.WAIVER_AMENDMENT_SUBSEQUENT_SUBMSISSION,
+      component: WaiverAmendmentSubsequentSubmissionForm,
+    },
+    {
+      path: ONEMAC_ROUTES.WAIVER_APP_K_SUBSEQUENT_SUBMSISSION,
+      component: WaiverAppKSubsequentSubmissionForm,
+    },
     {
       path: ONEMAC_ROUTES.MEDICAID_SPA_WITHDRAW,
       component: MedicaidSpaWithdraw,
     },
+    { path: ONEMAC_ROUTES.CHIP_SPA_RAI, component: CHIPSPARAIForm },
+    { path: ONEMAC_ROUTES.CHIP_SPA_WITHDRAW, component: ChipSpaWithdraw },
+    {
+      path: ONEMAC_ROUTES.CHIP_SPA_SUBSEQUENT_SUBMSISSION,
+      component: ChipSPASubsequentSubmissionForm,
+    },
+
     { path: ONEMAC_ROUTES.WAIVER_RAI, component: WaiverRAIForm },
     { path: ONEMAC_ROUTES.INITIAL_WAIVER_B_4, component: InitialWaiverB4Form },
     {

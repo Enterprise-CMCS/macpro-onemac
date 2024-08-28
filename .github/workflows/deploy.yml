@@ -344,6 +344,13 @@ jobs:
             Withdraw_Package_Form_Medicaid_SPA.spec.feature,
             Withdraw_Package_Form_Waiver_Amendment.spec.feature,
             Withdraw_Package_Form_Waiver_Renewal.spec.feature,
+            Subsequent_Submission_1915b_Amendment_Waiver.spec.feature,
+            Subsequent_Submission_1915c_Appendix_K.spec.feature,
+            Subsequent_Submission_CHIP_Spa.spec.feature,
+            Subsequent_Submission_Initial_Waiver.spec.feature,
+            Subsequent_Submission_Medicaid_Spa.spec.feature,
+            Subsequent_Submission_Renewal_Waiver.spec.feature,
+            Dashboard_RAI_Withdraw_Enabled_Actions.spec.feature,
           ]
     steps:
       - name: set branch_name

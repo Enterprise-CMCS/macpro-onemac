@@ -21,6 +21,8 @@ Feature: Waiver Package Details View: 1915 b Waiver Amendment for a State User
         Then verify package actions header is visible
         Then verify there are no package actions available
         Then verify the details section exists
+        Then verify there is a Latest Package Activity header in the details section
+        Then verify a full date and time entry exists for the Latest Package Activity
         Then verify there is a Type header in the details section
         Then verify the type is 1915b Waiver Amendment
         Then verify there is a State header in the details section
@@ -49,6 +51,8 @@ Feature: Waiver Package Details View: 1915 b Waiver Amendment for a State User
         Then verify package actions header is visible
         Then verify withdraw package action exists
         Then verify the details section exists
+        Then verify there is a Latest Package Activity header in the details section
+        Then verify a full date and time entry exists for the Latest Package Activity
         Then verify there is a Type header in the details section
         Then verify the type is 1915b Waiver Amendment
         Then verify there is a State header in the details section
@@ -78,6 +82,8 @@ Feature: Waiver Package Details View: 1915 b Waiver Amendment for a State User
         Then verify withdraw package action exists
         Then verify Respond to RAI action exists
         Then verify the details section exists
+        Then verify there is a Latest Package Activity header in the details section
+        Then verify a full date and time entry exists for the Latest Package Activity
         Then verify there is a Type header in the details section
         Then verify the type is 1915b Waiver Amendment
         Then verify there is a State header in the details section
@@ -106,6 +112,8 @@ Feature: Waiver Package Details View: 1915 b Waiver Amendment for a State User
         Then verify package actions header is visible
         Then verify there are no package actions available
         Then verify the details section exists
+        Then verify there is a Latest Package Activity header in the details section
+        Then verify a full date and time entry exists for the Latest Package Activity
         Then verify there is a Type header in the details section
         Then verify the type is 1915b Waiver Amendment
         Then verify there is a State header in the details section
@@ -135,6 +143,8 @@ Feature: Waiver Package Details View: 1915 b Waiver Amendment for a State User
         Then verify package actions header is visible
         Then verify there are no package actions available
         Then verify the details section exists
+        Then verify there is a Latest Package Activity header in the details section
+        Then verify a full date and time entry exists for the Latest Package Activity
         Then verify there is a Type header in the details section
         Then verify the type is 1915b Waiver Amendment
         Then verify there is a State header in the details section
@@ -163,6 +173,8 @@ Feature: Waiver Package Details View: 1915 b Waiver Amendment for a State User
         Then verify package actions header is visible
         Then verify there are no package actions available
         Then verify the details section exists
+        Then verify there is a Latest Package Activity header in the details section
+        Then verify a full date and time entry exists for the Latest Package Activity
         Then verify there is a Type header in the details section
         Then verify the type is 1915b Waiver Amendment
         Then verify there is a State header in the details section
@@ -187,6 +199,8 @@ Feature: Waiver Package Details View: 1915 b Waiver Amendment for a State User
         Then verify package actions header is visible
         Then verify there are no package actions available
         Then verify the details section exists
+        Then verify there is a Latest Package Activity header in the details section
+        Then verify a full date and time entry exists for the Latest Package Activity
         Then verify there is a Type header in the details section
         Then verify the type is 1915b Waiver Amendment
         Then verify there is a State header in the details section
@@ -217,6 +231,8 @@ Feature: Waiver Package Details View: 1915 b Waiver Amendment for a State User
         Then verify withdraw package action exists
         Then verify Withdraw Formal RAI Response package action exists
         Then verify the details section exists
+        Then verify there is a Latest Package Activity header in the details section
+        Then verify a full date and time entry exists for the Latest Package Activity
         Then verify there is a Type header in the details section
         Then verify the type is 1915b Waiver Amendment
         Then verify there is a State header in the details section

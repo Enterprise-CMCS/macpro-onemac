@@ -27,7 +27,6 @@ const detailSection =
   "//section[@class='detail-section']//h2[contains(.,'Details')]";
 const disableRAIResponseWithdrawAction =
   "//a[text()='Disable Formal RAI Response Withdraw']";
-const CHIPSPAIDHeader = "//h3[contains(text(),'SPA ID')]";
 const typeHeader = "//h3[contains(text(),'Type')]";
 const parentWaiverNumberHeader =
   "//h3[contains(text(),'Approved Initial or Renewal Number')]";
@@ -43,8 +42,7 @@ const approvedEffectiveDateHeader =
 const formalRAIReceivedDateHeader =
   "//h3[contains(text(),'Formal RAI Received')]";
 const adminPkgChangeSection = "//h2[text()='Administrative Package Changes']";
-const additionalInfoSection =
-  "//section[contains(@id, 'addl-info-chrono')]//h2[text()='Additional Information']";
+const additionalInfoSection = "#additional-information-label";
 const waiverAuthorityHeader = "//h3[text()='Waiver Authority']";
 const attachmentsSection = "//h2[text()='Supporting Documentation']";
 const amendmentTitleHeader = "//h3[text()='Amendment Title']";
@@ -62,6 +60,13 @@ const withdrawalRequestedCaretBtn =
   '//h2//button[contains(@id,"Package0_caret-button")]';
 const subStatus = "#substatus";
 const secondClock = "#secondclock";
+const uploadSubsequentDocumentsActionBtn =
+  "//a[contains(@id,'subsequent-submission-action')]";
+const subsequentSubmissionCaretBtn =
+  '//h2//button[contains(@id,"Subsequent Documentation Uploaded")]';
+const subsequentSubmissionDownloadAllBtn =
+  '//button[contains(@id,"dl_Subsequent Documentation Uploaded")]';
+const latestActivityHeader = "//h3[text()='Latest Package Activity']";
 
 export class oneMacPackageDetailsPage {
   verifyPackageDetailsPageIsVisible() {
@@ -268,7 +273,7 @@ export class oneMacPackageDetailsPage {
     cy.xpath(attachmentsSection).should("be.visible");
   }
   verifyAdditionalInfoSectionExists() {
-    cy.xpath(additionalInfoSection).should("be.visible");
+    cy.get(additionalInfoSection).should("be.visible");
   }
   verifyAdministrativePackageChangesSectionExists() {
     cy.xpath(adminPkgChangeSection).should("be.visible");
@@ -357,6 +362,35 @@ export class oneMacPackageDetailsPage {
   }
   verifyTheSubStatus() {
     cy.get(subStatus).contains("Withdraw Formal RAI Response Enabled");
+  }
+  verifyUploadSubsequentDocumentsActionBtnExists() {
+    cy.xpath(uploadSubsequentDocumentsActionBtn)
+      .should("be.visible")
+      .and("contain", "Upload Subsequent Documents");
+  }
+  clickUploadSubsequentDocumentsActionBtn() {
+    cy.xpath(uploadSubsequentDocumentsActionBtn).click();
+  }
+  verifySubsequentSubmissionCaretBtnExists() {
+    cy.xpath(subsequentSubmissionCaretBtn).should("be.visible");
+  }
+  clickSubsequentSubmissionCaretBtn() {
+    cy.xpath(subsequentSubmissionCaretBtn).click();
+  }
+
+  verifySubsequentSubmissionDownloadAllBtnExists() {
+    cy.xpath(subsequentSubmissionDownloadAllBtn).should("be.visible");
+  }
+  clickSubsequentSubmissionDownloadAllBtn() {
+    cy.xpath(subsequentSubmissionDownloadAllBtn).click();
+  }
+  verifyLatestPackageActivityDateExists() {
+    cy.xpath(latestActivityHeader)
+      .next()
+      .contains(/^[a-zA-Z]{3}.\d{2}.\d{4}||^[a-zA-Z]{3}.\d{1}.\d{4}/);
+  }
+  verifyLatestPackageActivityHeaderExists() {
+    cy.xpath(latestActivityHeader).should("be.visible");
   }
 }
 export default oneMacPackageDetailsPage;

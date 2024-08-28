@@ -24,7 +24,10 @@ describe("getActionsForPackage", () => {
       formSource
     );
 
-    expect(actions).toEqual(["Withdraw Package"]);
+    expect(actions).toEqual([
+      "Withdraw Package",
+      "Upload Subsequent Documents",
+    ]);
   });
 
   it("returns correct actions for chipspa with PENDING status for CMS user", () => {
@@ -117,6 +120,9 @@ describe("getActionsForPackage", () => {
       formSource
     );
 
-    expect(actions).toEqual(["Withdraw Package"]);
+    expect(actions).toEqual([
+      "Withdraw Package",
+      "Upload Subsequent Documents",
+    ]);
   });
 });

@@ -37,6 +37,12 @@ export const ALERTS_MSG: Record<
     heading: "Submission Completed",
     text: "Your submission has been received.",
   },
+  // Success
+  SUBSEQUENT_SUBMISSION_SUCCESS: {
+    type: ALERT_TYPES.SUCCESS,
+    heading: "Documents submitted",
+    text: "CMS reviewers will follow up by email if additional information is needed.",
+  },
 
   WITHDRAW_REQUESTED: {
     type: ALERT_TYPES.SUCCESS,
@@ -222,6 +228,8 @@ export const alertCodeAlerts = {
   [RESPONSE_CODE.NONE]: ALERTS_MSG.NONE,
   [RESPONSE_CODE.LOGIN_ERROR]: ALERTS_MSG.LOGIN_ERROR,
   [RESPONSE_CODE.SUCCESSFULLY_SUBMITTED]: ALERTS_MSG.SUBMISSION_SUCCESS,
+  [RESPONSE_CODE.SUCCESSFULLY_SUBMITTED_SUBSEQUENT_SUBMISSION]:
+    ALERTS_MSG.SUBSEQUENT_SUBMISSION_SUCCESS,
   [RESPONSE_CODE.WITHDRAW_REQUESTED]: ALERTS_MSG.WITHDRAW_REQUESTED,
   [RESPONSE_CODE.WITHDRAW_RAI_REQUESTED]:
     ALERTS_MSG.WITHDRAW_RAI_RESPONSE_SUCCESS,
