@@ -81,6 +81,7 @@ export const buildAnyPackage = async (packageId, config) => {
     let showPackageOnDashboard = false;
     let lmTimestamp = 0;
     let adminChanges = [];
+    let packageInactivated = false;
 
     result.Items.forEach((anEvent) => {
       // we ignore all other v's (for now) and any email events
@@ -121,8 +122,10 @@ export const buildAnyPackage = async (packageId, config) => {
       let eventConfig = {};
 
       if (source === "OneMAC") {
-        if (anEvent?.currentStatus === Workflow.ONEMAC_STATUS.INACTIVATED)
+        if (anEvent?.currentStatus === Workflow.ONEMAC_STATUS.INACTIVATED) {
+          packageInactivated = true;
           return;
+        }
         showPackageOnDashboard = true;
 
         if (anEvent.eventTimestamp > putParams.Item.lastActivityTimestamp) {
@@ -350,6 +353,11 @@ export const buildAnyPackage = async (packageId, config) => {
         putParams.Item.adminChanges.push(oneChange);
       }
     });
+
+    //if any submission has been inactivated then override package status
+    if (packageInactivated) {
+      putParams.Item.currentStatus = Workflow.ONEMAC_STATUS.INACTIVATED;
+    }
 
     putParams.Item.lastEventTimestamp = lmTimestamp;
     logIt(JSON.stringify(putParams));
