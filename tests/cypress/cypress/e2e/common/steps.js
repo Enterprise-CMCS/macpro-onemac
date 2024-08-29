@@ -997,7 +997,7 @@ Then("click the Formal RAI Response - Withdrawal Requested checkbox", () => {
   OneMacDashboardPage.clickRaiResponseWithdrawalRequestedCheckBox();
 });
 Then("click the Withdraw Formal RAI Response Enabled checkbox", () => {
-  OneMacPackagePage.clickRaiResponseWithdrawEnabledCheckBox();
+  OneMacDashboardPage.clickRaiResponseWithdrawEnabledCheckBox();
 });
 Then("click 1915b Initial Waiver check box", () => {
   OneMacDashboardPage.clickInitialWaiver1915bCheckBox();
@@ -2120,10 +2120,6 @@ Then("click on Latest Package Activity date picker filter", () => {
 Then("verify Latest Package Activity dropdown filter exists", () => {
   OneMacDashboardPage.verifyLatestPackageActivityDateFilterDropdownExists();
 });
-Then("click on Latest Package Activity dropdown filter", () => {
-  OneMacDashboardPage.clickOnLatestPackageActivityFilterDropdown();
-});
-
 Then("click on Latest Package Activity dropdown filter", () => {
   OneMacDashboardPage.clickOnLatestPackageActivityFilterDropdown();
 });

@@ -23,7 +23,7 @@ Feature: Subsequent Submission 1915b Waiver Amendment
         Then verify the form title is "Waiver Amendment Subsequent Submission Details"
         Then verify "1915(b) Waiver Amendment Number" is prefilled
         Then verify Type is "1915(b) Waiver Amendment"
-        #Then verify the Subsequent "Waiver Amendment" Documents section exists
+        Then verify the Subsequent "Waiver Amendment" Documents section exists
         Then verify label "Reason for Subsequent Submission" exists on page
         Then verify the submit button is disabled
         Then verify form cancel button exists
@@ -47,7 +47,7 @@ Feature: Subsequent Submission 1915b Waiver Amendment
         Then verify the form title is "Waiver Amendment Subsequent Submission Details"
         Then verify "1915(b) Waiver Amendment Number" is prefilled
         Then verify Type is "1915(b) Waiver Amendment"
-        #Then verify the Subsequent "Waiver Amendment" Documents section exists
+        Then verify the Subsequent "Waiver Amendment" Documents section exists
         Then verify label "Reason for Subsequent Submission" exists on page
         Then verify the submit button is disabled
         Then verify form cancel button exists

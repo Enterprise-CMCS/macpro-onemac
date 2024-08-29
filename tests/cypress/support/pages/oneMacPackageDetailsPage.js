@@ -52,8 +52,7 @@ const subjectHeader = "//h3[contains(text(),'Subject')]";
 const descriptionHeader = "//h3[contains(text(),'Description')]";
 const cPOCNameHeader = "//h3[contains(text(),'CPOC')]";
 const reviewTeamSRTHeader = "//h3[contains(text(),'Review Team (SRT)')]";
-const initialSubmissionCaretBtn =
-  '//h2//button[contains(@id,"Initial Package")]';
+const initialSubmissionCaretBtn = '//button[contains(@id,"Initial Package")]';
 const initialSubmissionDownloadAllBtn =
   '//button[contains(@id,"dl_Initial Package")]';
 const withdrawalRequestedCaretBtn =

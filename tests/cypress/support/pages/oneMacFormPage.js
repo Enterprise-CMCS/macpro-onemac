@@ -29,7 +29,7 @@ const subsequentDocumentsHeader = (type) =>
   `//h3[contains(text(),'Subsequent ${type} Documents')]`;
 const labelElementFromLabel = {
   "Additional Information": "#additional-information-label",
-  "Reason for Subsequent Submission": "#additional-information-label",
+  "Reason for subsequent submission": "#additional-information-label",
 };
 const elementFromLabel = {
   // Different forms may have different labels for the ID field
