@@ -106,7 +106,7 @@ Then("I am on the User Management Page", () => {
   OneMacUserManagmentPage.verifyWeAreOnUserManagmentPage();
 });
 Then("Click on My Account", () => {
-  OneMacUserManagmentPage.clickMyAccountDropDown();
+  OneMacUserManagmentPage.clickMyAccountDropdown();
 });
 Then("Click on Manage Profile", () => {
   OneMacUserManagmentPage.clickmanageProfileBTN();
