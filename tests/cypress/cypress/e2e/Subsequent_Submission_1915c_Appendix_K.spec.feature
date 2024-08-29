@@ -48,7 +48,7 @@ Feature: Subsequent Submission 1915c App K Waiver
         Then verify "Waiver Amendment Number" is prefilled
         Then verify Type is "1915(c) Appendix K Amendment"
         Then verify the Subsequent "1915(c) Appendix K" Documents section exists
-        Then verify label "Reason for Subsequent Submission" exists on page
+        Then verify label "Reason for subsequent submission" exists on page
         Then verify the submit button is disabled
         Then verify form cancel button exists
         Then attach "adobe.pdf" file to attachment 1

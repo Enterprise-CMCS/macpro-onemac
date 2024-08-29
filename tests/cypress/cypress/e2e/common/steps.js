@@ -996,9 +996,6 @@ Then("click the Withdrawal Requested checkbox", () => {
 Then("click the Formal RAI Response - Withdrawal Requested checkbox", () => {
   OneMacDashboardPage.clickRaiResponseWithdrawalRequestedCheckBox();
 });
-Then("click the Withdraw Formal RAI Response Enabled checkbox", () => {
-  OneMacDashboardPage.clickRaiResponseWithdrawEnabledCheckBox();
-});
 Then("click 1915b Initial Waiver check box", () => {
   OneMacDashboardPage.clickInitialWaiver1915bCheckBox();
 });

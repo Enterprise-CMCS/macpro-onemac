@@ -23,7 +23,7 @@ Feature: CHIP SPA State Details View - Card View with Actions
         Then verify "SPA ID" is prefilled
         Then verify Type is "CHIP SPA"
         Then verify the Subsequent "CHIP SPA" Documents section exists
-        Then verify label "Reason for Subsequent Submission" exists on page
+        Then verify label "Reason for subsequent submission" exists on page
         Then verify the submit button is disabled
         Then verify form cancel button exists
         Then attach "adobe.pdf" file to attachment 1
@@ -47,7 +47,7 @@ Feature: CHIP SPA State Details View - Card View with Actions
         Then verify "SPA ID" is prefilled
         Then verify Type is "CHIP SPA"
         Then verify the Subsequent "CHIP SPA" Documents section exists
-        Then verify label "Reason for Subsequent Submission" exists on page
+        Then verify label "Reason for subsequent submission" exists on page
         Then verify the submit button is disabled
         Then verify form cancel button exists
         Then attach "adobe.pdf" file to attachment 1

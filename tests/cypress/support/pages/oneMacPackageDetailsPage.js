@@ -52,7 +52,7 @@ const subjectHeader = "//h3[contains(text(),'Subject')]";
 const descriptionHeader = "//h3[contains(text(),'Description')]";
 const cPOCNameHeader = "//h3[contains(text(),'CPOC')]";
 const reviewTeamSRTHeader = "//h3[contains(text(),'Review Team (SRT)')]";
-const initialSubmissionCaretBtn = '//button[contains(@id,"Initial Package")]';
+const initialSubmissionCaretBtn = 'button[id^="Initial Package"]';
 const initialSubmissionDownloadAllBtn =
   '//button[contains(@id,"dl_Initial Package")]';
 const withdrawalRequestedCaretBtn =
@@ -325,18 +325,18 @@ export class oneMacPackageDetailsPage {
     cy.xpath(reviewTeamSRTHeader).should("not.exist");
   }
   verifyInitialSubmissionCaretBtnExists() {
-    cy.xpath(initialSubmissionCaretBtn).should("be.visible");
+    cy.get(initialSubmissionCaretBtn).should("be.visible");
   }
   clickInitialSubmissionCaretBtn() {
-    cy.xpath(initialSubmissionCaretBtn).click();
+    cy.get(initialSubmissionCaretBtn).click();
   }
   expandInitialSubmissionCaretBtn() {
-    cy.xpath(initialSubmissionCaretBtn)
+    cy.get(initialSubmissionCaretBtn)
       .invoke("attr", "aria-expanded")
       .then(($isExpanded) => {
         if ($isExpanded === "false") {
           //only click to expand
-          cy.xpath(initialSubmissionCaretBtn).click();
+          cy.get(initialSubmissionCaretBtn).click();
         }
       });
   }

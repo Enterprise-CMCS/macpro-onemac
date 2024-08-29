@@ -24,7 +24,7 @@ Feature: Subsequent Submission 1915b Renewal Waiver
         Then verify "1915(b) Waiver Renewal Number" is prefilled
         Then verify Type is "1915(b) Waiver Renewal"
         Then verify the Subsequent "Waiver Renewal" Documents section exists
-        Then verify label "Reason for Subsequent Submission" exists on page
+        Then verify label "Reason for subsequent submission" exists on page
         Then verify the submit button is disabled
         Then verify form cancel button exists
         Then attach "adobe.pdf" file to attachment 1
@@ -48,7 +48,7 @@ Feature: Subsequent Submission 1915b Renewal Waiver
         Then verify "1915(b) Waiver Renewal Number" is prefilled
         Then verify Type is "1915(b) Waiver Renewal"
         Then verify the Subsequent "Waiver Renewal" Documents section exists
-        Then verify label "Reason for Subsequent Submission" exists on page
+        Then verify label "Reason for subsequent submission" exists on page
         Then verify the submit button is disabled
         Then verify form cancel button exists
         Then attach "adobe.pdf" file to attachment 1

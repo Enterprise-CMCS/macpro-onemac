@@ -129,9 +129,6 @@ const raiResponseWithdrawalRequestedCheckBox =
   "//label[contains(@for,'checkbox_packageStatus-Formal RAI Response - Withdrawal Requested')]";
 const checkboxfinalDispositionDate =
   "//span[contains(text(),'Final Disposition')]";
-//Element is Xpath use cy.xpath instead of cy.get
-const raiResponseWithdrawEnabledCheckBox =
-  "//label[contains(@for,'checkbox_packageStatus-RAI Response Withdraw Enabled')]";
 const finalDispositionColumn = "#finalDispositionDateColHeader";
 //Element is Xpath use cy.xpath instead of cy.get
 const terminatedCheckBox =
@@ -535,9 +532,6 @@ export class oneMacDashboardPage {
   }
   clickRaiResponseWithdrawalRequestedCheckBox() {
     cy.xpath(raiResponseWithdrawalRequestedCheckBox).click();
-  }
-  clickRaiResponseWithdrawEnabledCheckBox() {
-    cy.xpath(raiResponseWithdrawEnabledCheckBox).click();
   }
   verifyWithdrawnCheckBoxExists() {
     cy.xpath(withdrawnCheckBox).should("be.visible");
