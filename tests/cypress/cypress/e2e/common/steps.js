@@ -1330,6 +1330,11 @@ Then(
     OneMacDashboardPage.verifypackageRowOneIDWaiverRenewalFormat();
   }
 );
+Then("verify Latest Package Activity column one date is this quarter", () => {
+  if (OneMacDashboardPage.checkIfPackageListResultsExist()) {
+    OneMacDashboardPage.verifypackageRowOneLatestPackageActivityIsThisQuarter();
+  }
+});
 Then("verify Onboarding Materials exists", () => {
   OneMacFAQPage.verifyOnboardingMaterialsBtnExists();
 });
