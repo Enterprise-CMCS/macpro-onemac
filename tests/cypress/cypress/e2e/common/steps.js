@@ -2084,6 +2084,12 @@ Then("click the Upload Subsequent Documents action button", () => {
 Then("verify the Subsequent {string} Documents section exists", (type) => {
   OneMacFormPage.verifySubsequentDocumentsSectionExistsWith(type);
 });
+Then("verify the Reason for subsequent submission section exists", () => {
+  OneMacFormPage.verifyAdditionalInfoSectionExists();
+});
+Then("verify the dialog title contains {string}", (s) => {
+  OneMacFormPage.verifyModalTitleIs(s);
+});
 Then("verify the detailed text in the modal contains {string}", (s) => {
   OneMacFormPage.verifyModalTextIs(s);
 });

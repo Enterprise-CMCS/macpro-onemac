@@ -24,14 +24,15 @@ Feature: Subsequent Submission 1915b Renewal Waiver
         Then verify "1915(b) Waiver Renewal Number" is prefilled
         Then verify Type is "1915(b) Waiver Renewal"
         Then verify the Subsequent "Waiver Renewal" Documents section exists
-        Then verify the additional information section exists
+        Then verify label "Reason for Subsequent Submission" exists on page
         Then verify the submit button is disabled
         Then verify form cancel button exists
         Then attach "adobe.pdf" file to attachment 1
-        Then into "Additional Information" type "This is an automated subsequent submission test."
+        Then into "Reason for subsequent submission" type "This is an automated subsequent submission test."
         Then Click the Submit Button without waiting
         Then verify the modal pop-up is visible
-        Then verify the detailed text in the modal contains "OneMAC is solely for file submission purposes."
+        Then verify the dialog title contains "OneMAC only for document submission"
+        Then verify the detailed text in the modal contains "States and CMS reviewers will communicate about the submission through email."
         Then verify the yes, submit modal button is visible and clickable
         Then click modal cancel button
         Then click form cancel button
@@ -47,14 +48,15 @@ Feature: Subsequent Submission 1915b Renewal Waiver
         Then verify "1915(b) Waiver Renewal Number" is prefilled
         Then verify Type is "1915(b) Waiver Renewal"
         Then verify the Subsequent "Waiver Renewal" Documents section exists
-        Then verify the additional information section exists
+        Then verify label "Reason for Subsequent Submission" exists on page
         Then verify the submit button is disabled
         Then verify form cancel button exists
         Then attach "adobe.pdf" file to attachment 1
-        Then into "Additional Information" type "This is an automated subsequent submission test."
+        Then into "Reason for subsequent submission" type "This is an automated subsequent submission test."
         Then Click the Submit Button without waiting
         Then verify the modal pop-up is visible
-        Then verify the detailed text in the modal contains "OneMAC is solely for file submission purposes."
+        Then verify the dialog title contains "OneMAC only for document submission"
+        Then verify the detailed text in the modal contains "States and CMS reviewers will communicate about the submission through email."
         Then verify the yes, submit modal button is visible and clickable
         Then click modal cancel button
         Then click form cancel button
@@ -67,14 +69,15 @@ Feature: Subsequent Submission 1915b Renewal Waiver
         Then verify the page header is "Upload Subsequent Waiver Renewal Documentation"
         Then verify "1915(b) Waiver Renewal Number" is prefilled
         Then attach "adobe.pdf" file to attachment 1
-        Then into "Additional Information" type "This is an automated subsequent submission test."
+        Then into "Reason for subsequent submission" type "This is an automated subsequent submission test."
         Then Click the Submit Button without waiting
         Then verify the modal pop-up is visible
-        Then verify the detailed text in the modal contains "OneMAC is solely for file submission purposes."
+        Then verify the dialog title contains "OneMAC only for document submission"
+        Then verify the detailed text in the modal contains "States and CMS reviewers will communicate about the submission through email."
         Then verify the yes, submit modal button is visible and clickable
         Then click the yes, submit modal button
         Then i am on Dashboard Page
-        Then verify the success message is "Attachments have been successfully submitted"
+        Then verify the success message is "Documents submitted"
 
     Scenario: Upload Subsequent Documents from the details page
         Then click the Waiver Number link in the first row
@@ -83,13 +86,14 @@ Feature: Subsequent Submission 1915b Renewal Waiver
         Then verify the page header is "Upload Subsequent Waiver Renewal Documentation"
         Then verify "1915(b) Waiver Renewal Number" is prefilled
         Then attach "adobe.pdf" file to attachment 1
-        Then into "Additional Information" type "This is an automated subsequent submission test."
+        Then into "Reason for subsequent submission" type "This is an automated subsequent submission test."
         Then Click the Submit Button without waiting
         Then verify the modal pop-up is visible
-        Then verify the detailed text in the modal contains "OneMAC is solely for file submission purposes."
+        Then verify the dialog title contains "OneMAC only for document submission"
+        Then verify the detailed text in the modal contains "States and CMS reviewers will communicate about the submission through email."
         Then verify the yes, submit modal button is visible and clickable
         Then click the yes, submit modal button
         Then verify the package details page is visible
-        Then verify the success message is "Attachments have been successfully submitted"
+        Then verify the success message is "Documents submitted"
         Then verify the Subsequent Documentation Uploaded caret button exists
         Then verify the Subsequent Documentation download all button exists

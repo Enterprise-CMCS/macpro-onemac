@@ -42,7 +42,7 @@ const approvedEffectiveDateHeader =
 const formalRAIReceivedDateHeader =
   "//h3[contains(text(),'Formal RAI Received')]";
 const adminPkgChangeSection = "//h2[text()='Administrative Package Changes']";
-const additionalInfoSection = "#additional-information-label";
+const additionalInfoSection = "#addl-info-chrono-0";
 const waiverAuthorityHeader = "//h3[text()='Waiver Authority']";
 const attachmentsSection = "//h2[text()='Supporting Documentation']";
 const amendmentTitleHeader = "//h3[text()='Amendment Title']";
