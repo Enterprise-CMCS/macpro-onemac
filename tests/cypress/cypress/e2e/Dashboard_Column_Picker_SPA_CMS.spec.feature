@@ -11,6 +11,7 @@ Feature: Package Dashboard - SPA Tab Column Picker for CMS User
         Then Verify State Column Exists
         Then verify status column exists
         Then verify Initial Submission Date column exists
+        Then verify Latest Package Activity column exists
         Then verify Formal RAI Received column exists
         Then verify submitted by column does not exist
         Then verify CPOC Name column does not exist
@@ -30,6 +31,7 @@ Feature: Package Dashboard - SPA Tab Column Picker for CMS User
         Then click show hide columns button
         Then click Formal RAI Received checkbox
         Then click Initial Submission Date checkbox
+        Then click Latest Package Activity checkbox
         Then click state checkbox
         Then click status checkbox
         Then click type checkbox
@@ -41,6 +43,7 @@ Feature: Package Dashboard - SPA Tab Column Picker for CMS User
         Then verify state column does not exist
         Then verify status column does not exist
         Then verify Initial Submission Date column does not exist
+        Then verify Latest Package Activity column does not exist
         Then verify submitted by column does not exist
         Then verify CPOC Name column exists
         Then verify Final Disposition column exists

@@ -21,6 +21,8 @@ Feature: Waiver Package Details View:  Temporary Extension for a State User
         Then verify package actions header is visible
         Then verify there are no package actions available
         Then verify the details section exists
+        Then verify there is a Latest Package Activity header in the details section
+        Then verify a full date and time entry exists for the Latest Package Activity
         Then verify there is a Type header in the details section
         Then verify the type is 1915b Temporary Extension
         Then verify there is an Initial Submission Date header in the details section
@@ -45,6 +47,8 @@ Feature: Waiver Package Details View:  Temporary Extension for a State User
         Then verify package actions header is visible
         Then verify there are no package actions available
         Then verify the details section exists
+        Then verify there is a Latest Package Activity header in the details section
+        Then verify a full date and time entry exists for the Latest Package Activity
         Then verify there is a Type header in the details section
         Then verify the type is 1915c Temporary Extension
         Then verify there is an Initial Submission Date header in the details section

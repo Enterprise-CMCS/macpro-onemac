@@ -51,5 +51,6 @@ module.exports = defineConfig({
     specPattern: ["cypress/e2e/**/*.feature", "cypress/e2e/**/*.spec.js"],
     supportFile: "support/index.js",
     stepDefinitions: ["cypress/e2e/common/steps.js"],
+    experimentalRunAllSpecs: true,
   },
 });

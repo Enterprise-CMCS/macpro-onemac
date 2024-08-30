@@ -3,7 +3,7 @@ Feature: OY2_8618_CMS_Approver
         Given I am on Login Page
         When Clicking on Development Login
         When Login with "an Active" "CMS Role Approver" user
-        Then i am on User Management Page
+        Then I am on the User Management Page
         Then Click on My Account
         Then Click on Manage Profile
         When I am on My Profile Page

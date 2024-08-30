@@ -113,15 +113,18 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
     location: Location<FormLocationState>,
     formConfig: OneMACFormConfig
   ) {
+    console.log("state", location.state);
     if (
       location.state?.parentId &&
       location.state?.parentType &&
       location.state?.formSource === FORM_SOURCE.DETAIL
     ) {
+      console.log("detail landing page");
       return `${TYPE_TO_DETAIL_ROUTE[location.state?.parentType]}/${
         location.state?.parentId
       }`;
     }
+    console.log("form landing page");
     return formConfig.landingPage;
   }
 
@@ -546,14 +549,24 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
           {(formConfig?.requiredAttachments.length > 0 ||
             formConfig.optionalAttachments.length > 0) && (
             <>
-              <h3>{formConfig?.attachmentsTitle ?? "Attachments"}</h3>
+              <h3
+                className={
+                  formConfig.atLeastOneAttachmentRequired ? "required" : ""
+                }
+              >
+                {formConfig?.attachmentsTitle ?? "Attachments"}
+              </h3>
+
               {formConfig.attachmentIntroJSX}
               <FileUploader
                 ref={uploader}
                 requiredUploads={formConfig.requiredAttachments}
                 optionalUploads={formConfig.optionalAttachments}
                 numRequired={
-                  formConfig.requireUploadOrAdditionalInformation ? 1 : 0
+                  formConfig.requireUploadOrAdditionalInformation ||
+                  formConfig.atLeastOneAttachmentRequired
+                    ? 1
+                    : 0
                 }
                 readyCallback={setAreUploadsReady}
               ></FileUploader>

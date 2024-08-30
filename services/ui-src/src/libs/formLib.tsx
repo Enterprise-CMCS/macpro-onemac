@@ -24,6 +24,7 @@ export type OneMACFormConfig = {
   parentTypeNice?: string;
   attachmentsTitle?: string;
   attachmentIntroJSX: JSX.Element;
+  atLeastOneAttachmentRequired?: boolean;
   addlInfoTitle?: string;
   addlInfoText?: string | React.ReactNode;
   addlInfoRequired?: boolean;
@@ -84,6 +85,10 @@ export const RequiredAttachmentSpan = () => (
   </p>
 );
 
+export const AtLeastOneAttachmentSpan = () => (
+  <p className="req-message">At least one attachment is required to submit.</p>
+);
+
 export const defaultAttachmentInstructionsJSX = (
   anchoredFAQRoute: string = ROUTES.FAQ
 ) => (
@@ -91,6 +96,16 @@ export const defaultAttachmentInstructionsJSX = (
     <DefaultFileSizeInfo route={anchoredFAQRoute} />
     <DefaultFileTypesInfo />
     <RequiredAttachmentSpan />
+  </>
+);
+
+export const defaultSubsequentAttachmentInstructionsJSX = (
+  anchoredFAQRoute: string = ROUTES.FAQ
+) => (
+  <>
+    <DefaultFileSizeInfo route={anchoredFAQRoute} />
+    <DefaultFileTypesInfo />
+    <AtLeastOneAttachmentSpan />
   </>
 );
 
@@ -117,6 +132,12 @@ export const defaultOneMACFormConfig = {
   submitInstructionsJSX: defaultSubmitInstructionsJSX,
 };
 
+export const defaultSubsequentSubmissionFormConfig = {
+  ...defaultOneMACFormConfig,
+  addlInfoTitle: "Reason for subsequent submission",
+  addlInfoText: "Explain why additional documents are being submitted.",
+};
+
 export const defaultWaiverAuthority = [
   { label: "-- select a waiver authority --", value: "" },
 ];
@@ -133,6 +154,40 @@ export const defaultConfirmSubmitMessageRAI = (
 export const defaultConfirmSubmitRAI = {
   confirmSubmitHeading: defaultConfirmSubmitHeadingRAI,
   confirmSubmitMessage: defaultConfirmSubmitMessageRAI,
+};
+
+export const defaultSubsequentSubmissionIntroJSX = (
+  <>
+    <p>
+      <span className="required-mark">*</span>
+      indicates required field.
+    </p>
+    <p id="form-intro">
+      Provide revised or additional documentation for your submission. Once you
+      submit this form, a confirmation email is sent to you and to CMS. CMS will
+      use this content to review your package, and you will not be able to edit
+      this form. If CMS needs any additional information, they will follow up by
+      email.
+      <b>If you leave this page, you will lose your progress on this form.</b>
+    </p>
+  </>
+);
+
+export const defaultConfirmSubmitMessageSubsequentSubmission = (
+  <p>
+    By Clicking <b>Yes, Submit</b>, you are submitting your official formal RAI
+    Response to start the 90 day clock review process.
+  </p>
+);
+
+export const defaultConfirmSubsequentSubmission: ConfirmSubmitType = {
+  confirmSubmitHeading: "OneMAC only for document submission",
+  confirmSubmitMessage: (
+    <p>
+      States and CMS reviewers will communicate about the submission through
+      email.
+    </p>
+  ),
 };
 
 export const defaultConfirmSubmitHeadingWithdraw = (packageType: string) =>

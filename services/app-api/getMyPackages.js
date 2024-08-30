@@ -42,7 +42,7 @@ export const getMyPackages = async (email, group) => {
         ExclusiveStartKey: null,
         ScanIndexForward: false,
         ProjectionExpression:
-          "componentId,componentType,currentStatus,submissionTimestamp,latestRaiResponseTimestamp,submitterName,submitterEmail,waiverAuthority, cpocName, reviewTeam, subStatus, finalDispositionDate",
+          "componentId,componentType,currentStatus,submissionTimestamp,latestRaiResponseTimestamp,lastActivityTimestamp,submitterName,submitterEmail,waiverAuthority, cpocName, reviewTeam, subStatus, finalDispositionDate",
       };
       const grouppk = "OneMAC#" + group;
       let paramList = [];

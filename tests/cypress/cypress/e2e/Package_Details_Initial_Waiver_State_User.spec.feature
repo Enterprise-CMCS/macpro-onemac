@@ -21,6 +21,8 @@ Feature: Waiver Package Details View: Initial Waivers
         Then verify package actions header is visible
         Then verify there are no package actions available
         Then verify the details section exists
+        Then verify there is a Latest Package Activity header in the details section
+        Then verify a full date and time entry exists for the Latest Package Activity
         Then verify the package details title contains "Initial Waiver Package"
         Then verify there is a Type header in the details section
         Then verify the type is Initial Waiver
@@ -50,6 +52,8 @@ Feature: Waiver Package Details View: Initial Waivers
         Then verify package actions header is visible
         Then verify withdraw package action exists
         Then verify the details section exists
+        Then verify there is a Latest Package Activity header in the details section
+        Then verify a full date and time entry exists for the Latest Package Activity
         Then verify the package details title contains "Initial Waiver Package"
         Then verify there is a Type header in the details section
         Then verify the type is Initial Waiver
@@ -79,6 +83,8 @@ Feature: Waiver Package Details View: Initial Waivers
         Then verify the status on the card is "Waiver Terminated"
         Then verify there are no package actions available
         Then verify the details section exists
+        Then verify there is a Latest Package Activity header in the details section
+        Then verify a full date and time entry exists for the Latest Package Activity
         Then verify the package details title contains "Initial Waiver Package"
         Then verify there is a Type header in the details section
         Then verify the type is Initial Waiver
@@ -109,6 +115,8 @@ Feature: Waiver Package Details View: Initial Waivers
         Then verify withdraw package action exists
         Then verify Respond to RAI action exists
         Then verify the details section exists
+        Then verify there is a Latest Package Activity header in the details section
+        Then verify a full date and time entry exists for the Latest Package Activity
         Then verify the package details title contains "Initial Waiver Package"
         Then verify there is a Type header in the details section
         Then verify the type is Initial Waiver
@@ -139,6 +147,8 @@ Feature: Waiver Package Details View: Initial Waivers
         Then verify Add Amendment package action exists
         Then verify Request a Temporary Extension package action exists
         Then verify the details section exists
+        Then verify there is a Latest Package Activity header in the details section
+        Then verify a full date and time entry exists for the Latest Package Activity
         Then verify the package details title contains "Initial Waiver Package"
         Then verify there is a Type header in the details section
         Then verify the type is Initial Waiver
@@ -168,6 +178,8 @@ Feature: Waiver Package Details View: Initial Waivers
         Then verify package actions header is visible
         Then verify there are no package actions available
         Then verify the details section exists
+        Then verify there is a Latest Package Activity header in the details section
+        Then verify a full date and time entry exists for the Latest Package Activity
         Then verify the package details title contains "Initial Waiver Package"
         Then verify there is a Type header in the details section
         Then verify the type is Initial Waiver
@@ -198,6 +210,8 @@ Feature: Waiver Package Details View: Initial Waivers
         Then verify package actions header is visible
         Then verify there are no package actions available
         Then verify the details section exists
+        Then verify there is a Latest Package Activity header in the details section
+        Then verify a full date and time entry exists for the Latest Package Activity
         Then verify the package details title contains "Initial Waiver Package"
         Then verify there is a Type header in the details section
         Then verify the type is Initial Waiver
@@ -229,6 +243,8 @@ Feature: Waiver Package Details View: Initial Waivers
         Then verify package actions header is visible
         Then verify there are no package actions available
         Then verify the details section exists
+        Then verify there is a Latest Package Activity header in the details section
+        Then verify a full date and time entry exists for the Latest Package Activity
         Then verify the package details title contains "Initial Waiver Package"
         Then verify there is a Type header in the details section
         Then verify the type is Initial Waiver
@@ -260,6 +276,8 @@ Feature: Waiver Package Details View: Initial Waivers
         Then verify withdraw package action exists
         Then verify Withdraw Formal RAI Response package action exists
         Then verify the details section exists
+        Then verify there is a Latest Package Activity header in the details section
+        Then verify a full date and time entry exists for the Latest Package Activity
         Then verify the package details title contains "Initial Waiver Package"
         Then verify there is a Type header in the details section
         Then verify the type is Initial Waiver

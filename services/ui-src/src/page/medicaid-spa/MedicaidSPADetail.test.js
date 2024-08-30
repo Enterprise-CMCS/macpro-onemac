@@ -57,6 +57,7 @@ const testDetail = {
   GSI1sk: "MI-13-1122",
   additionalInformation: "This is just a test",
   submissionTimestamp: 1639696185888,
+  lastActivityTimestamp: 1639696185888,
   GSI1pk: "OneMAC#spa",
   packageId: "MI-13-1122",
   submitterEmail: "statesubmitter@nightwatch.test",

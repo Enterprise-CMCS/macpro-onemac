@@ -19,6 +19,8 @@ Feature: Package Dashboard Temporary Extension
         Then search for "MD-5533.R00.TE01"
         Then click the Waiver Number link in the first row
         Then verify the details section exists
+        Then verify there is a Latest Package Activity header in the details section
+        Then verify a full date and time entry exists for the Latest Package Activity
         Then verify there is a Type header in the details section
         Then verify the type is 1915c Temporary Extension
         Then verify there is a Approved Initial or Renewal Number header in the details section

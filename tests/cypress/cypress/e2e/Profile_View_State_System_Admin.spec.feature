@@ -4,7 +4,7 @@ Feature: OY2_9990_State_System_Admin_Profile_Screen_Enhancements
         When Clicking on Development Login
         When Login with "an Active" "CMS System Admin" user
         Then Click on User Management Tab
-        Then i am on User Management Page
+        Then I am on the User Management Page
         Then verify User Management is Displayed
         Then verify Export to Excel CSV is Displayed
         Then verify Name is Displayed
