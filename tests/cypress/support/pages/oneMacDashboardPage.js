@@ -96,7 +96,6 @@ const quarterToDateDatePickerBtn =
 //Element is Xpath use cy.xpath instead of cy.get
 const statusDropDownFilter = "//button[text()='Status']";
 const packageRowOneInitialSubmissionDate = "#submissionTimestamp-0";
-const packageRowOneFormalRAIReceived = "#latestRaiResponseTimestamp-0";
 //Element is Xpath use cy.xpath instead of cy.get
 const resetButton = "//button[contains(text(),'Reset')]";
 //Element is Xpath use cy.xpath instead of cy.get
@@ -129,9 +128,6 @@ const raiResponseWithdrawalRequestedCheckBox =
   "//label[contains(@for,'checkbox_packageStatus-Formal RAI Response - Withdrawal Requested')]";
 const checkboxfinalDispositionDate =
   "//span[contains(text(),'Final Disposition')]";
-//Element is Xpath use cy.xpath instead of cy.get
-const raiResponseWithdrawEnabledCheckBox =
-  "//label[contains(@for,'checkbox_packageStatus-RAI Response Withdraw Enabled')]";
 const finalDispositionColumn = "#finalDispositionDateColHeader";
 //Element is Xpath use cy.xpath instead of cy.get
 const terminatedCheckBox =
@@ -476,6 +472,17 @@ export class oneMacDashboardPage {
         expect(dateQuarter).to.eq(todaysQuarter);
       });
   }
+  verifypackageRowOneLatestPackageActivityIsThisQuarter() {
+    cy.get(packageRowOneLatestPackageActivity, { timeout: 15000 })
+      .invoke("text")
+      .then((dateText) => {
+        const date = new Date(packageRowOneLatestPackageActivity);
+        const today = new Date();
+        let dateQuarter = Math.floor((date.getMonth() + 3) / 3);
+        let todaysQuarter = Math.floor((today.getMonth() + 3) / 3);
+        expect(dateQuarter).to.eq(todaysQuarter);
+      });
+  }
   verifystatusDropDownFilterExists() {
     cy.xpath(statusDropDownFilter).should("be.visible");
   }
@@ -535,9 +542,6 @@ export class oneMacDashboardPage {
   }
   clickRaiResponseWithdrawalRequestedCheckBox() {
     cy.xpath(raiResponseWithdrawalRequestedCheckBox).click();
-  }
-  clickRaiResponseWithdrawEnabledCheckBox() {
-    cy.xpath(raiResponseWithdrawEnabledCheckBox).click();
   }
   verifyWithdrawnCheckBoxExists() {
     cy.xpath(withdrawnCheckBox).should("be.visible");

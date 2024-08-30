@@ -106,7 +106,7 @@ Then("I am on the User Management Page", () => {
   OneMacUserManagmentPage.verifyWeAreOnUserManagmentPage();
 });
 Then("Click on My Account", () => {
-  OneMacUserManagmentPage.clickMyAccountDropDown();
+  OneMacUserManagmentPage.clickMyAccountDropdown();
 });
 Then("Click on Manage Profile", () => {
   OneMacUserManagmentPage.clickmanageProfileBTN();
@@ -996,9 +996,6 @@ Then("click the Withdrawal Requested checkbox", () => {
 Then("click the Formal RAI Response - Withdrawal Requested checkbox", () => {
   OneMacDashboardPage.clickRaiResponseWithdrawalRequestedCheckBox();
 });
-Then("click the Withdraw Formal RAI Response Enabled checkbox", () => {
-  OneMacPackagePage.clickRaiResponseWithdrawEnabledCheckBox();
-});
 Then("click 1915b Initial Waiver check box", () => {
   OneMacDashboardPage.clickInitialWaiver1915bCheckBox();
 });
@@ -1333,6 +1330,11 @@ Then(
     OneMacDashboardPage.verifypackageRowOneIDWaiverRenewalFormat();
   }
 );
+Then("verify Latest Package Activity column one date is this quarter", () => {
+  if (OneMacDashboardPage.checkIfPackageListResultsExist()) {
+    OneMacDashboardPage.verifypackageRowOneLatestPackageActivityIsThisQuarter();
+  }
+});
 Then("verify Onboarding Materials exists", () => {
   OneMacFAQPage.verifyOnboardingMaterialsBtnExists();
 });
@@ -2084,6 +2086,12 @@ Then("click the Upload Subsequent Documents action button", () => {
 Then("verify the Subsequent {string} Documents section exists", (type) => {
   OneMacFormPage.verifySubsequentDocumentsSectionExistsWith(type);
 });
+Then("verify the Reason for subsequent submission section exists", () => {
+  OneMacFormPage.verifyAdditionalInfoSectionExists();
+});
+Then("verify the dialog title contains {string}", (s) => {
+  OneMacFormPage.verifyModalTitleIs(s);
+});
 Then("verify the detailed text in the modal contains {string}", (s) => {
   OneMacFormPage.verifyModalTextIs(s);
 });
@@ -2114,10 +2122,6 @@ Then("click on Latest Package Activity date picker filter", () => {
 Then("verify Latest Package Activity dropdown filter exists", () => {
   OneMacDashboardPage.verifyLatestPackageActivityDateFilterDropdownExists();
 });
-Then("click on Latest Package Activity dropdown filter", () => {
-  OneMacDashboardPage.clickOnLatestPackageActivityFilterDropdown();
-});
-
 Then("click on Latest Package Activity dropdown filter", () => {
   OneMacDashboardPage.clickOnLatestPackageActivityFilterDropdown();
 });

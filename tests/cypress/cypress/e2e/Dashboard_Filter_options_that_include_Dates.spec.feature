@@ -23,6 +23,16 @@ Feature: Package Dashboard - Filter options that include Dates
         Then Click on Filter Button
         Then verify Initial Submission Date column one date is this quarter
 
+    Scenario: Filter by Latest Package Activity - Date picker
+        Then Click on Filter Button
+        Then click on Latest Package Activity dropdown filter
+        Then click on Latest Package Activity date picker filter
+        Then click on quarter to date date picker button
+        Then Click on Filter Button
+        Then verify Latest Package Activity column one date is this quarter
+        Then Click on My Account
+        Then click the logout button
+
     Scenario: Filter by Formal RAI Received - Date picker
         Then Click on Filter Button
         Then click on Formal RAI Received dropdown filter
