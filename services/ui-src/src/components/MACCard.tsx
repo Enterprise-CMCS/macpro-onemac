@@ -1,5 +1,6 @@
-import React, { PropsWithChildren } from "react";
+import React, { PropsWithChildren, ReactChildren } from "react";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import { Button } from "@cmsgov/design-system";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 import closingX from "../images/ClosingX.svg";
@@ -33,6 +34,15 @@ export type MACRemovableCardProps = MACCardProps & {
 export type MACCardListProps = PropsWithChildren<{
   legend: string;
   additionalContainerClassName?: string;
+}>;
+export type MACNotificationCardProps = PropsWithChildren<{
+  header: string;
+  body: ReactChildren;
+  date: string;
+  button?: {
+    text: string;
+    link: string;
+  };
 }>;
 
 /** Styled wrapper for use in MACCards, consolidates the use of 'mac-card'
@@ -182,6 +192,25 @@ export const MACRemovableCard = ({
       </div>
       {description && <span>{description}</span>}
       {children}
+    </MACCardWrapper>
+  );
+};
+
+/** A MACCard for use for notification banners on home screen */
+export const MACNotificationCard = ({
+  header,
+  body,
+  date,
+  button,
+}: MACNotificationCardProps) => {
+  return (
+    <MACCardWrapper>
+      <div>
+        {header && <MACCardTitle title={header} />}
+        {body}
+        {button && <Button href={button.link}>{button.text}</Button>}
+        {date}
+      </div>
     </MACCardWrapper>
   );
 };
