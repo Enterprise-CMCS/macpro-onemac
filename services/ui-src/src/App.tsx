@@ -16,6 +16,7 @@ import {
 } from "cmscommonlib";
 import IdleTimerWrapper from "./components/IdleTimerWrapper";
 import { ConfirmationDialog } from "./components/ConfirmationDialog";
+import NotificationBanner from "./components/NotificationBanner";
 
 const DEFAULT_AUTH_STATE: Omit<
   AppContextValue,
@@ -187,10 +188,22 @@ export function App() {
     [authState, setUserInfo, updatePhoneNumber, confirmAction]
   );
 
+  // TODO - Andie DELTE!!
+  const notifications = {
+    header: "MMDL SPA forms available in OneMAC",
+    body: "You can now find PDF forms and implementation guides for Medicaid and CHIP Eligibility SPAs in the FAQs.",
+    date: "Aug 01, 2024",
+    button: {
+      text: "Go to the FAQs",
+      link: "/FAQ",
+    },
+  };
+
   return authState.isAuthenticating ? null : (
     <AppContext.Provider value={contextValue}>
       <IdleTimerWrapper />
       <div className="header-and-content">
+        <NotificationBanner {...notifications} />
         <Header />
         <main id="main">
           <Routes />

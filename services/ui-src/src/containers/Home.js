@@ -154,7 +154,6 @@ export default function Home() {
     <>
       <HomeHeader />
       <AlertBar alertCode={location?.state?.passCode} />
-
       <div className="home-content-container">
         <h1>State Users</h1>
         <section>
