@@ -635,6 +635,16 @@ functions:
           cors: true
           authorizer: aws_iam
 
+  getActiveSystemNotifications:
+    handler: notification/getActiveSystemNotifications.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: getActiveSystemNotifications  # The API path
+          method: get
+          cors: true
+          authorizer: aws_iam
+
 resources:
   - ${file(resources/base.yml)}
 
