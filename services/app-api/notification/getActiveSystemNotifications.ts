@@ -13,13 +13,16 @@ export const getActiveSystemNotifications = async () => {
 
   const params = {
     TableName: process.env.oneMacTableName, // Use the environment variable for the table name
-    IndexName: "GSI1", // Replace with your GSI1 index name
+    IndexName: "GSI1", // Use your GSI1 index name
     KeyConditionExpression:
-      "GSI1PK = :systemType AND GSI1SK BETWEEN :pubStart AND :pubEnd",
+      "GSI1pk = :systemType AND GSI1sk BETWEEN :pubStart AND :pubEnd",
+    FilterExpression:
+      "expiryDate >= :currentDate OR attribute_not_exists(expiryDate)",
     ExpressionAttributeValues: {
       ":systemType": "SYSTEM", // For system notifications
-      ":pubStart": `0000-01-01T00:00:00Z#${currentDate}`, // Start from earliest possible date
-      ":pubEnd": `${currentDate}#9999-12-31T23:59:59Z`, // Current publication date to far future expiry date
+      ":pubStart": `0000-01-01T00:00:00Z#${currentDate}`, // Start from the earliest possible date
+      ":pubEnd": `${currentDate}#9999-12-31T23:59:59Z`, // End at the far-future expiry date
+      ":currentDate": currentDate, // Use the current date to filter out expired records
     },
   };
 
@@ -27,7 +30,7 @@ export const getActiveSystemNotifications = async () => {
     const result = await dynamoDb.query(params); // Using the custom dynamoDb query method
     return {
       statusCode: RESPONSE_CODE.OK, // Always return 200 OK
-      body: JSON.stringify(result.Items || []), // Return the list of notifications or an empty array if none
+      body: result.Items || [], // Return the list of notifications or an empty array if none
     };
   } catch (error) {
     console.log("Error fetching system notifications: ", error);
