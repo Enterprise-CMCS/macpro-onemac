@@ -36,9 +36,9 @@ export const getActiveSystemNotifications = async () => {
     console.log("Error fetching system notifications: ", error);
     return {
       statusCode: RESPONSE_CODE.SYSTEM_ERROR,
-      body: JSON.stringify({
+      body: {
         message: "There was an error fetching the active system notifications.",
-      }),
+      },
     };
   }
 };

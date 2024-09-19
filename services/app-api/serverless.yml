@@ -655,6 +655,16 @@ functions:
           cors: true
           authorizer: aws_iam
 
+  dismissUserNotification:
+    handler: notification/dismissUserNotification.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: dismissNotification/{userId}/{notificationId}
+          method: patch
+          cors: true
+          authorizer: aws_iam
+
 resources:
   - ${file(resources/base.yml)}
 
