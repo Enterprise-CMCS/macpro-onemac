@@ -25,7 +25,7 @@ export const stateSubsequentSubmissionReceipt = (data, config) => {
       config.typeLabel
     } ${data.componentId}:</p>
     ${formatPackageDetails(data, config)}
-    <p>If you have questions or did not expect this email, please contact <a href="mailto:spa@cms.hhs.gov">SPA@CMS.HHS.gov</a>.</p>
+    <p>If you have any questions or did not expect this email, please contact your CPOC.</p>
     <p>Thank you.</p>`,
   };
 };

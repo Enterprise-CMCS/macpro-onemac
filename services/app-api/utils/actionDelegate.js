@@ -24,9 +24,10 @@ function getDefaultActions(
       break;
     case Workflow.ONEMAC_STATUS.PENDING_CONCURRENCE:
     case Workflow.ONEMAC_STATUS.PENDING_APPROVAL:
-      if (userRole.canAccessForms)
+      if (userRole.canAccessForms) {
         actions.push(Workflow.PACKAGE_ACTION.WITHDRAW);
-      actions.push(Workflow.PACKAGE_ACTION.SUBSEQUENT_SUBMISSION);
+        actions.push(Workflow.PACKAGE_ACTION.SUBSEQUENT_SUBMISSION);
+      }
       break;
     case Workflow.ONEMAC_STATUS.RAI_ISSUED:
       if (userRole.canAccessForms)
