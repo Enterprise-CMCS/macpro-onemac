@@ -665,6 +665,16 @@ functions:
           cors: true
           authorizer: aws_iam
 
+  createUserNotifications:
+    handler: notification/createUserNotifications.main 
+    role: LambdaApiRole
+    events:
+      - http:
+          path: createUserNotifications
+          method: post
+          cors: true
+          authorizer: aws_iam
+
 resources:
   - ${file(resources/base.yml)}
 
