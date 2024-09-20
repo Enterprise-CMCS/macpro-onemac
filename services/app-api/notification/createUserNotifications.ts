@@ -115,6 +115,7 @@ export const createUserNotifications = async (userId: string) => {
     body: {
       message: "User notifications synced successfully.",
       insertedCount: missingNotifications.length,
+      notifications: missingNotifications,
     },
   };
 };
