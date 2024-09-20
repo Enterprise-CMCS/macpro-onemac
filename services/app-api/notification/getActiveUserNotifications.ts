@@ -19,10 +19,7 @@ export const getActiveUserNotifications = async (userId: string) => {
 
   try {
     const result = await dynamoDb.query(params);
-    return {
-      statusCode: 200,
-      body: result.Items || [],
-    };
+    return result.Items || [];
   } catch (error) {
     console.error("Error fetching user notifications:", error);
     return {

@@ -28,10 +28,7 @@ export const getActiveSystemNotifications = async () => {
 
   try {
     const result = await dynamoDb.query(params); // Using the custom dynamoDb query method
-    return {
-      statusCode: RESPONSE_CODE.OK, // Always return 200 OK
-      body: result.Items || [], // Return the list of notifications or an empty array if none
-    };
+    return result.Items || []; // Return the list of notifications or an empty array if none
   } catch (error) {
     console.log("Error fetching system notifications: ", error);
     return {
@@ -46,9 +43,9 @@ export const getActiveSystemNotifications = async () => {
 /**
  * Main handler function to expose via API Gateway or Lambda
  */
-export const main = handler(async (event) => {
+export const main = handler(async () => {
   try {
-    return getActiveSystemNotifications(event);
+    return getActiveSystemNotifications();
   } catch (error) {
     console.log("Error: ", error);
     return {
