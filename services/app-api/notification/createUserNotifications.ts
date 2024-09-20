@@ -1,5 +1,6 @@
 import dynamoDb from "../libs/dynamodb-lib"; // Import shared DynamoDB library
 import handler from "../libs/handler-lib"; // Lambda handler wrapper
+import { Notification } from "./notification";
 
 export const getUserTargetedSystemNotifications = async () => {
   const currentDate = new Date().toISOString();
@@ -42,13 +43,12 @@ export const getAllUserNotifications = async (userId: string) => {
 // Function to insert missing notifications
 export const insertMissingNotifications = async (
   userId: string,
-  notifications: any[]
+  notifications: Notification[]
 ) => {
   const putRequests = notifications.map((notification) => {
     const newNotification = {
       ...notification, // Copy notification data from system notification
       pk: `USER#${userId}`,
-      sk: notification.sk,
       dismissed: false, // Default to not dismissed for the user
     };
 

@@ -1,4 +1,3 @@
-const dynamoDb = require("../libs/dynamodb-lib");
 const {
   createUserNotifications,
   getUserTargetedSystemNotifications,
@@ -7,9 +6,7 @@ const {
 } = require("./createUserNotifications");
 
 jest.mock("../libs/dynamodb-lib");
-jest.mock("./getUserTargetedSystemNotifications");
-jest.mock("./getAllUserNotifications");
-jest.mock("./insertMissingNotifications");
+jest.mock("./createUserNotifications");
 
 describe("createUserNotifications", () => {
   const mockUserId = "user@example.com";
