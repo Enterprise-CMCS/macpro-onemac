@@ -1,4 +1,6 @@
 export interface Notification {
+  pk: string;
+  sk: string;
   notificationId: string;
   header: string;
   body: string;

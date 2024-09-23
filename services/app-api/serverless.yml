@@ -670,7 +670,7 @@ functions:
     role: LambdaApiRole
     events:
       - http:
-          path: createUserNotifications
+          path: createUserNotifications/{userId}
           method: post
           cors: true
           authorizer: aws_iam

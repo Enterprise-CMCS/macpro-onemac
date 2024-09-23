@@ -26,7 +26,9 @@ export const getUserTargetedSystemNotifications = async () => {
 };
 
 // Function to get all user notifications (including dismissed)
-export const getAllUserNotifications = async (userId: string) => {
+export const getAllUserNotifications = async (
+  userId: string
+): Promise<Notification[]> => {
   const params = {
     TableName: process.env.oneMacTableName,
     KeyConditionExpression: "pk = :user AND begins_with(sk, :notification)",
@@ -37,7 +39,7 @@ export const getAllUserNotifications = async (userId: string) => {
   };
 
   const result = await dynamoDb.query(params);
-  return result.Items;
+  return result.Items as Notification[];
 };
 
 // Function to insert missing notifications
@@ -77,8 +79,8 @@ export const insertMissingNotifications = async (
 // Main Lambda function to create user notifications upon login
 export const createUserNotifications = async (userId: string) => {
   // Step 1: Get all user-targeted system notifications
-  const systemNotifications =
-    (await getUserTargetedSystemNotifications()) || [];
+  const systemNotifications: Notification[] =
+    (await getUserTargetedSystemNotifications()) as Notification[];
 
   // Exit early if there are no active user-targeted system notifications
   if (systemNotifications.length === 0) {
@@ -93,7 +95,9 @@ export const createUserNotifications = async (userId: string) => {
   }
 
   // Step 2: Get all user notifications (including dismissed)
-  const userNotifications = (await getAllUserNotifications(userId)) || [];
+  const userNotifications =
+    ((await getAllUserNotifications(userId)) as Notification[]) ||
+    ([] as Notification[]);
 
   // Step 3: Find the missing notifications
   const existingNotificationIds = new Set(
@@ -101,7 +105,7 @@ export const createUserNotifications = async (userId: string) => {
   );
 
   // Filter system notifications to find the ones not yet created for this user
-  const missingNotifications = systemNotifications.filter(
+  const missingNotifications: Notification[] = systemNotifications.filter(
     (notif) => !existingNotificationIds.has(notif.sk.split("#")[1]) // Compare system notificationId with user notificationId
   );
 
@@ -121,10 +125,9 @@ export const createUserNotifications = async (userId: string) => {
 };
 
 export const main = handler(async (event) => {
-  // Extract the email from the token claims
-  const userEmail = event.requestContext.authorizer?.claims?.email;
+  const userId = event.pathParameters?.userId; // Extract the userId from path parameters
 
-  if (!userEmail) {
+  if (!userId) {
     return {
       statusCode: 400,
       body: { message: "userEmail is required" },
@@ -132,5 +135,5 @@ export const main = handler(async (event) => {
   }
 
   // Call the function to create missing user notifications, passing the email
-  return createUserNotifications(userEmail);
+  return createUserNotifications(userId);
 });
