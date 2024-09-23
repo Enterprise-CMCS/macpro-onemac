@@ -9,7 +9,7 @@ describe("NotificationCard", () => {
       <NotificationCard
         header="Test Header"
         body="Test body content"
-        date="2024-09-17"
+        date="2024-01-01T00:00:00Z"
       />
     );
 
@@ -22,8 +22,9 @@ describe("NotificationCard", () => {
       <NotificationCard
         header="Test Header"
         body="Test body content"
-        date="2024-08-01"
-        link={{ href: "http://example.com", text: "Example Link" }}
+        date="2024-01-01T00:00:00Z"
+        buttonLink="http://example.com"
+        buttonText="Example Link"
       />
     );
 
@@ -37,7 +38,7 @@ describe("NotificationCard", () => {
       <NotificationCard
         header="Test Header"
         body="Test body content"
-        date="2024-09-17"
+        date="2024-01-01T00:00:00Z"
       />
     );
 
@@ -49,7 +50,7 @@ describe("NotificationCard", () => {
       <NotificationCard
         header="Test Header"
         body="Test body content"
-        date="2024-09-17"
+        date="2024-01-01T00:00:00Z"
       />
     );
 

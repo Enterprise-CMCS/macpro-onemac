@@ -1,19 +1,16 @@
 import React, { useState } from "react";
 import { Alert, Button } from "@cmsgov/design-system";
 import closingX from "../images/AlertClosingX.svg";
+import { NotificationType } from "../domain-types";
+import NotificationApi from "../utils/NotificationApi";
+
+type NotificationBannerProps = NotificationType & {
+  userEmail: string;
+};
 
 const CLOSING_X_IMAGE = (
   <img alt="close-x" className="closing-x" src={closingX} />
 );
-
-interface NotificationBannerProps {
-  header: string;
-  body: string;
-  button?: {
-    text: string;
-    link: string;
-  };
-}
 
 const NotificationBanner: React.FC<NotificationBannerProps> = (
   props: NotificationBannerProps
@@ -23,7 +20,13 @@ const NotificationBanner: React.FC<NotificationBannerProps> = (
 
   // closing banner invokes API call
   const close = () => {
-    // TODO: make an API call to
+    (async () => {
+      const dissmissed = await NotificationApi.dismissUserNotifications(
+        props.userEmail,
+        props.sk
+      );
+      console.log("dissmissed emails: ", dissmissed);
+    })();
     setShowNotification(false);
   };
 
@@ -40,12 +43,12 @@ const NotificationBanner: React.FC<NotificationBannerProps> = (
           <p className="">{props.body}</p>
         </div>
         <div>
-          {props.button && (
+          {props.buttonLink && props.buttonText && (
             <Button
               className="ds-u-color--black ds-u-border--dark ds-u-fill--transparent"
-              href={props.button.link}
+              href={props.buttonLink}
             >
-              {props.button.text}
+              {props.buttonText}
             </Button>
           )}
 

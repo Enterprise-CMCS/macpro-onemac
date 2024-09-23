@@ -30,7 +30,8 @@ describe("NotificationBanner", () => {
       <NotificationBanner
         header="Test Header"
         body="Test body content"
-        button={{ text: "Click Me", link: "http://example.com" }}
+        buttonText="Click Me"
+        buttonLink="http://example.com"
       />
     );
 

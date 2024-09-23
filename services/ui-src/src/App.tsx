@@ -16,7 +16,9 @@ import {
 } from "cmscommonlib";
 import IdleTimerWrapper from "./components/IdleTimerWrapper";
 import { ConfirmationDialog } from "./components/ConfirmationDialog";
+
 import NotificationBanner from "./components/NotificationBanner";
+import NotificationsApi from "./utils/NotificationApi";
 
 const DEFAULT_AUTH_STATE: Omit<
   AppContextValue,
@@ -81,6 +83,10 @@ export function App() {
       const authUser = await Auth.currentAuthenticatedUser();
       const email = authUser.signInUserSession.idToken.payload.email;
       const userData = await UserDataApi.userProfile(email);
+      // set the notificationss
+      userData.notifications = await NotificationsApi.createUserNotifications(
+        email
+      );
       const roleResult = effectiveRoleForUser(userData?.roleList);
       let userRole = null,
         userStatus = null;
@@ -147,6 +153,19 @@ export function App() {
     setUserInfo();
   }, [setUserInfo]);
 
+  // useEffect(() => {
+  //   (async () => {
+  //     if (authState.userProfile.email) {
+  //       const notifications = await NotificationsApi.createUserNotifications(
+  //         authState.userProfile.email
+  //       );
+  //       console.log("ANDIE", notifications);
+  //       if (notifications && notifications.length)
+  //         setUserNotifications([...notifications]);
+  //     }
+  //   })();
+  // }, [authState.userProfile.email]);
+
   const { email, firstName, lastName, cmsRoles } = authState.userProfile;
   useEffect(() => {
     // When user's email or name changes, create a record of their info if it
@@ -188,22 +207,23 @@ export function App() {
     [authState, setUserInfo, updatePhoneNumber, confirmAction]
   );
 
-  // TODO - Andie DELTE!!
-  const notifications = {
-    header: "MMDL SPA forms available in OneMAC",
-    body: "You can now find PDF forms and implementation guides for Medicaid and CHIP Eligibility SPAs in the FAQs.",
-    date: "Aug 01, 2024",
-    button: {
-      text: "Go to the FAQs",
-      link: "/FAQ",
-    },
-  };
+  const notifcations = useMemo(() => {
+    if (authState.userProfile.userData?.notifications) {
+      return authState.userProfile.userData?.notifications;
+    } else return [];
+  }, [authState.userProfile.userData]);
 
   return authState.isAuthenticating ? null : (
     <AppContext.Provider value={contextValue}>
       <IdleTimerWrapper />
       <div className="header-and-content">
-        <NotificationBanner {...notifications} />
+        {notifcations.map((n) => (
+          <NotificationBanner
+            key={n.sk}
+            {...n}
+            userEmail={authState.userProfile.email ?? ""}
+          />
+        ))}
         <Header />
         <main id="main">
           <Routes />

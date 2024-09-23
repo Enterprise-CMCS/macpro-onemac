@@ -1,33 +1,21 @@
-import React, { PropsWithChildren, ReactChildren } from "react";
+import React from "react";
 import { MACCard } from "./MACCard";
 import { ExternalLinkIcon } from "@cmsgov/design-system";
+import { formatDateOnly } from "../utils/date-utils";
+import { NotificationType } from "../domain-types";
 
-export type NotificationCardProps = PropsWithChildren<{
-  header: string;
-  body: ReactChildren;
-  date: string;
-  link?: {
-    text: string;
-    href: string;
-  };
-}>;
-
-export const NotificationCard = ({
-  header,
-  body,
-  date,
-  link,
-}: NotificationCardProps) => {
+export const NotificationCard = (props: NotificationType) => {
+  const date = formatDateOnly(props.publicationDate);
   return (
     <MACCard withBorder childContainerClassName="home-content-full-width">
-      <b className="ds-u-color--primary">{header}: </b>
-      {body}{" "}
-      {link && (
-        <a className="ds-u-color--primary" href={link.href}>
-          {link.text}
+      <b className="ds-u-color--primary">{props.header}: </b>
+      {props.body}{" "}
+      {props.buttonLink && props.buttonText && (
+        <a className="ds-u-color--primary" href={props.buttonLink}>
+          {props.buttonText}
         </a>
       )}{" "}
-      {link && <ExternalLinkIcon />} {date}
+      {props.buttonLink && <ExternalLinkIcon />} {date}
     </MACCard>
   );
 };
