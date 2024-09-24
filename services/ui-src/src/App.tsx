@@ -17,6 +17,10 @@ import {
 import IdleTimerWrapper from "./components/IdleTimerWrapper";
 import { ConfirmationDialog } from "./components/ConfirmationDialog";
 
+import NotificationBanner from "./components/NotificationBanner";
+import NotificationsApi from "./utils/NotificationApi";
+import { LOCAL_STORAGE_USERNOTIFICATIONS } from "./utils/StorageKeys";
+
 const DEFAULT_AUTH_STATE: Omit<
   AppContextValue,
   "setUserInfo" | "updatePhoneNumber" | "confirmAction"
@@ -80,6 +84,27 @@ export function App() {
       const authUser = await Auth.currentAuthenticatedUser();
       const email = authUser.signInUserSession.idToken.payload.email;
       const userData = await UserDataApi.userProfile(email);
+
+      // set the notifications: Needs to be stored locally to persist on reload
+      // Check local storage for notifications
+      const storedNotifications = localStorage.getItem(
+        LOCAL_STORAGE_USERNOTIFICATIONS
+      );
+
+      if (storedNotifications?.length && storedNotifications.length > 2) {
+        userData.notifications = JSON.parse(storedNotifications);
+      } else {
+        // get the notifications & set local storage
+        const notifications = await NotificationsApi.createUserNotifications(
+          email
+        );
+        userData.notifications = notifications;
+        localStorage.setItem(
+          LOCAL_STORAGE_USERNOTIFICATIONS,
+          JSON.stringify(notifications)
+        );
+      }
+
       const roleResult = effectiveRoleForUser(userData?.roleList);
       let userRole = null,
         userStatus = null;
@@ -187,10 +212,23 @@ export function App() {
     [authState, setUserInfo, updatePhoneNumber, confirmAction]
   );
 
+  const notifcations = useMemo(() => {
+    if (authState.userProfile.userData?.notifications) {
+      return authState.userProfile.userData?.notifications;
+    } else return [];
+  }, [authState.userProfile.userData]);
+
   return authState.isAuthenticating ? null : (
     <AppContext.Provider value={contextValue}>
       <IdleTimerWrapper />
       <div className="header-and-content">
+        {notifcations.map((n) => (
+          <NotificationBanner
+            key={n.sk}
+            {...n}
+            userEmail={authState.userProfile.email ?? ""}
+          />
+        ))}
         <Header />
         <main id="main">
           <Routes />
