@@ -1489,6 +1489,7 @@ export const oneMACFAQContent: FAQContent[] = [
                       rel="noopener noreferrer"
                       target="_blank"
                       className="spa-link"
+                      download
                     >
                       {label}
                     </a>
@@ -1549,6 +1550,7 @@ export const oneMACFAQContent: FAQContent[] = [
                       rel="noopener noreferrer"
                       target="_blank"
                       className="spa-link"
+                      download
                     >
                       {label}
                     </a>
@@ -1672,6 +1674,7 @@ export const oneMACFAQContent: FAQContent[] = [
                       rel="noopener noreferrer"
                       target="_blank"
                       className="spa-link"
+                      download
                     >
                       {label}
                     </a>
@@ -1684,6 +1687,7 @@ export const oneMACFAQContent: FAQContent[] = [
                       rel="noopener noreferrer"
                       target="_blank"
                       className="spa-link"
+                      download
                     >
                   CS 3: Eligibility for Medicaid Expansion Program Implementation Guide
               </a>
@@ -1693,6 +1697,7 @@ export const oneMACFAQContent: FAQContent[] = [
                       rel="noopener noreferrer"
                       target="_blank"
                       className="spa-link"
+                      download
                     >
                   CS 14: Eligibility - Children Ineligible for Medicaid as a Result of the
                   Elimination of Income Disregards Implementation Guide
@@ -1703,6 +1708,7 @@ export const oneMACFAQContent: FAQContent[] = [
                       rel="noopener noreferrer"
                       target="_blank"
                       className="spa-link"
+                      download
                     >
                   CS 24: General Eligibility - Eligibility Processing Implementation Guide
               </a>
@@ -1725,6 +1731,7 @@ export const oneMACFAQContent: FAQContent[] = [
                       rel="noopener noreferrer"
                       target="_blank"
                       className="spa-link"
+                      download
                     >
                       {label}
                     </a>
