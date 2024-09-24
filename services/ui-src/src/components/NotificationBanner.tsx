@@ -3,6 +3,7 @@ import { Alert, Button } from "@cmsgov/design-system";
 import closingX from "../images/AlertClosingX.svg";
 import { NotificationType } from "../domain-types";
 import NotificationApi from "../utils/NotificationApi";
+import { LOCAL_STORAGE_USERNOTIFICATIONS } from "../utils/StorageKeys";
 
 type NotificationBannerProps = NotificationType & {
   userEmail: string;
@@ -27,6 +28,7 @@ const NotificationBanner: React.FC<NotificationBannerProps> = (
       );
       console.log("dissmissed emails: ", dissmissed);
     })();
+    localStorage.removeItem(LOCAL_STORAGE_USERNOTIFICATIONS);
     setShowNotification(false);
   };
 

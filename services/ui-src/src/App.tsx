@@ -19,6 +19,7 @@ import { ConfirmationDialog } from "./components/ConfirmationDialog";
 
 import NotificationBanner from "./components/NotificationBanner";
 import NotificationsApi from "./utils/NotificationApi";
+import { LOCAL_STORAGE_USERNOTIFICATIONS } from "./utils/StorageKeys";
 
 const DEFAULT_AUTH_STATE: Omit<
   AppContextValue,
@@ -83,10 +84,27 @@ export function App() {
       const authUser = await Auth.currentAuthenticatedUser();
       const email = authUser.signInUserSession.idToken.payload.email;
       const userData = await UserDataApi.userProfile(email);
-      // set the notificationss
-      userData.notifications = await NotificationsApi.createUserNotifications(
-        email
+
+      // set the notifications: Needs to be stored locally to persist on reload
+      // Check local storage for notifications
+      const storedNotifications = localStorage.getItem(
+        LOCAL_STORAGE_USERNOTIFICATIONS
       );
+
+      if (storedNotifications?.length && storedNotifications.length > 2) {
+        userData.notifications = JSON.parse(storedNotifications);
+      } else {
+        // get the notifications & set local storage
+        const notifications = await NotificationsApi.createUserNotifications(
+          email
+        );
+        userData.notifications = notifications;
+        localStorage.setItem(
+          LOCAL_STORAGE_USERNOTIFICATIONS,
+          JSON.stringify(notifications)
+        );
+      }
+
       const roleResult = effectiveRoleForUser(userData?.roleList);
       let userRole = null,
         userStatus = null;
@@ -152,19 +170,6 @@ export function App() {
     // It will capture info if they are logged in from a previous session.
     setUserInfo();
   }, [setUserInfo]);
-
-  // useEffect(() => {
-  //   (async () => {
-  //     if (authState.userProfile.email) {
-  //       const notifications = await NotificationsApi.createUserNotifications(
-  //         authState.userProfile.email
-  //       );
-  //       console.log("ANDIE", notifications);
-  //       if (notifications && notifications.length)
-  //         setUserNotifications([...notifications]);
-  //     }
-  //   })();
-  // }, [authState.userProfile.email]);
 
   const { email, firstName, lastName, cmsRoles } = authState.userProfile;
   useEffect(() => {

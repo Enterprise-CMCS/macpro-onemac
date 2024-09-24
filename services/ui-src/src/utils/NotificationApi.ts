@@ -44,7 +44,6 @@ class NotificationApi {
         `/createUserNotifications/${userEmail}`,
         {}
       );
-      console.log("ANDIE", notifications);
       return notifications.body.notifications;
     } catch (error) {
       return handleApiError(
