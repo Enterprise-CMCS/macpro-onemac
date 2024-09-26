@@ -26,7 +26,7 @@ describe("getActionsForPackage", () => {
 
     expect(actions).toEqual([
       "Withdraw Package",
-      "Upload Subsequent Documents",
+      "Upload Subsequent Documentss",
     ]);
   });
 
@@ -122,7 +122,7 @@ describe("getActionsForPackage", () => {
 
     expect(actions).toEqual([
       "Withdraw Package",
-      "Upload Subsequent Documents",
+      "Upload Subsequent Documentss",
     ]);
   });
 });

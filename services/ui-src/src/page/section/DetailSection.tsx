@@ -157,7 +157,7 @@ export const DetailSection = ({
   );
 
   const actions = detail.actions;
-  const subSubType = "Subsequent Documentation Uploaded";
+  const subSubType = "Subsequent Documentsation Uploaded";
 
   return (
     <>

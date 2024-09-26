@@ -23,7 +23,7 @@ export const waiverAmendmentSubsequentSubmissionFormInfo: OneMACFormConfig = {
   ...defaultSubsequentSubmissionFormConfig,
   ...waiverAmendmentSubsequentSubmission,
   pageTitle: "Upload Subsequent Waiver Amendment Documentation",
-  detailsHeader: "Waiver Amendment Subsequent Document",
+  detailsHeader: "Waiver Amendment Subsequent Documents",
   landingPage: ONEMAC_ROUTES.PACKAGE_LIST_WAIVER,
   confirmSubmit: defaultConfirmSubsequentSubmission,
   validateParentAPI: "validateParentOfWaiverAmendment",

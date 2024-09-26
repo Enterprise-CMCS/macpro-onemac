@@ -9,7 +9,7 @@ import { ONEMAC_TYPE } from "../workflow.js";
 export const initialWaiverSubsequentSubmission = {
   ...initialWaiver,
   componentType: ONEMAC_TYPE.WAIVER_INITIAL_SUBSEQUENT_SUBMISSION,
-  typeLabel: "1915(b) Initial Waiver Subsequent Document",
+  typeLabel: "1915(b) Initial Waiver Subsequent Documents",
   idMustExist: true,
   allowMultiplesWithSameId: true,
   requiredAttachments: [], //default to empty and let subtype B or B4 override

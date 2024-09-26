@@ -81,7 +81,7 @@ export const PACKAGE_ACTION = {
   REQUEST_TEMPORARY_EXTENSION: "Request a Temporary Extension",
   ADD_AMENDMENT: "Add Amendment",
   ENABLE_RAI_WITHDRAWAL: "Enable Formal RAI Response Withdraw",
-  SUBSEQUENT_SUBMISSION: "Upload Subsequent Documents",
+  SUBSEQUENT_SUBMISSION: "Upload Subsequent Documentss",
   DISABLE_RAI_WITHDRAWAL: "Disable Formal RAI Response Withdraw",
 };
 

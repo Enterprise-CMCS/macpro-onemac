@@ -134,7 +134,7 @@ export const defaultOneMACFormConfig = {
 
 export const defaultSubsequentSubmissionFormConfig = {
   ...defaultOneMACFormConfig,
-  addlInfoTitle: "Reason for subsequent document",
+  addlInfoTitle: "Reason for subsequent documents",
   addlInfoText: "Explain why additional documents are being submitted.",
 };
 

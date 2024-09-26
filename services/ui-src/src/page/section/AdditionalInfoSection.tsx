@@ -11,7 +11,7 @@ export const AdditionalInfoSection: FC<{
       <section id={id} className="detail-section">
         <h2>
           {isSubSub
-            ? "Reason for subsequent document"
+            ? "Reason for subsequent documents"
             : "Additional Information"}
         </h2>
         <Review

@@ -14,11 +14,11 @@ Feature: Subsequent Submission 1915b Waiver Amendment
         Then click Under Review checkbox
         Then Click on Filter Button
 
-    Scenario: Screen Enhance - Subsequent Document from the details page
+    Scenario: Screen Enhance - Subsequent Documents from the details page
         Then click the Waiver Number link in the first row
         Then verify the package details page is visible
-        Then verify Upload Subsequent Documents action exists
-        Then click the Upload Subsequent Documents action button
+        Then verify Upload Subsequent Documentss action exists
+        Then click the Upload Subsequent Documentss action button
         Then verify the page header is "Upload Subsequent Waiver Amendment Documentation"
         Then verify the form title is "Waiver Amendment Subsequent Submission Details"
         Then verify "1915(b) Waiver Amendment Number" is prefilled
@@ -39,10 +39,10 @@ Feature: Subsequent Submission 1915b Waiver Amendment
         Then click Leave Anyway form button
         Then verify the package details page is visible
 
-        Scenario: Screen Enhance - Subsequent Documents from the package dashboard
+        Scenario: Screen Enhance - Subsequent Documentss from the package dashboard
         Then click the actions button in row one
-        Then verify Upload Subsequent Documents action exists
-        Then click the Upload Subsequent Documents action button
+        Then verify Upload Subsequent Documentss action exists
+        Then click the Upload Subsequent Documentss action button
         Then verify the page header is "Upload Subsequent Waiver Amendment Documentation"
         Then verify the form title is "Waiver Amendment Subsequent Submission Details"
         Then verify "1915(b) Waiver Amendment Number" is prefilled
@@ -63,9 +63,9 @@ Feature: Subsequent Submission 1915b Waiver Amendment
         Then click Leave Anyway form button
         Then i am on Dashboard Page
 
-    Scenario: Upload Subsequent Documents from the package dashboard
+    Scenario: Upload Subsequent Documentss from the package dashboard
         Then click the actions button in row one
-        Then click the Upload Subsequent Documents action button
+        Then click the Upload Subsequent Documentss action button
         Then verify the page header is "Upload Subsequent Waiver Amendment Documentation"
         Then attach "adobe.pdf" file to attachment 1
         Then into "Reason for subsequent submission" type "This is an automated subsequent submission test."
@@ -78,10 +78,10 @@ Feature: Subsequent Submission 1915b Waiver Amendment
         Then i am on Dashboard Page
         Then verify the success message is "Documents submitted"
 
-    Scenario: Upload Subsequent Documents from the details page
+    Scenario: Upload Subsequent Documentss from the details page
         Then click the Waiver Number link in the first row
         Then verify the package details page is visible
-        Then click the Upload Subsequent Documents action button
+        Then click the Upload Subsequent Documentss action button
         Then verify the page header is "Upload Subsequent Waiver Amendment Documentation"
         Then attach "adobe.pdf" file to attachment 1
         Then into "Reason for subsequent submission" type "This is an automated subsequent submission test."
@@ -93,5 +93,5 @@ Feature: Subsequent Submission 1915b Waiver Amendment
         Then click the yes, submit modal button
         Then verify the package details page is visible
         Then verify the success message is "Documents submitted"
-        Then verify the Subsequent Documentation Uploaded caret button exists
-        Then verify the Subsequent Documentation download all button exists
+        Then verify the Subsequent Documentsation Uploaded caret button exists
+        Then verify the Subsequent Documentsation download all button exists

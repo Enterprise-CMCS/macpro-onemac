@@ -62,9 +62,9 @@ const secondClock = "#secondclock";
 const uploadSubsequentDocumentsActionBtn =
   "//a[contains(@id,'subsequent-submission-action')]";
 const subsequentSubmissionCaretBtn =
-  '//h2//button[contains(@id,"Subsequent Documentation Uploaded")]';
+  '//h2//button[contains(@id,"Subsequent Documentsation Uploaded")]';
 const subsequentSubmissionDownloadAllBtn =
-  '//button[contains(@id,"dl_Subsequent Documentation Uploaded")]';
+  '//button[contains(@id,"dl_Subsequent Documentsation Uploaded")]';
 const latestActivityHeader = "//h3[text()='Latest Package Activity']";
 
 export class oneMacPackageDetailsPage {
@@ -365,7 +365,7 @@ export class oneMacPackageDetailsPage {
   verifyUploadSubsequentDocumentsActionBtnExists() {
     cy.xpath(uploadSubsequentDocumentsActionBtn)
       .should("be.visible")
-      .and("contain", "Upload Subsequent Documents");
+      .and("contain", "Upload Subsequent Documentss");
   }
   clickUploadSubsequentDocumentsActionBtn() {
     cy.xpath(uploadSubsequentDocumentsActionBtn).click();

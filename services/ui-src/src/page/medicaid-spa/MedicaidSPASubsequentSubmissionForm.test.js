@@ -14,7 +14,7 @@ jest.mock("../../utils/PackageApi");
 window.HTMLElement.prototype.scrollIntoView = jest.fn();
 window.scrollTo = jest.fn();
 
-describe("Medicaid SPA Subsequent Document Form", () => {
+describe("Medicaid SPA Subsequent Documents Form", () => {
   let history;
 
   beforeEach(() => {
