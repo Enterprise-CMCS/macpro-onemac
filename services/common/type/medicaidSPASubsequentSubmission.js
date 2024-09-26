@@ -2,7 +2,7 @@ import { medicaidSPA } from "./medicaidSPA.js";
 export const medicaidSPASubsequentSubmission = {
   ...medicaidSPA,
   componentType: "medicaidspasubsequent",
-  typeLabel: "Medicaid SPA Subsequent Submission",
+  typeLabel: "Medicaid SPA Subsequent Document",
   idMustExist: true,
   allowMultiplesWithSameId: true,
   requiredAttachments: [],

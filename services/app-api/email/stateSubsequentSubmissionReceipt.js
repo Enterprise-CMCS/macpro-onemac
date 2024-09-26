@@ -11,7 +11,7 @@ export const stateSubsequentSubmissionReceipt = (data, config) => {
     let typeLabel = config.typeLabel;
     // cut the type label at sub sub and set that at the new idLabel
     typeLabel = typeLabel
-      .substring(0, typeLabel.indexOf("Subsequent Submission"))
+      .substring(0, typeLabel.indexOf("Subsequent Document"))
       .trim();
     config.idLabel = `${typeLabel} Package ID`;
   }

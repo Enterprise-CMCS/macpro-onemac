@@ -17,7 +17,7 @@ export const medicaidSPASubsequentSubmissionFormInfo: OneMACFormConfig = {
   ...defaultSubsequentSubmissionFormConfig,
   ...medicaidSPASubsequentSubmission,
   pageTitle: "Upload Subsequent Medicaid SPA Documentation",
-  detailsHeader: "Medicaid SPA Subsequent Submission",
+  detailsHeader: "Medicaid SPA Subsequent Document",
   landingPage: ONEMAC_ROUTES.PACKAGE_LIST_SPA,
   confirmSubmit: defaultConfirmSubsequentSubmission,
   validateParentAPI: "validateParentOfAny",
