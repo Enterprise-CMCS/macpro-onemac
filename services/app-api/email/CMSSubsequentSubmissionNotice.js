@@ -7,7 +7,6 @@ import { getCPOCandSRTEmailAddresses } from "../utils/getCpocAndSrtEmail.js";
  * @returns {Object} email parameters in generic format.
  */
 export const CMSSubsequentSubmissionNotice = async (data, config) => {
-  data.submitterName = ""; // remove this bc we dont want it on the cms email
   const CMSEmailItem = await getCPOCandSRTEmailAddresses(data.componentId);
 
   const ToAddresses = CMSEmailItem.reviewTeamEmailList
@@ -25,6 +24,13 @@ export const CMSSubsequentSubmissionNotice = async (data, config) => {
     config.idLabel = `${typeLabel} Package ID`;
   }
 
+  // creating own object
+  const cmsSubSubDetails = {
+    componentId: data.componentId,
+    additionalInformation: data.additionalInformation,
+    attachments: data.attachments,
+  };
+
   return {
     ToAddresses: ToAddresses,
     CcAddresses: [],
@@ -33,7 +39,7 @@ export const CMSSubsequentSubmissionNotice = async (data, config) => {
         <p>New documents have been submitted for ${config.typeLabel} ${
       data.componentId
     } in OneMAC.</p>
-        ${formatPackageDetails(data, config)}
+        ${formatPackageDetails(cmsSubSubDetails, config)}
         <p><b>How to access:</b></p>
          <ul>
             <li>
