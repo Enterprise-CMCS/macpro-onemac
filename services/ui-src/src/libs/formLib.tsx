@@ -184,7 +184,7 @@ export const defaultConfirmSubsequentSubmission: ConfirmSubmitType = {
   confirmSubmitHeading: "Submit additional documents?",
   confirmSubmitMessage: (
     <p>
-      These documents will be added to the package and reviewed by CMS.” 
+      These documents will be added to the package and reviewed by CMS. 
     </p>
   ),
 };
