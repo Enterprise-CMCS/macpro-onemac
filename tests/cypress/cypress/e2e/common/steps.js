@@ -2065,25 +2065,22 @@ Then("verify all sections are expanded", () => {
 Then("verify page url contains {string}", (checkUrl) => {
   OneMacDashboardPage.verifyPageByURL(checkUrl);
 });
-Then(
-  "verify the Subsequent Documentsation Uploaded caret button exists",
-  () => {
-    OneMacPackageDetailsPage.verifySubsequentSubmissionCaretBtnExists();
-  }
-);
-Then("click the Subsequent Documentsation Uploaded caret button", () => {
+Then("verify the Subsequent Documentation Uploaded caret button exists", () => {
+  OneMacPackageDetailsPage.verifySubsequentSubmissionCaretBtnExists();
+});
+Then("click the Subsequent Documentation Uploaded caret button", () => {
   OneMacPackageDetailsPage.clickSubsequentSubmissionCaretBtn();
 });
-Then("verify the Subsequent Documentsation download all button exists", () => {
+Then("verify the Subsequent Documentation download all button exists", () => {
   OneMacPackageDetailsPage.verifySubsequentSubmissionDownloadAllBtnExists();
 });
-Then("click the Subsequent Documentsation download all button", () => {
+Then("click the Subsequent Documentation download all button", () => {
   OneMacPackageDetailsPage.clickSubsequentSubmissionDownloadAllBtn();
 });
-Then("verify Upload Subsequent Documentss action exists", () => {
+Then("verify Upload Subsequent Documents action exists", () => {
   OneMacPackageDetailsPage.verifyUploadSubsequentDocumentsActionBtnExists();
 });
-Then("click the Upload Subsequent Documentss action button", () => {
+Then("click the Upload Subsequent Documents action button", () => {
   OneMacPackageDetailsPage.clickUploadSubsequentDocumentsActionBtn();
 });
 Then("verify the Subsequent {string} Documents section exists", (type) => {

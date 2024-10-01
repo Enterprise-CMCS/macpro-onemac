@@ -14,7 +14,7 @@ it("builds the CMS Submission Notice Email", async () => {
   const response2 = await CMSSubsequentSubmissionNotice(testData, testConfig);
 
   expect(response2.Subject).toBe(
-    "Subsequent Documentsation for " +
+    "Subsequent Documentation for " +
       testConfig.typeLabel +
       " " +
       testData.componentId

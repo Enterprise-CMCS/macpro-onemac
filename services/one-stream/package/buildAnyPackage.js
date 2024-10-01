@@ -325,9 +325,9 @@ export const buildAnyPackage = async (packageId, config) => {
       Array.isArray(putParams.Item?.reverseChrono) &&
       putParams.Item.reverseChrono.length > 0
     ) {
-      // Find the first event that is not "Subsequent Documentsation Uploaded"
+      // Find the first event that is not "Subsequent Documentation Uploaded"
       const qualifyingEvent = putParams.Item.reverseChrono.find(
-        (event) => event.type !== "Subsequent Documentsation Uploaded"
+        (event) => event.type !== "Subsequent Documentation Uploaded"
       );
 
       // Check if the found event qualifies for WITHDRAW_RAI_ENABLED
