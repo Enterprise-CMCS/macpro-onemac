@@ -58,7 +58,7 @@ type ConfirmSubmitType = {
 
 export const DefaultFileTypesInfo = () => (
   <p>
-    We accept the following file formats: <b>.docx, .jpg, .pdf, .png, .xlsx.</b>{" "}
+    We accept the following file formats: <b>.docx, .jpg, .pdf, .png, .xlsx,</b> and more:{" "}
     See the full list on the{" "}
     <Link to={ROUTES.FAQ_ACCEPTED_FILE_TYPES} target={FAQ_TARGET}>
       FAQ Page
@@ -181,11 +181,10 @@ export const defaultConfirmSubmitMessageSubsequentSubmission = (
 );
 
 export const defaultConfirmSubsequentSubmission: ConfirmSubmitType = {
-  confirmSubmitHeading: "OneMAC only for document submission",
+  confirmSubmitHeading: "Submit additional documents?",
   confirmSubmitMessage: (
     <p>
-      States and CMS reviewers will communicate about the submission through
-      email.
+      These documents will be added to the package and reviewed by CMS. 
     </p>
   ),
 };
