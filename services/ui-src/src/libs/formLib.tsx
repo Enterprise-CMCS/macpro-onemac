@@ -35,7 +35,6 @@ export type OneMACFormConfig = {
   proposedEffectiveDate?: boolean;
   titleLabel?: string;
   submitInstructionsJSX?: JSX.Element;
-  subsequentSubmisssionForm?: boolean;
 } & PackageType &
   Partial<ParentPackageType> &
   Partial<WaiverPackageType> &
