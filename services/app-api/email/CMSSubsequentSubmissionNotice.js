@@ -48,14 +48,11 @@ export const CMSSubsequentSubmissionNotice = async (data, config) => {
             }/dashboard">this link</a>.
             </li>
             <li>
-            If you are not already logged in, please click the "Login" link at the
-            top of the page and log in using your Enterprise User Administration
-            (EUA) credentials.
+            If you are not already logged in, click “Login” at the top of the page and log in using your 
+            Enterprise User Administration (EUA) credentials. 
             </li>
             <li>
-            After you have logged in, you will be taken to the OneMAC application.
-            The submission will be listed on the dashboard page, and you can view
-            its details by clicking on its ID number.
+            After you logged in, click the submission ID number on the dashboard page to view details. 
             </li>
         </ul>
         <p>Thank you!</p>
