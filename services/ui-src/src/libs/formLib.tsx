@@ -35,6 +35,7 @@ export type OneMACFormConfig = {
   proposedEffectiveDate?: boolean;
   titleLabel?: string;
   submitInstructionsJSX?: JSX.Element;
+  subsequentSubmisssionForm?: boolean;
 } & PackageType &
   Partial<ParentPackageType> &
   Partial<WaiverPackageType> &
@@ -58,6 +59,18 @@ type ConfirmSubmitType = {
 
 export const DefaultFileTypesInfo = () => (
   <p>
+    We accept the following file formats: <b>.docx, .jpg, .pdf, .png, .xlsx,</b>{" "}
+    See the full list on the{" "}
+    <Link to={ROUTES.FAQ_ACCEPTED_FILE_TYPES} target={FAQ_TARGET}>
+      FAQ Page
+    </Link>
+    .
+  </p>
+);
+
+
+export const DefaultFileTypesInfoSubSub = () => (
+  <p>
     We accept the following file formats: <b>.docx, .jpg, .pdf, .png, .xlsx,</b> and more:{" "}
     See the full list on the{" "}
     <Link to={ROUTES.FAQ_ACCEPTED_FILE_TYPES} target={FAQ_TARGET}>
@@ -66,6 +79,7 @@ export const DefaultFileTypesInfo = () => (
     .
   </p>
 );
+
 
 export const DefaultFileSizeInfo = ({ route }: { route: string }) => (
   <p className="req-message">
@@ -104,7 +118,7 @@ export const defaultSubsequentAttachmentInstructionsJSX = (
 ) => (
   <>
     <DefaultFileSizeInfo route={anchoredFAQRoute} />
-    <DefaultFileTypesInfo />
+    <DefaultFileTypesInfoSubSub />
     <AtLeastOneAttachmentSpan />
   </>
 );
