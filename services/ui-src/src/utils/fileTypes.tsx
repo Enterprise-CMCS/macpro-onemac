@@ -11,7 +11,7 @@ export const FILE_TYPES: FileTypeInfo[] = [
   { extension: ".doc", description: "MS Word Document" },
   { extension: ".docx", description: "MS Word Document (xml)" },
   { extension: ".gif", description: "Graphics Interchange Format" },
-  { extension: ".jpeg", description: "Joint Photographic Experts Group" },
+  { extension: ".jpg", description: "Joint Photographic Experts Group" },
   { extension: ".odp", description: "OpenDocument Presentation (OpenOffice)" },
   { extension: ".ods", description: "OpenDocument Spreadsheet (OpenOffice)" },
   { extension: ".odt", description: "OpenDocument Text (OpenOffice)" },
