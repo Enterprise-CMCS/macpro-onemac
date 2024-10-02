@@ -2954,3 +2954,9 @@ article.form-container {
   @extend .ds-c-button;
   margin: 10px;
 }
+.accordion-button > svg {
+  display: none;
+}
+.inversed-accordion-button > svg {
+  display: none;
+}
