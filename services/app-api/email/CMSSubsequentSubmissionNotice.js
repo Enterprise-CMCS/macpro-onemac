@@ -52,7 +52,7 @@ export const CMSSubsequentSubmissionNotice = async (data, config) => {
             Enterprise User Administration (EUA) credentials. 
             </li>
             <li>
-            After you logged in, click the submission ID number on the dashboard page to view details. 
+            After you are logged in, click the submission ID number on the dashboard page to view details. 
             </li>
         </ul>
         <p>Thank you!</p>
