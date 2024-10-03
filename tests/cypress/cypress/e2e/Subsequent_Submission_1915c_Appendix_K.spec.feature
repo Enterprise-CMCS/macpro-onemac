@@ -14,7 +14,7 @@ Feature: Subsequent Submission 1915c App K Waiver
         Then click Under Review checkbox
         Then Click on Filter Button
 
-    Scenario: Screen Enhance - Subsequent Document from the details page
+    Scenario: Screen Enhance - Subsequent Documents from the details page
         Then click the Waiver Number link in the first row
         Then verify the package details page is visible
         Then verify Upload Subsequent Documents action exists

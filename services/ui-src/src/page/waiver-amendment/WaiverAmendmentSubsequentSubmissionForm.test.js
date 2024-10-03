@@ -18,7 +18,7 @@ jest.mock("../../utils/PackageApi");
 window.HTMLElement.prototype.scrollIntoView = jest.fn();
 window.scrollTo = jest.fn();
 
-describe("1915(b) Waiver Amendment Subsequent Submission Form", () => {
+describe("1915(b) Waiver Amendment Subsequent Documents Form", () => {
   let history;
 
   beforeEach(() => {

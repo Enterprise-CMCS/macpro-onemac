@@ -17,7 +17,7 @@ export const waiverAppKSubsequentSubmissionFormInfo: OneMACFormConfig = {
   ...defaultSubsequentSubmissionFormConfig,
   ...waiverAppKSubsequentSubmission,
   pageTitle: "Upload Subsequent 1915(c) Appendix K Documentation",
-  detailsHeader: "1915(c) Appendix K Subsequent Submission",
+  detailsHeader: "1915(c) Appendix K Subsequent Documents",
   landingPage: ONEMAC_ROUTES.PACKAGE_LIST_WAIVER,
   confirmSubmit: defaultConfirmSubsequentSubmission,
   validateParentAPI: "validateParentOfAny",
