@@ -6,30 +6,7 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import { AppContext } from "../libs/contextLib";
 import { Header } from "./Header";
 
-// setupTests.js or at the top of your test file
 
-// describe('Header Component', () => {
-//   beforeAll(() => {
-//     window.matchMedia = jest.fn().mockImplementation((query) => {
-//       console.log(`matchMedia called with query: ${query}`);
-//       return {
-//         matches: query === '(max-width: 600px)',
-//         media: query,
-//         addEventListener: jest.fn(),
-//         removeEventListener: jest.fn(),
-//         dispatchEvent: jest.fn(),
-//       };
-//     });
-//   });
-
-//   test('should respond to media query', () => {
-//     const mediaQueryList = window.matchMedia('(max-width: 600px)');
-    
-//     expect(mediaQueryList).toBeDefined();
-//     expect(mediaQueryList.matches).toBe(true);
-//     expect(typeof mediaQueryList.addEventListener).toBe('function');
-//   });
-// });
 window.matchMedia = window.matchMedia || function() {
   return {
         matches: false,
@@ -38,11 +15,6 @@ window.matchMedia = window.matchMedia || function() {
         dispatchEvent: jest.fn(),
   };
 };
-
-
-
-const mediaQueryList = window.matchMedia('(max-width: 600px)');
-console.log('*******Media query list:', mediaQueryList);
 
 jest.mock("aws-amplify", () => ({
   Auth: {
