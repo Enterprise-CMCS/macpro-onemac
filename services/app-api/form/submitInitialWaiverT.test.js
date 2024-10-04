@@ -59,9 +59,7 @@ describe("main", () => {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Credentials": true,
       },
-      body: JSON.stringify({
-        error: "Unexpected token i in JSON at position 0",
-      }),
+      body:  "{\"error\":\"Unexpected token 'i', \\\"invalidJson\\\" is not valid JSON\"}"
     };
 
     const result = await main(event);

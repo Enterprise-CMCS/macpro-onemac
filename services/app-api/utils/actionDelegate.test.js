@@ -101,6 +101,7 @@ describe("getActionsForPackage", () => {
 
     expect(actions).toEqual([
       "Withdraw Package",
+      "Upload Subsequent Documents",
       "Withdraw Formal RAI Response",
     ]);
   });

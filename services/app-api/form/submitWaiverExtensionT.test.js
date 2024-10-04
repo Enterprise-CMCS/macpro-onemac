@@ -64,6 +64,7 @@ it("should return an error when temporaryExtensionType is invalid", async () => 
     },
     body: JSON.stringify({
       error:
+      
         "Temporary Extension Type not found - " + data.temporaryExtensionType,
     }),
   };
@@ -81,9 +82,7 @@ it("should return an HTTP 500 error when event body cannot be parsed", async () 
       "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Credentials": true,
     },
-    body: JSON.stringify({
-      error: "Unexpected token i in JSON at position 0",
-    }),
+    body: "{\"error\":\"Unexpected token 'i', \\\"invalidJson\\\" is not valid JSON\"}",
   };
 
   const result = await main(event);

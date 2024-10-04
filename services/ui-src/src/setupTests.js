@@ -2,12 +2,12 @@
 // allows you to do things like:
 // expect(element).toHaveTextContent(/react/i)
 // learn more: https://github.com/testing-library/jest-dom
+
 import "@testing-library/jest-dom/extend-expect";
 
-window._env_ = {};
 window.scroll = () => {};
-
-// used in the Dialog component from the CMS Design System
+window._env_ = {};
+// Mocking focus-trap
 jest.mock("focus-trap", () => {
   const trap = {
     activate: () => trap,

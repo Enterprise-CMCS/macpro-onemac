@@ -10,11 +10,20 @@ import WaiverInitialB4Form from "./InitialWaiverB4Form";
 import WaiverInitialBForm from "./InitialWaiverBForm";
 import PackageApi from "../../utils/PackageApi";
 import { AppContext } from "../../libs/contextLib";
-
+import OneMACForm from "../OneMACForm";
+import { defaultOneMACFormConfig} from "../../libs/formLib";
+import { initialWaiverB4 } from "cmscommonlib";
+import { initialWaiverFormConfig } from "../initial-waiver/initialWaiverFormConfig";
 jest.mock("../../utils/PackageApi");
 
 window.HTMLElement.prototype.scrollIntoView = jest.fn();
 window.scrollTo = jest.fn();
+
+ const initialWaiverB4FormInfo = {
+  ...defaultOneMACFormConfig,
+  ...initialWaiverB4,
+  ...initialWaiverFormConfig,
+};
 
 describe("1915(b) Initial Waiver Form", () => {
   let history;
@@ -23,6 +32,7 @@ describe("1915(b) Initial Waiver Form", () => {
     history = createMemoryHistory();
     history.push(ONEMAC_ROUTES.WAIVER_INITIAL_B4);
   });
+
 
   it("has the submit button disabled on initial load", async () => {
     const handleSubmit = jest.fn();
@@ -71,5 +81,29 @@ describe("1915(b) Initial Waiver Form", () => {
     await waitFor(() => expect(transmittalNumberEl.value).toBe(testID));
 
     expect(submitButtonEl).toBeDisabled();
+  });
+
+  it("has the submit button disabled on initial load xyz", async () => {
+    const handleSubmit = jest.fn();
+
+    render(
+      <AppContext.Provider
+        value={{
+          ...stateSubmitterInitialAuthState,
+        }}
+      >
+        <Router history={history}>
+          <OneMACForm formConfig={initialWaiverB4FormInfo} />
+        </Router>
+      </AppContext.Provider>
+    );
+
+    // console.log("***************")
+    // console.log("******************")
+    // console.log
+    const submitButtonEl = screen.getByText("Submit");
+
+    userEvent.click(submitButtonEl);
+    expect(handleSubmit).not.toBeCalled();
   });
 });
