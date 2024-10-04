@@ -4,7 +4,7 @@ import { ONEMAC_TYPE } from "../workflow.js";
 export const waiverAppKSubsequentSubmission = {
   ...waiverAppendixK,
   componentType: ONEMAC_TYPE.WAIVER_APP_K_SUBSEQUENT_SUBMISSION,
-  typeLabel: "Waiver Appendix K Subsequent Submission",
+  typeLabel: "Waiver Appendix K Subsequent Documents",
   idMustExist: true,
   allowMultiplesWithSameId: true,
   requiredAttachments: [],
