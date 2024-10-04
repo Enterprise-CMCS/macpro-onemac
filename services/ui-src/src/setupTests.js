@@ -17,17 +17,3 @@ jest.mock("focus-trap", () => {
   };
   return () => trap;
 });
-
-window.matchMedia = jest.fn((query) => {
-  return {
-    matches: query === '(max-width: 600px)', // Adjust this logic based on your needs
-    media: query,
-    onchange: null,
-    addListener: jest.fn(), // Deprecated, but still mock for compatibility
-    removeListener: jest.fn(), // Deprecated, but still mock for compatibility
-    addEventListener: jest.fn(), // For modern browsers
-    removeEventListener: jest.fn(), // For modern browsers
-    dispatchEvent: jest.fn(), // For modern browsers
-  };
-});
-console.log("Setup file loaded");
