@@ -9,7 +9,7 @@ from botocore.exceptions import ClientError
 dynamodb = boto3.resource('dynamodb')
 
 # Get table name from environment variable or use default
-table_name = os.getenv('TABLE_NAME', 'onemac-develop-one')
+table_name = os.getenv('TABLE_NAME', 'onemac-masterclone-one')
 table = dynamodb.Table(table_name)
 
 # Define different component configurations
@@ -18,25 +18,43 @@ component_config = {
         "componentType": "medicaidspa",
         "GSI1pk": "OneMAC#submitmedicaidspa",
         "GSI1sk_prefix": "OneMAC#",
-        "second_GSI1pk": "SEATool#Medicaid_SPA"
+        "second_GSI1pk": "SEATool#Medicaid_SPA",
+        "pk_format": "{state_code}-{current_year}-{random_4_digits}"
     },
     "chipspa": {
         "componentType": "chipspa",
         "GSI1pk": "OneMAC#submitchipspa",
         "GSI1sk_prefix": "OneMAC#",
-        "second_GSI1pk": "SEATool#CHIP_SPA"
+        "second_GSI1pk": "SEATool#CHIP_SPA",
+        "pk_format": "{state_code}-{current_year}-{random_4_digits}"
     },
     "waivernew": {
         "componentType": "waivernew",
         "GSI1pk": "OneMAC#submitwaivernew",
         "GSI1sk_prefix": "OneMAC#",
-        "second_GSI1pk": "SEATool#1915b_waivers"
+        "second_GSI1pk": "SEATool#1915b_waivers",
+        "pk_format": "{state_code}-{random_5_digits}.R00.00"
     },
     "waiverappk": {
         "componentType": "waiverappk",
         "GSI1pk": "OneMAC#submitwaiverappk",
         "GSI1sk_prefix": "OneMAC#",
-        "second_GSI1pk": "SEATool#1915c_waivers"
+        "second_GSI1pk": "SEATool#1915c_waivers",
+        "pk_format": "{state_code}-{random_5_digits}.R00.01"
+    },
+    "waiveramendment": {
+        "componentType": "waiveramendment",
+        "GSI1pk": "OneMAC#submitwaiveramendment",
+        "GSI1sk_prefix": "OneMAC#",
+        "second_GSI1pk": "SEATool#1915b_waivers",
+        "pk_format": "{state_code}-{random_5_digits}.R01.02"
+    },
+    "waiverrenewal": {
+        "componentType": "waiverrenewal",
+        "GSI1pk": "OneMAC#submitwaiverrenewal",
+        "GSI1sk_prefix": "OneMAC#",
+        "second_GSI1pk": "SEATool#1915b_waivers",
+        "pk_format": "{state_code}-{random_5_digits}.R01.00"
     }
 }
 
@@ -44,14 +62,17 @@ component_config = {
 generated_ids = set()
 
 def generate_ids_and_timestamps(state_code, component_type):
+    config = component_config[component_type]
     current_year = datetime.now().year % 100  # last 2 digits of the year
     while True:
-        if component_type == "waivernew":
-            random_id = f"{state_code}-{random.randint(10000, 99999)}.R00.00"
-        elif component_type == "waiverappk":
-            random_id = f"{state_code}-{random.randint(10000, 99999)}.R00.01"
-        else:
-            random_id = f"{state_code}-{current_year}-{random.randint(1000, 9999)}"
+        pk_format = config['pk_format']
+        # Replace placeholders with actual values
+        random_id = pk_format.format(
+            state_code=state_code,
+            current_year=current_year,
+            random_4_digits=random.randint(1000, 9999),
+            random_5_digits=random.randint(10000, 99999)
+        )
         
         if random_id not in generated_ids:
             generated_ids.add(random_id)
@@ -86,8 +107,115 @@ default_action_officers = [
     }
 ]
 
-# Function to generate first record based on component type
-def generate_first_record(state, random_id, first_timestamp, component_type):
+# Define different action officers and lead analysts per state, using the original defaults for now
+action_officers_per_state = {
+    "MD": [
+        {
+            "EMAIL": "onemacsrt52@gmail.com",
+            "FIRST_NAME": "OneMAC",
+            "LAST_NAME": "SRT52",
+            "OFFICER_ID": 3740,
+            "POSITION_ID": 538,
+            "TELEPHONE": "(410) 555-5445"
+        }
+    ],
+    "NY": [
+        {
+            "EMAIL": "onemacsrt5@gmail.com",
+            "FIRST_NAME": "OneMAC",
+            "LAST_NAME": "SRT5",
+            "OFFICER_ID": 3740,
+            "POSITION_ID": 538,
+            "TELEPHONE": "(410) 555-5445"
+        }
+    ],
+    "CA": [
+        {
+            "EMAIL": "onemacsrt2@gmail.com",
+            "FIRST_NAME": "OneMAC",
+            "LAST_NAME": "SRT2",
+            "OFFICER_ID": 3740,
+            "POSITION_ID": 538,
+            "TELEPHONE": "(410) 555-5445"
+        }
+    ],
+    "OH": [
+        {
+            "EMAIL": "onemacsrt3@gmail.com",
+            "FIRST_NAME": "OneMAC",
+            "LAST_NAME": "SRT3",
+            "OFFICER_ID": 3740,
+            "POSITION_ID": 538,
+            "TELEPHONE": "(410) 555-5445"
+        }
+    ],
+    "WI": [
+        {
+            "EMAIL": "onemacsrt4@gmail.com",
+            "FIRST_NAME": "OneMAC",
+            "LAST_NAME": "SRT4",
+            "OFFICER_ID": 3740,
+            "POSITION_ID": 538,
+            "TELEPHONE": "(410) 555-5445"
+        }
+    ]
+}
+
+lead_analyst_per_state = {
+    "MD": [
+        {
+            "EMAIL": "onemaccpoc6@gmail.com",
+            "FIRST_NAME": "OneMAC",
+            "LAST_NAME": "CPOC06",
+            "OFFICER_ID": 3743,
+            "POSITION_ID": 538,
+            "TELEPHONE": "(410) 555-5445"
+        }
+    ],
+    "NY": [
+        {
+            "EMAIL": "onemaccpoc50@gmail.com",
+            "FIRST_NAME": "OneMAC",
+            "LAST_NAME": "CPOC5",
+            "OFFICER_ID": 3743,
+            "POSITION_ID": 538,
+            "TELEPHONE": "(410) 555-5445"
+        }
+    ],
+    "CA": [
+        {
+            "EMAIL": "onemaccpoc9@gmail.com",
+            "FIRST_NAME": "OneMAC",
+            "LAST_NAME": "CPOC02",
+            "OFFICER_ID": 3743,
+            "POSITION_ID": 538,
+            "TELEPHONE": "(410) 555-5445"
+        }
+    ],
+    "OH": [
+        {
+            "EMAIL": "onemaccpoc319@gmail.com",
+            "FIRST_NAME": "OneMAC",
+            "LAST_NAME": "CPOC3",
+            "OFFICER_ID": 3743,
+            "POSITION_ID": 538,
+            "TELEPHONE": "(410) 555-5445"
+        }
+    ],
+    "WI": [
+        {
+            "EMAIL": "onemaccpoc49@gmail.com",
+            "FIRST_NAME": "OneMAC",
+            "LAST_NAME": "CPOC4",
+            "OFFICER_ID": 3743,
+            "POSITION_ID": 538,
+            "TELEPHONE": "(410) 555-5445"
+        }
+    ]
+}
+
+# Function to generate onemace submission record based on component type
+def generate_onemac_submission_record(state, random_id, first_timestamp, component_type):
     config = component_config[component_type]
     if component_type == "waiverappk":
         attachments = [
@@ -165,17 +293,21 @@ def generate_first_record(state, random_id, first_timestamp, component_type):
         }
 
 # Function to generate second record based on component type
-def generate_second_record(state, random_id, second_timestamp, component_type):
+def generate_seatool_pending_record(state, random_id, second_timestamp, component_type):
     config = component_config[component_type]
     
+    # Use state-specific action officers and lead analysts
+    action_officers = action_officers_per_state.get(state, default_action_officers)
+    lead_analyst = lead_analyst_per_state.get(state, default_lead_analyst)
+
     # Base common record structure
-    second_item = {
+    seatool_record = {
         "pk": random_id,
         "sk": f"SEATool#{second_timestamp}",
         "GSI1pk": config["second_GSI1pk"],
         "GSI1sk": random_id,
-        "LEAD_ANALYST": default_lead_analyst,
-        "ACTION_OFFICERS": default_action_officers,
+        "LEAD_ANALYST": lead_analyst,
+        "ACTION_OFFICERS": action_officers,
         "OCD_REVIEW": [
             {
                 "OCD_REVIEW_DESCRIPTION": "No",
@@ -191,6 +323,7 @@ def generate_second_record(state, random_id, second_timestamp, component_type):
         "STATE_PLAN": {
             "ID_NUMBER": random_id,
             "SPW_STATUS_ID": 1,  # Ensures SPW_STATUS_ID is always included
+            "LEAD_ANALYST_ID": lead_analyst[0]["OFFICER_ID"],  # Using the first lead analyst's ID
             "STATE_CODE": state,
             "SUMMARY_MEMO": "This is just a test" if component_type != "waiverappk" else "Sample Summary Memo",
             "UUID": "66908FBA-9AFC-41BD-BA77-AA74379E6F44" if component_type != "waiverappk" else None
@@ -199,58 +332,63 @@ def generate_second_record(state, random_id, second_timestamp, component_type):
 
     # Add or modify specific fields based on component_type
     if component_type == "waiverappk":
-        second_item["ACTIONTYPES"] = [
+        seatool_record["ACTIONTYPES"] = [
             {
                 "ACTION_ID": 76,
                 "ACTION_NAME": "Amend",
                 "PLAN_TYPE_ID": 123
             }
         ]
-        second_item["PLAN_TYPES"] = [
+        seatool_record["PLAN_TYPES"] = [
             {
                 "PLAN_TYPE_ID": 123,
                 "PLAN_TYPE_NAME": "1915(c)"
             }
         ]
-        second_item["STATE_PLAN"]["ACTION_TYPE"] = 76
-        second_item["STATE_PLAN"]["ALERT_90_DAYS_DATE"] = 1681862400000
-        second_item["STATE_PLAN"]["LEAD_ANALYST_ID"] = 3743
-
+        seatool_record["STATE_PLAN"]["ACTION_TYPE"] = 76
+        seatool_record["STATE_PLAN"]["ALERT_90_DAYS_DATE"] = 1681862400000
     else:
-        second_item["PLAN_TYPES"] = [
+        seatool_record["PLAN_TYPES"] = [
             {
                 "PLAN_TYPE_ID": 122,
                 "PLAN_TYPE_NAME": "1915(b)"
             }
         ]
-        second_item["STATE_PLAN"]["PLAN_TYPE"] = 122
+        seatool_record["STATE_PLAN"]["PLAN_TYPE"] = 122
 
-    return second_item
+    return seatool_record
+
 
 
 # Function to insert records into DynamoDB with multiple component types
 def insert_records(state_codes, num_records, component_types):
+    created_records = []  # List to store final records (State, PK, Component Type)
+
     for state in state_codes:
         for _ in range(num_records):
             for component_type in component_types:
                 random_id, first_timestamp, second_timestamp = generate_ids_and_timestamps(state, component_type)
 
                 # Generate first record
-                first_item = generate_first_record(state, random_id, first_timestamp, component_type)
+                onemac_record = generate_onemac_submission_record(state, random_id, first_timestamp, component_type)
 
                 # Generate second record
-                second_item = generate_second_record(state, random_id, second_timestamp, component_type)
+                seatool_record = generate_seatool_pending_record(state, random_id, second_timestamp, component_type)
 
                 # Try to insert both records, retry if duplicate key error occurs
                 try:
                     # insert SEATOOL record first just to avoid package builder issues
-                    table.put_item(Item=second_item)
+                    table.put_item(Item=seatool_record)
 
                     # Add a delay of 2 second between inserting the first and second records
                     time.sleep(2)
-                    table.put_item(Item=first_item)
+                    table.put_item(Item=onemac_record)
 
                     print(f"Inserted records for {random_id} with component type: {component_type}")
+                    
+                    # Add record details to created_records list
+                    created_records.append([state, random_id, component_type])
+
                 except ClientError as e:
                     if e.response['Error']['Code'] == 'ConditionalCheckFailedException':
                         print(f"Duplicate ID {random_id} detected. Retrying with a new ID.")
@@ -258,10 +396,21 @@ def insert_records(state_codes, num_records, component_types):
                     else:
                         raise e  # Raise the exception for non-duplicate errors
 
+    # Sort created records by State, Component Type, PK
+    created_records.sort(key=lambda x: (x[0], x[2], x[1]))
+
+    # Output final records in a table-like format
+    print("\nFinal created records:")
+    print(f"{'State':<10} {'PK':<30} {'Component Type':<20}")
+    print("-" * 60)
+    for record in created_records:
+        print(f"{record[0]:<10} {record[1]:<30} {record[2]:<20}")
+
+
 # Retrieve state codes, number of records, and component types from environment variables
-state_codes = os.getenv('STATE_CODES', 'MD').split(',')  # Example: 'MD,NY,CA'
-num_records = int(os.getenv('NUM_RECORDS', '2'))  # Default is 5 if not provided
-component_types = os.getenv('COMPONENT_TYPES', 'medicaidspa,chipspa,waivernew,waiverappk').split(',')  # Example: 'medicaidspa,chipspa,waivernew,waiverappk'
+state_codes = os.getenv('STATE_CODES', 'MD,NY,CA,OH,WI').split(',')  # Example: 'MD,NY,CA'
+num_records = int(os.getenv('NUM_RECORDS', '6'))  # Default is 5 if not provided
+component_types = os.getenv('COMPONENT_TYPES', 'medicaidspa,chipspa,waivernew,waiverappk,waiveramendment,waiverrenewal').split(',')  # Example: 'medicaidspa,chipspa,waivernew,waiverappk'
 
 # Call the insert function
 insert_records(state_codes, num_records, component_types)
