@@ -7,7 +7,6 @@ import "@testing-library/jest-dom/extend-expect";
 
 window.scroll = () => {};
 window._env_ = {};
-// Mocking focus-trap
 jest.mock("focus-trap", () => {
   const trap = {
     activate: () => trap,
