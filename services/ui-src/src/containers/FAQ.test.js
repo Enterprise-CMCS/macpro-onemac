@@ -20,11 +20,9 @@ it("expands linked question", async () => {
   window.location.href =
     window.location.href + "#waiverb-extension-attachments";
 
-  const btnEl = await screen.findByRole("button", {
-    name: "What are the attachments for a 1915(b) Waiver - Request for Temporary Extension?",
-  });
+  const button = screen.getByRole('button', { name: /what are the attachments for a 1915\(b\) waiver - request for temporary extension\?/i });
   await waitFor(() => {
-    expect(btnEl).toHaveAttribute("aria-expanded", "true");
+    expect(button).toHaveAttribute("aria-expanded", "true");
   });
 });
 
@@ -34,12 +32,10 @@ it("expand button opens all", async () => {
   const btnEl = await screen.findByRole("button", {
     name: "Expand all to search with CTRL+F",
   });
-  const btnEl2 = await screen.findByRole("button", {
-    name: "What are the attachments for a 1915(b) Waiver - Request for Temporary Extension?",
-  });
+  const button2 = screen.getByRole('button', { name: /what are the attachments for a 1915\(b\) waiver - request for temporary extension\?/i });
 
   userEvent.click(btnEl);
   await waitFor(() => {
-    expect(btnEl2).toHaveAttribute("aria-expanded", "true");
+    expect(button2).toHaveAttribute("aria-expanded", "true");
   });
 });
