@@ -7,20 +7,6 @@ import { AppContext } from "../libs/contextLib";
 import { Header } from "./Header";
 
 // setupTests.js or at the top of your test file
-Object.defineProperty(window, 'matchMedia', {
-  writable: true,
-  value: jest.fn().mockImplementation(query => ({
-    matches: false,
-    media: query,
-    onchange: null,
-    addListener: jest.fn(), // Deprecated
-    removeListener: jest.fn(), // Deprecated
-    addEventListener: jest.fn(),
-    removeEventListener: jest.fn(),
-    dispatchEvent: jest.fn(),
-  })),
-});
-
 
 // describe('Header Component', () => {
 //   beforeAll(() => {
@@ -44,6 +30,14 @@ Object.defineProperty(window, 'matchMedia', {
 //     expect(typeof mediaQueryList.addEventListener).toBe('function');
 //   });
 // });
+window.matchMedia = window.matchMedia || function() {
+  return {
+        matches: false,
+        addEventListener: jest.fn(),
+        removeEventListener: jest.fn(),
+        dispatchEvent: jest.fn(),
+  };
+};
 
 
 
