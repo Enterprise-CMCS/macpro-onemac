@@ -67,6 +67,19 @@ export const DefaultFileTypesInfo = () => (
   </p>
 );
 
+
+export const DefaultFileTypesInfoSubSub = () => (
+  <p>
+    We accept the following file formats: <b>.docx, .jpg, .pdf, .png, .xlsx,</b> and more:{" "}
+    See the full list on the{" "}
+    <Link to={ROUTES.FAQ_ACCEPTED_FILE_TYPES} target={FAQ_TARGET}>
+      FAQ Page
+    </Link>
+    .
+  </p>
+);
+
+
 export const DefaultFileSizeInfo = ({ route }: { route: string }) => (
   <p className="req-message">
     Maximum file size of {config.MAX_ATTACHMENT_SIZE_MB} MB per attachment.{" "}
@@ -104,7 +117,7 @@ export const defaultSubsequentAttachmentInstructionsJSX = (
 ) => (
   <>
     <DefaultFileSizeInfo route={anchoredFAQRoute} />
-    <DefaultFileTypesInfo />
+    <DefaultFileTypesInfoSubSub />
     <AtLeastOneAttachmentSpan />
   </>
 );
@@ -184,7 +197,7 @@ export const defaultConfirmSubsequentSubmission: ConfirmSubmitType = {
   confirmSubmitHeading: "OneMAC only for document submission",
   confirmSubmitMessage: (
     <p>
-      States and CMS reviewers will communicate about the submission through
+      States and CMS reviewers will communicate about the submission through 
       email.
     </p>
   ),
