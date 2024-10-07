@@ -12,6 +12,7 @@
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^13.0.0",
+    "ajv": "^8.17.1",
     "aws-amplify": "^4.3.35",
     "axios": "1.5.1",
     "bootstrap": "^3.3.7",
