@@ -9,7 +9,7 @@ import {
 
 import { Accordion, AccordionItem, Button } from "@cmsgov/design-system";
 import { MACCard } from "../components/MACCard";
-import { withLDProvider, useFlags, LDOptions } from 'launchdarkly-react-client-sdk';
+import { withLDProvider, useFlags} from 'launchdarkly-react-client-sdk';
 
 
 /** Refactored out for later extraction by cms-ux-lib. However, using this
