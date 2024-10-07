@@ -7,7 +7,6 @@ import { getCPOCandSRTEmailAddresses } from "../utils/getCpocAndSrtEmail.js";
  * @returns {Object} email parameters in generic format.
  */
 export const CMSSubsequentSubmissionNotice = async (data, config) => {
-  data.submitterName = ""; // remove this bc we dont want it on the cms email
   const CMSEmailItem = await getCPOCandSRTEmailAddresses(data.componentId);
 
   const ToAddresses = CMSEmailItem.reviewTeamEmailList
@@ -25,6 +24,13 @@ export const CMSSubsequentSubmissionNotice = async (data, config) => {
     config.idLabel = `${typeLabel} Package ID`;
   }
 
+  // creating own object
+  const cmsSubSubDetails = {
+    componentId: data.componentId,
+    additionalInformation: data.additionalInformation,
+    attachments: data.attachments,
+  };
+
   return {
     ToAddresses: ToAddresses,
     CcAddresses: [],
@@ -33,7 +39,7 @@ export const CMSSubsequentSubmissionNotice = async (data, config) => {
         <p>New documents have been submitted for ${config.typeLabel} ${
       data.componentId
     } in OneMAC.</p>
-        ${formatPackageDetails(data, config)}
+        ${formatPackageDetails(cmsSubSubDetails, config)}
         <p><b>How to access:</b></p>
          <ul>
             <li>
@@ -42,14 +48,11 @@ export const CMSSubsequentSubmissionNotice = async (data, config) => {
             }/dashboard">this link</a>.
             </li>
             <li>
-            If you are not already logged in, please click the "Login" link at the
-            top of the page and log in using your Enterprise User Administration
-            (EUA) credentials.
+            If you are not already logged in, click “Login” at the top of the page and log in using your 
+            Enterprise User Administration (EUA) credentials. 
             </li>
             <li>
-            After you have logged in, you will be taken to the OneMAC application.
-            The submission will be listed on the dashboard page, and you can view
-            its details by clicking on its ID number.
+            After you are logged in, click the submission ID number on the dashboard page to view details. 
             </li>
         </ul>
         <p>Thank you!</p>

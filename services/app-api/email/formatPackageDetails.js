@@ -58,7 +58,7 @@ export const formatPackageDetails = (data, config) => {
   ) {
     detailText += `
             <p>
-            <b>Files</b>:
+            Files:
             <ul>
             ${data.attachments
               .filter((u) => u && u.title && u.filename)
