@@ -9,6 +9,8 @@ import {
 
 import { Accordion, AccordionItem, Button } from "@cmsgov/design-system";
 import { MACCard } from "../components/MACCard";
+import { withLDProvider, useFlags } from 'launchdarkly-react-client-sdk';
+
 
 /** Refactored out for later extraction by cms-ux-lib. However, using this
  * abstraction rather than doing it inline as we do in the FAQ return created
@@ -43,6 +45,7 @@ export const FAQSection = ({ section }: { section: FAQContent }) => {
 const FAQ = () => {
   const [faqItems, setFaqItems] = useState(oneMACFAQContent);
   const [hash, setHash] = useState(window.location.hash.replace("#", ""));
+  const {testFlag} = useFlags()
 
   const toggleAccordianItem = (anchorText: string) => {
     const newItems = faqItems.map((section) => {
@@ -125,7 +128,8 @@ const FAQ = () => {
 
   return (
     <div>
-      <PageTitleBar heading="Frequently Asked Questions" />
+      {testFlag && 
+      <PageTitleBar heading="Frequently Asked Questions" /> }
       <div className="faq-display" id="top">
         <div id="faq-list">
           <Button className="faqButtonLink" onClick={() => openAll()}>
@@ -170,4 +174,8 @@ const FAQ = () => {
   );
 };
 
-export default FAQ;
+//export default FAQ;
+
+export default withLDProvider({
+  clientSideID: "66e81e1ae81b5b079a75a4f7"
+})(FAQ);
