@@ -174,7 +174,7 @@ const FAQ = () => {
   );
 };
 
-//export default FAQ;
+//export default FAQ; default
 export default withLDProvider({
   clientSideID: "66e81e1ae81b5b079a75a4f7",
   options: {
