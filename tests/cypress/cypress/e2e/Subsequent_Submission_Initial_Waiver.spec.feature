@@ -31,8 +31,8 @@ Feature: Subsequent Submission 1915b Initial Waiver
         Then into "Reason for subsequent submission" type "This is an automated subsequent submission test."
         Then Click the Submit Button without waiting
         Then verify the modal pop-up is visible
-        Then verify the dialog title contains "OneMAC only for document submission"
-        Then verify the detailed text in the modal contains "States and CMS reviewers will communicate about the submission through email."
+        Then verify the dialog title contains "Submit additional documents?"
+        Then verify the detailed text in the modal contains "These documents will be added to the package and reviewed by CMS."
         Then verify the yes, submit modal button is visible and clickable
         Then click modal cancel button
         Then click form cancel button
@@ -54,8 +54,8 @@ Feature: Subsequent Submission 1915b Initial Waiver
         Then into "Reason for subsequent submission" type "This is an automated subsequent submission test."
         Then Click the Submit Button without waiting
         Then verify the modal pop-up is visible
-        Then verify the dialog title contains "OneMAC only for document submission"
-        Then verify the detailed text in the modal contains "States and CMS reviewers will communicate about the submission through email."
+        Then verify the dialog title contains "Submit additional documents?"
+        Then verify the detailed text in the modal contains "These documents will be added to the package and reviewed by CMS."
         Then verify the yes, submit modal button is visible and clickable
         Then click modal cancel button
         Then click form cancel button
@@ -71,8 +71,8 @@ Feature: Subsequent Submission 1915b Initial Waiver
         Then into "Reason for subsequent submission" type "This is an automated subsequent submission test."
         Then Click the Submit Button without waiting
         Then verify the modal pop-up is visible
-        Then verify the dialog title contains "OneMAC only for document submission"
-        Then verify the detailed text in the modal contains "States and CMS reviewers will communicate about the submission through email."
+        Then verify the dialog title contains "Submit additional documents?"
+        Then verify the detailed text in the modal contains "These documents will be added to the package and reviewed by CMS."
         Then verify the yes, submit modal button is visible and clickable
         Then click the yes, submit modal button
         Then i am on Dashboard Page
@@ -89,8 +89,8 @@ Feature: Subsequent Submission 1915b Initial Waiver
         Then into "Reason for subsequent submission" type "This is an automated subsequent submission test."
         Then Click the Submit Button without waiting
         Then verify the modal pop-up is visible
-        Then verify the dialog title contains "OneMAC only for document submission"
-        Then verify the detailed text in the modal contains "States and CMS reviewers will communicate about the submission through email."
+        Then verify the dialog title contains "Submit additional documents?"
+        Then verify the detailed text in the modal contains "These documents will be added to the package and reviewed by CMS."
         Then verify the yes, submit modal button is visible and clickable
         Then click the yes, submit modal button
         Then verify the package details page is visible
