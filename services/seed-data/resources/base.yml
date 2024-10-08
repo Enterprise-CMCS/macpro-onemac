@@ -1,0 +1,6 @@
+Conditions:
+  CreatePermissionsBoundary:
+    Fn::Not:
+      - Fn::Equals:
+          - ""
+          - ${self:custom.iamPermissionsBoundaryPolicy, ""}
