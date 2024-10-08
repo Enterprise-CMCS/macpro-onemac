@@ -15,7 +15,7 @@ install_deps() {
 deploy() {
   pushd services/$1
   install_deps
-  serverless deploy --stage $stage
+  serverless deploy --stage $stage --verbose
   popd
 }
 

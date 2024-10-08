@@ -8,6 +8,7 @@ package:
 plugins:
   - serverless-esbuild
   - serverless-plugin-scripts
+  - serverless-plugin-warmup
 
 custom:
   stage: ${opt:stage, self:provider.stage}
