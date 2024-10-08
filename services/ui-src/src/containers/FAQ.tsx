@@ -179,8 +179,8 @@ export default withLDProvider({
   clientSideID: "66e81e1ae81b5b079a75a4f7",
   options: {
   // @ts-ignore  
-  streamUri: "https://clientstream.launchdarkly.us",
-  baseUri: "https://clientsdk.launchdarkly.us",
-  eventsUri: "https://events.launchdarkly.us",
+  streamUrl: "https://clientstream.launchdarkly.us",
+  baseUrl: "https://clientsdk.launchdarkly.us",
+  eventsUrl: "https://events.launchdarkly.us",
   }
 })(FAQ);
