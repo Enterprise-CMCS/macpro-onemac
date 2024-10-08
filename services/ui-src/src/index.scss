@@ -1801,6 +1801,7 @@ article.form-container {
 }
 
 .home-content-container {
+  background-color: red !important;
   @extend .ds-u-display--flex;
   @extend .ds-u-flex-direction--column;
   @extend .ds-u-justify-content--center;
