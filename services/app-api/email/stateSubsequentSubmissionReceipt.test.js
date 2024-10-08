@@ -9,6 +9,7 @@ it("builds the State Submission Receipt Email", async () => {
   };
   const testConfig = {
     typeLabel: "Test Type",
+    idLabel: "Test Id",
   };
   try {
     const response2 = stateSubsequentSubmissionReceipt(testData, testConfig);
