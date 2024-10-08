@@ -13,35 +13,55 @@ custom:
   stage: ${opt:stage, self:provider.stage}
   iamPath: ${ssm:/configuration/${self:custom.stage}/iam/path, ssm:/configuration/default/iam/path}
   iamPermissionsBoundaryPolicy: ${ssm:/configuration/${self:custom.stage}/iam/permissionsBoundaryPolicy, ssm:/configuration/default/iam/permissionsBoundaryPolicy, ""}
-  infrastructureType: ${ssm:/configuration/${self:custom.stage}/infrastucture/type, ssm:/configuration/default/infrastucture/type, "development"}
+  infrastructureType: ${ssm:/configuration/${self:custom.stage}/infrastructure/type, ssm:/configuration/default/infrastructure/type, "development"}
+  
+  # DynamoDB configuration
   tableStreamArn: ${cf:app-api-${self:custom.stage}.OneMacTableStreamArn}
   oneMacTableName: ${cf:app-api-${self:custom.stage}.OneMacTableName}
   oneMacTableArn: ${cf:app-api-${self:custom.stage}.OneMacTableArn}
   migrationTableName: onemac-${self:service}-${self:custom.stage}-migration
+  
+  # Broker and VPC settings
   bootstrapBrokerStringTls: ${ssm:/configuration/${self:custom.stage}/bigmac/bootstrapBrokerStringTls, ssm:/configuration/default/bigmac/bootstrapBrokerStringTls}
   vpcId: ${ssm:/configuration/${self:custom.stage}/vpc/id, ssm:/configuration/default/vpc/id}
+  
   esbuild:
     exclude: []
+  
+  # Subnet configurations
   dataSubnets:
     - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/data/a/id, ssm:/configuration/default/vpc/subnets/data/a/id}
     - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/data/b/id, ssm:/configuration/default/vpc/subnets/data/b/id}
     - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/data/c/id, ssm:/configuration/default/vpc/subnets/data/c/id}
+    
   privateSubnets:
     - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/private/a/id, ssm:/configuration/default/vpc/subnets/private/a/id}
     - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/private/b/id, ssm:/configuration/default/vpc/subnets/private/b/id}
     - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/private/c/id, ssm:/configuration/default/vpc/subnets/private/c/id}
+  
+  # Scripts for table migration
   scripts:
     commands:
       sync: |
         echo """
-        This is a helper, for copying one table to another.  Please be careful.
-        One/source table:  ${self:custom.oneMacTableName}
-        Migration/target table:  ${self:custom.migrationTableName}
-
-        If you need to copy source to target for a one time migration, and you know what you're doing, you can try the following:
-
+        This is a helper, for copying one table to another. Please be careful.
+        One/source table: ${self:custom.oneMacTableName}
+        Migration/target table: ${self:custom.migrationTableName}
+        
+        If you need to copy source to target for a one-time migration, you can try the following:
+        
         sh migrate.sh ${self:custom.oneMacTableName} ${self:custom.migrationTableName}
         """
+  
+  # Warmer configuration
+  warmup:
+    default:
+      enabled: true
+      functions:
+        - createTopics
+        - cleanupKafka
+        - sourceDynamoToMsk
+
 provider:
   name: aws
   runtime: nodejs20.x
@@ -77,7 +97,7 @@ functions:
         ${self:custom.privateSubnets}
     timeout: 300
     role: LamdaSourceDynamoToMskRole
-  sourceDynamoToMsk:
+  sourceDynamoToMsk: 
     handler: handlers/source.handler
     events:
       - stream:
@@ -122,6 +142,12 @@ resources:
         BrokerString: ${self:custom.bootstrapBrokerStringTls}
         TopicsToCreate:
           - name: ${param:topicNamespace}aws.onemac.migration.cdc
+    ServerlessVersionOutput:
+      Type: AWS::CloudFormation::Output
+      Properties:
+        Value: !Sub "Serverless Framework version: ${sls:version}"
+        Export:
+          Name: ServerlessVersion
 
     CleanupTopics:
       Type: AWS::CloudFormation::CustomResource
@@ -229,3 +255,45 @@ resources:
     #           ProjectionType: ALL
     #     # Set the capacity to auto-scale
     #     BillingMode: PAY_PER_REQUEST
+
+
+    # custom:
+#   stage: ${opt:stage, self:provider.stage}
+#   iamPath: ${ssm:/configuration/${self:custom.stage}/iam/path, ssm:/configuration/default/iam/path}
+#   iamPermissionsBoundaryPolicy: ${ssm:/configuration/${self:custom.stage}/iam/permissionsBoundaryPolicy, ssm:/configuration/default/iam/permissionsBoundaryPolicy, ""}
+#   infrastructureType: ${ssm:/configuration/${self:custom.stage}/infrastucture/type, ssm:/configuration/default/infrastucture/type, "development"}
+#   tableStreamArn: ${cf:app-api-${self:custom.stage}.OneMacTableStreamArn}
+#   oneMacTableName: ${cf:app-api-${self:custom.stage}.OneMacTableName}
+#   oneMacTableArn: ${cf:app-api-${self:custom.stage}.OneMacTableArn}
+#   migrationTableName: onemac-${self:service}-${self:custom.stage}-migration
+#   bootstrapBrokerStringTls: ${ssm:/configuration/${self:custom.stage}/bigmac/bootstrapBrokerStringTls, ssm:/configuration/default/bigmac/bootstrapBrokerStringTls}
+#   vpcId: ${ssm:/configuration/${self:custom.stage}/vpc/id, ssm:/configuration/default/vpc/id}
+#   esbuild:
+#     exclude: []
+#   dataSubnets:
+#     - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/data/a/id, ssm:/configuration/default/vpc/subnets/data/a/id}
+#     - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/data/b/id, ssm:/configuration/default/vpc/subnets/data/b/id}
+#     - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/data/c/id, ssm:/configuration/default/vpc/subnets/data/c/id}
+#   privateSubnets:
+#     - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/private/a/id, ssm:/configuration/default/vpc/subnets/private/a/id}
+#     - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/private/b/id, ssm:/configuration/default/vpc/subnets/private/b/id}
+#     - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/private/c/id, ssm:/configuration/default/vpc/subnets/private/c/id}
+#   scripts:
+#     commands:
+#       sync: |
+#         echo """
+#         This is a helper, for copying one table to another.  Please be careful.
+#         One/source table:  ${self:custom.oneMacTableName}
+#         Migration/target table:  ${self:custom.migrationTableName}
+
+#         If you need to copy source to target for a one time migration, and you know what you're doing, you can try the following:
+
+#         sh migrate.sh ${self:custom.oneMacTableName} ${self:custom.migrationTableName}
+#         """
+#   warmup:
+#     default:
+#       enabled: true
+#       functions:
+#         - createTopics
+#         - cleanupKafka
+#         - sourceDynamoToMsk
