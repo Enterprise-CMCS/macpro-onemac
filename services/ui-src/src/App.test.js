@@ -13,6 +13,15 @@ jest.mock("aws-amplify");
 jest.mock("./utils/UserDataApi");
 jest.mock("./components/IdleTimerWrapper");
 
+window.matchMedia = window.matchMedia || function() {
+  return {
+        matches: false,
+        addEventListener: jest.fn(),
+        removeEventListener: jest.fn(),
+        dispatchEvent: jest.fn(),
+  };
+};
+
 beforeEach(() => {
   jest.clearAllMocks();
 

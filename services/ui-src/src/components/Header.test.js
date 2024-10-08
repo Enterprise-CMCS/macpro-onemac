@@ -6,6 +6,16 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import { AppContext } from "../libs/contextLib";
 import { Header } from "./Header";
 
+
+window.matchMedia = window.matchMedia || function() {
+  return {
+        matches: false,
+        addEventListener: jest.fn(),
+        removeEventListener: jest.fn(),
+        dispatchEvent: jest.fn(),
+  };
+};
+
 jest.mock("aws-amplify", () => ({
   Auth: {
     configure: () => ({ oauth: { domain: "" } }),
