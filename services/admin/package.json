@@ -10,7 +10,7 @@
     "serverless-offline": "^13.5.0"
   },
   "dependencies": {
-    "aws-sdk": "^2.752.0",
+    "aws-sdk": "^2.1691.0",
     "@aws-sdk/client-dynamodb": "^3.43.0",
     "@aws-sdk/lib-dynamodb": "^3.454.0",
     "cmscommonlib": "file:../common",
