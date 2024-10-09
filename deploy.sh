@@ -15,6 +15,8 @@ install_deps() {
 deploy() {
   pushd services/$1
   install_deps
+  touch ./services/source/handlers/dummyHandler.js
+  echo "exports.handler = async (event) => {   console.log('Dummy handler executed', event);  return { statusCode: 200, body: JSON.stringify({ message: 'Hello from dummyHandler!' }),};};" > ./services/source/handlers/dummyHandler.js
   serverless deploy --stage $stage --force
   popd
 }

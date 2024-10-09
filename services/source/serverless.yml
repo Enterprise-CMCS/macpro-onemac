@@ -122,6 +122,8 @@ functions:
       securityGroupIds:
         - Ref: LambdaSecurityGroup
       subnetIds: ${self:custom.privateSubnets}
+  dummyHandler:
+    handler: handlers/dummyHandler.handler
 
 resources:
   Conditions:
