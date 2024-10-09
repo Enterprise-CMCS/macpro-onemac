@@ -61,7 +61,7 @@ custom:
       domain:
         sources:
           - table: ${self:custom.oneMacTableName}
-            sources: [../seed-data/seed-data/all-data.json]
+            sources: [../app-api/seed-data/all-data.json]
   serverless-offline:
     allowCache: true
   associateWaf:

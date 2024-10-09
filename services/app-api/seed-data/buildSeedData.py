@@ -11,8 +11,8 @@ if __name__ == "__main__":
     parser.add_argument("baseDir", help="the base directory to start (seed-data is default)")
     args = parser.parse_args()
 
-    if os.path.exists('all-data.json'):
-        os.remove('all-data.json')
+    if os.path.exists('../app-api/all-data.json'):
+        os.remove('../app-api/all-data.json')
 
     all_data = []
 
@@ -25,5 +25,5 @@ if __name__ == "__main__":
     for oneItem in all_data:
         print(oneItem['pk'] + "  " + oneItem['sk'])
 
-    with open("all-data.json", "w") as df:
+    with open("../app-api/all-data.json", "w") as df:
         json.dump(all_data, df, indent=4)

@@ -243,7 +243,7 @@ jobs:
           popd
       - name: Consolidate Seed Data
         if: ${{ env.branch_name != 'production'}}
-        run: cd services/seed-data/seed-data && ./buildSeedData.py .
+        run: cd services/seed-data/seed-data && ../app-api/buildSeedData.py .
       - name: Seed Data
         if: ${{ env.branch_name != 'production' }}
         env:
@@ -251,7 +251,7 @@ jobs:
           BRANCH: ${{ env.STAGE_PREFIX }}${{ env.branch_name }}
         run: |
           set +e
-          cd services/seed-data
+          cd services/app-api
           serverless dynamodb seed --stage=$BRANCH --region=$AWS_DEFAULT_REGION --online
           if [ $? -ne 0 ]; then
             echo "Seed data step failed but continuing with the pipeline."
