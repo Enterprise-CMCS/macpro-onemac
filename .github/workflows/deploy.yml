@@ -243,7 +243,7 @@ jobs:
           popd
       - name: Consolidate Seed Data
         if: ${{ env.branch_name != 'production'}}
-        run: cd services/seed-data/seed-data && ../app-api/buildSeedData.py .
+        run: services/app-api/seed-data/buildSeedData.py /services/seed-data/seed-data
       - name: Seed Data
         if: ${{ env.branch_name != 'production' }}
         env:
