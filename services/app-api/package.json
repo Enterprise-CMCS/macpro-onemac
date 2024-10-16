@@ -27,9 +27,6 @@
     "xstate": "^4.26.0"
   },
   "dependencies": {
-    "aws-sdk": "^2.752.0",
-    "@aws-sdk/client-dynamodb": "^3.454.0",
-    "@aws-sdk/lib-dynamodb": "^3.454.0",
     "cmscommonlib": "file:../common",
     "date-fns": "^2.16.1",
     "dynamodb-local": "^0.0.32",
