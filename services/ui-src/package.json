@@ -41,7 +41,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build && node remove-version.js",
     "test": "react-scripts test --unhandled-rejections=strict",
     "eject": "react-scripts eject"
   },
