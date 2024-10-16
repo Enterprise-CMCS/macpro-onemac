@@ -92,6 +92,8 @@ provider:
   tracing:
     apiGateway: true
     lambda: true
+  layers:
+      - ${cf:aws-sdk-v2-layer-${self:custom.stage}.AwsSdkV2LayerArn}
 
 functions:
   migrate:
