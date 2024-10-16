@@ -35,7 +35,7 @@ custom:
   applicationEndpoint: ${cf:ui-${self:custom.stage}.ApplicationEndpointUrl, "onemac.cms.gov"}
   attachmentsBucket: ${cf:uploads-${self:custom.stage}.AttachmentsBucketName}
   attachmentsBucketArn: ${cf:uploads-${self:custom.stage}.AttachmentsBucketArn}
-  awsSdkV2LayerArn: ${cf:sls-aws-sdk-v2-layer-${self:custom.stage}.AwsSdkV2LambdaLayerQualifiedArn}
+  awsSdkV2LayerArn: ${cf:aws-sdk-v2-layer-${self:custom.stage}.AwsSdkV2LambdaLayerQualifiedArn, 'arn:aws:lambda:us-east-1:<account-id>:layer:awsSdkV2:1'}
   warmupEnabled:
     production: true
     development: false
