@@ -3,6 +3,12 @@
 stage=${1:-dev}
 
 install_deps() {
+  # Check if we're inside a layer directory (layers have a 'nodejs' folder)
+  if [ -d "nodejs" ]; then
+    # If we're in a Lambda layer, navigate to the 'nodejs' folder
+    cd nodejs
+  fi
+
   if [ "$CI" == "true" ]; then # If we're in a CI system
     if [ ! -d "node_modules" ]; then # If we don't have any node_modules (CircleCI cache miss scenario), run npm ci.  Otherwise, we're all set, do nothing.
       npm ci --legacy-peer-deps
