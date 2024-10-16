@@ -25,6 +25,7 @@ install_deps
 services=(
   'ui'
   'uploads'
+  'layers/aws-sdk-v2-layer'
   'app-api'
   'email'
   'one-stream'
