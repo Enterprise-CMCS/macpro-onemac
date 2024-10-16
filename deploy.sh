@@ -3,10 +3,13 @@
 stage=${1:-dev}
 
 install_deps() {
+  local islayer=false # Flag to track whether we navigated into the nodejs folder
+
   # Check if we're inside a layer directory (layers have a 'nodejs' folder)
   if [ -d "nodejs" ]; then
     # If we're in a Lambda layer, navigate to the 'nodejs' folder
     cd nodejs
+    islayer=true  # Set the flag to true since we navigated into nodejs
   fi
 
   if [ "$CI" == "true" ]; then # If we're in a CI system
@@ -18,7 +21,7 @@ install_deps() {
   fi
 
   # If we navigated to the nodejs folder (i.e., for a layer), go back to the root folder
-  if [ -d "nodejs" ]; then
+  if [ "$islayer" = true ]; then
     cd ..
   fi
 }
