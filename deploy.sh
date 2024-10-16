@@ -16,6 +16,11 @@ install_deps() {
   else # We're not in a CI system, let's npm install
     npm install --legacy-peer-deps
   fi
+
+  # If we navigated to the nodejs folder (i.e., for a layer), go back to the root folder
+  if [ -d "nodejs" ]; then
+    cd ..
+  fi
 }
 
 deploy() {
