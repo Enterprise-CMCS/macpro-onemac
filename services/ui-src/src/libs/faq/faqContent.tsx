@@ -1055,7 +1055,7 @@ export const oneMACFAQContent: FAQContent[] = [
           ),
       },
       {
-        anchorText: "chip-spa-pdfs",
+        anchorText: "chip-spa-implimentation-guides",
         isOpen: false,
         question:
           "Where can I download CHIP SPA implementation guides?",
