@@ -12,8 +12,6 @@ plugins:
   - serverless-dotenv-plugin
   - serverless-s3-bucket-helper
 custom:
-  esbuild:
-    exclude: []
   stage: ${opt:stage, self:provider.stage}
   iamPermissionsBoundaryPolicy: ${ssm:/configuration/${self:custom.stage}/iam/permissionsBoundaryPolicy, ssm:/configuration/default/iam/permissionsBoundaryPolicy, ""}
   oneMacTableName: onemac-${self:custom.stage}-one
@@ -42,6 +40,8 @@ provider:
   environment:
     NODE_OPTIONS: '--enable-source-maps'
     oneMacTableName: ${self:custom.oneMacTableName}
+  layers:
+      - ${cf:aws-sdk-v2-layer-${self:custom.stage}.AwsSdkV2LambdaLayerQualifiedArn}
 
 functions:
      
