@@ -7,7 +7,7 @@
     "cfn-response-async": "^1.0.0",
     "kafkajs": "^1.14.0",
     "lodash": "^4.17.20",
-    "serverless-plugin-scripts": "^1.0.2",
+    "serverless-plugin-scripts": "^1.0.2"
   },
   "devDependencies": {
     "aws-sdk": "^2.752.0",
