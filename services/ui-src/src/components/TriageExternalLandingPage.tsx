@@ -48,7 +48,7 @@ const TriageExternalLandingPage = ({
         <div className="landing-logo">{logoJSX}</div>
         <section className="landing-description">{descriptionJSX}</section>
         <a href={buttonLink} target="_blank" rel="noreferrer">
-          <Button variation="primary" className="landing-button">
+          <Button variation="solid" className="landing-button">
             {buttonLabel}
           </Button>
         </a>

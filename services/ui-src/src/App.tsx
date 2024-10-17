@@ -276,6 +276,7 @@ const  App = () => {
           <Routes />
           {confirmationDialog && (
             <ConfirmationDialog
+              isOpen={confirmationDialog != null}
               acceptText={confirmationDialog.acceptText}
               cancelText={confirmationDialog.cancelText}
               heading={confirmationDialog.heading}
@@ -284,6 +285,10 @@ const  App = () => {
                 closeConfirmationDialog();
               }}
               onCancel={() => {
+                confirmationDialog.onDeny && confirmationDialog.onDeny();
+                closeConfirmationDialog();
+              }}
+              onExit={() => {
                 confirmationDialog.onDeny && confirmationDialog.onDeny();
                 closeConfirmationDialog();
               }}

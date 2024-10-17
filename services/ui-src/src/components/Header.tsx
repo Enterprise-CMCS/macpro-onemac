@@ -71,10 +71,10 @@ const AccountButtons: React.FC<{
   if (!isAuthenticated) {
     return (
       <>
-        <Button href={getRegisterUrl()} inversed className="register-link">
+        <Button href={getRegisterUrl()} onDark className="register-link">
           Register
         </Button>
-        <Button href={getSignInUrl()} id="loginBtn" inversed>
+        <Button href={getSignInUrl()} id="loginBtn" onDark>
           Login
         </Button>
         {config.ALLOW_DEV_LOGIN === "true" && (
@@ -82,7 +82,7 @@ const AccountButtons: React.FC<{
             <Button
               id="devloginBtn"
               onClick={() => history.push(ROUTES.DEVLOGIN)}
-              inversed
+              onDark
             >
               Development Login
             </Button>

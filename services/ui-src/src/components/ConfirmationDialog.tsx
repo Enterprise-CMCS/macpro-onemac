@@ -12,35 +12,34 @@ type SelfProps = {
   onCancel: () => void;
 };
 
-export const ConfirmationDialog: FC<SelfProps & ComponentProps<typeof Dialog>> =
-  ({
-    acceptText,
-    className,
-    onAccept,
-    cancelText = "Cancel",
-    onCancel,
-    ...rest
-  }) => {
-    return (
-      <Dialog
-        actions={[
-          <Button
-            className="ds-u-margin-right--1"
-            key="ok"
-            onClick={onAccept}
-            variation="primary"
-          >
-            {acceptText}
-          </Button>,
-          <Button key="cancel" onClick={onCancel} variation="transparent">
-            {cancelText}
-          </Button>,
-        ]}
-        className={cx("confirmation-dialog", className)}
-        getApplicationNode={getApplicationNode}
-        onExit={onCancel}
-        underlayClickExits
-        {...rest}
-      />
-    );
-  };
+export const ConfirmationDialog: FC<
+  SelfProps & ComponentProps<typeof Dialog>
+> = ({
+  acceptText,
+  className,
+  onAccept,
+  cancelText = "Cancel",
+  onCancel,
+  ...rest
+}) => {
+  return (
+    <Dialog
+      actions={[
+        <Button
+          className="ds-u-margin-right--1"
+          key="ok"
+          onClick={onAccept}
+          variation="solid"
+        >
+          {acceptText}
+        </Button>,
+        <Button key="cancel" onClick={onCancel} variation="ghost">
+          {cancelText}
+        </Button>,
+      ]}
+      className={cx("confirmation-dialog", className)}
+      onCancel={onCancel}
+      {...rest}
+    />
+  );
+};

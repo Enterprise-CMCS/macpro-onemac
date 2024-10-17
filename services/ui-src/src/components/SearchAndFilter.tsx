@@ -324,7 +324,7 @@ function TextFilter({
             value !== "Inactivated" && (
               <Choice
                 checked={filterValue?.includes(value) ?? true}
-                inversed
+                onDark
                 key={value}
                 label={value}
                 name={`${id}-${value}`}
@@ -554,10 +554,10 @@ function FilterPane<V extends {}>({
                   <Button
                     autoFocus
                     className="close-filter-pane"
-                    inversed
+                    onDark
                     onClick={toggleShowFilters}
                     size="small"
-                    variation="transparent"
+                    variation="ghost"
                   >
                     Close <FontAwesomeIcon icon={faTimes} />
                   </Button>
@@ -565,7 +565,7 @@ function FilterPane<V extends {}>({
                 <Button
                   className="reset-button-filter"
                   onClick={onResetFilters}
-                  inversed
+                  onDark
                 >
                   Reset
                 </Button>

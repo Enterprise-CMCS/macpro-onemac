@@ -57,7 +57,7 @@ const PageTitleBar = ({
                     )
                   : handleTravel()
               }
-              variation="transparent"
+              variation="ghost"
             >
               <FontAwesomeIcon
                 icon={faChevronLeft}
