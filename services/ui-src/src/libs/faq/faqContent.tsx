@@ -793,6 +793,360 @@ export const oneMACFAQContent: FAQContent[] = [
           </div>
         ),
       },
+      {
+        anchorText: "medicaid-alternative-benifit-plan-pdfs",
+        isOpen: false,
+        question:
+          "Where can I download Medicaid Alternative Benefit Plan (ABP) SPA PDFs?",
+          answerJSX: (
+            <>
+              <ul className="file-type-list">
+                {[
+                  ["ABP1.pdf", "ABP 1: Alternative Benefit Plan Populations"],
+                  ["ABP2a.pdf", "ABP 2a: Voluntary Benefit Package Selection Assurances - Eligibility Group under Section 1902(a)(10)(A)(i)(VIII) of the Act"],
+                  ["ABP2b.pdf", "ABP 2b: Voluntary Enrollment Assurances for Eligibility Groups other than the Adult Group under Section 1902(a)(10)(A)(i)(VIII) of the Act"],
+                  ["ABP3.pdf", "ABP 3: Selection of Benchmark Benefit Package or Benchmark-Equivalent Benefit Package Use only if ABP has an effective date earlier than 1/1/2020 or if only changing the Section 1937 Coverage Option of an ABP implemented before 1/1/2020"],
+                  ["ABP3.1.pdf", "ABP 3.1: Selection of Benchmark Benefit or Benchmark-Equivalent Benefit Package Use only for ABP's effective on or after 1/1/2020"],
+                  ["ABP4.pdf", "ABP 4: Alternative Benefit Plan Cost Sharing"],
+                  ["ABP5.pdf", "ABP 5: Benefits Description"],
+                  ["ABP6.pdf", "ABP 6: Benchmark-Equivalent Benefit Package"],
+                  ["ABP7.pdf", "ABP 7: Benefits Assurances"],
+                  ["ABP8.pdf", "ABP 8: Service Delivery Systems"],
+                  ["ABP9.pdf", "ABP 9: Employer-Sponsored Insurance and Payment of Premiums"],
+                  ["ABP10.pdf", "ABP 10: General Assurances"],
+                  ["ABP11.pdf", "ABP 11: Payment Methodology"],
+                ].map(([filename, label]) => ( !label.includes("or Benchmark-Equivalent Benefit Package") && !label.includes("3.1") ? 
+                  <li key={filename}>
+                    <a
+                      href={`${process.env.PUBLIC_URL}/assets/forms/${filename}`}
+                      rel="noopener noreferrer"
+                      target="_blank"
+                      className="spa-link"
+                    >
+                      {label}
+                    </a>
+                  </li> :  label.includes("3.1") ?
+                  <li key={filename}>
+                    <div>
+                      <a
+                        href={`${process.env.PUBLIC_URL}/assets/forms/${filename}`}
+                        rel="noopener noreferrer"
+                        target="_blank"
+                        className="spa-link"
+                      >
+                      {label.substring(0,79)}
+                      </a>
+                      <ul>
+                        <li className="list-item-with-bullet"> 
+                          {label.substring(79)}
+                        </li>
+                      </ul>
+                    </div>
+                  </li>  :
+                  <li key={filename}>
+                  <div>
+                    <a
+                      href={`${process.env.PUBLIC_URL}/assets/forms/${filename}`}
+                      rel="noopener noreferrer"
+                      target="_blank"
+                      className="spa-link"
+                    >
+
+                    {label.substring(0,85)}
+                    </a>
+                    <ul>
+                      <li className="list-item-with-bullet"> 
+                          {label.substring(85)}
+                      </li>
+                    </ul>
+                  </div>
+                </li> 
+                ))}
+              </ul>
+            </>
+          ),
+      },
+      {
+        anchorText: "medicaid-alternative-benifit-plan-implimention-guides",
+        isOpen: false,
+        question:
+          "Where can I download Medicaid Alternative Benefit Plan (ABP) implementation guides?",
+          answerJSX: (
+            <>
+              <ul className="file-type-list">
+                {[
+                  ["IG_ABP1_AlternativeBenefitPlanPopulations.doc", "ABP 1: Alternative Benefit Plan Populations Implementation Guide"],
+                  ["IG_ABP2a_VoluntaryBenefitPackageAssurances.doc", "ABP 2a: Voluntary Benefit Package Selection Assurances - Eligibility Group under Section 1902(a)(10)(A)(i)(VIII) of the Act Implementation Guide"],
+                  ["IG_ABP2b_VoluntaryEnrollmentAssurances.doc", "ABP 2b: Voluntary Enrollment Assurances for Eligibility Groups other than the Adult Group under Section 1902(a)(10)(A)(i)(VIII) of the Act Implementation Guide"],
+                  ["IG_ABP3_SelectionOfBenchmark.doc", "ABP 3: Selection of Benchmark Benefit Package or Benchmark-Equivalent Benefit Package Implementation Guide"],
+                  ["IG_ABP3.1_SelectionOfBenchmark20190819-Final.docx", "ABP 3.1: Selection of Benchmark Benefit Package or Benchmark-Equivalent Benefit Package Implementation Guide"],
+                  ["IG_ABP4_AbpCostSharing.doc", "ABP 4: Alternative Benefit Plan Cost Sharing Implementation Guide"],
+                  ["IG_ABP5_BenefitsDescription-Final.docx", "ABP 5: Benefits Description Implementation Guide"],
+                  ["IG_ABP6_BenchmarkEquivalentBenefit.doc", "ABP 6: Benchmark-Equivalent Benefit Package Implementation Guide"],
+                  ["IG_ABP7_BenefitAssurances.doc", "ABP 7: Benefit Assurances Implementation Guide"],
+                  ["IG_ABP8_ServiceDeliverySystems.doc", "ABP 8:Service Delivery Systems Implementation Guide"],
+                  ["IG_ABP9_EmployerSponsoredInsurance.doc", "ABP 9: Employer-Sponsored Insurance and Payment of Premiums Implementation Guide"],
+                  ["IG_ABP10_GeneralAssurances.doc", "ABP 10: General Assurances Implementation Guide"],
+                  ["IG_ABP11_PaymentMethodology.doc", "ABP 11: Payment Methodology Implementation Guide"],
+                ].map(([filename, label]) => (
+                  <li key={filename}>
+                    <a
+                      href={`${process.env.PUBLIC_URL}/assets/docs/${filename}`}
+                      rel="noopener noreferrer"
+                      target="_blank"
+                      className="spa-link"
+                      download
+                    >
+                      {label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </>
+          ),
+      },
+      {
+        anchorText: "medicaid-premiums-cost-sharing-pdfs",
+        isOpen: false,
+        question:
+          "Where can I download Medicaid Premiums and Cost Sharing (P&CS) SPA PDFs?",
+          answerJSX: (
+            <>
+              <ul className="file-type-list">
+                {[
+                  ["G1.pdf", "G 1: Cost Sharing Requirements"],
+                  ["G2a.pdf", "G 2a: Cost Sharing Amounts - Categorically Needy"],
+                  ["G2b.pdf", "G 2b: Cost Sharing Amounts - Medically Needy"],
+                  ["G2c.pdf", "G 2c: Cost Sharing Amounts - Targeting"],
+                  ["G3.pdf", "G 3: Cost Sharing Limitations"],
+                ].map(([filename, label]) => (
+                  <li key={filename}>
+                    <a
+                      href={`${process.env.PUBLIC_URL}/assets/forms/${filename}`}
+                      rel="noopener noreferrer"
+                      target="_blank"
+                      className="spa-link"
+                    >
+                      {label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </>
+          ),
+      },
+      {
+        anchorText: "medicaid-premiums-cost-sharing-inplementation guides",
+        isOpen: false,
+        question:
+          "Where can I download Medicaid Premiums and Cost Sharing (P&CS) SPA implementation guides?",
+          answerJSX: (
+            <>
+              <ul className="file-type-list">
+                {[
+                  ["IG_G1_CostSharingRequirements.doc", "G 1: Cost-Sharing Requirements Implementation Guide"],
+                  ["IG_G2a_CostSharingAmountsCN.doc", "Cost Sharing Amounts - Categorically Needy Implementation Guide"],
+                  ["IG_G2b_CostSharingAmountsMN.doc", "Cost Sharing Amounts - Medically Needy Implementation Guide"],
+                  ["IG_G2c_CostSharingAmountsTargeting.doc", "Cost Sharing Amounts - Targeting Implementation Guide"],
+                  ["IG_G3_CostSharingLimitations.doc", "Cost Sharing Limitations Implementation Guide"],
+                ].map(([filename, label]) => (
+                  <li key={filename}>
+                    <a
+                      href={`${process.env.PUBLIC_URL}/assets/docs/${filename}`}
+                      rel="noopener noreferrer"
+                      target="_blank"
+                      className="spa-link"
+                      download
+                    >
+                      {label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </>
+          ),
+      },
+      {
+        anchorText: "chip-spa-pdfs",
+        isOpen: false,
+        question:
+          "Where can I download CHIP SPA PDFs?",
+          answerJSX: (
+            <>
+              <h4>MAGI Eligibility & Methods</h4>
+              <ul className="file-type-list">
+                {[
+                  ["CS7.pdf", "CS 7: Eligibility - Targeted Low-Income Children"],
+                  ["CS8.pdf", "CS 8: Eligibility - Targeted Low-Income Pregnant Women"],
+                  ["CS9.pdf", "CS 9: Eligibility - Coverage From Conception to Birth"],
+                  ["CS10.pdf", "CS 10: Eligibility - Children Who Have Access to Public Employee Coverage"],
+                  ["CS11.pdf", "CS 11: Eligibility - Pregnant Women Who Have Access to Public Employee Coverage"],
+                  ["CS12.pdf", "CS 12: Eligibility - Dental Only Supplemental Coverage"],
+                  ["CS13.pdf", "CS 13: Eligibility - Deemed Newborns"],
+                  ["CS15.pdf", "CS 15: MAGI-Based Income Methodologies"],
+                  ["CS16.pdf", "CS 16: Other Eligibility Criteria - Spenddowns"],
+                ].map(([filename, label]) => (
+                  <li key={filename}>
+                    <a
+                      href={`${process.env.PUBLIC_URL}/assets/forms/${filename}`}
+                      rel="noopener noreferrer"
+                      target="_blank"
+                      className="spa-link"
+                    >
+                      {label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+              <h4>XXI Medicaid Expansion</h4>
+              <a
+                      href={`${process.env.PUBLIC_URL}/assets/forms/CS3.pdf`}
+                      rel="noopener noreferrer"
+                      target="_blank"
+                      className="spa-link"
+                    >
+                      "CS 3: Eligibility for Medicaid Expansion Program"
+              </a>
+              <h4>Establish 2101(f) Groups</h4>
+              <a
+                      href={`${process.env.PUBLIC_URL}/assets/forms/CS14.pdf`}
+                      rel="noopener noreferrer"
+                      target="_blank"
+                      className="spa-link"
+                    >
+                      "CS 14: Eligibility - Children Ineligible for Medicaid as a Result of the
+                      Elimination of Income Disregards"
+              </a>
+              <h4>Eligibility Processing</h4>
+              <a
+                      href={`${process.env.PUBLIC_URL}/assets/forms/CS14.pdf`}
+                      rel="noopener noreferrer"
+                      target="_blank"
+                      className="spa-link"
+                    >
+                      "CS 24: General Eligibility - Eligibility Processing"
+              </a>
+              <h4>Non-Financial Eligibility</h4>
+              <ul className="file-type-list">
+                {[
+                  ["CS17.pdf", "Non-Financial Eligibility - Residency"],
+                  ["CS18.pdf", "Non-Financial Eligibility - Citizenship"],
+                  ["CS19.pdf", "Non-Financial Eligibility - Social Security Number"],
+                  ["CS20.pdf", "Non-Financial Eligibility - Substitution of Coverage"],
+                  ["CS21.pdf", "Non-Financial Eligibility - Non-Payment of Premiums"],
+                  ["CS23.pdf", "Non-Financial Requirements - Other Eligibility Standards"],
+                  ["CS27.pdf", "General Eligibility - Continuous Eligibility"],
+                  ["CS28.pdf", "General Eligibility - Presumptive Eligibility for Children"],
+                  ["CS29.pdf", "General Eligibility - Presumptive Eligibility for Pregnant Women"],
+                ].map(([filename, label]) => (
+                  <li key={filename}>
+                    <a
+                      href={`${process.env.PUBLIC_URL}/assets/forms/${filename}`}
+                      rel="noopener noreferrer"
+                      target="_blank"
+                      className="spa-link"
+                    >
+                      {label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </>
+          ),
+      },
+      {
+        anchorText: "chip-spa-pdfs",
+        isOpen: false,
+        question:
+          "Where can I download CHIP SPA implementation guides?",
+          answerJSX: (
+            <>
+              <h4>MAGI Eligibility & Methods</h4>
+              <ul className="file-type-list">
+                {[
+                  ["IG_CS7_TargetedLow-IncomeChildren.doc", "CS 7: Eligibility - Targeted Low-Income Children Implementation Guide"],
+                  ["IG_CS8_TargetedLow-IncomePregnantWomen.doc", "CS 8: Eligibility - Targeted Low-Income Pregnant Women Implementation Guide"],
+                  ["IG_CS9_CoverageFromConceptionToBirth.doc", "CS 9: Eligibility - Coverage From Conception to Birth Implementation Guide"],
+                  ["IG_CS10_ChildrenWhoHaveAccessToPublicEmployeeCoverage.doc", "CS 10: Eligibility - Children Who Have Access to Public Employee Coverage Implementation Guide"],
+                  ["IG_CS11_PregnantWomenWhoHaveAccessToPublicEmployeeCoverage.doc", "CS 11: Eligibility - Pregnant Women Who Have Access to Public Employee Coverage Implementation Guide"],
+                  ["IG_CS12_DentalOnlySupplementalCoverage.doc", "CS 12: Eligibility - Dental Only Supplemental Coverage Implementation Guide"],
+                  ["IG_CS13_DeemedNewborns.doc", "CS 13: Eligibility - Deemed Newborns Implementation Guide"],
+                  ["IG_CS15_MAGI-BasedIncomeMethodologies.doc", "CS 15: MAGI-Based Income Methodologies Implementation Guide"],
+                  ["IG_CS16_Spenddown.doc", "CS 16: Other Eligibility Criteria - Spenddowns Implementation Guide"],
+                ].map(([filename, label]) => (
+                  <li key={filename}>
+                    <a
+                      href={`${process.env.PUBLIC_URL}/assets/docs/${filename}`}
+                      rel="noopener noreferrer"
+                      target="_blank"
+                      className="spa-link"
+                      download
+                    >
+                      {label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+              <h4>XXI Medicaid Expansion</h4>
+              <a
+                      href={`${process.env.PUBLIC_URL}/assets/docs/IG_CS3_MedicaidExpansion.doc`}
+                      rel="noopener noreferrer"
+                      target="_blank"
+                      className="spa-link"
+                      download
+                    >
+                  CS 3: Eligibility for Medicaid Expansion Program Implementation Guide
+              </a>
+              <h4>Establish 2101(f) Groups</h4>
+              <a
+                      href={`${process.env.PUBLIC_URL}/assets/docs/IG_CS14_ChildrenIneligForMedicaid.doc`}
+                      rel="noopener noreferrer"
+                      target="_blank"
+                      className="spa-link"
+                      download
+                    >
+                  CS 14: Eligibility - Children Ineligible for Medicaid as a Result of the
+                  Elimination of Income Disregards Implementation Guide
+              </a>
+              <h4>Eligibility Processing</h4>
+              <a
+                      href={`${process.env.PUBLIC_URL}/assets/docs/IG_CS24_EligibilityProcessing.doc`}
+                      rel="noopener noreferrer"
+                      target="_blank"
+                      className="spa-link"
+                      download
+                    >
+                  CS 24: General Eligibility - Eligibility Processing Implementation Guide
+              </a>
+              <h4>Non-Financial Eligibility</h4>
+              <ul className="file-type-list">
+                {[
+                  ["IG_CS17_Non-Financial-Residency.doc", "CS 17: Non-Financial Eligibility - Residency Implementation Guide"],
+                  ["IG_CS18_Non-Financial-Citizenship.doc", "CS 18: Non-Financial Eligibility - Citizenship Implementation Guide"],
+                  ["IG_CS19_Non-Financial-SocialSecurityNumber.doc", "CS 19: Non-Financial Eligibility - Social Security Number Implementation Guide"],
+                  ["IG_CS20_Non-Financial-SubstitutionOfCoverage.doc", "CS 20: Non-Financial Eligibility - Substitution of Coverage Implementation Guide"],
+                  ["IG_CS21_NonFinancialNonPaymentOfPremiums.doc", "CS 21: Non-Financial Eligibility - Non-Payment of Premiums Implementation Guide"],
+                  ["IG_CS23_NonFinancialRequirementOtherEligibilityStandards.doc", "CS 23: Non-Financial Requirements - Other Eligibility Standards Implementation Guide"],
+                  ["IG_CS27_ContinuousEligibility.doc", "CS 27: General Eligibility - Continuous Eligibility Implementation Guide"],
+                  ["IG_CS28_PresumptiveEligibilityForChildren.doc", "CS 28: General Eligibility - Presumptive Eligibility for Children Implementation Guide"],
+                  ["IG_CS29_PresumptiveEligibilityForPregnantWomen.doc", "CS 29: General Eligibility - Presumptive Eligibility for Pregnant Women Implementation Guide"],
+                ].map(([filename, label]) => (
+                  <li key={filename}>
+                    <a
+                      href={`${process.env.PUBLIC_URL}/assets/docs/${filename}`}
+                      rel="noopener noreferrer"
+                      target="_blank"
+                      className="spa-link"
+                      download
+                    >
+                      {label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </>
+          ),
+      },
     ],
   },
   {
@@ -1386,360 +1740,6 @@ export const oneMACFAQContent: FAQContent[] = [
             </p>
           </div>
         ),
-      },
-      {
-        anchorText: "medicaid-alternative-benifit-plan-pdfs",
-        isOpen: false,
-        question:
-          "Where can I download Medicaid Alternative Benefit Plan (ABP) SPA PDFs?",
-          answerJSX: (
-            <>
-              <ul className="file-type-list">
-                {[
-                  ["ABP1.pdf", "ABP 1: Alternative Benefit Plan Populations"],
-                  ["ABP2a.pdf", "ABP 2a: Voluntary Benefit Package Selection Assurances - Eligibility Group under Section 1902(a)(10)(A)(i)(VIII) of the Act"],
-                  ["ABP2b.pdf", "ABP 2b: Voluntary Enrollment Assurances for Eligibility Groups other than the Adult Group under Section 1902(a)(10)(A)(i)(VIII) of the Act"],
-                  ["ABP3.pdf", "ABP 3: Selection of Benchmark Benefit Package or Benchmark-Equivalent Benefit Package Use only if ABP has an effective date earlier than 1/1/2020 or if only changing the Section 1937 Coverage Option of an ABP implemented before 1/1/2020"],
-                  ["ABP3.1.pdf", "ABP 3.1: Selection of Benchmark Benefit or Benchmark-Equivalent Benefit Package Use only for ABP's effective on or after 1/1/2020"],
-                  ["ABP4.pdf", "ABP 4: Alternative Benefit Plan Cost Sharing"],
-                  ["ABP5.pdf", "ABP 5: Benefits Description"],
-                  ["ABP6.pdf", "ABP 6: Benchmark-Equivalent Benefit Package"],
-                  ["ABP7.pdf", "ABP 7: Benefits Assurances"],
-                  ["ABP8.pdf", "ABP 8: Service Delivery Systems"],
-                  ["ABP9.pdf", "ABP 9: Employer-Sponsored Insurance and Payment of Premiums"],
-                  ["ABP10.pdf", "ABP 10: General Assurances"],
-                  ["ABP11.pdf", "ABP 11: Payment Methodology"],
-                ].map(([filename, label]) => ( !label.includes("or Benchmark-Equivalent Benefit Package") && !label.includes("3.1") ? 
-                  <li key={filename}>
-                    <a
-                      href={`${process.env.PUBLIC_URL}/assets/forms/${filename}`}
-                      rel="noopener noreferrer"
-                      target="_blank"
-                      className="spa-link"
-                    >
-                      {label}
-                    </a>
-                  </li> :  label.includes("3.1") ?
-                  <li key={filename}>
-                    <div>
-                      <a
-                        href={`${process.env.PUBLIC_URL}/assets/forms/${filename}`}
-                        rel="noopener noreferrer"
-                        target="_blank"
-                        className="spa-link"
-                      >
-                      {label.substring(0,79)}
-                      </a>
-                      <ul>
-                        <li className="list-item-with-bullet"> 
-                          {label.substring(79)}
-                        </li>
-                      </ul>
-                    </div>
-                  </li>  :
-                  <li key={filename}>
-                  <div>
-                    <a
-                      href={`${process.env.PUBLIC_URL}/assets/forms/${filename}`}
-                      rel="noopener noreferrer"
-                      target="_blank"
-                      className="spa-link"
-                    >
-
-                    {label.substring(0,85)}
-                    </a>
-                    <ul>
-                      <li className="list-item-with-bullet"> 
-                          {label.substring(85)}
-                      </li>
-                    </ul>
-                  </div>
-                </li> 
-                ))}
-              </ul>
-            </>
-          ),
-      },
-      {
-        anchorText: "medicaid-alternative-benifit-plan-implimention-guides",
-        isOpen: false,
-        question:
-          "Where can I download Medicaid Alternative Benefit Plan (ABP) implementation guides?",
-          answerJSX: (
-            <>
-              <ul className="file-type-list">
-                {[
-                  ["IG_ABP1_AlternativeBenefitPlanPopulations.doc", "ABP 1: Alternative Benefit Plan Populations Implementation Guide"],
-                  ["IG_ABP2a_VoluntaryBenefitPackageAssurances.doc", "ABP 2a: Voluntary Benefit Package Selection Assurances - Eligibility Group under Section 1902(a)(10)(A)(i)(VIII) of the Act Implementation Guide"],
-                  ["IG_ABP2b_VoluntaryEnrollmentAssurances.doc", "ABP 2b: Voluntary Enrollment Assurances for Eligibility Groups other than the Adult Group under Section 1902(a)(10)(A)(i)(VIII) of the Act Implementation Guide"],
-                  ["IG_ABP3_SelectionOfBenchmark.doc", "ABP 3: Selection of Benchmark Benefit Package or Benchmark-Equivalent Benefit Package Implementation Guide"],
-                  ["IG_ABP3.1_SelectionOfBenchmark20190819-Final.docx", "ABP 3.1: Selection of Benchmark Benefit Package or Benchmark-Equivalent Benefit Package Implementation Guide"],
-                  ["IG_ABP4_AbpCostSharing.doc", "ABP 4: Alternative Benefit Plan Cost Sharing Implementation Guide"],
-                  ["IG_ABP5_BenefitsDescription-Final.docx", "ABP 5: Benefits Description Implementation Guide"],
-                  ["IG_ABP6_BenchmarkEquivalentBenefit.doc", "ABP 6: Benchmark-Equivalent Benefit Package Implementation Guide"],
-                  ["IG_ABP7_BenefitAssurances.doc", "ABP 7: Benefit Assurances Implementation Guide"],
-                  ["IG_ABP8_ServiceDeliverySystems.doc", "ABP 8:Service Delivery Systems Implementation Guide"],
-                  ["IG_ABP9_EmployerSponsoredInsurance.doc", "ABP 9: Employer-Sponsored Insurance and Payment of Premiums Implementation Guide"],
-                  ["IG_ABP10_GeneralAssurances.doc", "ABP 10: General Assurances Implementation Guide"],
-                  ["IG_ABP11_PaymentMethodology.doc", "ABP 11: Payment Methodology Implementation Guide"],
-                ].map(([filename, label]) => (
-                  <li key={filename}>
-                    <a
-                      href={`${process.env.PUBLIC_URL}/assets/docs/${filename}`}
-                      rel="noopener noreferrer"
-                      target="_blank"
-                      className="spa-link"
-                      download
-                    >
-                      {label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </>
-          ),
-      },
-      {
-        anchorText: "medicaid-premiums-cost-sharing-pdfs",
-        isOpen: false,
-        question:
-          "Where can I download Medicaid Premiums and Cost Sharing (P&CS) SPA PDFs?",
-          answerJSX: (
-            <>
-              <ul className="file-type-list">
-                {[
-                  ["G1.pdf", "G 1: Cost Sharing Requirements"],
-                  ["G2a.pdf", "G 2a: Cost Sharing Amounts - Categorically Needy"],
-                  ["G2b.pdf", "G 2b: Cost Sharing Amounts - Medically Needy"],
-                  ["G2c.pdf", "G 2c: Cost Sharing Amounts - Targeting"],
-                  ["G3.pdf", "G 3: Cost Sharing Limitations"],
-                ].map(([filename, label]) => (
-                  <li key={filename}>
-                    <a
-                      href={`${process.env.PUBLIC_URL}/assets/forms/${filename}`}
-                      rel="noopener noreferrer"
-                      target="_blank"
-                      className="spa-link"
-                    >
-                      {label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </>
-          ),
-      },
-      {
-        anchorText: "medicaid-premiums-cost-sharing-inplementation guides",
-        isOpen: false,
-        question:
-          "Where can I download Medicaid Premiums and Cost Sharing (P&CS) SPA implementation guides?",
-          answerJSX: (
-            <>
-              <ul className="file-type-list">
-                {[
-                  ["IG_G1_CostSharingRequirements.doc", "G 1: Cost-Sharing Requirements Implementation Guide"],
-                  ["IG_G2a_CostSharingAmountsCN.doc", "Cost Sharing Amounts - Categorically Needy Implementation Guide"],
-                  ["IG_G2b_CostSharingAmountsMN.doc", "Cost Sharing Amounts - Medically Needy Implementation Guide"],
-                  ["IG_G2c_CostSharingAmountsTargeting.doc", "Cost Sharing Amounts - Targeting Implementation Guide"],
-                  ["IG_G3_CostSharingLimitations.doc", "Cost Sharing Limitations Implementation Guide"],
-                ].map(([filename, label]) => (
-                  <li key={filename}>
-                    <a
-                      href={`${process.env.PUBLIC_URL}/assets/docs/${filename}`}
-                      rel="noopener noreferrer"
-                      target="_blank"
-                      className="spa-link"
-                      download
-                    >
-                      {label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </>
-          ),
-      },
-      {
-        anchorText: "chip-spa-pdfs",
-        isOpen: false,
-        question:
-          "Where can I download CHIP SPA PDFs?",
-          answerJSX: (
-            <>
-              <h4>MAGI Eligibility & Methods</h4>
-              <ul className="file-type-list">
-                {[
-                  ["CS7.pdf", "CS 7: Eligibility - Targeted Low-Income Children"],
-                  ["CS8.pdf", "CS 8: Eligibility - Targeted Low-Income Pregnant Women"],
-                  ["CS9.pdf", "CS 9: Eligibility - Coverage From Conception to Birth"],
-                  ["CS10.pdf", "CS 10: Eligibility - Children Who Have Access to Public Employee Coverage"],
-                  ["CS11.pdf", "CS 11: Eligibility - Pregnant Women Who Have Access to Public Employee Coverage"],
-                  ["CS12.pdf", "CS 12: Eligibility - Dental Only Supplemental Coverage"],
-                  ["CS13.pdf", "CS 13: Eligibility - Deemed Newborns"],
-                  ["CS15.pdf", "CS 15: MAGI-Based Income Methodologies"],
-                  ["CS16.pdf", "CS 16: Other Eligibility Criteria - Spenddowns"],
-                ].map(([filename, label]) => (
-                  <li key={filename}>
-                    <a
-                      href={`${process.env.PUBLIC_URL}/assets/forms/${filename}`}
-                      rel="noopener noreferrer"
-                      target="_blank"
-                      className="spa-link"
-                    >
-                      {label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-              <h4>XXI Medicaid Expansion</h4>
-              <a
-                      href={`${process.env.PUBLIC_URL}/assets/forms/CS3.pdf`}
-                      rel="noopener noreferrer"
-                      target="_blank"
-                      className="spa-link"
-                    >
-                      "CS 3: Eligibility for Medicaid Expansion Program"
-              </a>
-              <h4>Establish 2101(f) Groups</h4>
-              <a
-                      href={`${process.env.PUBLIC_URL}/assets/forms/CS14.pdf`}
-                      rel="noopener noreferrer"
-                      target="_blank"
-                      className="spa-link"
-                    >
-                      "CS 14: Eligibility - Children Ineligible for Medicaid as a Result of the
-                      Elimination of Income Disregards"
-              </a>
-              <h4>Eligibility Processing</h4>
-              <a
-                      href={`${process.env.PUBLIC_URL}/assets/forms/CS14.pdf`}
-                      rel="noopener noreferrer"
-                      target="_blank"
-                      className="spa-link"
-                    >
-                      "CS 24: General Eligibility - Eligibility Processing"
-              </a>
-              <h4>Non-Financial Eligibility</h4>
-              <ul className="file-type-list">
-                {[
-                  ["CS17.pdf", "Non-Financial Eligibility - Residency"],
-                  ["CS18.pdf", "Non-Financial Eligibility - Citizenship"],
-                  ["CS19.pdf", "Non-Financial Eligibility - Social Security Number"],
-                  ["CS20.pdf", "Non-Financial Eligibility - Substitution of Coverage"],
-                  ["CS21.pdf", "Non-Financial Eligibility - Non-Payment of Premiums"],
-                  ["CS23.pdf", "Non-Financial Requirements - Other Eligibility Standards"],
-                  ["CS27.pdf", "General Eligibility - Continuous Eligibility"],
-                  ["CS28.pdf", "General Eligibility - Presumptive Eligibility for Children"],
-                  ["CS29.pdf", "General Eligibility - Presumptive Eligibility for Pregnant Women"],
-                ].map(([filename, label]) => (
-                  <li key={filename}>
-                    <a
-                      href={`${process.env.PUBLIC_URL}/assets/forms/${filename}`}
-                      rel="noopener noreferrer"
-                      target="_blank"
-                      className="spa-link"
-                    >
-                      {label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </>
-          ),
-      },
-      {
-        anchorText: "chip-spa-pdfs",
-        isOpen: false,
-        question:
-          "Where can I download CHIP SPA implementation guides?",
-          answerJSX: (
-            <>
-              <h4>MAGI Eligibility & Methods</h4>
-              <ul className="file-type-list">
-                {[
-                  ["IG_CS7_TargetedLow-IncomeChildren.doc", "CS 7: Eligibility - Targeted Low-Income Children Implementation Guide"],
-                  ["IG_CS8_TargetedLow-IncomePregnantWomen.doc", "CS 8: Eligibility - Targeted Low-Income Pregnant Women Implementation Guide"],
-                  ["IG_CS9_CoverageFromConceptionToBirth.doc", "CS 9: Eligibility - Coverage From Conception to Birth Implementation Guide"],
-                  ["IG_CS10_ChildrenWhoHaveAccessToPublicEmployeeCoverage.doc", "CS 10: Eligibility - Children Who Have Access to Public Employee Coverage Implementation Guide"],
-                  ["IG_CS11_PregnantWomenWhoHaveAccessToPublicEmployeeCoverage.doc", "CS 11: Eligibility - Pregnant Women Who Have Access to Public Employee Coverage Implementation Guide"],
-                  ["IG_CS12_DentalOnlySupplementalCoverage.doc", "CS 12: Eligibility - Dental Only Supplemental Coverage Implementation Guide"],
-                  ["IG_CS13_DeemedNewborns.doc", "CS 13: Eligibility - Deemed Newborns Implementation Guide"],
-                  ["IG_CS15_MAGI-BasedIncomeMethodologies.doc", "CS 15: MAGI-Based Income Methodologies Implementation Guide"],
-                  ["IG_CS16_Spenddown.doc", "CS 16: Other Eligibility Criteria - Spenddowns Implementation Guide"],
-                ].map(([filename, label]) => (
-                  <li key={filename}>
-                    <a
-                      href={`${process.env.PUBLIC_URL}/assets/docs/${filename}`}
-                      rel="noopener noreferrer"
-                      target="_blank"
-                      className="spa-link"
-                      download
-                    >
-                      {label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-              <h4>XXI Medicaid Expansion</h4>
-              <a
-                      href={`${process.env.PUBLIC_URL}/assets/docs/IG_CS3_MedicaidExpansion.doc`}
-                      rel="noopener noreferrer"
-                      target="_blank"
-                      className="spa-link"
-                      download
-                    >
-                  CS 3: Eligibility for Medicaid Expansion Program Implementation Guide
-              </a>
-              <h4>Establish 2101(f) Groups</h4>
-              <a
-                      href={`${process.env.PUBLIC_URL}/assets/docs/IG_CS14_ChildrenIneligForMedicaid.doc`}
-                      rel="noopener noreferrer"
-                      target="_blank"
-                      className="spa-link"
-                      download
-                    >
-                  CS 14: Eligibility - Children Ineligible for Medicaid as a Result of the
-                  Elimination of Income Disregards Implementation Guide
-              </a>
-              <h4>Eligibility Processing</h4>
-              <a
-                      href={`${process.env.PUBLIC_URL}/assets/docs/IG_CS24_EligibilityProcessing.doc`}
-                      rel="noopener noreferrer"
-                      target="_blank"
-                      className="spa-link"
-                      download
-                    >
-                  CS 24: General Eligibility - Eligibility Processing Implementation Guide
-              </a>
-              <h4>Non-Financial Eligibility</h4>
-              <ul className="file-type-list">
-                {[
-                  ["IG_CS17_Non-Financial-Residency.doc", "CS 17: Non-Financial Eligibility - Residency Implementation Guide"],
-                  ["IG_CS18_Non-Financial-Citizenship.doc", "CS 18: Non-Financial Eligibility - Citizenship Implementation Guide"],
-                  ["IG_CS19_Non-Financial-SocialSecurityNumber.doc", "CS 19: Non-Financial Eligibility - Social Security Number Implementation Guide"],
-                  ["IG_CS20_Non-Financial-SubstitutionOfCoverage.doc", "CS 20: Non-Financial Eligibility - Substitution of Coverage Implementation Guide"],
-                  ["IG_CS21_NonFinancialNonPaymentOfPremiums.doc", "CS 21: Non-Financial Eligibility - Non-Payment of Premiums Implementation Guide"],
-                  ["IG_CS23_NonFinancialRequirementOtherEligibilityStandards.doc", "CS 23: Non-Financial Requirements - Other Eligibility Standards Implementation Guide"],
-                  ["IG_CS27_ContinuousEligibility.doc", "CS 27: General Eligibility - Continuous Eligibility Implementation Guide"],
-                  ["IG_CS28_PresumptiveEligibilityForChildren.doc", "CS 28: General Eligibility - Presumptive Eligibility for Children Implementation Guide"],
-                  ["IG_CS29_PresumptiveEligibilityForPregnantWomen.doc", "CS 29: General Eligibility - Presumptive Eligibility for Pregnant Women Implementation Guide"],
-                ].map(([filename, label]) => (
-                  <li key={filename}>
-                    <a
-                      href={`${process.env.PUBLIC_URL}/assets/docs/${filename}`}
-                      rel="noopener noreferrer"
-                      target="_blank"
-                      className="spa-link"
-                      download
-                    >
-                      {label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </>
-          ),
       },
     ],
   },
