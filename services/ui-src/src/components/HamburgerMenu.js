@@ -63,7 +63,7 @@ function HamburgerMenu({ linksToDisplay }) {
           type="button"
           id="close-hamburger-menu"
           className="to-close-hamburger"
-          inversed
+          onDark
         >
           <img
             aria-label="Close Hamburger Navigation"

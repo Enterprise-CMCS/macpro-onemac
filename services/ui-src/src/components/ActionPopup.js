@@ -50,7 +50,7 @@ export default function ActionPopup({
         disabled={!availableActions || availableActions.length === 0}
         onClick={() => setShowMenu(!showMenu)}
         size="small"
-        variation="transparent"
+        variation="ghost"
       >
         <FontAwesomeIcon icon={faEllipsisV} />
       </Button>
