@@ -5,7 +5,7 @@ const path = require('path');
 const buildDir = path.join(__dirname, 'build', 'static', 'js');
 
 // Define the regular expression to match the version pattern
-const regex = /^4\.\d{1,2}\.\d{1,2}$/;
+const regex = /4\.\d{1,2}\.\d{1,2}/g; // Added 'g' flag for global matching
 
 // Function to remove the version from files
 const removeVersionFromFiles = (dir) => {
@@ -21,7 +21,7 @@ const removeVersionFromFiles = (dir) => {
           if (err) throw err;
 
           // Replace the version pattern
-          const result = data.replace(regex, '');
+          const result = data.replace(regex, ''); // Remove matched versions
 
           // Write the modified content back to the file
           fs.writeFile(filePath, result, 'utf8', (err) => {
