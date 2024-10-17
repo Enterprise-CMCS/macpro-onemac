@@ -5,7 +5,7 @@ const path = require('path');
 const buildDir = path.join(__dirname, 'build', 'static', 'js');
 
 // Define the regular expression to match the version pattern
-const regex = /\b\d+\.\d+\.\d+\b/g;
+const regex = /^4\.\d{1,2}\.\d{1,2}$/;
 
 // Function to remove the version from files
 const removeVersionFromFiles = (dir) => {
