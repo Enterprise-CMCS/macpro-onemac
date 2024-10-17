@@ -7,17 +7,9 @@ provider:
 # Define the Lambda layer
 layers:
   awsSdkV2:
-    path: nodejs
+    path: .
     compatibleRuntimes:
       - nodejs20.x
-
-# Export the ARN of the layer for other services to use
-outputs:
-  AwsSdkV2LayerExport:
-    value:
-      Ref: AwsSdkV2LambdaLayer
-    export:
-      name: AwsSdkV2LayerArn
 
 # Package the layer
 package:
