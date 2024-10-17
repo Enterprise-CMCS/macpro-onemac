@@ -794,6 +794,32 @@ export const oneMACFAQContent: FAQContent[] = [
         ),
       },
       {
+        anchorText: "which-spa-submitted",
+        isOpen: false,
+        question: "What State Plan Amendments (SPAs) can be submitted to OneMAC",
+        answerJSX: (
+          <div>
+            <p>
+             OneMAC is the electronic submission system for all paper-based Medicaid and Children's Health insurance Program (CHIP) SPAs. 
+            </p>
+             <p>
+             Starting [TBD], CMS is modifying the state transmittal process for Medicaid.
+             Alternative Benefit Plan SPAs, Medicaid Premium and Cost Sharing SPAs, and CHIP Eligibility SPAs which were previously submitted to CMS through Medicaid Model Data Lab (MMDL).
+             </p>
+             <p>
+             In order to be processed, States will need to submit these state actions to the OneMAC system. The MMDL system will no longer accept new submissions for these SPA actions.
+             </p>
+             <p>
+             MMDL SPA submissions submitted prior to [TBD], including those SPA actions currently off the clock with a Request for Additional Information; will continue to be processed through the MMDL system.
+             However, no new submissions or amendments will be accepted in the MMDL system.
+             </p>
+             <p>
+             Medicaid Alternative Benefit SPAs, Premium and Cost Sharing SPAs, and CHIP Eligibility SPAs will continue to use the published SPA templates and Implementation Guides which can now be found here/below. This change does not apply to electronic Medicaid SPA submissions processed in the Medicaid and CHIP Program Portal (MACPro) system.
+            </p>
+          </div>
+        ),
+      },
+      {
         anchorText: "medicaid-alternative-benifit-plan-pdfs",
         isOpen: false,
         question:
@@ -1711,32 +1737,6 @@ export const oneMACFAQContent: FAQContent[] = [
               is withdrawn, it cannot be resubmitted and this action will
               conclude the review of this package. Select Yes, withdraw package
               to complete the task.
-            </p>
-          </div>
-        ),
-      },
-      {
-        anchorText: "which-spa-submitted",
-        isOpen: false,
-        question: "What State Plan Amendments (SPAs) can be submitted to OneMAC",
-        answerJSX: (
-          <div>
-            <p>
-             OneMAC is the electronic submission system for all paper-based Medicaid and Children's Health insurance Program (CHIP) SPAs. 
-            </p>
-             <p>
-             Starting [TBD], CMS is modifying the state transmittal process for Medicaid.
-             Alternative Benefit Plan SPAs, Medicaid Premium and Cost Sharing SPAs, and CHIP Eligibility SPAs which were previously submitted to CMS through Medicaid Model Data Lab (MMDL).
-             </p>
-             <p>
-             In order to be processed, States will need to submit these state actions to the OneMAC system. The MMDL system will no longer accept new submissions for these SPA actions.
-             </p>
-             <p>
-             MMDL SPA submissions submitted prior to [TBD], including those SPA actions currently off the clock with a Request for Additional Information; will continue to be processed through the MMDL system.
-             However, no new submissions or amendments will be accepted in the MMDL system.
-             </p>
-             <p>
-             Medicaid Alternative Benefit SPAs, Premium and Cost Sharing SPAs, and CHIP Eligibility SPAs will continue to use the published SPA templates and Implementation Guides which can now be found here/below. This change does not apply to electronic Medicaid SPA submissions processed in the Medicaid and CHIP Program Portal (MACPro) system.
             </p>
           </div>
         ),
