@@ -66,7 +66,7 @@ export default function PopupMenu({
         disabled={!menuItems || menuItems.length === 0}
         onClick={handleClick}
         size="small"
-        variation="transparent"
+        variation="ghost"
       >
         <FontAwesomeIcon icon={faEllipsisV} />
       </Button>
