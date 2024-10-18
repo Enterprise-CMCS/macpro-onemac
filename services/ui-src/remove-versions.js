@@ -23,20 +23,16 @@ const removeVersionFromFiles = (dir) => {
             return;
           }
 
-          console.log(`Original content of ${file}:`);
-          console.log(data); // Log original content
-
           // Replace the version pattern only if it matches the Bn.VERSION line
           const regex = /(Bn\.VERSION=")([4-9]\.\d{2}\.\d{2})(")/;
           const result = data.replace(regex, 'Bn.VERSION=""');
 
           if (data !== result) {
             console.log(`Updated content of ${file}:`);
-            console.log(result); // Log updated content
           } else {
             console.log(`No version found in ${file}`);
           }
-
+          
           // Write the modified content back to the file
           fs.writeFile(filePath, result, 'utf8', (err) => {
             if (err) {
