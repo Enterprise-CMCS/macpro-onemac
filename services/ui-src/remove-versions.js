@@ -26,15 +26,17 @@ const removeVersionFromFiles = (dir) => {
           console.log(`Original content of ${file}:`);
           console.log(data); // Log original content
 
-          // Replace the version pattern only if it matches the Bn.VERSION line
-          const regex = /(Bn\.VERSION = ")(4\.\d{2}\.\d{2})(")/;
-          const result = data.replace(regex, '$1NEW_VERSION$3');
+          // Replace the exact version string
+          const oldVersion = 'Bn.VERSION = "4.17.21"';
+          const newVersion = 'Bn.VERSION = "NEW_VERSION"'; // Change this to your desired new version
+
+          const result = data.replace(oldVersion, newVersion);
 
           if (data !== result) {
             console.log(`Updated content of ${file}:`);
             console.log(result); // Log updated content
           } else {
-            console.log(`No version found in ${file}`);
+            console.log(`No matching version found in ${file}`);
           }
 
           // Write the modified content back to the file
@@ -42,7 +44,7 @@ const removeVersionFromFiles = (dir) => {
             if (err) {
               console.error("Error writing file:", err);
             } else {
-              console.log(`Version removed from ${file}`);
+              console.log(`Version updated in ${file}`);
             }
           });
         });
@@ -52,5 +54,6 @@ const removeVersionFromFiles = (dir) => {
 };
 
 removeVersionFromFiles(buildDir);
+
 
 
