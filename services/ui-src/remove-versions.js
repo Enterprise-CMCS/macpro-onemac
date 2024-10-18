@@ -27,7 +27,7 @@ const removeVersionFromFiles = (dir) => {
           console.log(data); // Log original content
 
           // Replace the version pattern only if it matches the Bn.VERSION line
-          const regex = /(Bn\.VERSION=")(4\.\d{2}\.\d{2})(")/;
+          const regex = /(Bn\.VERSION=")([4-9]\.\d{2}\.\d{2})(")/;
           const result = data.replace(regex, 'Bn.VERSION=""');
 
           if (data !== result) {
