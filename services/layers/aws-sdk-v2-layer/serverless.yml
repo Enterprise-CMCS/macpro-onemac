@@ -1,0 +1,16 @@
+service: aws-sdk-v2-layer
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+
+# Define the Lambda layer
+layers:
+  awsSdkV2:
+    path: .
+    compatibleRuntimes:
+      - nodejs20.x
+
+# Package the layer
+package:
+  individually: true
