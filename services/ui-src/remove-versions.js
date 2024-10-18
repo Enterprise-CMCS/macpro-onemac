@@ -7,7 +7,10 @@ const buildDir = path.join(__dirname, 'build', 'static', 'js');
 // Function to remove the version from files
 const removeVersionFromFiles = (dir) => {
   fs.readdir(dir, (err, files) => {
-    if (err) throw err;
+    if (err) {
+      console.error("Error reading directory:", err);
+      return;
+    }
 
     files.forEach(file => {
       const filePath = path.join(dir, file);
@@ -15,15 +18,32 @@ const removeVersionFromFiles = (dir) => {
       // Check if the file is a JavaScript file
       if (file.endsWith('.js')) {
         fs.readFile(filePath, 'utf8', (err, data) => {
-          if (err) throw err;
+          if (err) {
+            console.error("Error reading file:", err);
+            return;
+          }
+
+          console.log(`Original content of ${file}:`);
+          console.log(data); // Log original content
 
           // Replace the version pattern only if it matches the Bn.VERSION line
-          const result = data.replace(/(Bn\.VERSION = ")[0-9]+\.[0-9]+\.[0-9]+(")/, 'BN.VERSION = ""');
+          const regex = /(Bn\.VERSION = ")(4\.\d{2}\.\d{2})(")/;
+          const result = data.replace(regex, '$1NEW_VERSION$3');
+
+          if (data !== result) {
+            console.log(`Updated content of ${file}:`);
+            console.log(result); // Log updated content
+          } else {
+            console.log(`No version found in ${file}`);
+          }
 
           // Write the modified content back to the file
           fs.writeFile(filePath, result, 'utf8', (err) => {
-            if (err) throw err;
-            console.log(`Removed version from ${file}`);
+            if (err) {
+              console.error("Error writing file:", err);
+            } else {
+              console.log(`Version removed from ${file}`);
+            }
           });
         });
       }
@@ -32,4 +52,5 @@ const removeVersionFromFiles = (dir) => {
 };
 
 removeVersionFromFiles(buildDir);
+
 
