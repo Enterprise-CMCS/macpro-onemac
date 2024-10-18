@@ -5,8 +5,8 @@ const path = require('path');
 const buildDir = path.join(__dirname, 'build', 'static', 'js');
 
 // Define the regular expression to match the version pattern
-// where the match occurs right after Bn.VERSION = "
-const regex = /(?<=Bn\.VERSION = ")(4\.(1[7-9]|[2-9][0-9])\.\d{2}|5\.\d{2}\.\d{2}|[6-9]\.\d{2}\.\d{2})/g; // Matches versions like 4.17.01, 5.25.99, 9.10.11
+// Specifically targeting the line with Bn.VERSION
+const regex = /(Bn\.VERSION = ")(4\.(1[7-9]|[2-9][0-9])\.\d{2}|5\.\d{2}\.\d{2}|[6-9]\.\d{2}\.\d{2})(")/g;
 
 // Function to remove the version from files
 const removeVersionFromFiles = (dir) => {
@@ -22,7 +22,7 @@ const removeVersionFromFiles = (dir) => {
           if (err) throw err;
 
           // Replace the version pattern only after Bn.VERSION = "
-          const result = data.replace(regex, ''); // Remove matched versions
+          const result = data.replace(regex, '$1"$4'); // Keep the surrounding parts and replace the version
 
           // Write the modified content back to the file
           fs.writeFile(filePath, result, 'utf8', (err) => {
@@ -36,3 +36,4 @@ const removeVersionFromFiles = (dir) => {
 };
 
 removeVersionFromFiles(buildDir);
+
