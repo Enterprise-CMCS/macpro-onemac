@@ -9,7 +9,7 @@ import { ONEMAC_TYPE } from "../workflow.js";
 export const waiverAmendmentSubsequentSubmission = {
   ...waiverAmendment,
   componentType: ONEMAC_TYPE.WAIVER_AMENDMENT_SUBSEQUENT_SUBMISSION,
-  typeLabel: "Waiver Amendment Subsequent Submission",
+  typeLabel: "Waiver Amendment Subsequent Documents",
   idMustExist: true,
   allowMultiplesWithSameId: true,
   allowedParentStatuses: ["Under Review"],

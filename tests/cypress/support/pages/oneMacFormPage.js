@@ -12,7 +12,6 @@ const modalCancelBTN =
   "//*[@id='react-aria-modal-dialog']//button[text()='Cancel']";
 const attachmentInfoDescription =
   "//h3[text()='Attachments']/following-sibling::p[1]";
-const enterMmdlBtn = "//button[contains(text(),'Enter the MMDL system')]";
 const enterMacProBtn = "//button[contains(text(),'Enter the MACPro system')]";
 const IDInputBox = idElement;
 const errorMessageID = "#componentIdStatusMsg0";
@@ -29,7 +28,7 @@ const subsequentDocumentsHeader = (type) =>
   `//h3[contains(text(),'Subsequent ${type} Documents')]`;
 const labelElementFromLabel = {
   "Additional Information": "#additional-information-label",
-  "Reason for subsequent submission": "#additional-information-label",
+  "Reason for subsequent documents": "#additional-information-label",
 };
 const elementFromLabel = {
   // Different forms may have different labels for the ID field
@@ -41,7 +40,7 @@ const elementFromLabel = {
   "Existing Waiver Number to Renew": parentIdElement,
   "Existing Waiver Number to Amend": parentIdElement,
   "Additional Information": "#additional-information",
-  "Reason for subsequent submission": "#additional-information",
+  "Reason for subsequent documents": "#additional-information",
 };
 const errorMessageLine1FromLabel = {
   "SPA ID": "#componentIdStatusMsg0",
@@ -283,16 +282,6 @@ export class oneMacFormPage {
     }
   }
 
-  verifyMmdlSystemBtn() {
-    cy.xpath(enterMmdlBtn).should("be.visible");
-    cy.xpath(enterMmdlBtn)
-      .parent("a")
-      .should(
-        "have.attr",
-        "href",
-        "https://wms-mmdl.cms.gov/MMDL/faces/portal.jsp"
-      );
-  }
   verifyMacProSystemBtn() {
     cy.xpath(enterMacProBtn).should("be.visible");
     cy.xpath(enterMacProBtn)

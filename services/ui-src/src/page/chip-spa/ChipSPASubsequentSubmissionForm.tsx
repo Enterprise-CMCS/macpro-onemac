@@ -17,7 +17,7 @@ export const chipSPASubsequentSubmissionFormInfo: OneMACFormConfig = {
   ...defaultSubsequentSubmissionFormConfig,
   ...chipSPASubsequentSubmission,
   pageTitle: "Upload Subsequent CHIP SPA Documentation",
-  detailsHeader: "CHIP SPA Subsequent Submission",
+  detailsHeader: "CHIP SPA Subsequent Documents",
   landingPage: ONEMAC_ROUTES.PACKAGE_LIST_SPA,
   confirmSubmit: defaultConfirmSubsequentSubmission,
   validateParentAPI: "validateParentOfAny",
