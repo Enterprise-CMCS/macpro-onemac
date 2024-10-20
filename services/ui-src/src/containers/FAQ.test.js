@@ -46,16 +46,22 @@ it("expand button opens all", async () => {
 
 it("links to a new browser tab that opens a pdf", async () => {
   render(<FAQ />);
-  const linkEl = await screen.getByText("CS 7: Eligibility - Targeted Low-Income Children")
-  expect(linkEl).toHaveAttribute('href', "/assets/forms/CS7.pdf");
-  expect(linkEl).toHaveAttribute('target', '_blank');
-  expect(linkEl).toHaveAttribute('rel', 'noopener noreferrer');
+  const linkEl = await screen.getByText(
+    "CS 7: Eligibility - Targeted Low-Income Children"
+  );
+  expect(linkEl).toHaveAttribute("href", "/assets/forms/CS7.pdf");
+  expect(linkEl).toHaveAttribute("target", "_blank");
+  expect(linkEl).toHaveAttribute("rel", "noopener noreferrer");
 });
 
-it("links to a download of a .doc file", async() => {
+it("links to a download of a .doc file", async () => {
   render(<FAQ />);
-  const linkEl = await screen.getByText("G 1: Cost-Sharing Requirements Implementation Guide");
-  expect(linkEl).toHaveAttribute('href', "/assets/docs/IG_G1_CostSharingRequirements.doc");
-  expect(linkEl).toHaveAttribute('download')
-})
-
+  const linkEl = await screen.getByText(
+    "G 1: Cost-Sharing Requirements Implementation Guide"
+  );
+  expect(linkEl).toHaveAttribute(
+    "href",
+    "/assets/docs/IG_G1_CostSharingRequirements.doc"
+  );
+  expect(linkEl).toHaveAttribute("download");
+});
