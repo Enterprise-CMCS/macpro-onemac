@@ -42,11 +42,9 @@ function mapNotificationType(type: "user" | "system"): string {
 }
 
 // Function to handle flexible date inputs
-function parseDate(
-  input: string | undefined,
-  defaultToNow: boolean = false
-): string {
-  if (!input && defaultToNow) {
+function parseDate(input?: string): string {
+  // If no input is provided, default to the current date
+  if (!input) {
     return new Date().toISOString();
   }
 
@@ -54,17 +52,17 @@ function parseDate(
     return new Date().toISOString();
   }
 
-  if (input?.includes("days from now")) {
+  if (input.includes("days from now")) {
     const days = parseInt(input.split(" ")[0], 10);
     return addDays(new Date(), days).toISOString();
   }
 
   // Assuming user passes YYYY-MM-DD format for easier input
-  if (input && /^\d{4}-\d{2}-\d{2}$/.test(input)) {
+  if (/^\d{4}-\d{2}-\d{2}$/.test(input)) {
     return new Date(`${input}T00:00:00Z`).toISOString();
   }
 
-  // Default to current date if no input is provided
+  // Default to current date if input is invalid
   return new Date().toISOString();
 }
 
@@ -97,9 +95,10 @@ function formatNotificationRecord(event: EventInput): NotificationRecord {
   const sk = `NOTIFICATION#${notificationId}`; // Unique notification identifier
 
   // Default values for publicationDate and expiryDate with more user-friendly inputs
-  const publicationDate = parseDate(event.publicationDate, true); // Default to current date
-  const expiryDate =
-    parseDate(event.expiryDate, false) || "9999-12-31T23:59:59Z"; // Default to far future date
+  const publicationDate = parseDate(event.publicationDate); // Default to current date
+  const expiryDate = event.expiryDate
+    ? parseDate(event.expiryDate)
+    : "9999-12-31T23:59:59Z"; // Default to far future date
 
   // Use the translated notificationType
   const GSI1pk = mapNotificationType(event.notificationType);
