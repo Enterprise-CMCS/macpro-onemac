@@ -2145,12 +2145,12 @@ article.form-container {
   padding-left: 0;
 }
 
-.spa-link{
+.spa-link {
   text-decoration: none;
 }
 
 .list-item-with-bullet {
-  list-style: disc
+  list-style: disc;
 }
 
 .file-type-list-item {
@@ -2963,7 +2963,6 @@ article.form-container {
   @extend .ds-c-button;
   margin: 10px;
 }
-
 .accordion-button > svg {
   display: none;
 }
