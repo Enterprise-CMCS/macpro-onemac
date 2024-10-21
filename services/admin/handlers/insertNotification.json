@@ -1,0 +1,10 @@
+{
+  "_comment": "Dates are passed in format YYYY-MM-DD or keywords 'today' or 'x days from now'",
+  "publicationDate": "2024-01-01",
+  "expiryDate": "7 days from now",
+  "header": "New Feature Release",
+  "body": "We have released a new feature. Check it out now!",
+  "buttonText": "Learn More",
+  "buttonLink": "https://example.com/feature",
+  "notificationType": "user"
+}

@@ -643,7 +643,6 @@ functions:
           path: getActiveSystemNotifications  # The API path
           method: get
           cors: true
-          authorizer: aws_iam
 
   getActiveUserNotifications:
     handler: notification/getActiveUserNotifications.main # Path to your function handler
