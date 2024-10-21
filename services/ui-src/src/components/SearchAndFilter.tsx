@@ -59,8 +59,11 @@ export interface ColumnPickerProps<V extends {}> {
   internalName: string;
 }
 
-const orderColumns = (a: { Header: string }, b: { Header: string }) => {
-  return a.Header.localeCompare(b.Header);
+const orderColumns = (a: ColumnInstance<any>, b: ColumnInstance<any>) => {
+  const x = a.Header?.toString();
+  const y = b.Header?.toString();
+  if (x && y) return x.localeCompare(y);
+  else return 0;
 };
 
 /** Takes a column ID and boolean to appropriately store the IDs of columns
@@ -120,6 +123,17 @@ export const ColumnPicker: FC<ColumnPickerProps<any>> = ({
   ] = useToggle(false);
   const dropdownButtonRef = useRef<HTMLDivElement>(null);
 
+  const columnsChoice = useMemo(
+    () =>
+      columnsInternal
+        .filter(
+          ({ id }: ColumnInstance<PackageRowValue>) =>
+            !["componentId", "packageActions"].includes(id)
+        )
+        .sort(orderColumns),
+    [columnsInternal]
+  );
+
   useEffect(() => {
     const listenToClick = (event: MouseEvent) => {
       let ignoreClickElement = dropdownButtonRef;
@@ -158,39 +172,29 @@ export const ColumnPicker: FC<ColumnPickerProps<any>> = ({
             aria-label="Column Picker For Table"
             className="dropdown-column-picker-box"
           >
-            {columnsInternal
-              .filter(
-                ({ id }: ColumnInstance<PackageRowValue>) =>
-                  //@ts-ignore
-                  !["componentId", "packageActions"].includes(id)
+            {columnsChoice.map(
+              ({
+                Header,
+                id,
+                toggleHidden,
+                isVisible,
+              }: ColumnInstance<PackageRowValue>) => (
+                <Choice
+                  className="dropdown-column-picker-button"
+                  label={Header as string}
+                  name={`columnPicker-${Header}`}
+                  value={Header as string}
+                  onChange={() => {
+                    toggleHidden();
+                    updateVisibilitySavedState(id, isVisible, internalName);
+                  }}
+                  checked={isVisible}
+                  type="checkbox"
+                  size="small"
+                  key={id}
+                />
               )
-              //@ts-ignore
-              .sort(orderColumns)
-              .map(
-                ({
-                  Header,
-                  id,
-                  //@ts-ignore
-                  toggleHidden,
-                  //@ts-ignore
-                  isVisible,
-                }: ColumnInstance<PackageRowValue>) => (
-                  <Choice
-                    className="dropdown-column-picker-button"
-                    label={Header}
-                    name={`columnPicker-${Header}`}
-                    value={Header as string}
-                    onChange={() => {
-                      toggleHidden();
-                      updateVisibilitySavedState(id, isVisible, internalName);
-                    }}
-                    checked={isVisible}
-                    type="checkbox"
-                    size="small"
-                    key={id}
-                  />
-                )
-              )}
+            )}
           </div>
         )}
       </div>
@@ -324,7 +328,7 @@ function TextFilter({
             value !== "Inactivated" && (
               <Choice
                 checked={filterValue?.includes(value) ?? true}
-                onDark
+                inversed
                 key={value}
                 label={value}
                 name={`${id}-${value}`}
@@ -577,12 +581,12 @@ function FilterPane<V extends {}>({
                       <AccordionItem
                         buttonClassName="inversed-accordion-button"
                         contentClassName="inversed-accordion-content"
-                        heading={column.render("Header")}
+                        heading={column.render("Header") as string}
                         headingLevel="6"
                         id={column.id}
                         key={column.id}
                       >
-                        {column.render("Filter")}
+                        {<>column.render("Filter")</>}
                       </AccordionItem>
                     ))}
                 </div>
@@ -632,6 +636,15 @@ export function SearchAndFilter<V extends {} = {}>({
     [debouncedSearch]
   );
 
+  // this is to avoid typing errors but I am going to look into better solution - andie
+  const columnsChoice: ColumnInstance<any>[] = useMemo(
+    () =>
+      columnsInternal.map((column) => {
+        return { ...column } as ColumnInstance;
+      }),
+    [columnsInternal]
+  );
+
   return (
     <div className="search-and-filter" role="search">
       <div className="search-bar">
@@ -660,7 +673,7 @@ export function SearchAndFilter<V extends {} = {}>({
       </div>
       <div className="picker-filter-wrapper">
         <ColumnPicker
-          columnsInternal={columnsInternal}
+          columnsInternal={columnsChoice}
           internalName={internalName}
         />
         <div className="filter-buttons">
