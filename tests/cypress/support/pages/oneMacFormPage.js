@@ -28,7 +28,7 @@ const subsequentDocumentsHeader = (type) =>
   `//h3[contains(text(),'Subsequent ${type} Documents')]`;
 const labelElementFromLabel = {
   "Additional Information": "#additional-information-label",
-  "Reason for subsequent submission": "#additional-information-label",
+  "Reason for subsequent documents": "#additional-information-label",
 };
 const elementFromLabel = {
   // Different forms may have different labels for the ID field
@@ -40,7 +40,7 @@ const elementFromLabel = {
   "Existing Waiver Number to Renew": parentIdElement,
   "Existing Waiver Number to Amend": parentIdElement,
   "Additional Information": "#additional-information",
-  "Reason for subsequent submission": "#additional-information",
+  "Reason for subsequent documents": "#additional-information",
 };
 const errorMessageLine1FromLabel = {
   "SPA ID": "#componentIdStatusMsg0",
@@ -281,7 +281,6 @@ export class oneMacFormPage {
         break;
     }
   }
-
 
   verifyMacProSystemBtn() {
     cy.xpath(enterMacProBtn).should("be.visible");

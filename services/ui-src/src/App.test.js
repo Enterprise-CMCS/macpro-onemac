@@ -14,6 +14,21 @@ jest.mock("./utils/UserDataApi");
 jest.mock("./components/IdleTimerWrapper");
 
 beforeEach(() => {
+  // fixing the 'window.matchMedia is not defined' error
+  Object.defineProperty(window, "matchMedia", {
+    writable: true,
+    value: jest.fn().mockImplementation((query) => ({
+      matches: false,
+      media: query,
+      onchange: null,
+      addListener: jest.fn(), // Deprecated
+      removeListener: jest.fn(), // Deprecated
+      addEventListener: jest.fn(),
+      removeEventListener: jest.fn(),
+      dispatchEvent: jest.fn(),
+    })),
+  });
+
   jest.clearAllMocks();
 
   // render does not work for idleTimer -- workaround

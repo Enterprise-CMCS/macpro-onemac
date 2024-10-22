@@ -316,7 +316,10 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
     );
 
     const isAdditionalInformationReady: boolean = Boolean(
-      formConfig.addlInfoRequired ? oneMacFormData.additionalInformation : true
+      formConfig.addlInfoRequired
+        ? oneMacFormData.additionalInformation &&
+            oneMacFormData.additionalInformation.trim().length > 0
+        : true
     );
 
     setIsSubmissionReady(

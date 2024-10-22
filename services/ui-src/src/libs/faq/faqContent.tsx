@@ -1744,6 +1744,3 @@ export const oneMACFAQContent: FAQContent[] = [
     ],
   },
 ];
-
-
-

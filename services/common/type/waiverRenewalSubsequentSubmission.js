@@ -10,7 +10,7 @@ export const waiverRenewalSubsequentSubmission = {
   ...waiverRenewal,
   ...waiverRenewalB4,
   componentType: ONEMAC_TYPE.WAIVER_RENEWAL_SUBSEQUENT_SUBMISSION,
-  typeLabel: "Waiver Renewal Subsequent Submission",
+  typeLabel: "Waiver Renewal Subsequent Documents",
   idMustExist: true,
   allowMultiplesWithSameId: true,
   allowedParentTypes: ["waiverrenewal"],
