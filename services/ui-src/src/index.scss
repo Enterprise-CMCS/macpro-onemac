@@ -1745,6 +1745,8 @@ article.form-container {
       right: 300px;
       bottom: 400px;
       height: 100%;
+      pointer-events: none;
+      z-index: -1;
     }
   }
 
