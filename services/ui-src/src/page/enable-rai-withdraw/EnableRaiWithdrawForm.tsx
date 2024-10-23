@@ -28,7 +28,7 @@ export const enableRaiWithdrawFormInfo: OneMACFormConfig = {
 };
 
 const EnableRaiWithdrawForm: FC = () => {
-  const location = useLocation<FormLocationState>();
+  const location = useLocation() as { state: FormLocationState };
   if (location.state?.componentId && location.state?.parentType) {
     const detailPath = TYPE_TO_DETAIL_ROUTE[location.state.parentType];
     enableRaiWithdrawFormInfo.landingPage = `${detailPath}/${location.state?.componentId}`;

@@ -1,5 +1,5 @@
 import React, { RefObject, useState, useEffect, useRef } from "react";
-import { Link, useHistory, useLocation } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Button, SkipNav } from "@cmsgov/design-system";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -61,7 +61,7 @@ const AccountButtons: React.FC<{
   showMenu: boolean;
   setShowMenu: (newValue: boolean) => void;
 }> = ({ showMenu, setShowMenu }) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const {
     isAuthenticated,
     userRole,
@@ -81,7 +81,7 @@ const AccountButtons: React.FC<{
           <div className="dev-login">
             <Button
               id="devloginBtn"
-              onClick={() => history.push(ROUTES.DEVLOGIN)}
+              onClick={() => navigate(ROUTES.DEVLOGIN)}
               onDark
             >
               Development Login

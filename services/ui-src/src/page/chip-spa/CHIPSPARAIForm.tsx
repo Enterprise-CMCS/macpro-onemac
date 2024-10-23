@@ -33,7 +33,7 @@ export const chipSPARAIFormInfo: OneMACFormConfig = {
 };
 
 const CHIPSPARAIForm: FC = () => {
-  const location = useLocation<FormLocationState>();
+  const location = useLocation() as { state: FormLocationState };
   if (location.state?.componentId)
     chipSPARAIFormInfo.landingPage = `${ONEMAC_ROUTES.CHIP_SPA_DETAIL}/${location.state?.componentId}`;
 

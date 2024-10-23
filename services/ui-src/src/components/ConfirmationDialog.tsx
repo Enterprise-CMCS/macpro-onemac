@@ -2,8 +2,6 @@ import React, { ComponentProps, FC } from "react";
 import { Button, Dialog } from "@cmsgov/design-system";
 import cx from "classnames";
 
-import { getApplicationNode } from "../utils";
-
 type SelfProps = {
   className?: string;
   acceptText: string;

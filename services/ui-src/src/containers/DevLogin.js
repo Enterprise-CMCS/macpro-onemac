@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Auth } from "aws-amplify";
-import { Redirect } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 import { Button } from "@cmsgov/design-system";
 
@@ -41,7 +41,7 @@ export default function DevLogin() {
     setAlertCode(RESPONSE_CODE.NONE);
   }
 
-  if (isAuthenticated) return <Redirect to={ONEMAC_ROUTES.PACKAGE_LIST} />;
+  if (isAuthenticated) return <Navigate to={ONEMAC_ROUTES.PACKAGE_LIST} />;
 
   return (
     <div>

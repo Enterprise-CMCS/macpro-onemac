@@ -6,7 +6,7 @@ import React, {
   useEffect,
   useCallback,
 } from "react";
-import { useHistory, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Input } from "rsuite";
 
 import { TextField, Button, Review } from "@cmsgov/design-system";
@@ -62,7 +62,7 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
   // for setting the alert
   const [alertCode, setAlertCode] = useState(RESPONSE_CODE.NONE);
   const { activeTerritories, confirmAction } = useAppContext() ?? {};
-  const location = useLocation<FormLocationState>();
+  const location = useLocation();
 
   //Reference to the File Uploader.
   const uploader = useRef<FileUploader>(null);
@@ -81,7 +81,7 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
   >([]);
 
   // The browser history, so we can redirect to the home page
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const presetComponentId = location.state?.componentId ?? "";
   const presetParentId = location.state?.parentId ?? undefined;
@@ -372,8 +372,10 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
       if (returnCode in FORM_SUCCESS_RESPONSE_CODES)
         throw new Error(returnCode);
 
-      history.push(thisLandingPage, {
-        passCode: returnCode,
+      navigate(thisLandingPage, {
+        state: {
+          passCode: returnCode,
+        },
       });
     } catch (err) {
       console.log("error is: ", err);
@@ -386,7 +388,7 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
     componentIdStatusMessages,
     oneMacFormData,
     formConfig.componentType,
-    history,
+    navigate,
     thisLandingPage,
   ]);
 
@@ -637,7 +639,7 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
                   "Leave Anyway",
                   "Stay on Page",
                   leavePageConfirmMessage,
-                  () => history.goBack()
+                  () => navigate(-1)
                 )
               }
               type="button"

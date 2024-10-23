@@ -24,7 +24,7 @@ export const medicaidSPARAIFormInfo: OneMACFormConfig = {
 };
 
 const MedicaidSPARAIForm: FC = () => {
-  const location = useLocation<FormLocationState>();
+  const location = useLocation() as { state: FormLocationState };
   if (location.state?.componentId)
     medicaidSPARAIFormInfo.landingPage = `${ONEMAC_ROUTES.MEDICAID_SPA_DETAIL}/${location.state?.componentId}`;
   return <OneMACForm formConfig={medicaidSPARAIFormInfo} />;

@@ -640,7 +640,12 @@ export function SearchAndFilter<V extends {} = {}>({
   const columnsChoice: ColumnInstance<any>[] = useMemo(
     () =>
       columnsInternal.map((column) => {
-        return { ...column } as ColumnInstance;
+        return {
+          Header: column.Header,
+          id: column.id,
+          toggleHidden: column.toggleHidden,
+          isVisible: column.isVisible,
+        } as ColumnInstance;
       }),
     [columnsInternal]
   );
