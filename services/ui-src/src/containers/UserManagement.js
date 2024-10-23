@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { useLocation, useHistory, Link } from "react-router-dom";
+import { useLocation, useNavigate, Link } from "react-router-dom";
 import {
   RESPONSE_CODE,
   ROUTES,
@@ -77,7 +77,7 @@ const UserManagement = () => {
   const [userList, setUserList] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const { userProfile, userStatus, userRole } = useAppContext();
-  const history = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
   const [alertCode, setAlertCode] = useState(location?.state?.passCode);
   const [doneToName, setDoneToName] = useState("");
@@ -117,7 +117,7 @@ const UserManagement = () => {
       !userProfile.userData ||
       !getUserRoleObj(userProfile.userData.roleList).canAccessUserManagement
     ) {
-      history.push(ONEMAC_ROUTES.PACKAGE_LIST);
+      navigate(ONEMAC_ROUTES.PACKAGE_LIST);
     }
 
     if (mounted) updateList();
@@ -125,7 +125,7 @@ const UserManagement = () => {
     return function cleanup() {
       mounted = false;
     };
-  }, [location, userProfile, history, updateList]);
+  }, [location, userProfile, navigate, updateList]);
 
   useEffect(() => {
     let newIsLoading = true;

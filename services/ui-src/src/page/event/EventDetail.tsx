@@ -1,7 +1,7 @@
 import { ONEMAC_ROUTES, RESPONSE_CODE } from "cmscommonlib";
 import { format } from "date-fns";
 import React, { useCallback, useEffect, useState } from "react";
-import { useHistory, useParams, useLocation } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import AlertBar from "../../components/AlertBar";
 import LoadingScreen from "../../components/LoadingScreen";
 
@@ -15,8 +15,8 @@ type PathParams = {
 };
 
 const EventDetail: React.FC = () => {
-  const location = useLocation<LocationState>();
-  const history = useHistory();
+  const location = useLocation() as { state: LocationState };
+  const navigate = useNavigate();
   const [alertCode, setAlertCode] = useState(location?.state?.passCode);
   // so we show the spinner during the data load
   const [isLoading, setIsLoading] = useState(true);
@@ -41,8 +41,7 @@ const EventDetail: React.FC = () => {
         stillLoading = false;
       } catch (e) {
         console.log("error in getDetail call?? ", e);
-        history.push({
-          pathname: ONEMAC_ROUTES.EVENT,
+        navigate(ONEMAC_ROUTES.EVENT, {
           state: {
             passCode: RESPONSE_CODE.SYSTEM_ERROR,
           },
@@ -51,7 +50,7 @@ const EventDetail: React.FC = () => {
       if (!ctrlr?.signal.aborted) setDetail(fetchedDetail);
       if (!ctrlr?.signal.aborted) setIsLoading(stillLoading);
     },
-    [changedDate, history, id]
+    [changedDate, navigate, id]
   );
 
   useEffect(() => {

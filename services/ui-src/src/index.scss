@@ -1,22 +1,24 @@
-$font-path: "~@cmsgov/design-system/dist/fonts";
-$image-path: "~@cmsgov/design-system/dist/images";
+$font-path: "~@cmsgov/design-system/dist/fonts.css";
+$image-path: "~@cmsgov/design-system/dist/images.css";
 $input-border-radius: 3px;
 $color-primary-alt-lightest: #f0fafe;
-@import "@cmsgov/design-system/dist/scss/index";
+
+@import "@cmsgov/design-system/dist/css/index";
+@import "@cmsgov/design-system/dist/scss/core-theme";
 @import "~bootstrap/dist/css/bootstrap.min.css";
 
 @mixin gradient-top-border {
   background: linear-gradient(
     90.11deg,
     $color-primary 49.91%,
-    $color-primary-alt 66.06%
+    $color-primary-light 66.06%
   );
   border-radius: 3px 3px 0px 0px;
   height: 8px;
 }
 
 @mixin max-width-ultra-wide {
-  max-width: $width-lg;
+  max-width: $media-width-lg;
 }
 
 // Expansion for the CMS Review component
@@ -122,25 +124,25 @@ $color-primary-alt-lightest: #f0fafe;
     text-align: center;
   }
 }
-body {
-  @extend .ds-base;
-}
+// body {
+//   @extend .ds-base;
+// }
 
-h1 {
-  @extend .ds-h1;
-}
+// h1 {
+//   @extend .ds-h1;
+// }
 
-h2 {
-  @extend .ds-h2;
-}
+// h2 {
+//   @extend .ds-text-heading--2xl;
+// }
 
-h3 {
-  @extend .ds-h3;
-}
+// h3 {
+//   @extend .ds-text-heading--xl;
+// }
 
-h4 {
-  @extend .ds-h4;
-}
+// h4 {
+//   @extend .ds-text-heading--lg;
+// }
 
 legend {
   border-bottom-style: none !important;
@@ -185,7 +187,7 @@ p.field-hint {
 }
 .field-error-message {
   @extend .ds-c-field__hint;
-  color: $color-red;
+  color: $color-error;
 }
 .dashboard-white {
   background-color: $color-white;
@@ -210,10 +212,10 @@ p.field-hint {
   @extend .ds-u-padding-bottom--2;
   min-height: 7rem;
 
-  h1 {
-    @extend .ds-h2;
-    margin: 0;
-  }
+  // h1 {
+  //   @extend .ds-text-heading--2xl;
+  //   margin: 0;
+  // }
 
   .title-bar-left-content {
     @extend .ds-u-display--flex;
@@ -257,9 +259,9 @@ p.field-hint {
   }
 }
 
-ul {
-  @extend .ds-c-list;
-}
+// ul {
+//   @extend .ds-c-list;
+// }
 
 .ds-u-padding--8 {
   padding-left: 70px !important;
@@ -323,13 +325,13 @@ ul {
     padding-bottom: 4px;
 
     &:focus-within {
-      @include focus-styles;
+      @extend .ds-u-focus-within;
     }
   }
 
   .uploader-input-label-active {
     @extend .uploader-input-label;
-    @extend .ds-c-button--primary;
+    @extend .ds-c-button--solid;
   }
 
   .uploader-input-label-disabled {
@@ -342,7 +344,7 @@ ul {
 
   .uploader-clear-button {
     @extend .ds-c-button;
-    @extend .ds-c-button--transparent;
+    @extend .ds-c-button--ghost;
     @extend .ds-u-padding--0;
     color: $color-primary;
 
@@ -520,11 +522,11 @@ input[type="file"] {
   @extend .ds-u-align-items--center;
 
   h2 {
-    @extend .ds-h3;
+    @extend .ds-text-heading--xl;
     @extend .ds-u-margin-top--1;
   }
   .topic-title {
-    @extend .ds-h3;
+    @extend .ds-text-heading--xl;
     @extend .ds-u-margin-top--0;
     margin-bottom: 24px;
   }
@@ -602,7 +604,7 @@ input[type="file"] {
     span {
       font-size: 24px;
 
-      @media only screen and (max-width: $width-lg) {
+      @media only screen and (max-width: $media-width-lg) {
         font-size: 21px;
       }
     }
@@ -672,7 +674,7 @@ input[type="file"] {
     }
 
     span:first-child {
-      @extend .ds-h2;
+      @extend .ds-text-heading--2xl;
       @extend .ds-u-margin-top--7;
     }
   }
@@ -714,7 +716,7 @@ input[type="file"] {
     span {
       font-size: 24px;
 
-      @media only screen and (max-width: $width-lg) {
+      @media only screen and (max-width: $media-width-lg) {
         font-size: 21px;
       }
     }
@@ -763,7 +765,7 @@ article.form-container {
     }
 
     h2.ds-c-review__heading {
-      @extend .ds-h2;
+      @extend .ds-text-heading--2xl;
       @extend .ds-u-font-weight--bold;
       @extend .ds-u-margin-bottom--3;
     }
@@ -812,16 +814,16 @@ article.form-container {
   }
 
   .section-title-center {
-    @extend .ds-h2;
+    @extend .ds-text-heading--2xl;
     text-align: center;
   }
 
   .section-title {
-    @extend .ds-h2;
+    @extend .ds-text-heading--2xl;
   }
 
   .section-subtitle {
-    @extend .ds-h3;
+    @extend .ds-text-heading--xl;
   }
 
   .section-how-it-works {
@@ -872,7 +874,7 @@ article.form-container {
 }
 
 .circle-single-digit {
-  @extend .ds-h2;
+  @extend .ds-text-heading--2xl;
   width: 40px;
   height: 40px;
   color: $color-primary;
@@ -1063,7 +1065,7 @@ article.form-container {
     th,
     td {
       &:not(:last-child) {
-        padding-right: $table-padding;
+        padding-right: $spacer-1;
       }
     }
   }
@@ -1389,7 +1391,7 @@ article.form-container {
     display: inline-block;
 
     &:not(.ds-c-field__hint) {
-      @extend .ds-h3;
+      @extend .ds-text-heading--xl;
       @extend .ds-u-margin-bottom--1;
     }
   }
@@ -1501,7 +1503,7 @@ article.form-container {
     .multi-select-error-message {
       @extend .ds-c-field__hint;
       height: 35px;
-      color: $color-red;
+      color: $color-error;
     }
 
     .no-error-offset {
@@ -1541,7 +1543,7 @@ article.form-container {
     width: 100vw;
   }
 
-  @media only screen and (max-width: $width-lg) {
+  @media only screen and (max-width: $media-width-lg) {
     .footer-wrapper {
       flex-direction: column;
     }
@@ -1556,7 +1558,7 @@ article.form-container {
 
 .page-title-bar {
   .header-wrapper {
-    @media only screen and (max-width: $width-sm) {
+    @media only screen and (max-width: $media-width-sm) {
       justify-content: center !important;
       flex-direction: column;
       gap: 1rem;
@@ -1664,7 +1666,7 @@ article.form-container {
     margin-right: 7.2rem;
     @include max-width-ultra-wide;
 
-    @media only screen and (max-width: $width-lg) {
+    @media only screen and (max-width: $media-width-lg) {
       .polygon-image {
         width: 80%;
         top: 130px;
@@ -1808,7 +1810,7 @@ article.form-container {
   margin: 0 auto;
   background-color: $color-white;
 
-  @media only screen and (max-width: $width-xl) {
+  @media only screen and (max-width: $media-width-xl) {
     max-width: 560px;
     // Centers section titles when on mobile view
     h1 {
@@ -1841,7 +1843,7 @@ article.form-container {
     @extend .ds-u-justify-content--between;
     width: 100%;
 
-    @media only screen and (max-width: $width-xl) {
+    @media only screen and (max-width: $media-width-xl) {
       .mac-card-wrapper {
         width: 100%;
       }
@@ -2049,7 +2051,7 @@ article.form-container {
 .mac-card-removable-wrapper,
 .cms-group-division-section {
   div {
-    @extend .ds-u-font-size--h3;
+    @extend .ds-u-font-size--xl;
     @extend .ds-u-font-weight--semibold;
     line-height: 1.42857143; //carried over from bootstrap dd height
     margin-bottom: 5px;
@@ -2124,7 +2126,7 @@ article.form-container {
     width: 100%;
   }
 
-  @media only screen and (min-width: $width-md) {
+  @media only screen and (min-width: $media-width-md) {
     #contact-card {
       width: 350px;
       position: sticky;
@@ -2132,7 +2134,7 @@ article.form-container {
     }
   }
 
-  @media only screen and (max-width: $width-md) {
+  @media only screen and (max-width: $media-width-md) {
     flex-wrap: wrap-reverse;
     #contact-card {
       width: 100%;
@@ -2165,7 +2167,7 @@ article.form-container {
 
 .submission-form-cancel-button {
   @extend .ds-c-button;
-  @extend .ds-c-button--transparent;
+  @extend .ds-c-button--ghost;
   font-family: Open Sans;
   font-style: normal;
   font-weight: bold;
@@ -2216,7 +2218,7 @@ article.form-container {
 }
 
 .mac-card-title {
-  @extend .ds-h2;
+  @extend .ds-text-heading--2xl;
   @extend .ds-u-margin-bottom--4;
   line-height: 30px;
   text-align: left;
@@ -2499,13 +2501,13 @@ article.form-container {
   width: -moz-available;
   flex-wrap: wrap;
 
-  @media only screen and (max-width: $width-md) {
+  @media only screen and (max-width: $media-width-md) {
     align-items: center;
     justify-content: center;
   }
 
   > .search-bar {
-    @media only screen and (max-width: $width-md) {
+    @media only screen and (max-width: $media-width-md) {
       width: 100%;
     }
     > label {
@@ -2640,7 +2642,7 @@ article.form-container {
     right: 0;
 
     .no-results-header {
-      @extend .ds-h4;
+      @extend .ds-text-heading--lg;
     }
   }
 }
@@ -2830,7 +2832,7 @@ article.form-container {
     width: 45%;
   }
 
-  @media only screen and (max-width: $width-sm) {
+  @media only screen and (max-width: $media-width-sm) {
     justify-content: start;
     flex-direction: column;
     gap: 1rem;
@@ -2852,7 +2854,7 @@ article.form-container {
   border-top: none;
 
   .detail-card-status {
-    @extend .ds-h2;
+    @extend .ds-text-heading--2xl;
     color: $color-black;
   }
 
@@ -2877,7 +2879,7 @@ article.form-container {
 
   a {
     @extend .ds-c-button;
-    @extend .ds-c-button--transparent;
+    @extend .ds-c-button--ghost;
     @extend .ds-u-text-decoration--none;
     @extend .ds-u-padding--0;
     text-align: left;
@@ -2922,7 +2924,7 @@ article.form-container {
 .video {
   button {
     @extend .ds-c-button;
-    @extend .ds-c-button--transparent;
+    @extend .ds-c-button--ghost;
     @extend .ds-u-text-decoration--none;
     @extend .ds-u-padding--0;
     @extend .ds-u-justify-content--center;
@@ -2930,7 +2932,7 @@ article.form-container {
   }
 }
 .review-team {
-  @extend .ds-c-button--transparent;
+  @extend .ds-c-button--ghost;
   @extend .ds-c-button--small;
   @extend .ds-u-padding--0;
   text-align: left;

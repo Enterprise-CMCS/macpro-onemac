@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo } from "react";
-import { Redirect } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 import { useAppContext } from "../libs/contextLib";
 import { useSignupCallback } from "../libs/hooksLib";
@@ -106,12 +106,7 @@ export function Signup() {
       ) : isCmsUser(userRole) ? (
         <CMSSignup />
       ) : (
-        <Redirect
-          to={{
-            pathname: "/",
-            state: { passCode: RESPONSE_CODE.SYSTEM_ERROR }, // ALERTS_MSG.CONTACT_HELP_DESK },
-          }}
-        />
+        <Navigate to={"/"} state={{ passCode: RESPONSE_CODE.SYSTEM_ERROR }} />
       ),
     [cmsRoles, userRole]
   );

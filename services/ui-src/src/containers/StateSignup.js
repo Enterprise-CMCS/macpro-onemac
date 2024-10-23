@@ -1,5 +1,5 @@
 import React, { useCallback } from "react";
-import { useLocation, useHistory } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { roleLabels, territoryList, USER_ROLE } from "cmscommonlib";
 
 import { useFlag, useSignupCallback } from "../libs/hooksLib";
@@ -8,7 +8,7 @@ import { MultiSelectDropDown } from "../components/MultiSelectDropDown";
 import PageTitleBar from "../components/PageTitleBar";
 
 export function StateSignup() {
-  const history = useHistory();
+  const navigate = useNavigate();
   const {
     state: { role = "" },
   } = useLocation();
@@ -63,7 +63,7 @@ export function StateSignup() {
           acceptText="Confirm"
           cancelText="Stay on Page"
           heading="Cancel role request?"
-          onAccept={() => history.goBack()}
+          onAccept={() => navigate.goBack()}
           onCancel={closeCancelConfirmation}
         >
           Changes you made will not be saved.

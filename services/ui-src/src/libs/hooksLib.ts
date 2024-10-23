@@ -1,5 +1,5 @@
 import { ChangeEvent, useState, useCallback } from "react";
-import { useHistory, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import {
   RESPONSE_CODE,
   USER_ROLE,
@@ -47,8 +47,8 @@ export function useSignupCallback(
   processAttributes?: (payload: {}) => string[] | undefined
 ): [boolean, (payload: {}, additionalProperties?: {}) => void] {
   const [loading, setLoading] = useState(false);
-  const history = useHistory();
-  const location = useLocation<{}>();
+  const navigate = useNavigate();
+  const location = useLocation();
   const {
     isLoggedInAsDeveloper,
     userProfile: { email = "" } = {},
@@ -95,7 +95,7 @@ export function useSignupCallback(
             messageState = { passCode: RESPONSE_CODE.USER_SUBMITTED };
         }
         setLoading(false);
-        history.replace(destination, messageState);
+        navigate(destination, { replace: true, state: messageState });
       } catch (error) {
         console.error("Could not create new user:", error);
         const destination = {
@@ -110,12 +110,12 @@ export function useSignupCallback(
         }
 
         setLoading(false);
-        history.replace(destination);
+        navigate(destination, { replace: true });
       }
     },
     [
       email,
-      history,
+      navigate,
       isLoggedInAsDeveloper,
       loading,
       location,

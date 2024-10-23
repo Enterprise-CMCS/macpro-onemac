@@ -5,7 +5,7 @@ import React, {
   useMemo,
   useRef,
 } from "react";
-import { Link, useHistory, useLocation } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@cmsgov/design-system";
 import { format } from "date-fns";
 import classNames from "classnames";
@@ -124,7 +124,7 @@ const PackageList = () => {
     userProfile,
     userProfile: { cmsRoles, userData } = {},
   } = useAppContext();
-  const history = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
   const startTab =
     new URLSearchParams(location.search).get("startTab") ??
@@ -172,7 +172,7 @@ const PackageList = () => {
     };
   }, [
     cmsRoles,
-    history,
+    navigate,
     loadPackageList,
     location,
     userData,

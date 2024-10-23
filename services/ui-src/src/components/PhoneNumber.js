@@ -57,7 +57,7 @@ export const PhoneNumber = ({
           id="applyButton"
           onClick={onSubmitFn}
           type="button"
-          variation="primary"
+          variation="solid"
         >
           Apply
         </Button>
@@ -65,7 +65,7 @@ export const PhoneNumber = ({
           id="cancelButton"
           onClick={onCancelFn}
           type="button"
-          variation="transparent"
+          variation="ghost"
         >
           Cancel
         </Button>
@@ -80,7 +80,7 @@ export const PhoneNumber = ({
             className="phone-add-button"
             id="addButton"
             onClick={onEdit}
-            variation="primary"
+            variation="solid"
             type="button"
           >
             Add&nbsp;&nbsp;

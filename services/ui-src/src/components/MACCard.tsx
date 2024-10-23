@@ -130,7 +130,8 @@ export const MACFieldsetCardOption = ({
     <label className="mac-triage-link" onClick={onClick}>
       <Link
         data-testid="link-wrapper"
-        to={{ pathname: linkTo, state: state }}
+        to={linkTo}
+        state={state}
         className="mac-triage-link"
       >
         <Option />

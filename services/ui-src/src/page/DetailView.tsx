@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from "react";
-import { useHistory, useParams, useLocation } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { format, parseISO } from "date-fns";
 
 import {
@@ -9,7 +9,6 @@ import {
   territoryMap,
 } from "cmscommonlib";
 
-import { LocationState } from "../domain-types";
 import LoadingScreen from "../components/LoadingScreen";
 import PackageApi from "../utils/PackageApi";
 import { formatDate } from "../utils/date-utils";
@@ -66,10 +65,10 @@ export type ComponentDetail = {
  */
 const DetailView: React.FC<{ pageConfig: OneMACDetail }> = ({ pageConfig }) => {
   // The browser history, so we can redirect to the home page
-  const history = useHistory();
+  const navigate = useNavigate();
   const { componentTimestamp, componentId } = useParams<PathParams>();
   const [componentType] = useState(pageConfig.componentType);
-  const location = useLocation<LocationState>();
+  const location = useLocation();
   const [alertCode, setAlertCode] = useState(location?.state?.passCode);
 
   // so we show the spinner during the data load
@@ -167,8 +166,7 @@ const DetailView: React.FC<{ pageConfig: OneMACDetail }> = ({ pageConfig }) => {
         stillLoading = false;
       } catch (e) {
         console.log("error in getDetail call?? ", e);
-        history.push({
-          pathname: goBackLink,
+        navigate(goBackLink, {
           state: {
             passCode: RESPONSE_CODE.SYSTEM_ERROR,
           },
@@ -177,7 +175,7 @@ const DetailView: React.FC<{ pageConfig: OneMACDetail }> = ({ pageConfig }) => {
       if (!ctrlr?.signal.aborted) setDetail(fetchedDetail);
       if (!ctrlr?.signal.aborted) setIsLoading(stillLoading);
     },
-    [goBackLink, history, componentId, componentType, componentTimestamp]
+    [goBackLink, navigate, componentId, componentType, componentTimestamp]
   );
 
   useEffect(() => {

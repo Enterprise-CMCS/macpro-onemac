@@ -3,7 +3,7 @@
 // https://www.ryanjyost.com/react-routing/
 
 import React, { FC } from "react";
-import { Redirect, Route, Switch } from "react-router-dom";
+import { Navigate, Route, Routes as RouterRoutes } from "react-router-dom";
 
 import {
   ROUTES,
@@ -72,34 +72,28 @@ import DisableRaiWithdrawForm from "./page/disable-rai-withdraw/DisableRaiWithdr
 
 type RouteSpec = {
   path: string;
-  component: any;
+  component: FC<any>;
   key?: string;
   exact?: boolean;
   routes?: RouteSpec[];
 };
-
-const RouteWithSubRoutes: FC<RouteSpec> = (route) => (
-  <Route
-    path={route.path}
-    exact={route.exact}
-    render={(props) => <route.component {...props} routes={route.routes} />}
-  />
-);
 
 const RouteListRenderer: FC<{ routes: RouteSpec[] }> = ({ routes }) => {
   if (!useAppContext()?.isAuthenticated) {
     clearTableStateStorageKeys();
   }
   return (
-    <Switch>
+    <RouterRoutes>
       {routes.map((routeSpec) => (
-        <RouteWithSubRoutes
+        <Route
+          path={routeSpec.path}
+          element={<routeSpec.component routes={routeSpec.routes} />}
           key={routeSpec.key ?? routeSpec.path}
           {...routeSpec}
         />
       ))}
-      <Route component={NotFound} />
-    </Switch>
+      <Route element={NotFound} />
+    </RouterRoutes>
   );
 };
 
@@ -109,7 +103,7 @@ const AuthenticatedRouteListRenderer: FC<{ routes: RouteSpec[] }> = ({
   useAppContext()?.isAuthenticated ? (
     <RouteListRenderer routes={routes} />
   ) : (
-    <Redirect to={ROUTES.HOME} />
+    <Navigate to={ROUTES.HOME} />
   );
 
 const SignupGuardRouteListRenderer: FC<{ routes: RouteSpec[] }> = ({
@@ -120,9 +114,9 @@ const SignupGuardRouteListRenderer: FC<{ routes: RouteSpec[] }> = ({
     userProfile: { cmsRoles = "", userData: { roleList = [] } = {} } = {},
   } = useAppContext() ?? {};
 
-  if (!isAuthenticated) return <Redirect to={ROUTES.HOME} />;
+  if (!isAuthenticated) return <Navigate to={ROUTES.HOME} />;
   if (effectiveRoleForUser(roleList) === null && cmsRoles)
-    return <Redirect to={ROUTES.SIGNUP} />;
+    return <Navigate to={ROUTES.SIGNUP} />;
 
   return <RouteListRenderer routes={routes} />;
 };
@@ -140,7 +134,7 @@ const accessGuardRouteListRenderer: (
 
     if (roleObj[accessKey]) return <RouteListRenderer routes={routes} />;
     if (redirectAccessKey && redirectTo && roleObj[redirectAccessKey])
-      return <Redirect to={redirectTo} />;
+      return <Navigate to={redirectTo} />;
     return <NotFound />;
   };
 

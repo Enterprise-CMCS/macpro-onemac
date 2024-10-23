@@ -48,7 +48,7 @@ export const waiverAmendmentBSubsequentSubmissionFormInfo = {
 
 const WaiverAmendmentSubsequentSubmissionForm: FC = () => {
   let formConfig = waiverAmendmentSubsequentSubmissionFormInfo;
-  const location = useLocation<FormLocationState>();
+  const location = useLocation() as { state: FormLocationState };
 
   if (location.state?.waiverAuthority === waiverAuthorityB.value) {
     formConfig = waiverAmendmentBSubsequentSubmissionFormInfo;

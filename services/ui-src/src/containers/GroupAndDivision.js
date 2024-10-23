@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo, useReducer } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Select, { components } from "react-select";
 import { Button, FormLabel } from "@cmsgov/design-system";
 import cx from "classnames";
@@ -65,7 +65,7 @@ const groupDivisionReducer = (state, [field, value]) => {
 };
 
 export const GroupAndDivision = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const [, onSubmitUser] = useSignupCallback(
     USER_ROLE.CMS_REVIEWER,
     createAttribute
@@ -154,7 +154,7 @@ export const GroupAndDivision = () => {
           acceptText="Confirm"
           cancelText="Stay on Page"
           heading="Cancel role request?"
-          onAccept={() => history.goBack()}
+          onAccept={() => navigate.goBack()}
           onCancel={closeCancelConfirmation}
         >
           Changes you made will not be saved.

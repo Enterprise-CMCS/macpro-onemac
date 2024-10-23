@@ -1,4 +1,10 @@
-import React, { useCallback, useMemo, useState, useEffect } from "react";
+import React, {
+  useCallback,
+  useMemo,
+  useState,
+  useEffect,
+  ReactElement,
+} from "react";
 import { Auth } from "aws-amplify";
 import { set } from "lodash";
 
@@ -36,7 +42,7 @@ export function App() {
     heading: string;
     acceptText: string;
     cancelText: string;
-    message: JSX.Element | string;
+    message: ReactElement | string;
     onAccept: any;
     onDeny: any;
   } | null>(null);
@@ -50,7 +56,7 @@ export function App() {
       heading: string,
       acceptText: string,
       cancelText: string,
-      message: JSX.Element | string,
+      message: ReactElement | string,
       onAccept: any,
       onDeny: any
     ) =>
@@ -196,6 +202,7 @@ export function App() {
           <Routes />
           {confirmationDialog && (
             <ConfirmationDialog
+              isOpen={confirmationDialog != null}
               acceptText={confirmationDialog.acceptText}
               cancelText={confirmationDialog.cancelText}
               heading={confirmationDialog.heading}
@@ -204,6 +211,10 @@ export function App() {
                 closeConfirmationDialog();
               }}
               onCancel={() => {
+                confirmationDialog.onDeny && confirmationDialog.onDeny();
+                closeConfirmationDialog();
+              }}
+              onExit={() => {
                 confirmationDialog.onDeny && confirmationDialog.onDeny();
                 closeConfirmationDialog();
               }}
