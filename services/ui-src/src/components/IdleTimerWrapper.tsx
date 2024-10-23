@@ -66,7 +66,7 @@ const IdleTimerWrapper = () => {
      * this depends on promptTimeout and logoutTimeout
      * this is to ensure that the idleTimer has the most recent values for the times
      */
-    if (isAuthenticated && !isLoggedInAsDeveloper) {
+    if (isAuthenticated) {
       setTimeoutTimes();
       idleTimer.start();
     }
