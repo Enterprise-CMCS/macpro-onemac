@@ -114,9 +114,7 @@ jobs:
         id: fetch_ssm
         run: |
           LdClientId=$(aws ssm get-parameter --name "/configuration/onemacmmdl/LdClientId" --query "Parameter.Value" --output text)
-          echo "LdClientId=${LdClientId}" >> $GITHUB_ENV
-        env:
-          REACT_APP_LD_CLIENT_ID: ${{ env.LdClientId }}
+          echo "REACT_APP_LD_CLIENT_ID=${LdClientId}" >> $GITHUB_ENV
       - uses: actions/setup-node@v3
         with:
           node-version: "20.x"
@@ -208,7 +206,6 @@ jobs:
           OKTA_METADATA_URL: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_OKTA_METADATA_URL] || secrets.OKTA_METADATA_URL }}
           COGNITO_TEST_USERS_PASSWORD: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_COGNITO_TEST_USERS_PASSWORD] || secrets.COGNITO_TEST_USERS_PASSWORD }}
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-          REACT_APP_LD_CLIENT_ID: ${{ env.LdClientId }}
       - name: Configure AWS credentials for GitHub Actions
         uses: aws-actions/configure-aws-credentials@v4
         with:
