@@ -105,6 +105,7 @@ jobs:
           COGNITO_TEST_USERS_PASSWORD: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_COGNITO_TEST_USERS_PASSWORD] || secrets.COGNITO_TEST_USERS_PASSWORD }}
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
           REACT_APP_GOOGLE_TAG: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_REACT_APP_GOOGLE_TAG] || secrets[env.REACT_APP_GOOGLE_TAG] }}
+          LAUNCH_DARKLY_CLIENT_ID:  ${{ssm:/configuration/onemacmmdl/LdClientId}} 
       - name: Configure AWS credentials for GitHub Actions
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -150,6 +151,9 @@ jobs:
           pushd services
           echo "::notice::Endpoint URL - `./output.sh ui ApplicationEndpointUrl $STAGE_PREFIX$branch_name`"
           popd
+      - name: check ssm
+        run: | 
+          echo "client side id=${LAUNCH_DARKLY_CLIENT_ID}"
   configure:
     name: Configure
     needs:
