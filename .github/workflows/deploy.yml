@@ -157,7 +157,7 @@ jobs:
           popd
       - name: check ssm
         run: | 
-          echo "CLIENT_ID=${LAUNCH_DARKLY_CLIENT_ID}"
+          echo "CLIENT_ID=${LdClientId}"
   configure:
     name: Configure
     needs:
