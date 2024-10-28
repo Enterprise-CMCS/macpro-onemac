@@ -113,7 +113,7 @@ jobs:
       - name: Fetch SSM Parameter
         id: fetch_ssm
         run: |
-          LdClientId=$(aws ssm get-parameter --name "configuration/onemacmmdl/LdClientId" --query "Parameter.Value" --output text)
+          LdClientId=$(aws ssm get-parameter --name "/configuration/onemacmmdl/LdClientId" --query "Parameter.Value" --output text)
           echo "LdClientId=${LdClientId}" >> $GITHUB_ENV
       - uses: actions/setup-node@v3
         with:
