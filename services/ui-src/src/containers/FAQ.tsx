@@ -10,7 +10,7 @@ import {
 import { Accordion, AccordionItem, Button } from "@cmsgov/design-system";
 import { MACCard } from "../components/MACCard";
 import { withLDProvider, useFlags} from 'launchdarkly-react-client-sdk';
-
+const clientId = process.env.AUNCH_DARKLY_CLIENT_ID;
 
 /** Refactored out for later extraction by cms-ux-lib. However, using this
  * abstraction rather than doing it inline as we do in the FAQ return created
@@ -44,6 +44,7 @@ export const FAQSection = ({ section }: { section: FAQContent }) => {
 
 const FAQ = () => {
   const {mmdlFaq} = useFlags()
+ 
   const [faqItems, setFaqItems] = useState(oneMACFAQContent);
   const [hash, setHash] = useState(window.location.hash.replace("#", ""));
 
@@ -176,7 +177,7 @@ const FAQ = () => {
 
 // export default FAQ;
 export default withLDProvider({
-  clientSideID: "66e81e1ae81b5b079a75a4f7",
+  clientSideID: clientId ?? "undefined",
   options: {
   // @ts-ignore  
   streamUrl: "https://clientstream.launchdarkly.us",
