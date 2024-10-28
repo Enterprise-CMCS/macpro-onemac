@@ -10,7 +10,7 @@ import {
 import { Accordion, AccordionItem, Button } from "@cmsgov/design-system";
 import { MACCard } from "../components/MACCard";
 import { withLDProvider, useFlags} from 'launchdarkly-react-client-sdk';
-const {mmdlFaq} = useFlags()
+
 
 /** Refactored out for later extraction by cms-ux-lib. However, using this
  * abstraction rather than doing it inline as we do in the FAQ return created
@@ -43,6 +43,7 @@ export const FAQSection = ({ section }: { section: FAQContent }) => {
 };
 
 const FAQ = () => {
+  const {mmdlFaq} = useFlags()
   const [faqItems, setFaqItems] = useState(oneMACFAQContent);
   const [hash, setHash] = useState(window.location.hash.replace("#", ""));
 
