@@ -9,6 +9,8 @@ import {
 
 import { Accordion, AccordionItem, Button } from "@cmsgov/design-system";
 import { MACCard } from "../components/MACCard";
+import { withLDProvider, useFlags} from 'launchdarkly-react-client-sdk';
+const {mmdlFaq} = useFlags()
 
 /** Refactored out for later extraction by cms-ux-lib. However, using this
  * abstraction rather than doing it inline as we do in the FAQ return created
@@ -134,6 +136,7 @@ const FAQ = () => {
           {faqItems.map((section, idx) => (
             /** To be replaced with {@link FAQSection} */
             <div key={`faq-section-${idx}`} className="faq-section">
+              {mmdlFaq && <h1>MMDL FLAG</h1>}
               <h2 className="topic-title">{section.sectionTitle}</h2>
               <Accordion>
                 {section.qanda.map((questionAnswer, i) => (
@@ -170,4 +173,14 @@ const FAQ = () => {
   );
 };
 
-export default FAQ;
+// export default FAQ;
+export default withLDProvider({
+  clientSideID: "66e81e1ae81b5b079a75a4f7",
+  options: {
+  // @ts-ignore  
+  streamUrl: "https://clientstream.launchdarkly.us",
+  baseUrl: "https://clientsdk.launchdarkly.us",
+  eventsUrl: "https://events.launchdarkly.us",
+  }
+})(FAQ);
+
