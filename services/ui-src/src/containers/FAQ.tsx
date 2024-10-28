@@ -11,6 +11,7 @@ import { Accordion, AccordionItem, Button } from "@cmsgov/design-system";
 import { MACCard } from "../components/MACCard";
 import { withLDProvider, useFlags} from 'launchdarkly-react-client-sdk';
 const clientId = process.env.AUNCH_DARKLY_CLIENT_ID;
+console.log("CLIENT_ID="+clientId)
 
 /** Refactored out for later extraction by cms-ux-lib. However, using this
  * abstraction rather than doing it inline as we do in the FAQ return created
