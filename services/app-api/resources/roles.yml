@@ -83,11 +83,10 @@ Resources:
                   - xray:PutTraceSegments
                   - xray:PutTelemetryRecords
                 Resource: "*"
-              - Effect: "Allow"
+              - Effect: Allow
                 Action:
-                  - "events:PutEvents"
-                Resource: !Ref OneMacEventBus
-                
+                  - events:PutEvents
+                Resource: !GetAtt OneMacEventBus.Arn
   LambdaWarmupRole:
     Type: "AWS::IAM::Role"
     Properties:
