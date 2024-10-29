@@ -87,6 +87,7 @@ Resources:
                 Action:
                   - events:PutEvents
                 Resource: !GetAtt OneMacEventBus.Arn
+    DependsOn: OneMacEventBus
   LambdaWarmupRole:
     Type: "AWS::IAM::Role"
     Properties:
