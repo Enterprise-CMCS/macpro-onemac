@@ -648,7 +648,7 @@ functions:
           batchSize: 5
           startingPosition: "LATEST"
     environment:
-      EVENT_BUS_NAME: OneMacEventBus-${self:provider.stage}
+      EVENT_BUS_NAME: OneMacEventBus-${self:custom.stage}
 
 
   # Lambda to handle events from EventBridge
@@ -656,7 +656,7 @@ functions:
     handler: processEventBridgeEvent.main
     events:
       - eventBridge:
-          eventBus: !Sub "OneMacEventBus-${self:provider.stage}" 
+          eventBus: !Sub "OneMacEventBus-${self:custom.stage}" 
           pattern:
             source:
               - "aws.dynamodb"
