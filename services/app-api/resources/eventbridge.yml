@@ -1,0 +1,26 @@
+Resources:
+  # EventBridge Bus
+  OneMacEventBus:
+    Type: AWS::Events::EventBus
+    Properties:
+      Name: OneMacEventBus-${self:provider.stage}
+
+  # EventBridge Rule for DynamoDB Stream events
+  DynamoDBEventRule:
+    Type: AWS::Events::Rule
+    Properties:
+      Name: DynamoDBToEventBridgeRule
+      EventBusName: !Ref OneMacEventBus
+      EventPattern:
+        source:
+          - "aws.dynamodb"
+        detail-type:
+          - "DynamoDB Stream Record"
+        resources:
+          - ${self:custom.oneMacTableArn}
+      Targets:
+        - Arn: !GetAtt ProcessEventBridgeEventLambdaFunction.Arn
+          Id: "ProcessDynamoDBEventTarget"
+    DependsOn:
+      - OneMacEventBus
+      - OneMacTable

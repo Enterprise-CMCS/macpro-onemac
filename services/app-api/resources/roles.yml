@@ -69,6 +69,9 @@ Resources:
                   - dynamodb:PutItem
                   - dynamodb:UpdateItem
                   - dynamodb:DeleteItem
+                  - "dynamodb:DescribeStream"
+                  - "dynamodb:GetRecords"
+                  - "dynamodb:GetShardIterator"
                 Resource: arn:aws:dynamodb:*:*:table/${self:custom.oneMacTableName}
               - Effect: Allow
                 Action:
@@ -80,7 +83,11 @@ Resources:
                   - xray:PutTraceSegments
                   - xray:PutTelemetryRecords
                 Resource: "*"
-
+              - Effect: "Allow"
+                Action:
+                  - "events:PutEvents"
+                Resource: !Ref OneMacEventBus
+                
   LambdaWarmupRole:
     Type: "AWS::IAM::Role"
     Properties:

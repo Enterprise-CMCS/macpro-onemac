@@ -635,11 +635,42 @@ functions:
           cors: true
           authorizer: aws_iam
 
+   # Lambda to process DynamoDB stream records
+  processDynamoDBStream:
+    handler: processDynamoDBStream.main
+    events:
+      - stream:
+          type: dynamodb
+          arn:
+            Fn::GetAtt:
+              - OneMacTable    # DynamoDB table logical name
+              - StreamArn
+          batchSize: 5
+          startingPosition: "LATEST"
+    environment:
+      EVENT_BUS_NAME: OneMacEventBus-${self:provider.stage}
+
+
+  # Lambda to handle events from EventBridge
+  processEventBridgeEvent:
+    handler: processEventBridgeEvent.main
+    events:
+      - eventBridge:
+          eventBus: !Sub "OneMacEventBus-${self:provider.stage}" 
+          pattern:
+            source:
+              - "aws.dynamodb"
+            detail-type:
+              - "DynamoDB Stream Record"
+
 resources:
   - ${file(resources/base.yml)}
 
   # Uploads S3 bucket
   - ${file(resources/spa-form-tables.yml)}
+
+  # EventBridge
+  - ${file(resources/eventbridge.yml)}
 
   # Roles
   - ${file(resources/roles.yml)}
