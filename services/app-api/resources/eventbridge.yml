@@ -3,7 +3,7 @@ Resources:
   OneMacEventBus:
     Type: AWS::Events::EventBus
     Properties:
-      Name: OneMacEventBus-${self:provider.stage}
+      Name: OneMacEventBus-${self:custom.stage}
 
   # EventBridge Rule for DynamoDB Stream events
   DynamoDBEventRule:
