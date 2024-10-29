@@ -17,7 +17,7 @@ Resources:
         detail-type:
           - "DynamoDB Stream Record"
         resources:
-          - ${self:custom.oneMacTableArn}
+          - !GetAtt OneMacTable.Arn
       Targets:
         - Arn: !GetAtt ProcessEventBridgeEventLambdaFunction.Arn
           Id: "ProcessDynamoDBEventTarget"
