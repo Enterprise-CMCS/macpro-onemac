@@ -10,6 +10,7 @@ export interface QuestionAnswer {
   isOpen: boolean;
   question: string;
   answerJSX: JSX.Element;
+  isMmdl: boolean; 
 }
 
 export interface FAQContent {
@@ -28,6 +29,7 @@ export const oneMACFAQContent: FAQContent[] = [
         anchorText: "system",
         isOpen: false,
         question: "Which system should I use for my state’s submission?",
+        isMmdl: false,
         answerJSX: (
           <>
             <p>
@@ -52,6 +54,7 @@ export const oneMACFAQContent: FAQContent[] = [
         anchorText: "browsers",
         isOpen: false,
         question: "What browsers can I use to access the system?",
+        isMmdl: false,
         answerJSX: (
           <p>
             The submission portal works best on Google Chrome (Version
@@ -63,6 +66,7 @@ export const oneMACFAQContent: FAQContent[] = [
         anchorText: "confirm-email",
         isOpen: false,
         question: "What should we do if we don’t receive a confirmation email?",
+        isMmdl: false,
         answerJSX: (
           <p>
             Refresh your inbox, check your SPAM filters, then contact the OneMAC
@@ -78,6 +82,7 @@ export const oneMACFAQContent: FAQContent[] = [
         anchorText: "is-official",
         isOpen: false,
         question: "Is this considered the official state submission?",
+        isMmdl: false,
         answerJSX: (
           <p>
             Yes, as long as you have the electronic receipt (confirmation
@@ -95,6 +100,7 @@ export const oneMACFAQContent: FAQContent[] = [
         anchorText: "onemac-roles",
         isOpen: false,
         question: "What are the OneMAC user roles?",
+        isMmdl: false,
         answerJSX: (
           <table className="faq-table">
             <thead>
@@ -142,6 +148,7 @@ export const oneMACFAQContent: FAQContent[] = [
         anchorText: "acceptable-file-formats",
         isOpen: false,
         question: "What are the kinds of file formats I can upload into OneMAC",
+        isMmdl: false,
         answerJSX: (
           <section>
             <p>
@@ -166,6 +173,7 @@ export const oneMACFAQContent: FAQContent[] = [
         anchorText: "onboarding-materials",
         isOpen: false,
         question: "Onboarding Materials",
+        isMmdl: false,
         answerJSX: (
           <>
             <ul>
@@ -208,6 +216,7 @@ export const oneMACFAQContent: FAQContent[] = [
         anchorText: "spa-id-format",
         isOpen: false,
         question: "What format is used to enter a SPA ID?",
+        isMmdl: false,
         answerJSX: (
           <>
             Enter the State Plan Amendment transmittal number. Assign
@@ -232,6 +241,7 @@ export const oneMACFAQContent: FAQContent[] = [
         anchorText: "medicaid-spa-attachments",
         isOpen: false,
         question: "What are the attachments for a Medicaid SPA?",
+        isMmdl: false,
         answerJSX: (
           <>
             <p>
@@ -333,6 +343,7 @@ export const oneMACFAQContent: FAQContent[] = [
         isOpen: false,
         question:
           "What are the attachments for a Medicaid response to Request for Additional Information (RAI)?",
+        isMmdl: false,
         answerJSX: (
           <>
             <p>Note: “*” indicates a required attachment.</p>
@@ -367,6 +378,7 @@ export const oneMACFAQContent: FAQContent[] = [
         anchorText: "chip-spa-attachments",
         isOpen: false,
         question: "What are the attachments for a CHIP SPA?",
+        isMmdl: false,
         answerJSX: (
           <>
             <p>Note: “*” indicates a required attachment.</p>
@@ -437,6 +449,7 @@ export const oneMACFAQContent: FAQContent[] = [
         isOpen: false,
         question:
           "What are the attachments for a CHIP SPA response to Request for Additional Information (RAI)?",
+        isMmdl: false,
         answerJSX: (
           <>
             <p>Note: “*” indicates a required attachment.</p>
@@ -502,6 +515,7 @@ export const oneMACFAQContent: FAQContent[] = [
         isOpen: false,
         question:
           "Can I submit SPAs relating to the Public Health Emergency (PHE) in OneMAC?",
+        isMmdl: false,
         answerJSX: (
           <p>
             Yes, all PHE-related SPAs should be submitted through OneMAC by
@@ -514,6 +528,7 @@ export const oneMACFAQContent: FAQContent[] = [
         isOpen: false,
         question:
           "How do I submit a Formal Request for Additional Information (RAI) Response for a  Medicaid SPA?",
+        isMmdl: false,
         answerJSX: (
           <div>
             <p>
@@ -559,6 +574,7 @@ export const oneMACFAQContent: FAQContent[] = [
         anchorText: "medicaid-spa-withdraw-rai-response",
         isOpen: false,
         question: "How do I Withdraw a Formal RAI Response for a Medicaid SPA?",
+        isMmdl: false,
         answerJSX: (
           <div>
             <p>
@@ -615,6 +631,7 @@ export const oneMACFAQContent: FAQContent[] = [
         anchorText: "withdraw-medicaid-spa",
         isOpen: false,
         question: "How do I Withdraw a Package for a  Medicaid SPA?",
+        isMmdl: false,
         answerJSX: (
           <div>
             <p>
@@ -656,6 +673,7 @@ export const oneMACFAQContent: FAQContent[] = [
         isOpen: false,
         question:
           "How do I submit a Formal Request for Additional Information (RAI) Response for a CHIP SPA?",
+        isMmdl: false,
         answerJSX: (
           <div>
             <p>
@@ -701,6 +719,7 @@ export const oneMACFAQContent: FAQContent[] = [
         anchorText: "chip-spa-withdraw-rai-response",
         isOpen: false,
         question: "How do I Withdraw a Formal RAI Response for a CHIP SPA?",
+        isMmdl: false,
         answerJSX: (
           <div>
             <p>
@@ -757,6 +776,7 @@ export const oneMACFAQContent: FAQContent[] = [
         anchorText: "withdraw-chip-spa",
         isOpen: false,
         question: "How do I Withdraw a Package for a CHIP SPA?",
+        isMmdl: false,
         answerJSX: (
           <div>
             <p>
@@ -797,6 +817,7 @@ export const oneMACFAQContent: FAQContent[] = [
         anchorText: "which-spa-submitted",
         isOpen: false,
         question: "What State Plan Amendments (SPAs) can be submitted to OneMAC",
+        isMmdl: true,
         answerJSX: (
           <div>
             <p>
@@ -824,7 +845,8 @@ export const oneMACFAQContent: FAQContent[] = [
         isOpen: false,
         question:
           "Where can I download Medicaid Alternative Benefit Plan (ABP) SPA PDFs?",
-          answerJSX: (
+        isMmdl: true,
+        answerJSX: (
             <>
               <ul className="file-type-list">
                 {[
@@ -897,6 +919,7 @@ export const oneMACFAQContent: FAQContent[] = [
         isOpen: false,
         question:
           "Where can I download Medicaid Alternative Benefit Plan (ABP) implementation guides?",
+        isMmdl: true,
           answerJSX: (
             <>
               <ul className="file-type-list">
@@ -934,6 +957,7 @@ export const oneMACFAQContent: FAQContent[] = [
       {
         anchorText: "medicaid-premiums-cost-sharing-pdfs",
         isOpen: false,
+        isMmdl: true,
         question:
           "Where can I download Medicaid Premiums and Cost Sharing (P&CS) SPA PDFs?",
           answerJSX: (
@@ -964,6 +988,7 @@ export const oneMACFAQContent: FAQContent[] = [
       {
         anchorText: "medicaid-premiums-cost-sharing-inplementation guides",
         isOpen: false,
+        isMmdl: true,
         question:
           "Where can I download Medicaid Premiums and Cost Sharing (P&CS) SPA implementation guides?",
           answerJSX: (
@@ -995,6 +1020,7 @@ export const oneMACFAQContent: FAQContent[] = [
       {
         anchorText: "chip-spa-pdfs",
         isOpen: false,
+        isMmdl: true,
         question:
           "Where can I download CHIP SPA PDFs?",
           answerJSX: (
@@ -1083,6 +1109,7 @@ export const oneMACFAQContent: FAQContent[] = [
       {
         anchorText: "chip-spa-implimentation-guides",
         isOpen: false,
+        isMmdl: true,
         question:
           "Where can I download CHIP SPA implementation guides?",
           answerJSX: (
@@ -1181,6 +1208,7 @@ export const oneMACFAQContent: FAQContent[] = [
       {
         anchorText: "initial-waiver-id-format",
         isOpen: false,
+        isMmdl: false,
         question:
           "What format is used to enter a 1915(b) Initial Waiver number?",
         answerJSX: (
@@ -1208,6 +1236,7 @@ export const oneMACFAQContent: FAQContent[] = [
       {
         anchorText: "waiver-renewal-id-format",
         isOpen: false,
+        isMmdl: false,
         question:
           "What format is used to enter a 1915(b) Waiver Renewal number?",
         answerJSX: (
@@ -1235,6 +1264,7 @@ export const oneMACFAQContent: FAQContent[] = [
       {
         anchorText: "waiver-amendment-id-format",
         isOpen: false,
+        isMmdl: false,
         question:
           "What format is used to enter a 1915(b) Waiver Amendment number?",
         answerJSX: (
@@ -1263,6 +1293,7 @@ export const oneMACFAQContent: FAQContent[] = [
       {
         anchorText: "waiver-id-help",
         isOpen: false,
+        isMmdl: false,
         question:
           "Who can I contact to help me figure out the correct 1915(b) Waiver Number?",
         answerJSX: (
@@ -1278,6 +1309,7 @@ export const oneMACFAQContent: FAQContent[] = [
       {
         anchorText: "waiver-c-id",
         isOpen: false,
+        isMmdl: false,
         question: "What format is used to enter a 1915(c) waiver number?",
         answerJSX: (
           <>
@@ -1308,6 +1340,7 @@ export const oneMACFAQContent: FAQContent[] = [
       {
         anchorText: "waiverb-attachments",
         isOpen: false,
+        isMmdl: false,
         question:
           "What attachments are needed to submit a 1915(b) waiver action?",
         answerJSX: (
@@ -1392,6 +1425,7 @@ export const oneMACFAQContent: FAQContent[] = [
       {
         anchorText: "waiverb-rai-attachments",
         isOpen: false,
+        isMmdl: false,
         question:
           "What are the attachments for a 1915(b) Waiver response to Request for Additional Information (RAI)?",
         answerJSX: (
@@ -1429,6 +1463,7 @@ export const oneMACFAQContent: FAQContent[] = [
       {
         anchorText: "waiver-extension-id-format",
         isOpen: false,
+        isMmdl: false,
         question:
           "What format is used to enter a 1915(b) and 1915(c) Temporary Extension number?",
         answerJSX: (
@@ -1463,6 +1498,7 @@ export const oneMACFAQContent: FAQContent[] = [
       {
         anchorText: "waiver-extension-status",
         isOpen: false,
+        isMmdl: false,
         question:
           "Why does the status of my Temporary Extension Request continue to show as 'Submitted'?",
         answerJSX: (
@@ -1479,6 +1515,7 @@ export const oneMACFAQContent: FAQContent[] = [
       {
         anchorText: "waiverb-extension-attachments",
         isOpen: false,
+        isMmdl: false,
         question:
           "What are the attachments for a 1915(b) Waiver - Request for Temporary Extension?",
         answerJSX: (
@@ -1515,6 +1552,7 @@ export const oneMACFAQContent: FAQContent[] = [
       {
         anchorText: "waiverc-extension-attachments",
         isOpen: false,
+        isMmdl: false,
         question:
           "What are the attachments for a 1915(c) Waiver - Request for Temporary Extension",
         answerJSX: (
@@ -1551,6 +1589,7 @@ export const oneMACFAQContent: FAQContent[] = [
       {
         anchorText: "appk",
         isOpen: false,
+        isMmdl: false,
         question: "Can I submit Appendix K amendments in OneMAC?",
         answerJSX: (
           <p>
@@ -1562,6 +1601,7 @@ export const oneMACFAQContent: FAQContent[] = [
       {
         anchorText: "appk-attachments",
         isOpen: false,
+        isMmdl: false,
         question: "What are the attachments for a 1915(c) Appendix K Waiver?",
         answerJSX: (
           <>
@@ -1601,6 +1641,7 @@ export const oneMACFAQContent: FAQContent[] = [
       {
         anchorText: "waiver-rai-response",
         isOpen: false,
+        isMmdl: false,
         question:
           "How do I submit a Formal Request for Additional Information (RAI) Response for a Waiver?",
         answerJSX: (
@@ -1647,6 +1688,7 @@ export const oneMACFAQContent: FAQContent[] = [
       {
         anchorText: "waiver-withdraw-rai-response",
         isOpen: false,
+        isMmdl: false,
         question:
           "How do I Withdraw a Formal RAI Response for a Medicaid Waiver?",
         answerJSX: (
@@ -1704,6 +1746,7 @@ export const oneMACFAQContent: FAQContent[] = [
       {
         anchorText: "withdraw-waiver",
         isOpen: false,
+        isMmdl: false,
         question: "How do I Withdraw a Package for a Waiver?",
         answerJSX: (
           <div>
