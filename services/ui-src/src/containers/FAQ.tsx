@@ -139,30 +139,6 @@ const FAQ = () => {
             /** To be replaced with {@link FAQSection} */
             <div key={`faq-section-${idx}`} className="faq-section">
               <h2 className="topic-title">{section.sectionTitle}</h2>
-             
-             {
-                 <Accordion>
-                    {section.qanda.map((questionAnswer, i) => (
-                      <div key={i}>
-                        <AccordionItem
-                          id={questionAnswer.anchorText}
-                          heading={questionAnswer.question}
-                          buttonClassName="accordion-button"
-                          contentClassName="accordion-content"
-                          isControlledOpen={questionAnswer.isOpen}
-                          onChange={() =>
-                            toggleAccordianItem(questionAnswer.anchorText)
-                          }
-                        >
-                          {questionAnswer.answerJSX}
-                        </AccordionItem>
-                        <hr></hr>
-                      </div>
-                    ))}
-                 </Accordion>
-             }
-             
-             
               {mmdlFaq ? 
                   <Accordion>
                     {section.qanda.map((questionAnswer, i) => (
@@ -200,11 +176,10 @@ const FAQ = () => {
                           {questionAnswer.answerJSX}
                         </AccordionItem>
                         <hr></hr>
-                      </div> 
+                      </div>
                   ))}
                 </Accordion>
               }
-
             </div>
           ))}
         </div>
