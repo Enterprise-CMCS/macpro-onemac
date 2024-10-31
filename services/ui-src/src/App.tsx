@@ -22,6 +22,7 @@ import NotificationsApi from "./utils/NotificationApi";
 import { LOCAL_STORAGE_USERNOTIFICATIONS } from "./utils/StorageKeys";
 import { withLDProvider, useFlags} from 'launchdarkly-react-client-sdk';
 const clientId = process.env.REACT_APP_LD_CLIENT_ID;
+console.log("LaunchDarkly Client ID:", process.env.REACT_APP_LD_CLIENT_ID);
 
 const DEFAULT_AUTH_STATE: Omit<
   AppContextValue,
@@ -39,6 +40,11 @@ const DEFAULT_AUTH_STATE: Omit<
 const  App = () => {
   const [authState, setAuthState] = useState(DEFAULT_AUTH_STATE);
   const {mmdlNotificationBanner} = useFlags()
+  const { ldClient } = useFlags();
+  if (!ldClient) {
+    console.error("LaunchDarkly client is not initialized");
+  }
+  console.log("Feature Flags:", { mmdlNotificationBanner });
   const [confirmationDialog, setConfirmationDialog] = useState<{
     heading: string;
     acceptText: string;

@@ -8,7 +8,7 @@ import NotificationApi from "../utils/NotificationApi";
 import { NotificationCard } from "../components/NotificationCard";
 import { withLDProvider, useFlags} from 'launchdarkly-react-client-sdk';
 const clientId = process.env.REACT_APP_LD_CLIENT_ID;
-
+console.log("LaunchDarkly Client ID:", process.env.REACT_APP_LD_CLIENT_ID);
 const stateSubmissionTitle = "How to create a submission";
 const stateSubmissionsList = [
   {
@@ -154,6 +154,11 @@ const renderPaperSubmissionInfo = (renderSubmissionSteps) => {
 const Home = () => {
   const location = useLocation();
   const {mmdlNotificationBanner} = useFlags()
+  const { ldClient } = useFlags();
+  if (!ldClient) {
+    console.error("LaunchDarkly client is not initialized");
+  }
+  console.log("Feature Flags:", { mmdlNotificationBanner });
   const [systemNotifications, setSystemNotifications] = useState([]);
 
   // on intial load of the page we want to fetch the system notifications
@@ -228,5 +233,6 @@ export default withLDProvider({
   streamUrl: "https://clientstream.launchdarkly.us",
   baseUrl: "https://clientsdk.launchdarkly.us",
   eventsUrl: "https://events.launchdarkly.us",
+  waitForInitializationTimeout: 5000,
   }
 })(Home);
