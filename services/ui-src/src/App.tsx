@@ -72,6 +72,7 @@ const  App = () => {
     []
   );
 
+
   /**
    * Gets authentication status for user,
    * gets user names and email from cognito
@@ -168,7 +169,13 @@ const  App = () => {
         isAuthenticating: false,
       });
     }
-  }, []);
+  }, [mmdlNotificationBanner]);
+
+  useEffect(() => {
+    setUserInfo();
+  }, [setUserInfo, mmdlNotificationBanner]);
+
+  
 
   useEffect(() => {
     // On initial load of the App, try to set the user info.
@@ -222,6 +229,7 @@ const  App = () => {
       return authState.userProfile.userData?.notifications;
     } else return [];
   }, [authState.userProfile.userData]);
+
 
   return authState.isAuthenticating ? null : (
     <AppContext.Provider value={contextValue}>
