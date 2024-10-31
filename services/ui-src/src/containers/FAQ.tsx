@@ -9,7 +9,7 @@ import {
 
 import { Accordion, AccordionItem, Button } from "@cmsgov/design-system";
 import { MACCard } from "../components/MACCard";
-import { withLDProvider, useFlags} from 'launchdarkly-react-client-sdk';
+import { useFlags} from 'launchdarkly-react-client-sdk';
 const clientId = process.env.REACT_APP_LD_CLIENT_ID;
 
 /** Refactored out for later extraction by cms-ux-lib. However, using this
@@ -197,13 +197,5 @@ const FAQ = () => {
 };
 
 
-export default withLDProvider({
-  clientSideID: clientId ?? "undefined",
-  options: {
-  // @ts-ignore  
-  streamUrl: "https://clientstream.launchdarkly.us",
-  baseUrl: "https://clientsdk.launchdarkly.us",
-  eventsUrl: "https://events.launchdarkly.us",
-  }
-})(FAQ);
+export default FAQ;
 

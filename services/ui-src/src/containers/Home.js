@@ -6,7 +6,7 @@ import AlertBar from "../components/AlertBar";
 import { MACCard } from "../components/MACCard";
 import NotificationApi from "../utils/NotificationApi";
 import { NotificationCard } from "../components/NotificationCard";
-import { withLDProvider, useFlags} from 'launchdarkly-react-client-sdk';
+import {  useFlags} from 'launchdarkly-react-client-sdk';
 const clientId = process.env.REACT_APP_LD_CLIENT_ID;
 console.log("LaunchDarkly Client ID:", process.env.REACT_APP_LD_CLIENT_ID);
 const stateSubmissionTitle = "How to create a submission";
@@ -248,13 +248,4 @@ const Home = () => {
   );
 }
 
-export default withLDProvider({
-  clientSideID: clientId ?? "undefined",
-  options: {
-  // @ts-ignore  
-  streamUrl: "https://clientstream.launchdarkly.us",
-  baseUrl: "https://clientsdk.launchdarkly.us",
-  eventsUrl: "https://events.launchdarkly.us",
-  waitForInitialization: 5
-  }
-})(Home);
+export default Home;
