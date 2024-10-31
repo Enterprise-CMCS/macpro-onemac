@@ -180,18 +180,19 @@ const Home = () => {
   }, []); //on page load
 
   useEffect(() => {
-    (async () => {
+    const fetchNotifications = async () => {
       if (mmdlNotificationBanner) {
         const notifications = await NotificationApi.getActiveSystemNotifications();
-  
         if (notifications && notifications.length) {
           setSystemNotifications([...notifications]);
         }
       } else {
         console.log("Either no notifications or an error occurred");
       }
-    })();
-  }, [mmdlNotificationBanner]); // Add mmdlNotificationBanner as a dependency
+    };
+  
+    fetchNotifications();
+  }, [mmdlNotificationBanner]);
 
   return (
     <>
