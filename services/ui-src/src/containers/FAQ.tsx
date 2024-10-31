@@ -196,7 +196,7 @@ const FAQ = () => {
   );
 };
 
-// export default FAQ;
+
 export default withLDProvider({
   clientSideID: clientId ?? "undefined",
   options: {

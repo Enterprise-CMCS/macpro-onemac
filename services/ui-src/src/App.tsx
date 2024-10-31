@@ -20,6 +20,8 @@ import { ConfirmationDialog } from "./components/ConfirmationDialog";
 import NotificationBanner from "./components/NotificationBanner";
 import NotificationsApi from "./utils/NotificationApi";
 import { LOCAL_STORAGE_USERNOTIFICATIONS } from "./utils/StorageKeys";
+import { withLDProvider, useFlags} from 'launchdarkly-react-client-sdk';
+const clientId = process.env.REACT_APP_LD_CLIENT_ID;
 
 const DEFAULT_AUTH_STATE: Omit<
   AppContextValue,
@@ -34,8 +36,9 @@ const DEFAULT_AUTH_STATE: Omit<
   activeTerritories: null,
 };
 
-export function App() {
+const  App = () => {
   const [authState, setAuthState] = useState(DEFAULT_AUTH_STATE);
+  const {mmdlNotificationBanner} = useFlags()
   const [confirmationDialog, setConfirmationDialog] = useState<{
     heading: string;
     acceptText: string;
@@ -95,14 +98,16 @@ export function App() {
         userData.notifications = JSON.parse(storedNotifications);
       } else {
         // get the notifications & set local storage
-        const notifications = await NotificationsApi.createUserNotifications(
-          email
-        );
-        userData.notifications = notifications;
-        localStorage.setItem(
-          LOCAL_STORAGE_USERNOTIFICATIONS,
-          JSON.stringify(notifications)
-        );
+        if(mmdlNotificationBanner) {
+          const notifications = await NotificationsApi.createUserNotifications(
+            email
+          );
+          userData.notifications = notifications;
+          localStorage.setItem(
+            LOCAL_STORAGE_USERNOTIFICATIONS,
+            JSON.stringify(notifications)
+          );
+        }
       }
 
       const roleResult = effectiveRoleForUser(userData?.roleList);
@@ -222,7 +227,7 @@ export function App() {
     <AppContext.Provider value={contextValue}>
       <IdleTimerWrapper />
       <div className="header-and-content">
-        {notifcations.map((n) => (
+        {mmdlNotificationBanner && notifcations.map((n) => (
           <NotificationBanner
             key={n.sk}
             {...n}
@@ -255,3 +260,14 @@ export function App() {
     </AppContext.Provider>
   );
 }
+
+export default withLDProvider({
+  clientSideID: clientId ?? "undefined",
+  options: {
+  // @ts-ignore  
+  streamUrl: "https://clientstream.launchdarkly.us",
+  baseUrl: "https://clientsdk.launchdarkly.us",
+  eventsUrl: "https://events.launchdarkly.us",
+  }
+})(App);
+

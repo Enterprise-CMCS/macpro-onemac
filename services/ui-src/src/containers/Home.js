@@ -6,6 +6,8 @@ import AlertBar from "../components/AlertBar";
 import { MACCard } from "../components/MACCard";
 import NotificationApi from "../utils/NotificationApi";
 import { NotificationCard } from "../components/NotificationCard";
+import { withLDProvider, useFlags} from 'launchdarkly-react-client-sdk';
+const clientId = process.env.REACT_APP_LD_CLIENT_ID;
 
 const stateSubmissionTitle = "How to create a submission";
 const stateSubmissionsList = [
@@ -149,9 +151,9 @@ const renderPaperSubmissionInfo = (renderSubmissionSteps) => {
 /**
  * Displays information about the usage of the webform
  */
-export default function Home() {
+const Home = () => {
   const location = useLocation();
-
+  const {mmdlNotificationBanner} = useFlags()
   const [systemNotifications, setSystemNotifications] = useState([]);
 
   // on intial load of the page we want to fetch the system notifications
@@ -160,10 +162,14 @@ export default function Home() {
 
   useEffect(() => {
     (async () => {
-      const notifications =
+      let notifications;
+      if(mmdlNotificationBanner) {
+  
         await NotificationApi.getActiveSystemNotifications();
+
       if (notifications && notifications.length)
         setSystemNotifications([...notifications]);
+    }
       else {
         console.log(
           "Either no notifications or an error occured",
@@ -177,7 +183,7 @@ export default function Home() {
     <>
       <HomeHeader />
       <AlertBar alertCode={location?.state?.passCode} />
-      {systemNotifications.length !== 0 && (
+      {mmdlNotificationBanner && systemNotifications.length !== 0 && (
         <div className="home-content-container">
           <h2>New and Notable</h2>
           {systemNotifications.map((notification) => (
@@ -218,3 +224,13 @@ export default function Home() {
     </>
   );
 }
+
+export default withLDProvider({
+  clientSideID: clientId ?? "undefined",
+  options: {
+  // @ts-ignore  
+  streamUrl: "https://clientstream.launchdarkly.us",
+  baseUrl: "https://clientsdk.launchdarkly.us",
+  eventsUrl: "https://events.launchdarkly.us",
+  }
+})(Home);
