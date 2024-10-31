@@ -7,7 +7,6 @@ import { MACCard } from "../components/MACCard";
 import NotificationApi from "../utils/NotificationApi";
 import { NotificationCard } from "../components/NotificationCard";
 import { withLDProvider, useFlags} from 'launchdarkly-react-client-sdk';
-import { ldInit } from 'launchdarkly-vue-client-sdk'
 const clientId = process.env.REACT_APP_LD_CLIENT_ID;
 console.log("LaunchDarkly Client ID:", process.env.REACT_APP_LD_CLIENT_ID);
 const stateSubmissionTitle = "How to create a submission";
