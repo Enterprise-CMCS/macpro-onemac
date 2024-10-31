@@ -10,7 +10,6 @@ import {
 import { Accordion, AccordionItem, Button } from "@cmsgov/design-system";
 import { MACCard } from "../components/MACCard";
 import { useFlags} from 'launchdarkly-react-client-sdk';
-const clientId = process.env.REACT_APP_LD_CLIENT_ID;
 
 /** Refactored out for later extraction by cms-ux-lib. However, using this
  * abstraction rather than doing it inline as we do in the FAQ return created
