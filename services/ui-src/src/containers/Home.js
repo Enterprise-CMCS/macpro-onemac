@@ -161,36 +161,17 @@ const Home = () => {
   //     then in the component if notificatins have lenght > 0 we will render them
 
   useEffect(() => {
-    (async () => {
-      let notifications;
-      if(mmdlNotificationBanner) {
-  
-        await NotificationApi.getActiveSystemNotifications();
-
-      if (notifications && notifications.length)
-        setSystemNotifications([...notifications]);
-    }
-      else {
-        console.log(
-          "Either no notifications or an error occured",
-          notifications
-        );
-      }
-    })();
-  }, []); //on page load
-
-  useEffect(() => {
     const fetchNotifications = async () => {
       if (mmdlNotificationBanner) {
         const notifications = await NotificationApi.getActiveSystemNotifications();
         if (notifications && notifications.length) {
-          setSystemNotifications([...notifications]);
+          setSystemNotifications(notifications); // Directly set notifications
+        } else {
+          console.log("Either no notifications or an error occurred");
         }
-      } else {
-        console.log("Either no notifications or an error occurred");
       }
     };
-  
+
     fetchNotifications();
   }, [mmdlNotificationBanner]);
 
