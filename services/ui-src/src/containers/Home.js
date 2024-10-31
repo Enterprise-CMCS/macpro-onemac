@@ -7,6 +7,7 @@ import { MACCard } from "../components/MACCard";
 import NotificationApi from "../utils/NotificationApi";
 import { NotificationCard } from "../components/NotificationCard";
 import { withLDProvider, useFlags} from 'launchdarkly-react-client-sdk';
+import { ldInit } from 'launchdarkly-vue-client-sdk'
 const clientId = process.env.REACT_APP_LD_CLIENT_ID;
 console.log("LaunchDarkly Client ID:", process.env.REACT_APP_LD_CLIENT_ID);
 const stateSubmissionTitle = "How to create a submission";
@@ -155,11 +156,33 @@ const Home = () => {
   const location = useLocation();
   const {mmdlNotificationBanner} = useFlags()
   const { ldClient } = useFlags();
+      // using Promise then() and catch() handlers
+  ldClient.waitForInitialization(5).then(() => {
+        console.log("waited 5 seconds")
+      }).catch((err) => {
+        console.log("error caught intializing" +err)
+      });
+    
+
+    // using async/await
+    // try {
+    //     await client.waitForInitialization(5);
+    //     doSomethingWithSuccessfullyInitializedClient();
+    // } catch (err) {
+    //     doSomethingForFailedStartup(err);
+    // }
   if (!ldClient) {
     console.error("LaunchDarkly client is not initialized");
   }
   console.log("Feature Flags:", { mmdlNotificationBanner });
   const [systemNotifications, setSystemNotifications] = useState([]);
+
+
+  useEffect(() => {
+    if (ldClient && ldClient.isInitialized()) {
+      // Now safe to use feature flags
+    }
+  }, [ldClient]);
 
   // on intial load of the page we want to fetch the system notifications
   //     and add a state variable which will save the notifications
@@ -233,6 +256,6 @@ export default withLDProvider({
   streamUrl: "https://clientstream.launchdarkly.us",
   baseUrl: "https://clientsdk.launchdarkly.us",
   eventsUrl: "https://events.launchdarkly.us",
-  waitForInitializationTimeout: 5000,
+  waitForInitialization: 5
   }
 })(Home);
