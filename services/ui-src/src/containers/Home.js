@@ -154,11 +154,7 @@ const Home = () => {
   const {mmdlNotificationBanner} = useFlags()
   const { ldClient } = useFlags();
       // using Promise then() and catch() handlers
-  ldClient.waitForInitialization(5).then(() => {
-        console.log("waited 5 seconds")
-      }).catch((err) => {
-        console.log("error caught intializing" +err)
-      });
+
     
 
     // using async/await
