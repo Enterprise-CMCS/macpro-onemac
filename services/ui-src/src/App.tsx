@@ -41,12 +41,6 @@ const  App = () => {
   const [authState, setAuthState] = useState(DEFAULT_AUTH_STATE);
   const {mmdlNotificationBanner} = useFlags()
   const { ldClient } = useFlags();
-  ldClient.waitForInitialization(5).then(() => {
-    console.log("waited 5 seconds")
-  }).catch((err: string) => {
-    console.log("error caught intializing" +err)
-  });
-
 
   if (!ldClient) {
     console.error("LaunchDarkly client is not initialized");
