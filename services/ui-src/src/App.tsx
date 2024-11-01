@@ -20,9 +20,7 @@ import { ConfirmationDialog } from "./components/ConfirmationDialog";
 import NotificationBanner from "./components/NotificationBanner";
 import NotificationsApi from "./utils/NotificationApi";
 import { LOCAL_STORAGE_USERNOTIFICATIONS } from "./utils/StorageKeys";
-import { withLDProvider, useFlags} from 'launchdarkly-react-client-sdk';
-const clientId = process.env.REACT_APP_LD_CLIENT_ID;
-console.log("LaunchDarkly Client ID:", process.env.REACT_APP_LD_CLIENT_ID);
+import { useFlags} from 'launchdarkly-react-client-sdk';
 
 const DEFAULT_AUTH_STATE: Omit<
   AppContextValue,
@@ -180,7 +178,7 @@ const  App = () => {
         isAuthenticating: false,
       });
     }
-  }, []);
+  }, [testFlag]);
 
   useEffect(() => {
     setUserInfo();
