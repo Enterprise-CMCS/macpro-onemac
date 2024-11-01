@@ -106,18 +106,20 @@ const  App = () => {
 
       if (storedNotifications?.length && storedNotifications.length > 2) {
         userData.notifications = JSON.parse(storedNotifications);
+        console.log("***** notifications found " + userData.notifications)
       } else {
         // get the notifications & set local storage
-        if(testFlag) {
+        // if(testFlag) {
           const notifications = await NotificationsApi.createUserNotifications(
             email
           );
           userData.notifications = notifications;
+          console.log("***** notifications fetched " + userData.notifications)
           localStorage.setItem(
             LOCAL_STORAGE_USERNOTIFICATIONS,
             JSON.stringify(notifications)
           );
-        }
+        // }
       }
 
       const roleResult = effectiveRoleForUser(userData?.roleList);
