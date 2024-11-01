@@ -155,16 +155,18 @@ const Home = () => {
   const [systemNotifications, setSystemNotifications] = useState([]);
 
   useEffect(() => {
-    const fetchNotifications = async () => {
-        const notifications = await NotificationApi.getActiveSystemNotifications();
-        if (notifications && notifications.length) {
-          setSystemNotifications(notifications); // Directly set notifications
-        } else {
-          console.log("Either no notifications or an error occurred");
-        }
-    };
-
-    fetchNotifications();
+    (async () => {
+      const notifications =
+        await NotificationApi.getActiveSystemNotifications();
+      if (notifications && notifications.length)
+        setSystemNotifications([...notifications]);
+      else {
+        console.log(
+          "Either no notifications or an error occured",
+          notifications
+        );
+      }
+    })();
   }, []);
 
   return (

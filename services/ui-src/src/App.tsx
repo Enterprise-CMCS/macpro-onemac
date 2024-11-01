@@ -109,17 +109,17 @@ const  App = () => {
         console.log("***** notifications found " + userData.notifications)
       } else {
         // get the notifications & set local storage
-        // if(testFlag) {
-          const notifications = await NotificationsApi.createUserNotifications(
-            email
-          );
-          userData.notifications = notifications;
-          console.log("***** notifications fetched " + userData.notifications)
+        const notifications = await NotificationsApi.createUserNotifications(
+          email
+        );
+        userData.notifications = notifications;
+        console.log("***** notifications fetched " + userData.notifications)
+        if(notifcations) {
           localStorage.setItem(
             LOCAL_STORAGE_USERNOTIFICATIONS,
             JSON.stringify(notifications)
           );
-        // }
+        }
       }
 
       const roleResult = effectiveRoleForUser(userData?.roleList);
@@ -184,7 +184,7 @@ const  App = () => {
 
   useEffect(() => {
     setUserInfo();
-  }, [setUserInfo, testFlag]);
+  }, [setUserInfo]);
 
   
 
