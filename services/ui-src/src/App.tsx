@@ -77,11 +77,7 @@ const  App = () => {
     []
   );
 
-  // useEffect(() => {
-  //   if (ldClient && ldClient.isInitialized()) {
-  //     // Now safe to use feature flags
-  //   }
-  // }, [ldClient]);
+
   /**
    * Gets authentication status for user,
    * gets user names and email from cognito
@@ -90,6 +86,7 @@ const  App = () => {
    * Then sets all these values in their corresponding state variables.
    * @param isDeveloper indicates if the user is a developer
    */
+
   const setUserInfo = useCallback(async (isDeveloper = false) => {
     try {
       // Get authenticated user's info from cognito
@@ -180,6 +177,7 @@ const  App = () => {
         isAuthenticating: false,
       });
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -280,13 +278,4 @@ const  App = () => {
   );
 }
 export default App;
-// export default withLDProvider({
-//   clientSideID:"66e81e1ae81b5b079a75a4f7",
-//   options: {
-//   // @ts-ignore  
-//   streamUrl: "https://clientstream.launchdarkly.us",
-//   baseUrl: "https://clientsdk.launchdarkly.us",
-//   eventsUrl: "https://events.launchdarkly.us",
-//   }
-// })(App);
 
