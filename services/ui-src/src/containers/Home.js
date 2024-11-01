@@ -152,49 +152,20 @@ const renderPaperSubmissionInfo = (renderSubmissionSteps) => {
 const Home = () => {
   const location = useLocation();
   const {testFlag} = useFlags()
-  // const { ldClient } = useFlags();
-      // using Promise then() and catch() handlers
-
-    
-
-    // using async/await
-    // try {
-    //     await client.waitForInitialization(5);
-    //     doSomethingWithSuccessfullyInitializedClient();
-    // } catch (err) {
-    //     doSomethingForFailedStartup(err);
-    // }
-  // if (!ldClient) {
-  //   console.error("LaunchDarkly client is not initialized");
-  // }
-  // console.log("Feature Flags:", { mmdlNotificationBanner });
   const [systemNotifications, setSystemNotifications] = useState([]);
-
-
-  // useEffect(() => {
-  //   if (ldClient && ldClient.isInitialized()) {
-  //     // Now safe to use feature flags
-  //   }
-  // }, [ldClient]);
-
-  // on intial load of the page we want to fetch the system notifications
-  //     and add a state variable which will save the notifications
-  //     then in the component if notificatins have lenght > 0 we will render them
 
   useEffect(() => {
     const fetchNotifications = async () => {
-      if (testFlag) {
         const notifications = await NotificationApi.getActiveSystemNotifications();
         if (notifications && notifications.length) {
           setSystemNotifications(notifications); // Directly set notifications
         } else {
           console.log("Either no notifications or an error occurred");
         }
-      }
     };
 
     fetchNotifications();
-  }, [testFlag]);
+  }, []);
 
   return (
     <>
