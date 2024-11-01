@@ -180,7 +180,7 @@ const  App = () => {
         isAuthenticating: false,
       });
     }
-  }, [testFlag]);
+  }, []);
 
   useEffect(() => {
     setUserInfo();
