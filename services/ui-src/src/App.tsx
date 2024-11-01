@@ -39,13 +39,13 @@ const DEFAULT_AUTH_STATE: Omit<
 
 const  App = () => {
   const [authState, setAuthState] = useState(DEFAULT_AUTH_STATE);
-  const {mmdlNotificationBanner} = useFlags()
+  const {testFlag} = useFlags()
   const { ldClient } = useFlags();
 
   if (!ldClient) {
     console.error("LaunchDarkly client is not initialized");
   }
-  console.log("Feature Flags:", { mmdlNotificationBanner });
+  console.log("Feature Flags:", { testFlag });
   const [confirmationDialog, setConfirmationDialog] = useState<{
     heading: string;
     acceptText: string;
@@ -79,11 +79,11 @@ const  App = () => {
     []
   );
 
-  useEffect(() => {
-    if (ldClient && ldClient.isInitialized()) {
-      // Now safe to use feature flags
-    }
-  }, [ldClient]);
+  // useEffect(() => {
+  //   if (ldClient && ldClient.isInitialized()) {
+  //     // Now safe to use feature flags
+  //   }
+  // }, [ldClient]);
   /**
    * Gets authentication status for user,
    * gets user names and email from cognito
@@ -110,7 +110,7 @@ const  App = () => {
         userData.notifications = JSON.parse(storedNotifications);
       } else {
         // get the notifications & set local storage
-        if(mmdlNotificationBanner) {
+        if(testFlag) {
           const notifications = await NotificationsApi.createUserNotifications(
             email
           );
@@ -180,19 +180,19 @@ const  App = () => {
         isAuthenticating: false,
       });
     }
-  }, [mmdlNotificationBanner]);
+  }, []);
 
   useEffect(() => {
     setUserInfo();
-  }, [setUserInfo, mmdlNotificationBanner]);
+  }, [setUserInfo, testFlag]);
 
   
 
-  useEffect(() => {
-    // On initial load of the App, try to set the user info.
-    // It will capture info if they are logged in from a previous session.
-    setUserInfo();
-  }, [setUserInfo]);
+  // useEffect(() => {
+  //   // On initial load of the App, try to set the user info.
+  //   // It will capture info if they are logged in from a previous session.
+  //   setUserInfo();
+  // }, [setUserInfo]);
 
   const { email, firstName, lastName, cmsRoles } = authState.userProfile;
   useEffect(() => {
@@ -246,7 +246,7 @@ const  App = () => {
     <AppContext.Provider value={contextValue}>
       <IdleTimerWrapper />
       <div className="header-and-content">
-        {mmdlNotificationBanner && notifcations.map((n) => (
+        {testFlag && notifcations.map((n) => (
           <NotificationBanner
             key={n.sk}
             {...n}
@@ -279,14 +279,14 @@ const  App = () => {
     </AppContext.Provider>
   );
 }
-
-export default withLDProvider({
-  clientSideID: clientId ?? "undefined",
-  options: {
-  // @ts-ignore  
-  streamUrl: "https://clientstream.launchdarkly.us",
-  baseUrl: "https://clientsdk.launchdarkly.us",
-  eventsUrl: "https://events.launchdarkly.us",
-  }
-})(App);
+export default App;
+// export default withLDProvider({
+//   clientSideID:"66e81e1ae81b5b079a75a4f7",
+//   options: {
+//   // @ts-ignore  
+//   streamUrl: "https://clientstream.launchdarkly.us",
+//   baseUrl: "https://clientsdk.launchdarkly.us",
+//   eventsUrl: "https://events.launchdarkly.us",
+//   }
+// })(App);
 

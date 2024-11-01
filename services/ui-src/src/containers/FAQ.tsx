@@ -44,6 +44,7 @@ export const FAQSection = ({ section }: { section: FAQContent }) => {
 const FAQ = () => {
 
   const {mmdlFaq} = useFlags()
+  console.log("Feature Flags:", { mmdlFaq });
   const [faqItems, setFaqItems] = useState(oneMACFAQContent);
   const [hash, setHash] = useState(window.location.hash.replace("#", ""));
 

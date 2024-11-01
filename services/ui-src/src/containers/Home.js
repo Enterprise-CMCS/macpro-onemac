@@ -151,8 +151,8 @@ const renderPaperSubmissionInfo = (renderSubmissionSteps) => {
  */
 const Home = () => {
   const location = useLocation();
-  const {mmdlNotificationBanner} = useFlags()
-  const { ldClient } = useFlags();
+  const {testFlag} = useFlags()
+  // const { ldClient } = useFlags();
       // using Promise then() and catch() handlers
 
     
@@ -164,18 +164,18 @@ const Home = () => {
     // } catch (err) {
     //     doSomethingForFailedStartup(err);
     // }
-  if (!ldClient) {
-    console.error("LaunchDarkly client is not initialized");
-  }
-  console.log("Feature Flags:", { mmdlNotificationBanner });
+  // if (!ldClient) {
+  //   console.error("LaunchDarkly client is not initialized");
+  // }
+  // console.log("Feature Flags:", { mmdlNotificationBanner });
   const [systemNotifications, setSystemNotifications] = useState([]);
 
 
-  useEffect(() => {
-    if (ldClient && ldClient.isInitialized()) {
-      // Now safe to use feature flags
-    }
-  }, [ldClient]);
+  // useEffect(() => {
+  //   if (ldClient && ldClient.isInitialized()) {
+  //     // Now safe to use feature flags
+  //   }
+  // }, [ldClient]);
 
   // on intial load of the page we want to fetch the system notifications
   //     and add a state variable which will save the notifications
@@ -183,7 +183,7 @@ const Home = () => {
 
   useEffect(() => {
     const fetchNotifications = async () => {
-      if (mmdlNotificationBanner) {
+      if (testFlag) {
         const notifications = await NotificationApi.getActiveSystemNotifications();
         if (notifications && notifications.length) {
           setSystemNotifications(notifications); // Directly set notifications
@@ -194,13 +194,13 @@ const Home = () => {
     };
 
     fetchNotifications();
-  }, [mmdlNotificationBanner]);
+  }, [testFlag]);
 
   return (
     <>
       <HomeHeader />
       <AlertBar alertCode={location?.state?.passCode} />
-      {mmdlNotificationBanner && systemNotifications.length !== 0 && (
+      {testFlag && systemNotifications.length !== 0 && (
         <div className="home-content-container">
           <h2>New and Notable</h2>
           {systemNotifications.map((notification) => (
