@@ -1,10 +1,15 @@
-$font-path: "~@cmsgov/design-system/dist/fonts.css";
-$image-path: "~@cmsgov/design-system/dist/images.css";
+// $font-path: "~@cmsgov/design-system/dist/fonts.css";
+// $image-path: "~@cmsgov/design-system/dist/images.css";
 $input-border-radius: 3px;
 $color-primary-alt-lightest: #f0fafe;
 
 @import "@cmsgov/design-system/dist/css/index";
+@import "@cmsgov/design-system/dist/css/core-theme";
+
+@import "@cmsgov/design-system/dist/scss/core-component-tokens";
+@import "@cmsgov/design-system/dist/scss/core-tokens";
 @import "@cmsgov/design-system/dist/scss/core-theme";
+
 @import "~bootstrap/dist/css/bootstrap.min.css";
 
 @mixin gradient-top-border {
@@ -44,7 +49,7 @@ $color-primary-alt-lightest: #f0fafe;
   th {
     border-color: $color-gray-lightest;
     background-color: $color-white;
-    color: $color-black;
+    color: $color-gray-darkest;
     font-weight: 600;
     padding-left: 0px;
     padding-top: 0px;
@@ -109,7 +114,7 @@ $color-primary-alt-lightest: #f0fafe;
   table,
   th,
   td {
-    border: 1px solid $color-black;
+    border: 1px solid $color-gray-darkest;
   }
 
   td {
@@ -128,21 +133,21 @@ $color-primary-alt-lightest: #f0fafe;
 //   @extend .ds-base;
 // }
 
-// h1 {
-//   @extend .ds-h1;
-// }
+h1 {
+  @extend .ds-text-heading--3xl;
+}
 
-// h2 {
-//   @extend .ds-text-heading--2xl;
-// }
+h2 {
+  @extend .ds-text-heading--2xl;
+}
 
-// h3 {
-//   @extend .ds-text-heading--xl;
-// }
+h3 {
+  @extend .ds-text-heading--xl;
+}
 
-// h4 {
-//   @extend .ds-text-heading--lg;
-// }
+h4 {
+  @extend .ds-text-heading--lg;
+}
 
 legend {
   border-bottom-style: none !important;
@@ -212,10 +217,10 @@ p.field-hint {
   @extend .ds-u-padding-bottom--2;
   min-height: 7rem;
 
-  // h1 {
-  //   @extend .ds-text-heading--2xl;
-  //   margin: 0;
-  // }
+  h1 {
+    @extend .ds-text-heading--3xl;
+    margin: 0;
+  }
 
   .title-bar-left-content {
     @extend .ds-u-display--flex;
@@ -338,7 +343,7 @@ p.field-hint {
     @extend .uploader-input-label;
     background-color: $color-gray-lighter;
     border-color: transparent;
-    color: $color-gray-dark;
+    color: $color-gray-darkest;
     pointer-events: none;
   }
 
@@ -522,13 +527,7 @@ input[type="file"] {
   @extend .ds-u-align-items--center;
 
   h2 {
-    @extend .ds-text-heading--xl;
     @extend .ds-u-margin-top--1;
-  }
-  .topic-title {
-    @extend .ds-text-heading--xl;
-    @extend .ds-u-margin-top--0;
-    margin-bottom: 24px;
   }
   .ds-c-review {
     @extend .ds-u-border-bottom--0;
@@ -1140,13 +1139,13 @@ article.form-container {
   }
 
   .user-state {
-    color: $color-black;
+    color: $color-gray-darkest;
   }
 
   .user-status {
     font-weight: 700;
     text-transform: capitalize;
-    color: $color-black;
+    color: $color-gray-darkest;
   }
 
   td:not(:last-child) {
@@ -1158,7 +1157,7 @@ article.form-container {
   }
 
   td:last-child button {
-    color: $color-black;
+    color: $color-gray-darkest;
     width: 100%;
   }
 }
@@ -1266,6 +1265,7 @@ article.form-container {
 
   #oneMacLogo {
     @extend .ds-u-margin-right--6;
+    @extend .ds-u-padding--1;
     max-height: 4rem;
   }
 
@@ -1362,6 +1362,7 @@ article.form-container {
   text-decoration-color: $color-white;
   text-decoration-thickness: 4px;
   text-decoration-skip-ink: none;
+  text-underline-offset: auto;
 }
 
 .usa-bar {
@@ -1831,6 +1832,7 @@ article.form-container {
 
   // Row titles for home page content
   h1 {
+    @extend .ds-text-heading--3xl;
     @extend .ds-u-margin-top--7;
     @extend .ds-u-padding-top--7;
     @extend .ds-u-padding-x--1;
@@ -1878,6 +1880,7 @@ article.form-container {
       }
 
       h2 {
+        @extend .ds-text-heading--2xl;
         @include title-font(24px, 30px, 700);
         @extend .ds-u-margin-bottom--3;
         color: $color-base;
@@ -1911,6 +1914,7 @@ article.form-container {
     gap: 1rem;
 
     h2 {
+      @extend .ds-text-heading--2xl;
       @include title-font(18px, 24px, 700);
       margin-top: 0;
       color: $color-gray;
@@ -1979,6 +1983,10 @@ article.form-container {
     @extend .ds-u-margin-top--5;
     @extend .ds-u-lg-margin-top--0;
     @extend .ds-u-padding--0;
+
+    h2 {
+      @extend .ds-text-heading--2xl;
+    }
 
     ul {
       padding-left: 2ch !important;
@@ -2081,7 +2089,6 @@ article.form-container {
   font-size: 18px;
   text-decoration: none;
   position: relative;
-  padding: 10px;
   padding-left: 40px;
   color: #0071bc;
   background-color: white;
@@ -2121,6 +2128,15 @@ article.form-container {
   padding: 40px 16px 8px 16px;
   margin: 0 auto;
   gap: 3rem;
+
+  h2 {
+    @extend .ds-u-margin-top--2;
+  }
+
+  .topic-title {
+    @extend .ds-text-heading--2xl;
+    @extend .ds-u-margin--2;
+  }
 
   #question-list {
     width: 100%;
@@ -2788,7 +2804,7 @@ article.form-container {
 }
 
 .custom-multi-select {
-  color: $color-black;
+  color: $color-gray-darkest;
 }
 
 .parent-row-expanded .row-expander-cell button svg {
@@ -2855,7 +2871,7 @@ article.form-container {
 
   .detail-card-status {
     @extend .ds-text-heading--2xl;
-    color: $color-black;
+    color: $color-gray-darkest;
   }
 
   section {
