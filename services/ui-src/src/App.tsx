@@ -195,6 +195,7 @@ const  App = () => {
             const notifications = await NotificationsApi.createUserNotifications(
               email
             );
+            console.log("test flag true, notifications found: ", notifcations)
             userData.notifications = notifications;
             if(notifcations) {
               localStorage.setItem(
@@ -204,6 +205,13 @@ const  App = () => {
             }
           }
         }
+        setAuthState((prevState) => ({
+          ...prevState,
+          userProfile: {
+            ...prevState.userProfile, // Spread existing userProfile properties
+            userData: userData, // Update userData with the new value
+          },
+        }));
       } catch (error) {
         if (
           (error as string) !== "The user is not authenticated" &&
