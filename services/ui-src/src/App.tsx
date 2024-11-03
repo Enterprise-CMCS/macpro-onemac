@@ -38,7 +38,6 @@ const DEFAULT_AUTH_STATE: Omit<
 const  App = () => {
   const [authState, setAuthState] = useState(DEFAULT_AUTH_STATE);
   const {testFlag} = useFlags()
-  const { ldClient } = useFlags();
 
   console.log("Feature Flags:", { testFlag });
   const [confirmationDialog, setConfirmationDialog] = useState<{
