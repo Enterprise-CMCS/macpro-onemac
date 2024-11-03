@@ -90,7 +90,6 @@ const  App = () => {
       const authUser = await Auth.currentAuthenticatedUser();
       const email = authUser.signInUserSession.idToken.payload.email;
       const userData = await UserDataApi.userProfile(email);
-
       // set the notifications: Needs to be stored locally to persist on reload
       // Check local storage for notifications
       const storedNotifications = localStorage.getItem(
@@ -171,6 +170,7 @@ const  App = () => {
         isAuthenticating: false,
       });
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
