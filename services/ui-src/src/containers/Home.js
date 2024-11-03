@@ -7,7 +7,6 @@ import { MACCard } from "../components/MACCard";
 import NotificationApi from "../utils/NotificationApi";
 import { NotificationCard } from "../components/NotificationCard";
 import {  useFlags} from 'launchdarkly-react-client-sdk';
-import { use } from "chai";
 const stateSubmissionTitle = "How to create a submission";
 const stateSubmissionsList = [
   {
