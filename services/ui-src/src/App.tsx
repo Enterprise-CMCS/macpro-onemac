@@ -92,25 +92,30 @@ const  App = () => {
       const userData = await UserDataApi.userProfile(email);
       // set the notifications: Needs to be stored locally to persist on reload
       // Check local storage for notifications
-      const storedNotifications = localStorage.getItem(
-        LOCAL_STORAGE_USERNOTIFICATIONS
-      );
 
-      if (storedNotifications?.length && storedNotifications.length > 2) {
-        userData.notifications = JSON.parse(storedNotifications);
-      } else {
-        // get the notifications & set local storage
-        const notifications = await NotificationsApi.createUserNotifications(
-          email
-        );
-        userData.notifications = notifications;
-        if(notifcations) {
-          localStorage.setItem(
-            LOCAL_STORAGE_USERNOTIFICATIONS,
-            JSON.stringify(notifications)
+      setTimeout(async ()=>{
+        if(testFlag) {
+          const storedNotifications = localStorage.getItem(
+            LOCAL_STORAGE_USERNOTIFICATIONS
           );
+          if (storedNotifications?.length && storedNotifications.length > 2) {
+            userData.notifications = JSON.parse(storedNotifications);
+          } else {
+            // get the notifications & set local storage
+            const notifications = await NotificationsApi.createUserNotifications(
+              email
+            );
+            userData.notifications = notifications;
+            if(notifcations) {
+              localStorage.setItem(
+                LOCAL_STORAGE_USERNOTIFICATIONS,
+                JSON.stringify(notifications)
+              );
+            }
+          }
         }
-      }
+      }, 1000)
+
 
       const roleResult = effectiveRoleForUser(userData?.roleList);
       let userRole = null,
@@ -172,6 +177,50 @@ const  App = () => {
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(()=> {
+    (async ()=>{
+      try{
+        const authUser = await Auth.currentAuthenticatedUser();
+        const email = authUser.signInUserSession.idToken.payload.email;
+        const userData = await UserDataApi.userProfile(email);
+        if(testFlag) {
+          const storedNotifications = localStorage.getItem(
+            LOCAL_STORAGE_USERNOTIFICATIONS
+          );
+          if (storedNotifications?.length && storedNotifications.length > 2) {
+            userData.notifications = JSON.parse(storedNotifications);
+          } else {
+            // get the notifications & set local storage
+            const notifications = await NotificationsApi.createUserNotifications(
+              email
+            );
+            userData.notifications = notifications;
+            if(notifcations) {
+              localStorage.setItem(
+                LOCAL_STORAGE_USERNOTIFICATIONS,
+                JSON.stringify(notifications)
+              );
+            }
+          }
+        }
+      } catch (error) {
+        if (
+          (error as string) !== "The user is not authenticated" &&
+          (error as Error).message !== "SESSION_EXPIRY"
+        ) {
+          console.log(
+            "There was an error while loading the user information.",
+            error
+          );
+        }
+        setAuthState({
+          ...DEFAULT_AUTH_STATE,
+          isAuthenticating: false,
+        });
+      }
+    })();
+  }, [testFlag])
 
   useEffect(() => {
     setUserInfo();
