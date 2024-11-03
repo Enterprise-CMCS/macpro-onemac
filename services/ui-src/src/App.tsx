@@ -95,30 +95,6 @@ const  App = () => {
       const email = authUser.signInUserSession.idToken.payload.email;
       const userData = await UserDataApi.userProfile(email);
 
-      // set the notifications: Needs to be stored locally to persist on reload
-      // Check local storage for notifications
-      const storedNotifications = localStorage.getItem(
-        LOCAL_STORAGE_USERNOTIFICATIONS
-      );
-
-      if (storedNotifications?.length && storedNotifications.length > 2) {
-        userData.notifications = JSON.parse(storedNotifications);
-        console.log("***** notifications found " + userData.notifications)
-      } else {
-        // get the notifications & set local storage
-        const notifications = await NotificationsApi.createUserNotifications(
-          email
-        );
-        userData.notifications = notifications;
-        console.log("***** notifications fetched " + userData.notifications)
-        if(notifcations) {
-          localStorage.setItem(
-            LOCAL_STORAGE_USERNOTIFICATIONS,
-            JSON.stringify(notifications)
-          );
-        }
-      }
-
       const roleResult = effectiveRoleForUser(userData?.roleList);
       let userRole = null,
         userStatus = null;
@@ -184,7 +160,55 @@ const  App = () => {
     setUserInfo();
   }, [setUserInfo]);
 
+  useEffect(() => {
+    (async () => {
+      try{
+        if(testFlag) {
+          const authUser = await Auth.currentAuthenticatedUser();
+          const email = authUser.signInUserSession.idToken.payload.email;
+          const userData = await UserDataApi.userProfile(email);
+          // set the notifications: Needs to be stored locally to persist on reload
+          // Check local storage for notifications
+          const storedNotifications = localStorage.getItem(
+            LOCAL_STORAGE_USERNOTIFICATIONS
+          );
+    
+          if (storedNotifications?.length && storedNotifications.length > 2) {
+            userData.notifications = JSON.parse(storedNotifications);
+            console.log("***** notifications found " + userData.notifications)
+          } else {
+            // get the notifications & set local storage
+            const notifications = await NotificationsApi.createUserNotifications(
+              email
+            );
+            userData.notifications = notifications;
+            if(notifcations) {
+              localStorage.setItem(
+                LOCAL_STORAGE_USERNOTIFICATIONS,
+                JSON.stringify(notifications)
+              );
+            }
+          }
+        }
+      }
+      catch (error) {
+        if (
+          (error as string) !== "The user is not authenticated" &&
+          (error as Error).message !== "SESSION_EXPIRY"
+        ) {
+          console.log(
+            "There was an error while loading the user information.",
+            error
+          );
+        }
   
+        setAuthState({
+          ...DEFAULT_AUTH_STATE,
+          isAuthenticating: false,
+        });
+      }
+    })();
+  }, [testFlag]);
 
   // useEffect(() => {
   //   // On initial load of the App, try to set the user info.
