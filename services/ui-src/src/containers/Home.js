@@ -155,21 +155,18 @@ const Home = () => {
   const [systemNotifications, setSystemNotifications] = useState([]);
 
   useEffect(() => {
-    if(testFlag) {
-      (async () => {
-        const notifications =
-          await NotificationApi.getActiveSystemNotifications();
-        if (notifications && notifications.length)
-          setSystemNotifications([...notifications]);
-        else {
-          console.log(
-            "Either no notifications or an error occured",
-            notifications
-          );
-        }
-      })();
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    (async () => {
+      const notifications =
+        await NotificationApi.getActiveSystemNotifications();
+      if (notifications && notifications.length)
+        setSystemNotifications([...notifications]);
+      else {
+        console.log(
+          "Either no notifications or an error occured",
+          notifications
+        );
+      }
+    })();
   }, []);
 
   return (
