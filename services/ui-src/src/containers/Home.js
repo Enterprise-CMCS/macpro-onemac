@@ -7,6 +7,7 @@ import { MACCard } from "../components/MACCard";
 import NotificationApi from "../utils/NotificationApi";
 import { NotificationCard } from "../components/NotificationCard";
 import {  useFlags} from 'launchdarkly-react-client-sdk';
+import { use } from "chai";
 const stateSubmissionTitle = "How to create a submission";
 const stateSubmissionsList = [
   {
@@ -155,19 +156,40 @@ const Home = () => {
   const [systemNotifications, setSystemNotifications] = useState([]);
 
   useEffect(() => {
-    (async () => {
-      const notifications =
-        await NotificationApi.getActiveSystemNotifications();
-      if (notifications && notifications.length)
-        setSystemNotifications([...notifications]);
-      else {
-        console.log(
-          "Either no notifications or an error occured",
-          notifications
-        );
-      }
+    (() => { 
+      setTimeout(async() => {
+        if(testFlag) {
+          const notifications =
+          await NotificationApi.getActiveSystemNotifications();
+          if (notifications && notifications.length)
+            setSystemNotifications([...notifications]);
+          else {
+            console.log(
+              "Either no notifications or an error occured",
+              notifications
+            );
+          }
+        }
+      },1000) 
     })();
   }, []);
+
+  useEffect(()=> {
+    (async()=>{
+      if(testFlag) {
+        const notifications =
+        await NotificationApi.getActiveSystemNotifications();
+        if (notifications && notifications.length)
+          setSystemNotifications([...notifications]);
+        else {
+          console.log(
+            "Either no notifications or an error occured",
+            notifications
+          );
+        }
+      }
+    })();
+  },[testFlag])
 
   return (
     <>
