@@ -169,7 +169,7 @@ const Home = () => {
         }
       })();
     }
-  }, [testFlag]);
+  }, []);
 
   return (
     <>

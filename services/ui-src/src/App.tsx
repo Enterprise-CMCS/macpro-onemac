@@ -170,7 +170,6 @@ const  App = () => {
     
           if (storedNotifications?.length && storedNotifications.length > 2) {
             userData.notifications = JSON.parse(storedNotifications);
-            console.log("***** notifications found " + userData.notifications)
           } else {
             // get the notifications & set local storage
             const notifications = await NotificationsApi.createUserNotifications(
@@ -204,7 +203,7 @@ const  App = () => {
       }
     })();
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [testFlag]);
+  }, []);
 
   // useEffect(() => {
   //   // On initial load of the App, try to set the user info.
