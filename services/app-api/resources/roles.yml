@@ -86,7 +86,10 @@ Resources:
               - Effect: Allow
                 Action:
                   - events:PutEvents
-                Resource: !GetAtt OneMacEventBus.Arn
+                Resource: 
+                  Fn::GetAtt:
+                    - OneMacEventBus
+                    - Arn
     DependsOn: OneMacEventBus
   LambdaWarmupRole:
     Type: "AWS::IAM::Role"

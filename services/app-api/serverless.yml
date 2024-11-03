@@ -69,7 +69,7 @@ custom:
 provider:
   name: aws
   runtime: nodejs20.x
-  timeout: 150
+  timeout: 30
   region: us-east-1
   stage: dev
   iam:
@@ -132,7 +132,6 @@ functions:
   submitMedicaidSpaSubsequent:
     handler: form/submitMedicaidSPASubsequentSubmission.main
     role: LambdaApiRole
-    timeout: 30
     events:
       - http:
           path: submitMedicaidSPASubsequent
@@ -169,7 +168,6 @@ functions:
   submitChipSpaSubsequent:
     handler: form/submitChipSPASubsequentSubmission.main
     role: LambdaApiRole
-    timeout: 30
     events:
       - http:
           path: submitChipSPASubsequent
@@ -240,7 +238,6 @@ functions:
   submitInitialWaiverSubsequent:
     handler: form/submitInitialWaiverSubsequentSubmission.main
     role: LambdaApiRole
-    timeout: 30
     events:
       - http:
           path: submitInitialWaiverSubsequent
@@ -251,7 +248,6 @@ functions:
   submitWaiverRenewalSubsequent:
     handler: form/submitWaiverRenewalSubsequentSubmission.main
     role: LambdaApiRole
-    timeout: 30
     events:
       - http:
           path: submitWaiverRenewalSubsequent
@@ -262,7 +258,6 @@ functions:
   submitWaierAmendmentSubsequent:
     handler: form/submitWaiverAmendmentSubsequentSubmission.main
     role: LambdaApiRole
-    timeout: 30
     events:
       - http:
           path: submitWaiverAmendmentSubsequent
@@ -273,7 +268,6 @@ functions:
   submitWaiverAppKSubsequent:
     handler: form/submitWaiverAppKSubsequentSubmission.main
     role: LambdaApiRole
-    timeout: 30
     events:
       - http:
           path: submitWaiverAppKSubsequent
@@ -635,38 +629,15 @@ functions:
           cors: true
           authorizer: aws_iam
 
-   # Lambda to process DynamoDB stream records
-  processDynamoDBStream:
-    handler: processDynamoDBStream.main
-    events:
-      - stream:
-          type: dynamodb
-          arn:
-            Fn::GetAtt:
-              - OneMacTable    # DynamoDB table logical name
-              - StreamArn
-          batchSize: 5
-          startingPosition: "LATEST"
-    environment:
-      EVENT_BUS_NAME: OneMacEventBus-${self:custom.stage}
-
-
   # Lambda to handle events from EventBridge
   processEventBridgeEvent:
     handler: processEventBridgeEvent.main
-    events:
-      - eventBridge:
-          eventBus: !Sub "OneMacEventBus-${self:custom.stage}" 
-          pattern:
-            source:
-              - "aws.dynamodb"
-            detail-type:
-              - "DynamoDB Stream Record"
+    role: LambdaApiRole
 
 resources:
   - ${file(resources/base.yml)}
 
-  # Uploads S3 bucket
+  # DynamoDB Tables
   - ${file(resources/spa-form-tables.yml)}
 
   # EventBridge

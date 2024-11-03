@@ -5,6 +5,17 @@ Resources:
     Properties:
       Name: OneMacEventBus-${self:custom.stage}
 
+  DynamoDBToEventBusPipe:
+      Type: AWS::Pipes::Pipe
+      Properties:
+        Name: !Sub "DynamoDBToEventBusPipe-${self:custom.stage}"
+        RoleArn: !GetAtt PipeRole.Arn  # IAM Role with permissions for the pipe
+        Source: !GetAtt OneMacTable.StreamArn  # Source is the DynamoDB stream
+        Target: !GetAtt OneMacEventBus.Arn  # Use GetAtt to get the full ARN of the EventBridge bus
+        SourceParameters:
+          DynamoDBStreamParameters:
+            StartingPosition: LATEST
+
   # EventBridge Rule for DynamoDB Stream events
   DynamoDBEventRule:
     Type: AWS::Events::Rule
@@ -14,13 +25,42 @@ Resources:
       EventPattern:
         source:
           - "aws.dynamodb"
-        detail-type:
-          - "DynamoDB Stream Record"
-        resources:
-          - !GetAtt OneMacTable.Arn
       Targets:
         - Arn: !GetAtt ProcessEventBridgeEventLambdaFunction.Arn
           Id: "ProcessDynamoDBEventTarget"
-    DependsOn:
-      - OneMacEventBus
-      - OneMacTable
+
+  ProcessEventBridgeEventLambdaPermission:
+      Type: AWS::Lambda::Permission
+      Properties:
+        FunctionName: !Ref ProcessEventBridgeEventLambdaFunction
+        Action: lambda:InvokeFunction
+        Principal: events.amazonaws.com
+        SourceArn: !GetAtt DynamoDBEventRule.Arn 
+
+  PipeRole:
+      Type: AWS::IAM::Role
+      Properties:
+        RoleName: !Sub "PipeRole-${self:custom.stage}"
+        AssumeRolePolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Principal:
+                Service: pipes.amazonaws.com
+              Action: sts:AssumeRole
+        Policies:
+          - PolicyName: PipePolicy
+            PolicyDocument:
+              Version: '2012-10-17'
+              Statement:
+                - Effect: Allow
+                  Action:
+                    - dynamodb:GetRecords
+                    - dynamodb:GetShardIterator
+                    - dynamodb:DescribeStream
+                    - dynamodb:ListStreams
+                  Resource: !GetAtt OneMacTable.StreamArn  # Explicitly reference the DynamoDB stream ARN
+                - Effect: Allow
+                  Action:
+                    - events:PutEvents
+                  Resource: !GetAtt OneMacEventBus.Arn 
