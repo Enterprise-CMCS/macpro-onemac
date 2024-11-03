@@ -40,9 +40,6 @@ const  App = () => {
   const {testFlag} = useFlags()
   const { ldClient } = useFlags();
 
-  if (!ldClient) {
-    console.error("LaunchDarkly client is not initialized");
-  }
   console.log("Feature Flags:", { testFlag });
   const [confirmationDialog, setConfirmationDialog] = useState<{
     heading: string;
@@ -153,7 +150,6 @@ const  App = () => {
         isAuthenticating: false,
       });
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -208,6 +204,7 @@ const  App = () => {
         });
       }
     })();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [testFlag]);
 
   // useEffect(() => {
