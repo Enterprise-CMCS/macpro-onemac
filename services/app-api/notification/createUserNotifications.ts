@@ -82,6 +82,7 @@ export const createUserNotifications = async (userId: string) => {
   // Step 1: Get all user-targeted system notifications
   const systemNotifications: Notification[] =
     (await getUserTargetedSystemNotifications()) as Notification[];
+  console.log("systemNotifications: " + systemNotifications)
 
   // Exit early if there are no active user-targeted system notifications
   if (systemNotifications.length === 0) {
@@ -99,27 +100,27 @@ export const createUserNotifications = async (userId: string) => {
   const userNotifications =
     ((await getAllUserNotifications(userId)) as Notification[]) ||
     ([] as Notification[]);
-
+    console.log("userNotifications: " + userNotifications)
   // Step 3: Find the missing notifications
   const existingNotificationIds = new Set(
     userNotifications.map((notif) => notif.sk.split("#")[1]) // Extract notificationId from user notification sk
   );
-
+  console.log("existingNotifications: " + userNotifications)
   // Filter system notifications to find the ones not yet created for this user
   const missingNotifications: Notification[] = systemNotifications.filter(
     (notif) => !existingNotificationIds.has(notif.sk.split("#")[1]) // Compare system notificationId with user notificationId
   );
-
+  console.log("missingNotifications: " + missingNotifications)
   // mark existing notifications as dismissed
   existingNotificationIds.forEach(async (notificationId) => {
     dismissUserNotification(userId, notificationId);
   });
-
+  console.log("missingNotifications after filter dissmissed: " + missingNotifications)
   // Step 4: Insert missing notifications
   if (missingNotifications.length > 0) {
     await insertMissingNotifications(userId, missingNotifications);
   }
-
+  console.log("missingNotifications after insert missing: " + missingNotifications)
   return {
     statusCode: 200,
     body: {
