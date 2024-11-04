@@ -170,6 +170,7 @@ export function App() {
         isAuthenticating: false,
       });
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
