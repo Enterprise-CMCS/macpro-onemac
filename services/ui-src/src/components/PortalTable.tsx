@@ -141,7 +141,10 @@ export default function PortalTable<V extends {} = {}>({
         <table className={props.className} {...getTableProps()}>
           <thead>
             {headerGroups.map((headerGroup) => (
-              <tr {...headerGroup.getHeaderGroupProps()}>
+              <tr
+                {...headerGroup.getHeaderGroupProps()}
+                key={`tr-${headerGroup.id}`}
+              >
                 {(
                   headerGroup.headers as (HeaderGroup<V> &
                     UseSortByColumnProps<V>)[]
@@ -149,6 +152,7 @@ export default function PortalTable<V extends {} = {}>({
                   <th
                     {...column.getHeaderProps(column.getSortByToggleProps())}
                     id={`${column.id}ColHeader`}
+                    key={`th-${column.id}`}
                   >
                     {column.render("Header")}
                     <span className="sort-icons-table">
@@ -171,7 +175,7 @@ export default function PortalTable<V extends {} = {}>({
                 // @ts-ignore FIXME remove when react-table types are improved
                 prepareRow(row, rowIndex);
                 return (
-                  <tr {...row.getRowProps()}>
+                  <tr {...row.getRowProps()} key={`tr-${row.id}`}>
                     {row.cells.map((cell, index) => {
                       return (
                         <td
@@ -179,6 +183,7 @@ export default function PortalTable<V extends {} = {}>({
                             headerGroups[0].headers[index].id + "-" + rowIndex
                           }
                           {...cell.getCellProps()}
+                          key={`td-${row.id}-${cell.column.id}`}
                         >
                           {cell.render("Cell")}
                         </td>

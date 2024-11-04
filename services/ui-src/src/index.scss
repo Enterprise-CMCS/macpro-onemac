@@ -409,7 +409,7 @@ input[type="file"] {
 .ds-c-review:not(.original-review-component) {
   .ds-c-review__body {
     @extend .ds-u-margin-top--1;
-    font-size: 2rem;
+    font-size: 1rem;
     color: $color-gray;
   }
 }

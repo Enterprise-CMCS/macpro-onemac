@@ -270,7 +270,7 @@ function TextFilter({
 
     for (const {
       values: { [id]: value },
-      // @ts-ignore
+      ///@ts-ignore
       depth,
     } of preGlobalFilteredFlatRows) {
       if (typeof value === "string") possibleUnique.add(value);
@@ -286,7 +286,11 @@ function TextFilter({
   }, [preGlobalFilteredFlatRows, id]) as [string[], Set<string>];
 
   const onCheckboxSelect = useCallback(
-    ({ currentTarget: { checked, value } }) => {
+    ({
+      currentTarget: { checked, value },
+    }: {
+      currentTarget: { checked: boolean; value: string };
+    }) => {
       setFilter((oldFilterValue?: string[]) => {
         if (!oldFilterValue) oldFilterValue = [...possibleValues]; // begin with everything
         const newFilterValue: Set<string> = new Set(oldFilterValue);
@@ -349,6 +353,7 @@ function DateFilter({
 }: FilterProps & { inThePast?: boolean }) {
   const { dispatch: updateFilterChips } = useFilterChipContext();
   const onChangeSelection = useCallback(
+    ///@ts-ignore
     (value) => {
       value !== null && value?.length
         ? /* Filters come in an array with 2 dates, the earlier always at
@@ -438,6 +443,7 @@ const MultiSelectList = ({
 }) => {
   const { dispatch: updateFilterChips } = useFilterChipContext();
   const onSelect = useCallback(
+    ///@ts-ignore
     (selected) => {
       setFilter(selected.map(({ value }: SelectOption) => value));
       /* We can universally use "ADD" action type as it handles MULTISELECT
@@ -586,7 +592,7 @@ function FilterPane<V extends {}>({
                         id={column.id}
                         key={column.id}
                       >
-                        {<>column.render("Filter")</>}
+                        {<>{column.render("Filter")}</>}
                       </AccordionItem>
                     ))}
                 </div>
@@ -629,7 +635,7 @@ export function SearchAndFilter<V extends {} = {}>({
   }, []);
 
   const onKeywordChange = useCallback(
-    ({ currentTarget: { value } }) => {
+    ({ currentTarget: { value } }: { currentTarget: { value: string } }) => {
       setSearchTerm(value);
       debouncedSearch(value);
     },
