@@ -10,7 +10,7 @@ import "core-js/es/object";
 import "isomorphic-fetch";
 import "rsuite/dist/rsuite.min.css";
 import "./index.scss";
-import {App} from "./App";
+import App from "./App";
 import { BrowserRouter } from "react-router-dom";
 import { Amplify } from "aws-amplify";
 import { getApplicationNode } from "./utils";
