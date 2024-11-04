@@ -20,7 +20,7 @@ import { ConfirmationDialog } from "./components/ConfirmationDialog";
 import NotificationBanner from "./components/NotificationBanner";
 import NotificationsApi from "./utils/NotificationApi";
 import { LOCAL_STORAGE_USERNOTIFICATIONS } from "./utils/StorageKeys";
-import { useFlags} from 'launchdarkly-react-client-sdk';
+import { useFlags } from 'launchdarkly-react-client-sdk';
 
 const DEFAULT_AUTH_STATE: Omit<
   AppContextValue,
@@ -35,11 +35,10 @@ const DEFAULT_AUTH_STATE: Omit<
   activeTerritories: null,
 };
 
-const  App = () => {
-  const [authState, setAuthState] = useState(DEFAULT_AUTH_STATE);
-  const {testFlag} = useFlags()
-
+export function App() {
+  const {testFlag} = useFlags();
   console.log("Feature Flags:", { testFlag });
+  const [authState, setAuthState] = useState(DEFAULT_AUTH_STATE);
   const [confirmationDialog, setConfirmationDialog] = useState<{
     heading: string;
     acceptText: string;
@@ -73,7 +72,6 @@ const  App = () => {
     []
   );
 
-
   /**
    * Gets authentication status for user,
    * gets user names and email from cognito
@@ -82,7 +80,6 @@ const  App = () => {
    * Then sets all these values in their corresponding state variables.
    * @param isDeveloper indicates if the user is a developer
    */
-
   const setUserInfo = useCallback(async (isDeveloper = false) => {
     try {
       // Get authenticated user's info from cognito
@@ -90,32 +87,30 @@ const  App = () => {
       const authUser = await Auth.currentAuthenticatedUser();
       const email = authUser.signInUserSession.idToken.payload.email;
       const userData = await UserDataApi.userProfile(email);
+
       // set the notifications: Needs to be stored locally to persist on reload
       // Check local storage for notifications
+      const storedNotifications = localStorage.getItem(
+        LOCAL_STORAGE_USERNOTIFICATIONS
+      );
 
-      setTimeout(async ()=>{
-        if(testFlag) {
-          const storedNotifications = localStorage.getItem(
-            LOCAL_STORAGE_USERNOTIFICATIONS
-          );
-          if (storedNotifications?.length && storedNotifications.length > 2) {
-            userData.notifications = JSON.parse(storedNotifications);
-          } else {
-            // get the notifications & set local storage
-            const notifications = await NotificationsApi.createUserNotifications(
-              email
-            );
-            userData.notifications = notifications;
-            if(notifcations) {
-              localStorage.setItem(
-                LOCAL_STORAGE_USERNOTIFICATIONS,
-                JSON.stringify(notifications)
-              );
-            }
-          }
-        }
-      }, 1000)
-
+      if (storedNotifications?.length && storedNotifications.length > 2) {
+        userData.notifications = JSON.parse(storedNotifications);
+        console.log("***** notifications found " + userData.notifications)
+      } else {
+        // get the notifications & set local storage
+        const notifications = await NotificationsApi.createUserNotifications(
+          email
+        );
+        userData.notifications = notifications;
+        // console.log("***** notifications fetched " + userData.notifications)
+        console.log("right before save to LS")
+        localStorage.setItem(
+          LOCAL_STORAGE_USERNOTIFICATIONS,
+          JSON.stringify(notifications)
+        );
+        console.log("right after, notifications: " + notifcations);
+      }
 
       const roleResult = effectiveRoleForUser(userData?.roleList);
       let userRole = null,
@@ -175,71 +170,13 @@ const  App = () => {
         isAuthenticating: false,
       });
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(()=> {
-    (async ()=>{
-      try{
-        const authUser = await Auth.currentAuthenticatedUser();
-        const email = authUser.signInUserSession.idToken.payload.email;
-        const userData = await UserDataApi.userProfile(email);
-        if(testFlag) {
-          const storedNotifications = localStorage.getItem(
-            LOCAL_STORAGE_USERNOTIFICATIONS
-          );
-          if (storedNotifications?.length && storedNotifications.length > 2) {
-            userData.notifications = JSON.parse(storedNotifications);
-          } else {
-            // get the notifications & set local storage
-            const notifications = await NotificationsApi.createUserNotifications(
-              email
-            );
-            console.log("test flag true, notifications found: ", notifcations)
-            userData.notifications = notifications;
-            if(notifcations) {
-              localStorage.setItem(
-                LOCAL_STORAGE_USERNOTIFICATIONS,
-                JSON.stringify(notifications)
-              );
-            }
-          }
-        }
-        setAuthState((prevState) => ({
-          ...prevState,
-          userProfile: {
-            ...prevState.userProfile, // Spread existing userProfile properties
-            userData: userData, // Update userData with the new value
-          },
-        }));
-      } catch (error) {
-        if (
-          (error as string) !== "The user is not authenticated" &&
-          (error as Error).message !== "SESSION_EXPIRY"
-        ) {
-          console.log(
-            "There was an error while loading the user information.",
-            error
-          );
-        }
-        setAuthState({
-          ...DEFAULT_AUTH_STATE,
-          isAuthenticating: false,
-        });
-      }
-    })();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [testFlag])
-
   useEffect(() => {
+    // On initial load of the App, try to set the user info.
+    // It will capture info if they are logged in from a previous session.
     setUserInfo();
   }, [setUserInfo]);
-
-  // useEffect(() => {
-  //   // On initial load of the App, try to set the user info.
-  //   // It will capture info if they are logged in from a previous session.
-  //   setUserInfo();
-  // }, [setUserInfo]);
 
   const { email, firstName, lastName, cmsRoles } = authState.userProfile;
   useEffect(() => {
@@ -288,7 +225,6 @@ const  App = () => {
     } else return [];
   }, [authState.userProfile.userData]);
 
-
   return authState.isAuthenticating ? null : (
     <AppContext.Provider value={contextValue}>
       <IdleTimerWrapper />
@@ -326,5 +262,3 @@ const  App = () => {
     </AppContext.Provider>
   );
 }
-export default App;
-
