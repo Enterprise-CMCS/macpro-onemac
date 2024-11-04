@@ -93,26 +93,26 @@ const  App = () => {
       // set the notifications: Needs to be stored locally to persist on reload
       // Check local storage for notifications
 
-      if(testFlag) {
-        const storedNotifications = localStorage.getItem(
-          LOCAL_STORAGE_USERNOTIFICATIONS
+
+      const storedNotifications = localStorage.getItem(
+        LOCAL_STORAGE_USERNOTIFICATIONS
+      );
+      if (storedNotifications?.length && storedNotifications.length > 2) {
+        userData.notifications = JSON.parse(storedNotifications);
+      } else {
+        // get the notifications & set local storage
+        const notifications = await NotificationsApi.createUserNotifications(
+          email
         );
-        if (storedNotifications?.length && storedNotifications.length > 2) {
-          userData.notifications = JSON.parse(storedNotifications);
-        } else {
-          // get the notifications & set local storage
-          const notifications = await NotificationsApi.createUserNotifications(
-            email
+        userData.notifications = notifications;
+        if(notifcations) {
+          localStorage.setItem(
+            LOCAL_STORAGE_USERNOTIFICATIONS,
+            JSON.stringify(notifications)
           );
-          userData.notifications = notifications;
-          if(notifcations) {
-            localStorage.setItem(
-              LOCAL_STORAGE_USERNOTIFICATIONS,
-              JSON.stringify(notifications)
-            );
-          }
         }
       }
+      
 
       const roleResult = effectiveRoleForUser(userData?.roleList);
       let userRole = null,
