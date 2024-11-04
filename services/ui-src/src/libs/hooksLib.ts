@@ -56,16 +56,22 @@ export function useSignupCallback(
   } = useAppContext() ?? {};
 
   const signupUser = useCallback(
-    async (payload) => {
+    async (payload: {}) => {
       if (loading) return;
       try {
         setLoading(true);
 
+        let payloadAtrributes: string[] = [];
+
         if (processAttributes) {
-          payload = processAttributes(payload);
+          payloadAtrributes = processAttributes(payload) ?? [];
         }
 
-        let answer = await UserDataApi.requestAccess(email, userType, payload);
+        let answer = await UserDataApi.requestAccess(
+          email,
+          userType,
+          payloadAtrributes
+        );
         // TODO use RESPONSE_CODE.USER_SUBMITTED when it is exported from common package
         if (answer && answer !== RESPONSE_CODE.USER_SUBMITTED) throw answer;
 
