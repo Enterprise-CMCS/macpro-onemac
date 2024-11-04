@@ -15,6 +15,10 @@ Resources:
         SourceParameters:
           DynamoDBStreamParameters:
             StartingPosition: LATEST
+        TargetParameters:
+          EventBridgeEventBusParameters:
+            DetailType: "DynamoDB Stream Record"
+            Source: "aws.dynamodb"  # Set this to customize the source value
 
   # EventBridge Rule for DynamoDB Stream events
   DynamoDBEventRule:
