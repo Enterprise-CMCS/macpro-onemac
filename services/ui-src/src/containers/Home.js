@@ -151,13 +151,13 @@ const renderPaperSubmissionInfo = (renderSubmissionSteps) => {
  */
 const Home = () => {
   const location = useLocation();
-  const {testFlag} = useFlags()
+  const {mmdlNotification} = useFlags()
   const [systemNotifications, setSystemNotifications] = useState([]);
 
   useEffect(() => {
     (() => { 
       setTimeout(async() => {
-        if(testFlag) {
+        if(mmdlNotification) {
           const notifications =
           await NotificationApi.getActiveSystemNotifications();
           if (notifications && notifications.length)
@@ -176,7 +176,7 @@ const Home = () => {
 
   useEffect(()=> {
     (async()=>{
-      if(testFlag) {
+      if(mmdlNotification) {
         const notifications =
         await NotificationApi.getActiveSystemNotifications();
         if (notifications && notifications.length)
@@ -189,13 +189,13 @@ const Home = () => {
         }
       }
     })();
-  },[testFlag])
+  },[mmdlNotification])
 
   return (
     <>
       <HomeHeader />
       <AlertBar alertCode={location?.state?.passCode} />
-      {testFlag && systemNotifications.length !== 0 && (
+      {mmdlNotification && systemNotifications.length !== 0 && (
         <div className="home-content-container">
           {console.log("render notification card")}
           <h2>New and Notable</h2>

@@ -37,9 +37,9 @@ const DEFAULT_AUTH_STATE: Omit<
 
 const  App = () => {
   const [authState, setAuthState] = useState(DEFAULT_AUTH_STATE);
-  const {testFlag} = useFlags()
+  const {mmdlNotification} = useFlags()
 
-  console.log("Feature Flags:", { testFlag });
+  console.log("Feature Flags:", { mmdlNotification });
   const [confirmationDialog, setConfirmationDialog] = useState<{
     heading: string;
     acceptText: string;
@@ -175,58 +175,6 @@ const  App = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // useEffect(()=> {
-  //   (async ()=>{
-  //     try{
-  //       const authUser = await Auth.currentAuthenticatedUser();
-  //       const email = authUser.signInUserSession.idToken.payload.email;
-  //       const userData = await UserDataApi.userProfile(email);
-  //       if(testFlag) {
-  //         const storedNotifications = localStorage.getItem(
-  //           LOCAL_STORAGE_USERNOTIFICATIONS
-  //         );
-  //         if (storedNotifications?.length && storedNotifications.length > 2) {
-  //           userData.notifications = JSON.parse(storedNotifications);
-  //         } else {
-  //           // get the notifications & set local storage
-  //           const notifications = await NotificationsApi.createUserNotifications(
-  //             email
-  //           );
-  //           console.log("test flag true, notifications found: ", notifcations)
-  //           userData.notifications = notifications;
-  //           if(notifcations) {
-  //             localStorage.setItem(
-  //               LOCAL_STORAGE_USERNOTIFICATIONS,
-  //               JSON.stringify(notifications)
-  //             );
-  //           }
-  //         }
-  //       }
-  //       setAuthState((prevState) => ({
-  //         ...prevState,
-  //         userProfile: {
-  //           ...prevState.userProfile, // Spread existing userProfile properties
-  //           userData: userData, // Update userData with the new value
-  //         },
-  //       }));
-  //     } catch (error) {
-  //       if (
-  //         (error as string) !== "The user is not authenticated" &&
-  //         (error as Error).message !== "SESSION_EXPIRY"
-  //       ) {
-  //         console.log(
-  //           "There was an error while loading the user information.",
-  //           error
-  //         );
-  //       }
-  //       setAuthState({
-  //         ...DEFAULT_AUTH_STATE,
-  //         isAuthenticating: false,
-  //       });
-  //     }
-  //   })();
-  // // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [testFlag])
 
   useEffect(() => {
     setUserInfo();
@@ -290,7 +238,7 @@ const  App = () => {
     <AppContext.Provider value={contextValue}>
       <IdleTimerWrapper />
       <div className="header-and-content">
-        {testFlag && notifcations.map((n) => (
+        {mmdlNotification && notifcations.map((n) => (
           <NotificationBanner
             key={n.sk}
             {...n}
