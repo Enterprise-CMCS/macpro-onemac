@@ -177,6 +177,8 @@ const  App = () => {
 
 
   useEffect(() => {
+    // On initial load of the App, try to set the user info.
+    // It will capture info if they are logged in from a previous session.
     setUserInfo();
   }, [setUserInfo]);
 

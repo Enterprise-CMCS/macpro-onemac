@@ -20,7 +20,7 @@ import "core-js/stable";
 import { withLDProvider } from 'launchdarkly-react-client-sdk';
 const clientId = process.env.REACT_APP_LD_CLIENT_ID;
 
-// Your existing Amplify configuration
+// Amplify configuration
 let amplifyConfig = {
   Auth: {
     mandatorySignIn: true,
