@@ -19,7 +19,6 @@ import { ONEMAC_ROUTES } from "cmscommonlib";
 import "core-js/stable";
 import { withLDProvider } from 'launchdarkly-react-client-sdk';
 const clientId = process.env.REACT_APP_LD_CLIENT_ID;
-console.log("LaunchDarkly Client ID:", process.env.REACT_APP_LD_CLIENT_ID);
 
 // Your existing Amplify configuration
 let amplifyConfig = {
@@ -71,14 +70,3 @@ ReactDOM.render(
   </BrowserRouter>,
   getApplicationNode()
 );
-
-
-// export default withLDProvider({
-//   clientSideID:"66e81e1ae81b5b079a75a4f7",
-//   options: {
-//   // @ts-ignore  
-//   streamUrl: "https://clientstream.launchdarkly.us",
-//   baseUrl: "https://clientsdk.launchdarkly.us",
-//   eventsUrl: "https://events.launchdarkly.us",
-//   }
-// })(App);

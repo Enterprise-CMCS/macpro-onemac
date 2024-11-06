@@ -98,7 +98,7 @@ describe("App Component", () => {
   });
 
   it("renders without crashing", async () => {
-    useFlags.mockReturnValue({ mmdlNotificationBanner: false });
+    useFlags.mockReturnValue({ mmdlNotification: false });
     render(
       <MemoryRouter>
         <App />
@@ -108,7 +108,7 @@ describe("App Component", () => {
   });
 
   it("handles error on fetch", async () => {
-    useFlags.mockReturnValue({ mmdlNotificationBanner: false });
+    useFlags.mockReturnValue({ mmdlNotification: false });
     Auth.currentAuthenticatedUser.mockImplementationOnce(() => {
       throw "an Error";
     });
@@ -122,7 +122,7 @@ describe("App Component", () => {
   });
 
   it("renders NotificationBanner when flag set to true", async () => {
-    useFlags.mockReturnValue({ mmdlNotificationBanner: true });
+    useFlags.mockReturnValue({ mmdlNotification: true });
     render(
       <MemoryRouter>
         <App />
@@ -135,7 +135,7 @@ describe("App Component", () => {
   });
 
   it("does not render NotificationBanner when flag set to false", async () => {
-    useFlags.mockReturnValue({ mmdlNotificationBanner: false }); // Set to false to test for absence
+    useFlags.mockReturnValue({ mmdlNotification: false }); // Set to false to test for absence
     render(
       <MemoryRouter>
         <App />

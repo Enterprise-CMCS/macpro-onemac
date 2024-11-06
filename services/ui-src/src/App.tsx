@@ -180,11 +180,6 @@ const  App = () => {
     setUserInfo();
   }, [setUserInfo]);
 
-  // useEffect(() => {
-  //   // On initial load of the App, try to set the user info.
-  //   // It will capture info if they are logged in from a previous session.
-  //   setUserInfo();
-  // }, [setUserInfo]);
 
   const { email, firstName, lastName, cmsRoles } = authState.userProfile;
   useEffect(() => {

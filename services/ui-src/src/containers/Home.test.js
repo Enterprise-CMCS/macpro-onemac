@@ -27,7 +27,7 @@ jest.mock('../utils/NotificationApi', () => ({
 const { useFlags } = require('launchdarkly-react-client-sdk');
 
 it("renders without crashing", async () => {
-  useFlags.mockReturnValue({ mmdlNotificationBanner: true });
+  useFlags.mockReturnValue({ mmdlNotification: true });
   NotificationApi.getActiveSystemNotifications.mockResolvedValue([
     { header: "heading", body: "Test Notification" },
   ]);
@@ -46,8 +46,8 @@ it("renders without crashing", async () => {
   });
 });
 
-it("does not call notifications api or render notifications component when mmdlNotificationBanner set to false", async () => {
-  useFlags.mockReturnValue({ mmdlNotificationBanner: false });
+it("does not render notifications component when mmdlNotification set to false", async () => {
+  useFlags.mockReturnValue({ mmdlNotification: false });
 
 
   await act(async () => {
