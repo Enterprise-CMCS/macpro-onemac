@@ -197,7 +197,6 @@ export default function Home() {
       <AlertBar alertCode={location?.state?.passCode} />
       {mmdlNotification && systemNotifications.length !== 0 && (
         <div className="home-content-container">
-          {console.log("render notification card")}
           <h2>New and Notable</h2>
           {systemNotifications.map((notification) => (
             <NotificationCard key={notification.sk} {...notification} />
