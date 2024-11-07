@@ -149,7 +149,7 @@ const renderPaperSubmissionInfo = (renderSubmissionSteps) => {
 /**
  * Displays information about the usage of the webform
  */
-const Home = () => {
+export default function Home() {
   const location = useLocation();
   const {mmdlNotification} = useFlags()
   const [systemNotifications, setSystemNotifications] = useState([]);
@@ -237,5 +237,3 @@ const Home = () => {
     </>
   );
 }
-
-export default Home;

@@ -38,8 +38,6 @@ const DEFAULT_AUTH_STATE: Omit<
 const  App = () => {
   const [authState, setAuthState] = useState(DEFAULT_AUTH_STATE);
   const {mmdlNotification} = useFlags()
-
-  console.log("Feature Flags:", { mmdlNotification });
   const [confirmationDialog, setConfirmationDialog] = useState<{
     heading: string;
     acceptText: string;
@@ -73,7 +71,6 @@ const  App = () => {
     []
   );
 
-
   /**
    * Gets authentication status for user,
    * gets user names and email from cognito
@@ -82,7 +79,6 @@ const  App = () => {
    * Then sets all these values in their corresponding state variables.
    * @param isDeveloper indicates if the user is a developer
    */
-
   const setUserInfo = useCallback(async (isDeveloper = false) => {
     try {
       // Get authenticated user's info from cognito
@@ -92,11 +88,10 @@ const  App = () => {
       const userData = await UserDataApi.userProfile(email);
       // set the notifications: Needs to be stored locally to persist on reload
       // Check local storage for notifications
-
-
       const storedNotifications = localStorage.getItem(
         LOCAL_STORAGE_USERNOTIFICATIONS
       );
+
       if (storedNotifications?.length && storedNotifications.length > 2) {
         userData.notifications = JSON.parse(storedNotifications);
       } else {
@@ -175,13 +170,11 @@ const  App = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-
   useEffect(() => {
     // On initial load of the App, try to set the user info.
     // It will capture info if they are logged in from a previous session.
     setUserInfo();
   }, [setUserInfo]);
-
 
   const { email, firstName, lastName, cmsRoles } = authState.userProfile;
   useEffect(() => {
@@ -230,7 +223,6 @@ const  App = () => {
     } else return [];
   }, [authState.userProfile.userData]);
 
-
   return authState.isAuthenticating ? null : (
     <AppContext.Provider value={contextValue}>
       <IdleTimerWrapper />
@@ -269,4 +261,3 @@ const  App = () => {
   );
 }
 export default App;
-

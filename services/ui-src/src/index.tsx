@@ -58,6 +58,7 @@ Amplify.configure(amplifyConfig);
 const LDProviderApp = withLDProvider({
   clientSideID: clientId ?? "undefined", // Make sure this is set correctly
   options: {
+  // @ts-ignore
   streamUrl: "https://clientstream.launchdarkly.us",
   baseUrl: "https://clientsdk.launchdarkly.us",
   eventsUrl: "https://events.launchdarkly.us",
