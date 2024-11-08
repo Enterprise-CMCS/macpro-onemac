@@ -185,7 +185,7 @@ const  App = () => {
             LOCAL_STORAGE_USERNOTIFICATIONS
           );
           
-          if (storedNotifications != "undefined" && storedNotifications?.length && storedNotifications.length > 2) {
+          if (storedNotifications !== "undefined" && storedNotifications?.length && storedNotifications.length > 2) {
             userData.notifications = JSON.parse(storedNotifications);
           } else {
             // get the notifications & set local storage
