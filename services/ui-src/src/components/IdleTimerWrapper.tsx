@@ -7,9 +7,9 @@ import { clearTableStateStorageKeys } from "../utils/StorageKeys";
 
 const IdleTimerWrapper = () => {
   const STORAGE_KEY: string = "accessToken";
-  const TOTAL_TIMEOUT_TIME: number = 60 * 60 * 1000; // default of 1 hour total
-  const PROMPT_TIME: number = 45 * 60 * 1000; // default of 45 minutes to warning
-  const LOGOUT_TIME: number = 15 * 60 * 1000 - 5000; // default logout 15 minutes after warning
+  const TOTAL_TIMEOUT_TIME: number = 60 * 7 * 1000; // default of 1 hour total
+  const PROMPT_TIME: number = 5 * 60 * 1000; // default of 45 minutes to warning
+  const LOGOUT_TIME: number = 2 * 60 * 1000 - 5000; // default logout 15 minutes after warning
   /*
    * NB: the logout time is 5 seconds less than the backend timer to ensure
    * the logout occurs on the front end before the backend to avoid sync issues
