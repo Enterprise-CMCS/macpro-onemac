@@ -32,12 +32,13 @@ const DEFAULT_AUTH_STATE: Omit<
   userProfile: {},
   userRole: null,
   userStatus: null,
-  activeTerritories: null,
+  activeTerritories: null
 };
 
 const  App = () => {
   const [authState, setAuthState] = useState(DEFAULT_AUTH_STATE);
-  const {mmdlNotification} = useFlags()
+  const [notificationState, setNotificationState] = useState(false);
+  const {mmdlNotification} = useFlags();
   const [confirmationDialog, setConfirmationDialog] = useState<{
     heading: string;
     acceptText: string;
@@ -88,26 +89,27 @@ const  App = () => {
       const userData = await UserDataApi.userProfile(email);
       // set the notifications: Needs to be stored locally to persist on reload
       // Check local storage for notifications
-      const storedNotifications = localStorage.getItem(
-        LOCAL_STORAGE_USERNOTIFICATIONS
-      );
-
-      if (storedNotifications?.length && storedNotifications.length > 2) {
-        userData.notifications = JSON.parse(storedNotifications);
-      } else {
-        // get the notifications & set local storage
-        const notifications = await NotificationsApi.createUserNotifications(
-          email
+      if(mmdlNotification){
+        const storedNotifications = localStorage.getItem(
+          LOCAL_STORAGE_USERNOTIFICATIONS
         );
-        userData.notifications = notifications;
-        if(notifcations) {
-          localStorage.setItem(
-            LOCAL_STORAGE_USERNOTIFICATIONS,
-            JSON.stringify(notifications)
+  
+        if (storedNotifications?.length && storedNotifications.length > 2) {
+          userData.notifications = JSON.parse(storedNotifications);
+        } else {
+          // get the notifications & set local storage
+          const notifications = await NotificationsApi.createUserNotifications(
+            email
           );
+          userData.notifications = notifications;
+          if(notifcations) {
+            localStorage.setItem(
+              LOCAL_STORAGE_USERNOTIFICATIONS,
+              JSON.stringify(notifications)
+            );
+          }
         }
       }
-      
 
       const roleResult = effectiveRoleForUser(userData?.roleList);
       let userRole = null,
@@ -128,7 +130,8 @@ const  App = () => {
               role === "onemac-state-user" || role === "onemac-helpdesk"
           )
           .toString();
-
+      setNotificationState(mmdlNotification);
+      console.log("use callback called")
       setAuthState({
         ...DEFAULT_AUTH_STATE,
         isAuthenticating: false,
@@ -169,6 +172,62 @@ const  App = () => {
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(()=>{
+    (async ()=> {
+      try{
+        const authUser = await Auth.currentAuthenticatedUser();
+        const email = authUser.signInUserSession.idToken.payload.email;
+        const userData = await UserDataApi.userProfile(email);
+        if(mmdlNotification) {
+          console.log("notification flag true, fetch notifications")
+          const storedNotifications = localStorage.getItem(
+            LOCAL_STORAGE_USERNOTIFICATIONS
+          );
+    
+          if (storedNotifications?.length && storedNotifications.length > 2) {
+            userData.notifications = JSON.parse(storedNotifications);
+          } else {
+            // get the notifications & set local storage
+            const notifications = await NotificationsApi.createUserNotifications(
+              email
+            );
+            userData.notifications = notifications;
+            if(notifcations) {
+              localStorage.setItem(
+                LOCAL_STORAGE_USERNOTIFICATIONS,
+                JSON.stringify(notifications)
+              );
+            }
+          }
+          setAuthState((prevState) => ({
+            ...prevState,
+            userProfile: {
+              ...prevState.userProfile, // Spread existing userProfile properties
+              userData: userData, // Update userData with the new value
+            },
+          }));
+        }
+      }catch (error) {
+        if (
+          (error as string) !== "The user is not authenticated" &&
+          (error as Error).message !== "SESSION_EXPIRY"
+        ) {
+          console.log(
+            "There was an error while loading the user information.",
+            error
+          );
+          setAuthState({
+            ...DEFAULT_AUTH_STATE,
+            isAuthenticating: false,
+          });
+        }
+      console.log("error retrieving notifications")
+      }
+    })()
+    setNotificationState(mmdlNotification);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[mmdlNotification])
 
   useEffect(() => {
     // On initial load of the App, try to set the user info.
