@@ -184,8 +184,8 @@ const  App = () => {
           const storedNotifications = localStorage.getItem(
             LOCAL_STORAGE_USERNOTIFICATIONS
           );
-    
-          if (storedNotifications?.length && storedNotifications.length > 2) {
+          
+          if (storedNotifications != "undefined" && storedNotifications?.length && storedNotifications.length > 2) {
             userData.notifications = JSON.parse(storedNotifications);
           } else {
             // get the notifications & set local storage
@@ -200,6 +200,7 @@ const  App = () => {
               );
             }
           }
+          console.log("notifications before set state: " + notifcations)
           setAuthState((prevState) => ({
             ...prevState,
             userProfile: {
@@ -217,10 +218,6 @@ const  App = () => {
             "There was an error while loading the user information.",
             error
           );
-          setAuthState({
-            ...DEFAULT_AUTH_STATE,
-            isAuthenticating: false,
-          });
         }
       console.log("error retrieving notifications")
       }
