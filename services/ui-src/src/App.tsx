@@ -284,9 +284,10 @@ const  App = () => {
 
   return authState.isAuthenticating ? null : (
     <AppContext.Provider value={contextValue}>
+      {console.log("notification state: ", notificationState)}
       <IdleTimerWrapper />
       <div className="header-and-content">
-        {mmdlNotification && notifcations.map((n) => (
+        {notificationState && notifcations.map((n) => (
           <NotificationBanner
             key={n.sk}
             {...n}
