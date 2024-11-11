@@ -177,14 +177,17 @@ const  App = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(()=>{
+  useEffect(()=> {
+    console.log("use effect #2")
     if (mmdlNotification !== undefined) {
       setNotificationState(mmdlNotification);
     } else {
       // Handle case when mmdlNotification is still loading or undefined
       setNotificationState(false); // Default to false or some other behavior
     }
-  
+  },[mmdlNotification])
+
+  useEffect(()=>{
     (async ()=> {
       try{
         if(mmdlNotification && authState.isAuthenticated) {
