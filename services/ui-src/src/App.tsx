@@ -90,31 +90,31 @@ const  App = () => {
       const userData = await UserDataApi.userProfile(email);
       // set the notifications: Needs to be stored locally to persist on reload
       // Check local storage for notifications
-      if(mmdlNotification){
-        console.log("mmdl notification in useCallback true")
-        const storedNotifications = localStorage.getItem(
-          LOCAL_STORAGE_USERNOTIFICATIONS
-        );
-        console.log("stored notificaitons: " +storedNotifications)
-        console.log("storedNotifications?.length: " + storedNotifications?.length)
-        if (storedNotifications !== undefined && storedNotifications?.length && storedNotifications.length > 2) {
-        console.log("first If ")
-          userData.notifications = JSON.parse(storedNotifications);
-        } else {
-          console.log("else")
-          // get the notifications & set local storage
-          const notifications = await NotificationsApi.createUserNotifications(
-            email
-          );
-          userData.notifications = notifications;
-          if(notifcations) {
-            localStorage.setItem(
-              LOCAL_STORAGE_USERNOTIFICATIONS,
-              JSON.stringify(notifications)
-            );
-          }
-        }
-      }
+      // if(mmdlNotification){
+      //   console.log("mmdl notification in useCallback true")
+      //   const storedNotifications = localStorage.getItem(
+      //     LOCAL_STORAGE_USERNOTIFICATIONS
+      //   );
+      //   console.log("stored notificaitons: " +storedNotifications)
+      //   console.log("storedNotifications?.length: " + storedNotifications?.length)
+      //   if (storedNotifications !== undefined && storedNotifications?.length && storedNotifications.length > 2) {
+      //   console.log("first If ")
+      //     userData.notifications = JSON.parse(storedNotifications);
+      //   } else {
+      //     console.log("else")
+      //     // get the notifications & set local storage
+      //     const notifications = await NotificationsApi.createUserNotifications(
+      //       email
+      //     );
+      //     userData.notifications = notifications;
+      //     if(notifcations) {
+      //       localStorage.setItem(
+      //         LOCAL_STORAGE_USERNOTIFICATIONS,
+      //         JSON.stringify(notifications)
+      //       );
+      //     }
+      //   }
+      // }
 
       const roleResult = effectiveRoleForUser(userData?.roleList);
       let userRole = null,
