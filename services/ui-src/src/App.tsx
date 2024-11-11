@@ -173,16 +173,20 @@ const  App = () => {
   }, []);
 
   useEffect(()=>{
-    if (mmdlNotification !== undefined) {  // Ensure the flag has been resolved
+    if (mmdlNotification !== undefined) {
       setNotificationState(mmdlNotification);
+    } else {
+      // Handle case when mmdlNotification is still loading or undefined
+      setNotificationState(false); // Default to false or some other behavior
     }
+  
     (async ()=> {
       try{
-        const authUser = await Auth.currentAuthenticatedUser();
-        const email = authUser.signInUserSession.idToken.payload.email;
-        const userData = await UserDataApi.userProfile(email);
-        if(mmdlNotification) {
-          console.log("notification flag true, fetch notifications")
+        if(mmdlNotification && authState.isAuthenticated) {
+          const authUser = await Auth.currentAuthenticatedUser();
+          const email = authUser.signInUserSession.idToken.payload.email;
+          const userData = await UserDataApi.userProfile(email);
+          console.log("notification flag true user authenticated, fetch notifications")
           const storedNotifications = localStorage.getItem(
             LOCAL_STORAGE_USERNOTIFICATIONS
           );

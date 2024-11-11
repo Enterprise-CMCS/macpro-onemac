@@ -154,26 +154,6 @@ export default function Home() {
   const {mmdlNotification} = useFlags()
   const [systemNotifications, setSystemNotifications] = useState([]);
 
-  useEffect(() => {
-    (() => { 
-      setTimeout(async() => {
-        if(mmdlNotification) {
-          const notifications =
-          await NotificationApi.getActiveSystemNotifications();
-          if (notifications && notifications.length)
-            setSystemNotifications([...notifications]);
-          else {
-            console.log(
-              "Either no notifications or an error occured",
-              notifications
-            );
-          }
-        }
-      },1000) 
-    })();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   useEffect(()=> {
     (async()=>{
       if(mmdlNotification) {
