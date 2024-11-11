@@ -229,7 +229,7 @@ const  App = () => {
       }
     })()
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[mmdlNotification])
+  },[mmdlNotification, authState])
 
   useEffect(() => {
     // On initial load of the App, try to set the user info.
