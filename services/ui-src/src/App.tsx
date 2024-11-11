@@ -185,6 +185,7 @@ const  App = () => {
       // Handle case when mmdlNotification is still loading or undefined
       setNotificationState(false); // Default to false or some other behavior
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   },[mmdlNotification])
 
   useEffect(()=>{
