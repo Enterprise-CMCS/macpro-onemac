@@ -97,7 +97,7 @@ const  App = () => {
         );
         console.log("stored notificaitons: " +storedNotifications)
         console.log("storedNotifications?.length: " + storedNotifications?.length)
-        if (storedNotifications != undefined && storedNotifications?.length && storedNotifications.length > 2) {
+        if (storedNotifications !== undefined && storedNotifications?.length && storedNotifications.length > 2) {
         console.log("first If ")
           userData.notifications = JSON.parse(storedNotifications);
         } else {
