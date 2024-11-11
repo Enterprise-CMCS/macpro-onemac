@@ -86,17 +86,22 @@ const  App = () => {
       // and set portion of the user profile.
       const authUser = await Auth.currentAuthenticatedUser();
       const email = authUser.signInUserSession.idToken.payload.email;
+      console.log("email: " + email)
       const userData = await UserDataApi.userProfile(email);
       // set the notifications: Needs to be stored locally to persist on reload
       // Check local storage for notifications
       if(mmdlNotification){
+        console.log("mmdl notification in useCallback true")
         const storedNotifications = localStorage.getItem(
           LOCAL_STORAGE_USERNOTIFICATIONS
         );
-  
-        if (storedNotifications?.length && storedNotifications.length > 2) {
+        console.log("stored notificaitons: " +storedNotifications)
+        console.log("storedNotifications?.length: " + storedNotifications?.length)
+        if (storedNotifications != undefined && storedNotifications?.length && storedNotifications.length > 2) {
+        console.log("first If ")
           userData.notifications = JSON.parse(storedNotifications);
         } else {
+          console.log("else")
           // get the notifications & set local storage
           const notifications = await NotificationsApi.createUserNotifications(
             email
@@ -191,9 +196,11 @@ const  App = () => {
             LOCAL_STORAGE_USERNOTIFICATIONS
           );
           
-          if (storedNotifications !== "undefined" && storedNotifications?.length && storedNotifications.length > 2) {
+          if (storedNotifications !== undefined && storedNotifications?.length && storedNotifications.length > 2) {
+            console.log("inside use effect first if")
             userData.notifications = JSON.parse(storedNotifications);
           } else {
+            console.log("inside use effect else")
             // get the notifications & set local storage
             const notifications = await NotificationsApi.createUserNotifications(
               email
