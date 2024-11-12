@@ -194,13 +194,20 @@ const  App = () => {
 
   useEffect(()=>{
     console.log("use effect #2");
+    console.log("notification State:  " +notificationState);
+    console.log("authstate.isAuthenticated:" + authState.isAuthenticated);
     (async ()=> {
       try{
         if(notificationState && authState.isAuthenticated) {
-          const authUser = await Auth.currentAuthenticatedUser();
-          const email = authUser.signInUserSession.idToken.payload.email;
-          const userData = await UserDataApi.userProfile(email);
-          console.log("notification flag true user authenticated, fetch notifications")
+          // const authUser = await Auth.currentAuthenticatedUser();
+          // const email = authUser.signInUserSession.idToken.payload.email;
+          // const userData = await UserDataApi.userProfile(email);
+          let userData :any;
+          let email : any;
+          email = authState.userProfile.email; 
+          userData = authState.userProfile.userData;
+          console.log("userData: "+ userData);
+          console.log("email" + email);
           const storedNotifications = localStorage.getItem(
             LOCAL_STORAGE_USERNOTIFICATIONS
           );
