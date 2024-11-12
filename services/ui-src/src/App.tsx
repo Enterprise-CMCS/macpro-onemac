@@ -86,37 +86,37 @@ const  App = () => {
       // and set portion of the user profile.
       const authUser = await Auth.currentAuthenticatedUser();
       const email = authUser.signInUserSession.idToken.payload.email;
-      console.log("email: " + email)
+      // console.log("email: " + email)
       const userData = await UserDataApi.userProfile(email);
       // set the notifications: Needs to be stored locally to persist on reload
       // Check local storage for notifications
-      console.log("notificationState before if: " + notificationState);
-      console.log("true: " + true);
-      if(notificationState === true){
-        console.log("mmdl notification in useCallback true")
-        const storedNotifications = localStorage.getItem(
-          LOCAL_STORAGE_USERNOTIFICATIONS
-        );
-        console.log("stored notificaitons: " +storedNotifications)
-        console.log("storedNotifications?.length: " + storedNotifications?.length)
-        if (storedNotifications !== undefined && storedNotifications?.length && storedNotifications.length > 2) {
-        console.log("first If ")
-          userData.notifications = JSON.parse(storedNotifications);
-        } else {
-          console.log("else")
-          // get the notifications & set local storage
-          const notifications = await NotificationsApi.createUserNotifications(
-            email
-          );
-          userData.notifications = notifications;
-          if(notifcations) {
-            localStorage.setItem(
-              LOCAL_STORAGE_USERNOTIFICATIONS,
-              JSON.stringify(notifications)
-            );
-          }
-        }
-      }
+      // console.log("notificationState before if: " + notificationState);
+      // console.log("true: " + true);
+      // if(notificationState === true){
+      //   console.log("mmdl notification in useCallback true")
+      //   const storedNotifications = localStorage.getItem(
+      //     LOCAL_STORAGE_USERNOTIFICATIONS
+      //   );
+      //   console.log("stored notificaitons: " +storedNotifications)
+      //   console.log("storedNotifications?.length: " + storedNotifications?.length)
+      //   if (storedNotifications !== undefined && storedNotifications?.length && storedNotifications.length > 2) {
+      //   console.log("first If ")
+      //     userData.notifications = JSON.parse(storedNotifications);
+      //   } else {
+      //     console.log("else")
+      //     // get the notifications & set local storage
+      //     const notifications = await NotificationsApi.createUserNotifications(
+      //       email
+      //     );
+      //     userData.notifications = notifications;
+      //     if(notifcations) {
+      //       localStorage.setItem(
+      //         LOCAL_STORAGE_USERNOTIFICATIONS,
+      //         JSON.stringify(notifications)
+      //       );
+      //     }
+      //   }
+      // }
 
       const roleResult = effectiveRoleForUser(userData?.roleList);
       let userRole = null,
@@ -137,7 +137,7 @@ const  App = () => {
               role === "onemac-state-user" || role === "onemac-helpdesk"
           )
           .toString();
-      console.log("use callback called")
+      // console.log("use callback called")
       setAuthState({
         ...DEFAULT_AUTH_STATE,
         isAuthenticating: false,
@@ -186,7 +186,6 @@ const  App = () => {
   }, [setUserInfo]);
 
   useEffect(() => {
-    console.log("use effect #3")
     if (mmdlNotification !== undefined) {  // Ensure the flag has been resolved
       setNotificationState(mmdlNotification);
     }
@@ -204,10 +203,13 @@ const  App = () => {
           // const userData = await UserDataApi.userProfile(email);
           let userData :any;
           let email : any;
+          let userDataNotifications :any;
           email = authState.userProfile.email; 
           userData = authState.userProfile.userData;
+          userDataNotifications = userData.notifications;
           console.log("userData: "+ userData);
           console.log("email" + email);
+          console.log("notifications" + userDataNotifications);
           const storedNotifications = localStorage.getItem(
             LOCAL_STORAGE_USERNOTIFICATIONS
           );
@@ -222,23 +224,30 @@ const  App = () => {
               email
             );
             userData.notifications = notifications;
-            if(notifcations) {
+            if(notifications) {
               localStorage.setItem(
                 LOCAL_STORAGE_USERNOTIFICATIONS,
                 JSON.stringify(notifications)
               );
             }
-          }
-          console.log("notifications before set state: " + notifcations)
-          setAuthState((prevState) => ({
-            ...prevState,
-            userProfile: {
-              ...prevState.userProfile, // Spread existing userProfile properties
-              userData: userData, // Update userData with the new value
-            },
-          }));
+            console.log("notifications response: " + notifications);
+            console.log("notifications before set state: " + userData.notifications)
+            setAuthState((prevState) => ({
+              ...prevState,
+              userProfile: {
+                ...prevState.userProfile,
+                userData: {
+                  ...prevState.userProfile?.userData,
+                  notifications: notifications,
+                  // fullName: prevState.userProfile?.userData?.fullName ?? "",  // Fallback to empty string if undefined
+                  roleList: prevState.userProfile?.userData?.roleList ?? [], // typescript 
+                },
+              },
+            }));
         }
-      }catch (error) {
+      }
+    }
+      catch (error) {
         if (
           (error as string) !== "The user is not authenticated" &&
           (error as Error).message !== "SESSION_EXPIRY"
