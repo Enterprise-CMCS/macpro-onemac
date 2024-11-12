@@ -179,14 +179,21 @@ const  App = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(()=>{
-    console.log("use effect #2")
-    if (mmdlNotification !== undefined) {
+  useEffect(() => {
+    // On initial load of the App, try to set the user info.
+    // It will capture info if they are logged in from a previous session.
+    setUserInfo();
+  }, [setUserInfo]);
+
+  useEffect(() => {
+    console.log("use effect #3")
+    if (mmdlNotification !== undefined) {  // Ensure the flag has been resolved
       setNotificationState(mmdlNotification);
-    } else {
-      // Handle case when mmdlNotification is still loading or undefined
-      setNotificationState(false); // Default to false or some other behavior
     }
+  }, [mmdlNotification]);
+
+  useEffect(()=>{
+    console.log("use effect #2");
     (async ()=> {
       try{
         if(notificationState && authState.isAuthenticated) {
@@ -238,7 +245,7 @@ const  App = () => {
       }
     })()
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[mmdlNotification])
+  },[notificationState])
 
   useEffect(() => {
     // On initial load of the App, try to set the user info.
