@@ -67,8 +67,15 @@ const IdleTimerWrapper = () => {
      * this is to ensure that the idleTimer has the most recent values for the times
      */
     if (isAuthenticated && !isLoggedInAsDeveloper) {
+      console.log("logged in as a developer")
+      // console.log("Time ")
       setTimeoutTimes();
       idleTimer.start();
+      setInterval(() => {
+        console.log("Hello, World!");
+        console.log("remaining time: " +   idleTimer.getRemainingTime() / 1000 / 60 + " minutes")
+      }, 5000);
+
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuthenticated, promptTimeout, logoutTimeout]);
