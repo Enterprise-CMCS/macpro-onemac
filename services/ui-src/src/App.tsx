@@ -206,7 +206,7 @@ const  App = () => {
           let userDataNotifications :any;
           email = authState.userProfile.email; 
           userData = authState.userProfile.userData;
-          userDataNotifications = userData.notifications;
+          // userDataNotifications = userData.notifications;
           // console.log("userData: "+ userData);
           // console.log("email" + email);
           // console.log("notifications" + userDataNotifications);
@@ -231,7 +231,7 @@ const  App = () => {
               );
               // console.log("notifications response: " + notifications);
               // console.log("notifications before set state: " + userData.notifications)
-            
+            console.log("role list: " + userData?.roleList);
               setAuthState((prevState) => ({
                 ...prevState,
                 userProfile: {
