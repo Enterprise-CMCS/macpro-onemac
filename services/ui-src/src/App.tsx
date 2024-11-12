@@ -86,38 +86,7 @@ const  App = () => {
       // and set portion of the user profile.
       const authUser = await Auth.currentAuthenticatedUser();
       const email = authUser.signInUserSession.idToken.payload.email;
-      // console.log("email: " + email)
       const userData = await UserDataApi.userProfile(email);
-      // set the notifications: Needs to be stored locally to persist on reload
-      // Check local storage for notifications
-      // console.log("notificationState before if: " + notificationState);
-      // console.log("true: " + true);
-      // if(notificationState === true){
-      //   console.log("mmdl notification in useCallback true")
-      //   const storedNotifications = localStorage.getItem(
-      //     LOCAL_STORAGE_USERNOTIFICATIONS
-      //   );
-      //   console.log("stored notificaitons: " +storedNotifications)
-      //   console.log("storedNotifications?.length: " + storedNotifications?.length)
-      //   if (storedNotifications !== undefined && storedNotifications?.length && storedNotifications.length > 2) {
-      //   console.log("first If ")
-      //     userData.notifications = JSON.parse(storedNotifications);
-      //   } else {
-      //     console.log("else")
-      //     // get the notifications & set local storage
-      //     const notifications = await NotificationsApi.createUserNotifications(
-      //       email
-      //     );
-      //     userData.notifications = notifications;
-      //     if(notifcations) {
-      //       localStorage.setItem(
-      //         LOCAL_STORAGE_USERNOTIFICATIONS,
-      //         JSON.stringify(notifications)
-      //       );
-      //     }
-      //   }
-      // }
-
       const roleResult = effectiveRoleForUser(userData?.roleList);
       let userRole = null,
         userStatus = null;
@@ -137,7 +106,6 @@ const  App = () => {
               role === "onemac-state-user" || role === "onemac-helpdesk"
           )
           .toString();
-      // console.log("use callback called")
       setAuthState({
         ...DEFAULT_AUTH_STATE,
         isAuthenticating: false,
@@ -170,13 +138,11 @@ const  App = () => {
           error
         );
       }
-      console.log("Error setting user info on load")
       setAuthState({
         ...DEFAULT_AUTH_STATE,
         isAuthenticating: false,
       });
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -192,33 +158,19 @@ const  App = () => {
   }, [mmdlNotification]);
 
   useEffect(()=>{
-    // console.log("use effect #2");
-    // console.log("notification State:  " +notificationState);
-    // console.log("authstate.isAuthenticated:" + authState.isAuthenticated);
     (async ()=> {
       try{
         if(notificationState && authState.isAuthenticated) {
-          // const authUser = await Auth.currentAuthenticatedUser();
-          // const email = authUser.signInUserSession.idToken.payload.email;
-          // const userData = await UserDataApi.userProfile(email);
-          let userData :any;
-          let email : any;
-          // let userDataNotifications :any;
-          email = authState.userProfile.email; 
-          userData = authState.userProfile.userData;
-          // userDataNotifications = userData.notifications;
-          // console.log("userData: "+ userData);
-          // console.log("email" + email);
-          // console.log("notifications" + userDataNotifications);
+          // set the notifications: Needs to be stored locally to persist on reload
+          const email : any = authState.userProfile.email; 
+          let userData : any = authState.userProfile.userData;
+          // Check local storage for notifications
           const storedNotifications = localStorage.getItem(
             LOCAL_STORAGE_USERNOTIFICATIONS
           );
-          
           if (storedNotifications !== undefined && storedNotifications?.length && storedNotifications.length > 2) {
-            // console.log("inside use effect first if")
             userData.notifications = JSON.parse(storedNotifications);
           } else {
-            // console.log("inside use effect else")
             // get the notifications & set local storage
             const notifications = await NotificationsApi.createUserNotifications(
               email
@@ -229,9 +181,7 @@ const  App = () => {
                 LOCAL_STORAGE_USERNOTIFICATIONS,
                 JSON.stringify(notifications)
               );
-              // console.log("notifications response: " + notifications);
-              // console.log("notifications before set state: " + userData.notifications)
-            console.log("role list: " + userData?.roleList);
+              // set authState userData notifications
               setAuthState((prevState) => ({
                 ...prevState,
                 userProfile: {
@@ -239,8 +189,7 @@ const  App = () => {
                   userData: {
                     ...prevState.userProfile?.userData,
                     notifications: notifications,
-                    // fullName: prevState.userProfile?.userData?.fullName ?? "",  // Fallback to empty string if undefined
-                    roleList: prevState.userProfile?.userData?.roleList ?? [], // typescript 
+                    roleList: prevState.userProfile?.userData?.roleList ?? [], // typescript UserProfile type def needs a value
                   },
                 },
               }));
@@ -249,19 +198,12 @@ const  App = () => {
       }
     }
       catch (error) {
-        if (
-          (error as string) !== "The user is not authenticated" &&
-          (error as Error).message !== "SESSION_EXPIRY"
-        ) {
-          console.log(
-            "There was an error while loading the user information.",
-            error
-          );
-        }
-      console.log("error retrieving notifications")
+        console.log(
+          "There was an error retreiving notifications.",
+          error
+        );
       }
     })()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   },[notificationState, authState.isAuthenticated])
 
   useEffect(() => {
@@ -319,7 +261,6 @@ const  App = () => {
 
   return authState.isAuthenticating ? null : (
     <AppContext.Provider value={contextValue}>
-      {/* {console.log("notification state: ", notificationState)} */}
       <IdleTimerWrapper />
       <div className="header-and-content">
         {notificationState && notifcations.map((n) => (
