@@ -91,7 +91,8 @@ const  App = () => {
       // set the notifications: Needs to be stored locally to persist on reload
       // Check local storage for notifications
       console.log("mmdlNotificaiton before if: " + mmdlNotification);
-      if(mmdlNotification == true){
+      console.log("true: " + true;
+      if(mmdlNotification === true){
         console.log("mmdl notification in useCallback true")
         const storedNotifications = localStorage.getItem(
           LOCAL_STORAGE_USERNOTIFICATIONS
