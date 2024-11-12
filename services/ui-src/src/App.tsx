@@ -203,7 +203,7 @@ const  App = () => {
           // const userData = await UserDataApi.userProfile(email);
           let userData :any;
           let email : any;
-          let userDataNotifications :any;
+          // let userDataNotifications :any;
           email = authState.userProfile.email; 
           userData = authState.userProfile.userData;
           // userDataNotifications = userData.notifications;
