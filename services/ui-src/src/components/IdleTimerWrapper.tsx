@@ -61,12 +61,14 @@ const IdleTimerWrapper = () => {
   });
 
   useEffect(() => {
+    console.log("use effect Idele Wrapper")
     /*
      *this depends on isAuthenticated to ensure it starts the timer after logging in
      * this depends on promptTimeout and logoutTimeout
      * this is to ensure that the idleTimer has the most recent values for the times
      */
-    if (isAuthenticated && !isLoggedInAsDeveloper) {
+    // if (isAuthenticated && !isLoggedInAsDeveloper) {
+    if (isAuthenticated && isLoggedInAsDeveloper) {
       console.log("logged in as a developer")
       // console.log("Time ")
       setTimeoutTimes();
