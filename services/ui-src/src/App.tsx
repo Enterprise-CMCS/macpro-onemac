@@ -192,9 +192,9 @@ const  App = () => {
   }, [mmdlNotification]);
 
   useEffect(()=>{
-    console.log("use effect #2");
-    console.log("notification State:  " +notificationState);
-    console.log("authstate.isAuthenticated:" + authState.isAuthenticated);
+    // console.log("use effect #2");
+    // console.log("notification State:  " +notificationState);
+    // console.log("authstate.isAuthenticated:" + authState.isAuthenticated);
     (async ()=> {
       try{
         if(notificationState && authState.isAuthenticated) {
@@ -207,43 +207,44 @@ const  App = () => {
           email = authState.userProfile.email; 
           userData = authState.userProfile.userData;
           userDataNotifications = userData.notifications;
-          console.log("userData: "+ userData);
-          console.log("email" + email);
-          console.log("notifications" + userDataNotifications);
+          // console.log("userData: "+ userData);
+          // console.log("email" + email);
+          // console.log("notifications" + userDataNotifications);
           const storedNotifications = localStorage.getItem(
             LOCAL_STORAGE_USERNOTIFICATIONS
           );
           
           if (storedNotifications !== undefined && storedNotifications?.length && storedNotifications.length > 2) {
-            console.log("inside use effect first if")
+            // console.log("inside use effect first if")
             userData.notifications = JSON.parse(storedNotifications);
           } else {
-            console.log("inside use effect else")
+            // console.log("inside use effect else")
             // get the notifications & set local storage
             const notifications = await NotificationsApi.createUserNotifications(
               email
             );
-            userData.notifications = notifications;
             if(notifications) {
+              userData.notifications = notifications;
               localStorage.setItem(
                 LOCAL_STORAGE_USERNOTIFICATIONS,
                 JSON.stringify(notifications)
               );
-            }
-            console.log("notifications response: " + notifications);
-            console.log("notifications before set state: " + userData.notifications)
-            setAuthState((prevState) => ({
-              ...prevState,
-              userProfile: {
-                ...prevState.userProfile,
-                userData: {
-                  ...prevState.userProfile?.userData,
-                  notifications: notifications,
-                  // fullName: prevState.userProfile?.userData?.fullName ?? "",  // Fallback to empty string if undefined
-                  roleList: prevState.userProfile?.userData?.roleList ?? [], // typescript 
+              // console.log("notifications response: " + notifications);
+              // console.log("notifications before set state: " + userData.notifications)
+            
+              setAuthState((prevState) => ({
+                ...prevState,
+                userProfile: {
+                  ...prevState.userProfile,
+                  userData: {
+                    ...prevState.userProfile?.userData,
+                    notifications: notifications,
+                    // fullName: prevState.userProfile?.userData?.fullName ?? "",  // Fallback to empty string if undefined
+                    roleList: prevState.userProfile?.userData?.roleList ?? [], // typescript 
+                  },
                 },
-              },
-            }));
+              }));
+            }
         }
       }
     }
@@ -318,7 +319,7 @@ const  App = () => {
 
   return authState.isAuthenticating ? null : (
     <AppContext.Provider value={contextValue}>
-      {console.log("notification state: ", notificationState)}
+      {/* {console.log("notification state: ", notificationState)} */}
       <IdleTimerWrapper />
       <div className="header-and-content">
         {notificationState && notifcations.map((n) => (
