@@ -90,9 +90,9 @@ const  App = () => {
       const userData = await UserDataApi.userProfile(email);
       // set the notifications: Needs to be stored locally to persist on reload
       // Check local storage for notifications
-      console.log("mmdlNotificaiton before if: " + mmdlNotification);
+      console.log("notificationState before if: " + notificationState);
       console.log("true: " + true);
-      if(mmdlNotification === true){
+      if(notificationState === true){
         console.log("mmdl notification in useCallback true")
         const storedNotifications = localStorage.getItem(
           LOCAL_STORAGE_USERNOTIFICATIONS
@@ -189,7 +189,7 @@ const  App = () => {
     }
     (async ()=> {
       try{
-        if(mmdlNotification && authState.isAuthenticated) {
+        if(notificationState && authState.isAuthenticated) {
           const authUser = await Auth.currentAuthenticatedUser();
           const email = authUser.signInUserSession.idToken.payload.email;
           const userData = await UserDataApi.userProfile(email);
