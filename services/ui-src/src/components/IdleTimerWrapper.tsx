@@ -36,14 +36,28 @@ const IdleTimerWrapper = () => {
         "Logout",
         "Continue Browsing",
         bodyMessage,
-        onIdle
+        logout,
+        keepBrowsing,
       );
   };
-
+  // acceptText: string,
+  // cancelText: string,
+  // onAccept?: any,
+  // onDeny?: any
   const onIdle = () => {
     clearTableStateStorageKeys();
     logout();
   };
+
+  const logout = () => {
+    clearTableStateStorageKeys();
+    logout();
+  }
+  const keepBrowsing = () => {
+
+
+    return decoded.exp < currentTime; // Token expired if current time > exp time
+  }
 
   const idleTimer: IIdleTimer = useIdleTimer({
     onPrompt,
@@ -94,6 +108,11 @@ const IdleTimerWrapper = () => {
 
     const decodedToken: any = jwt_decode(loginToken);
     const epochAuthTime: number | undefined = decodedToken?.auth_time;
+
+    console.log("decodedToken", decodedToken)
+    console.log("decodedToken", String(decodedToken))
+    console.log("decodedToken?.auth_time;", decodedToken?.auth_time)
+
     if (!epochAuthTime) return;
 
     const authTime: number = new Date(epochAuthTime * 1000).valueOf();
