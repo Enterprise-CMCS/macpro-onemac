@@ -48,8 +48,8 @@ const IdleTimerWrapper = () => {
   const idleTimer: IIdleTimer = useIdleTimer({
     onPrompt,
     onIdle,
-    timeout: promptTimeout,
-    promptTimeout: logoutTimeout,
+    timeout: promptTimeout + 1000, // Ensure promptTimeout < timeout
+    promptTimeout: logoutTimeout, // logoutTimeout should still be before actual logout
     events: [],
     element: document,
     startOnMount: false,
@@ -61,7 +61,7 @@ const IdleTimerWrapper = () => {
   });
 
   useEffect(() => {
-    console.log("use effect Idele Wrapper")
+    console.log("use effect Idele")
     /*
      *this depends on isAuthenticated to ensure it starts the timer after logging in
      * this depends on promptTimeout and logoutTimeout
@@ -107,14 +107,14 @@ const IdleTimerWrapper = () => {
       return;
     }
 
-    // time is already less then the prompt time - inform user they are low on time
+    // Adjust timeout times
     if (timeLeft <= LOGOUT_TIME) {
-      setPromptTimeout(0);
+      setPromptTimeout(0); // if less than logout time, no need for a prompt
       setLogoutTimeout(timeLeft);
-      return;
+    } else {
+      setPromptTimeout(Math.max(PROMPT_TIME - timeLoggedIn, 0));
+      setLogoutTimeout(Math.max(LOGOUT_TIME, 0));
     }
-
-    setPromptTimeout(PROMPT_TIME - timeLoggedIn);
   };
 
   return <></>;
