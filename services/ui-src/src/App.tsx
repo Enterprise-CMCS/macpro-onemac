@@ -151,13 +151,10 @@ const  App = () => {
     setUserInfo();
   }, [setUserInfo]);
 
-  useEffect(() => {
+  useEffect(()=>{
     if (mmdlNotification !== undefined) {  // Ensure the flag has been resolved
       setNotificationState(mmdlNotification);
     }
-  }, [mmdlNotification]);
-
-  useEffect(()=>{
     (async ()=> {
       try{
         if(notificationState && authState.isAuthenticated) {
