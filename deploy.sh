@@ -3,12 +3,26 @@
 stage=${1:-dev}
 
 install_deps() {
+  local islayer=false # Flag to track whether we navigated into the nodejs folder
+
+  # Check if we're inside a layer directory (layers have a 'nodejs' folder)
+  if [ -d "nodejs" ]; then
+    # If we're in a Lambda layer, navigate to the 'nodejs' folder
+    cd nodejs
+    islayer=true  # Set the flag to true since we navigated into nodejs
+  fi
+
   if [ "$CI" == "true" ]; then # If we're in a CI system
     if [ ! -d "node_modules" ]; then # If we don't have any node_modules (CircleCI cache miss scenario), run npm ci.  Otherwise, we're all set, do nothing.
       npm ci --legacy-peer-deps
     fi
   else # We're not in a CI system, let's npm install
     npm install --legacy-peer-deps
+  fi
+
+  # If we navigated to the nodejs folder (i.e., for a layer), go back to the root folder
+  if [ "$islayer" = true ]; then
+    cd ..
   fi
 }
 
@@ -25,6 +39,7 @@ install_deps
 services=(
   'ui'
   'uploads'
+  'layers/aws-sdk-v2-layer'
   'app-api'
   'email'
   'one-stream'
