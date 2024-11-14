@@ -36,7 +36,7 @@ const IdleTimerWrapper = () => {
         "Logout",
         "Continue Browsing",
         bodyMessage,
-        logout,
+        clickLogout,
         keepBrowsing,
       );
   };
