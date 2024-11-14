@@ -49,14 +49,14 @@ const IdleTimerWrapper = () => {
     logout();
   };
 
-  const logout = () => {
+  const clickLogout = () => {
     clearTableStateStorageKeys();
     logout();
   }
   const keepBrowsing = () => {
 
 
-    return decoded.exp < currentTime; // Token expired if current time > exp time
+    // return decoded.exp < currentTime; // Token expired if current time > exp time
   }
 
   const idleTimer: IIdleTimer = useIdleTimer({
