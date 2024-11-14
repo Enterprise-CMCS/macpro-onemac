@@ -396,7 +396,11 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('combined-package-lock.txt') }}
       - name: Install dependencies
         run: |
+          if [ -e package-lock.json]; then
           npm ci --legacy-peer-deps
+          else
+          npm i --legacy-peer-deps
+          fi
       - name: set path
         run: |
           echo "PATH=$(pwd)/node_modules/.bin/:$PATH" >> $GITHUB_ENV
