@@ -50,3 +50,24 @@ export const logout = async () => {
     console.log("signout error: ", error);
   }
 };
+
+export async function getSession() {
+  console.log("get session called")
+  try {
+    // Get the current session
+    const session = await Auth.currentSession();
+    
+    // The session contains access, id, and refresh tokens
+    const refreshToken = session.getRefreshToken();
+    const accessToken = session.getAccessToken();
+    const idToken = session.getIdToken();
+
+    console.log("Refresh Token:", refreshToken.getToken());
+    console.log("Access Token:", accessToken.getJwtToken());
+    console.log("ID Token:", idToken.getJwtToken());
+
+    return refreshToken.getToken();
+  } catch (error) {
+    console.error("Error getting session", error);
+  }
+}

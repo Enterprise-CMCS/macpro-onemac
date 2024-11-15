@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useIdleTimer, IIdleTimer } from "react-idle-timer";
 import jwt_decode from "jwt-decode";
-import { logout } from "../libs/logoutLib";
+import { logout, getSession } from "../libs/logoutLib";
 import { useAppContext } from "../libs/contextLib";
 import { clearTableStateStorageKeys } from "../utils/StorageKeys";
 
@@ -54,42 +54,45 @@ const IdleTimerWrapper = () => {
     logout();
   }
   const keepBrowsing = () => {
-    if (!isAuthenticated) return;
+    const refreshToken = getSession();
+    console.log('refresh token: ' + refreshToken)
+    console.log("refresh token")
+    // if (!isAuthenticated) return;
 
-    const tokenKey: string[] = Object.keys(localStorage).filter((k) =>
-      k.includes(STORAGE_KEY)
-    );
-    const loginToken: string | null =
-      tokenKey && localStorage.getItem(tokenKey[0]);
-    if (!loginToken) return;
+    // const tokenKey: string[] = Object.keys(localStorage).filter((k) =>
+    //   k.includes(STORAGE_KEY)
+    // );
+    // const loginToken: string | null =
+    //   tokenKey && localStorage.getItem(tokenKey[0]);
+    // if (!loginToken) return;
 
-    const decodedToken: any = jwt_decode(loginToken);
-    const expirationTime: number  = decodedToken?.exp;
-    const currentTime: number = new Date().valueOf();
-    const timeAllowed: number | undefined = expirationTime - currentTime;
+    // const decodedToken: any = jwt_decode(loginToken);
+    // const expirationTime: number  = decodedToken?.exp;
+    // const currentTime: number = new Date().valueOf();
+    // const timeAllowed: number | undefined = expirationTime - currentTime;
 
-    console.log("expiration time milliseconds: " + decodedToken?.exp);
-    console.log("expiration time minutes: " + decodedToken?.exp / 1000 / 60);
-    console.log("time allowed milliseconds: " + timeAllowed);
-    console.log("time allowed minutes: " + timeAllowed/ 1000 / 60);
-    console.log("total timeout time milliseconds: " + TOTAL_TIMEOUT_TIME);
-    console.log("total timeout time minutes" + TOTAL_TIMEOUT_TIME / 1000 / 60);
+    // console.log("expiration time milliseconds: " + decodedToken?.exp);
+    // console.log("expiration time minutes: " + decodedToken?.exp / 1000 / 60);
+    // console.log("time allowed milliseconds: " + timeAllowed);
+    // console.log("time allowed minutes: " + timeAllowed/ 1000 / 60);
+    // console.log("total timeout time milliseconds: " + TOTAL_TIMEOUT_TIME);
+    // console.log("total timeout time minutes" + TOTAL_TIMEOUT_TIME / 1000 / 60);
   
-    if (timeAllowed <= 0) {
-      // NB: possibly add logic to handle edge cases?
-      return;
-    } else if (TOTAL_TIMEOUT_TIME < timeAllowed) {
-      console.log("first else if");
-      setPromptTimeout(Math.max(TOTAL_TIMEOUT_TIME, 0));
-      setLogoutTimeout(Math.max(LOGOUT_TIME, 0));
-    } else if (timeAllowed  >=  LOGOUT_TIME && timeAllowed <= TOTAL_TIMEOUT_TIME) {
-      console.log("second else if ")
-      setPromptTimeout(Math.max(timeAllowed, 0));
-      setLogoutTimeout(Math.max(LOGOUT_TIME, 0));
-    } else {
-      setPromptTimeout(Math.max(timeAllowed, 0));
-      setLogoutTimeout(Math.max(timeAllowed, 0));
-    }
+    // if (timeAllowed <= 0) {
+    //   // NB: possibly add logic to handle edge cases?
+    //   return;
+    // } else if (TOTAL_TIMEOUT_TIME < timeAllowed) {
+    //   console.log("first else if");
+    //   setPromptTimeout(Math.max(TOTAL_TIMEOUT_TIME, 0));
+    //   setLogoutTimeout(Math.max(LOGOUT_TIME, 0));
+    // } else if (timeAllowed  >=  LOGOUT_TIME && timeAllowed <= TOTAL_TIMEOUT_TIME) {
+    //   console.log("second else if ")
+    //   setPromptTimeout(Math.max(timeAllowed, 0));
+    //   setLogoutTimeout(Math.max(LOGOUT_TIME, 0));
+    // } else {
+    //   setPromptTimeout(Math.max(timeAllowed, 0));
+    //   setLogoutTimeout(Math.max(timeAllowed, 0));
+    // }
     // return decoded.exp < currentTime; // Token expired if current time > exp time
   }
 
