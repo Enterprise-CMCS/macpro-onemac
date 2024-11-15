@@ -17,8 +17,6 @@ plugins:
   - serverless-iam-helper
   - serverless-s3-bucket-helper
 custom:
-  esbuild:
-    exclude: []
   stage: ${opt:stage, self:provider.stage}
   oneMacTableName: onemac-${self:custom.stage}-one
   iamPath: ${ssm:/configuration/${self:custom.stage}/iam/path, ssm:/configuration/default/iam/path, "/"}
@@ -92,6 +90,8 @@ provider:
   tracing:
     apiGateway: true
     lambda: true
+  layers:
+      - ${cf:aws-sdk-v2-layer-${self:custom.stage}.AwsSdkV2LambdaLayerQualifiedArn, ""}
 
 functions:
   migrate:
@@ -128,6 +128,17 @@ functions:
           method: post
           cors: true
           authorizer: aws_iam
+  
+  submitMedicaidSpaSubsequent:
+    handler: form/submitMedicaidSPASubsequentSubmission.main
+    role: LambdaApiRole
+    timeout: 30
+    events:
+      - http:
+          path: submitMedicaidSPASubsequent
+          method: post
+          cors: true
+          authorizer: aws_iam
 
   submitChipSpa:
     handler: form/submitCHIPSPA.main
@@ -151,6 +162,17 @@ functions:
     events:
       - http:
           path: submitCHIPSPARAIResponse
+          method: post
+          cors: true
+          authorizer: aws_iam
+  
+  submitChipSpaSubsequent:
+    handler: form/submitChipSPASubsequentSubmission.main
+    role: LambdaApiRole
+    timeout: 30
+    events:
+      - http:
+          path: submitChipSPASubsequent
           method: post
           cors: true
           authorizer: aws_iam
@@ -211,6 +233,50 @@ functions:
     events:
       - http:
           path: submitWaiverAppendixKRAIResponse
+          method: post
+          cors: true
+          authorizer: aws_iam
+
+  submitInitialWaiverSubsequent:
+    handler: form/submitInitialWaiverSubsequentSubmission.main
+    role: LambdaApiRole
+    timeout: 30
+    events:
+      - http:
+          path: submitInitialWaiverSubsequent
+          method: post
+          cors: true
+          authorizer: aws_iam
+  
+  submitWaiverRenewalSubsequent:
+    handler: form/submitWaiverRenewalSubsequentSubmission.main
+    role: LambdaApiRole
+    timeout: 30
+    events:
+      - http:
+          path: submitWaiverRenewalSubsequent
+          method: post
+          cors: true
+          authorizer: aws_iam
+
+  submitWaierAmendmentSubsequent:
+    handler: form/submitWaiverAmendmentSubsequentSubmission.main
+    role: LambdaApiRole
+    timeout: 30
+    events:
+      - http:
+          path: submitWaiverAmendmentSubsequent
+          method: post
+          cors: true
+          authorizer: aws_iam
+
+  submitWaiverAppKSubsequent:
+    handler: form/submitWaiverAppKSubsequentSubmission.main
+    role: LambdaApiRole
+    timeout: 30
+    events:
+      - http:
+          path: submitWaiverAppKSubsequent
           method: post
           cors: true
           authorizer: aws_iam

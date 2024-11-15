@@ -14,7 +14,6 @@ const attachmentInfoDescription =
   "//h3[text()='Attachments']/following-sibling::p[1]";
 const enterMmdlBtn = "//button[contains(text(),'Enter the MMDL system')]";
 const enterMacProBtn = "//button[contains(text(),'Enter the MACPro system')]";
-
 const IDInputBox = idElement;
 const errorMessageID = "#componentIdStatusMsg0";
 const errorMessageLine2ID = "#componentIdStatusMsg1";
@@ -26,9 +25,11 @@ const tempExtensionTypeHeader =
   "//h3[contains(text(),'Temporary Extension Type')]";
 const tempExtensionTypeBtn = "#temp-ext-type";
 const formIntroElement = "#form-intro";
-
+const subsequentDocumentsHeader = (type) =>
+  `//h3[contains(text(),'Subsequent ${type} Documents')]`;
 const labelElementFromLabel = {
   "Additional Information": "#additional-information-label",
+  "Reason for subsequent documents": "#additional-information-label",
 };
 const elementFromLabel = {
   // Different forms may have different labels for the ID field
@@ -40,6 +41,7 @@ const elementFromLabel = {
   "Existing Waiver Number to Renew": parentIdElement,
   "Existing Waiver Number to Amend": parentIdElement,
   "Additional Information": "#additional-information",
+  "Reason for subsequent documents": "#additional-information",
 };
 const errorMessageLine1FromLabel = {
   "SPA ID": "#componentIdStatusMsg0",
@@ -78,6 +80,9 @@ const dateElementsFromLabel = {
   "Proposed Effective Date of 1915(c) Appendix K Amendment":
     "#proposed-effective-date",
 };
+const yesSubmitBtn = "//button[text()='Yes, Submit']";
+const coverLetterAttachment = "//div[contains(text(),'Cover Letter')]";
+const reasonForSubsequentSubmission = "";
 
 //internal function for proposed effective date
 function caculateMonthsInFuture(numMonths) {
@@ -318,6 +323,19 @@ export class oneMacFormPage {
   }
   verifyAttachmentType(attachmentType) {
     cy.xpath(`//h3[text()='${attachmentType}']`).should("be.visible");
+  }
+  verifySubsequentDocumentsSectionExistsWith(type) {
+    cy.xpath(subsequentDocumentsHeader(type)).should("be.visible");
+  }
+  clickYesSubmitBTN() {
+    cy.xpath(yesSubmitBtn).click();
+    cy.wait(8000);
+  }
+  verifyModalSubmitExistsAndClickable() {
+    cy.xpath(yesSubmitBtn).should("be.visible").and("be.enabled");
+  }
+  verifyCoverLetterDoesNotExist() {
+    cy.xpath(coverLetterAttachment).should("not.exist");
   }
 }
 export default oneMacFormPage;

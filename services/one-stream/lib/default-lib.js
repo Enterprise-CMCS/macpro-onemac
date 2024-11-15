@@ -3,6 +3,7 @@ export const initialSubmissionType = "Initial Package";
 export const packageType = "Package";
 export const submitAction = "Submitted";
 export const withdrawalRequestedAction = "Withdrawal Requested";
+export const subsequentSubmissionType = "Subsequent Documentation Uploaded";
 
 export const defaultInitialSubmissionMap = {
   type: initialSubmissionType,
@@ -14,6 +15,12 @@ export const defaultInitialSubmissionMap = {
     "submitterName",
     "submitterEmail",
   ],
+};
+
+export const defaultSubsequentSubmissionMap = {
+  type: subsequentSubmissionType,
+  action: submitAction,
+  packageAttributes: ["currentStatus"],
 };
 
 export const defaultCreateMap = {
@@ -67,6 +74,7 @@ export const defaultEventMapping = {
   submitrai: defaultRAIResponseMap,
   submitwithdraw: defaultWithdrawPackageMap,
   submitrairesponsewithdraw: defaultWithdrawRAIResponseMap,
+  submitsubsequent: defaultSubsequentSubmissionMap,
 };
 
 export const defaultWaiverEventMapping = {

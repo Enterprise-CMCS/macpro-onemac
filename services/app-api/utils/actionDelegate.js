@@ -9,8 +9,10 @@ function getDefaultActions(
   const actions = [];
   switch (packageStatus) {
     case Workflow.ONEMAC_STATUS.PENDING:
-      if (userRole.canAccessForms)
+      if (userRole.canAccessForms) {
         actions.push(Workflow.PACKAGE_ACTION.WITHDRAW);
+        actions.push(Workflow.PACKAGE_ACTION.SUBSEQUENT_SUBMISSION);
+      }
       if (
         userRole.isCMSUser &&
         hasRaiResponse &&
@@ -22,8 +24,10 @@ function getDefaultActions(
       break;
     case Workflow.ONEMAC_STATUS.PENDING_CONCURRENCE:
     case Workflow.ONEMAC_STATUS.PENDING_APPROVAL:
-      if (userRole.canAccessForms)
+      if (userRole.canAccessForms) {
         actions.push(Workflow.PACKAGE_ACTION.WITHDRAW);
+        actions.push(Workflow.PACKAGE_ACTION.SUBSEQUENT_SUBMISSION);
+      }
       break;
     case Workflow.ONEMAC_STATUS.RAI_ISSUED:
       if (userRole.canAccessForms)
@@ -78,7 +82,7 @@ export function getActionsForPackage(
   userRole,
   formSource
 ) {
-  const actions = getDefaultActions(
+  let actions = getDefaultActions(
     packageStatus,
     hasRaiResponse,
     packageSubStatus,
@@ -95,7 +99,19 @@ export function getActionsForPackage(
     case Workflow.ONEMAC_TYPE.WAIVER_EXTENSION:
     case Workflow.ONEMAC_TYPE.WAIVER_EXTENSION_B:
     case Workflow.ONEMAC_TYPE.WAIVER_EXTENSION_C:
-      actions.push(...getWaiverExtensionActions(packageStatus, userRole));
+      actions.push(
+        ...getDefaultActions(
+          packageStatus,
+          hasRaiResponse,
+          userRole,
+          formSource
+        ),
+        ...getWaiverExtensionActions(packageStatus, userRole)
+      );
+      //Extensions should remove SUBSEQUENT_SUBMISSION action
+      actions = actions.filter(
+        (action) => action !== Workflow.PACKAGE_ACTION.SUBSEQUENT_SUBMISSION
+      );
       break;
   }
   // Filter out duplicates

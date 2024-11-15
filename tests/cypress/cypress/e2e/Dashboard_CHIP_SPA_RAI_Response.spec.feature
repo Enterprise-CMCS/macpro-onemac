@@ -26,7 +26,7 @@ Feature: RAI Response for CHIP SPA package view
         Then Click the Submit Button without waiting
         Then verify the modal pop-up is visible
         Then verify the title of the modal pop-up is Do you want to submit your official formal RAI response
-        Then verify the detailed text in the modal contains you are submitting your official formal RAI Response to restart the SPA review process and a new 90th day will be identified
+        Then verify the detailed text in the modal contains "you are submitting your official formal RAI Response to restart the SPA review process and a new 90th day will be identified."
         Then click modal cancel button
         Then verify the modal pop-up is not visible
 
@@ -42,6 +42,6 @@ Feature: RAI Response for CHIP SPA package view
         Then Click the Submit Button without waiting
         Then verify the modal pop-up is visible
         Then verify the title of the modal pop-up is Do you want to submit your official formal RAI response
-        Then verify the detailed text in the modal contains you are submitting your official formal RAI Response to restart the SPA review process and a new 90th day will be identified
+        Then verify the detailed text in the modal contains "you are submitting your official formal RAI Response to restart the SPA review process and a new 90th day will be identified."
         Then click modal cancel button
         Then verify the modal pop-up is not visible

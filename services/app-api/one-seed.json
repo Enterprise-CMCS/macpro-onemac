@@ -57100,7 +57100,31 @@
    "eventTimestamp": 1693077990875,
    "timestamp": 1675766233000,
    "type": "Formal RAI Response"
-  }
+  },
+  {
+    "action": "Submitted",
+    "additionalInformation": "Initial Package for automated testing.",
+    "attachments": [
+     {
+      "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "filename": "excel.xlsx",
+      "s3Key": "1690811753124/excel.xlsx",
+      "title": "1915(b) Comprehensive (Capitated) Waiver Cost Effectiveness Spreadsheets",
+      "url": "https://uploads-oy2-24636-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A1cdd699c-f936-49b4-9f01-c4f4e8cfa595/1690811753124/excel.xlsx"
+     },
+     {
+      "contentType": "text/plain",
+      "filename": "textnotes.txt",
+      "s3Key": "1674655626214/textnotes.txt",
+      "title": "1915(b) Comprehensive (Capitated) Waiver Application Pre-print (Initial, Renewal, Amendment)",
+      "url": "https://uploads-master-attachments-989324938326.s3.us-east-1.amazonaws.com/protected/us-east-1%3A35b18373-d59d-4d36-8d7f-2ca368f6a6c1/1674655626214/textnotes.txt"
+     }
+    ],
+    "currentStatus": "Submitted",
+    "eventTimestamp": 1673887033000,
+    "timestamp": 1673887033000,
+    "type": "Initial Package"
+   }
  ],
  "reviewTeam": [
   "Sally Brown"

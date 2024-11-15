@@ -3,6 +3,8 @@ import Joi from "joi";
 import { RESPONSE_CODE, Workflow } from "cmscommonlib";
 import { CMSWithdrawalNotice } from "../email/CMSWithdrawalNotice";
 import { stateWithdrawalReceipt } from "../email/stateWithdrawalReceipt";
+import { CMSSubsequentSubmissionNotice } from "../email/CMSSubsequentSubmissionNotice";
+import { stateSubsequentSubmissionReceipt } from "../email/stateSubsequentSubmissionReceipt";
 
 export const defaultFormConfig = {
   CMSToAddresses: [process.env.reviewerEmail, process.env.testingEmail].filter(
@@ -26,6 +28,31 @@ export const defaultParentType = Joi.string().required();
 export const defaultWaiverSchema = {
   waiverAuthority: defaultWaiverAuthoritySchema,
   proposedEffectiveDate: defaultProposedEffectiveDateSchema,
+};
+
+export const defaultSubsequentSubmissionSchema = {
+  parentId: defaultParentId,
+  parentType: defaultParentType,
+};
+
+export const defaultSubsequentSubmissionConfig = {
+  ...defaultFormConfig,
+  newStatus: null, //use parent's current package status
+  successResponseCode:
+    RESPONSE_CODE.SUCCESSFULLY_SUBMITTED_SUBSEQUENT_SUBMISSION,
+  buildCMSNotice: CMSSubsequentSubmissionNotice,
+  buildStateReceipt: stateSubsequentSubmissionReceipt,
+  appendToSchema: {
+    ...defaultSubsequentSubmissionSchema,
+  },
+};
+
+export const defaultWaiverSubsequentSubmissionConfig = {
+  ...defaultSubsequentSubmissionConfig,
+  appendToSchema: {
+    ...defaultSubsequentSubmissionSchema,
+    waiverAuthority: defaultWaiverAuthoritySchema,
+  },
 };
 
 export const defaultWithdrawConfig = {

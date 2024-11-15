@@ -79,22 +79,6 @@ Then(
     );
   }
 );
-Then(
-  "verify the detailed text in the modal contains you are submitting your official formal RAI Response to restart the SPA review process and a new 90th day will be identified",
-  () => {
-    OneMacFormPage.verifyModalTextIs(
-      "you are submitting your official formal RAI Response to restart the SPA review process and a new 90th day will be identified."
-    );
-  }
-);
-Then(
-  "verify the detailed text in the modal contains you are submitting your official formal RAI Response to start the 90 day clock review process",
-  () => {
-    OneMacFormPage.verifyModalTextIs(
-      "you are submitting your official formal RAI Response to start the 90 day clock review process"
-    );
-  }
-);
 
 Then("verify form cancel button exists", () => {
   OneMacFormPage.verifyCancelBtnExists();
@@ -118,11 +102,11 @@ Then("verify submission successful message in the alert bar", () => {
   OneMacDashboardPage.verifySuccessMessage1IsDisplayed();
 });
 
-Then("i am on User Management Page", () => {
+Then("I am on the User Management Page", () => {
   OneMacUserManagmentPage.verifyWeAreOnUserManagmentPage();
 });
 Then("Click on My Account", () => {
-  OneMacUserManagmentPage.clickMyAccountDropDown();
+  OneMacUserManagmentPage.clickMyAccountDropdown();
 });
 Then("Click on Manage Profile", () => {
   OneMacUserManagmentPage.clickmanageProfileBTN();
@@ -1012,9 +996,6 @@ Then("click the Withdrawal Requested checkbox", () => {
 Then("click the Formal RAI Response - Withdrawal Requested checkbox", () => {
   OneMacDashboardPage.clickRaiResponseWithdrawalRequestedCheckBox();
 });
-Then("click the Withdraw Formal RAI Response Enabled checkbox", () => {
-  OneMacPackagePage.clickRaiResponseWithdrawEnabledCheckBox();
-});
 Then("click 1915b Initial Waiver check box", () => {
   OneMacDashboardPage.clickInitialWaiver1915bCheckBox();
 });
@@ -1349,6 +1330,11 @@ Then(
     OneMacDashboardPage.verifypackageRowOneIDWaiverRenewalFormat();
   }
 );
+Then("verify Latest Package Activity column one date is this quarter", () => {
+  if (OneMacDashboardPage.checkIfPackageListResultsExist()) {
+    OneMacDashboardPage.verifypackageRowOneLatestPackageActivityIsThisQuarter();
+  }
+});
 Then("verify Onboarding Materials exists", () => {
   OneMacFAQPage.verifyOnboardingMaterialsBtnExists();
 });
@@ -1499,6 +1485,12 @@ Then("click Yes, withdraw response button", () => {
 });
 Then("verify Yes, withdraw response button exists", () => {
   OneMacDashboardPage.verifyConfirmWithdrawResponseBtnExists();
+});
+Then("click the yes, submit modal button", () => {
+  OneMacFormPage.clickYesSubmitBTN();
+});
+Then("verify the yes, submit modal button is visible and clickable", () => {
+  OneMacFormPage.verifyModalSubmitExistsAndClickable();
 });
 Then("verify the package details page is visible", () => {
   OneMacPackageDetailsPage.verifyPackageDetailsPageIsVisible();
@@ -2073,3 +2065,75 @@ Then("verify all sections are expanded", () => {
 Then("verify page url contains {string}", (checkUrl) => {
   OneMacDashboardPage.verifyPageByURL(checkUrl);
 });
+Then("verify the Subsequent Documentation Uploaded caret button exists", () => {
+  OneMacPackageDetailsPage.verifySubsequentSubmissionCaretBtnExists();
+});
+Then("click the Subsequent Documentation Uploaded caret button", () => {
+  OneMacPackageDetailsPage.clickSubsequentSubmissionCaretBtn();
+});
+Then("verify the Subsequent Documentation download all button exists", () => {
+  OneMacPackageDetailsPage.verifySubsequentSubmissionDownloadAllBtnExists();
+});
+Then("click the Subsequent Documentation download all button", () => {
+  OneMacPackageDetailsPage.clickSubsequentSubmissionDownloadAllBtn();
+});
+Then("verify Upload Subsequent Documents action exists", () => {
+  OneMacPackageDetailsPage.verifyUploadSubsequentDocumentsActionBtnExists();
+});
+Then("click the Upload Subsequent Documents action button", () => {
+  OneMacPackageDetailsPage.clickUploadSubsequentDocumentsActionBtn();
+});
+Then("verify the Subsequent {string} Documents section exists", (type) => {
+  OneMacFormPage.verifySubsequentDocumentsSectionExistsWith(type);
+});
+Then("verify the Reason for subsequent documents section exists", () => {
+  OneMacFormPage.verifyAdditionalInfoSectionExists();
+});
+Then("verify the dialog title contains {string}", (s) => {
+  OneMacFormPage.verifyModalTitleIs(s);
+});
+Then("verify the detailed text in the modal contains {string}", (s) => {
+  OneMacFormPage.verifyModalTextIs(s);
+});
+Then("verify the Cover Letter attachment is not listed", () => {
+  OneMacFormPage.verifyCoverLetterDoesNotExist();
+});
+Then("verify Latest Package Activity checkbox exists", () => {
+  OneMacDashboardPage.verifyLatestPackageActivityCheckboxExists();
+});
+Then("click Latest Package Activity checkbox", () => {
+  OneMacDashboardPage.clickCheckBoxLatestPackageActivity();
+});
+Then("verify Latest Package Activity column exists", () => {
+  OneMacDashboardPage.verifyLatestPackageActivityColumnExists();
+});
+Then("verify Latest Package Activity column does not exist", () => {
+  OneMacDashboardPage.verifyLatestPackageActivityDoesNotExist();
+});
+Then("click on Latest Package Activity filter dropdown", () => {
+  OneMacDashboardPage.clickOnLatestPackageActivityFilterDropdown();
+});
+Then("verify Latest Package Activity date picker filter exists", () => {
+  OneMacDashboardPage.verifyLatestPackageActivityDatePickerFilterExists();
+});
+Then("click on Latest Package Activity date picker filter", () => {
+  OneMacDashboardPage.clickOnLatestPackageActivityDatePickerFilter();
+});
+Then("verify Latest Package Activity dropdown filter exists", () => {
+  OneMacDashboardPage.verifyLatestPackageActivityDateFilterDropdownExists();
+});
+Then("click on Latest Package Activity dropdown filter", () => {
+  OneMacDashboardPage.clickOnLatestPackageActivityFilterDropdown();
+});
+Then(
+  "verify there is a Latest Package Activity header in the details section",
+  () => {
+    OneMacPackageDetailsPage.verifyLatestPackageActivityHeaderExists();
+  }
+);
+Then(
+  "verify a full date and time entry exists for the Latest Package Activity",
+  () => {
+    OneMacPackageDetailsPage.verifyLatestPackageActivityDateExists();
+  }
+);
