@@ -1,5 +1,5 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import "promise-polyfill/src/polyfill";
 import "core-js/es/typed-array/uint32-array";
 import "core-js/es/array/find";
@@ -50,10 +50,10 @@ let amplifyConfig = {
 };
 
 Amplify.configure(amplifyConfig);
+const root = createRoot(getApplicationNode()!);
 
-ReactDOM.render(
+root.render(
   <BrowserRouter>
     <App />
-  </BrowserRouter>,
-  getApplicationNode()
+  </BrowserRouter>
 );
