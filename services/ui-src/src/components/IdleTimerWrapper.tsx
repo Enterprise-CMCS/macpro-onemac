@@ -4,7 +4,6 @@ import jwt_decode from "jwt-decode";
 import { logout, getNewSession } from "../libs/logoutLib";
 import { useAppContext } from "../libs/contextLib";
 import { clearTableStateStorageKeys } from "../utils/StorageKeys";
-import { milliseconds } from "date-fns";
 
 const IdleTimerWrapper = () => {
   const STORAGE_KEY: string = "accessToken";
