@@ -51,22 +51,71 @@ export const logout = async () => {
   }
 };
 
-export async function getSession() {
+export async function getNewSession() {
   console.log("get session called")
   try {
     // Get the current session
     const session = await Auth.currentSession();
+
+    console.log("session: " + session);
     
     // The session contains access, id, and refresh tokens
     const refreshToken = session.getRefreshToken();
     const accessToken = session.getAccessToken();
     const idToken = session.getIdToken();
 
+
+
+    const accessTokenKey: string[] = Object.keys(localStorage).filter((k) =>
+      k.includes("accessToken")
+    );
+    const loginAccessToken: string | null =
+    accessTokenKey && localStorage.getItem(accessTokenKey[0]);
+    if (!loginAccessToken) return;
+
+    const refreshTokenKey: string[] = Object.keys(localStorage).filter((k) =>
+      k.includes("refreshToken")
+    );
+    const loginRefreshToken: string | null =
+    accessTokenKey && localStorage.getItem(refreshTokenKey[0]);
+    if (!loginRefreshToken) return;
+
+    const idTokenKey: string[] = Object.keys(localStorage).filter((k) =>
+      k.includes("idToken")
+    );
+    const loginIdToken: string | null =
+    accessTokenKey && localStorage.getItem(idTokenKey[0]);
+    if (!loginIdToken) return;
+
+    console.log("********* ACCESS TOKEN::: "+accessToken.getJwtToken());
+    console.log("********* ACCESS TOKEN LOCAL Storage::: "+loginAccessToken)
+
+    if(accessToken.getJwtToken() !== loginAccessToken) {
+      console.log("new access token")
+      localStorage.setItem(accessTokenKey[0], loginAccessToken)
+    } else {
+      console.log("access tokens match")
+    }
+
+    if(refreshToken.getToken() !== loginRefreshToken) {
+      console.log("new refresh token")
+      localStorage.setItem(refreshTokenKey[0], loginRefreshToken)
+    } else {
+      console.log("refresh tokens match")
+    }
+
+    if(idToken.getJwtToken() !== loginIdToken) {
+      console.log("new id token")
+      localStorage.setItem(idTokenKey[0], loginIdToken)
+    } else {
+      console.log("id tokens match")
+    }
+
     console.log("Refresh Token:", refreshToken.getToken());
     console.log("Access Token:", accessToken.getJwtToken());
     console.log("ID Token:", idToken.getJwtToken());
 
-    return refreshToken.getToken();
+    // return refreshToken.getToken();
   } catch (error) {
     console.error("Error getting session", error);
   }

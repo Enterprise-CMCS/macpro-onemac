@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useIdleTimer, IIdleTimer } from "react-idle-timer";
 import jwt_decode from "jwt-decode";
-import { logout, getSession } from "../libs/logoutLib";
+import { logout, getNewSession } from "../libs/logoutLib";
 import { useAppContext } from "../libs/contextLib";
 import { clearTableStateStorageKeys } from "../utils/StorageKeys";
+import { milliseconds } from "date-fns";
 
 const IdleTimerWrapper = () => {
   const STORAGE_KEY: string = "accessToken";
@@ -54,46 +55,40 @@ const IdleTimerWrapper = () => {
     logout();
   }
   const keepBrowsing = () => {
-    const refreshToken = getSession();
-    console.log('refresh token: ' + refreshToken)
-    console.log("refresh token")
-    // if (!isAuthenticated) return;
+    console.log("keep browsing")
+    if (!isAuthenticated) return;
+    const tokenKey: string[] = Object.keys(localStorage).filter((k) =>
+      k.includes(STORAGE_KEY)
+    );
+    const loginToken: string | null =
+      tokenKey && localStorage.getItem(tokenKey[0]);
+    if (!loginToken) return;
 
-    // const tokenKey: string[] = Object.keys(localStorage).filter((k) =>
-    //   k.includes(STORAGE_KEY)
-    // );
-    // const loginToken: string | null =
-    //   tokenKey && localStorage.getItem(tokenKey[0]);
-    // if (!loginToken) return;
+    const decodedToken: any = jwt_decode(loginToken);
+    const epochAuthTime: number | undefined = decodedToken?.auth_time;
 
-    // const decodedToken: any = jwt_decode(loginToken);
-    // const expirationTime: number  = decodedToken?.exp;
-    // const currentTime: number = new Date().valueOf();
-    // const timeAllowed: number | undefined = expirationTime - currentTime;
+    console.log("decodedToken", decodedToken)
+    console.log("decodedToken", String(decodedToken))
+    console.log("decodedToken?.auth_time;", decodedToken?.auth_time)
 
-    // console.log("expiration time milliseconds: " + decodedToken?.exp);
-    // console.log("expiration time minutes: " + decodedToken?.exp / 1000 / 60);
-    // console.log("time allowed milliseconds: " + timeAllowed);
-    // console.log("time allowed minutes: " + timeAllowed/ 1000 / 60);
-    // console.log("total timeout time milliseconds: " + TOTAL_TIMEOUT_TIME);
-    // console.log("total timeout time minutes" + TOTAL_TIMEOUT_TIME / 1000 / 60);
-  
-    // if (timeAllowed <= 0) {
-    //   // NB: possibly add logic to handle edge cases?
-    //   return;
-    // } else if (TOTAL_TIMEOUT_TIME < timeAllowed) {
-    //   console.log("first else if");
-    //   setPromptTimeout(Math.max(TOTAL_TIMEOUT_TIME, 0));
-    //   setLogoutTimeout(Math.max(LOGOUT_TIME, 0));
-    // } else if (timeAllowed  >=  LOGOUT_TIME && timeAllowed <= TOTAL_TIMEOUT_TIME) {
-    //   console.log("second else if ")
-    //   setPromptTimeout(Math.max(timeAllowed, 0));
-    //   setLogoutTimeout(Math.max(LOGOUT_TIME, 0));
-    // } else {
-    //   setPromptTimeout(Math.max(timeAllowed, 0));
-    //   setLogoutTimeout(Math.max(timeAllowed, 0));
-    // }
-    // return decoded.exp < currentTime; // Token expired if current time > exp time
+    if (!epochAuthTime) return;
+
+    const authTime: number = new Date(epochAuthTime * 1000).valueOf();
+    const currentTime: number = new Date().valueOf();
+    const timeLoggedIn: number = currentTime - authTime; // in milliseconds
+    const timeLeft: number = TOTAL_TIMEOUT_TIME - timeLoggedIn;
+
+    // time has already expired for this session
+    if (timeLeft <= 0) {
+      // NB: possibly add logic to handle edge cases?
+      return;
+    }
+    console.log("get new session in "+ timeLeft + "milliseconds")
+    setTimeout(()=>{
+      console.log("set timeout Called");
+      getNewSession();
+      setTimeoutTimes();
+    }, timeLeft - 100)
   }
 
   const idleTimer: IIdleTimer = useIdleTimer({
@@ -166,6 +161,7 @@ const IdleTimerWrapper = () => {
     // Adjust timeout times
     if (timeLeft <= LOGOUT_TIME) {
       setPromptTimeout(0); // if less than logout time, no need for a prompt
+      console.log("timeleft < Lougout_time")
       setLogoutTimeout(timeLeft);
     } else {
       setPromptTimeout(Math.max(PROMPT_TIME - timeLoggedIn, 0));
