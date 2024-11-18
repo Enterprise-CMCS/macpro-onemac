@@ -5,7 +5,7 @@ describe("Package Dashboard Medicaid SPA Page 508 test", () => {
     cy.get("#email").type("statesubmitter@nightwatch.test");
     cy.get("#password").type("Passw0rd!");
     cy.get("#loginDevUserBtn").click();
-    cy.xpath("//a[@id='new-submission-button']").click();
+    cy.get("#new-submission-button").click();
     cy.xpath("//div[text()='State Plan Amendment (SPA)']").click();
     cy.xpath("//div[text()='Medicaid SPA']").click();
   });

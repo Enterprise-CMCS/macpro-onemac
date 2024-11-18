@@ -71,7 +71,7 @@ function terminalLog(violations) {
 
 // axe api documentation: https://www.deque.com/axe/core-documentation/api-documentation/
 Cypress.Commands.add("checkA11yOfPage", () => {
-  cy.wait(3000);
+  cy.wait(4500);
   cy.injectAxe();
   cy.checkA11y(
     null,

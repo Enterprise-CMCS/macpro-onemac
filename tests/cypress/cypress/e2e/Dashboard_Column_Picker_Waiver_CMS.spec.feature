@@ -13,12 +13,12 @@ Feature: Package Dashboard - Waiver Tab Column Picker for CMS User
         Then verify Waiver Number column exists
         Then verify status column exists
         Then verify Initial Submission Date column exists
-        Then verify Formal RAI Received column exists
+        Then verify Formal RAI Response column exists
         Then verify submitted by column does not exist
         Then verify CPOC Name column does not exist
         Then verify Final Disposition column does not exist
         Then click show hide columns button
-        Then verify Formal RAI Received checkbox exists
+        Then verify Formal RAI Response checkbox exists
         Then verify state checkbox exists
         Then verify status checkbox exists
         Then verify Initial Submission Date checkbox exists
@@ -33,7 +33,7 @@ Feature: Package Dashboard - Waiver Tab Column Picker for CMS User
     Scenario: Waivers Tab - Uncheck all and verify Waiver Number exists
         Then click on the Waivers tab
         Then click show hide columns button
-        Then click Formal RAI Received checkbox
+        Then click Formal RAI Response checkbox
         Then click Initial Submission Date checkbox
         Then click state checkbox
         Then click status checkbox
@@ -47,7 +47,7 @@ Feature: Package Dashboard - Waiver Tab Column Picker for CMS User
         Then verify status column does not exist
         Then verify Initial Submission Date column does not exist
         Then verify submitted by column does not exist
-        Then verify Formal RAI Received column does not exist
+        Then verify Formal RAI Response column does not exist
         Then verify Final Disposition column exists
         Then verify CPOC Name column exists
         Then Click on My Account
@@ -62,7 +62,7 @@ Feature: Package Dashboard - Waiver Tab Column Picker for CMS User
         Then verify Waiver Number column exists
         Then verify status column exists
         Then verify Initial Submission Date column exists
-        Then verify Formal RAI Received column exists
+        Then verify Formal RAI Response column exists
         Then Click on My Account
         Then click the logout button
 
