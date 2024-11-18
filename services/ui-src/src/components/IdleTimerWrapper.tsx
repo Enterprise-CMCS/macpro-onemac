@@ -89,6 +89,7 @@ const IdleTimerWrapper = () => {
     console.log("get new session in "+ (timeAvailable/1000)/60 + "minutes" ) 
     setLogoutTimeout(timeAvailable)
     setPromptTimeout(0)
+    setExtendSession(true)
 
 
     // setInterval(()=>{
@@ -141,7 +142,7 @@ const IdleTimerWrapper = () => {
   }, [isAuthenticated]);
 
   useEffect(()=>{
-    if (isAuthenticated && extendSession) {
+    if (isAuthenticated && extendSession && jwt!=="") {
       const id = setInterval(()=>{
         getNewSession();
         console.log("get New Session")
@@ -153,11 +154,13 @@ const IdleTimerWrapper = () => {
         if (!loginToken) return;
         if(jwt !== tokenKey[0]) {
         console.log("new tokens identified")
+        setExtendSession(false)
         setTimeoutTimes();
         clearInterval(id);
         }
       }, 60000*5)
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   },[extendSession, isAuthenticated, jwt])
 
 
@@ -171,6 +174,8 @@ const IdleTimerWrapper = () => {
     const loginToken: string | null =
       tokenKey && localStorage.getItem(tokenKey[0]);
     if (!loginToken) return;
+
+    setJwt(loginToken);
 
     const decodedToken: any = jwt_decode(loginToken);
     const epochAuthTime: number | undefined = decodedToken?.auth_time;
