@@ -19,6 +19,8 @@ const IdleTimerWrapper = () => {
     useAppContext() ?? {};
   const [promptTimeout, setPromptTimeout] = useState(PROMPT_TIME);
   const [logoutTimeout, setLogoutTimeout] = useState(LOGOUT_TIME);
+  const [extendSession, setExtendSession] = useState(false);
+  const [jwt, setJwt] = useState("")
 
   const onPrompt = () => {
     const minutesRemaining: number = Math.round(
@@ -64,30 +66,39 @@ const IdleTimerWrapper = () => {
     if (!loginToken) return;
 
     const decodedToken: any = jwt_decode(loginToken);
-    const epochAuthTime: number | undefined = decodedToken?.auth_time;
+    const accessExpTime: number | undefined = decodedToken?.exp
+    ;
 
     console.log("decodedToken", decodedToken)
     console.log("decodedToken", String(decodedToken))
     console.log("decodedToken?.auth_time;", decodedToken?.auth_time)
 
-    if (!epochAuthTime) return;
+    if (!accessExpTime) return;
 
-    const authTime: number = new Date(epochAuthTime * 1000).valueOf();
+    const expTime: number = new Date(accessExpTime * 1000).valueOf();
     const currentTime: number = new Date().valueOf();
-    const timeLoggedIn: number = currentTime - authTime; // in milliseconds
-    const timeLeft: number = TOTAL_TIMEOUT_TIME - timeLoggedIn;
+    const timeAvailable: number = expTime - currentTime; // in milliseconds
+    // const timeLeft: number = TOTAL_TIMEOUT_TIME - timeLoggedIn;
 
     // time has already expired for this session
-    if (timeLeft <= 0) {
+    if (timeAvailable <= 0) {
       // NB: possibly add logic to handle edge cases?
       return;
     }
-    console.log("get new session in "+ timeLeft + "milliseconds")
-    setTimeout(()=>{
-      console.log("set timeout Called");
-      getNewSession();
-      setTimeoutTimes();
-    }, timeLeft - 100)
+    console.log("get new session in "+ timeAvailable + "milliseconds" ) 
+    console.log("get new session in "+ (timeAvailable/1000)/60 + "minutes" ) 
+    setLogoutTimeout(timeAvailable)
+    setPromptTimeout(0)
+
+
+    // setInterval(()=>{
+    //   console.log("set  Interval called ");
+    //   const accessToken = getNewSession();
+    //   if()
+  
+
+    //   }
+    // , 60000*5)
   }
 
   const idleTimer: IIdleTimer = useIdleTimer({
@@ -106,7 +117,9 @@ const IdleTimerWrapper = () => {
   });
 
   useEffect(() => {
-    console.log("use effect Idele")
+    console.log("use effect is auth")
+    console.log("promptTimeout: " + promptTimeout)
+    console.log("logoutTimeout: " + logoutTimeout)
     /*
      *this depends on isAuthenticated to ensure it starts the timer after logging in
      * this depends on promptTimeout and logoutTimeout
@@ -125,7 +138,29 @@ const IdleTimerWrapper = () => {
 
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isAuthenticated, promptTimeout, logoutTimeout]);
+  }, [isAuthenticated]);
+
+  useEffect(()=>{
+    if (isAuthenticated && extendSession) {
+      const id = setInterval(()=>{
+        getNewSession();
+        console.log("get New Session")
+        const tokenKey: string[] = Object.keys(localStorage).filter((k) =>
+          k.includes(STORAGE_KEY)
+        );
+        const loginToken: string | null =
+          tokenKey && localStorage.getItem(tokenKey[0]);
+        if (!loginToken) return;
+        if(jwt !== tokenKey[0]) {
+        console.log("new tokens identified")
+        setTimeoutTimes();
+        clearInterval(id);
+        }
+      }, 60000*5)
+    }
+  },[extendSession, isAuthenticated, jwt])
+
+
 
   const setTimeoutTimes = () => {
     if (!isAuthenticated) return;

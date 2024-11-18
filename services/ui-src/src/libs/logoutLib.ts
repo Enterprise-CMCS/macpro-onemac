@@ -115,6 +115,8 @@ export async function getNewSession() {
     console.log("Access Token:", accessToken.getJwtToken());
     console.log("ID Token:", idToken.getJwtToken());
 
+    return accessToken.getJwtToken(); 
+
     // return refreshToken.getToken();
   } catch (error) {
     console.error("Error getting session", error);
