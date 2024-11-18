@@ -88,7 +88,7 @@ const IdleTimerWrapper = () => {
     console.log("get new session in "+ timeAvailable + "milliseconds" ) 
     console.log("get new session in "+ (timeAvailable/1000)/60 + "minutes" ) 
     setLogoutTimeout(timeAvailable)
-    setPromptTimeout(0)
+    setPromptTimeout(timeAvailable)
     setExtendSession(true)
 
 
