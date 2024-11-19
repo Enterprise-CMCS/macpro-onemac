@@ -19,8 +19,7 @@ const IdleTimerWrapper = () => {
     useAppContext() ?? {};
   const [promptTimeout, setPromptTimeout] = useState(PROMPT_TIME);
   const [logoutTimeout, setLogoutTimeout] = useState(LOGOUT_TIME);
-  const [extendSession, setExtendSession] = useState(false);
-  const [jwt, setJwt] = useState("")
+
 
   const onPrompt = () => {
     const minutesRemaining: number = Math.round(
@@ -87,20 +86,26 @@ const IdleTimerWrapper = () => {
     }
     console.log("get new session in "+ timeAvailable + "milliseconds" ) 
     console.log("get new session in "+ (timeAvailable/1000)/60 + "minutes" ) 
-    setLogoutTimeout(timeAvailable)
-    setPromptTimeout(timeAvailable)
-    setExtendSession(true)
 
 
-    // setInterval(()=>{
-    //   console.log("set  Interval called ");
-    //   const accessToken = getNewSession();
-    //   if()
-  
+    // trt to refresh session
+    setTimeout(()=>{
+      //attempt to get new session tokens
+      getNewSession();
+      //use those tokens to set timer times
+      setTimeoutTimes();
+    }, timeAvailable)
 
-    //   }
-    // , 60000*5)
+    //reset idle timer to starting values
+    setPromptTimeout(PROMPT_TIME)
+    setLogoutTimeout(LOGOUT_TIME)
   }
+
+    //reset the idleTimer state every time the prompt time changes
+    useEffect(() => {
+      idleTimer.reset(); 
+    }, [promptTimeout]); 
+  
 
   const idleTimer: IIdleTimer = useIdleTimer({
     onPrompt,
@@ -141,28 +146,27 @@ const IdleTimerWrapper = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuthenticated]);
 
-  useEffect(()=>{
-    if (isAuthenticated && extendSession && jwt!=="") {
-      const id = setInterval(()=>{
-        getNewSession();
-        console.log("get New Session")
-        const tokenKey: string[] = Object.keys(localStorage).filter((k) =>
-          k.includes(STORAGE_KEY)
-        );
-        const loginToken: string | null =
-          tokenKey && localStorage.getItem(tokenKey[0]);
-        if (!loginToken) return;
-        if(jwt !== tokenKey[0]) {
-        console.log("new tokens identified")
-        setExtendSession(false)
-        setTimeoutTimes();
-        clearInterval(id);
-        }
-      }, 60000*5)
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[extendSession, isAuthenticated, jwt])
-
+  // useEffect(()=>{
+  //   if (isAuthenticated && extendSession && jwt!=="") {
+  //     const id = setInterval(()=>{
+  //       getNewSession();
+  //       console.log("get New Session")
+  //       const tokenKey: string[] = Object.keys(localStorage).filter((k) =>
+  //         k.includes(STORAGE_KEY)
+  //       );
+  //       const loginToken: string | null =
+  //         tokenKey && localStorage.getItem(tokenKey[0]);
+  //       if (!loginToken) return;
+  //       if(jwt !== tokenKey[0]) {
+  //       console.log("new tokens identified")
+  //       setExtendSession(false)
+  //       setTimeoutTimes();
+  //       clearInterval(id);
+  //       }
+  //     }, 60000*5)
+  //   }
+  // // eslint-disable-next-line react-hooks/exhaustive-deps
+  // },[extendSession, isAuthenticated, jwt])
 
 
   const setTimeoutTimes = () => {
@@ -174,8 +178,6 @@ const IdleTimerWrapper = () => {
     const loginToken: string | null =
       tokenKey && localStorage.getItem(tokenKey[0]);
     if (!loginToken) return;
-
-    setJwt(loginToken);
 
     const decodedToken: any = jwt_decode(loginToken);
     const epochAuthTime: number | undefined = decodedToken?.auth_time;
