@@ -103,6 +103,7 @@ const IdleTimerWrapper = () => {
 
     //reset the idleTimer state every time the prompt time changes
     useEffect(() => {
+      console.log("reset use effect called")
       idleTimer.reset(); 
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [promptTimeout]); 
