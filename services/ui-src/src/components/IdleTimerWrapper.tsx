@@ -105,6 +105,7 @@ const IdleTimerWrapper = () => {
     idleTimer.reset()
     setPromptTimeout(PROMPT_TIME)
     setLogoutTimeout(LOGOUT_TIME)
+    idleTimer.start();  
     // idleTimer.pause()
     // idleTimer.resume()
   }
