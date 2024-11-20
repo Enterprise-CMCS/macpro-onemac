@@ -41,7 +41,7 @@ Feature: OY2_Update_Text_on_FAQ_Page
         Then verify What format is used to enter a 1915b Initial Waiver number body is visible
         Then verify What format is used to enter a 1915b Waiver Renewal number header is visible
         Then click What format is used to enter a 1915b Waiver Renewal number header
-        Then verify What format is used to enter a 1915b Waiver Renewal number is visible
+        Then verify What format is used to enter a 1915b Waiver Renewal number body is visible
         Then Verify Who can I contact to help me figure out the correct 1915b Waiver Number is displayed and click it
         Then Verify text contains "Email MCOGDMCOActions@cms.hhs.gov to get support with determining the correct 1915b Waiver Number"
         Then Verify What format is used to enter a 1915c waiver number is displayed and click it
@@ -111,6 +111,7 @@ Feature: OY2_Update_Text_on_FAQ_Page
         Then click on 1915b Comprehensive Capitated Renewal Waiver
         Then click link labelled "What is my 1915(b) Waiver Renewal Number?"
         Then verify What format is used to enter a 1915b Waiver Renewal number header is visible
+        Then verify What format is used to enter a 1915b Waiver Renewal number body is visible
 
     Scenario: Verify the Guides exist in the FAQ
         Given I am on Login Page
@@ -128,8 +129,8 @@ Feature: OY2_Update_Text_on_FAQ_Page
         Then verify OneMAC CMS User Guide link exists
         Then verify OneMAC CMS User Guide is valid
 
-
-        Scenario: Verify the Guides exist in the FAQ
+@focus 
+        Scenario: Verify the Expand All Button works
         Given I am on Login Page
         When Clicking on FAQ Tab
         Then verify the expand all button is visible

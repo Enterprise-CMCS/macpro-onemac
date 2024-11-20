@@ -1,4 +1,4 @@
-Feature: Subsequent Submission 1915b Initial Waiver
+Feature: Subsequent Documents 1915b Initial Waiver
     Background: Reoccuring Steps
         Given I am on Login Page
         When Clicking on Development Login
@@ -20,15 +20,15 @@ Feature: Subsequent Submission 1915b Initial Waiver
         Then verify Upload Subsequent Documents action exists
         Then click the Upload Subsequent Documents action button
         Then verify the page header is "Upload Subsequent Waiver Documentation"
-        Then verify the form title is "Initial Waiver Subsequent Submission Details"
+        Then verify the form title is "Initial Waiver Subsequent Documents Details"
         Then verify "Initial Waiver Number" is prefilled
         Then verify Type is "1915(b) Initial Waiver"
         Then verify the Subsequent "Initial Waiver" Documents section exists
-        Then verify label "Reason for subsequent submission" exists on page
+        Then verify label "Reason for subsequent documents" exists on page
         Then verify the submit button is disabled
         Then verify form cancel button exists
         Then attach "adobe.pdf" file to attachment 1
-        Then into "Reason for subsequent submission" type "This is an automated subsequent submission test."
+        Then into "Reason for subsequent documents" type "This is an automated subsequent submission test."
         Then Click the Submit Button without waiting
         Then verify the modal pop-up is visible
         Then verify the dialog title contains "Submit additional documents?"
@@ -43,15 +43,15 @@ Feature: Subsequent Submission 1915b Initial Waiver
         Then click the actions button in row one
         Then click the Upload Subsequent Documents action button
         Then verify the page header is "Upload Subsequent Waiver Documentation"
-        Then verify the form title is "Initial Waiver Subsequent Submission Details"
+        Then verify the form title is "Initial Waiver Subsequent Documents Details"
         Then verify "Initial Waiver Number" is prefilled
         Then verify Type is "1915(b) Initial Waiver"
         Then verify the Subsequent "Initial Waiver" Documents section exists
-        Then verify label "Reason for subsequent submission" exists on page
+        Then verify label "Reason for subsequent documents" exists on page
         Then verify the submit button is disabled
         Then verify form cancel button exists
         Then attach "adobe.pdf" file to attachment 1
-        Then into "Reason for subsequent submission" type "This is an automated subsequent submission test."
+        Then into "Reason for subsequent documents" type "This is an automated subsequent submission test."
         Then Click the Submit Button without waiting
         Then verify the modal pop-up is visible
         Then verify the dialog title contains "Submit additional documents?"
@@ -68,7 +68,7 @@ Feature: Subsequent Submission 1915b Initial Waiver
         Then verify the page header is "Upload Subsequent Waiver Documentation"
         Then verify "Initial Waiver Number" is prefilled
         Then attach "adobe.pdf" file to attachment 1
-        Then into "Reason for subsequent submission" type "This is an automated subsequent submission test."
+        Then into "Reason for subsequent documents" type "This is an automated subsequent submission test."
         Then Click the Submit Button without waiting
         Then verify the modal pop-up is visible
         Then verify the dialog title contains "Submit additional documents?"
@@ -86,7 +86,7 @@ Feature: Subsequent Submission 1915b Initial Waiver
         Then verify the page header is "Upload Subsequent Waiver Documentation"
         Then verify "Initial Waiver Number" is prefilled
         Then attach "adobe.pdf" file to attachment 1
-        Then into "Reason for subsequent submission" type "This is an automated subsequent submission test."
+        Then into "Reason for subsequent documents" type "This is an automated subsequent submission test."
         Then Click the Submit Button without waiting
         Then verify the modal pop-up is visible
         Then verify the dialog title contains "Submit additional documents?"

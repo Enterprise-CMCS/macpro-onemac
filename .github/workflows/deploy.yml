@@ -437,7 +437,6 @@ jobs:
             homePage,
             faqPage,
             manageProfilePage,
-            dashboardPage,
             packagePageSpas,
             packagePageWaivers,
             RequestRoleChangePage,
@@ -451,6 +450,8 @@ jobs:
             PackageWaiverAmendmentPage,
             PackageInitialWaiverPage,
             PackageWaiverRenewalPage,
+            SPAPackageDetailsPage,
+            WaiversPackageDetailsPage,
           ]
     steps:
       - name: set branch_name

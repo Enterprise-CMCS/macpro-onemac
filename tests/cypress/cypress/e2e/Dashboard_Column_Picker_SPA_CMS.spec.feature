@@ -12,12 +12,12 @@ Feature: Package Dashboard - SPA Tab Column Picker for CMS User
         Then verify status column exists
         Then verify Initial Submission Date column exists
         Then verify Latest Package Activity column exists
-        Then verify Formal RAI Received column exists
+        Then verify Formal RAI Response column exists
         Then verify submitted by column does not exist
         Then verify CPOC Name column does not exist
         Then verify Final Disposition column does not exist
         Then click show hide columns button
-        Then verify Formal RAI Received checkbox exists
+        Then verify Formal RAI Response checkbox exists
         Then verify Initial Submission Date checkbox exists
         Then verify state checkbox exists
         Then verify status checkbox exists
@@ -29,7 +29,7 @@ Feature: Package Dashboard - SPA Tab Column Picker for CMS User
 
     Scenario: SPAs Tab - Uncheck all and verify SPA ID exists
         Then click show hide columns button
-        Then click Formal RAI Received checkbox
+        Then click Formal RAI Response checkbox
         Then click Initial Submission Date checkbox
         Then click Latest Package Activity checkbox
         Then click state checkbox
@@ -47,7 +47,7 @@ Feature: Package Dashboard - SPA Tab Column Picker for CMS User
         Then verify submitted by column does not exist
         Then verify CPOC Name column exists
         Then verify Final Disposition column exists
-        Then verify Formal RAI Received column does not exist
+        Then verify Formal RAI Response column does not exist
         Then Click on My Account
         Then click the logout button
 
@@ -83,7 +83,7 @@ Feature: Package Dashboard - SPA Tab Column Picker for CMS User
         Then click CHIP SPA check box
         Then Click on Filter Button
         Then click show hide columns button
-        Then click Formal RAI Received checkbox
+        Then click Formal RAI Response checkbox
         Then click Initial Submission Date checkbox
         Then click state checkbox
         Then click status checkbox
@@ -101,7 +101,7 @@ Feature: Package Dashboard - SPA Tab Column Picker for CMS User
         Then verify IDNumber column exists
         Then verify type column exists
         Then Verify State Column Exists
-        Then verify Formal RAI Received column exists
+        Then verify Formal RAI Response column exists
         Then verify status column exists
         Then verify Initial Submission Date column exists
         Then verify submitted by column does not exist
@@ -112,7 +112,7 @@ Feature: Package Dashboard - SPA Tab Column Picker for CMS User
         Then click show hide columns button
         Then click Initial Submission Date checkbox
         Then click status checkbox
-        Then click Formal RAI Received checkbox
+        Then click Formal RAI Response checkbox
         Then click show hide columns button
         Then verify type column exists
         Then Verify State Column Exists

@@ -59411,7 +59411,7 @@
         "submissionTimestamp": 1675108098000,
         "submitterEmail": "statesubmitter@nightwatch.test",
         "submitterName": "Statesubmitter Nightwatch",
-        "temporaryExtensionType": "1915(b)",
+        "temporaryExtensionType": "1915(c)",
         "territory": "MD",
         "transmittalNumberWarningMessage": ""
     },
@@ -59456,7 +59456,7 @@
         "submissionTimestamp": 1675108098000,
         "submitterEmail": "statesubmitter@nightwatch.test",
         "submitterName": "Statesubmitter Nightwatch",
-        "temporaryExtensionType": "1915(b)"
+        "temporaryExtensionType": "1915(c)"
     },
     {
         "pk": "MD-5535.R00.TE01",

@@ -14,13 +14,13 @@ const email = '//*[@id="contact-card"]//dt[contains(text(),"Email")]';
 const actualEmail =
   "//*[@id='contact-card']//a[@href='mailto:OneMAC_Helpdesk@cms.hhs.gov']";
 //General Section
-const whatBrowsersHeaderBtn = "#browsers-button";
+const whatBrowsersHeaderBtn = "#browsers__button";
 const whatBrowsersBody = "#browsers";
-const WhatToDoConfirmationEmailHeaderBtn = "#confirm-email-button";
+const WhatToDoConfirmationEmailHeaderBtn = "#confirm-email__button";
 const WhatToDoConfirmationEmailBody = "#confirm-email";
-const isThisOfficialHeaderBtn = "#is-official-button";
+const isThisOfficialHeaderBtn = "#is-official__button";
 const isThisOfficialBody = "#is-official";
-const whatAreTheOneMacUserRoles = "#onemac-roles-button";
+const whatAreTheOneMacUserRoles = "#onemac-roles__button";
 //Element is Xpath use cy.xpath instead of cy.get
 const whatAreTheOneMacUserRolesValueStateSubmitter =
   "//*[@id='onemac-roles']//td[text()='State Submitter']";
@@ -31,55 +31,55 @@ const whatAreTheOneMacUserRolesValueStateSystemAdministrator =
 const whatAreTheOneMacUserRolesValueCMSRoleApprover =
   "//*[@id='onemac-roles']//tr[3]//td[text()='CMS Role Approver']";
 //State Plan Amendment (SPA's) Section
-const whatFormatIsUsedToEnterASPAID = "#spa-id-format-button";
+const whatFormatIsUsedToEnterASPAID = "#spa-id-format__button";
 const whatFormatIsUsedToEnterASPAIDValue = "#spa-id-format";
 const whatAttachmentForMedicaidSPAHeaderBtn =
-  "#medicaid-spa-attachments-button";
+  "#medicaid-spa-attachments__button";
 const whatAttachmentForMedicaidSPABody = "#medicaid-spa-attachments";
-const whatAttachmentForRespToSPARAI = "#medicaid-spa-rai-attachments-button";
+const whatAttachmentForRespToSPARAI = "#medicaid-spa-rai-attachments__button";
 const whatAttachmentForRespToSPARAIValue = "#medicaid-spa-rai-attachments";
-const whatAttachmentsForCHIPSPA = "#chip-spa-attachments-button";
+const whatAttachmentsForCHIPSPA = "#chip-spa-attachments__button";
 const whatAttachmentsForCHIPSPAValue = "#chip-spa-attachments";
 const whatAttachmentsForCHIPSPAResponseToRAI =
-  "#chip-spa-rai-attachments-button";
+  "#chip-spa-rai-attachments__button";
 const whatAttachmentsForCHIPSPAResponseToRAIValue = "#chip-spa-rai-attachments";
-const canISubmitSPAFORPHEInOneMac = "#public-health-emergency-button";
+const canISubmitSPAFORPHEInOneMac = "#public-health-emergency__button";
 const canISubmitSPAFORPHEInOneMacValue = "#public-health-emergency";
 //Waiver section
-const initialWaiverFormatHeaderBtn = "#initial-waiver-id-format-button";
+const initialWaiverFormatHeaderBtn = "#initial-waiver-id-format__button";
 const initialWaiverFormatBody = "#initial-waiver-id-format";
-const waiverRenewalFormatHeaderBtn = "#waiver-renewal-id-format-button";
+const waiverRenewalFormatHeaderBtn = "#waiver-renewal-id-format__button";
 const waiverRenewalFormatBody = "#waiver-renewal-id-format";
-const whatFormatIsUsedToEnterASPAIDforWaivers = "#waiver-id-format-button";
+const whatFormatIsUsedToEnterASPAIDforWaivers = "#waiver-id-format__button";
 const whatFormatIsUsedToEnterASPAIDforWaiversValue = "#waiver-id-format";
 const whoCanIContactToHelpMeFigureOutTheCorrect1915bWaiverNumber =
-  "#waiver-id-help-button";
+  "#waiver-id-help__button";
 const whoCanIContactToHelpMeFigureOutTheCorrect1915bWaiverNumberValue =
   "#waiver-id-help";
-const whatFormatIsUsedToEnter1915cwaiverNumber = "#waiver-c-id-button";
+const whatFormatIsUsedToEnter1915cwaiverNumber = "#waiver-c-id__button";
 const whatFormatIsUsedToEnter1915cwaiverNumberValue = "#waiver-c-id";
 const whatAttachmentsAreNeededToSubmitA1915bWaiverAction =
-  "#waiverb-attachments-button";
+  "#waiverb-attachments__button";
 const whatAttachmentsAreNeededToSubmitA1915bWaiverActionValue =
   "#waiverb-attachments";
 const whatAreTheAttachmentsFor1915bResponsetoRAI =
-  "#waiverb-rai-attachments-button";
+  "#waiverb-rai-attachments__button";
 const whatAreTheAttachmentsFor1915bResponsetoRAIValue =
   "#waiverb-rai-attachments";
-const tempExtFormatHeaderBtn = "#waiver-extension-id-format-button";
+const tempExtFormatHeaderBtn = "#waiver-extension-id-format__button";
 const tempExtFormatBody = "#waiver-extension-id-format";
 const whatAreTheAttachmentsFor1915bRequestTemprorayExtension =
-  "#waiverb-extension-attachments-button";
+  "#waiverb-extension-attachments__button";
 const whatAreTheAttachmentsFor1915bRequestTemprorayExtensionValue =
   "#waiverb-extension-attachments";
 const attachmentsFor1915cRequestTempExtHeaderBtn =
-  "#waiverc-extension-attachments-button";
+  "#waiverc-extension-attachments__button";
 const attachmentsFor1915cRequestTempExtBody = "#waiverc-extension-attachments";
-const canISubmitAppendixKAmendmentsInOneMac = "#appk-button";
+const canISubmitAppendixKAmendmentsInOneMac = "#appk__button";
 const canISubmitAppendixKAmendmentsInOneMacValue = "#appk";
-const whatAreTheAttachmentsForAppendixKWaiver = "#appk-attachments-button";
+const whatAreTheAttachmentsForAppendixKWaiver = "#appk-attachments__button";
 const whatAreTheAttachmentsForAppendixKWaiverValue = "#appk-attachments";
-const onboardingMaterialsBtn = "#onboarding-materials-button";
+const onboardingMaterialsBtn = "#onboarding-materials__button";
 const welcomeToOneMacLink =
   "//div[@id='onboarding-materials']//a[text() = 'Welcome to OneMAC']";
 const idmInstructionsLink =
@@ -359,7 +359,12 @@ export class oneMacFAQPage {
     cy.get(waiverRenewalFormatHeaderBtn).click();
   }
   verifyWaiverRenewalFormatBody() {
-    cy.get(waiverRenewalFormatBody).should("be.visible");
+    cy.get(waiverRenewalFormatBody)
+      .should("be.visible")
+      .find("p")
+      .contains(
+        "1915(b) Waiver Renewal must follow the format SS-####.R##.00 or SS-#####.R##.00 to include:"
+      );
   }
   verifyAttachmentsFor1915cRequestTempExtHeaderBtnExists() {
     cy.get(attachmentsFor1915cRequestTempExtHeaderBtn).should("be.visible");
