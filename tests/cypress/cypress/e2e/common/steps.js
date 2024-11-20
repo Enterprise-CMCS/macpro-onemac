@@ -1850,7 +1850,7 @@ Then(
   }
 );
 Then(
-  "verify What format is used to enter a 1915b Waiver Renewal number is visible",
+  "verify What format is used to enter a 1915b Waiver Renewal number body is visible",
   () => {
     OneMacFAQPage.verifyWaiverRenewalFormatBody();
   }
