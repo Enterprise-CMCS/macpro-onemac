@@ -97,8 +97,8 @@ const IdleTimerWrapper = () => {
     }, timeAvailable)
 
     //reset idle timer to starting values
-    setPromptTimeout(PROMPT_TIME)
-    setLogoutTimeout(LOGOUT_TIME)
+    setPromptTimeout(LOGOUT_TIME)
+    setLogoutTimeout(PROMPT_TIME)
     idleTimer.pause()
     idleTimer.resume()
   }
