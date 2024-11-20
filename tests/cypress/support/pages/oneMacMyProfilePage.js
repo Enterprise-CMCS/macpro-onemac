@@ -6,7 +6,7 @@ const roleHeader = '//h3[contains(text(),"Role")]';
 //Element is Xpath use cy.xpath instead of cy.get
 const emailHeader = '//h3[contains(text(),"Email")]';
 //Element is Xpath use cy.xpath instead of cy.get
-const phoneNumberHeader = '//span[contains(text(),"Phone Number")]';
+const phoneNumberHeader = '//label[@for="phoneNumber"]';
 const phoneNumberAddBTN = "#addButton";
 const statusHeader = "#accessHeader";
 const accessStatus = '//em[contains(text(),"Access Granted")]';
@@ -41,7 +41,7 @@ export class oneMacMyProfilePage {
     cy.xpath(emailHeader).next("div").should("be.visible");
   }
   verifyPhoneNumberHeader() {
-    cy.xpath(phoneNumberHeader).should("be.visible");
+    cy.xpath(phoneNumberHeader).should("be.visible").contains("Phone Number");
   }
   verifyPhoneNumberAddBTN() {
     cy.get(phoneNumberAddBTN).should("be.visible");
