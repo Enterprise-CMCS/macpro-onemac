@@ -4,12 +4,10 @@ const idElement = "#componentId";
 const parentIdElement = "#parent-componentId";
 const packageFormPt2ErrorMsg = "#componentIdStatusMsg1";
 const typeHeader = "//h3[text()='Type']";
-
-const modalContainer = "#react-aria-modal-dialog";
-const modalTitle = "#dialog-title";
-const modalText = "#dialog-content";
-const modalCancelBTN =
-  "//*[@id='react-aria-modal-dialog']//button[text()='Cancel']";
+const modalContainer = "dialog";
+const modalTitle = ".ds-c-dialog__header";
+const modalText = ".ds-c-dialog__body";
+const modalCancelBTN = "//dialog//button[text()='Cancel']";
 const attachmentInfoDescription =
   "//h3[text()='Attachments']/following-sibling::p[1]";
 const enterMacProBtn = "//button[contains(text(),'Enter the MACPro system')]";
@@ -23,7 +21,8 @@ const waiverAuthorityLabel = "//h3[text()='Waiver Authority']";
 const amendmentTitleField = "#title";
 const tempExtensionTypeHeader =
   "//h3[contains(text(),'Temporary Extension Type')]";
-const tempExtensionTypeBtn = "#temp-ext-type";
+const tempExtensionTypeBtn = "button#temp-ext-type";
+const tempExtensionOption = (type) => `//li[@data-key='${type}']`;
 const formIntroElement = "#form-intro";
 const subsequentDocumentsHeader = (type) =>
   `//h3[contains(text(),'Subsequent ${type} Documents')]`;
@@ -82,7 +81,6 @@ const dateElementsFromLabel = {
 };
 const yesSubmitBtn = "//button[text()='Yes, Submit']";
 const coverLetterAttachment = "//div[contains(text(),'Cover Letter')]";
-const reasonForSubsequentSubmission = "";
 
 //internal function for proposed effective date
 function caculateMonthsInFuture(numMonths) {
@@ -193,7 +191,8 @@ export class oneMacFormPage {
     cy.xpath(tempExtensionTypeHeader).next("div").contains(whatType);
   }
   selectTempExtensionType(whatType) {
-    cy.get(tempExtensionTypeBtn).select(whatType);
+    cy.get(tempExtensionTypeBtn).click();
+    cy.xpath(tempExtensionOption(whatType)).click();
   }
   uploadAttachment(fileName, attachmentIndex) {
     const addFileBTN = `//tbody/tr[${attachmentIndex}]/td[2]/label[1]`;
