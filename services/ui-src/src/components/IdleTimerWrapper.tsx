@@ -103,8 +103,8 @@ const IdleTimerWrapper = () => {
     //reset idle timer to starting values
 
     idleTimer.reset()
-    // setPromptTimeout(PROMPT_TIME)
-    // setLogoutTimeout(LOGOUT_TIME)
+    setPromptTimeout(PROMPT_TIME)
+    setLogoutTimeout(LOGOUT_TIME)
     // idleTimer.pause()
     // idleTimer.resume()
   }
@@ -217,7 +217,7 @@ const IdleTimerWrapper = () => {
     //   console.log("timeleft < Lougout_time")
     //   setLogoutTimeout(timeLeft);
     // } else {
-    setPromptTimeout(Math.max(LOGOUT_TIME - timeLoggedIn, 0));
+    setLogoutTimeout(Math.max(LOGOUT_TIME - timeLoggedIn, 0));
     setPromptTimeout(Math.max(PROMPT_TIME, 0));
     // }
   };
