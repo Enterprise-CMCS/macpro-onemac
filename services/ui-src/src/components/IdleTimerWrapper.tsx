@@ -102,11 +102,11 @@ const IdleTimerWrapper = () => {
 
     //reset idle timer to starting values
 
-    idleTimer.reset()
-    // setPromptTimeout(PROMPT_TIME)
-    setLogoutTimeout(PROMPT_TIME)
-    idleTimer.pause()
-    idleTimer.resume()
+    // idleTimer.reset()
+    setPromptTimeout(PROMPT_TIME)
+    setLogoutTimeout(LOGOUT_TIME)
+    // idleTimer.pause()
+    // idleTimer.resume()
   }
 
     // //reset the idleTimer state every time the prompt time changes
