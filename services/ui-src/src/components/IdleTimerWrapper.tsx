@@ -212,14 +212,14 @@ const IdleTimerWrapper = () => {
     }
 
     // Adjust timeout times
-    if (timeLeft <= LOGOUT_TIME) {
-      setPromptTimeout(0); // if less than logout time, no need for a prompt
-      console.log("timeleft < Lougout_time")
-      setLogoutTimeout(timeLeft);
-    } else {
-      setPromptTimeout(Math.max(LOGOUT_TIME - timeLoggedIn, 0));
-      setPromptTimeout(Math.max(PROMPT_TIME, 0));
-    }
+    // if (timeLeft <= LOGOUT_TIME) {
+    //   setPromptTimeout(0); // if less than logout time, no need for a prompt
+    //   console.log("timeleft < Lougout_time")
+    //   setLogoutTimeout(timeLeft);
+    // } else {
+    setPromptTimeout(Math.max(LOGOUT_TIME - timeLoggedIn, 0));
+    setPromptTimeout(Math.max(PROMPT_TIME, 0));
+    // }
   };
 
   return <></>;
