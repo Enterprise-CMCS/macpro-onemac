@@ -7,9 +7,13 @@ import { clearTableStateStorageKeys } from "../utils/StorageKeys";
 
 const IdleTimerWrapper = () => {
   const STORAGE_KEY: string = "accessToken";
+  // const TOTAL_TIMEOUT_TIME: number = 60 * 7 * 1000; // default of 1 hour total
+  // const PROMPT_TIME: number = 5 * 60 * 1000; // default of 45 minutes to warning
+  // const LOGOUT_TIME: number = 2 * 60 * 1000 - 5000; // default logout 15 minutes after warning
+
   const TOTAL_TIMEOUT_TIME: number = 60 * 7 * 1000; // default of 1 hour total
-  const PROMPT_TIME: number = 5 * 60 * 1000; // default of 45 minutes to warning
-  const LOGOUT_TIME: number = 2 * 60 * 1000 - 5000; // default logout 15 minutes after warning
+  const LOGOUT_TIME: number = 7 * 60 * 1000; // default of 45 minutes to warning
+  const PROMPT_TIME: number = 2 * 60 * 1000 - 5000; // default logout 15 minutes after warning
   /*
    * NB: the logout time is 5 seconds less than the backend timer to ensure
    * the logout occurs on the front end before the backend to avoid sync issues
@@ -117,8 +121,8 @@ const IdleTimerWrapper = () => {
   const idleTimer: IIdleTimer = useIdleTimer({
     onPrompt,
     onIdle,
-    timeout: promptTimeout + 1000, // Ensure promptTimeout < timeout
-    promptTimeout: logoutTimeout, // logoutTimeout should still be before actual logout
+    timeout: logoutTimeout, // Ensure promptTimeout < timeout
+    promptBeforeIdle: promptTimeout, // logoutTimeout should still be before actual logout
     events: [],
     element: document,
     startOnMount: false,
@@ -128,6 +132,7 @@ const IdleTimerWrapper = () => {
     syncTimers: 0,
     leaderElection: true,
   });
+
 
   useEffect(() => {
     console.log("use effect is auth")
@@ -212,8 +217,8 @@ const IdleTimerWrapper = () => {
       console.log("timeleft < Lougout_time")
       setLogoutTimeout(timeLeft);
     } else {
-      setPromptTimeout(Math.max(PROMPT_TIME - timeLoggedIn, 0));
-      setLogoutTimeout(Math.max(LOGOUT_TIME, 0));
+      setPromptTimeout(Math.max(LOGOUT_TIME - timeLoggedIn, 0));
+      setPromptTimeout(Math.max(PROMPT_TIME, 0));
     }
   };
 
