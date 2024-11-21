@@ -1,26 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { useIdleTimer, IIdleTimer } from "react-idle-timer";
 import jwt_decode from "jwt-decode";
-import { logout, getNewSession } from "../libs/logoutLib";
+import { logout } from "../libs/logoutLib";
 import { useAppContext } from "../libs/contextLib";
 import { clearTableStateStorageKeys } from "../utils/StorageKeys";
 
 const IdleTimerWrapper = () => {
   const STORAGE_KEY: string = "accessToken";
-  const TOTAL_TIMEOUT_TIME: number = 60 * 7 * 1000; // default of 1 hour total
-  const LOGOUT_TIME: number = 7 * 60 * 1000; // default of 45 minutes to warning
-  const PROMPT_TIME: number = 2 * 60 * 1000 - 5000; // default logout 15 minutes after warning
+  const TOTAL_TIMEOUT_TIME: number = 60 * 60 * 1000; 
+  const LOGOUT_TIME: number = 7 * 60 * 1000; // default of 1 hour until logout / timer idle
+  const PROMPT_TIME: number = 2 * 60 * 1000 - 5000; // prompt user 15 minutes before logout
   /*
    * NB: the logout time is 5 seconds less than the backend timer to ensure
    * the logout occurs on the front end before the backend to avoid sync issues
    */
-
   const { confirmAction, isAuthenticated, isLoggedInAsDeveloper } =
     useAppContext() ?? {};
   const [promptTimeout, setPromptTimeout] = useState(PROMPT_TIME);
   const [logoutTimeout, setLogoutTimeout] = useState(LOGOUT_TIME);
-  const [authToken, setAuthToken] = useState("");
-
 
   const onPrompt = () => {
     const minutesRemaining: number = Math.round(
@@ -76,31 +73,11 @@ const IdleTimerWrapper = () => {
       return;
     }
 
-    console.log("get new session in "+ (timeAvailable/1000)/60 + "minutes" ); 
-
-    // try to refresh tokens when current token expires
-    setTimeout(()=>{
-      const token = getNewSession();
-      const areTokensNew = compareTokens(token, authToken);
-      if(areTokensNew) {
-        setTimeoutTimes();
-      }
-    }, timeAvailable)
-
     //reset idle timer to starting values
     idleTimer.reset()
     setPromptTimeout(PROMPT_TIME)
     setLogoutTimeout(LOGOUT_TIME)
     idleTimer.start();  
-  }
-
-  const compareTokens = (arg1 : Promise<string | undefined>, arg2 : string) => {
-    console.log("arg1: " + arg1);
-    console.log("arg2: " + arg2);
-    if(typeof(arg1) === "string" && arg1 !== arg2) {
-      return true;
-    } 
-    return false;
   }
 
   const idleTimer: IIdleTimer = useIdleTimer({
@@ -117,7 +94,6 @@ const IdleTimerWrapper = () => {
     syncTimers: 0,
     leaderElection: true,
   });
-
 
   useEffect(() => {
     console.log("use effect is auth")
@@ -151,8 +127,6 @@ const IdleTimerWrapper = () => {
     const loginToken: string | null =
       tokenKey && localStorage.getItem(tokenKey[0]);
     if (!loginToken) return;
-
-    setAuthToken(loginToken);
 
     const decodedToken: any = jwt_decode(loginToken);
     const epochAuthTime: number | undefined = decodedToken?.auth_time;
