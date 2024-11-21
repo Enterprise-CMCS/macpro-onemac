@@ -49,7 +49,6 @@ const IdleTimerWrapper = () => {
     logout();
   }
   const keepBrowsing = () => {
-    console.log("keep browsing")
     if (!isAuthenticated) return;
     const tokenKey: string[] = Object.keys(localStorage).filter((k) =>
       k.includes(STORAGE_KEY)
@@ -72,7 +71,6 @@ const IdleTimerWrapper = () => {
       // tokens are already expired, will auto logout when timer idles
       return;
     }
-
     //reset idle timer to starting values
     idleTimer.reset()
     setPromptTimeout(PROMPT_TIME)
@@ -96,24 +94,14 @@ const IdleTimerWrapper = () => {
   });
 
   useEffect(() => {
-    console.log("use effect is auth")
-    console.log("promptTimeout: " + promptTimeout)
-    console.log("logoutTimeout: " + logoutTimeout)
     /*
      *this depends on isAuthenticated to ensure it starts the timer after logging in
      * this depends on promptTimeout and logoutTimeout
      * this is to ensure that the idleTimer has the most recent values for the times
      */
-    if (isAuthenticated && isLoggedInAsDeveloper) {
-      console.log("logged in as a developer")
-      // console.log("Time ")
+    if (isAuthenticated && !isLoggedInAsDeveloper) {
       setTimeoutTimes();
       idleTimer.start();
-      setInterval(() => {
-        console.log("Hello, World!");
-        console.log("remaining time: " +   idleTimer.getRemainingTime() / 1000 / 60 + " minutes")
-      }, 5000);
-
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuthenticated]);
@@ -130,10 +118,6 @@ const IdleTimerWrapper = () => {
 
     const decodedToken: any = jwt_decode(loginToken);
     const epochAuthTime: number | undefined = decodedToken?.auth_time;
-
-    console.log("decodedToken", decodedToken)
-    console.log("decodedToken", String(decodedToken))
-    console.log("decodedToken?.auth_time;", decodedToken?.auth_time)
 
     if (!epochAuthTime) return;
 
