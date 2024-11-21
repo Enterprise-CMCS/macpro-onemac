@@ -84,13 +84,13 @@ const IdleTimerWrapper = () => {
     onPrompt,
     onIdle,
     timeout: logoutTimeout, // Time until onIdle gets called which auto logs the user out
-    promptBeforeIdle: promptTimeout, // Time before auto logout in which user prompted
+    promptBeforeIdle: Math.min(promptTimeout, logoutTimeout - 1), // Time before auto logout in which user prompted, default is promptTimeout, unless cross tab.
     events: [],
     element: document,
     startOnMount: false,
     startManually: true,
     stopOnIdle: true,
-    crossTab: false,
+    crossTab: true,
     syncTimers: 0,
     leaderElection: true,
   });
