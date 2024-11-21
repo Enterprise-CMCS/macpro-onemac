@@ -64,8 +64,6 @@ export async function getNewSession() {
     const accessToken = session.getAccessToken();
     const idToken = session.getIdToken();
 
-
-
     const accessTokenKey: string[] = Object.keys(localStorage).filter((k) =>
       k.includes("accessToken")
     );
@@ -86,9 +84,6 @@ export async function getNewSession() {
     const loginIdToken: string | null =
     accessTokenKey && localStorage.getItem(idTokenKey[0]);
     if (!loginIdToken) return;
-
-    console.log("********* ACCESS TOKEN::: "+accessToken.getJwtToken());
-    console.log("********* ACCESS TOKEN LOCAL Storage::: "+loginAccessToken)
 
     if(accessToken.getJwtToken() !== loginAccessToken) {
       console.log("new access token")
@@ -111,13 +106,7 @@ export async function getNewSession() {
       console.log("id tokens match")
     }
 
-    console.log("Refresh Token:", refreshToken.getToken());
-    console.log("Access Token:", accessToken.getJwtToken());
-    console.log("ID Token:", idToken.getJwtToken());
-
     return accessToken.getJwtToken(); 
-
-    // return refreshToken.getToken();
   } catch (error) {
     console.error("Error getting session", error);
   }

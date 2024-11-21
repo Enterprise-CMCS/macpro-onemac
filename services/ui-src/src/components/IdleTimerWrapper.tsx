@@ -7,10 +7,6 @@ import { clearTableStateStorageKeys } from "../utils/StorageKeys";
 
 const IdleTimerWrapper = () => {
   const STORAGE_KEY: string = "accessToken";
-  // const TOTAL_TIMEOUT_TIME: number = 60 * 7 * 1000; // default of 1 hour total
-  // const PROMPT_TIME: number = 5 * 60 * 1000; // default of 45 minutes to warning
-  // const LOGOUT_TIME: number = 2 * 60 * 1000 - 5000; // default logout 15 minutes after warning
-
   const TOTAL_TIMEOUT_TIME: number = 60 * 7 * 1000; // default of 1 hour total
   const LOGOUT_TIME: number = 7 * 60 * 1000; // default of 45 minutes to warning
   const PROMPT_TIME: number = 2 * 60 * 1000 - 5000; // default logout 15 minutes after warning
@@ -23,6 +19,7 @@ const IdleTimerWrapper = () => {
     useAppContext() ?? {};
   const [promptTimeout, setPromptTimeout] = useState(PROMPT_TIME);
   const [logoutTimeout, setLogoutTimeout] = useState(LOGOUT_TIME);
+  const [authToken, setAuthToken] = useState("");
 
 
   const onPrompt = () => {
@@ -45,10 +42,6 @@ const IdleTimerWrapper = () => {
         keepBrowsing,
       );
   };
-  // acceptText: string,
-  // cancelText: string,
-  // onAccept?: any,
-  // onDeny?: any
   const onIdle = () => {
     clearTableStateStorageKeys();
     logout();
@@ -69,61 +62,52 @@ const IdleTimerWrapper = () => {
     if (!loginToken) return;
 
     const decodedToken: any = jwt_decode(loginToken);
-    const accessExpTime: number | undefined = decodedToken?.exp
-    ;
-
-    console.log("decodedToken", decodedToken)
-    console.log("decodedToken", String(decodedToken))
-    console.log("decodedToken?.auth_time;", decodedToken?.auth_time)
+    const accessExpTime: number | undefined = decodedToken?.exp;
 
     if (!accessExpTime) return;
 
+    //Get the ammount of time until the token expires
     const expTime: number = new Date(accessExpTime * 1000).valueOf();
     const currentTime: number = new Date().valueOf();
     const timeAvailable: number = expTime - currentTime; // in milliseconds
-    // const timeLeft: number = TOTAL_TIMEOUT_TIME - timeLoggedIn;
 
-    // time has already expired for this session
     if (timeAvailable <= 0) {
-      // NB: possibly add logic to handle edge cases?
+      // tokens are already expired, will auto logout when timer idles
       return;
     }
-    console.log("get new session in "+ timeAvailable + "milliseconds" ) 
-    console.log("get new session in "+ (timeAvailable/1000)/60 + "minutes" ) 
 
+    console.log("get new session in "+ (timeAvailable/1000)/60 + "minutes" ); 
 
-    // trt to refresh session
+    // try to refresh tokens when current token expires
     setTimeout(()=>{
-      //attempt to get new session tokens
-      getNewSession();
-      //use those tokens to set timer times
-      setTimeoutTimes();
+      const token = getNewSession();
+      const areTokensNew = compareTokens(token, authToken);
+      if(areTokensNew) {
+        setTimeoutTimes();
+      }
     }, timeAvailable)
 
     //reset idle timer to starting values
-
     idleTimer.reset()
     setPromptTimeout(PROMPT_TIME)
     setLogoutTimeout(LOGOUT_TIME)
     idleTimer.start();  
-    // idleTimer.pause()
-    // idleTimer.resume()
   }
 
-    // //reset the idleTimer state every time the prompt time changes
-    // useEffect(() => {
-    //   console.log("reset use effect called")
-    //   idleTimer.pause(); 
-    //   idleTimer.resume();
-    // // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [promptTimeout]); 
-  
+  const compareTokens = (arg1 : Promise<string | undefined>, arg2 : string) => {
+    console.log("arg1: " + arg1);
+    console.log("arg2: " + arg2);
+    if(typeof(arg1) === "string" && arg1 !== arg2) {
+      return true;
+    } 
+    return false;
+  }
 
   const idleTimer: IIdleTimer = useIdleTimer({
     onPrompt,
     onIdle,
-    timeout: logoutTimeout, // Ensure promptTimeout < timeout
-    promptBeforeIdle: promptTimeout, // logoutTimeout should still be before actual logout
+    timeout: logoutTimeout, // Time until onIdle gets called which auto logs the user out
+    promptBeforeIdle: promptTimeout, // Time before auto logout in which user prompted
     events: [],
     element: document,
     startOnMount: false,
@@ -144,7 +128,6 @@ const IdleTimerWrapper = () => {
      * this depends on promptTimeout and logoutTimeout
      * this is to ensure that the idleTimer has the most recent values for the times
      */
-    // if (isAuthenticated && !isLoggedInAsDeveloper) {
     if (isAuthenticated && isLoggedInAsDeveloper) {
       console.log("logged in as a developer")
       // console.log("Time ")
@@ -156,31 +139,8 @@ const IdleTimerWrapper = () => {
       }, 5000);
 
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuthenticated]);
-
-  // useEffect(()=>{
-  //   if (isAuthenticated && extendSession && jwt!=="") {
-  //     const id = setInterval(()=>{
-  //       getNewSession();
-  //       console.log("get New Session")
-  //       const tokenKey: string[] = Object.keys(localStorage).filter((k) =>
-  //         k.includes(STORAGE_KEY)
-  //       );
-  //       const loginToken: string | null =
-  //         tokenKey && localStorage.getItem(tokenKey[0]);
-  //       if (!loginToken) return;
-  //       if(jwt !== tokenKey[0]) {
-  //       console.log("new tokens identified")
-  //       setExtendSession(false)
-  //       setTimeoutTimes();
-  //       clearInterval(id);
-  //       }
-  //     }, 60000*5)
-  //   }
-  // // eslint-disable-next-line react-hooks/exhaustive-deps
-  // },[extendSession, isAuthenticated, jwt])
-
 
   const setTimeoutTimes = () => {
     if (!isAuthenticated) return;
@@ -191,6 +151,8 @@ const IdleTimerWrapper = () => {
     const loginToken: string | null =
       tokenKey && localStorage.getItem(tokenKey[0]);
     if (!loginToken) return;
+
+    setAuthToken(loginToken);
 
     const decodedToken: any = jwt_decode(loginToken);
     const epochAuthTime: number | undefined = decodedToken?.auth_time;
@@ -211,16 +173,9 @@ const IdleTimerWrapper = () => {
       // NB: possibly add logic to handle edge cases?
       return;
     }
-
-    // Adjust timeout times
-    // if (timeLeft <= LOGOUT_TIME) {
-    //   setPromptTimeout(0); // if less than logout time, no need for a prompt
-    //   console.log("timeleft < Lougout_time")
-    //   setLogoutTimeout(timeLeft);
-    // } else {
     setLogoutTimeout(Math.max(LOGOUT_TIME - timeLoggedIn, 0));
     setPromptTimeout(Math.max(PROMPT_TIME, 0));
-    // }
+
   };
 
   return <></>;
