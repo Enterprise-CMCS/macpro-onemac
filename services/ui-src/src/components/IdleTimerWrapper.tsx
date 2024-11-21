@@ -90,7 +90,7 @@ const IdleTimerWrapper = () => {
     startOnMount: false,
     startManually: true,
     stopOnIdle: true,
-    crossTab: true,
+    crossTab: false,
     syncTimers: 0,
     leaderElection: true,
   });
