@@ -1,8 +1,9 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import { VideoContent } from "../../components/VideoWithTranscript";
 import { helpDeskContact } from "../helpDeskContact";
 import { stateSystemOverviewTranscript } from "./stateSystemOverviewTranscript";
 import { FILE_TYPES, FileTypesFAQListItem } from "../../utils/fileTypes";
+
 import config from "../../utils/config";
 
 export interface QuestionAnswer {
@@ -16,6 +17,28 @@ export interface FAQContent {
   sectionTitle: string;
   qanda: QuestionAnswer[];
 }
+
+export const FAQScrollLink = ({
+  to,
+  children,
+}: {
+  to: string;
+  children: ReactNode;
+}) => {
+  // should scroll to that page of the FAQ
+  const scrollTo = () => {
+    console.log("id: ", to);
+    console.log(">>>");
+    // e.preventDefault();
+  };
+  // then open coreseponding question
+
+  return (
+    <a href="/FAQ" onClick={scrollTo}>
+      {children}
+    </a>
+  );
+};
 
 /**
  * List of alert messages for the application.
@@ -204,6 +227,81 @@ export const oneMACFAQContent: FAQContent[] = [
   {
     sectionTitle: "State Plan Amendments (SPAs)",
     qanda: [
+      {
+        anchorText: "spa-id-which",
+        isOpen: false,
+        question: "Which state plan amendments (SPAs) can I submit in OneMAC?",
+        answerJSX: (
+          <div>
+            <p>
+              All Medicaid and CHIP state plan amendments (SPAs), except
+              Medicaid SPA submissions processed in the Medicaid & CHIP Program
+              System portal (MACPro), must be submitted in OneMAC.
+            </p>
+            <br />
+            <p>
+              Starting [month date, year,] Medicaid Model Data Lab (MMDL) no
+              longer accepts new submissions for these SPAs, including:
+            </p>
+            <ul>
+              <li>Medicaid Alternative Benefit Plan (ABP)</li>
+              <li>Medicaid Premiums & Cost Sharing</li>
+              <li>CHIP Eligibility </li>
+            </ul>
+            <br />
+            <p>
+              Pending SPAs submitted in MMDL before [month day, year,] including
+              those on RAI (request for additional information) status, will
+              continue to be processed through MMDL.
+            </p>
+            <br />
+            <p>
+              Templates and implementation guides for OneMAC SPAs can be
+              downloaded from the respective FAQ:
+            </p>
+            <ul>
+              <li>
+                <FAQScrollLink to="">
+                  Where can I download Medicaid Alternative Benefit Plan (ABP)
+                  SPA templates?
+                </FAQScrollLink>
+              </li>
+              <li>
+                <FAQScrollLink to="">
+                  Where can I download Medicaid Alternative Benefit Plan (ABP)
+                  SPA implementation guides?
+                </FAQScrollLink>
+              </li>
+              <li>
+                <FAQScrollLink to="">
+                  Where can I download Medicaid Premiums and Cost Sharing (MPC)
+                  SPA templates?
+                </FAQScrollLink>
+              </li>
+              <li>
+                <FAQScrollLink to="">
+                  Where can I download Medicaid Premiums and Cost Sharing (MPC)
+                  SPA implementation guides?
+                </FAQScrollLink>
+              </li>
+              <li>
+                <FAQScrollLink to="">
+                  Where can I download CHIP eligibility SPA templates?
+                </FAQScrollLink>
+              </li>
+              <li>
+                <FAQScrollLink to="">
+                  Where can I download CHIP eligibility SPA implementation
+                  guides?
+                </FAQScrollLink>
+              </li>
+            </ul>
+            <p>
+              For more information, refer to CMCS Information Bulletin #25-TBD.
+            </p>
+          </div>
+        ),
+      },
       {
         anchorText: "spa-id-format",
         isOpen: false,

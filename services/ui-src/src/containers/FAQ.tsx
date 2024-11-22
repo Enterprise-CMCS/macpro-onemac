@@ -1,4 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, {
+  MouseEventHandler,
+  ReactNode,
+  useEffect,
+  useState,
+} from "react";
 import PageTitleBar from "../components/PageTitleBar";
 import { helpDeskContact } from "../libs/helpDeskContact";
 import {
@@ -37,6 +42,28 @@ export const FAQSection = ({ section }: { section: FAQContent }) => {
         ))}
       </Accordion>
     </div>
+  );
+};
+
+export const FAQScrollLink = ({
+  to,
+  children,
+}: {
+  to: string;
+  children: ReactNode;
+}) => {
+  // should scroll to that page of the FAQ
+  const scrollTo = () => {
+    console.log("id: ", to);
+    console.log(">>>");
+    // e.preventDefault();
+  };
+  // then open coreseponding question
+
+  return (
+    <a href="/FAQ" onClick={scrollTo}>
+      {children}
+    </a>
   );
 };
 
