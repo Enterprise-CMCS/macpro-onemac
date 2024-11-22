@@ -6,7 +6,7 @@ import AlertBar from "../components/AlertBar";
 import { MACCard } from "../components/MACCard";
 import NotificationApi from "../utils/NotificationApi";
 import { NotificationCard } from "../components/NotificationCard";
-
+import {  useFlags} from 'launchdarkly-react-client-sdk';
 const stateSubmissionTitle = "How to create a submission";
 const stateSubmissionsList = [
   {
@@ -151,33 +151,31 @@ const renderPaperSubmissionInfo = (renderSubmissionSteps) => {
  */
 export default function Home() {
   const location = useLocation();
-
+  const {mmdlNotification} = useFlags()
   const [systemNotifications, setSystemNotifications] = useState([]);
 
-  // on intial load of the page we want to fetch the system notifications
-  //     and add a state variable which will save the notifications
-  //     then in the component if notificatins have lenght > 0 we will render them
-
-  useEffect(() => {
-    (async () => {
-      const notifications =
+  useEffect(()=> {
+    (async()=>{
+      if(mmdlNotification) {
+        const notifications =
         await NotificationApi.getActiveSystemNotifications();
-      if (notifications && notifications.length)
-        setSystemNotifications([...notifications]);
-      else {
-        console.log(
-          "Either no notifications or an error occured",
-          notifications
-        );
+        if (notifications && notifications.length)
+          setSystemNotifications([...notifications]);
+        else {
+          console.log(
+            "Either no notifications or an error occured",
+            notifications
+          );
+        }
       }
     })();
-  }, []);
+  },[mmdlNotification])
 
   return (
     <>
       <HomeHeader />
       <AlertBar alertCode={location?.state?.passCode} />
-      {systemNotifications.length !== 0 && (
+      {mmdlNotification && systemNotifications.length !== 0 && (
         <div className="home-content-container">
           <h2>New and Notable</h2>
           {systemNotifications.map((notification) => (

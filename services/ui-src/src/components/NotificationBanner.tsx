@@ -34,7 +34,7 @@ const NotificationBanner: React.FC<NotificationBannerProps> = (
 
   if (!showNotification) return <></>;
   return (
-    <Alert className="notification-alert">
+    <Alert className="notification-alert" data-testid="notification-alert">
       <div
         style={{ width: "100%" }}
         className="ds-u-display--flex ds-u-justify-content--between"

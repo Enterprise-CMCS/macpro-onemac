@@ -7,7 +7,7 @@ import { NotificationType } from "../domain-types";
 export const NotificationCard = (props: NotificationType) => {
   const date = formatDateOnly(props.publicationDate);
   return (
-    <MACCard withBorder childContainerClassName="home-content-full-width">
+    <MACCard withBorder childContainerClassName="home-content-full-width" data-testid="notification-card">
       <b className="ds-u-color--primary">{props.header}: </b>
       {props.body}{" "}
       {props.buttonLink && props.buttonText && (

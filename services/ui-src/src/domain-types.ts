@@ -27,7 +27,7 @@ export type UserRecord = {
   roleList: RoleEntry[];
   validRoutes?: string[];
   phoneNumber?: string;
-  fullName: string;
+  fullName?: string;
   effRole?: string;
   effStatus?: string;
   notifications?: NotificationType[];
