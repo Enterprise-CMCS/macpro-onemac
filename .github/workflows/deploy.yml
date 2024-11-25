@@ -110,6 +110,11 @@ jobs:
         with:
           role-to-assume: ${{ env.AWS_OIDC_ROLE_TO_ASSUME }}
           aws-region: ${{ env.AWS_DEFAULT_REGION }}
+      - name: Fetch SSM Parameter
+        id: fetch_ssm
+        run: |
+          LdClientId=$(aws ssm get-parameter --name "/configuration/onemacmmdl/LdClientId" --query "Parameter.Value" --output text)
+          echo "REACT_APP_LD_CLIENT_ID=${LdClientId}" >> $GITHUB_ENV
       - uses: actions/setup-node@v3
         with:
           node-version: "20.x"

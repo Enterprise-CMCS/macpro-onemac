@@ -635,6 +635,45 @@ functions:
           cors: true
           authorizer: aws_iam
 
+  getActiveSystemNotifications:
+    handler: notification/getActiveSystemNotifications.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: getActiveSystemNotifications  # The API path
+          method: get
+          cors: true
+
+  getActiveUserNotifications:
+    handler: notification/getActiveUserNotifications.main # Path to your function handler
+    role: LambdaApiRole # Ensure the role has permissions for DynamoDB
+    events:
+      - http:
+          path: getActiveUserNotifications/{userId} # Define your API path
+          method: get
+          cors: true
+          authorizer: aws_iam
+
+  dismissUserNotification:
+    handler: notification/dismissUserNotification.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: dismissNotification/{userId}/{notificationId}
+          method: patch
+          cors: true
+          authorizer: aws_iam
+
+  createUserNotifications:
+    handler: notification/createUserNotifications.main 
+    role: LambdaApiRole
+    events:
+      - http:
+          path: createUserNotifications/{userId}
+          method: post
+          cors: true
+          authorizer: aws_iam
+
 resources:
   - ${file(resources/base.yml)}
 
