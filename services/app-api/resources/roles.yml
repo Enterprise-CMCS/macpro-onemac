@@ -69,6 +69,7 @@ Resources:
                   - dynamodb:PutItem
                   - dynamodb:UpdateItem
                   - dynamodb:DeleteItem
+                  - dynamodb:BatchWriteItem
                 Resource: arn:aws:dynamodb:*:*:table/${self:custom.oneMacTableName}
               - Effect: Allow
                 Action:
