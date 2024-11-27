@@ -96,7 +96,7 @@ const RouteListRenderer: FC<{ routes: RouteSpec[] }> = ({ routes }) => {
     // Filter out objects where the component includes a SubsequentSubmission form
     // This is not currently looking for subroutes since all subsub routes are at the root of the route object
     filteredRoutes = routes.filter(
-      (route) => !route.component.name.includes("SubsequentSubmission")
+      (route) => !route.path.includes("subsequent-submission")
     );
   } else {
     filteredRoutes = routes;
