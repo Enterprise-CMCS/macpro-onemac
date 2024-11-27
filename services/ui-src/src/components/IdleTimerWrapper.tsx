@@ -83,6 +83,8 @@ const IdleTimerWrapper = () => {
     if (!loginToken) return;
 
     const decodedToken: any = jwt_decode(loginToken);
+    console.log("decode auth token::: ", decodedToken)
+    console.log(decodedToken)
     const epochAuthTime: number | undefined = decodedToken?.auth_time;
     if (!epochAuthTime) return;
 
