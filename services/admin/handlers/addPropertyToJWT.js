@@ -6,12 +6,10 @@ const handler = async (event) => {
     if (event.request.userAttributes['custom:cms_roles'] === 'statesystemadmin') {
 
         event.response = event.response || {};
-        event.response.claimsAndScopeOverrideDetails = event.response.claimsAndScopeOverrideDetails || {};
-        event.response.claimsAndScopeOverrideDetails.idTokenGeneration = event.response.claimsAndScopeOverrideDetails.idTokenGeneration || {};
-        event.response.claimsAndScopeOverrideDetails.idTokenGeneration.claimsToAddOrOverride = event.response.claimsAndScopeOverrideDetails.idTokenGeneration.claimsToAddOrOverride || {};
-
+        event.response.claimsOverrideDetails = event.response.claimsOverrideDetails || {};
+        event.response.claimsOverrideDetails.claimsToAddOrOverride = event.response.claimsOverrideDetails.claimsToAddOrOverride || {};
+        event.response.claimsOverrideDetails.claimsToAddOrOverride['user_type'] = 'admin';
         // Add custom claim
-        event.response.claimsAndScopeOverrideDetails.idTokenGeneration.claimsToAddOrOverride['user_type'] = 'admin';
     }
 
     // Log modified claims
