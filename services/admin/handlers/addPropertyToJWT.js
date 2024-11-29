@@ -1,4 +1,5 @@
-exports.main = async (event) => {
+const handler = async (event) => {
+
     console.log("JWT claims before modification:", JSON.stringify(event));
 
     // Proceed with modifying the claims if needed
@@ -18,3 +19,5 @@ exports.main = async (event) => {
 
     return event;
 };
+
+export { handler };
