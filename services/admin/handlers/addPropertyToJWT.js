@@ -1,4 +1,4 @@
-exports.handler = async (event) => {
+exports.main = async (event) => {
     console.log("JWT claims before modification:", JSON.stringify(event));
 
     // Proceed with modifying the claims if needed
