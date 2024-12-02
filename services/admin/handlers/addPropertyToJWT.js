@@ -1,7 +1,7 @@
 // import dynamoDb from "../../app-api/libs/dynamodb-lib"
-import { getUser } from "../../app-api/getUser";
+// import { getUser } from "../../app-api/getUser";
 
-const handler = async (event) => {
+const handler = async () => {
     // console.log("JWT claims before modification:", JSON.stringify(event));
     // const userEmail = event.request.userAttributes.email;
     // console.log("User email:", userEmail);

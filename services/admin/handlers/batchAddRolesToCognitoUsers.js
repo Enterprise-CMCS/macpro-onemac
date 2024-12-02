@@ -1,5 +1,6 @@
-const AWS = require('aws-sdk');
-import { getUser } from "../../app-api/getUser";
+import AWS from 'aws-sdk';
+import dynamoDb from "../../app-api/libs/dynamodb-lib"
+// import { getUser } from "../../app-api/getUser";
 
 const cognito = new AWS.CognitoIdentityServiceProvider();
 
@@ -55,17 +56,34 @@ const getUserRolesFromDynamoDB = async (userEmail) => {
     throw dbError;
   }
     // const result = await dynamoDb.get(params).promise();
-    console.log("roles for user emai: " + userEmail + " :::" + result.items);
+    // console.log("roles for user emai: " + userEmail + " :::" + result.items);
     return result.Items ? result.Items: [];  // Assuming roles is an array
+};
+
+const processUsers = async () => {
+    try {
+        const users = await listUsers();  // Await the listUsers call to get all users
+        for (const user of users) {
+            console.log("User:", user.Username);  // Logging user info
+
+            const userEmail = user.Attributes.find(attr => attr.Name === 'email')?.Value;  // Get the user's email
+
+            if (userEmail) {
+                // Fetch roles from DynamoDB for the user
+                const roles = await getUserRolesFromDynamoDB(userEmail);
+                console.log(`Roles for ${userEmail}:`, roles);
+                
+                // You can now use the roles to update Cognito user attributes or other processing.
+            }
+        }
+    } catch (error) {
+        console.error('Error processing users:', error);
+    }
 };
 
 
 
 export const main = () => {
-    const users = listUsers();
-    for(user in users) {
-        console.log("user: " + user)
-        getUserRolesFromDynamoDB(user.email)
-    }
+    processUsers();
 }
 
