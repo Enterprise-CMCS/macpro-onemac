@@ -2,35 +2,35 @@
 import { getUser } from "../../app-api/getUser";
 
 const handler = async (event) => {
-    console.log("JWT claims before modification:", JSON.stringify(event));
-    const userEmail = event.request.userAttributes.email;
-    console.log("User email:", userEmail);
+    // console.log("JWT claims before modification:", JSON.stringify(event));
+    // const userEmail = event.request.userAttributes.email;
+    // console.log("User email:", userEmail);
 
-    try {
-        // Await the response from DynamoDB
-        const user = await getUser(userEmail);
-        console.log("***** USER", user);
-        console.log("role list:::", user.roleList);
+    // try {
+    //     // Await the response from DynamoDB
+    //     const user = await getUser(userEmail);
+    //     console.log("***** USER", user);
+    //     console.log("role list:::", user.roleList);
 
-        // Assuming you want to use user.roleList in your claims
-        if (user.roleList) {
-            event.response = event.response || {};
-            event.response.claimsOverrideDetails = event.response.claimsOverrideDetails || {};
-            event.response.claimsOverrideDetails.claimsToAddOrOverride = event.response.claimsOverrideDetails.claimsToAddOrOverride || {};
+    //     // Assuming you want to use user.roleList in your claims
+    //     if (user.roleList) {
+    //         event.response = event.response || {};
+    //         event.response.claimsOverrideDetails = event.response.claimsOverrideDetails || {};
+    //         event.response.claimsOverrideDetails.claimsToAddOrOverride = event.response.claimsOverrideDetails.claimsToAddOrOverride || {};
 
-            // Example of adding roles dynamically from DynamoDB to the JWT claims
-            event.response.claimsOverrideDetails.claimsToAddOrOverride['user_roles'] = user.roleList; // Add user roles
-        }
+    //         // Example of adding roles dynamically from DynamoDB to the JWT claims
+    //         event.response.claimsOverrideDetails.claimsToAddOrOverride['user_roles'] = user.roleList; // Add user roles
+    //     }
 
-    } catch (error) {
-        console.error("Error retrieving user data:", error);
-        // Handle the error appropriately, possibly with a default claim or error response
-    }
+    // } catch (error) {
+    //     console.error("Error retrieving user data:", error);
+    //     // Handle the error appropriately, possibly with a default claim or error response
+    // }
 
-    // Log modified claims
-    console.log("JWT claims after modification:", JSON.stringify(event));
+    // // Log modified claims
+    // console.log("JWT claims after modification:", JSON.stringify(event));
 
-    return event;
+    // return event;
 };
 
 export { handler };
