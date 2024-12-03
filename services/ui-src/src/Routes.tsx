@@ -128,27 +128,6 @@ const SignupGuardRouteListRenderer: FC<{ routes: RouteSpec[] }> = ({
   return <RouteListRenderer routes={routes} />;
 };
 
-const useIsAdminUser = () => {
-
-  
-  if () {
-    return false;
-  }
-
-  const idTokenKey: string[] = Object.keys(localStorage).filter((k) =>
-    k.includes(ID_TOKEN_KEY)
-  );
-
-  const idToken: string | null = idTokenKey && localStorage.getItem(idTokenKey[0]);
-  if (!idToken) return false;
-
-  const decodedIdToken: any = jwt_decode(idToken);
-  if (decodedIdToken?.user_type === "admin") {
-    return true;
-  }
-  return false;
-};
-
 const isAdminUser = ()=> {
   const context = useAppContext();
   console.log("admin check called")
