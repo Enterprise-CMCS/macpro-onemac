@@ -26,6 +26,7 @@ import { MultiSelectDropDown } from "../components/MultiSelectDropDown";
 import addStateButton from "../images/addStateButton.svg";
 import groupData from "cmscommonlib/groupDivision.json";
 import { MACCard, MACRemovableCard } from "../components/MACCard";
+const ID_TOKEN_KEY = "idToken";
 
 export const ACCESS_LABELS = {
   active: "Access Granted",
@@ -177,7 +178,7 @@ const UserPage = () => {
     decodeURIComponent(userId) !== userProfile.email;
 
   useEffect(() => {
-    const getProfile = async (profileEmail) => {
+    const getProfile = async () => {
       if (!isReadOnly) {
         return [{ ...userProfile.userData }, userRole, userStatus];
       }
@@ -185,6 +186,20 @@ const UserPage = () => {
       let tempProfileData = {},
         tempProfileRole = "user",
         tempProfileStatus = "status";
+
+      let profileEmail;
+      try {
+        const idTokenKey = Object.keys(localStorage).filter((k) =>
+          k.includes(ID_TOKEN_KEY)
+        );
+        const idToken =
+        idTokenKey && localStorage.getItem(idTokenKey[0]);
+        const decodedIdToken = jwt_decode(idToken);
+        profileEmail = decodedIdToken.email; 
+        console.log("profile email: "+ profileEmail)
+      } catch (e) {
+        console.error("Error decoding user email", e);
+      }
 
       try {
         tempProfileData = await UserDataApi.userProfile(profileEmail);

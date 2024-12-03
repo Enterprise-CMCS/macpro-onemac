@@ -163,6 +163,8 @@ const accessGuardRouteListRenderer: (
 ) => FC<{ routes: RouteSpec[] }> =
   (accessKey, redirectAccessKey, redirectTo, isAdminRoute) =>
   ({ routes }) => {
+    console.log("accessGuardRouteListRender called")
+    console.log("isAdminRoute? ", isAdminRoute)
     const { userProfile: { userData: { roleList = [] } = {} } = {} } =
       useAppContext() ?? {};
     const roleObj = getUserRoleObj(roleList);
@@ -191,11 +193,11 @@ const ROUTE_LIST: RouteSpec[] = [
         exact: true,
         component: UserPage,
       },
-      {
-        path: ROUTES.PROFILE + "/:userId",
-        exact: true,
-        component: UserPage,
-      },
+      // {
+      //   path: ROUTES.PROFILE + "/:userId",
+      //   exact: true,
+      //   component: UserPage,
+      // },
     ],
   },
   {
