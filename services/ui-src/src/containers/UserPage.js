@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import { Button, Review } from "@cmsgov/design-system";
+import jwt_decode from "jwt-decode";
 
 import {
   APPROVING_USER_ROLE,
