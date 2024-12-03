@@ -8,18 +8,20 @@ const handler = async (event) => {
     const user = await getUser(userEmail);
     console.log("***** USER", user);
     console.log("role list:::", user.roleList);
+    const roles = [];
+    for (const role in user.roleList) {
+        roles.push(role)
+    }
     // try {
     //     // Await the response from DynamoDB
-
-
     //     // Assuming you want to use user.roleList in your claims
     //     if (user.roleList) {
-    //         event.response = event.response || {};
-    //         event.response.claimsOverrideDetails = event.response.claimsOverrideDetails || {};
-    //         event.response.claimsOverrideDetails.claimsToAddOrOverride = event.response.claimsOverrideDetails.claimsToAddOrOverride || {};
+    event.response = event.response || {};
+    event.response.claimsOverrideDetails = event.response.claimsOverrideDetails || {};
+    event.response.claimsOverrideDetails.claimsToAddOrOverride = event.response.claimsOverrideDetails.claimsToAddOrOverride || {};
 
-    //         // Example of adding roles dynamically from DynamoDB to the JWT claims
-    //         event.response.claimsOverrideDetails.claimsToAddOrOverride['user_roles'] = user.roleList; // Add user roles
+    // Example of adding roles dynamically from DynamoDB to the JWT claims
+    event.response.claimsOverrideDetails.claimsToAddOrOverride['user_roles'] = JSON.stringify(roles); // Add user roles
     //     }
 
     // } catch (error) {
@@ -30,7 +32,7 @@ const handler = async (event) => {
     // Log modified claims
     console.log("JWT claims after modification:", JSON.stringify(event));
 
-    // return event;
+    return event;
 };
 
 export { handler };
