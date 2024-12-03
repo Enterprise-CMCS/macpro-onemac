@@ -9,7 +9,7 @@ const handler = async (event) => {
     console.log("***** USER", user);
     console.log("role list:::", user.roleList);
     const roles = [];
-    for (const role in user.roleList) {
+    for (const role of user.roleList) {
         console.log("role: " , role)
         console.log(role.role)
         roles.push(role.role)
