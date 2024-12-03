@@ -116,6 +116,7 @@ const AuthenticatedRouteListRenderer: FC<{ routes: RouteSpec[] }> = ({
 const SignupGuardRouteListRenderer: FC<{ routes: RouteSpec[] }> = ({
   routes,
 }) => {
+  console.log("Signup Gard Route Renderer Called")
   const {
     isAuthenticated,
     userProfile: { cmsRoles = "", userData: { roleList = [] } = {} } = {},
@@ -228,9 +229,10 @@ const ROUTE_LIST: RouteSpec[] = [
       accessKey: "canAccessDashboard",
       redirectAccessKey: "canAccessUserManagement",
       redirectTo: ROUTES.USER_MANAGEMENT,
+      isAdminRoute: false,
       component: PackageList,
     },
-  ].map(({ path, accessKey, redirectAccessKey, redirectTo, component }) => ({
+  ].map(({ path, accessKey, redirectAccessKey, redirectTo, component, isAdminRoute }) => ({
     path,
     component: SignupGuardRouteListRenderer,
     routes: [
@@ -239,11 +241,12 @@ const ROUTE_LIST: RouteSpec[] = [
         component: accessGuardRouteListRenderer(
           accessKey as keyof UserRole,
           redirectAccessKey as keyof UserRole,
-          redirectTo
+          redirectTo,
+          isAdminRoute
         ),
-        routes: [{ path, exact: true, component }],
+        routes: [{ path, exact: true, component}],
       },
-    ],
+    ]
   })),
   // legacy triage screens, plus current OneMACForm forms
   ...[
