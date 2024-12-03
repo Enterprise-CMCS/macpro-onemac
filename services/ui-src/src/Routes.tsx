@@ -4,7 +4,7 @@
 
 import React, { FC } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
-// import jwt_decode from "jwt-decode";
+import jwt_decode from "jwt-decode";
 
 import {
   ROUTES,
@@ -69,7 +69,7 @@ import WaiverAmendmentSubsequentSubmissionForm from "./page/waiver-amendment/Wai
 import WaiverAppKSubsequentSubmissionForm from "./page/waiver-appendix-k/WaiverAppKSubsequentSubmissionForm";
 import DisableRaiWithdrawForm from "./page/disable-rai-withdraw/DisableRaiWithdrawForm";
 
-// const ID_TOKEN_KEY: string = "idToken"
+const ID_TOKEN_KEY: string = "idToken"
 
 type RouteSpec = {
   path: string;
@@ -128,25 +128,25 @@ const SignupGuardRouteListRenderer: FC<{ routes: RouteSpec[] }> = ({
   return <RouteListRenderer routes={routes} />;
 };
 
-// const isAdminUser = ()=> {
-//   console.log("admin check called")
-//   if(!useAppContext()?.isAuthenticated) {
-//     return false; 
-//   }
-//   const idTokenKey: string[] = Object.keys(localStorage).filter((k) =>
-//     k.includes(ID_TOKEN_KEY)
-//   );
-//   const idToken: string | null =
-//   idTokenKey && localStorage.getItem(idTokenKey[0]);
-//   if (!idToken) return false;
-//   const decodedIdToken: any = jwt_decode(idToken);
-//   console.log("decode id token::: ", decodedIdToken)
-//   if(decodedIdToken?.user_type === "admin") {
-//     console.log("user is an admin user")
-//     return true;
-//   }
-//   return false;
-// }
+const isAdminUser = ()=> {
+  console.log("admin check called")
+  if(!useAppContext()?.isAuthenticated) {
+    return false; 
+  }
+  const idTokenKey: string[] = Object.keys(localStorage).filter((k) =>
+    k.includes(ID_TOKEN_KEY)
+  );
+  const idToken: string | null =
+  idTokenKey && localStorage.getItem(idTokenKey[0]);
+  if (!idToken) return false;
+  const decodedIdToken: any = jwt_decode(idToken);
+  console.log("decode id token::: ", decodedIdToken)
+  if(decodedIdToken?.user_type === "admin") {
+    console.log("user is an admin user")
+    return true;
+  }
+  return false;
+}
 
 const accessGuardRouteListRenderer: (
   accessKey: keyof UserRole,
@@ -160,9 +160,11 @@ const accessGuardRouteListRenderer: (
       useAppContext() ?? {};
     const roleObj = getUserRoleObj(roleList);
     // Token based admin check 
-    // if(isAdminRoute && !isAdminUser() && redirectTo) {
-    //   return <Redirect to={redirectTo} />;
-    // }
+    if(isAdminRoute && redirectTo) {
+      if(!isAdminUser()){
+       return <Redirect to={redirectTo} />;
+      }
+    }
     if (roleObj[accessKey]) return <RouteListRenderer routes={routes} />;
     if (redirectAccessKey && redirectTo && roleObj[redirectAccessKey])
       return <Redirect to={redirectTo} />;

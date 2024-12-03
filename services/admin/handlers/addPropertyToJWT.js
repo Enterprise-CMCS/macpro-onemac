@@ -10,7 +10,9 @@ const handler = async (event) => {
     console.log("role list:::", user.roleList);
     const roles = [];
     for (const role in user.roleList) {
-        roles.push(role)
+        console.log("role: " , role)
+        console.log(role.role)
+        roles.push(role.role)
     }
     // try {
     //     // Await the response from DynamoDB

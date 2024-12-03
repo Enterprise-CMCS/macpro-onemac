@@ -6,6 +6,7 @@ import { useAppContext } from "../libs/contextLib";
 import { clearTableStateStorageKeys } from "../utils/StorageKeys";
 
 const IdleTimerWrapper = () => {
+  const ID_TOKEN_KEY: string = "idToken"
   const STORAGE_KEY: string = "accessToken";
   const TOTAL_TIMEOUT_TIME: number = 60 * 60 * 1000; // default of 1 hour total
   const PROMPT_TIME: number = 45 * 60 * 1000; // default of 45 minutes to warning
@@ -78,20 +79,21 @@ const IdleTimerWrapper = () => {
     const tokenKey: string[] = Object.keys(localStorage).filter((k) =>
       k.includes(STORAGE_KEY)
     );
-    // const idTokenKey: string[] = Object.keys(localStorage).filter((k) =>
-    //   k.includes(ID_TOKEN_KEY)
-    // );
+    const idTokenKey: string[] = Object.keys(localStorage).filter((k) =>
+      k.includes(ID_TOKEN_KEY)
+    );
     const loginToken: string | null =
       tokenKey && localStorage.getItem(tokenKey[0]);
     if (!loginToken) return;
 
-    // const idToken: string | null =
-    // idTokenKey && localStorage.getItem(idTokenKey[0]);
-    // if (!idToken) return;
+    const idToken: string | null =
+    idTokenKey && localStorage.getItem(idTokenKey[0]);
+    if (!idToken) return;
 
     const decodedToken: any = jwt_decode(loginToken);
-    // const decodedIdToken: any = jwt_decode(idToken)
+    const decodedIdToken: any = jwt_decode(idToken)
     console.log("decode auth token::: ", decodedToken)
+    console.log("decode id token::: ",  decodedIdToken)
 
     const epochAuthTime: number | undefined = decodedToken?.auth_time;
     if (!epochAuthTime) return;
