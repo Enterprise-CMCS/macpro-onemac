@@ -13,8 +13,7 @@ const listUsers = async (userPoolId = "us-east-1_Y1xWRr12w", paginationToken = n
     };
     const response = await cognito.listUsers(params).promise();
     console.log("cognito users:::: ",response)
-    return response;
-
+    return response.Users;
 };
 
 const getUserRolesFromDynamoDB = async (userEmail) => {
@@ -65,7 +64,7 @@ const processUsers = async () => {
         const users = await listUsers();  // Await the listUsers call to get all users
         for (const user of users) {
             console.log("User:", user.Username);  // Logging user info
-
+            console.log("User Email:",  user.Attributes.find(attr => attr.Name === 'email')?.Value); 
             const userEmail = user.Attributes.find(attr => attr.Name === 'email')?.Value;  // Get the user's email
 
             if (userEmail) {
