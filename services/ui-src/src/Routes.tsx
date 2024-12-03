@@ -4,7 +4,7 @@
 
 import React, { FC } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
-import jwt_decode from "jwt-decode";
+// import jwt_decode from "jwt-decode";
 
 import {
   ROUTES,
@@ -69,7 +69,7 @@ import WaiverAmendmentSubsequentSubmissionForm from "./page/waiver-amendment/Wai
 import WaiverAppKSubsequentSubmissionForm from "./page/waiver-appendix-k/WaiverAppKSubsequentSubmissionForm";
 import DisableRaiWithdrawForm from "./page/disable-rai-withdraw/DisableRaiWithdrawForm";
 
-const ID_TOKEN_KEY: string = "idToken"
+// const ID_TOKEN_KEY: string = "idToken"
 
 type RouteSpec = {
   path: string;
