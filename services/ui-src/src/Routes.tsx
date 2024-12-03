@@ -129,7 +129,7 @@ const SignupGuardRouteListRenderer: FC<{ routes: RouteSpec[] }> = ({
 };
 
 const isAdminUser = ()=> {
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+  /* eslint-disable-next-line react-hooks/rules-of-hooks */
   const context = useAppContext();
   console.log("admin check called")
   if(!context?.isAuthenticated) {
