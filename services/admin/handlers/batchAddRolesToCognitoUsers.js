@@ -4,9 +4,9 @@ import dynamoDb from "../../app-api/libs/dynamodb-lib"
 
 const cognito = new AWS.CognitoIdentityServiceProvider();
 
-const userPoolId = "us-east-1_Y1xWRr12w"
+// const userPoolId = "us-east-1_Y1xWRr12w"
 
-const listUsers = async (userPoolId, paginationToken = null) => {
+const listUsers = async (userPoolId = "us-east-1_Y1xWRr12w", paginationToken = null) => {
     const params = {
         UserPoolId: userPoolId,
         PaginationToken: paginationToken,  // Use pagination token if necessary
