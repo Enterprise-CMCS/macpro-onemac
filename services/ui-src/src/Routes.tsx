@@ -150,10 +150,16 @@ const isAdminUser = ()=> {
     "statesystemadmin",
     "helpdesk"
   ];
-
-  return decodedIdToken?.user_roles?.some((role: string) =>
-    allowedRoles.includes(role)
-  ) ?? false;
+  
+  if (decodedIdToken?.user_roles) {
+    for (let i = 0; i < decodedIdToken.user_roles.length; i++) {
+      if (allowedRoles.includes(decodedIdToken.user_roles[i])) {
+        return true;
+      }
+    }
+  }
+  
+  return false;
 }
 
 const accessGuardRouteListRenderer: (
