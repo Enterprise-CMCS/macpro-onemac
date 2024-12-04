@@ -179,10 +179,12 @@ const UserPage = () => {
     decodeURIComponent(userId) !== userProfile.email;
 
   useEffect(() => {
+    console.log("user page use effect called")
     const getProfile = async () => {
       if (!isReadOnly) {
         return [{ ...userProfile.userData }, userRole, userStatus];
       }
+      console.log("is read only")
 
       let tempProfileData = {},
         tempProfileRole = "user",
