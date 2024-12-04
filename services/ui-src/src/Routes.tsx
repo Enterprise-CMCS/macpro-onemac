@@ -163,7 +163,7 @@ const isAdminUser = ()=> {
         userRoles = [];
       }
       for (let i = 0; i < userRoles.length; i++) {        
-        if (allowedRoles.includes(decodedIdToken.user_roles[i])) {
+        if (allowedRoles.includes(userRoles[i])) {
           console.log("match found")
           return true;
         }
