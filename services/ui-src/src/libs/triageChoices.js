@@ -45,12 +45,6 @@ export const choicesFromRoute = {
         linkTo: ROUTES.MEDICAID_ELIGIBILITY_LANDING,
       },
       {
-        title:
-          "Medicaid Alternative Benefits Plans (ABP), and Medicaid Premiums and Cost Sharing",
-        description: "Redirects to MMDL submission system",
-        linkTo: ROUTES.ABP_LANDING,
-      },
-      {
         title: "All Other Medicaid SPA Submissions",
         description: "Create a new Medicaid State Plan Amendment",
         linkTo: ONEMAC_ROUTES.MEDICAID_SPA,
@@ -61,11 +55,6 @@ export const choicesFromRoute = {
     heading: "CHIP SPA Type",
     intro: "Select a CHIP SPA type to create your submission",
     choices: [
-      {
-        title: "CHIP Eligibility",
-        description: "Redirects to MMDL submission system",
-        linkTo: ROUTES.CHIP_ELIGIBILITY_LANDING,
-      },
       {
         title: "All Other CHIP SPA Submissions",
         description: "Create a new Medicaid State Plan Amendment",

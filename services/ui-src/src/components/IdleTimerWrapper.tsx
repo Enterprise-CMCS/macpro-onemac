@@ -14,8 +14,9 @@ const IdleTimerWrapper = () => {
    * NB: the logout time is 5 seconds less than the backend timer to ensure
    * the logout occurs on the front end before the backend to avoid sync issues
    */
-  const { confirmAction, isAuthenticated, isLoggedInAsDeveloper } =
-    useAppContext() ?? {};
+
+
+  const { confirmAction, isAuthenticated } = useAppContext() ?? {};
   const [promptTimeout, setPromptTimeout] = useState(PROMPT_TIME);
   const [logoutTimeout, setLogoutTimeout] = useState(LOGOUT_TIME);
 
@@ -99,7 +100,7 @@ const IdleTimerWrapper = () => {
      * this depends on promptTimeout and logoutTimeout
      * this is to ensure that the idleTimer has the most recent values for the times
      */
-    if (isAuthenticated && isLoggedInAsDeveloper) {
+    if (isAuthenticated) {
       setTimeoutTimes();
       idleTimer.start();
     }
