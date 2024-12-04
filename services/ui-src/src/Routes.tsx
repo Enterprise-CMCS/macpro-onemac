@@ -153,17 +153,19 @@ const isAdminUser = ()=> {
 
   if (decodedIdToken?.user_roles) {
     let userRoles = decodedIdToken.user_roles;
+     console.log("decodedIdtoken.userRoles: "+ userRoles)
     if (typeof userRoles === 'string') {
       try {
         userRoles = JSON.parse(userRoles);
+        console.log("parsed user roles: ", userRoles)
       } catch (error) {
         console.error('Error parsing user_roles:', error);
-        userRoles = [];  // In case of parsing error, fallback to an empty array
-        for (let i = 0; i < decodedIdToken.user_roles.length; i++) {
-          if (allowedRoles.includes(decodedIdToken.user_roles[i])) {
-            console.log("match found")
-            return true;
-          }
+        userRoles = [];
+      }
+      for (let i = 0; i < decodedIdToken.user_roles.length; i++) {        
+        if (allowedRoles.includes(decodedIdToken.user_roles[i])) {
+          console.log("match found")
+          return true;
         }
       }
     }
