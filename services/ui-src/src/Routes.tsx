@@ -162,7 +162,7 @@ const isAdminUser = ()=> {
         console.error('Error parsing user_roles:', error);
         userRoles = [];
       }
-      for (let i = 0; i < decodedIdToken.user_roles.length; i++) {        
+      for (let i = 0; i < userRoles.length; i++) {        
         if (allowedRoles.includes(decodedIdToken.user_roles[i])) {
           console.log("match found")
           return true;
