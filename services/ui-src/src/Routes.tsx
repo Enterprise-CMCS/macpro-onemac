@@ -150,15 +150,25 @@ const isAdminUser = ()=> {
     "statesystemadmin",
     "helpdesk"
   ];
-  
+
   if (decodedIdToken?.user_roles) {
-    for (let i = 0; i < decodedIdToken.user_roles.length; i++) {
-      if (allowedRoles.includes(decodedIdToken.user_roles[i])) {
-        return true;
+    let userRoles = decodedIdToken.user_roles;
+    if (typeof userRoles === 'string') {
+      try {
+        userRoles = JSON.parse(userRoles);
+      } catch (error) {
+        console.error('Error parsing user_roles:', error);
+        userRoles = [];  // In case of parsing error, fallback to an empty array
+        for (let i = 0; i < decodedIdToken.user_roles.length; i++) {
+          if (allowedRoles.includes(decodedIdToken.user_roles[i])) {
+            console.log("match found")
+            return true;
+          }
+        }
       }
     }
   }
-  
+
   return false;
 }
 
