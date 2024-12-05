@@ -53,8 +53,6 @@ export const buildParams = (role, territory) => {
 
 export const getMyUserList = async (event) => {
   try {
-    console.log("event::: ", event)
-    console.log(event)
     // get the rest of the details about the current user
     const doneBy = await getUser(event.queryStringParameters.email);
 

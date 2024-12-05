@@ -68,8 +68,7 @@ import WaiverRenewalSubsequentSubmissionForm from "./page/waiver-renewal/WaiverR
 import WaiverAmendmentSubsequentSubmissionForm from "./page/waiver-amendment/WaiverAmendmentSubsequentSubmissionForm";
 import WaiverAppKSubsequentSubmissionForm from "./page/waiver-appendix-k/WaiverAppKSubsequentSubmissionForm";
 import DisableRaiWithdrawForm from "./page/disable-rai-withdraw/DisableRaiWithdrawForm";
-
-const ID_TOKEN_KEY: string = "idToken"
+const ID_TOKEN_KEY: string = "idToken";
 
 type RouteSpec = {
   path: string;
@@ -116,7 +115,6 @@ const AuthenticatedRouteListRenderer: FC<{ routes: RouteSpec[] }> = ({
 const SignupGuardRouteListRenderer: FC<{ routes: RouteSpec[] }> = ({
   routes,
 }) => {
-  console.log("Signup Gard Route Renderer Called")
   const {
     isAuthenticated,
     userProfile: { cmsRoles = "", userData: { roleList = [] } = {} } = {},
@@ -132,10 +130,11 @@ const SignupGuardRouteListRenderer: FC<{ routes: RouteSpec[] }> = ({
 const isAdminUser = ()=> {
   /* eslint-disable-next-line react-hooks/rules-of-hooks */
   const context = useAppContext();
-  console.log("admin check called")
   if(!context?.isAuthenticated) {
     return false; 
   }
+
+  //authenticated users will have idToken in Local Storage
   const idTokenKey: string[] = Object.keys(localStorage).filter((k) =>
     k.includes(ID_TOKEN_KEY)
   );
@@ -143,7 +142,7 @@ const isAdminUser = ()=> {
   idTokenKey && localStorage.getItem(idTokenKey[0]);
   if (!idToken) return false;
   const decodedIdToken: any = jwt_decode(idToken);
-  // console.log("decode id token::: ", decodedIdToken)
+
   const allowedRoles = [
     "cmsroleapprover",
     "systemadmin",
@@ -151,22 +150,18 @@ const isAdminUser = ()=> {
     "helpdesk"
   ];
 
+  // only passes admin check if roles from jwt one of the "allowed roles"
   if (decodedIdToken?.user_roles) {
     let userRoles = decodedIdToken.user_roles;
-     console.log("decodedIdtoken.userRoles: "+ userRoles)
-    if (typeof userRoles === 'string') {
-      try {
-        userRoles = JSON.parse(userRoles);
-        console.log("parsed user roles: ", userRoles)
-      } catch (error) {
-        console.error('Error parsing user_roles:', error);
-        userRoles = [];
-      }
-      for (let i = 0; i < userRoles.length; i++) {        
-        if (allowedRoles.includes(userRoles[i])) {
-          console.log("match found")
-          return true;
-        }
+    try {
+      userRoles = JSON.parse(userRoles);
+    } catch (error) {
+      console.error('Error parsing user_roles:', error);
+      userRoles = [];
+    }
+    for (let i = 0; i < userRoles.length; i++) {        
+      if (allowedRoles.includes(userRoles[i])) {
+        return true;
       }
     }
   }
@@ -182,12 +177,10 @@ const accessGuardRouteListRenderer: (
 ) => FC<{ routes: RouteSpec[] }> =
   (accessKey, redirectAccessKey, redirectTo, isAdminRoute) =>
   ({ routes }) => {
-    console.log("accessGuardRouteListRender called")
-    console.log("isAdminRoute? ", isAdminRoute)
     const { userProfile: { userData: { roleList = [] } = {} } = {} } =
       useAppContext() ?? {};
     const roleObj = getUserRoleObj(roleList);
-    // Token based admin check 
+    // Token based admin check will redirect if non admin user
     if(isAdminRoute && redirectTo) {
       if(!isAdminUser()){
        return <Redirect to={redirectTo} />;
