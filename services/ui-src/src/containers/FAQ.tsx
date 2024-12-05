@@ -9,6 +9,7 @@ import {
 
 import { Accordion, AccordionItem, Button } from "@cmsgov/design-system";
 import { MACCard } from "../components/MACCard";
+import { useFlags} from 'launchdarkly-react-client-sdk';
 
 /** Refactored out for later extraction by cms-ux-lib. However, using this
  * abstraction rather than doing it inline as we do in the FAQ return created
@@ -41,6 +42,8 @@ export const FAQSection = ({ section }: { section: FAQContent }) => {
 };
 
 const FAQ = () => {
+
+  const {mmdlFaq} = useFlags()
   const [faqItems, setFaqItems] = useState(oneMACFAQContent);
   const [hash, setHash] = useState(window.location.hash.replace("#", ""));
 
@@ -135,25 +138,47 @@ const FAQ = () => {
             /** To be replaced with {@link FAQSection} */
             <div key={`faq-section-${idx}`} className="faq-section">
               <h2 className="topic-title">{section.sectionTitle}</h2>
-              <Accordion>
-                {section.qanda.map((questionAnswer, i) => (
-                  <div key={i}>
-                    <AccordionItem
-                      id={questionAnswer.anchorText}
-                      heading={questionAnswer.question}
-                      buttonClassName="accordion-button"
-                      contentClassName="accordion-content"
-                      isControlledOpen={questionAnswer.isOpen}
-                      onChange={() =>
-                        toggleAccordianItem(questionAnswer.anchorText)
-                      }
-                    >
-                      {questionAnswer.answerJSX}
-                    </AccordionItem>
-                    <hr></hr>
-                  </div>
-                ))}
-              </Accordion>
+              {mmdlFaq ? 
+                  <Accordion>
+                    {section.qanda.map((questionAnswer, i) => (
+                      <div key={i}>
+                        <AccordionItem
+                          id={questionAnswer.anchorText}
+                          heading={questionAnswer.question}
+                          buttonClassName="accordion-button"
+                          contentClassName="accordion-content"
+                          isControlledOpen={questionAnswer.isOpen}
+                          onChange={() =>
+                            toggleAccordianItem(questionAnswer.anchorText)
+                          }
+                        >
+                          {questionAnswer.answerJSX}
+                        </AccordionItem>
+                        <hr></hr>
+                      </div>
+                    ))}
+                  </Accordion> : 
+                  <Accordion>
+                  {section.qanda.map((questionAnswer, i) => (
+                    !questionAnswer.isMmdl && 
+                      <div key={i}>
+                        <AccordionItem
+                          id={questionAnswer.anchorText}
+                          heading={questionAnswer.question}
+                          buttonClassName="accordion-button"
+                          contentClassName="accordion-content"
+                          isControlledOpen={questionAnswer.isOpen}
+                          onChange={() =>
+                            toggleAccordianItem(questionAnswer.anchorText)
+                          }
+                        >
+                          {questionAnswer.answerJSX}
+                        </AccordionItem>
+                        <hr></hr>
+                      </div>
+                  ))}
+                </Accordion>
+              }
             </div>
           ))}
         </div>
@@ -170,4 +195,6 @@ const FAQ = () => {
   );
 };
 
+
 export default FAQ;
+
