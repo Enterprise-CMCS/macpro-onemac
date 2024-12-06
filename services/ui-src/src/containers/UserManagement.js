@@ -96,12 +96,12 @@ const UserManagement = () => {
   );
 
   const setAdminUserContextList = (userList) =>{
-    const myUserList = [];
+    const adminUserList = [];
     try {
       for (let i = 0; i < userList.length; i++) {
-        myUserList.push(userList[i].email)
+        adminUserList.push(userList[i].email)
       }
-      myUserList(myUserList);
+      myUserList(adminUserList);
     } catch (error) {
     console.log("error setting admin user list app context", error)
     }
