@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { useLocation, useParams, useHistory, Redirect } from "react-router-dom";
+import { useLocation, useParams, useHistory} from "react-router-dom";
 import { Button, Review } from "@cmsgov/design-system";
 
 
@@ -202,11 +202,11 @@ const UserPage = () => {
     };
     console.log("trying to fetch user info for :", userId);
 
+    // If the userId/email is not the actuve user's or part of the admin user list, redirect the user
     if(userId !== undefined  && ! myUserList.includes(userId) && userId !== userProfile?.userData?.email) {
-      console.log("not in admin list")
+      // eslint-disable-next-line
       userId = userProfile?.userData?.email
       history.push("/notfound")
-      // history.push(ROUTES.PROFILE+"/"+userProfile?.userData?.email)
     } 
 
     getProfile(userId)
