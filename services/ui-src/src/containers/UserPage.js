@@ -1,12 +1,14 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { useLocation, Redirect, useParams } from "react-router-dom";
+import { useLocation, useParams, useHistory } from "react-router-dom";
 import { Button, Review } from "@cmsgov/design-system";
+
 
 import {
   APPROVING_USER_ROLE,
   RESPONSE_CODE,
   USER_ROLE,
   ROUTES,
+  ONEMAC_ROUTES,
   USER_STATUS,
   effectiveRoleForUser,
   inFlightRoleRequestForUser,
@@ -157,8 +159,9 @@ export const GroupDivisionDisplay = ({ profileData = {} }) => {
  * Component housing data belonging to a particular user
  */
 const UserPage = () => {
-  const { userProfile, setUserInfo, updatePhoneNumber, userRole, userStatus } =
+  const { userProfile, setUserInfo, updatePhoneNumber, userRole, userStatus, myUserList } =
     useAppContext();
+  const history = useHistory();
   const location = useLocation();
   const { userId } = useParams() ?? {};
   const [profileData, setProfileData] = useState({});
@@ -199,14 +202,21 @@ const UserPage = () => {
       return [tempProfileData, tempProfileRole, tempProfileStatus];
     };
     console.log("trying to fetch user info for :", userId);
-    /* eslint-disable-next-line react-hooks/rules-of-hooks */
-    const context = useAppContext();
-    if(context.myUserList.includes(userId)) {
-      console.log("user in admin list")
-    } else {
+
+    if(userId !== undefined  && ! myUserList.includes(userId) && userId !== userProfile?.userData?.email) {
       console.log("not in admin list")
-      return <Redirect to={ROUTES.PROFILE}/>
-    }
+      // console.log(userProfile?.userData?.email)
+      history.push(ROUTES.PROFILE+"/"+userProfile?.userData?.email)
+      // userId=userProfile?.userData?.email
+      // return <Redirect to={ONEMAC_ROUTES.PACKAGE_LIST}/>
+    } 
+
+    // if(userId === undefined || myUserList.includes(userId)) {
+    //   console.log("user in admin list")
+    // } else {
+    //   console.log("not in admin list")
+    //   return <Redirect to={ROUTES.PROFILE}/>
+    // }
 
     getProfile(userId)
       .then(([newProfileData, newProfileRole, newProfileStatus]) => {

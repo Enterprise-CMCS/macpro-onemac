@@ -10,6 +10,7 @@ export const stateSubmitterInitialAuthState = {
   setUserInfo: () => Promise.resolve(),
   updatePhoneNumber: () => Promise.resolve(),
   confirmAction: () => Promise.resolve(),
+  myUserList: [],
   userProfile: {
     cmsRoles: "onemac-state-user",
     email: "statesubmitteractive@cms.hhs.local",

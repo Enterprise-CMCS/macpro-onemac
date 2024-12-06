@@ -33,7 +33,7 @@ const DEFAULT_AUTH_STATE: Omit<
   userRole: null,
   userStatus: null,
   activeTerritories: null,
-  myUserList: null
+  myUserList: []
 };
 
 const  App = () => {
