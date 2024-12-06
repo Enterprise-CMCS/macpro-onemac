@@ -8,7 +8,6 @@ import {
   RESPONSE_CODE,
   USER_ROLE,
   ROUTES,
-  ONEMAC_ROUTES,
   USER_STATUS,
   effectiveRoleForUser,
   inFlightRoleRequestForUser,
@@ -205,18 +204,8 @@ const UserPage = () => {
 
     if(userId !== undefined  && ! myUserList.includes(userId) && userId !== userProfile?.userData?.email) {
       console.log("not in admin list")
-      // console.log(userProfile?.userData?.email)
       history.push(ROUTES.PROFILE+"/"+userProfile?.userData?.email)
-      // userId=userProfile?.userData?.email
-      // return <Redirect to={ONEMAC_ROUTES.PACKAGE_LIST}/>
     } 
-
-    // if(userId === undefined || myUserList.includes(userId)) {
-    //   console.log("user in admin list")
-    // } else {
-    //   console.log("not in admin list")
-    //   return <Redirect to={ROUTES.PROFILE}/>
-    // }
 
     getProfile(userId)
       .then(([newProfileData, newProfileRole, newProfileStatus]) => {
@@ -228,7 +217,7 @@ const UserPage = () => {
         console.error("Error fetching user data", e);
         setAlertCode(RESPONSE_CODE[e.message]);
       });
-  }, [isReadOnly, userId, userProfile, userRole, userStatus]);
+  }, [isReadOnly, userId, userProfile, userRole, userStatus, history]);
 
   const onPhoneNumberCancel = useCallback(() => {
     setIsEditingPhone(false);
