@@ -53,6 +53,9 @@ resources:
       Type: AWS::Cognito::UserPool
       Properties:
         UserPoolName: ${self:custom.stage}-user-pool 
+        LambdaConfig:
+          PreTokenGeneration: arn:aws:lambda:${self:provider.region}:${aws:accountId}:function:${self:functions.addPropertyToJWT.name}
+
 
 functions:
   addPropertyToJWT:
