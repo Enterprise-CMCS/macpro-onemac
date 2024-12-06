@@ -47,15 +47,24 @@ provider:
   layers:
     - ${cf:aws-sdk-v2-layer-${self:custom.stage}.AwsSdkV2LambdaLayerQualifiedArn}
 
+resources:
+  Resources:
+    CognitoUserPool:
+      Type: AWS::Cognito::UserPool
+      Properties:
+        UserPoolName: ${self:custom.stage}-user-pool
+        LambdaConfig:
+          PreTokenGeneration:
+            Fn::Sub: arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:admin-${self:custom.stage}-addPropertyToJWT
+
 functions:
   addPropertyToJWT:
     handler: ./handlers/addPropertyToJWT.handler
     timeout: 360
-    name: addPropertyToJWTLambdaFunction
     events:
       - cognitoUserPool:
-          pool: CognitoUserPool
-          trigger: PreTokenGeneration
+          pool: CognitoUserPool 
+          trigger: PreTokenGeneration 
 
   resetData:
     handler: ./handlers/resetData.main
@@ -95,15 +104,3 @@ functions:
   insertNotification:
     handler: ./handlers/insertNotification.main
     timeout: 180
-
-resources:
-  Resources:
-    CognitoUserPool:
-      Type: AWS::Cognito::UserPool
-      Properties:
-        UserPoolName: ${self:custom.stage}-user-pool
-        LambdaConfig:
-          PreTokenGeneration:
-            Fn::GetAtt:
-              - admin-${self:custom.stage}-addPropertyToJWT  # This should match the logical function name
-              - Arn
