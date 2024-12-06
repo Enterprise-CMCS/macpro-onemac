@@ -16,6 +16,8 @@ custom:
   stage: ${opt:stage, self:provider.stage}
   iamPermissionsBoundaryPolicy: ${ssm:/configuration/${self:custom.stage}/iam/permissionsBoundaryPolicy, ssm:/configuration/default/iam/permissionsBoundaryPolicy, ""}
   oneMacTableName: onemac-${self:custom.stage}-one
+  # Add your existing Cognito User Pool ID here
+  cognitoUserPoolId: "your-existing-user-pool-id"
 
 provider:
   name: aws
@@ -47,24 +49,14 @@ provider:
   layers:
     - ${cf:aws-sdk-v2-layer-${self:custom.stage}.AwsSdkV2LambdaLayerQualifiedArn}
 
-resources:
-  Resources:
-    CognitoUserPool:
-      Type: AWS::Cognito::UserPool
-      Properties:
-        UserPoolName: ${self:custom.stage}-user-pool
-        LambdaConfig:
-          PreTokenGeneration:
-            Fn::Sub: arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:admin-${self:custom.stage}-addPropertyToJWT
-
 functions:
   addPropertyToJWT:
     handler: ./handlers/addPropertyToJWT.handler
     timeout: 360
     events:
       - cognitoUserPool:
-          pool: CognitoUserPool 
-          trigger: PreTokenGeneration 
+          pool: ${self:custom.cognitoUserPoolId}  # Use the existing User Pool ID
+          trigger: PreTokenGeneration
 
   resetData:
     handler: ./handlers/resetData.main
