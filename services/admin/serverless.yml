@@ -13,16 +13,15 @@ plugins:
   - serverless-s3-bucket-helper
 
 custom:
-  stage: ${opt:stage, self:provider.stage}
+  stage: ${opt:stage, 'dev'}
   iamPermissionsBoundaryPolicy: ${ssm:/configuration/${self:custom.stage}/iam/permissionsBoundaryPolicy, ssm:/configuration/default/iam/permissionsBoundaryPolicy, ""}
   oneMacTableName: onemac-${self:custom.stage}-one
-  cognitoUserPoolId: !ImportValue MyExistingCognitoUserPoolId  
 
 provider:
   name: aws
   runtime: nodejs20.x
   region: us-east-1
-  stage: dev
+  stage: ${self:custom.stage}
   iam:
     role:
       path: ${ssm:/configuration/${self:custom.stage}/iam/path, ssm:/configuration/default/iam/path, "/"}
@@ -54,8 +53,8 @@ functions:
     timeout: 360
     events:
       - cognitoUserPool:
-          pool: ${self:custom.cognitoUserPoolId}
-          trigger: PreTokenGeneration 
+          pool: !Sub '${self:custom.stage}-user-pool'
+          trigger: PreTokenGeneration
 
   resetData:
     handler: ./handlers/resetData.main
