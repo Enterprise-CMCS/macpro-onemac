@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { useLocation, useParams, useHistory } from "react-router-dom";
+import { useLocation, useParams, useHistory, Redirect } from "react-router-dom";
 import { Button, Review } from "@cmsgov/design-system";
 
 
@@ -162,7 +162,7 @@ const UserPage = () => {
     useAppContext();
   const history = useHistory();
   const location = useLocation();
-  const { userId } = useParams() ?? {};
+  let { userId } = useParams() ?? {};
   const [profileData, setProfileData] = useState({});
   const [profileRole, setProfileRole] = useState("");
   const [profileStatus, setProfileStatus] = useState("");
@@ -204,7 +204,9 @@ const UserPage = () => {
 
     if(userId !== undefined  && ! myUserList.includes(userId) && userId !== userProfile?.userData?.email) {
       console.log("not in admin list")
-      history.push(ROUTES.PROFILE+"/"+userProfile?.userData?.email)
+      userId = userProfile?.userData?.email
+      history.push("/notfound")
+      // history.push(ROUTES.PROFILE+"/"+userProfile?.userData?.email)
     } 
 
     getProfile(userId)
