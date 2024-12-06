@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { useLocation, useParams, useHistory} from "react-router-dom";
+import { useLocation, useParams} from "react-router-dom";
 import { Button, Review } from "@cmsgov/design-system";
 
 
@@ -158,9 +158,8 @@ export const GroupDivisionDisplay = ({ profileData = {} }) => {
  * Component housing data belonging to a particular user
  */
 const UserPage = () => {
-  const { userProfile, setUserInfo, updatePhoneNumber, userRole, userStatus, myUserList } =
+  const { userProfile, setUserInfo, updatePhoneNumber, userRole, userStatus } =
     useAppContext();
-  const history = useHistory();
   const location = useLocation();
   let { userId } = useParams() ?? {};
   const [profileData, setProfileData] = useState({});
@@ -200,14 +199,6 @@ const UserPage = () => {
 
       return [tempProfileData, tempProfileRole, tempProfileStatus];
     };
-    console.log("trying to fetch user info for :", userId);
-
-    // If the userId/email is not the actuve user's or part of the admin user list, redirect the user
-    if(userId !== undefined  && ! myUserList.includes(userId) && userId !== userProfile?.userData?.email) {
-      // eslint-disable-next-line
-      userId = userProfile?.userData?.email
-      history.push("/notfound")
-    } 
 
     getProfile(userId)
       .then(([newProfileData, newProfileRole, newProfileStatus]) => {
@@ -219,7 +210,7 @@ const UserPage = () => {
         console.error("Error fetching user data", e);
         setAlertCode(RESPONSE_CODE[e.message]);
       });
-  }, [isReadOnly, userId, userProfile, userRole, userStatus, history, myUserList]);
+  }, [isReadOnly, userId, userProfile, userRole, userStatus]);
 
   const onPhoneNumberCancel = useCallback(() => {
     setIsEditingPhone(false);
