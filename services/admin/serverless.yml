@@ -52,10 +52,12 @@ resources:
     CognitoUserPool:
       Type: AWS::Cognito::UserPool
       Properties:
-        UserPoolName: ${self:custom.stage}-user-pool 
+        UserPoolName: ${self:custom.stage}-user-pool
         LambdaConfig:
           PreTokenGeneration:
-            Ref: addPropertyToJWT  
+            Fn::GetAtt:
+              - addPropertyToJWT
+              - Arn
 
 functions:
   addPropertyToJWT:
@@ -63,8 +65,8 @@ functions:
     timeout: 360
     events:
       - cognitoUserPool:
-          pool: CognitoUserPool 
-          trigger: PreTokenGeneration 
+          pool: CognitoUserPool
+          trigger: PreTokenGeneration
 
   resetData:
     handler: ./handlers/resetData.main
