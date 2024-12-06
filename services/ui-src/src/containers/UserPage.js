@@ -217,7 +217,7 @@ const UserPage = () => {
         console.error("Error fetching user data", e);
         setAlertCode(RESPONSE_CODE[e.message]);
       });
-  }, [isReadOnly, userId, userProfile, userRole, userStatus, history]);
+  }, [isReadOnly, userId, userProfile, userRole, userStatus, history, myUserList]);
 
   const onPhoneNumberCancel = useCallback(() => {
     setIsEditingPhone(false);
