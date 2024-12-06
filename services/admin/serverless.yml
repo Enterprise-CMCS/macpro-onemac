@@ -39,9 +39,11 @@ provider:
             - arn:aws:dynamodb:*:*:table/onemac-develop-one
             - arn:aws:dynamodb:*:*:table/${self:custom.oneMacTableName}
             - arn:aws:dynamodb:*:*:table/${self:custom.oneMacTableName}/index/*
+
   environment:
     NODE_OPTIONS: '--enable-source-maps'
     oneMacTableName: ${self:custom.oneMacTableName}
+
   layers:
     - ${cf:aws-sdk-v2-layer-${self:custom.stage}.AwsSdkV2LambdaLayerQualifiedArn}
 
@@ -51,8 +53,6 @@ resources:
       Type: AWS::Cognito::UserPool
       Properties:
         UserPoolName: ${self:custom.stage}-user-pool 
-        LambdaConfig:
-          PreTokenGeneration: !GetAtt addPropertyToJWT.Arn  
 
 functions:
   addPropertyToJWT:
@@ -60,8 +60,8 @@ functions:
     timeout: 360
     events:
       - cognitoUserPool:
-          pool: CognitoUserPool  
-          trigger: PreTokenGeneration
+          pool: CognitoUserPool 
+          trigger: PreTokenGeneration 
 
   resetData:
     handler: ./handlers/resetData.main
