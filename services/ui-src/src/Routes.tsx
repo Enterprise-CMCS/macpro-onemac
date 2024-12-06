@@ -196,6 +196,7 @@ const ROUTE_LIST: RouteSpec[] = [
   { path: ROUTES.HOME, exact: true, component: Home },
   { path: ROUTES.FAQ, exact: true, component: FAQ },
   { path: ROUTES.DEVLOGIN, exact: true, component: DevLogin },
+
   {
     path: ROUTES.PROFILE,
     component: AuthenticatedRouteListRenderer,
@@ -205,11 +206,11 @@ const ROUTE_LIST: RouteSpec[] = [
         exact: true,
         component: UserPage,
       },
-      // {
-      //   path: ROUTES.PROFILE + "/:userId",
-      //   exact: true,
-      //   component: UserPage,
-      // },
+      {
+        path: ROUTES.PROFILE + "/:userId",
+        exact: true,
+        component: UserPage,
+      }
     ],
   },
   {

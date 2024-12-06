@@ -23,6 +23,7 @@ import pendingCircle from "../images/PendingCircle.svg";
 import { pendingMessage, deniedOrRevokedMessage } from "../libs/userLib";
 import { Button } from "@cmsgov/design-system";
 import { tableListExportToCSV } from "../utils/tableListExportToCSV";
+import { useAppContext } from "../libs/contextLib";
 
 const PENDING_CIRCLE_IMAGE = (
   <img alt="" className="pending-circle" src={pendingCircle} />
@@ -70,6 +71,19 @@ const alertCodes = {
   revoked: RESPONSE_CODE.SUCCESS_USER_REVOKED,
 };
 
+const setAdminUserContextList = (userList) =>{
+  const context = useAppContext();
+  const myUserList = [];
+  try {
+    for (let i = 0; i < userList.length; i++) {
+      myUserList.push(userList[i].email)
+    }
+    context.myUserList(myUserList);
+  } catch (error) {
+  console.log("error setting admin user list app context", error)
+  }
+}
+
 /**
  * User Management "Dashboard"
  */
@@ -100,6 +114,7 @@ const UserManagement = () => {
           if (userStatus !== USER_STATUS.PENDING) setAlertCode(ul);
           ul = [];
         }
+        setAdminUserContextList(ul)
         setUserList(ul);
       })
       .catch((error) => {

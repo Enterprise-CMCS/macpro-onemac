@@ -198,6 +198,15 @@ const UserPage = () => {
 
       return [tempProfileData, tempProfileRole, tempProfileStatus];
     };
+    console.log("trying to fetch user info for :", userId);
+    /* eslint-disable-next-line react-hooks/rules-of-hooks */
+    const context = useAppContext();
+    if(context.myUserList.includes(userId)) {
+      console.log("user in admin list")
+    } else {
+      console.log("not in admin list")
+      return <Redirect to={ROUTES.PROFILE}/>
+    }
 
     getProfile(userId)
       .then(([newProfileData, newProfileRole, newProfileStatus]) => {

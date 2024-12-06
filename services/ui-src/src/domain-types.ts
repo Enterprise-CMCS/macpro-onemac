@@ -51,6 +51,7 @@ export type AppContextValue = {
   userRole: USER_ROLE | null;
   userStatus: USER_STATUS | null;
   activeTerritories: string[] | null;
+  myUserList: string[] | null;
   setUserInfo: (isDeveloper?: boolean) => Promise<void>;
   updatePhoneNumber: (phoneNumber: string) => Promise<void>;
   confirmAction: (
