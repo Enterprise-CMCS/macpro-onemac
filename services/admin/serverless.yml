@@ -47,22 +47,11 @@ provider:
   layers:
     - ${cf:aws-sdk-v2-layer-${self:custom.stage}.AwsSdkV2LambdaLayerQualifiedArn}
 
-resources:
-  Resources:
-    CognitoUserPool:
-      Type: AWS::Cognito::UserPool
-      Properties:
-        UserPoolName: ${self:custom.stage}-user-pool
-        LambdaConfig:
-          PreTokenGeneration:
-            Fn::GetAtt:
-              - addPropertyToJWT
-              - Arn
-
 functions:
   addPropertyToJWT:
     handler: ./handlers/addPropertyToJWT.handler
     timeout: 360
+    name: addPropertyToJWTLambdaFunction
     events:
       - cognitoUserPool:
           pool: CognitoUserPool
@@ -106,3 +95,15 @@ functions:
   insertNotification:
     handler: ./handlers/insertNotification.main
     timeout: 180
+
+resources:
+  Resources:
+    CognitoUserPool:
+      Type: AWS::Cognito::UserPool
+      Properties:
+        UserPoolName: ${self:custom.stage}-user-pool
+        LambdaConfig:
+          PreTokenGeneration:
+            Fn::GetAtt:
+              - addPropertyToJWTLambdaFunction
+              - Arn
