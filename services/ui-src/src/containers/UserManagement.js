@@ -122,6 +122,7 @@ const UserManagement = () => {
         console.log("Error while fetching user list.", error);
         setAlertCode(RESPONSE_CODE[error.message]);
       });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userProfile.email, userStatus]);
 
 
