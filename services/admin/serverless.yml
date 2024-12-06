@@ -105,5 +105,5 @@ resources:
         LambdaConfig:
           PreTokenGeneration:
             Fn::GetAtt:
-              - addPropertyToJWTLambdaFunction
+              - admin-${self:custom.stage}-addPropertyToJWT  # This should match the logical function name
               - Arn
