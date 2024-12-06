@@ -16,6 +16,7 @@ custom:
   stage: ${opt:stage, self:provider.stage}
   iamPermissionsBoundaryPolicy: ${ssm:/configuration/${self:custom.stage}/iam/permissionsBoundaryPolicy, ssm:/configuration/default/iam/permissionsBoundaryPolicy, ""}
   oneMacTableName: onemac-${self:custom.stage}-one
+  cognitoUserPoolId: !ImportValue MyExistingCognitoUserPoolId  
 
 provider:
   name: aws
@@ -53,7 +54,7 @@ functions:
     timeout: 360
     events:
       - cognitoUserPool:
-          pool: ${self:custom.stage}-user-pool
+          pool: ${self:custom.cognitoUserPoolId}
           trigger: PreTokenGeneration 
 
   resetData:
