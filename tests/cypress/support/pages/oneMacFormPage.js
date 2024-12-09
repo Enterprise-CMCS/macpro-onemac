@@ -12,7 +12,6 @@ const modalCancelBTN =
   "//*[@id='react-aria-modal-dialog']//button[text()='Cancel']";
 const attachmentInfoDescription =
   "//h3[text()='Attachments']/following-sibling::p[1]";
-const enterMmdlBtn = "//button[contains(text(),'Enter the MMDL system')]";
 const enterMacProBtn = "//button[contains(text(),'Enter the MACPro system')]";
 const IDInputBox = idElement;
 const errorMessageID = "#componentIdStatusMsg0";
@@ -283,16 +282,6 @@ export class oneMacFormPage {
     }
   }
 
-  verifyMmdlSystemBtn() {
-    cy.xpath(enterMmdlBtn).should("be.visible");
-    cy.xpath(enterMmdlBtn)
-      .parent("a")
-      .should(
-        "have.attr",
-        "href",
-        "https://wms-mmdl.cms.gov/MMDL/faces/portal.jsp"
-      );
-  }
   verifyMacProSystemBtn() {
     cy.xpath(enterMacProBtn).should("be.visible");
     cy.xpath(enterMacProBtn)

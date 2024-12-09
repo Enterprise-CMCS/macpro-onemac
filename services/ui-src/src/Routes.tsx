@@ -4,6 +4,7 @@
 
 import React, { FC } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
+import { useFlags } from "launchdarkly-react-client-sdk";
 
 import {
   ROUTES,
@@ -50,9 +51,7 @@ import WaiverAppendixKRAIForm from "./page/waiver-appendix-k/WaiverAppendixKRAIF
 import DescribeForms from "./page/DescribeForms";
 import EventList from "./page/event/EventList";
 import EventDetail from "./page/event/EventDetail";
-import MedicaidABPLandingPage from "./page/landing/MedicaidABPLandingPage";
 import MedicaidEligibilityLandingPage from "./page/landing/MedicaidEligibilityLandingPage";
-import CHIPEligibilityLandingPage from "./page/landing/CHIPEligibilityLandingPage";
 import InitialWaiverB4Form from "./page/initial-waiver/InitialWaiverB4Form";
 import InitialWaiverBForm from "./page/initial-waiver/InitialWaiverBForm";
 import WaiverRenewalB4Form from "./page/waiver-renewal/WaiverRenewalB4Form";
@@ -90,9 +89,22 @@ const RouteListRenderer: FC<{ routes: RouteSpec[] }> = ({ routes }) => {
   if (!useAppContext()?.isAuthenticated) {
     clearTableStateStorageKeys();
   }
+
+  const { enableSubsequentDocumentation } = useFlags();
+  let filteredRoutes;
+  if (!enableSubsequentDocumentation) {
+    // Filter out objects where the component includes a SubsequentSubmission form
+    // This is not currently looking for subroutes since all subsub routes are at the root of the route object
+    filteredRoutes = routes.filter(
+      (route) => !route.path.includes("subsequent-submission")
+    );
+  } else {
+    filteredRoutes = routes;
+  }
+
   return (
     <Switch>
-      {routes.map((routeSpec) => (
+      {filteredRoutes.map((routeSpec) => (
         <RouteWithSubRoutes
           key={routeSpec.key ?? routeSpec.path}
           {...routeSpec}
@@ -427,19 +439,9 @@ const ROUTE_LIST: RouteSpec[] = [
     component: AttachmentLanding,
   },
   {
-    path: ROUTES.ABP_LANDING,
-    exact: true,
-    component: MedicaidABPLandingPage,
-  },
-  {
     path: ROUTES.MEDICAID_ELIGIBILITY_LANDING,
     exact: true,
     component: MedicaidEligibilityLandingPage,
-  },
-  {
-    path: ROUTES.CHIP_ELIGIBILITY_LANDING,
-    exact: true,
-    component: CHIPEligibilityLandingPage,
   },
   {
     path: ONEMAC_ROUTES.FORMS_DESCRIBE,
