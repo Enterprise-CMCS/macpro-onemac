@@ -27,6 +27,7 @@ provider:
       path: ${ssm:/configuration/${self:custom.stage}/iam/path, ssm:/configuration/default/iam/path, "/"}
       permissionsBoundary: !Sub arn:aws:iam::${AWS::AccountId}:policy${self:custom.iamPermissionsBoundaryPolicy}
       statements:
+        # Allow DynamoDB access (example permissions)
         - Effect: Allow
           Action:
             - dynamodb:Query
@@ -39,6 +40,13 @@ provider:
             - arn:aws:dynamodb:*:*:table/onemac-develop-one
             - arn:aws:dynamodb:*:*:table/${self:custom.oneMacTableName}
             - arn:aws:dynamodb:*:*:table/${self:custom.oneMacTableName}/index/*
+        
+        # Allow CreateRole and TagResource actions
+        - Effect: Allow
+          Action:
+            - iam:CreateRole
+            - iam:TagResource
+          Resource: "*"
 
   environment:
     NODE_OPTIONS: '--enable-source-maps'
@@ -55,7 +63,6 @@ functions:
       - cognitoUserPool:
           pool: ${self:custom.stage}-user-pool  # Ensure this resolves correctly
           trigger: PreTokenGeneration
-          existing: true
 
   resetData:
     handler: ./handlers/resetData.main
@@ -95,3 +102,26 @@ functions:
   insertNotification:
     handler: ./handlers/insertNotification.main
     timeout: 180
+
+resources:
+  Resources:
+    IamRoleCustomResourcesLambdaExecution:
+      Type: AWS::IAM::Role
+      Properties:
+        AssumeRolePolicyDocument:
+          Version: "2012-10-17"
+          Statement:
+            - Effect: Allow
+              Action: sts:AssumeRole
+              Principal:
+                Service: lambda.amazonaws.com
+        Policies:
+          - PolicyName: CustomResourcePolicy
+            PolicyDocument:
+              Version: "2012-10-17"
+              Statement:
+                - Effect: Allow
+                  Action:
+                    - iam:CreateRole
+                    - iam:TagResource
+                  Resource: "*"
