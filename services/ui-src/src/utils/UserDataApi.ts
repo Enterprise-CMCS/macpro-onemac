@@ -1,5 +1,5 @@
 import { USER_ROLE } from "cmscommonlib";
-import { API } from "aws-amplify";
+import { API, Auth } from "aws-amplify";
 
 import { UserRecord } from "../domain-types";
 import handleApiError from "../libs/apiErrorHandler";
@@ -8,6 +8,26 @@ import handleApiError from "../libs/apiErrorHandler";
  * Singleton class to perform operations with the user tables backend.
  */
 class UserDataApi {
+  private async getIdToken(): Promise<string> {
+    try {
+      const session = await Auth.currentSession(); // Get current session
+      const idToken = session.getIdToken().getJwtToken(); // Get the idToken
+      return idToken;
+    } catch (error) {
+      console.error("Error retrieving idToken:", error);
+      throw new Error("Failed to retrieve idToken");
+    }
+  }
+
+  /**
+   * Add the idToken to the x-id-token header
+   */
+    private async addIdTokenToHeaders() {
+      const idToken = await this.getIdToken();
+      return {
+        "x-id-token": idToken, // Use x-id-token header
+      };
+    }
   /**
    * Fetch the list of users appropriate for this User
    * @return a list of users
@@ -41,8 +61,10 @@ class UserDataApi {
     }
 
     try {
+      const headers = await this.addIdTokenToHeaders();
       return await API.get("oneMacAPI", `/getUser`, {
         queryStringParameters: { email: userEmail },
+        headers, 
       });
     } catch (error) {
       return handleApiError(

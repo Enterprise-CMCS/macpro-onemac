@@ -1,5 +1,6 @@
 import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
+import jwt_decode from "jwt-decode";
 
 import { getUserRoleObj } from "cmscommonlib";
 
@@ -68,6 +69,18 @@ export const getUser = async (userEmail) => {
 
 // Gets owns user data from User DynamoDB table
 export const main = handler(async (event) => {
+  const idToken = event.headers["x-id-token"];
+
+  if (!idToken) {
+    console.log("x-id-token header is missing");
+    return {
+      statusCode: 400,
+      body: JSON.stringify({ error: "x-id-token header is missing" }),
+    };
+  }
+
+  console.log("Received x-id-token:", idToken);
+
   const userItem = (await getUser(event.queryStringParameters.email)) ?? {};
   userItem.validRoutes = getUserRoleObj(userItem.roleList).getAccesses();
 
