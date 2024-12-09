@@ -46,6 +46,7 @@ provider:
           Action:
             - iam:CreateRole
             - iam:TagResource
+            - iam:PassRole
           Resource: "*"
 
   environment:
