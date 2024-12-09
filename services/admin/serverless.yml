@@ -11,17 +11,15 @@ plugins:
   - serverless-esbuild
   - serverless-dotenv-plugin
   - serverless-s3-bucket-helper
-
 custom:
-  stage: ${opt:stage, 'dev'}  # Ensure the 'stage' is being passed correctly
+  stage: ${opt:stage, self:provider.stage}
   iamPermissionsBoundaryPolicy: ${ssm:/configuration/${self:custom.stage}/iam/permissionsBoundaryPolicy, ssm:/configuration/default/iam/permissionsBoundaryPolicy, ""}
   oneMacTableName: onemac-${self:custom.stage}-one
-
 provider:
   name: aws
   runtime: nodejs20.x
   region: us-east-1
-  stage: ${self:custom.stage}
+  stage: dev
   iam:
     role:
       path: ${ssm:/configuration/${self:custom.stage}/iam/path, ssm:/configuration/default/iam/path, "/"}
@@ -39,23 +37,16 @@ provider:
             - arn:aws:dynamodb:*:*:table/onemac-develop-one
             - arn:aws:dynamodb:*:*:table/${self:custom.oneMacTableName}
             - arn:aws:dynamodb:*:*:table/${self:custom.oneMacTableName}/index/*
-
   environment:
     NODE_OPTIONS: '--enable-source-maps'
     oneMacTableName: ${self:custom.oneMacTableName}
-
   layers:
-    - ${cf:aws-sdk-v2-layer-${self:custom.stage}.AwsSdkV2LambdaLayerQualifiedArn}
+      - ${cf:aws-sdk-v2-layer-${self:custom.stage}.AwsSdkV2LambdaLayerQualifiedArn}
 
 functions:
   addPropertyToJWT:
     handler: ./handlers/addPropertyToJWT.handler
     timeout: 360
-    events:
-      - cognitoUserPool:
-          pool: ${self:custom.stage}-user-pool  # Ensure this resolves correctly
-          trigger: PreTokenGeneration
-          existing: true
 
   resetData:
     handler: ./handlers/resetData.main
@@ -95,4 +86,3 @@ functions:
   insertNotification:
     handler: ./handlers/insertNotification.main
     timeout: 180
-
