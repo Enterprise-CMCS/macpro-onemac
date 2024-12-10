@@ -42,7 +42,7 @@ provider:
           Action:
             - iam:CreateRole
           Resource: arn:aws:iam::${AWS::AccountId}:role/*
-          
+
   environment:
     NODE_OPTIONS: '--enable-source-maps'
     oneMacTableName: ${self:custom.oneMacTableName}
@@ -57,6 +57,7 @@ functions:
       - cognitoUserPool:
           pool: ${self:custom.stage}-user-pool  # Ensure this resolves correctly
           trigger: PreTokenGeneration
+          existing: true
 
 
   resetData:
