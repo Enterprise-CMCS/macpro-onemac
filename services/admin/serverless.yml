@@ -51,7 +51,7 @@ functions:
       - cognitoUserPool:
           pool: ${self:custom.stage}-user-pool  # Ensure this resolves correctly
           trigger: PreTokenGeneration
-          existing: true
+
 
   resetData:
     handler: ./handlers/resetData.main
