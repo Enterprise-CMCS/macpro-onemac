@@ -129,6 +129,7 @@ export const main = handler(async (event) => {
   const decodedIdToken = jwt_decode(idToken);
   const idTokenEmail = decodedIdToken.email; 
   console.log("id token email: ", idTokenEmail);
+  console.log("event query email: ",event.queryStringParameters.email )
   const userItem = (await getUser(event.queryStringParameters.email)) ?? {};
 
   if(idTokenEmail !== event.queryStringParameters.email) {
@@ -141,8 +142,8 @@ export const main = handler(async (event) => {
     }
     const loggedInUserItem = await getUser(idTokenEmail)
     console.log("loggedInUserItem: ", loggedInUserItem)
-    const loggedInUserRoleList =  loggedInUserItem.roleList; 
-    const queryUserRoleList = userItem.roleList;
+    const loggedInUserRoleList =  JSON.parse(loggedInUserItem.roleList); 
+    const queryUserRoleList = JSON.parse(userItem.roleList);
     const hasMatchingRoles = checkMatchingRoles(loggedInUserRoleList, queryUserRoleList);
     const isAdminUser = checkAdminUser(userRoles);
     if(!hasMatchingRoles && !isAdminUser ) {
