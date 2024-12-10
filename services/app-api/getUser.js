@@ -78,11 +78,11 @@ const allowedRoles = [
 
 function checkMatchingRoles(arr1, arr2) {
   // Iterate through each element in array1
-  for (let item1 of arr1) {
+  for (let i = 0; i<arr1.length; i++) {
     // Iterate through each element in array2
-    for (let item2 of arr2) {
+    for (let j = 0; j<arr2.length; j++) {
       // Check if both role and territory match
-      if (item1.role === "active" && item2.role === "active" && item1.territory === item2.territory) {
+      if (arr1[i].role === "active" && arr2[j].role === "active" && arr1[i].territory === arr2[j].territory) {
         console.log("match found")
         return true; 
       }
