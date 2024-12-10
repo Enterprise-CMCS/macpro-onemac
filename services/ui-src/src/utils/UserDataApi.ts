@@ -19,15 +19,15 @@ class UserDataApi {
     }
   }
 
-  /**
-   * Add the idToken to the x-id-token header
-   */
-    private async addIdTokenToHeaders() {
-      const idToken = await this.getIdToken();
-      return {
-        "IdToken": idToken, // Use x-id-token header 
-      };
-    }
+  // /**
+  //  * Add the idToken to the x-id-token header
+  //  */
+  //   private async addIdTokenToHeaders() {
+  //     const idToken = await this.getIdToken();
+  //     return {
+  //       "IdToken": idToken, // Use x-id-token header 
+  //     };
+  //   }
   /**
    * Fetch the list of users appropriate for this User
    * @return a list of users
@@ -61,10 +61,10 @@ class UserDataApi {
     }
 
     try {
-      const headers = await this.addIdTokenToHeaders();
-      return await API.get("oneMacAPI", `/getUser`, {
+      const idToken = await this.getIdToken();
+      return await API.post("oneMacAPI", `/getUser`, {
         queryStringParameters: { email: userEmail },
-        headers, 
+        body: {idToken: idToken}
       });
     } catch (error) {
       return handleApiError(
