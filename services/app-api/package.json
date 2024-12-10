@@ -32,7 +32,7 @@
     "date-fns": "^2.16.1",
     "dynamodb-local": "^0.0.32",
     "joi": "^17.4.0",
-    "jwt-decode": "^4.0.0",
+    "jwt-decode": "^3.1.2",
     "luxon": "^1.25.0",
     "serverless-dynamodb-local": "^0.2.39",
     "uuid": "^7.0.3"
