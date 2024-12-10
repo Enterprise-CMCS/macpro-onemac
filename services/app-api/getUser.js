@@ -67,10 +67,48 @@ export const getUser = async (userEmail) => {
   return returnUser;
 };
 
+const allowedRoles = [
+  "cmsroleapprover",
+  "systemadmin",
+  "statesystemadmin",
+  "helpdesk",
+  "defaultcmsuser",
+  "cmsreviewer"
+];
+
+function checkMatchingRoles(arr1, arr2) {
+  // Iterate through each element in array1
+  for (let item1 of arr1) {
+    // Iterate through each element in array2
+    for (let item2 of arr2) {
+      // Check if both role and territory match
+      if (item1.role === "active" && item2.role === "active" && item1.territory === item2.territory) {
+        console.log("match found")
+        return true; 
+      }
+    }
+  }
+  return false; // Return false if no match is found
+}
+
+function checkAdminUser(arr) {
+  for (let i = 0; i < arr.length; i++) {        
+    if (allowedRoles.includes(arr[i])) {
+      console.log("not an admin user");
+      return true;
+    }
+  }
+  console.log("not an admin user");
+  return false;
+}
+
+
+
+
 // Gets owns user data from User DynamoDB table
 export const main = handler(async (event) => {
   const idToken = event.headers["x-id-token"];
-
+  console.log("Received x-id-token:", idToken);
   if (!idToken) {
     console.log("x-id-token header is missing");
     return {
@@ -79,9 +117,33 @@ export const main = handler(async (event) => {
     };
   }
 
-  console.log("Received x-id-token:", idToken);
-
+  const decodedIdToken = jwt_decode(idToken);
+  const idTokenEmail = decodedIdToken.email; 
+  console.log("id token email: ", idTokenEmail);
   const userItem = (await getUser(event.queryStringParameters.email)) ?? {};
+
+  if(idTokenEmail !== event.queryStringParameters.email) {
+    let userRoles = decodedIdToken.user_roles;
+    try {
+      userRoles = JSON.parse(userRoles);
+    } catch (error) {
+      console.error('Error parsing user_roles:', error);
+      userRoles = [];
+    }
+    const loggedInUserItem = await getUser(idTokenEmail)
+    console.log("loggedInUserItem: ", loggedInUserItem)
+    const loggedInUserRoleList =  loggedInUserItem.roleList; 
+    const queryUserRoleList = userItem.roleList;
+    const hasMatchingRoles = checkMatchingRoles(loggedInUserRoleList, queryUserRoleList);
+    const isAdminUser = checkAdminUser(userRoles);
+    if(!hasMatchingRoles && !isAdminUser ) {
+      console.log("permission denied");
+      return {
+        statusCode: 400,
+        body: JSON.stringify({ error: "permission denied" }),
+      };
+    }
+  }
   userItem.validRoutes = getUserRoleObj(userItem.roleList).getAccesses();
 
   return userItem;
