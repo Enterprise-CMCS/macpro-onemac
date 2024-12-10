@@ -2,7 +2,7 @@ import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
 import jwt_decode from "jwt-decode";
 
-import { getUserRoleObj } from "cmscommonlib";
+import { getUserRoleObj, RESPONSE_CODE } from "cmscommonlib";
 
 /**
  * returns the User Table entry who's id is this email
@@ -108,7 +108,15 @@ function checkAdminUser(arr) {
 // Gets owns user data from User DynamoDB table
 export const main = handler(async (event) => {
   console.log("get user invoked")
-  const idToken = event.headers["IdToken"];
+  let body;
+  try {
+    body = JSON.parse(event.body);
+  } catch (e) {
+    console.error("Failed to parse body", e);
+    return RESPONSE_CODE.USER_SUBMISSION_FAILED;
+  }
+  console.log("body: ", body)
+  const idToken = body.idToken;
   console.log("Received idToken:", idToken);
   if (!idToken) {
     console.log("idToken header is missing");
