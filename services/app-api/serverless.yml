@@ -15,7 +15,7 @@ plugins:
   - serverless-associate-waf
   - serverless-offline
   - serverless-iam-helper
-  # - serverless-s3-bucket-helper
+  - serverless-s3-bucket-helper
 custom:
   stage: ${opt:stage, self:provider.stage}
   oneMacTableName: onemac-${self:custom.stage}-one
@@ -567,7 +567,7 @@ functions:
     events:
       - http:
           path: getUser
-          method: get
+          method: post
           cors: true
           authorizer: aws_iam
 
