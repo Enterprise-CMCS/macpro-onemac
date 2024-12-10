@@ -107,7 +107,8 @@ function checkAdminUser(arr) {
 
 // Gets owns user data from User DynamoDB table
 export const main = handler(async (event) => {
-  const idToken = event.headers["xidToken"];
+  console.log("get user invoked")
+  const idToken = event.headers["IdToken"];
   console.log("Received idToken:", idToken);
   if (!idToken) {
     console.log("idToken header is missing");
