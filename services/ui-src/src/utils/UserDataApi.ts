@@ -25,7 +25,7 @@ class UserDataApi {
     private async addIdTokenToHeaders() {
       const idToken = await this.getIdToken();
       return {
-        "x-id-token": idToken, // Use x-id-token header
+        "idToken": idToken, // Use x-id-token header
       };
     }
   /**

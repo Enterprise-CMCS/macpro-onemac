@@ -107,13 +107,13 @@ function checkAdminUser(arr) {
 
 // Gets owns user data from User DynamoDB table
 export const main = handler(async (event) => {
-  const idToken = event.headers["x-id-token"];
-  console.log("Received x-id-token:", idToken);
+  const idToken = event.headers["xidToken"];
+  console.log("Received idToken:", idToken);
   if (!idToken) {
-    console.log("x-id-token header is missing");
+    console.log("idToken header is missing");
     return {
       statusCode: 400,
-      body: JSON.stringify({ error: "x-id-token header is missing" }),
+      body: JSON.stringify({ error: "idToken header is missing" }),
     };
   }
 
