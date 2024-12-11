@@ -87,7 +87,7 @@ export const getDetails = async (event) => {
     if (!userRoleObj.isCMSUser && result.Item.reviewTeam)
       delete result.Item.reviewTeam;
 
-    result.Item.actions = getActionsForPackage(
+    result.Item.actions = await getActionsForPackage(
       result.Item.componentType,
       originalStatus,
       !!result.Item.latestRaiResponseTimestamp,
