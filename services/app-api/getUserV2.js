@@ -1,9 +1,8 @@
 import handler from "./libs/handler-lib";
-import dynamoDb from "./libs/dynamodb-lib";
 import jwt_decode from "jwt-decode";
 import {getUser} from "./getUser";
  
-import { getUserRoleObj, RESPONSE_CODE } from "cmscommonlib";
+import { getUserRoleObj } from "cmscommonlib";
 
 /**
  * returns the User Table entry who's id is this email
