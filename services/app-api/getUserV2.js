@@ -64,6 +64,13 @@ export const main = handler(async (event) => {
   console.log("decoded id token: ", decodedIdToken);
   const idTokenEmail = decodedIdToken.email; 
   let userRoles = decodedIdToken.user_roles;
+
+  if(!userRoles) {
+    const userItem = (await getUser(event.queryStringParameters.email)) ?? {};
+    userItem.validRoutes = getUserRoleObj(userItem.roleList).getAccesses();
+    return userItem;
+  }
+  
   try {
     userRoles = JSON.parse(userRoles);
   } catch (error) {
