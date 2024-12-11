@@ -59,8 +59,11 @@ export interface ColumnPickerProps<V extends {}> {
   internalName: string;
 }
 
-const orderColumns = (a: { Header: string }, b: { Header: string }) => {
-  return a.Header.localeCompare(b.Header);
+const orderColumns = (a: ColumnInstance<any>, b: ColumnInstance<any>) => {
+  const x = a.Header?.toString();
+  const y = b.Header?.toString();
+  if (x && y) return x.localeCompare(y);
+  else return 0;
 };
 
 /** Takes a column ID and boolean to appropriately store the IDs of columns
@@ -120,6 +123,17 @@ export const ColumnPicker: FC<ColumnPickerProps<any>> = ({
   ] = useToggle(false);
   const dropdownButtonRef = useRef<HTMLDivElement>(null);
 
+  const columnsChoice = useMemo(
+    () =>
+      columnsInternal
+        .filter(
+          ({ id }: ColumnInstance<PackageRowValue>) =>
+            !["componentId", "packageActions"].includes(id)
+        )
+        .sort(orderColumns),
+    [columnsInternal]
+  );
+
   useEffect(() => {
     const listenToClick = (event: MouseEvent) => {
       let ignoreClickElement = dropdownButtonRef;
@@ -158,39 +172,29 @@ export const ColumnPicker: FC<ColumnPickerProps<any>> = ({
             aria-label="Column Picker For Table"
             className="dropdown-column-picker-box"
           >
-            {columnsInternal
-              .filter(
-                ({ id }: ColumnInstance<PackageRowValue>) =>
-                  //@ts-ignore
-                  !["componentId", "packageActions"].includes(id)
+            {columnsChoice.map(
+              ({
+                Header,
+                id,
+                toggleHidden,
+                isVisible,
+              }: ColumnInstance<PackageRowValue>) => (
+                <Choice
+                  className="dropdown-column-picker-button"
+                  label={Header as string}
+                  name={`columnPicker-${Header}`}
+                  value={Header as string}
+                  onChange={() => {
+                    toggleHidden();
+                    updateVisibilitySavedState(id, isVisible, internalName);
+                  }}
+                  checked={isVisible}
+                  type="checkbox"
+                  size="small"
+                  key={id}
+                />
               )
-              //@ts-ignore
-              .sort(orderColumns)
-              .map(
-                ({
-                  Header,
-                  id,
-                  //@ts-ignore
-                  toggleHidden,
-                  //@ts-ignore
-                  isVisible,
-                }: ColumnInstance<PackageRowValue>) => (
-                  <Choice
-                    className="dropdown-column-picker-button"
-                    label={Header}
-                    name={`columnPicker-${Header}`}
-                    value={Header as string}
-                    onChange={() => {
-                      toggleHidden();
-                      updateVisibilitySavedState(id, isVisible, internalName);
-                    }}
-                    checked={isVisible}
-                    type="checkbox"
-                    size="small"
-                    key={id}
-                  />
-                )
-              )}
+            )}
           </div>
         )}
       </div>
@@ -266,7 +270,7 @@ function TextFilter({
 
     for (const {
       values: { [id]: value },
-      // @ts-ignore
+      ///@ts-ignore
       depth,
     } of preGlobalFilteredFlatRows) {
       if (typeof value === "string") possibleUnique.add(value);
@@ -282,7 +286,11 @@ function TextFilter({
   }, [preGlobalFilteredFlatRows, id]) as [string[], Set<string>];
 
   const onCheckboxSelect = useCallback(
-    ({ currentTarget: { checked, value } }) => {
+    ({
+      currentTarget: { checked, value },
+    }: {
+      currentTarget: { checked: boolean; value: string };
+    }) => {
       setFilter((oldFilterValue?: string[]) => {
         if (!oldFilterValue) oldFilterValue = [...possibleValues]; // begin with everything
         const newFilterValue: Set<string> = new Set(oldFilterValue);
@@ -345,6 +353,7 @@ function DateFilter({
 }: FilterProps & { inThePast?: boolean }) {
   const { dispatch: updateFilterChips } = useFilterChipContext();
   const onChangeSelection = useCallback(
+    ///@ts-ignore
     (value) => {
       value !== null && value?.length
         ? /* Filters come in an array with 2 dates, the earlier always at
@@ -434,6 +443,7 @@ const MultiSelectList = ({
 }) => {
   const { dispatch: updateFilterChips } = useFilterChipContext();
   const onSelect = useCallback(
+    ///@ts-ignore
     (selected) => {
       setFilter(selected.map(({ value }: SelectOption) => value));
       /* We can universally use "ADD" action type as it handles MULTISELECT
@@ -554,10 +564,10 @@ function FilterPane<V extends {}>({
                   <Button
                     autoFocus
                     className="close-filter-pane"
-                    inversed
+                    onDark
                     onClick={toggleShowFilters}
                     size="small"
-                    variation="transparent"
+                    variation="ghost"
                   >
                     Close <FontAwesomeIcon icon={faTimes} />
                   </Button>
@@ -565,7 +575,7 @@ function FilterPane<V extends {}>({
                 <Button
                   className="reset-button-filter"
                   onClick={onResetFilters}
-                  inversed
+                  onDark
                 >
                   Reset
                 </Button>
@@ -577,12 +587,12 @@ function FilterPane<V extends {}>({
                       <AccordionItem
                         buttonClassName="inversed-accordion-button"
                         contentClassName="inversed-accordion-content"
-                        heading={column.render("Header")}
+                        heading={column.render("Header") as string}
                         headingLevel="6"
                         id={column.id}
                         key={column.id}
                       >
-                        {column.render("Filter")}
+                        {<>{column.render("Filter")}</>}
                       </AccordionItem>
                     ))}
                 </div>
@@ -625,11 +635,20 @@ export function SearchAndFilter<V extends {} = {}>({
   }, []);
 
   const onKeywordChange = useCallback(
-    ({ currentTarget: { value } }) => {
+    ({ currentTarget: { value } }: { currentTarget: { value: string } }) => {
       setSearchTerm(value);
       debouncedSearch(value);
     },
     [debouncedSearch]
+  );
+
+  // this is to avoid typing errors but I am going to look into better solution - andie
+  const columnsChoice: ColumnInstance<any>[] = useMemo(
+    () =>
+      columnsInternal.map((column) => {
+        return { ...column } as ColumnInstance;
+      }),
+    [columnsInternal]
   );
 
   return (
@@ -660,7 +679,7 @@ export function SearchAndFilter<V extends {} = {}>({
       </div>
       <div className="picker-filter-wrapper">
         <ColumnPicker
-          columnsInternal={columnsInternal}
+          columnsInternal={columnsChoice}
           internalName={internalName}
         />
         <div className="filter-buttons">

@@ -142,7 +142,7 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
   }
 
   const validateComponentId = useCallback(
-    (componentId) => {
+    (componentId: string | undefined) => {
       let errorMessages: Message[] = [];
 
       // Do not validate if no value

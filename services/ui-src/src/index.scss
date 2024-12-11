@@ -1,22 +1,29 @@
-$font-path: "~@cmsgov/design-system/dist/fonts";
-$image-path: "~@cmsgov/design-system/dist/images";
+// $font-path: "~@cmsgov/design-system/dist/fonts.css";
+// $image-path: "~@cmsgov/design-system/dist/images.css";
 $input-border-radius: 3px;
 $color-primary-alt-lightest: #f0fafe;
-@import "@cmsgov/design-system/dist/scss/index";
+
+@import "@cmsgov/design-system/dist/css/index";
+@import "@cmsgov/design-system/dist/css/core-theme";
+
+@import "@cmsgov/design-system/dist/scss/core-component-tokens";
+@import "@cmsgov/design-system/dist/scss/core-tokens";
+@import "@cmsgov/design-system/dist/scss/core-theme";
+
 @import "~bootstrap/dist/css/bootstrap.min.css";
 
 @mixin gradient-top-border {
   background: linear-gradient(
     90.11deg,
     $color-primary 49.91%,
-    $color-primary-alt 66.06%
+    $color-primary-light 66.06%
   );
   border-radius: 3px 3px 0px 0px;
   height: 8px;
 }
 
 @mixin max-width-ultra-wide {
-  max-width: $width-lg;
+  max-width: $media-width-lg;
 }
 
 // Expansion for the CMS Review component
@@ -42,7 +49,7 @@ $color-primary-alt-lightest: #f0fafe;
   th {
     border-color: $color-gray-lightest;
     background-color: $color-white;
-    color: $color-black;
+    color: $color-gray-darkest;
     font-weight: 600;
     padding-left: 0px;
     padding-top: 0px;
@@ -107,7 +114,7 @@ $color-primary-alt-lightest: #f0fafe;
   table,
   th,
   td {
-    border: 1px solid $color-black;
+    border: 1px solid $color-gray-darkest;
   }
 
   td {
@@ -122,24 +129,24 @@ $color-primary-alt-lightest: #f0fafe;
     text-align: center;
   }
 }
-body {
-  @extend .ds-base;
-}
+// body {
+//   @extend .ds-base;
+// }
 
 h1 {
-  @extend .ds-h1;
+  @extend .ds-text-heading--3xl;
 }
 
 h2 {
-  @extend .ds-h2;
+  @extend .ds-text-heading--2xl;
 }
 
 h3 {
-  @extend .ds-h3;
+  @extend .ds-text-heading--xl;
 }
 
 h4 {
-  @extend .ds-h4;
+  @extend .ds-text-heading--lg;
 }
 
 legend {
@@ -185,7 +192,7 @@ p.field-hint {
 }
 .field-error-message {
   @extend .ds-c-field__hint;
-  color: $color-red;
+  color: $color-error;
 }
 .dashboard-white {
   background-color: $color-white;
@@ -211,7 +218,7 @@ p.field-hint {
   min-height: 7rem;
 
   h1 {
-    @extend .ds-h2;
+    @extend .ds-text-heading--3xl;
     margin: 0;
   }
 
@@ -257,9 +264,9 @@ p.field-hint {
   }
 }
 
-ul {
-  @extend .ds-c-list;
-}
+// ul {
+//   @extend .ds-c-list;
+// }
 
 .ds-u-padding--8 {
   padding-left: 70px !important;
@@ -323,26 +330,26 @@ ul {
     padding-bottom: 4px;
 
     &:focus-within {
-      @include focus-styles;
+      @extend .ds-u-focus-within;
     }
   }
 
   .uploader-input-label-active {
     @extend .uploader-input-label;
-    @extend .ds-c-button--primary;
+    @extend .ds-c-button--solid;
   }
 
   .uploader-input-label-disabled {
     @extend .uploader-input-label;
     background-color: $color-gray-lighter;
     border-color: transparent;
-    color: $color-gray-dark;
+    color: $color-gray-darkest;
     pointer-events: none;
   }
 
   .uploader-clear-button {
     @extend .ds-c-button;
-    @extend .ds-c-button--transparent;
+    @extend .ds-c-button--ghost;
     @extend .ds-u-padding--0;
     color: $color-primary;
 
@@ -402,7 +409,7 @@ input[type="file"] {
 .ds-c-review:not(.original-review-component) {
   .ds-c-review__body {
     @extend .ds-u-margin-top--1;
-    font-size: 2rem;
+    font-size: 1rem;
     color: $color-gray;
   }
 }
@@ -520,13 +527,7 @@ input[type="file"] {
   @extend .ds-u-align-items--center;
 
   h2 {
-    @extend .ds-h3;
     @extend .ds-u-margin-top--1;
-  }
-  .topic-title {
-    @extend .ds-h3;
-    @extend .ds-u-margin-top--0;
-    margin-bottom: 24px;
   }
   .ds-c-review {
     @extend .ds-u-border-bottom--0;
@@ -602,7 +603,7 @@ input[type="file"] {
     span {
       font-size: 24px;
 
-      @media only screen and (max-width: $width-lg) {
+      @media only screen and (max-width: $media-width-lg) {
         font-size: 21px;
       }
     }
@@ -672,7 +673,7 @@ input[type="file"] {
     }
 
     span:first-child {
-      @extend .ds-h2;
+      @extend .ds-text-heading--2xl;
       @extend .ds-u-margin-top--7;
     }
   }
@@ -714,7 +715,7 @@ input[type="file"] {
     span {
       font-size: 24px;
 
-      @media only screen and (max-width: $width-lg) {
+      @media only screen and (max-width: $media-width-lg) {
         font-size: 21px;
       }
     }
@@ -763,7 +764,7 @@ article.form-container {
     }
 
     h2.ds-c-review__heading {
-      @extend .ds-h2;
+      @extend .ds-text-heading--2xl;
       @extend .ds-u-font-weight--bold;
       @extend .ds-u-margin-bottom--3;
     }
@@ -812,16 +813,16 @@ article.form-container {
   }
 
   .section-title-center {
-    @extend .ds-h2;
+    @extend .ds-text-heading--2xl;
     text-align: center;
   }
 
   .section-title {
-    @extend .ds-h2;
+    @extend .ds-text-heading--2xl;
   }
 
   .section-subtitle {
-    @extend .ds-h3;
+    @extend .ds-text-heading--xl;
   }
 
   .section-how-it-works {
@@ -872,7 +873,7 @@ article.form-container {
 }
 
 .circle-single-digit {
-  @extend .ds-h2;
+  @extend .ds-text-heading--2xl;
   width: 40px;
   height: 40px;
   color: $color-primary;
@@ -1063,7 +1064,7 @@ article.form-container {
     th,
     td {
       &:not(:last-child) {
-        padding-right: $table-padding;
+        padding-right: $spacer-1;
       }
     }
   }
@@ -1138,13 +1139,13 @@ article.form-container {
   }
 
   .user-state {
-    color: $color-black;
+    color: $color-gray-darkest;
   }
 
   .user-status {
     font-weight: 700;
     text-transform: capitalize;
-    color: $color-black;
+    color: $color-gray-darkest;
   }
 
   td:not(:last-child) {
@@ -1156,7 +1157,7 @@ article.form-container {
   }
 
   td:last-child button {
-    color: $color-black;
+    color: $color-gray-darkest;
     width: 100%;
   }
 }
@@ -1264,6 +1265,7 @@ article.form-container {
 
   #oneMacLogo {
     @extend .ds-u-margin-right--6;
+    @extend .ds-u-padding--1;
     max-height: 4rem;
   }
 
@@ -1360,6 +1362,7 @@ article.form-container {
   text-decoration-color: $color-white;
   text-decoration-thickness: 4px;
   text-decoration-skip-ink: none;
+  text-underline-offset: auto;
 }
 
 .usa-bar {
@@ -1389,7 +1392,7 @@ article.form-container {
     display: inline-block;
 
     &:not(.ds-c-field__hint) {
-      @extend .ds-h3;
+      @extend .ds-text-heading--xl;
       @extend .ds-u-margin-bottom--1;
     }
   }
@@ -1501,7 +1504,7 @@ article.form-container {
     .multi-select-error-message {
       @extend .ds-c-field__hint;
       height: 35px;
-      color: $color-red;
+      color: $color-error;
     }
 
     .no-error-offset {
@@ -1541,7 +1544,7 @@ article.form-container {
     width: 100vw;
   }
 
-  @media only screen and (max-width: $width-lg) {
+  @media only screen and (max-width: $media-width-lg) {
     .footer-wrapper {
       flex-direction: column;
     }
@@ -1556,7 +1559,7 @@ article.form-container {
 
 .page-title-bar {
   .header-wrapper {
-    @media only screen and (max-width: $width-sm) {
+    @media only screen and (max-width: $media-width-sm) {
       justify-content: center !important;
       flex-direction: column;
       gap: 1rem;
@@ -1664,7 +1667,7 @@ article.form-container {
     margin-right: 7.2rem;
     @include max-width-ultra-wide;
 
-    @media only screen and (max-width: $width-lg) {
+    @media only screen and (max-width: $media-width-lg) {
       .polygon-image {
         width: 80%;
         top: 130px;
@@ -1810,7 +1813,7 @@ article.form-container {
   margin: 0 auto;
   background-color: $color-white;
 
-  @media only screen and (max-width: $width-xl) {
+  @media only screen and (max-width: $media-width-xl) {
     max-width: 560px;
     // Centers section titles when on mobile view
     h1 {
@@ -1831,6 +1834,7 @@ article.form-container {
 
   // Row titles for home page content
   h1 {
+    @extend .ds-text-heading--3xl;
     @extend .ds-u-margin-top--7;
     @extend .ds-u-padding-top--7;
     @extend .ds-u-padding-x--1;
@@ -1843,7 +1847,7 @@ article.form-container {
     @extend .ds-u-justify-content--between;
     width: 100%;
 
-    @media only screen and (max-width: $width-xl) {
+    @media only screen and (max-width: $media-width-xl) {
       .mac-card-wrapper {
         width: 100%;
       }
@@ -1878,6 +1882,7 @@ article.form-container {
       }
 
       h2 {
+        @extend .ds-text-heading--2xl;
         @include title-font(24px, 30px, 700);
         @extend .ds-u-margin-bottom--3;
         color: $color-base;
@@ -1915,6 +1920,7 @@ article.form-container {
     gap: 1rem;
 
     h2 {
+      @extend .ds-text-heading--2xl;
       @include title-font(18px, 24px, 700);
       margin-top: 0;
       color: $color-gray;
@@ -1992,6 +1998,10 @@ article.form-container {
     @extend .ds-u-lg-margin-top--0;
     @extend .ds-u-padding--0;
 
+    h2 {
+      @extend .ds-text-heading--2xl;
+    }
+
     ul {
       padding-left: 2ch !important;
     }
@@ -2063,7 +2073,7 @@ article.form-container {
 .mac-card-removable-wrapper,
 .cms-group-division-section {
   div {
-    @extend .ds-u-font-size--h3;
+    @extend .ds-u-font-size--xl;
     @extend .ds-u-font-weight--semibold;
     line-height: 1.42857143; //carried over from bootstrap dd height
     margin-bottom: 5px;
@@ -2093,7 +2103,6 @@ article.form-container {
   font-size: 18px;
   text-decoration: none;
   position: relative;
-  padding: 10px;
   padding-left: 40px;
   color: #0071bc;
   background-color: white;
@@ -2134,11 +2143,20 @@ article.form-container {
   margin: 0 auto;
   gap: 3rem;
 
+  h2 {
+    @extend .ds-u-margin-top--2;
+  }
+
+  .topic-title {
+    @extend .ds-text-heading--2xl;
+    @extend .ds-u-margin--2;
+  }
+
   #question-list {
     width: 100%;
   }
 
-  @media only screen and (min-width: $width-md) {
+  @media only screen and (min-width: $media-width-md) {
     #contact-card {
       width: 350px;
       position: sticky;
@@ -2146,7 +2164,7 @@ article.form-container {
     }
   }
 
-  @media only screen and (max-width: $width-md) {
+  @media only screen and (max-width: $media-width-md) {
     flex-wrap: wrap-reverse;
     #contact-card {
       width: 100%;
@@ -2187,7 +2205,7 @@ article.form-container {
 
 .submission-form-cancel-button {
   @extend .ds-c-button;
-  @extend .ds-c-button--transparent;
+  @extend .ds-c-button--ghost;
   font-family: Open Sans;
   font-style: normal;
   font-weight: bold;
@@ -2238,7 +2256,7 @@ article.form-container {
 }
 
 .mac-card-title {
-  @extend .ds-h2;
+  @extend .ds-text-heading--2xl;
   @extend .ds-u-margin-bottom--4;
   line-height: 30px;
   text-align: left;
@@ -2521,13 +2539,13 @@ article.form-container {
   width: -moz-available;
   flex-wrap: wrap;
 
-  @media only screen and (max-width: $width-md) {
+  @media only screen and (max-width: $media-width-md) {
     align-items: center;
     justify-content: center;
   }
 
   > .search-bar {
-    @media only screen and (max-width: $width-md) {
+    @media only screen and (max-width: $media-width-md) {
       width: 100%;
     }
     > label {
@@ -2662,7 +2680,7 @@ article.form-container {
     right: 0;
 
     .no-results-header {
-      @extend .ds-h4;
+      @extend .ds-text-heading--lg;
     }
   }
 }
@@ -2808,7 +2826,7 @@ article.form-container {
 }
 
 .custom-multi-select {
-  color: $color-black;
+  color: $color-gray-darkest;
 }
 
 .parent-row-expanded .row-expander-cell button svg {
@@ -2852,7 +2870,7 @@ article.form-container {
     width: 45%;
   }
 
-  @media only screen and (max-width: $width-sm) {
+  @media only screen and (max-width: $media-width-sm) {
     justify-content: start;
     flex-direction: column;
     gap: 1rem;
@@ -2874,8 +2892,8 @@ article.form-container {
   border-top: none;
 
   .detail-card-status {
-    @extend .ds-h2;
-    color: $color-black;
+    @extend .ds-text-heading--2xl;
+    color: $color-gray-darkest;
   }
 
   section {
@@ -2899,7 +2917,7 @@ article.form-container {
 
   a {
     @extend .ds-c-button;
-    @extend .ds-c-button--transparent;
+    @extend .ds-c-button--ghost;
     @extend .ds-u-text-decoration--none;
     @extend .ds-u-padding--0;
     text-align: left;
@@ -2944,7 +2962,7 @@ article.form-container {
 .video {
   button {
     @extend .ds-c-button;
-    @extend .ds-c-button--transparent;
+    @extend .ds-c-button--ghost;
     @extend .ds-u-text-decoration--none;
     @extend .ds-u-padding--0;
     @extend .ds-u-justify-content--center;
@@ -2952,7 +2970,7 @@ article.form-container {
   }
 }
 .review-team {
-  @extend .ds-c-button--transparent;
+  @extend .ds-c-button--ghost;
   @extend .ds-c-button--small;
   @extend .ds-u-padding--0;
   text-align: left;
