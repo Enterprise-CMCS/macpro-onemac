@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { useLocation, useParams} from "react-router-dom";
+import { useLocation, useParams, useHistory } from "react-router-dom";
 import { Button, Review } from "@cmsgov/design-system";
 
 
@@ -158,6 +158,7 @@ export const GroupDivisionDisplay = ({ profileData = {} }) => {
  * Component housing data belonging to a particular user
  */
 const UserPage = () => {
+  const history = useHistory();
   const { userProfile, setUserInfo, updatePhoneNumber, userRole, userStatus } =
     useAppContext();
   const location = useLocation();
@@ -175,10 +176,10 @@ const UserPage = () => {
   const [isEditingPhone, setIsEditingPhone] = useState(false);
   const isReadOnly =
     location.pathname !== ROUTES.PROFILE &&
-    decodeURIComponent(userId) !== userProfile.email;
+    decodeURIComponent(userId) !== window.btoa(userProfile.email);
 
   useEffect(() => {
-    const getProfile = async (profileEmail) => {
+    const getProfile = async (encodedProfileEmail) => {
       if (!isReadOnly) {
         return [{ ...userProfile.userData }, userRole, userStatus];
       }
@@ -188,6 +189,7 @@ const UserPage = () => {
         tempProfileStatus = "status";
 
       try {
+        const profileEmail = window.atob(encodedProfileEmail);
         tempProfileData = await UserDataApi.userProfile(profileEmail);
         const profileAccess = effectiveRoleForUser(tempProfileData?.roleList);
         if (profileAccess !== null)
@@ -195,6 +197,8 @@ const UserPage = () => {
       } catch (e) {
         console.error("Error fetching user data", e);
         setAlertCode(RESPONSE_CODE[e.message]);
+        // redirect if the user is not found
+        history.push("/notfound");
       }
 
       return [tempProfileData, tempProfileRole, tempProfileStatus];
@@ -210,7 +214,7 @@ const UserPage = () => {
         console.error("Error fetching user data", e);
         setAlertCode(RESPONSE_CODE[e.message]);
       });
-  }, [isReadOnly, userId, userProfile, userRole, userStatus]);
+  }, [isReadOnly, userId, userProfile, userRole, userStatus, history]);
 
   const onPhoneNumberCancel = useCallback(() => {
     setIsEditingPhone(false);

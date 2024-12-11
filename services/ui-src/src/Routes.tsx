@@ -5,6 +5,7 @@
 import React, { FC } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 import jwt_decode from "jwt-decode";
+import { useFlags } from "launchdarkly-react-client-sdk";
 
 import {
   ROUTES,
@@ -90,9 +91,22 @@ const RouteListRenderer: FC<{ routes: RouteSpec[] }> = ({ routes }) => {
   if (!useAppContext()?.isAuthenticated) {
     clearTableStateStorageKeys();
   }
+
+  const { enableSubsequentDocumentation } = useFlags();
+  let filteredRoutes;
+  if (!enableSubsequentDocumentation) {
+    // Filter out objects where the component includes a SubsequentSubmission form
+    // This is not currently looking for subroutes since all subsub routes are at the root of the route object
+    filteredRoutes = routes.filter(
+      (route) => !route.path.includes("subsequent-submission")
+    );
+  } else {
+    filteredRoutes = routes;
+  }
+
   return (
     <Switch>
-      {routes.map((routeSpec) => (
+      {filteredRoutes.map((routeSpec) => (
         <RouteWithSubRoutes
           key={routeSpec.key ?? routeSpec.path}
           {...routeSpec}
