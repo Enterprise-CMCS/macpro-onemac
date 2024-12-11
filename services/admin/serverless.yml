@@ -48,11 +48,6 @@ functions:
   addPropertyToJWT:
     handler: ./handlers/addPropertyToJWT.handler
     timeout: 360
-    events:
-      - cognitoUserPool:
-          pool: ${self:custom.stage}-user-pool  # Ensure this resolves correctly
-          trigger: PreTokenGeneration
-
 
   resetData:
     handler: ./handlers/resetData.main
