@@ -49,7 +49,7 @@ function checkAdminUser(arr) {
 // Gets owns user data from User DynamoDB table
 export const main = handler(async (event) => {
   console.log("get user invoked")
-  let body = JSON.parse(event.body);
+  const body = JSON.parse(event.body);
   console.log("body: ", body)
   const idToken = body.idToken;
   console.log("Received idToken:", idToken);
