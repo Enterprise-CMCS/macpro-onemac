@@ -37,11 +37,6 @@ provider:
             - arn:aws:dynamodb:*:*:table/onemac-develop-one
             - arn:aws:dynamodb:*:*:table/${self:custom.oneMacTableName}
             - arn:aws:dynamodb:*:*:table/${self:custom.oneMacTableName}/index/*
-        # Allow CreateRole for IAM actions
-        - Effect: Allow
-          Action:
-            - iam:CreateRole
-          Resource: arn:aws:iam::${AWS::AccountId}:role/*
 
   environment:
     NODE_OPTIONS: '--enable-source-maps'
