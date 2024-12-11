@@ -1,4 +1,4 @@
-import { getUser } from "../../app-api/getUserV2";
+import { getUser } from "../../app-api/getUser";
 
 const handler = async (event) => {
     console.log("JWT claims before modification:", JSON.stringify(event));
