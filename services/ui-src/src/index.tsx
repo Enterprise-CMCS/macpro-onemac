@@ -69,6 +69,5 @@ const LDProviderApp = withLDProvider({
 root.render(
   <BrowserRouter>
     <LDProviderApp />
-  </BrowserRouter>,
-  getApplicationNode()
+  </BrowserRouter>
 );
