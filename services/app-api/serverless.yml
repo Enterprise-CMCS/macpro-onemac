@@ -18,7 +18,7 @@ plugins:
   # - serverless-s3-bucket-helper
 custom:
   stage: ${opt:stage, self:provider.stage}
-  oneMacTableName: onemac-develop-one
+  oneMacTableName: onemac-${self:custom.stage}-one
   iamPath: ${ssm:/configuration/${self:custom.stage}/iam/path, ssm:/configuration/default/iam/path, "/"}
   iamPermissionsBoundaryPolicy: ${ssm:/configuration/${self:custom.stage}/iam/permissionsBoundaryPolicy, ssm:/configuration/default/iam/permissionsBoundaryPolicy, ""}
   emailSource: ${ssm:/configuration/${self:custom.stage}/email/cms_spa_form_from_email, ssm:/configuration/default/email/cms_spa_form_from_email, file(resources/ssm-params.yml):Resources.CmsSpaFormFromEmail.Properties.Value}

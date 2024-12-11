@@ -15,7 +15,7 @@ plugins:
 custom:
   stage: ${opt:stage, 'dev'}  # Ensure the 'stage' is being passed correctly
   iamPermissionsBoundaryPolicy: ${ssm:/configuration/${self:custom.stage}/iam/permissionsBoundaryPolicy, ssm:/configuration/default/iam/permissionsBoundaryPolicy, ""}
-  oneMacTableName: onemac-develop-one
+  oneMacTableName: onemac-${self:custom.stage}-one
 
 provider:
   name: aws
