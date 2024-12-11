@@ -14,7 +14,7 @@ const handler = async (event) => {
         event.response.claimsOverrideDetails.claimsToAddOrOverride = event.response.claimsOverrideDetails.claimsToAddOrOverride || {};
     
         // Example of adding roles dynamically from DynamoDB to the JWT claims
-        event.response.claimsOverrideDetails.claimsToAddOrOverride['user_roles'] = JSON.stringify(roles); // Add user roles
+        event.response.claimsOverrideDetails.claimsToAddOrOverride["user_roles"] = JSON.stringify(roles); // Add user roles
     } catch(e) {
         console.log("error updating id token claims", e)
     }
