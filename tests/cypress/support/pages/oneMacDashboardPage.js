@@ -69,23 +69,23 @@ const closeButton = "//header/button[1]";
 //Element is Xpath use cy.xpath instead of cy.get
 const typeDropDownFilter = "//button[text()='Type']";
 const finalDispositionDatePickerFilter = "#finalDispositionDate-date-filter";
-const typeDropDown = "#componentType-button";
-const statusDropDown = "#packageStatus-button";
+const typeDropDown = "#componentType__button";
+const statusDropDown = "#packageStatus__button";
 const cPOCNameDropDown = "#cpocName-button";
-const finalDispositionDateFilterDropdown = "#finalDispositionDate-button";
+const finalDispositionDateFilterDropdown = "#finalDispositionDate__button";
 const statusFilterCheckboxes = "#packageStatus input";
 const typeFilterCheckboxes = "#componentType input";
 //Element is Xpath use cy.xpath instead of cy.get
 const formalRAIReceivedCheckbox =
-  "//label[contains(@for,'checkbox_columnPicker-Formal RAI')]";
+  "//input[contains(@name,'columnPicker-Formal RAI')]";
 
 //Element is Xpath use cy.xpath instead of cy.get
 const initialSubmissionDateFilterDropdown =
   "//button[text()='Initial Submission']";
 const initialSubmissionDateDatePickerFilter =
   "#submissionTimestamp-date-filter";
-const formalRAIReceivedDateFilterDropdown =
-  "#latestRaiResponseTimestamp-button";
+const formalRAIResponseDateFilterDropdown =
+  "#latestRaiResponseTimestamp__button";
 const formalRAIReceivedDatePickerFilter =
   "#latestRaiResponseTimestamp-date-filter";
 //Element is Xpath use cy.xpath instead of cy.get
@@ -100,41 +100,40 @@ const packageRowOneInitialSubmissionDate = "#submissionTimestamp-0";
 const resetButton = "//button[contains(text(),'Reset')]";
 //Element is Xpath use cy.xpath instead of cy.get
 const initialWaiver1915bCheckBox =
-  "//label[contains(@for,'checkbox_componentType-1915(b) Initial Waiver')]";
+  "//input[contains(@name,'componentType-1915(b) Initial Waiver')]";
 const waiverRenewal1915bCheckBox =
-  "//label[contains(@for,'checkbox_componentType-1915(b) Waiver Renewal')]";
+  "//input[contains(@name,'componentType-1915(b) Waiver Renewal')]";
 const appendixKAmendmentCheckBox =
-  "//label[contains(@for,'checkbox_componentType-1915(c) Appendix K Amendment')]";
+  "//input[contains(@name,'componentType-1915(c) Appendix K Amendment')]";
 const waiverAmendment1915bCheckbox =
-  "//label[contains(@for,'checkbox_componentType-1915(b) Waiver Amendment')]";
+  "//input[contains(@name,'componentType-1915(b) Waiver Amendment')]";
 const temporaryExtension1915bCheckBox =
-  "//label[contains(@for,'checkbox_componentType-1915(b) Temporary Extension')]";
+  "//input[contains(@name,'componentType-1915(b) Temporary Extension')]";
 const temporaryExtension1915cCheckBox =
-  "//label[contains(@for,'checkbox_componentType-1915(c) Temporary Extension')]";
+  "//input[contains(@name,'componentType-1915(c) Temporary Extension')]";
 //Element is Xpath use cy.xpath instead of cy.get
-const CHIPSPACheckBox =
-  "//label[contains(@for,'checkbox_componentType-CHIP SPA')]";
+const CHIPSPACheckBox = "//input[contains(@name,'componentType-CHIP SPA')]";
 //Element is Xpath use cy.xpath instead of cy.get
 const MedicaidSPACheckBox =
-  "//label[contains(@for,'checkbox_componentType-Medicaid SPA')]";
+  "//input[contains(@name,'componentType-Medicaid SPA')]";
 //Element is Xpath use cy.xpath instead of cy.get
 const underReviewCheckBox =
-  "//label[contains(@for,'checkbox_packageStatus-Under Review')]";
+  "//input[contains(@name,'packageStatus-Under Review')]";
 //Element is Xpath use cy.xpath instead of cy.get
 const withdrawalRequestedCheckBox =
-  "//label[contains(@for,'checkbox_packageStatus-Withdrawal Requested')]";
+  "//input[contains(@name,'packageStatus-Withdrawal Requested')]";
 //Element is Xpath use cy.xpath instead of cy.get
 const raiResponseWithdrawalRequestedCheckBox =
-  "//label[contains(@for,'checkbox_packageStatus-Formal RAI Response - Withdrawal Requested')]";
+  "//input[contains(@name,'packageStatus-Formal RAI Response - Withdrawal Requested')]";
 const checkboxfinalDispositionDate =
-  "//span[contains(text(),'Final Disposition')]";
+  "//input[contains(@name,'columnPicker-Final Disposition')]";
 const finalDispositionColumn = "#finalDispositionDateColHeader";
 //Element is Xpath use cy.xpath instead of cy.get
 const terminatedCheckBox =
-  "//label[contains(@for,'checkbox_packageStatus-Waiver Terminated')]";
+  "//input[contains(@name,'packageStatus-Waiver Terminated')]";
 //Element is Xpath use cy.xpath instead of cy.get
 const withdrawnCheckBox =
-  "//label[contains(@for,'checkbox_packageStatus-Package Withdrawn')]";
+  "//input[contains(@name,'packageStatus-Package Withdrawn')]";
 //Element is Xpath use cy.xpath instead of cy.get
 const raiResponseSubmitted = "//span[contains(text(),'RAIResponse Submitted')]";
 //Element is Xpath use cy.xpath instead of cy.get
@@ -145,23 +144,24 @@ const ShowHideColumnsBTN = "//button[contains(text(),'Show/Hide Columns')]";
 const checkBox90thDay = "//span[contains(text(),'90th Day')]";
 //Element is Xpath use cy.xpath instead of cy.get
 const checkBoxInitialSubmissionDate =
-  "//span[contains(text(),'Initial Submission')]";
+  "//input[contains(@name,'columnPicker-Initial Submission')]";
 //Element is Xpath use cy.xpath instead of cy.get
-const checkboxState = "//span[text()='State']";
+const checkboxState = "//input[contains(@name,'columnPicker-State')]";
 //Element is Xpath use cy.xpath instead of cy.get
-const checkBoxStatus = "//span[contains(text(),'Status')]";
+const checkBoxStatus = "//input[contains(@name,'columnPicker-Status')]";
 //Element is Xpath use cy.xpath instead of cy.get
-const checkBoxSubmittedBy = "//span[contains(text(),'Submitted By')]";
+const checkBoxSubmittedBy =
+  "//input[contains(@name,'columnPicker-Submitted By')]";
 //Element is Xpath use cy.xpath instead of cy.get
-const checkBoxType = "//span[contains(text(),'Type')]";
-const checkboxCPOCName = "//span[contains(text(),'CPOC Name')]";
+const checkBoxType = "//input[contains(@name,'columnPicker-Type')]";
+const checkboxCPOCName = "//input[contains(@name,'columnPicker-CPOC Name')]";
 const IDNumberColumn = "#componentIdColHeader";
 const typeColumn = "#componentTypeColHeader";
 const statusColumn = "#packageStatusColHeader";
 const initialSubmissionDateColumn = "#submissionTimestampColHeader";
 const submittedByColumn = "#submitterColHeader";
 const actionsColumn = "#packageActionsColHeader";
-const formalRAIReceivedColumn = "#latestRaiResponseTimestampColHeader";
+const formalRAIResponseColumn = "#latestRaiResponseTimestampColHeader";
 const cPOCNameColumn = "#cpocNameColHeader";
 const packageRowOneType = "#componentType-0";
 const packageRowOneState = "#territory-0";
@@ -183,7 +183,7 @@ const waiverTerminated =
 //Element is Xpath use cy.xpath instead of cy.get
 const Unsubmitted =
   "//a[contains(text(),'MD.83420')]/../following-sibling::td[contains(@id,'packageActions')]/button";
-const stateDropdownFilter = "#territory-button";
+const stateDropdownFilter = "#territory__button";
 const stateFilterSelect = "#territory-filter-select";
 const statesSelected = "#territory";
 //Element is Xpath use cy.xpath instead of cy.get
@@ -191,32 +191,27 @@ const removeBtn = (state) => `//*[@aria-label='Remove ${state}']`;
 const waiversTab = "#show-waivers-button";
 const spasTab = "#show-spas-button";
 //Element is Xpath use cy.xpath instead of cy.get
-const raiIssuedCheckbox =
-  "//label[contains(@for,'checkbox_packageStatus-RAI Issued')]";
+const raiIssuedCheckbox = "//input[contains(@name,'packageStatus-RAI Issued')]";
 const pendingRaiCheckbox =
-  "//label[contains(@for,'checkbox_packageStatus-Pending - RAI')]";
+  "//input[contains(@name,'packageStatus-Pending - RAI')]";
 const pendingConcurrenceCheckbox =
-  "//label[contains(@for,'checkbox_packageStatus-Pending - Concurrence')]";
+  "//input[contains(@name,'packageStatus-Pending - Concurrence')]";
 const pendingApprovalCheckbox =
-  "//label[contains(@for,'checkbox_packageStatus-Pending - Approval')]";
+  "//input[contains(@name,'packageStatus-Pending - Approval')]";
 //Element is Xpath use cy.xpath instead of cy.get
-const approvedCheckbox =
-  "//label[contains(@for,'checkbox_packageStatus-Approved')]";
+const approvedCheckbox = "//input[contains(@name,'packageStatus-Approved')]";
 //Element is Xpath use cy.xpath instead of cy.get
 const disapprovedCheckbox =
-  "//label[contains(@for,'checkbox_packageStatus-Disapproved')]";
+  "//input[contains(@name,'packageStatus-Disapproved')]";
 //Element is Xpath use cy.xpath instead of cy.get
-const submittedCheckbox =
-  "//label[contains(@for,'checkbox_packageStatus-Submitted')]";
+const submittedCheckbox = "//input[contains(@name,'packageStatus-Submitted')]";
 //Element is Xpath use cy.xpath instead of cy.get
 const submittedIntakeNeededCheckbox =
-  "//label[contains(@for,'checkbox_packageStatus-Submitted - Intake Needed')]";
-const doubleDashCheckbox =
-  "//label[contains(@for,'checkbox_packageStatus-Requested')]";
-const pendingCheckbox =
-  "//label[contains(@for,'checkbox_packageStatus-Pending')]/span[text()='Pending']";
+  "//input[contains(@name,'packageStatus-Submitted - Intake Needed')]";
+const doubleDashCheckbox = "//input[contains(@name,'packageStatus-Requested')]";
+const pendingCheckbox = "//input[@name='packageStatus-Pending']";
 const unsubmittedCheckbox =
-  "//label[contains(@for,'checkbox_packageStatus-Unsubmitted')]";
+  "//input[contains(@name,'packageStatus-Unsubmitted')]";
 const packageRowOneID = "#componentId-0";
 const packageRowTwoID = "#componentId-1";
 const packageRowTwoStatus = "#packageStatus-1";
@@ -238,8 +233,9 @@ const RequestTempExtensionBtn = "//a[text()='Request Temporary Extension']";
 const addAmendmentBtn = "//a[text()='Add Amendment']";
 const waiverNumLink = (n) => `//a[text()="${n}"]`;
 const latestPackageActivityCheckbox =
-  "//label[contains(@for,'checkbox_columnPicker-Latest Package Activity')]";
-const latestPackageActivityDateFilterDropdown = "#lastActivityTimestamp-button";
+  "//input[contains(@name,'columnPicker-Latest Package Activity')]";
+const latestPackageActivityDateFilterDropdown =
+  "#lastActivityTimestamp__button";
 const latestPackageActivityDatePickerFilter =
   "#lastActivityTimestamp-date-filter";
 const packageRowOneLatestPackageActivity = "#lastActivityTimestamp-0";
@@ -414,32 +410,17 @@ export class oneMacDashboardPage {
     cy.xpath(initialSubmissionDateFilterDropdown).click();
   }
   verifyFormalRAIReceivedDateFilterDropdownExists() {
-    cy.get(formalRAIReceivedDateFilterDropdown).should("be.visible");
+    cy.get(formalRAIResponseDateFilterDropdown).should("be.visible");
   }
-  clickOnFormalRAIReceivedDateFilterDropdownDropDown() {
-    cy.get(formalRAIReceivedDateFilterDropdown).wait(1000);
-    cy.get(formalRAIReceivedDateFilterDropdown).click();
-  }
-  verifyNinetiethDayNACheckboxExists() {
-    cy.xpath(ninetiethDayNACheckbox).should("exist");
-  }
-  clickOnNinetiethDayNACheckbox() {
-    cy.xpath(ninetiethDayNACheckbox).click();
-  }
-  verifyNinetiethDayPendingCheckboxExists() {
-    cy.xpath(ninetiethDayPendingCheckbox).should("exist");
-  }
-  clickOnNinetiethDayPendingCheckbox() {
-    cy.xpath(ninetiethDayPendingCheckbox).click();
-  }
-  clickOnNinetiethDayClockStoppedCheckbox() {
-    cy.xpath(ninetiethDayClockStoppedCheckbox).click();
+  clickOnFormalRAIResponseDateFilterDropdown() {
+    cy.get(formalRAIResponseDateFilterDropdown).wait(1000);
+    cy.get(formalRAIResponseDateFilterDropdown).click();
   }
   verifyFormalRAIReceivedCheckboxExists() {
     cy.xpath(formalRAIReceivedCheckbox).should("exist");
   }
   clickFormalRAIReceivedCheckbox() {
-    cy.xpath(formalRAIReceivedCheckbox).click();
+    cy.xpath(formalRAIReceivedCheckbox).click({ force: true });
   }
   verifyInitialSubmissionDateDatePickerFilterExists() {
     cy.get(initialSubmissionDateDatePickerFilter).last().should("exist");
@@ -613,13 +594,13 @@ export class oneMacDashboardPage {
     cy.xpath(checkBoxInitialSubmissionDate).should("be.visible");
   }
   clickCheckBoxInitialSubmissionDate() {
-    cy.xpath(checkBoxInitialSubmissionDate).click();
+    cy.xpath(checkBoxInitialSubmissionDate).click({ force: true });
   }
   verifycheckboxStateExists() {
     cy.xpath(checkboxState).should("be.visible");
   }
   clickCheckboxState() {
-    cy.xpath(checkboxState).click();
+    cy.xpath(checkboxState).click({ force: true });
   }
   verifycheckBoxStatusExists() {
     cy.xpath(checkBoxStatus).should("be.visible");
@@ -664,12 +645,12 @@ export class oneMacDashboardPage {
     cy.get(actionsColumn).scrollIntoView();
     cy.get(actionsColumn).should("be.visible");
   }
-  verifyFormalRAIReceivedColumnExists() {
-    cy.get(formalRAIReceivedColumn).scrollIntoView();
-    cy.get(formalRAIReceivedColumn).should("be.visible");
+  verifyFormalRAIResponseColumnExists() {
+    cy.get(formalRAIResponseColumn).scrollIntoView();
+    cy.get(formalRAIResponseColumn).should("be.visible");
   }
-  verifyFormalRAIReceivedColumnDoesNotExist() {
-    cy.get(formalRAIReceivedColumn).should("not.exist");
+  verifyFormalRAIResponseColumnDoesNotExist() {
+    cy.get(formalRAIResponseColumn).should("not.exist");
   }
   verifyIDNumberColumnDoesNotExist() {
     cy.get(IDNumberColumn).should("not.exist");
@@ -997,7 +978,7 @@ export class oneMacDashboardPage {
     cy.xpath(latestPackageActivityCheckbox).should("exist");
   }
   clickCheckBoxLatestPackageActivity() {
-    cy.xpath(latestPackageActivityCheckbox).click();
+    cy.xpath(latestPackageActivityCheckbox).click({ force: true });
   }
   verifyLatestPackageActivityColumnExists() {
     cy.get(latestPackageActivityColumn).should("be.visible");

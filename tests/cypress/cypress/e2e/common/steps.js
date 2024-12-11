@@ -1047,7 +1047,7 @@ Then("verify type checkbox exists", () => {
 Then("verify CPOC Name checkbox exists", () => {
   OneMacDashboardPage.verifycheckBoxCPOCNameExists();
 });
-Then("verify Formal RAI Received checkbox exists", () => {
+Then("verify Formal RAI Response checkbox exists", () => {
   OneMacDashboardPage.verifyFormalRAIReceivedCheckboxExists();
 });
 Then("verify Final Disposition checkbox exists", () => {
@@ -1074,11 +1074,11 @@ Then("verify IDNumber column exists", () => {
 Then("verify actions column exists", () => {
   OneMacDashboardPage.verifyactionsColumnExists();
 });
-Then("verify Formal RAI Received column exists", () => {
-  OneMacDashboardPage.verifyFormalRAIReceivedColumnExists();
+Then("verify Formal RAI Response column exists", () => {
+  OneMacDashboardPage.verifyFormalRAIResponseColumnExists();
 });
-Then("verify Formal RAI Received column does not exist", () => {
-  OneMacDashboardPage.verifyFormalRAIReceivedColumnDoesNotExist();
+Then("verify Formal RAI Response column does not exist", () => {
+  OneMacDashboardPage.verifyFormalRAIResponseColumnDoesNotExist();
 });
 Then("verify CPOC Name column exists", () => {
   OneMacDashboardPage.verifyCPOCNameColumnExists();
@@ -1110,7 +1110,7 @@ Then("click type checkbox", () => {
 Then("click CPOC Name checkbox", () => {
   OneMacDashboardPage.clickCPOCNameCheckBox();
 });
-Then("click Formal RAI Received checkbox", () => {
+Then("click Formal RAI Response checkbox", () => {
   OneMacDashboardPage.clickFormalRAIReceivedCheckbox();
 });
 Then("click Final Disposition checkbox", () => {
@@ -1188,7 +1188,7 @@ Then("verify Formal RAI Received dropdown filter exists", () => {
   OneMacDashboardPage.verifyFormalRAIReceivedDateFilterDropdownExists();
 });
 Then("click on Formal RAI Received dropdown filter", () => {
-  OneMacDashboardPage.clickOnFormalRAIReceivedDateFilterDropdownDropDown();
+  OneMacDashboardPage.clickOnFormalRAIResponseDateFilterDropdown();
 });
 Then("verify Final Disposition dropdown filter exists", () => {
   OneMacDashboardPage.verifyFinalDispositionDateFilterDropdownExists();
@@ -1850,7 +1850,7 @@ Then(
   }
 );
 Then(
-  "verify What format is used to enter a 1915b Waiver Renewal number is visible",
+  "verify What format is used to enter a 1915b Waiver Renewal number body is visible",
   () => {
     OneMacFAQPage.verifyWaiverRenewalFormatBody();
   }

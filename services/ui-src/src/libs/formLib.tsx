@@ -67,18 +67,16 @@ export const DefaultFileTypesInfo = () => (
   </p>
 );
 
-
 export const DefaultFileTypesInfoSubSub = () => (
   <p>
-    We accept the following file formats: <b>.docx, .jpg, .pdf, .png, .xlsx,</b> and more:{" "}
-    See the full list on the{" "}
+    We accept the following file formats: <b>.docx, .jpg, .pdf, .png, .xlsx,</b>{" "}
+    and more: See the full list on the{" "}
     <Link to={ROUTES.FAQ_ACCEPTED_FILE_TYPES} target={FAQ_TARGET}>
       FAQ Page
     </Link>
     .
   </p>
 );
-
 
 export const DefaultFileSizeInfo = ({ route }: { route: string }) => (
   <p className="req-message">
@@ -181,7 +179,7 @@ export const defaultSubsequentSubmissionIntroJSX = (
       use this content to review your package, and you will not be able to edit
       this form. If CMS needs any additional information, they will follow up by
       email.
-      <b>If you leave this page, you will lose your progress on this form.</b>
+      <b> If you leave this page, you will lose your progress on this form.</b>
     </p>
   </>
 );
@@ -196,9 +194,7 @@ export const defaultConfirmSubmitMessageSubsequentSubmission = (
 export const defaultConfirmSubsequentSubmission: ConfirmSubmitType = {
   confirmSubmitHeading: "Submit additional documents?",
   confirmSubmitMessage: (
-    <p>
-      These documents will be added to the package and reviewed by CMS. 
-    </p>
+    <p>These documents will be added to the package and reviewed by CMS.</p>
   ),
 };
 

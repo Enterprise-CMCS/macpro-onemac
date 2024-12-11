@@ -1,4 +1,26 @@
 import { Workflow } from "cmscommonlib";
+import { init } from "@launchdarkly/node-server-sdk";
+
+// Global variable to hold the LD client so it's reused on subsequent invocations
+let ldClient;
+
+async function initializeLaunchDarkly() {
+  if (!ldClient) {
+    ldClient = init(process.env.launchDarklySdkKey, {
+      baseUri: "https://clientsdk.launchdarkly.us",
+      streamUri: "https://clientstream.launchdarkly.us",
+      eventsUri: "https://events.launchdarkly.us",
+    });
+
+    try {
+      await ldClient.waitForInitialization({ timeout: 10 });
+      console.log("LD Initialization successful");
+    } catch (err) {
+      console.error("LD Initialization failed:", err.message || err);
+    }
+  }
+}
+
 function getDefaultActions(
   packageStatus,
   hasRaiResponse,
@@ -74,7 +96,7 @@ function getWaiverExtensionActions(packageStatus, userRole) {
   return actions;
 }
 
-export function getActionsForPackage(
+export async function getActionsForPackage(
   packageType,
   packageStatus,
   hasRaiResponse,
@@ -82,6 +104,16 @@ export function getActionsForPackage(
   userRole,
   formSource
 ) {
+  // Initialize LaunchDarkly client (if not already initialized)
+  await initializeLaunchDarkly();
+
+  const ENABLE_SUBSEQUENT_SUBMISSION = await ldClient.variation(
+    "enableSubsequentDocumentation",
+    { key: userRole },
+    false
+  );
+  console.log("Flag value:", ENABLE_SUBSEQUENT_SUBMISSION);
+
   let actions = getDefaultActions(
     packageStatus,
     hasRaiResponse,
@@ -114,9 +146,18 @@ export function getActionsForPackage(
       );
       break;
   }
-  // Filter out duplicates
-  const uniqueActions = actions.filter(
-    (action, index) => actions.indexOf(action) === index
-  );
+
+  const uniqueActions = actions.filter((action, index) => {
+    // Filter out SUBSEQUENT_SUBMISSION if not enabled
+    const isNotSubsequentSubmission =
+      action !== Workflow.PACKAGE_ACTION.SUBSEQUENT_SUBMISSION ||
+      ENABLE_SUBSEQUENT_SUBMISSION;
+
+    // Remove duplicates: only keep the first occurrence of each action
+    const isUnique = actions.indexOf(action) === index;
+
+    return isNotSubsequentSubmission && isUnique;
+  });
+
   return uniqueActions;
 }

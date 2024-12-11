@@ -79,3 +79,7 @@ functions:
       - schedule:
           rate: rate(6 hours)
     timeout: 180
+
+  insertNotification:
+    handler: ./handlers/insertNotification.main
+    timeout: 180

@@ -55,8 +55,7 @@ const reviewTeamSRTHeader = "//h3[contains(text(),'Review Team (SRT)')]";
 const initialSubmissionCaretBtn = 'button[id^="Initial Package"]';
 const initialSubmissionDownloadAllBtn =
   '//button[contains(@id,"dl_Initial Package")]';
-const withdrawalRequestedCaretBtn =
-  '//h2//button[contains(@id,"Package0_caret-button")]';
+const withdrawalRequestedCaretBtn = "button#Package0_caret__button";
 const subStatus = "#substatus";
 const secondClock = "#secondclock";
 const uploadSubsequentDocumentsActionBtn =
@@ -344,18 +343,18 @@ export class oneMacPackageDetailsPage {
     cy.xpath(initialSubmissionDownloadAllBtn).should("be.visible");
   }
   verifyWithdrawalRequestedCaretBtnExists() {
-    cy.xpath(withdrawalRequestedCaretBtn).should("be.visible");
+    cy.get(withdrawalRequestedCaretBtn).should("be.visible");
   }
   clickWithdrawalRequestedCaretBtn() {
-    cy.xpath(withdrawalRequestedCaretBtn).click();
+    cy.get(withdrawalRequestedCaretBtn).click();
   }
   expandWithdrawalRequestedCaretBtn() {
-    cy.xpath(withdrawalRequestedCaretBtn)
+    cy.get(withdrawalRequestedCaretBtn)
       .invoke("attr", "aria-expanded")
       .then(($isExpanded) => {
         if ($isExpanded === "false") {
           //only click to expand
-          cy.xpath(withdrawalRequestedCaretBtn).click();
+          cy.get(withdrawalRequestedCaretBtn).click();
         }
       });
   }
