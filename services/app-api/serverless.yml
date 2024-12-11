@@ -14,8 +14,8 @@ plugins:
   - serverless-dynamodb-local
   - serverless-associate-waf
   - serverless-offline
-  # - serverless-iam-helper
-  # - serverless-s3-bucket-helper
+  - serverless-iam-helper
+  - serverless-s3-bucket-helper
 custom:
   stage: ${opt:stage, self:provider.stage}
   oneMacTableName: onemac-${self:custom.stage}-one
