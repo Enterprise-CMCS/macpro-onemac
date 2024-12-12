@@ -1,4 +1,10 @@
+service: admin
+
+frameworkVersion: "3"
+
 useDotenv: true
+
+variablesResolutionMode: 20210326
 
 package:
   individually: true
@@ -13,7 +19,6 @@ custom:
   iamPermissionsBoundaryPolicy: ${ssm:/configuration/${self:custom.stage}/iam/permissionsBoundaryPolicy, ssm:/configuration/default/iam/permissionsBoundaryPolicy, ""}
   oneMacTableName: onemac-${self:custom.stage}-one
   userPoolName: ${self:custom.stage}-user-pool
-  userPoolId: ${cf:${self:service}-${self:custom.stage}.UserPoolId}
 
 provider:
   name: aws
@@ -41,12 +46,12 @@ provider:
           Action:
             - cognito-idp:ListUsers
             - cognito-idp:AdminUpdateUserAttributes
-          Resource: arn:aws:cognito-idp:${self:provider.region}:*:userpool/${self:custom.userPoolId}
+          Resource: !GetAtt CognitoUserPool.Arn
 
   environment:
     NODE_OPTIONS: '--enable-source-maps'
     oneMacTableName: ${self:custom.oneMacTableName}
-    USER_POOL_ID: ${self:custom.userPoolId}
+    USER_POOL_ID: !Ref CognitoUserPool
   layers:
       - ${cf:aws-sdk-v2-layer-${self:custom.stage}.AwsSdkV2LambdaLayerQualifiedArn}
 
