@@ -348,6 +348,10 @@ export class oneMacDashboardPage {
     cy.xpath(noResultsFound).contains("No Results Found");
   }
 
+  verifySorryPageNotFoundMessage() {
+    cy.get("h3").contains("Sorry, page not found!");
+  }
+
   typeCreatedIDNumber(s) {
     cy.get(searchbar).type(s);
   }
