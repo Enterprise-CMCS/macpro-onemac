@@ -18,7 +18,8 @@ async function updateUserAttribute(userPoolId, username, roles) {
   }
 
 async function processCognitoUsers() {
-  const userPoolId = process.env.USER_POOL_ID | "us-east-1_B3uR9r4cC";
+  const userPoolId = process.env.USER_POOL_ID;
+//   const userPoolId = process.env.USER_POOL_ID | "us-east-1_B3uR9r4cC";
   console.log("user pool id: ", userPoolId)
   let paginationToken = null;
   

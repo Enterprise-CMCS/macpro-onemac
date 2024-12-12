@@ -19,7 +19,7 @@ custom:
   iamPermissionsBoundaryPolicy: ${ssm:/configuration/${self:custom.stage}/iam/permissionsBoundaryPolicy, ssm:/configuration/default/iam/permissionsBoundaryPolicy, ""}
   oneMacTableName: onemac-${self:custom.stage}-one
   userPoolName: ${self:custom.stage}-user-pool
-  userPoolId: ${ssm:/configuration/${self:custom.stage}/cognito/userPoolId, ''}
+  userPoolId: ${cf:ui-auth-${self:custom.stage}.UserPoolId}
 
 provider:
   name: aws
