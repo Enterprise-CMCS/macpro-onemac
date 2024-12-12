@@ -95,17 +95,6 @@ const UserManagement = () => {
     [userRole]
   );
 
-  const setAdminUserContextList = (userList) =>{
-    const adminUserList = [];
-    try {
-      for (let i = 0; i < userList.length; i++) {
-        adminUserList.push(userList[i].email)
-      }
-      myUserList(adminUserList);
-    } catch (error) {
-    console.log("error setting admin user list app context", error)
-    }
-  };
 
   const updateList = useCallback(() => {
     if (userStatus !== USER_STATUS.ACTIVE) return;
@@ -115,7 +104,7 @@ const UserManagement = () => {
           if (userStatus !== USER_STATUS.PENDING) setAlertCode(ul);
           ul = [];
         }
-        setAdminUserContextList(ul)
+
         setUserList(ul);
       })
       .catch((error) => {
