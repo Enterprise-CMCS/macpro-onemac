@@ -13,6 +13,7 @@ const modalCancelBTN =
 const attachmentInfoDescription =
   "//h3[text()='Attachments']/following-sibling::p[1]";
 const enterMacProBtn = "//button[contains(text(),'Enter the MACPro system')]";
+const enterMmdlBtn = "//button[contains(text(),'Enter the MMDL system')]";
 const IDInputBox = idElement;
 const errorMessageID = "#componentIdStatusMsg0";
 const errorMessageLine2ID = "#componentIdStatusMsg1";
@@ -280,6 +281,17 @@ export class oneMacFormPage {
           .should("have.attr", "href", "/FAQ#waiverb-rai-attachments");
         break;
     }
+  }
+
+  verifyMmdlSystemBtn() {
+    cy.xpath(enterMmdlBtn).should("be.visible");
+    cy.xpath(enterMmdlBtn)
+      .parent("a")
+      .should(
+        "have.attr",
+        "href",
+        "https://wms-mmdl.cms.gov/MMDL/faces/portal.jsp"
+      );
   }
 
   verifyMacProSystemBtn() {
