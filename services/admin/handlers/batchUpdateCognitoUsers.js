@@ -2,6 +2,21 @@ import AWS from "aws-sdk";
 const cognito = new AWS.CognitoIdentityServiceProvider();
 import { getUser } from "../../app-api/getUser";
 
+async function updateUserAttribute(userPoolId, username, roles) {
+    const params = {
+      UserPoolId: userPoolId,
+      Username: username,
+      UserAttributes: [
+        {
+          Name: 'custom:user_roles',
+          Value: JSON.stringify(roles)
+        }
+      ]
+    };
+    
+    await cognito.adminUpdateUserAttributes(params).promise();
+  }
+  
 async function processCognitoUsers() {
   const userPoolId = process.env.USER_POOL_ID;
   console.log("user pool id: ", userPoolId)
@@ -36,22 +51,8 @@ async function processCognitoUsers() {
   } while (paginationToken);
 }
 
-async function updateUserAttribute(userPoolId, username, roles) {
-  const params = {
-    UserPoolId: userPoolId,
-    Username: username,
-    UserAttributes: [
-      {
-        Name: 'custom:user_roles',
-        Value: JSON.stringify(roles)
-      }
-    ]
-  };
-  
-  await cognito.adminUpdateUserAttributes(params).promise();
-}
 
-export const main = async (event) => {
+export const main = async () => {
     processCognitoUsers().catch(console.error);
 }
 
