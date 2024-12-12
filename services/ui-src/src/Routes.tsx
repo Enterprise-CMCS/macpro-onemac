@@ -156,6 +156,7 @@ const isAdminUser = ()=> {
   idTokenKey && localStorage.getItem(idTokenKey[0]);
   if (!idToken) return false;
   const decodedIdToken: any = jwt_decode(idToken);
+  let userRoles = decodedIdToken["custom:user_roles"];
 
   const allowedRoles = [
     "cmsroleapprover",
@@ -165,8 +166,7 @@ const isAdminUser = ()=> {
   ];
 
   // only passes admin check if roles from jwt one of the "allowed roles"
-  if (decodedIdToken?.user_roles) {
-    let userRoles = decodedIdToken.user_roles;
+  if (userRoles) {
     try {
       userRoles = JSON.parse(userRoles);
     } catch (error) {
