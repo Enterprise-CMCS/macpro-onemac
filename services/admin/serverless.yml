@@ -61,7 +61,7 @@ resources:
     UserPoolId:
       Value: !Ref CognitoUserPool
       Export:
-        Name: ${self:service}-${self:custom.stage}-UserPoolId
+        Name: ${self:service}-${self:provider.stage}-UserPoolId
 
 functions:
   batchUpdateCognitoUsers:
