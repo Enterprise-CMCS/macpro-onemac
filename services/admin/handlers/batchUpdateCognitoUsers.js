@@ -16,7 +16,7 @@ async function updateUserAttribute(userPoolId, username, roles) {
     
     await cognito.adminUpdateUserAttributes(params).promise();
   }
-  
+
 async function processCognitoUsers() {
   const userPoolId = process.env.USER_POOL_ID;
   console.log("user pool id: ", userPoolId)
@@ -53,6 +53,7 @@ async function processCognitoUsers() {
 
 
 export const main = async () => {
-    processCognitoUsers().catch(console.error);
+    await processCognitoUsers().catch(console.error);
+    console.log("function complete")
 }
 
