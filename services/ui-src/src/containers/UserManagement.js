@@ -78,7 +78,7 @@ const alertCodes = {
 const UserManagement = () => {
   const [userList, setUserList] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const { userProfile, userStatus, userRole, myUserList } = useAppContext();
+  const { userProfile, userStatus, userRole } = useAppContext();
   const history = useHistory();
   const location = useLocation();
   const [alertCode, setAlertCode] = useState(location?.state?.passCode);
