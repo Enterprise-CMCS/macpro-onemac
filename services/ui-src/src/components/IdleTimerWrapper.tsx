@@ -78,11 +78,13 @@ const IdleTimerWrapper = () => {
     const tokenKey: string[] = Object.keys(localStorage).filter((k) =>
       k.includes(STORAGE_KEY)
     );
+
     const loginToken: string | null =
       tokenKey && localStorage.getItem(tokenKey[0]);
     if (!loginToken) return;
 
     const decodedToken: any = jwt_decode(loginToken);
+
     const epochAuthTime: number | undefined = decodedToken?.auth_time;
     if (!epochAuthTime) return;
 
