@@ -4,6 +4,8 @@
 
 import React, { FC } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
+import jwt_decode from "jwt-decode";
+import { useFlags } from "launchdarkly-react-client-sdk";
 
 import {
   ROUTES,
@@ -49,10 +51,10 @@ import WaiverAppendixKWithdraw from "./page/waiver-appendix-k/WaiverAppendixKWit
 import WaiverAppendixKRAIForm from "./page/waiver-appendix-k/WaiverAppendixKRAIForm";
 import DescribeForms from "./page/DescribeForms";
 import EventList from "./page/event/EventList";
-import EventDetail from "./page/event/EventDetail";
 import MedicaidABPLandingPage from "./page/landing/MedicaidABPLandingPage";
-import MedicaidEligibilityLandingPage from "./page/landing/MedicaidEligibilityLandingPage";
+import EventDetail from "./page/event/EventDetail";
 import CHIPEligibilityLandingPage from "./page/landing/CHIPEligibilityLandingPage";
+import MedicaidEligibilityLandingPage from "./page/landing/MedicaidEligibilityLandingPage";
 import InitialWaiverB4Form from "./page/initial-waiver/InitialWaiverB4Form";
 import InitialWaiverBForm from "./page/initial-waiver/InitialWaiverBForm";
 import WaiverRenewalB4Form from "./page/waiver-renewal/WaiverRenewalB4Form";
@@ -69,6 +71,7 @@ import WaiverRenewalSubsequentSubmissionForm from "./page/waiver-renewal/WaiverR
 import WaiverAmendmentSubsequentSubmissionForm from "./page/waiver-amendment/WaiverAmendmentSubsequentSubmissionForm";
 import WaiverAppKSubsequentSubmissionForm from "./page/waiver-appendix-k/WaiverAppKSubsequentSubmissionForm";
 import DisableRaiWithdrawForm from "./page/disable-rai-withdraw/DisableRaiWithdrawForm";
+const ID_TOKEN_KEY: string = "idToken";
 
 type RouteSpec = {
   path: string;
@@ -90,9 +93,22 @@ const RouteListRenderer: FC<{ routes: RouteSpec[] }> = ({ routes }) => {
   if (!useAppContext()?.isAuthenticated) {
     clearTableStateStorageKeys();
   }
+
+  const { enableSubsequentDocumentation } = useFlags();
+  let filteredRoutes;
+  if (!enableSubsequentDocumentation) {
+    // Filter out objects where the component includes a SubsequentSubmission form
+    // This is not currently looking for subroutes since all subsub routes are at the root of the route object
+    filteredRoutes = routes.filter(
+      (route) => !route.path.includes("subsequent-submission")
+    );
+  } else {
+    filteredRoutes = routes;
+  }
+
   return (
     <Switch>
-      {routes.map((routeSpec) => (
+      {filteredRoutes.map((routeSpec) => (
         <RouteWithSubRoutes
           key={routeSpec.key ?? routeSpec.path}
           {...routeSpec}
@@ -127,17 +143,73 @@ const SignupGuardRouteListRenderer: FC<{ routes: RouteSpec[] }> = ({
   return <RouteListRenderer routes={routes} />;
 };
 
+const isAdminUser = ()=> {
+  /* eslint-disable-next-line react-hooks/rules-of-hooks */
+  const context = useAppContext();
+  if(!context?.isAuthenticated) {
+    return false; 
+  }
+
+  let userRoles;
+  //authenticated users will have idToken in Local Storage
+  try{
+    const idTokenKey: string[] = Object.keys(localStorage).filter((k) =>
+      k.includes(ID_TOKEN_KEY)
+    );
+    const idToken: string | null =
+    idTokenKey && localStorage.getItem(idTokenKey[0]);
+    if (!idToken) return false;
+    const decodedIdToken: any = jwt_decode(idToken);
+     userRoles = decodedIdToken["custom:user_roles"];
+  } catch (error) {
+    console.error("error decoding idToken", error);
+    return false; 
+  }
+
+  const allowedRoles = [
+    "cmsroleapprover",
+    "systemadmin",
+    "statesystemadmin",
+    "helpdesk",
+    "cmsreviewer",
+    // "defaultcmsuser" 
+  ];
+
+  // only passes admin check if roles from jwt one of the "allowed roles"
+  if (userRoles) {
+    try {
+      userRoles = JSON.parse(userRoles);
+    } catch (error) {
+      console.error('Error parsing user_roles:', error);
+      userRoles = [];
+    }
+    for (let i = 0; i < userRoles.length; i++) {        
+      if (allowedRoles.includes(userRoles[i])) {
+        return true;
+      }
+    }
+  }
+
+  return false;
+}
+
 const accessGuardRouteListRenderer: (
   accessKey: keyof UserRole,
   redirectAccessKey?: keyof UserRole,
-  redirectTo?: string
+  redirectTo?: string,
+  isAdminRoute?: boolean
 ) => FC<{ routes: RouteSpec[] }> =
-  (accessKey, redirectAccessKey, redirectTo) =>
+  (accessKey, redirectAccessKey, redirectTo, isAdminRoute) =>
   ({ routes }) => {
     const { userProfile: { userData: { roleList = [] } = {} } = {} } =
       useAppContext() ?? {};
     const roleObj = getUserRoleObj(roleList);
-
+    // Token based admin check will redirect if non admin user
+    if(isAdminRoute && redirectTo) {
+      if(!isAdminUser()){
+       return <Redirect to={redirectTo} />;
+      }
+    }
     if (roleObj[accessKey]) return <RouteListRenderer routes={routes} />;
     if (redirectAccessKey && redirectTo && roleObj[redirectAccessKey])
       return <Redirect to={redirectTo} />;
@@ -148,6 +220,7 @@ const ROUTE_LIST: RouteSpec[] = [
   { path: ROUTES.HOME, exact: true, component: Home },
   { path: ROUTES.FAQ, exact: true, component: FAQ },
   { path: ROUTES.DEVLOGIN, exact: true, component: DevLogin },
+
   {
     path: ROUTES.PROFILE,
     component: AuthenticatedRouteListRenderer,
@@ -161,7 +234,7 @@ const ROUTE_LIST: RouteSpec[] = [
         path: ROUTES.PROFILE + "/:userId",
         exact: true,
         component: UserPage,
-      },
+      }
     ],
   },
   {
@@ -184,6 +257,7 @@ const ROUTE_LIST: RouteSpec[] = [
       accessKey: "canAccessUserManagement",
       redirectAccessKey: "canAccessDashboard",
       redirectTo: ONEMAC_ROUTES.PACKAGE_LIST,
+      isAdminRoute: true,
       component: UserManagement,
     },
     {
@@ -191,9 +265,10 @@ const ROUTE_LIST: RouteSpec[] = [
       accessKey: "canAccessDashboard",
       redirectAccessKey: "canAccessUserManagement",
       redirectTo: ROUTES.USER_MANAGEMENT,
+      isAdminRoute: false,
       component: PackageList,
     },
-  ].map(({ path, accessKey, redirectAccessKey, redirectTo, component }) => ({
+  ].map(({ path, accessKey, redirectAccessKey, redirectTo, component, isAdminRoute }) => ({
     path,
     component: SignupGuardRouteListRenderer,
     routes: [
@@ -202,11 +277,12 @@ const ROUTE_LIST: RouteSpec[] = [
         component: accessGuardRouteListRenderer(
           accessKey as keyof UserRole,
           redirectAccessKey as keyof UserRole,
-          redirectTo
+          redirectTo,
+          isAdminRoute
         ),
-        routes: [{ path, exact: true, component }],
+        routes: [{ path, exact: true, component}],
       },
-    ],
+    ]
   })),
   // legacy triage screens, plus current OneMACForm forms
   ...[

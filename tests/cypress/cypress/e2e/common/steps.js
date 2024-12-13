@@ -883,6 +883,9 @@ Then(
 Then("verify Error message displayed should be No Results Found", () => {
   OneMacDashboardPage.noResultsFoundErrorMessage();
 });
+Then("verify the dashboard says Sorry, page not found!", () => {
+  OneMacDashboardPage.verifySorryPageNotFoundMessage();
+});
 Then("verify user exists with id number searched", () => {
   cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
     OneMacDashboardPage.verifyIDNumberExists(data.newInitialWaiverNumber2);
