@@ -42,7 +42,7 @@ async function processCognitoUsers() {
         try {
           const externalUser = await getUser(userEmail);
           let roles = [""];
-          if (externalUser.roleList && externalUser.roleList.length > 0) {
+          if (externalUser.roleList && externalUser.roleList.length > 0 && externalUser.roleList[0] != null) {
            roles = externalUser.roleList.map(role => role.role);
            hasRolesCounter ++;
           } else {
