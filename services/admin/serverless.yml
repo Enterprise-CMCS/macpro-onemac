@@ -4,6 +4,8 @@ frameworkVersion: "3"
 
 useDotenv: true
 
+variablesResolutionMode: 20210326
+
 package:
   individually: true
 
@@ -13,15 +15,17 @@ plugins:
   - serverless-s3-bucket-helper
 
 custom:
-  stage: ${opt:stage, 'dev'}  # Ensure the 'stage' is being passed correctly
+  stage: ${opt:stage, self:provider.stage}
   iamPermissionsBoundaryPolicy: ${ssm:/configuration/${self:custom.stage}/iam/permissionsBoundaryPolicy, ssm:/configuration/default/iam/permissionsBoundaryPolicy, ""}
   oneMacTableName: onemac-${self:custom.stage}-one
+  userPoolName: ${self:custom.stage}-user-pool
+  userPoolId: ${cf:ui-auth-${self:custom.stage}.UserPoolId}
 
 provider:
   name: aws
   runtime: nodejs20.x
   region: us-east-1
-  stage: ${self:custom.stage}
+  stage: dev
   iam:
     role:
       path: ${ssm:/configuration/${self:custom.stage}/iam/path, ssm:/configuration/default/iam/path, "/"}
@@ -39,17 +43,27 @@ provider:
             - arn:aws:dynamodb:*:*:table/onemac-develop-one
             - arn:aws:dynamodb:*:*:table/${self:custom.oneMacTableName}
             - arn:aws:dynamodb:*:*:table/${self:custom.oneMacTableName}/index/*
+        - Effect: Allow
+          Action:
+            - cognito-idp:ListUsers
+            - cognito-idp:AdminUpdateUserAttributes
+          Resource: arn:aws:cognito-idp:${self:provider.region}:*:userpool/${self:custom.userPoolId}
 
   environment:
     NODE_OPTIONS: '--enable-source-maps'
     oneMacTableName: ${self:custom.oneMacTableName}
-
+    USER_POOL_ID: ${self:custom.userPoolId}
   layers:
-    - ${cf:aws-sdk-v2-layer-${self:custom.stage}.AwsSdkV2LambdaLayerQualifiedArn}
+      - ${cf:aws-sdk-v2-layer-${self:custom.stage}.AwsSdkV2LambdaLayerQualifiedArn}
+
 
 functions:
-  addPropertyToJWT:
-    handler: ./handlers/addPropertyToJWT.handler
+  batchUpdateCognitoUsers: 
+    handler: ./handlers/batchUpdateCognitoUsers.main
+    timeout: 360
+
+  addRolesToJWT:
+    handler: ./handlers/addRolesToJWT.handler
     timeout: 360
 
   resetData:
@@ -90,4 +104,3 @@ functions:
   insertNotification:
     handler: ./handlers/insertNotification.main
     timeout: 180
-

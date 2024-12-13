@@ -33,6 +33,7 @@ custom:
   applicationEndpoint: ${cf:ui-${self:custom.stage}.ApplicationEndpointUrl, "onemac.cms.gov"}
   attachmentsBucket: ${cf:uploads-${self:custom.stage}.AttachmentsBucketName}
   attachmentsBucketArn: ${cf:uploads-${self:custom.stage}.AttachmentsBucketArn}
+  launchDarklySdkKey: ${ssm:/configuration/${self:custom.stage}/launchdarkly/sdkkey, ssm:/configuration/default/launchdarkly/sdkkey}
   warmupEnabled:
     production: true
     development: false
@@ -87,6 +88,7 @@ provider:
     applicationEndpoint: ${self:custom.applicationEndpoint}
     attachmentsBucket: ${self:custom.attachmentsBucket}
     configurationSetName: 'email-${self:custom.stage}-configuration'
+    launchDarklySdkKey: ${self:custom.launchDarklySdkKey}
   tracing:
     apiGateway: true
     lambda: true

@@ -28,6 +28,7 @@
     "xstate": "^4.26.0"
   },
   "dependencies": {
+    "@launchdarkly/node-server-sdk": "^9.7.2",
     "cmscommonlib": "file:../common",
     "date-fns": "^2.16.1",
     "dynamodb-local": "^0.0.32",

@@ -70,15 +70,13 @@ const alertCodes = {
   revoked: RESPONSE_CODE.SUCCESS_USER_REVOKED,
 };
 
-
-
 /**
  * User Management "Dashboard"
  */
 const UserManagement = () => {
   const [userList, setUserList] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const { userProfile, userStatus, userRole, myUserList } = useAppContext();
+  const { userProfile, userStatus, userRole } = useAppContext();
   const history = useHistory();
   const location = useLocation();
   const [alertCode, setAlertCode] = useState(location?.state?.passCode);
@@ -94,19 +92,6 @@ const UserManagement = () => {
       ].includes(userRole),
     [userRole]
   );
-
-  const setAdminUserContextList = (userList) =>{
-    const adminUserList = [];
-    try {
-      for (let i = 0; i < userList.length; i++) {
-        adminUserList.push(userList[i].email)
-      }
-      myUserList(adminUserList);
-    } catch (error) {
-    console.log("error setting admin user list app context", error)
-    }
-  };
-
   const updateList = useCallback(() => {
     if (userStatus !== USER_STATUS.ACTIVE) return;
     UserDataApi.getMyUserList(userProfile.email)
@@ -115,7 +100,6 @@ const UserManagement = () => {
           if (userStatus !== USER_STATUS.PENDING) setAlertCode(ul);
           ul = [];
         }
-        setAdminUserContextList(ul)
         setUserList(ul);
       })
       .catch((error) => {
@@ -124,8 +108,6 @@ const UserManagement = () => {
       });
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userProfile.email, userStatus]);
-
-
 
   // Load the data from the backend.
   useEffect(() => {
@@ -185,7 +167,7 @@ const UserManagement = () => {
     ({ value, row }) => (
       <Link
         className="user-name"
-        to={`${ROUTES.PROFILE}/${row.original.email}`}
+        to={`${ROUTES.PROFILE}/${window.btoa(row.original.email)}`}
       >
         {value}
       </Link>

@@ -218,7 +218,7 @@ const PackageList = () => {
     ({ value, row }) => (
       <Link
         className="user-name"
-        to={`${ROUTES.PROFILE}/${row.original.submitterEmail}`}
+        to={`${ROUTES.PROFILE}/${window.btoa(row.original.submitterEmail)}`}
       >
         {value}
       </Link>

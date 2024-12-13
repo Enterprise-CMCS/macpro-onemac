@@ -5,6 +5,7 @@
 import React, { FC } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 import jwt_decode from "jwt-decode";
+import { useFlags } from "launchdarkly-react-client-sdk";
 
 import {
   ROUTES,
@@ -90,9 +91,22 @@ const RouteListRenderer: FC<{ routes: RouteSpec[] }> = ({ routes }) => {
   if (!useAppContext()?.isAuthenticated) {
     clearTableStateStorageKeys();
   }
+
+  const { enableSubsequentDocumentation } = useFlags();
+  let filteredRoutes;
+  if (!enableSubsequentDocumentation) {
+    // Filter out objects where the component includes a SubsequentSubmission form
+    // This is not currently looking for subroutes since all subsub routes are at the root of the route object
+    filteredRoutes = routes.filter(
+      (route) => !route.path.includes("subsequent-submission")
+    );
+  } else {
+    filteredRoutes = routes;
+  }
+
   return (
     <Switch>
-      {routes.map((routeSpec) => (
+      {filteredRoutes.map((routeSpec) => (
         <RouteWithSubRoutes
           key={routeSpec.key ?? routeSpec.path}
           {...routeSpec}
@@ -134,25 +148,33 @@ const isAdminUser = ()=> {
     return false; 
   }
 
+  let userRoles;
   //authenticated users will have idToken in Local Storage
-  const idTokenKey: string[] = Object.keys(localStorage).filter((k) =>
-    k.includes(ID_TOKEN_KEY)
-  );
-  const idToken: string | null =
-  idTokenKey && localStorage.getItem(idTokenKey[0]);
-  if (!idToken) return false;
-  const decodedIdToken: any = jwt_decode(idToken);
+  try{
+    const idTokenKey: string[] = Object.keys(localStorage).filter((k) =>
+      k.includes(ID_TOKEN_KEY)
+    );
+    const idToken: string | null =
+    idTokenKey && localStorage.getItem(idTokenKey[0]);
+    if (!idToken) return false;
+    const decodedIdToken: any = jwt_decode(idToken);
+     userRoles = decodedIdToken["custom:user_roles"];
+  } catch (error) {
+    console.error("error decoding idToken", error);
+    return false; 
+  }
 
   const allowedRoles = [
     "cmsroleapprover",
     "systemadmin",
     "statesystemadmin",
-    "helpdesk"
+    "helpdesk",
+    "cmsreviewer",
+    // "defaultcmsuser" 
   ];
 
   // only passes admin check if roles from jwt one of the "allowed roles"
-  if (decodedIdToken?.user_roles) {
-    let userRoles = decodedIdToken.user_roles;
+  if (userRoles) {
     try {
       userRoles = JSON.parse(userRoles);
     } catch (error) {
