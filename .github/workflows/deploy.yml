@@ -319,7 +319,7 @@ jobs:
             Profile_View_CMS_User_Denied.spec.feature,
             Profile_View_CMS_User_Revoked.spec.feature,
             Profile_View_Helpdesk_User.spec.feature,
-            Profile_View_Mixed_Case_Emails.spec.feature,
+            Profile_View_Remove_Email_From_URL.spec.feature,
             Profile_View_State_Submitter.spec.feature,
             Profile_View_State_System_Admin.spec.feature,
             Request_A_Role_Change_As_CMS_Read_Only.spec.feature,
