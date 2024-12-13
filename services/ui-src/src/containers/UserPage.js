@@ -161,7 +161,7 @@ const UserPage = () => {
   const { userProfile, setUserInfo, updatePhoneNumber, userRole, userStatus } =
     useAppContext();
   const location = useLocation();
-  let { userId } = useParams() ?? {};
+  const { userId } = useParams() ?? {};
   const [profileData, setProfileData] = useState({});
   const [profileRole, setProfileRole] = useState("");
   const [profileStatus, setProfileStatus] = useState("");
