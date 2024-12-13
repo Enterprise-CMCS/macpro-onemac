@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useLocation, useParams, useHistory } from "react-router-dom";
 import { Button, Review } from "@cmsgov/design-system";
 
-
 import {
   APPROVING_USER_ROLE,
   RESPONSE_CODE,

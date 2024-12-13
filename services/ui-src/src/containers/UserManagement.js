@@ -70,8 +70,6 @@ const alertCodes = {
   revoked: RESPONSE_CODE.SUCCESS_USER_REVOKED,
 };
 
-
-
 /**
  * User Management "Dashboard"
  */
@@ -94,8 +92,6 @@ const UserManagement = () => {
       ].includes(userRole),
     [userRole]
   );
-
-
   const updateList = useCallback(() => {
     if (userStatus !== USER_STATUS.ACTIVE) return;
     UserDataApi.getMyUserList(userProfile.email)
@@ -104,7 +100,6 @@ const UserManagement = () => {
           if (userStatus !== USER_STATUS.PENDING) setAlertCode(ul);
           ul = [];
         }
-
         setUserList(ul);
       })
       .catch((error) => {
@@ -113,8 +108,6 @@ const UserManagement = () => {
       });
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userProfile.email, userStatus]);
-
-
 
   // Load the data from the backend.
   useEffect(() => {

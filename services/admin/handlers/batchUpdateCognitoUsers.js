@@ -19,7 +19,6 @@ async function updateUserAttribute(userPoolId, username, roles) {
 
 async function processCognitoUsers() {
   const userPoolId = process.env.USER_POOL_ID;
-//   const userPoolId = process.env.USER_POOL_ID | "us-east-1_B3uR9r4cC";
   console.log("user pool id: ", userPoolId)
   let paginationToken = null;
   let counter = 0;
@@ -33,7 +32,8 @@ async function processCognitoUsers() {
     };
     
     const listUsersResponse = await cognito.listUsers(params).promise();
- 
+    console.log(listUsersResponse.Users.length + " users found")
+
     for (const user of listUsersResponse.Users) {
       const emailAttribute = user.Attributes.find(attr => attr.Name === 'email');
       if (emailAttribute) {
@@ -41,7 +41,7 @@ async function processCognitoUsers() {
         
         try {
           const externalUser = await getUser(userEmail);
-          let roles = [];
+          let roles = [""];
           if (externalUser.roleList) {
            roles = externalUser.roleList.map(role => role.role);
            hasRolesCounter ++;

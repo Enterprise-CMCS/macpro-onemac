@@ -148,21 +148,29 @@ const isAdminUser = ()=> {
     return false; 
   }
 
+  let userRoles;
   //authenticated users will have idToken in Local Storage
-  const idTokenKey: string[] = Object.keys(localStorage).filter((k) =>
-    k.includes(ID_TOKEN_KEY)
-  );
-  const idToken: string | null =
-  idTokenKey && localStorage.getItem(idTokenKey[0]);
-  if (!idToken) return false;
-  const decodedIdToken: any = jwt_decode(idToken);
-  let userRoles = decodedIdToken["custom:user_roles"];
+  try{
+    const idTokenKey: string[] = Object.keys(localStorage).filter((k) =>
+      k.includes(ID_TOKEN_KEY)
+    );
+    const idToken: string | null =
+    idTokenKey && localStorage.getItem(idTokenKey[0]);
+    if (!idToken) return false;
+    const decodedIdToken: any = jwt_decode(idToken);
+     userRoles = decodedIdToken["custom:user_roles"];
+  } catch (error) {
+    console.error("error decoding idToken", error);
+    return false; 
+  }
 
   const allowedRoles = [
     "cmsroleapprover",
     "systemadmin",
     "statesystemadmin",
-    "helpdesk"
+    "helpdesk",
+    "cmsreviewer",
+    // "defaultcmsuser" 
   ];
 
   // only passes admin check if roles from jwt one of the "allowed roles"

@@ -62,8 +62,8 @@ functions:
     handler: ./handlers/batchUpdateCognitoUsers.main
     timeout: 360
 
-  addPropertyToJWT:
-    handler: ./handlers/addPropertyToJWT.handler
+  addRolesToJWT:
+    handler: ./handlers/addRolesToJWT.handler
     timeout: 360
 
   resetData:
