@@ -42,13 +42,19 @@ async function processCognitoUsers() {
         try {
           const externalUser = await getUser(userEmail);
           let roles = [""];
+          let roleList;
+          try{
+            roleList = externalUser.roleList;
+          }catch(error) {
+            noRolesCounter ++
+            console.log(userEmail + " has no roles")
+          }
           if (externalUser.roleList && externalUser.roleList.length > 0 && externalUser.roleList[0] != null) {
            roles = externalUser.roleList.map(role => role.role);
            hasRolesCounter ++;
           } else {
-            noRolesCounter ++
+            console.log("user parsing error for user" + userEmail)
           }
-          
           await updateUserAttribute(userPoolId, user.Username, roles);
         } catch (error) {
           console.error(`Error processing user ${userEmail}:`, error);
