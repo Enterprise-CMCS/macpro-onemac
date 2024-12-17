@@ -2,14 +2,16 @@ import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
 
 import { getUserRoleObj } from "cmscommonlib";
-import { logAttempt } from "./utils/logAttempts";
+import { logAttempt } from "./utils/logAttempt";
 
 /**
  * returns the User Table entry who's id is this email
  * @param {String} userEmail User to return
+ * @param {String} ipAddress users ip address
  * @returns {Object} the User json object
  */
-export const getUser = async (userEmail, req) => {
+export const getUser = async (userEmail, ipAddress) => {
+  console.log("ANDIEEE getUser: ", ipAddress);
   const cParams = {
     TableName: process.env.oneMacTableName,
     // 'Key' defines the partition key and sort key of the item to be retrieved
@@ -21,6 +23,7 @@ export const getUser = async (userEmail, req) => {
     ProjectionExpression: "email, fullName, phoneNumber",
   };
 
+  console.log("cParams", cParams);
   const params = {
     TableName: process.env.oneMacTableName,
     // 'Key' defines the partition key and sort key of the item to be retrieved
@@ -49,7 +52,7 @@ export const getUser = async (userEmail, req) => {
     }
   } catch (dbError) {
     console.log(`Error happened while reading from DB:  ${dbError}`);
-    logAttempt("getUser", false, req);
+    logAttempt("getUser", false, ipAddress);
     throw dbError;
   }
 
@@ -65,13 +68,17 @@ export const getUser = async (userEmail, req) => {
   const returnUser = cResult.Item;
   returnUser.roleList = result.Items;
   console.log(`Selected User ${userEmail}: ${JSON.stringify(returnUser)}`);
-  logAttempt("getUser", true, req);
+  logAttempt("getUser", true, ipAddress);
   return returnUser;
 };
 
 // Gets owns user data from User DynamoDB table
 export const main = handler(async (event) => {
-  const userItem = (await getUser(event.queryStringParameters.email)) ?? {};
+  const userItem =
+    (await getUser(
+      event.queryStringParameters.email,
+      event.requestContext.identity.sourceIp
+    )) ?? {};
   userItem.validRoutes = getUserRoleObj(userItem.roleList).getAccesses();
   return userItem;
 });
