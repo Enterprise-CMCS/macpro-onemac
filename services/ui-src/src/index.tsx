@@ -10,14 +10,17 @@ import "core-js/es/object";
 import "isomorphic-fetch";
 import "rsuite/dist/rsuite.min.css";
 import "./index.scss";
-import { App } from "./App";
+import App from "./App";
 import { BrowserRouter } from "react-router-dom";
 import { Amplify } from "aws-amplify";
 import { getApplicationNode } from "./utils";
 import config from "./utils/config";
 import { ONEMAC_ROUTES } from "cmscommonlib";
 import "core-js/stable";
+import { withLDProvider } from 'launchdarkly-react-client-sdk';
+const clientId = process.env.REACT_APP_LD_CLIENT_ID;
 
+// Amplify configuration
 let amplifyConfig = {
   Auth: {
     mandatorySignIn: true,
@@ -51,9 +54,20 @@ let amplifyConfig = {
 
 Amplify.configure(amplifyConfig);
 
+// Wrap your App component with withLDProvider
+const LDProviderApp = withLDProvider({
+  clientSideID: clientId ?? "undefined", // Make sure this is set correctly
+  options: {
+  // @ts-ignore
+  streamUrl: "https://clientstream.launchdarkly.us",
+  baseUrl: "https://clientsdk.launchdarkly.us",
+  eventsUrl: "https://events.launchdarkly.us",
+  }
+})(App);
+
 ReactDOM.render(
   <BrowserRouter>
-    <App />
+    <LDProviderApp />
   </BrowserRouter>,
   getApplicationNode()
 );

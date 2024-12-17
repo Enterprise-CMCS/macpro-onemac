@@ -1,5 +1,19 @@
 import { USER_STATUS, USER_ROLE, RoleEntry } from "cmscommonlib";
 
+export type NotificationType = {
+  pk: string;
+  sk: string;
+  notificationId: string;
+  header: string;
+  body: string;
+  buttonText?: string;
+  buttonLink?: string;
+  publicationDate: Date;
+  expiryDate?: string;
+  activeStatus: boolean;
+  notificationType: string;
+};
+
 export type UserProfile = {
   ismemberof: string;
   cmsRoles: string;
@@ -13,9 +27,10 @@ export type UserRecord = {
   roleList: RoleEntry[];
   validRoutes?: string[];
   phoneNumber?: string;
-  fullName: string;
+  fullName?: string;
   effRole?: string;
   effStatus?: string;
+  notifications?: NotificationType[];
 };
 
 export type AccessHistoryEvent = {
