@@ -13,6 +13,7 @@ import { saveEmail } from "./utils/saveEmail";
 import { getUser } from "./getUser";
 import { changeUserStatus } from "./utils/changeUserStatus";
 import { getMyApprovers } from "./getMyApprovers";
+import { logAttempt } from "./utils/logAttempts";
 
 const statusLabels = {
   [USER_STATUS.ACTIVE]: "granted",
@@ -81,13 +82,14 @@ export const doUpdate = async (body, doneBy, doneTo) => {
   }
 };
 
-export const updateUserStatus = async (event) => {
+export const updateUserStatus = async (event, req) => {
   let body;
   const rightNowNormalized = Date.now();
 
   try {
     body = JSON.parse(event.body);
   } catch (e) {
+    logAttempt("updateUserStatus", false, req);
     console.error("Failed to parse body", e);
     return RESPONSE_CODE.USER_SUBMISSION_FAILED;
   }
@@ -100,6 +102,7 @@ export const updateUserStatus = async (event) => {
       getUser(body.email),
     ]);
   } catch (e) {
+    logAttempt("updateUserStatus", false, req);
     console.error("Could not fetch relevant user info", e);
     return RESPONSE_CODE.USER_NOT_FOUND;
   }
@@ -155,9 +158,11 @@ export const updateUserStatus = async (event) => {
       );
     }
   } catch (e) {
+    logAttempt("updateUserStatus", false, req, body.user);
     console.log("failed to send email: ", e);
   }
 
+  logAttempt("updateUserStatus", true, req, body.user);
   return RESPONSE_CODE.USER_SUBMITTED;
 };
 

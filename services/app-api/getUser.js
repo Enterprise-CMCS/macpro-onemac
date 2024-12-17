@@ -2,13 +2,14 @@ import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
 
 import { getUserRoleObj } from "cmscommonlib";
+import { logAttempt } from "./utils/logAttempts";
 
 /**
  * returns the User Table entry who's id is this email
  * @param {String} userEmail User to return
  * @returns {Object} the User json object
  */
-export const getUser = async (userEmail) => {
+export const getUser = async (userEmail, req) => {
   const cParams = {
     TableName: process.env.oneMacTableName,
     // 'Key' defines the partition key and sort key of the item to be retrieved
@@ -48,6 +49,7 @@ export const getUser = async (userEmail) => {
     }
   } catch (dbError) {
     console.log(`Error happened while reading from DB:  ${dbError}`);
+    logAttempt("getUser", false, req);
     throw dbError;
   }
 
@@ -63,6 +65,7 @@ export const getUser = async (userEmail) => {
   const returnUser = cResult.Item;
   returnUser.roleList = result.Items;
   console.log(`Selected User ${userEmail}: ${JSON.stringify(returnUser)}`);
+  logAttempt("getUser", true, req);
   return returnUser;
 };
 
@@ -70,6 +73,5 @@ export const getUser = async (userEmail) => {
 export const main = handler(async (event) => {
   const userItem = (await getUser(event.queryStringParameters.email)) ?? {};
   userItem.validRoutes = getUserRoleObj(userItem.roleList).getAccesses();
-
   return userItem;
 });
