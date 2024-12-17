@@ -11,7 +11,6 @@ import { logAttempt } from "./utils/logAttempt";
  * @returns {Object} the User json object
  */
 export const getUser = async (userEmail, ipAddress) => {
-  console.log("ANDIEEE getUser: ", ipAddress);
   const cParams = {
     TableName: process.env.oneMacTableName,
     // 'Key' defines the partition key and sort key of the item to be retrieved
