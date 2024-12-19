@@ -8,6 +8,7 @@ import {
   getActiveTerritories,
 } from "cmscommonlib";
 import { getUser } from "./getUser";
+import { logAttempt } from "./utils/logAttempt";
 
 export const buildParams = (role, territory) => {
   const startParams = {
@@ -52,15 +53,18 @@ export const buildParams = (role, territory) => {
 };
 
 export const getMyUserList = async (event) => {
+  const ipAddress = event.requestContext.identity.sourceIp;
   try {
     // get the rest of the details about the current user
     const doneBy = await getUser(event.queryStringParameters.email);
 
     if (!doneBy) {
+      logAttempt("getMyUserList", false, ipAddress);
       return RESPONSE_CODE.USER_NOT_FOUND;
     }
 
     if (!getUserRoleObj(doneBy?.roleList).canAccessUserManagement) {
+      logAttempt("getMyUserList", false, ipAddress, doneBy);
       return RESPONSE_CODE.USER_NOT_AUTHORIZED;
     }
 
@@ -76,6 +80,7 @@ export const getMyUserList = async (event) => {
       buildParams(umRole, territories.shift())
     );
 
+    logAttempt("getMyUserList", true, ipAddress, doneBy);
     return listResult.Items;
   } catch (e) {
     console.log("getMyUserList exception? ", e);
