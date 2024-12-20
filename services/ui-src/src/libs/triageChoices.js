@@ -41,7 +41,7 @@ export const choicesFromRoute = {
       {
         title:
           "Medicaid Eligibility, Enrollment, Administration, and Health Homes",
-        description: "Redirects to the MACPro Appian submission system",
+        description: "Redirects to the MACPro system",
         linkTo: ROUTES.MEDICAID_ELIGIBILITY_LANDING,
       },
       {
