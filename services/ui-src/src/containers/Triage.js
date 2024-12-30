@@ -20,7 +20,6 @@ const Triage = () => {
       tempTriageData.choices = tempTriageData.choices.filter(
         (choice) => !choice.description.includes("MMDL")
       );
-      console.log("andie after", tempTriageData);
     }
     setTriageData(tempTriageData);
   }, [location, mmdlNotification]);
