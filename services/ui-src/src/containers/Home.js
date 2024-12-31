@@ -181,7 +181,7 @@ export default function Home() {
         );
       }
     })();
-  }, []);
+  }, [enableSubsequentDocumentation, mmdlNotification]);
 
   return (
     <>
