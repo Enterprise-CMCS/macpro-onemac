@@ -20,7 +20,7 @@ import { ConfirmationDialog } from "./components/ConfirmationDialog";
 import NotificationBanner from "./components/NotificationBanner";
 import NotificationsApi from "./utils/NotificationApi";
 import { LOCAL_STORAGE_USERNOTIFICATIONS } from "./utils/StorageKeys";
-import { useFlags} from 'launchdarkly-react-client-sdk';
+import { useFlags } from "launchdarkly-react-client-sdk";
 
 const DEFAULT_AUTH_STATE: Omit<
   AppContextValue,
@@ -32,13 +32,13 @@ const DEFAULT_AUTH_STATE: Omit<
   userProfile: {},
   userRole: null,
   userStatus: null,
-  activeTerritories: null
+  activeTerritories: null,
 };
 
-const  App = () => {
+const App = () => {
   const [authState, setAuthState] = useState(DEFAULT_AUTH_STATE);
-  const [notificationState, setNotificationState] = useState(false);
-  const {mmdlNotification} = useFlags();
+  console.log("ANDIE", useFlags());
+  const { mmdlNotification, enableSubsequentDocumentation } = useFlags();
   const [confirmationDialog, setConfirmationDialog] = useState<{
     heading: string;
     acceptText: string;
@@ -152,30 +152,43 @@ const  App = () => {
   }, [setUserInfo]);
 
   useEffect(() => {
-    if (mmdlNotification !== undefined) {  // Ensure the flag has been resolved
-      setNotificationState(mmdlNotification);
-    }
-  }, [mmdlNotification]);
-
-  useEffect(()=>{
-    (async ()=> {
-      try{
-        if(notificationState && authState.isAuthenticated) {
+    (async () => {
+      try {
+        if (authState.isAuthenticated) {
           // set the notifications: Needs to be stored locally to persist on reload
-          const email : any = authState.userProfile.email; 
-          let userData : any = authState.userProfile.userData;
+          const email: any = authState.userProfile.email;
+          let userData: any = authState.userProfile.userData;
           // Check local storage for notifications
           const storedNotifications = localStorage.getItem(
             LOCAL_STORAGE_USERNOTIFICATIONS
           );
-          if (storedNotifications !== undefined && storedNotifications?.length && storedNotifications.length > 2) {
+          if (
+            storedNotifications !== undefined &&
+            storedNotifications?.length &&
+            storedNotifications.length > 2
+          ) {
             userData.notifications = JSON.parse(storedNotifications);
           } else {
             // get the notifications & set local storage
-            const notifications = await NotificationsApi.createUserNotifications(
+            let notifications = await NotificationsApi.createUserNotifications(
               email
             );
-            if(notifications) {
+            // remove any MMDL notifications if flag is off
+            if (notifications && !mmdlNotification) {
+              notifications = notifications.filter(
+                (notification) => !notification.header.includes("MMDL")
+              );
+            }
+
+            // remove sub doc notifications if flag is off
+            if (notifications && !enableSubsequentDocumentation) {
+              notifications = notifications.filter(
+                (notification) =>
+                  !notification.body.includes("Upload Subsequent Documents")
+              );
+            }
+            // set the notificationos
+            if (notifications) {
               userData.notifications = notifications;
               localStorage.setItem(
                 LOCAL_STORAGE_USERNOTIFICATIONS,
@@ -194,18 +207,14 @@ const  App = () => {
                 },
               }));
             }
+          }
         }
+      } catch (error) {
+        console.log("There was an error retreiving notifications.", error);
       }
-    }
-      catch (error) {
-        console.log(
-          "There was an error retreiving notifications.",
-          error
-        );
-      }
-    })()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[notificationState, authState.isAuthenticated])
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [authState.isAuthenticated]);
 
   useEffect(() => {
     // On initial load of the App, try to set the user info.
@@ -264,7 +273,7 @@ const  App = () => {
     <AppContext.Provider value={contextValue}>
       <IdleTimerWrapper />
       <div className="header-and-content">
-        {notificationState && notifcations.map((n) => (
+        {notifcations.map((n) => (
           <NotificationBanner
             key={n.sk}
             {...n}
@@ -296,5 +305,5 @@ const  App = () => {
       <Footer />
     </AppContext.Provider>
   );
-}
+};
 export default App;
