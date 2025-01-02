@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useLocation } from "react-router-dom";
 
 import PageTitleBar from "../components/PageTitleBar";
@@ -25,11 +25,14 @@ const Triage = () => {
     setTriageData(tempTriageData);
   }, [location, mmdlNotification]);
 
+  // need react to recognize when to update
+  const choices = useMemo(() => triageData.choices, [triageData.choices]);
+
   return (
     <>
       <PageTitleBar heading={triageData.heading} enableBackNav />
       <MACFieldsetCard legend={triageData.intro}>
-        {triageData.choices.map((choice, key) => (
+        {choices.map((choice, key) => (
           <MACFieldsetCardOption {...choice} key={key} />
         ))}
       </MACFieldsetCard>
