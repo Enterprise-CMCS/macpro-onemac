@@ -14,6 +14,7 @@ const Triage = () => {
   const { mmdlNotification } = useFlags();
 
   useEffect(() => {
+    console.log("mmdl Notification flag:", mmdlNotification);
     const tempTriageData = choicesFromRoute[location.pathname];
     // if the mmdl Flag is set to true, cards related to MMDL will not appear
     if (mmdlNotification) {
