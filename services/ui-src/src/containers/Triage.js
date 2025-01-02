@@ -26,7 +26,7 @@ const Triage = () => {
   }, [location, mmdlNotification]);
 
   // need react to recognize when to update
-  const choices = useMemo(() => triageData.choices, [triageData.choices]);
+  const choices = useMemo(() => [...triageData.choices], [triageData.choices]);
 
   return (
     <>
