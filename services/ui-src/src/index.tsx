@@ -1,5 +1,5 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import "promise-polyfill/src/polyfill";
 import "core-js/es/typed-array/uint32-array";
 import "core-js/es/array/find";
@@ -17,7 +17,7 @@ import { getApplicationNode } from "./utils";
 import config from "./utils/config";
 import { ONEMAC_ROUTES } from "cmscommonlib";
 import "core-js/stable";
-import { withLDProvider } from 'launchdarkly-react-client-sdk';
+import { withLDProvider } from "launchdarkly-react-client-sdk";
 const clientId = process.env.REACT_APP_LD_CLIENT_ID;
 
 // Amplify configuration
@@ -53,21 +53,21 @@ let amplifyConfig = {
 };
 
 Amplify.configure(amplifyConfig);
+const root = createRoot(getApplicationNode()!);
 
 // Wrap your App component with withLDProvider
 const LDProviderApp = withLDProvider({
   clientSideID: clientId ?? "undefined", // Make sure this is set correctly
   options: {
-  // @ts-ignore
-  streamUrl: "https://clientstream.launchdarkly.us",
-  baseUrl: "https://clientsdk.launchdarkly.us",
-  eventsUrl: "https://events.launchdarkly.us",
-  }
+    // @ts-ignore
+    streamUrl: "https://clientstream.launchdarkly.us",
+    baseUrl: "https://clientsdk.launchdarkly.us",
+    eventsUrl: "https://events.launchdarkly.us",
+  },
 })(App);
 
-ReactDOM.render(
+root.render(
   <BrowserRouter>
     <LDProviderApp />
-  </BrowserRouter>,
-  getApplicationNode()
+  </BrowserRouter>
 );

@@ -1,5 +1,6 @@
 import React from "react";
 import { FAQ_TARGET, ROUTES } from "cmscommonlib";
+import { Button } from "@cmsgov/design-system";
 
 function HomeFooter() {
   return (
@@ -11,13 +12,9 @@ function HomeFooter() {
             Do you have questions or need support?
           </div>
           <div className="ds-l-col--3 ds-u-margin-left--auto">
-            <a
-              target={FAQ_TARGET}
-              href={ROUTES.FAQ_TOP}
-              className="ds-c-button ds-c-button--primary ds-u-text-decoration--none"
-            >
+            <Button variation="solid" href={ROUTES.FAQ_TOP} target={FAQ_TARGET}>
               View FAQ
-            </a>
+            </Button>
           </div>
         </div>
       </section>
