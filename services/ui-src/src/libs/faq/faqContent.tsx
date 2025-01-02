@@ -2,6 +2,7 @@ import React from "react";
 import { VideoContent } from "../../components/VideoWithTranscript";
 import { helpDeskContact } from "../helpDeskContact";
 import { stateSystemOverviewTranscript } from "./stateSystemOverviewTranscript";
+import { uploadSubsequentDocumentationTranscript } from "./uploadSubsequentDocumentationTranscript";
 import { FILE_TYPES, FileTypesFAQListItem } from "../../utils/fileTypes";
 import config from "../../utils/config";
 
@@ -203,6 +204,12 @@ export const oneMACFAQContent: FAQContent[] = [
               introText="Watch this video for an overview on Package View."
               src={`${process.env.PUBLIC_URL}/assets/onboarding/OneMACPackageViewStateDemo.mp4`}
               transcript={stateSystemOverviewTranscript}
+            />
+            <VideoContent
+              title="Upload Subsedquent Documentation Overview"
+              introText="Watch this video for an overview on how to upload subsequent documentation to a package under review."
+              src={`${process.env.PUBLIC_URL}/assets/onboarding/UploadSubsequentDocumentationDemo.mp4`}
+              transcript={uploadSubsequentDocumentationTranscript}
             />
           </>
         ),
