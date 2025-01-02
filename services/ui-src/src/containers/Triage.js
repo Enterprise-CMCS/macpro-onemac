@@ -11,10 +11,10 @@ const Triage = () => {
   const [triageData, setTriageData] = useState(
     choicesFromRoute[location.pathname]
   );
+  const [choices, setChoices] = useState([...triageData.choices]);
   const { mmdlNotification } = useFlags();
 
   useEffect(() => {
-    console.log("mmdl Notification flag:", mmdlNotification);
     const tempTriageData = choicesFromRoute[location.pathname];
     // if the mmdl Flag is set to true, cards related to MMDL will not appear
     if (mmdlNotification) {
@@ -22,11 +22,10 @@ const Triage = () => {
         (choice) => !choice.description.includes("MMDL")
       );
     }
+    console.log("tmepTriageChoices: ", tempTriageData.choices);
     setTriageData(tempTriageData);
+    setChoices([...tempTriageData.choices]);
   }, [location, mmdlNotification]);
-
-  // need react to recognize when to update
-  const choices = useMemo(() => [...triageData.choices], [triageData.choices]);
 
   return (
     <>
