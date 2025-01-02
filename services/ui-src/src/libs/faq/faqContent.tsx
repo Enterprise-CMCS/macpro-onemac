@@ -206,7 +206,7 @@ export const oneMACFAQContent: FAQContent[] = [
               transcript={stateSystemOverviewTranscript}
             />
             <VideoContent
-              title="Upload Subsedquent Documentation Overview"
+              title="Upload Subsequent Documentation Overview"
               introText="Watch this video for an overview on how to upload subsequent documentation to a package under review."
               src={`${process.env.PUBLIC_URL}/assets/onboarding/UploadSubsequentDocumentationDemo.mp4`}
               transcript={uploadSubsequentDocumentationTranscript}
