@@ -44,7 +44,7 @@ const NotificationBanner: React.FC<NotificationBannerProps> = (
           <h2 className="ds-c-alert__header">{props.header}</h2>
           <p className="">{props.body}</p>
         </div>
-        <div>
+        <div className="ds-u-display--flex ds-u-align-items--start">
           {props.buttonLink && props.buttonText && (
             <Button
               className="ds-u-color--black ds-u-border--dark ds-u-fill--transparent"

@@ -37,9 +37,7 @@ const DEFAULT_AUTH_STATE: Omit<
 
 const App = () => {
   const [authState, setAuthState] = useState(DEFAULT_AUTH_STATE);
-  const [notificationState, setNotificationState] = useState(false);
-  const { mmdlNotification } = useFlags();
-  console.log("Launch Darkly Flags", { ...useFlags() });
+  const { mmdlNotification, enableSubsequentDocumentation } = useFlags();
   const [confirmationDialog, setConfirmationDialog] = useState<{
     heading: string;
     acceptText: string;
@@ -153,16 +151,9 @@ const App = () => {
   }, [setUserInfo]);
 
   useEffect(() => {
-    if (mmdlNotification !== undefined) {
-      // Ensure the flag has been resolved
-      setNotificationState(mmdlNotification);
-    }
-  }, [mmdlNotification]);
-
-  useEffect(() => {
     (async () => {
       try {
-        if (notificationState && authState.isAuthenticated) {
+        if (authState.isAuthenticated) {
           // set the notifications: Needs to be stored locally to persist on reload
           const email: any = authState.userProfile.email;
           let userData: any = authState.userProfile.userData;
@@ -178,8 +169,24 @@ const App = () => {
             userData.notifications = JSON.parse(storedNotifications);
           } else {
             // get the notifications & set local storage
-            const notifications =
-              await NotificationsApi.createUserNotifications(email);
+            let notifications = await NotificationsApi.createUserNotifications(
+              email
+            );
+            // remove any MMDL notifications if flag is off
+            if (notifications && !mmdlNotification) {
+              notifications = notifications.filter(
+                (notification) => !notification.header.includes("MMDL")
+              );
+            }
+
+            // remove sub doc notifications if flag is off
+            if (notifications && !enableSubsequentDocumentation) {
+              notifications = notifications.filter(
+                (notification) =>
+                  !notification.body.includes("Upload Subsequent Documents")
+              );
+            }
+            // set the notificationos
             if (notifications) {
               userData.notifications = notifications;
               localStorage.setItem(
@@ -206,7 +213,7 @@ const App = () => {
       }
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [notificationState, authState.isAuthenticated]);
+  }, [authState.isAuthenticated]);
 
   useEffect(() => {
     // On initial load of the App, try to set the user info.
@@ -265,14 +272,13 @@ const App = () => {
     <AppContext.Provider value={contextValue}>
       <IdleTimerWrapper />
       <div className="header-and-content">
-        {notificationState &&
-          notifcations.map((n) => (
-            <NotificationBanner
-              key={n.sk}
-              {...n}
-              userEmail={authState.userProfile.email ?? ""}
-            />
-          ))}
+        {notifcations.map((n) => (
+          <NotificationBanner
+            key={n.sk}
+            {...n}
+            userEmail={authState.userProfile.email ?? ""}
+          />
+        ))}
         <Header />
         <main id="main">
           <Routes />
