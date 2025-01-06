@@ -37,7 +37,6 @@ const DEFAULT_AUTH_STATE: Omit<
 
 const App = () => {
   const [authState, setAuthState] = useState(DEFAULT_AUTH_STATE);
-  console.log("ANDIE", useFlags());
   const { mmdlNotification, enableSubsequentDocumentation } = useFlags();
   const [confirmationDialog, setConfirmationDialog] = useState<{
     heading: string;
