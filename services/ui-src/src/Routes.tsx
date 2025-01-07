@@ -71,6 +71,7 @@ import WaiverRenewalSubsequentSubmissionForm from "./page/waiver-renewal/WaiverR
 import WaiverAmendmentSubsequentSubmissionForm from "./page/waiver-amendment/WaiverAmendmentSubsequentSubmissionForm";
 import WaiverAppKSubsequentSubmissionForm from "./page/waiver-appendix-k/WaiverAppKSubsequentSubmissionForm";
 import DisableRaiWithdrawForm from "./page/disable-rai-withdraw/DisableRaiWithdrawForm";
+
 const ID_TOKEN_KEY: string = "idToken";
 
 type RouteSpec = {
@@ -94,16 +95,24 @@ const RouteListRenderer: FC<{ routes: RouteSpec[] }> = ({ routes }) => {
     clearTableStateStorageKeys();
   }
 
-  const { enableSubsequentDocumentation } = useFlags();
-  let filteredRoutes;
+  const { enableSubsequentDocumentation, mmdlNotification } = useFlags();
+  let filteredRoutes = routes;
+
   if (!enableSubsequentDocumentation) {
     // Filter out objects where the component includes a SubsequentSubmission form
     // This is not currently looking for subroutes since all subsub routes are at the root of the route object
     filteredRoutes = routes.filter(
       (route) => !route.path.includes("subsequent-submission")
     );
-  } else {
-    filteredRoutes = routes;
+  }
+
+  // if MMDL flag is on, these landing pages should not be accessable
+  if (mmdlNotification) {
+    filteredRoutes = routes.filter(
+      (route) =>
+        route.path !== ROUTES.ABP_LANDING &&
+        route.path !== ROUTES.CHIP_ELIGIBILITY_LANDING
+    );
   }
 
   return (
@@ -143,27 +152,27 @@ const SignupGuardRouteListRenderer: FC<{ routes: RouteSpec[] }> = ({
   return <RouteListRenderer routes={routes} />;
 };
 
-const isAdminUser = ()=> {
+const isAdminUser = () => {
   /* eslint-disable-next-line react-hooks/rules-of-hooks */
   const context = useAppContext();
-  if(!context?.isAuthenticated) {
-    return false; 
+  if (!context?.isAuthenticated) {
+    return false;
   }
 
   let userRoles;
   //authenticated users will have idToken in Local Storage
-  try{
+  try {
     const idTokenKey: string[] = Object.keys(localStorage).filter((k) =>
       k.includes(ID_TOKEN_KEY)
     );
     const idToken: string | null =
-    idTokenKey && localStorage.getItem(idTokenKey[0]);
+      idTokenKey && localStorage.getItem(idTokenKey[0]);
     if (!idToken) return false;
     const decodedIdToken: any = jwt_decode(idToken);
-     userRoles = decodedIdToken["custom:user_roles"];
+    userRoles = decodedIdToken["custom:user_roles"];
   } catch (error) {
     console.error("error decoding idToken", error);
-    return false; 
+    return false;
   }
 
   const allowedRoles = [
@@ -172,7 +181,7 @@ const isAdminUser = ()=> {
     "statesystemadmin",
     "helpdesk",
     "cmsreviewer",
-    // "defaultcmsuser" 
+    // "defaultcmsuser"
   ];
 
   // only passes admin check if roles from jwt one of the "allowed roles"
@@ -180,10 +189,10 @@ const isAdminUser = ()=> {
     try {
       userRoles = JSON.parse(userRoles);
     } catch (error) {
-      console.error('Error parsing user_roles:', error);
+      console.error("Error parsing user_roles:", error);
       userRoles = [];
     }
-    for (let i = 0; i < userRoles.length; i++) {        
+    for (let i = 0; i < userRoles.length; i++) {
       if (allowedRoles.includes(userRoles[i])) {
         return true;
       }
@@ -191,7 +200,7 @@ const isAdminUser = ()=> {
   }
 
   return false;
-}
+};
 
 const accessGuardRouteListRenderer: (
   accessKey: keyof UserRole,
@@ -205,9 +214,9 @@ const accessGuardRouteListRenderer: (
       useAppContext() ?? {};
     const roleObj = getUserRoleObj(roleList);
     // Token based admin check will redirect if non admin user
-    if(isAdminRoute && redirectTo) {
-      if(!isAdminUser()){
-       return <Redirect to={redirectTo} />;
+    if (isAdminRoute && redirectTo) {
+      if (!isAdminUser()) {
+        return <Redirect to={redirectTo} />;
       }
     }
     if (roleObj[accessKey]) return <RouteListRenderer routes={routes} />;
@@ -234,7 +243,7 @@ const ROUTE_LIST: RouteSpec[] = [
         path: ROUTES.PROFILE + "/:userId",
         exact: true,
         component: UserPage,
-      }
+      },
     ],
   },
   {
@@ -268,22 +277,31 @@ const ROUTE_LIST: RouteSpec[] = [
       isAdminRoute: false,
       component: PackageList,
     },
-  ].map(({ path, accessKey, redirectAccessKey, redirectTo, component, isAdminRoute }) => ({
-    path,
-    component: SignupGuardRouteListRenderer,
-    routes: [
-      {
-        path,
-        component: accessGuardRouteListRenderer(
-          accessKey as keyof UserRole,
-          redirectAccessKey as keyof UserRole,
-          redirectTo,
-          isAdminRoute
-        ),
-        routes: [{ path, exact: true, component}],
-      },
-    ]
-  })),
+  ].map(
+    ({
+      path,
+      accessKey,
+      redirectAccessKey,
+      redirectTo,
+      component,
+      isAdminRoute,
+    }) => ({
+      path,
+      component: SignupGuardRouteListRenderer,
+      routes: [
+        {
+          path,
+          component: accessGuardRouteListRenderer(
+            accessKey as keyof UserRole,
+            redirectAccessKey as keyof UserRole,
+            redirectTo,
+            isAdminRoute
+          ),
+          routes: [{ path, exact: true, component }],
+        },
+      ],
+    })
+  ),
   // legacy triage screens, plus current OneMACForm forms
   ...[
     { path: ONEMAC_ROUTES.MEDICAID_SPA, component: MedicaidSpaForm },
