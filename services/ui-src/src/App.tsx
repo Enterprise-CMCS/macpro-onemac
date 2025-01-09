@@ -160,10 +160,6 @@ const App = () => {
 
           let notifications: NotificationType[] = [];
           // if notification flag is on, find and display notifications otherwise keep empty array
-          console.log(
-            "Laundach darkly mmdlNotifcation flag status: ",
-            mmdlNotification
-          );
           if (mmdlNotification) {
             // Check local storage for notifications
             const storedNotifications = localStorage.getItem(

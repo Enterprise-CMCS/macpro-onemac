@@ -15,7 +15,6 @@ const Triage = () => {
   // mmdlFaq is the flag for all MMDL work
   const { mmdlFaq } = useFlags();
 
-  console.log("Laundach darkly mmdlFaq flag status: ", mmdlFaq);
   useEffect(() => {
     const tempTriageData = choicesFromRoute[location.pathname];
     // if the mmdl Flag is set to true, cards related to MMDL will not appear

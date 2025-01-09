@@ -107,7 +107,6 @@ const RouteListRenderer: FC<{ routes: RouteSpec[] }> = ({ routes }) => {
   }
 
   // mmdlFaq is the flag for all MMDL work these landing pages should not be accessable
-  console.log("Launch Darkly mmdlFaq flag status: ", mmdlFaq);
 
   if (mmdlFaq) {
     filteredRoutes = routes.filter(
