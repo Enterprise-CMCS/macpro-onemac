@@ -156,6 +156,10 @@ export default function Home() {
 
   useEffect(() => {
     (async () => {
+      console.log(
+        "Laundach darkly mmdlNotifcation flag status: ",
+        mmdlNotification
+      );
       if (mmdlNotification) {
         const notifications =
           await NotificationApi.getActiveSystemNotifications();

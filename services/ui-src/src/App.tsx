@@ -160,6 +160,10 @@ const App = () => {
 
           let notifications: NotificationType[] = [];
           // if notification flag is on, find and display notifications otherwise keep empty array
+          console.log(
+            "Laundach darkly mmdlNotifcation flag status: ",
+            mmdlNotification
+          );
           if (mmdlNotification) {
             // Check local storage for notifications
             const storedNotifications = localStorage.getItem(
@@ -185,20 +189,19 @@ const App = () => {
                 );
               }
             }
-
-            // set authState userData notifications
-            setAuthState((prevState) => ({
-              ...prevState,
-              userProfile: {
-                ...prevState.userProfile,
-                userData: {
-                  ...prevState.userProfile?.userData,
-                  notifications: notifications,
-                  roleList: prevState.userProfile?.userData?.roleList ?? [], // typescript UserProfile type def needs a value
-                },
-              },
-            }));
           }
+          // set authState userData notifications
+          setAuthState((prevState) => ({
+            ...prevState,
+            userProfile: {
+              ...prevState.userProfile,
+              userData: {
+                ...prevState.userProfile?.userData,
+                notifications: notifications,
+                roleList: prevState.userProfile?.userData?.roleList ?? [], // typescript UserProfile type def needs a value
+              },
+            },
+          }));
         }
       } catch (error) {
         console.log("There was an error retreiving notifications.", error);
