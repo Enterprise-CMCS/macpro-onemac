@@ -4,6 +4,8 @@ frameworkVersion: "3"
 
 useDotenv: true
 
+variablesResolutionMode: 20210326
+
 package:
   individually: true
 
@@ -11,12 +13,14 @@ plugins:
   - serverless-esbuild
   - serverless-dotenv-plugin
   - serverless-s3-bucket-helper
+
 custom:
-  esbuild:
-    exclude: []
   stage: ${opt:stage, self:provider.stage}
   iamPermissionsBoundaryPolicy: ${ssm:/configuration/${self:custom.stage}/iam/permissionsBoundaryPolicy, ssm:/configuration/default/iam/permissionsBoundaryPolicy, ""}
   oneMacTableName: onemac-${self:custom.stage}-one
+  userPoolName: ${self:custom.stage}-user-pool
+  userPoolId: ${cf:ui-auth-${self:custom.stage}.UserPoolId}
+
 provider:
   name: aws
   runtime: nodejs20.x
@@ -39,12 +43,29 @@ provider:
             - arn:aws:dynamodb:*:*:table/onemac-develop-one
             - arn:aws:dynamodb:*:*:table/${self:custom.oneMacTableName}
             - arn:aws:dynamodb:*:*:table/${self:custom.oneMacTableName}/index/*
+        - Effect: Allow
+          Action:
+            - cognito-idp:ListUsers
+            - cognito-idp:AdminUpdateUserAttributes
+          Resource: arn:aws:cognito-idp:${self:provider.region}:*:userpool/${self:custom.userPoolId}
+
   environment:
     NODE_OPTIONS: '--enable-source-maps'
     oneMacTableName: ${self:custom.oneMacTableName}
+    USER_POOL_ID: ${self:custom.userPoolId}
+  layers:
+      - ${cf:aws-sdk-v2-layer-${self:custom.stage}.AwsSdkV2LambdaLayerQualifiedArn}
+
 
 functions:
-     
+  batchUpdateCognitoUsers: 
+    handler: ./handlers/batchUpdateCognitoUsers.main
+    timeout: 360
+
+  addRolesToJWT:
+    handler: ./handlers/addRolesToJWT.handler
+    timeout: 360
+
   resetData:
     handler: ./handlers/resetData.main
     timeout: 360
@@ -78,4 +99,8 @@ functions:
     events:
       - schedule:
           rate: rate(6 hours)
+    timeout: 180
+
+  insertNotification:
+    handler: ./handlers/insertNotification.main
     timeout: 180

@@ -20,8 +20,6 @@ custom:
   migrationTableName: onemac-${self:service}-${self:custom.stage}-migration
   bootstrapBrokerStringTls: ${ssm:/configuration/${self:custom.stage}/bigmac/bootstrapBrokerStringTls, ssm:/configuration/default/bigmac/bootstrapBrokerStringTls}
   vpcId: ${ssm:/configuration/${self:custom.stage}/vpc/id, ssm:/configuration/default/vpc/id}
-  esbuild:
-    exclude: []
   dataSubnets:
     - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/data/a/id, ssm:/configuration/default/vpc/subnets/data/a/id}
     - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/data/b/id, ssm:/configuration/default/vpc/subnets/data/b/id}
@@ -47,6 +45,8 @@ provider:
   runtime: nodejs20.x
   region: us-east-1
   stage: dev
+  layers:
+      - ${cf:aws-sdk-v2-layer-${self:custom.stage}.AwsSdkV2LambdaLayerQualifiedArn}
 
 params:
   develop:
