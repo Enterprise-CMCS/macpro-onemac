@@ -2,7 +2,7 @@ import React, { useCallback, useMemo, useState, useEffect } from "react";
 import { Auth } from "aws-amplify";
 import { set } from "lodash";
 
-import { AppContextValue } from "./domain-types";
+import { AppContextValue, NotificationType } from "./domain-types";
 import { AppContext } from "./libs/contextLib";
 import { devUsers } from "./libs/devUsers";
 import UserDataApi from "./utils/UserDataApi";
@@ -37,7 +37,8 @@ const DEFAULT_AUTH_STATE: Omit<
 
 const App = () => {
   const [authState, setAuthState] = useState(DEFAULT_AUTH_STATE);
-  const { mmdlNotification, enableSubsequentDocumentation } = useFlags();
+  // mmdlNotification = all notifications
+  const { mmdlNotification } = useFlags();
   const [confirmationDialog, setConfirmationDialog] = useState<{
     heading: string;
     acceptText: string;
@@ -154,59 +155,49 @@ const App = () => {
     (async () => {
       try {
         if (authState.isAuthenticated) {
-          // set the notifications: Needs to be stored locally to persist on reload
           const email: any = authState.userProfile.email;
           let userData: any = authState.userProfile.userData;
-          // Check local storage for notifications
-          const storedNotifications = localStorage.getItem(
-            LOCAL_STORAGE_USERNOTIFICATIONS
-          );
-          if (
-            storedNotifications !== undefined &&
-            storedNotifications?.length &&
-            storedNotifications.length > 2
-          ) {
-            userData.notifications = JSON.parse(storedNotifications);
-          } else {
-            // get the notifications & set local storage
-            let notifications = await NotificationsApi.createUserNotifications(
-              email
-            );
-            // remove any MMDL notifications if flag is off
-            if (notifications && !mmdlNotification) {
-              notifications = notifications.filter(
-                (notification) => !notification.header.includes("MMDL")
-              );
-            }
 
-            // remove sub doc notifications if flag is off
-            if (notifications && !enableSubsequentDocumentation) {
-              notifications = notifications.filter(
-                (notification) =>
-                  !notification.body.includes("Upload Subsequent Documents")
+          let notifications: NotificationType[] = [];
+          // if notification flag is on, find and display notifications otherwise keep empty array
+          if (mmdlNotification) {
+            // Check local storage for notifications
+            const storedNotifications = localStorage.getItem(
+              LOCAL_STORAGE_USERNOTIFICATIONS
+            );
+            if (
+              storedNotifications !== undefined &&
+              storedNotifications?.length &&
+              storedNotifications.length > 2
+            ) {
+              userData.notifications = JSON.parse(storedNotifications);
+            } else {
+              // get the notifications & set local storage
+              notifications = await NotificationsApi.createUserNotifications(
+                email
               );
-            }
-            // set the notificationos
-            if (notifications) {
-              userData.notifications = notifications;
-              localStorage.setItem(
-                LOCAL_STORAGE_USERNOTIFICATIONS,
-                JSON.stringify(notifications)
-              );
-              // set authState userData notifications
-              setAuthState((prevState) => ({
-                ...prevState,
-                userProfile: {
-                  ...prevState.userProfile,
-                  userData: {
-                    ...prevState.userProfile?.userData,
-                    notifications: notifications,
-                    roleList: prevState.userProfile?.userData?.roleList ?? [], // typescript UserProfile type def needs a value
-                  },
-                },
-              }));
+              // set the notifications: Needs to be stored locally to persist on reload
+              if (notifications) {
+                userData.notifications = notifications;
+                localStorage.setItem(
+                  LOCAL_STORAGE_USERNOTIFICATIONS,
+                  JSON.stringify(notifications)
+                );
+              }
             }
           }
+          // set authState userData notifications
+          setAuthState((prevState) => ({
+            ...prevState,
+            userProfile: {
+              ...prevState.userProfile,
+              userData: {
+                ...prevState.userProfile?.userData,
+                notifications: notifications,
+                roleList: prevState.userProfile?.userData?.roleList ?? [], // typescript UserProfile type def needs a value
+              },
+            },
+          }));
         }
       } catch (error) {
         console.log("There was an error retreiving notifications.", error);
