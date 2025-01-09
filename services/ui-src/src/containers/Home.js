@@ -151,43 +151,31 @@ const renderPaperSubmissionInfo = (renderSubmissionSteps) => {
  */
 export default function Home() {
   const location = useLocation();
-  const { mmdlNotification, enableSubsequentDocumentation } = useFlags();
+  const { mmdlNotification } = useFlags();
   const [systemNotifications, setSystemNotifications] = useState([]);
 
   useEffect(() => {
     (async () => {
-      let notifications = await NotificationApi.getActiveSystemNotifications();
-      // remove any MMDL notifications if flag is off
-      if (notifications && !mmdlNotification) {
-        notifications = notifications.filter(
-          (notification) => !notification.header.includes("MMDL")
-        );
-      }
-
-      // remove sub doc notifications if flag is off
-      if (notifications && !enableSubsequentDocumentation) {
-        notifications = notifications.filter(
-          (notification) =>
-            !notification.body.includes("Upload Subsequent Documents")
-        );
-      }
-
-      if (notifications && notifications.length)
-        setSystemNotifications([...notifications]);
-      else {
-        console.log(
-          "Either no notifications or an error occured",
-          notifications
-        );
+      if (mmdlNotification) {
+        const notifications =
+          await NotificationApi.getActiveSystemNotifications();
+        if (notifications && notifications.length)
+          setSystemNotifications([...notifications]);
+        else {
+          console.log(
+            "Either no notifications or an error occured",
+            notifications
+          );
+        }
       }
     })();
-  }, [enableSubsequentDocumentation, mmdlNotification]);
+  }, [mmdlNotification]);
 
   return (
     <>
       <HomeHeader />
       <AlertBar alertCode={location?.state?.passCode} />
-      {systemNotifications.length !== 0 && (
+      {mmdlNotification && systemNotifications.length !== 0 && (
         <div className="home-content-container">
           <h2>New and Notable</h2>
           {systemNotifications.map((notification) => (

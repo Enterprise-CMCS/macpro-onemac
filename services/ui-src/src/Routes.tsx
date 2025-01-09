@@ -95,7 +95,7 @@ const RouteListRenderer: FC<{ routes: RouteSpec[] }> = ({ routes }) => {
     clearTableStateStorageKeys();
   }
 
-  const { enableSubsequentDocumentation, mmdlNotification } = useFlags();
+  const { enableSubsequentDocumentation, mmdlFaq } = useFlags();
   let filteredRoutes = routes;
 
   if (!enableSubsequentDocumentation) {
@@ -106,8 +106,8 @@ const RouteListRenderer: FC<{ routes: RouteSpec[] }> = ({ routes }) => {
     );
   }
 
-  // if MMDL flag is on, these landing pages should not be accessable
-  if (mmdlNotification) {
+  // mmdlFaq is the flag for all MMDL work these landing pages should not be accessable
+  if (mmdlFaq) {
     filteredRoutes = routes.filter(
       (route) =>
         route.path !== ROUTES.ABP_LANDING &&
