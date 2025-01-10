@@ -17,8 +17,6 @@ plugins:
   - serverless-iam-helper
   - serverless-s3-bucket-helper
 custom:
-  esbuild:
-    exclude: []
   stage: ${opt:stage, self:provider.stage}
   oneMacTableName: onemac-${self:custom.stage}-one
   iamPath: ${ssm:/configuration/${self:custom.stage}/iam/path, ssm:/configuration/default/iam/path, "/"}
@@ -35,6 +33,7 @@ custom:
   applicationEndpoint: ${cf:ui-${self:custom.stage}.ApplicationEndpointUrl, "onemac.cms.gov"}
   attachmentsBucket: ${cf:uploads-${self:custom.stage}.AttachmentsBucketName}
   attachmentsBucketArn: ${cf:uploads-${self:custom.stage}.AttachmentsBucketArn}
+  launchDarklySdkKey: ${ssm:/configuration/${self:custom.stage}/launchdarkly/sdkkey, ssm:/configuration/default/launchdarkly/sdkkey}
   warmupEnabled:
     production: true
     development: false
@@ -89,9 +88,12 @@ provider:
     applicationEndpoint: ${self:custom.applicationEndpoint}
     attachmentsBucket: ${self:custom.attachmentsBucket}
     configurationSetName: 'email-${self:custom.stage}-configuration'
+    launchDarklySdkKey: ${self:custom.launchDarklySdkKey}
   tracing:
     apiGateway: true
     lambda: true
+  layers:
+      - ${cf:aws-sdk-v2-layer-${self:custom.stage}.AwsSdkV2LambdaLayerQualifiedArn, ""}
 
 functions:
   migrate:
@@ -128,6 +130,17 @@ functions:
           method: post
           cors: true
           authorizer: aws_iam
+  
+  submitMedicaidSpaSubsequent:
+    handler: form/submitMedicaidSPASubsequentSubmission.main
+    role: LambdaApiRole
+    timeout: 30
+    events:
+      - http:
+          path: submitMedicaidSPASubsequent
+          method: post
+          cors: true
+          authorizer: aws_iam
 
   submitChipSpa:
     handler: form/submitCHIPSPA.main
@@ -151,6 +164,17 @@ functions:
     events:
       - http:
           path: submitCHIPSPARAIResponse
+          method: post
+          cors: true
+          authorizer: aws_iam
+  
+  submitChipSpaSubsequent:
+    handler: form/submitChipSPASubsequentSubmission.main
+    role: LambdaApiRole
+    timeout: 30
+    events:
+      - http:
+          path: submitChipSPASubsequent
           method: post
           cors: true
           authorizer: aws_iam
@@ -211,6 +235,50 @@ functions:
     events:
       - http:
           path: submitWaiverAppendixKRAIResponse
+          method: post
+          cors: true
+          authorizer: aws_iam
+
+  submitInitialWaiverSubsequent:
+    handler: form/submitInitialWaiverSubsequentSubmission.main
+    role: LambdaApiRole
+    timeout: 30
+    events:
+      - http:
+          path: submitInitialWaiverSubsequent
+          method: post
+          cors: true
+          authorizer: aws_iam
+  
+  submitWaiverRenewalSubsequent:
+    handler: form/submitWaiverRenewalSubsequentSubmission.main
+    role: LambdaApiRole
+    timeout: 30
+    events:
+      - http:
+          path: submitWaiverRenewalSubsequent
+          method: post
+          cors: true
+          authorizer: aws_iam
+
+  submitWaierAmendmentSubsequent:
+    handler: form/submitWaiverAmendmentSubsequentSubmission.main
+    role: LambdaApiRole
+    timeout: 30
+    events:
+      - http:
+          path: submitWaiverAmendmentSubsequent
+          method: post
+          cors: true
+          authorizer: aws_iam
+
+  submitWaiverAppKSubsequent:
+    handler: form/submitWaiverAppKSubsequentSubmission.main
+    role: LambdaApiRole
+    timeout: 30
+    events:
+      - http:
+          path: submitWaiverAppKSubsequent
           method: post
           cors: true
           authorizer: aws_iam
@@ -566,6 +634,45 @@ functions:
       - http:
           path: getMyApprovers
           method: get
+          cors: true
+          authorizer: aws_iam
+
+  getActiveSystemNotifications:
+    handler: notification/getActiveSystemNotifications.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: getActiveSystemNotifications  # The API path
+          method: get
+          cors: true
+
+  getActiveUserNotifications:
+    handler: notification/getActiveUserNotifications.main # Path to your function handler
+    role: LambdaApiRole # Ensure the role has permissions for DynamoDB
+    events:
+      - http:
+          path: getActiveUserNotifications/{userId} # Define your API path
+          method: get
+          cors: true
+          authorizer: aws_iam
+
+  dismissUserNotification:
+    handler: notification/dismissUserNotification.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: dismissNotification/{userId}/{notificationId}
+          method: patch
+          cors: true
+          authorizer: aws_iam
+
+  createUserNotifications:
+    handler: notification/createUserNotifications.main 
+    role: LambdaApiRole
+    events:
+      - http:
+          path: createUserNotifications/{userId}
+          method: post
           cors: true
           authorizer: aws_iam
 

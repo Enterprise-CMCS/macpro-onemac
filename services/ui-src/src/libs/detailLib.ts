@@ -29,6 +29,11 @@ export const submissionIdDefault: AttributeDetail = {
   fieldName: "componentId",
   default: null,
 };
+export const latestActivityDefault: AttributeDetail = {
+  heading: "Latest Package Activity",
+  fieldName: "lastActivityNice",
+  default: "-- --",
+};
 export const submissionDateDefault: AttributeDetail = {
   heading: "Initial Submission Date",
   fieldName: "submissionDateNice",
@@ -131,7 +136,7 @@ export const defaultPackageOverviewLabel: string = "Package Overview";
 
 export const defaultDetailSectionItems = [
   submissionIdDefault,
-  blankBox, // empty space
+  latestActivityDefault,
   territoryDefault,
   typeDefault,
   submissionDateDefault,
@@ -146,6 +151,8 @@ export const defaultDetailSectionItems = [
 ];
 
 export const defaultWaiverDetailSectionItems = [
+  submissionIdDefault,
+  latestActivityDefault,
   waiverAuthorityDefault,
   blankBox, // empty space
   territoryDefault,

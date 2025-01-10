@@ -13,6 +13,8 @@ import {
   waiverAuthorityDefault,
   cpocDefault,
   blankBox,
+  submissionIdDefault,
+  latestActivityDefault,
 } from "../../libs/detailLib";
 import { waiverAppendixK } from "cmscommonlib";
 
@@ -27,6 +29,8 @@ export const waiverAppendixKDetail: OneMACDetail = {
   detailHeader: "Appendix K Amendment Package",
   attachmentsHeading: "Attachments",
   detailSection: [
+    submissionIdDefault,
+    latestActivityDefault,
     appendixKWaiverAuthority,
     territoryDefault,
     {

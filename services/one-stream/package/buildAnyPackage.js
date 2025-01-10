@@ -74,12 +74,14 @@ export const buildAnyPackage = async (packageId, config) => {
         reviewTeam: [],
         reviewTeamEmailList: [],
         adminChanges: [],
+        lastActivityTimestamp: 0,
       },
     };
     let currentPackage;
     let showPackageOnDashboard = false;
     let lmTimestamp = 0;
     let adminChanges = [];
+    let packageInactivated = false;
 
     result.Items.forEach((anEvent) => {
       // we ignore all other v's (for now) and any email events
@@ -120,9 +122,15 @@ export const buildAnyPackage = async (packageId, config) => {
       let eventConfig = {};
 
       if (source === "OneMAC") {
-        if (anEvent?.currentStatus === Workflow.ONEMAC_STATUS.INACTIVATED)
+        if (anEvent?.currentStatus === Workflow.ONEMAC_STATUS.INACTIVATED) {
+          packageInactivated = true;
           return;
+        }
         showPackageOnDashboard = true;
+
+        if (anEvent.eventTimestamp > putParams.Item.lastActivityTimestamp) {
+          putParams.Item.lastActivityTimestamp = anEvent.eventTimestamp;
+        }
 
         // the normalized eventLabel is the GSI1pk without the source and componentType
         // but waiver rai should only remove waiver part
@@ -310,21 +318,30 @@ export const buildAnyPackage = async (packageId, config) => {
 
     putParams.Item?.reverseChrono.sort((a, b) => b.timestamp - a.timestamp);
 
-    // if the most recent OneMAC event is an enable withdraw RAI Response,
+    // If the most recent OneMAC event is an enable withdraw RAI Response,
     // then set sub status to "Withdraw RAI Enabled"
     // and freeze status to pending
     if (
       Array.isArray(putParams.Item?.reverseChrono) &&
-      putParams.Item.reverseChrono.length > 0 &&
-      putParams.Item.reverseChrono[0].currentStatus ===
-        ONEMAC_STATUS.WITHDRAW_RAI_ENABLED
+      putParams.Item.reverseChrono.length > 0
     ) {
-      putParams.Item.currentStatus = ONEMAC_STATUS.PENDING;
-      putParams.Item.subStatus = ONEMAC_STATUS.WITHDRAW_RAI_ENABLED;
-    } else {
-      console.log("setting sub status to null");
-      putParams.Item.subStatus = null;
-      delete putParams.Item.subStatus;
+      // Find the first event that is not "Subsequent Documentation Uploaded"
+      const qualifyingEvent = putParams.Item.reverseChrono.find(
+        (event) => event.type !== "Subsequent Documentation Uploaded"
+      );
+
+      // Check if the found event qualifies for WITHDRAW_RAI_ENABLED
+      if (
+        qualifyingEvent &&
+        qualifyingEvent.currentStatus === ONEMAC_STATUS.WITHDRAW_RAI_ENABLED
+      ) {
+        putParams.Item.currentStatus = ONEMAC_STATUS.PENDING;
+        putParams.Item.subStatus = ONEMAC_STATUS.WITHDRAW_RAI_ENABLED;
+      } else {
+        console.log("setting sub status to null");
+        putParams.Item.subStatus = null;
+        delete putParams.Item.subStatus;
+      }
     }
 
     adminChanges.sort((a, b) => b.changeTimestamp - a.changeTimestamp);
@@ -336,6 +353,11 @@ export const buildAnyPackage = async (packageId, config) => {
         putParams.Item.adminChanges.push(oneChange);
       }
     });
+
+    //if any submission has been inactivated then override package status
+    if (packageInactivated) {
+      putParams.Item.currentStatus = Workflow.ONEMAC_STATUS.INACTIVATED;
+    }
 
     putParams.Item.lastEventTimestamp = lmTimestamp;
     logIt(JSON.stringify(putParams));

@@ -48,6 +48,7 @@ export const COLUMN_ID = {
   TYPE: "componentType",
   STATUS: "packageStatus",
   SUBMISSION_TIMESTAMP: "submissionTimestamp",
+  ACTIVITY_TIMESTAMP: "lastActivityTimestamp",
   FINAL_DISPOSITION_DATE: "finalDispositionDate",
   LATEST_RAI_TIMESTAMP: "latestRaiResponseTimestamp",
   CPOC_NAME: "cpocName",
@@ -217,7 +218,7 @@ const PackageList = () => {
     ({ value, row }) => (
       <Link
         className="user-name"
-        to={`${ROUTES.PROFILE}/${row.original.submitterEmail}`}
+        to={`${ROUTES.PROFILE}/${window.btoa(row.original.submitterEmail)}`}
       >
         {value}
       </Link>
@@ -241,6 +242,7 @@ const PackageList = () => {
   const exportTransformMap = {
     submissionTimestamp: renderDate,
     latestRaiResponseTimestamp: renderDate,
+    lastActivityTimestamp: renderDate,
   };
 
   const columns = useMemo(
@@ -283,6 +285,14 @@ const PackageList = () => {
         {
           Header: "Initial Submission",
           accessor: COLUMN_ID.SUBMISSION_TIMESTAMP,
+          Cell: renderDate,
+          disableFilters: false,
+          filter: CustomFilterTypes.DateRange,
+          Filter: CustomFilterUi.DateRangeInPast,
+        },
+        {
+          Header: "Latest Package Activity",
+          accessor: COLUMN_ID.ACTIVITY_TIMESTAMP,
           Cell: renderDate,
           disableFilters: false,
           filter: CustomFilterTypes.DateRange,

@@ -1,0 +1,76 @@
+{
+  "users": [
+    {
+      "password": "Passw0rd!",
+      "cms_roles": "onemac-state-user",
+      "email": "onemaccpoc9@gmail.com",
+      "family_name": "OneMAC",
+      "given_name": "CPOC2",
+      "territory": "CA",
+      "role": "systemadmin"
+    },
+    {
+      "password": "Passw0rd!",
+      "cms_roles": "onemac-state-user",
+      "email": "onemaccpoc319@gmail.com",
+      "family_name": "OneMAC",
+      "given_name": "CPOC3",
+      "territory": "OH",
+      "role": "systemadmin"
+    },
+    {
+      "password": "Passw0rd!",
+      "cms_roles": "onemac-state-user",
+      "email": "onemaccpoc49@gmail.com",
+      "family_name": "OneMAC",
+      "given_name": "CPOC4",
+      "territory": "WI",
+      "role": "systemadmin"
+    },
+    {
+      "password": "Passw0rd!",
+      "cms_roles": "onemac-state-user",
+      "email": "onemaccpoc50@gmail.com",
+      "family_name": "OneMAC",
+      "given_name": "CPOC5",
+      "territory": "NY",
+      "role": "systemadmin"
+    },
+    {
+      "password": "Passw0rd!",
+      "cms_roles": "onemac-state-user",
+      "email": "onemacsrt2@gmail.com",
+      "family_name": "OneMAC",
+      "given_name": "SRT2",
+      "territory": "CA",
+      "role": "systemadmin"
+    },
+    {
+      "password": "Passw0rd!",
+      "cms_roles": "onemac-state-user",
+      "email": "onemacsrt3@gmail.com",
+      "family_name": "OneMAC",
+      "given_name": "SRT3",
+      "territory": "OH",
+      "role": "systemadmin"
+    },
+    {
+      "password": "Passw0rd!",
+      "cms_roles": "onemac-state-user",
+      "email": "onemacsrt4@gmail.com",
+      "family_name": "OneMAC",
+      "given_name": "SRT4",
+      "territory": "WI",
+      "role": "systemadmin"
+    },
+    {
+      "password": "Passw0rd!",
+      "cms_roles": "onemac-state-user",
+      "email": "onemacsrt5@gmail.com",
+      "family_name": "OneMAC",
+      "given_name": "SRT5",
+      "territory": "NY",
+      "role": "systemadmin"
+    }
+  ]
+}

@@ -1,27 +1,6 @@
-import dynamoDb from "../libs/dynamodb-lib";
-
 import { ONEMAC_TYPE } from "cmscommonlib/workflow.js";
 import { formatPackageDetails } from "./formatPackageDetails.js";
-
-export const getCPOCandSRTEmailAddresses = async (packageId) => {
-  let returnObj = {};
-  const qParams = {
-    TableName: process.env.oneMacTableName,
-    Key: {
-      pk: `${packageId}`,
-      sk: "Package",
-    },
-    ProjectionExpression: "cpocEmail, reviewTeamEmailList",
-  };
-  try {
-    const packageItem = await dynamoDb.get(qParams);
-
-    returnObj = packageItem.Item;
-  } catch (e) {
-    console.log("query error: ", e.message);
-  }
-  return returnObj;
-};
+import { getCPOCandSRTEmailAddresses } from "../utils/getCpocAndSrtEmail";
 
 /**
  * RAI Response withdrawal email to CMS

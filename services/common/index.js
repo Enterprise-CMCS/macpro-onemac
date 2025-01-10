@@ -36,12 +36,30 @@ export { waiverRAIResponse } from "./type/waiverRAIResponse.js";
 export { medicaidSPA } from "./type/medicaidSPA.js";
 export { medicaidSPARAIResponse } from "./type/medicaidSPARAIResponse.js";
 export { medicaidSPAWithdraw } from "./type/medicaidSPAWithdraw.js";
+export { medicaidSPASubsequentSubmission } from "./type/medicaidSPASubsequentSubmission.js";
 export { chipSPA } from "./type/chipSPA.js";
 export { chipSPARAIResponse } from "./type/chipSPARAIResponse.js";
 export { chipSPAWithdraw } from "./type/chipSPAWithdraw.js";
+export { chipSPASubsequentSubmission } from "./type/chipSPASubsequentSubmission.js";
 export { enableRaiWithdraw } from "./type/enableRaiWithdraw.js";
 export { disableRaiWithdraw } from "./type/disableRaiWithdraw.js";
 export { withdrawRAIResponse } from "./type/withdrawRAIResponse.js";
+export {
+  initialWaiverSubsequentSubmission,
+  initialWaiverB4SubsequentSubmission,
+  initialWaiverBSubsequentSubmission,
+} from "./type/initialWaiverSubsequentSubmission.js";
+export {
+  waiverRenewalSubsequentSubmission,
+  waiverRenewalB4SubsequentSubmission,
+  waiverRenewalBSubsequentSubmission,
+} from "./type/waiverRenewalSubsequentSubmission.js";
+export {
+  waiverAmendmentSubsequentSubmission,
+  waiverAmendmentB4SubsequentSubmission,
+  waiverAmendmentBSubsequentSubmission,
+} from "./type/waiverAmendmentSubsequentSubmission.js";
+export { waiverAppKSubsequentSubmission } from "./type/waiverAppKSubsequentSubmission.js";
 
 import { ROUTES, ONEMAC_ROUTES } from "./routes.js";
 export {
@@ -64,6 +82,7 @@ export const RESPONSE_CODE = {
   NONE: "NONE",
   LOGIN_ERROR: "UR403",
   SUCCESSFULLY_SUBMITTED: "SC000",
+  SUCCESSFULLY_SUBMITTED_SUBSEQUENT_SUBMISSION: "SS000",
   DATA_MISSING: "SC001",
   SUBMISSION_SAVE_FAILURE: "SC003",
   ATTACHMENTS_MISSING: "SC002",
@@ -96,12 +115,14 @@ export const RESPONSE_CODE = {
   SUBMISSION_ID_EXIST_WARNING: "OMP003",
   RAI_RESPONSE_WITHDRAW_ENABLE_SUCCESS: "RE000",
   RAI_RESPONSE_WITHDRAW_DISABLE_SUCCESS: "RE001",
+  OK: "200",
 };
 
 export const FORM_SUCCESS_RESPONSE_CODES = [
   RESPONSE_CODE.SUCCESSFULLY_SUBMITTED,
   RESPONSE_CODE.WITHDRAW_REQUESTED,
   RESPONSE_CODE.WITHDRAW_RAI_REQUESTED,
+  RESPONSE_CODE.SUCCESSFULLY_SUBMITTED_SUBSEQUENT_SUBMISSION,
 ];
 
 /**

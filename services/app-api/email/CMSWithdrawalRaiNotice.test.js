@@ -1,10 +1,8 @@
 import dynamoDb from "../libs/dynamodb-lib";
 import { ONEMAC_TYPE } from "cmscommonlib/workflow.js";
 
-import {
-  CMSWithdrawRaiNotice,
-  getCPOCandSRTEmailAddresses,
-} from "./CMSWithdrawRaiNotice";
+import { CMSWithdrawRaiNotice } from "./CMSWithdrawRaiNotice";
+import { getCPOCandSRTEmailAddresses } from "../utils/getCpocAndSrtEmail";
 
 jest.mock("../libs/dynamodb-lib");
 
