@@ -21,7 +21,9 @@ export const PhoneNumber = ({
   const onSubmitFn = useCallback(
     (e) => {
       e.preventDefault();
-      onSubmit(value);
+      // remove () and - on submit of number 
+      const formattedValue = value.replace(/[^\d]/g, '');
+      onSubmit(formattedValue);
     },
     [onSubmit, value]
   );
@@ -30,6 +32,36 @@ export const PhoneNumber = ({
     onCancel();
     setValue(phoneNumber); // resets value displayed in TextField back to the original value
   }, [onCancel, phoneNumber]);
+
+
+  const onEnterPhoneNumber = (value) => {
+  
+    // Remove all non-numeric characters first (only numbers allowed)
+    let cleanedValue = value.replace(/[^0-9]/g, '');
+  
+    // Apply parentheses after the first 3 digits
+    if (cleanedValue.length > 3) {
+      cleanedValue = `(${cleanedValue.slice(0, 3)}) ${cleanedValue.slice(3)}`;
+    }
+  
+    // Apply hyphen after the first 6 digits
+    if (cleanedValue.length > 9) {
+      cleanedValue = `${cleanedValue.slice(0, 9)}-${cleanedValue.slice(9)}`;
+    }
+  
+    //needed for deleteinng/editing number
+    if (value.length <= 9) {
+      cleanedValue = cleanedValue.replace(/-/g, ''); // Remove the hyphen
+    }
+
+    //prevent extra numbers
+    if (cleanedValue.length > 14) {
+      cleanedValue = cleanedValue.slice(0, 14);
+    }
+
+    // Set the formatted value in the state
+    setValue(cleanedValue);
+  };
 
   const formId = id || "phoneSection";
 
@@ -48,7 +80,7 @@ export const PhoneNumber = ({
           id="phoneNumber"
           label="Phone Number"
           name="phoneTextField"
-          onChange={({ target: { value } }) => setValue(value)}
+          onChange={({ target: { value } }) => onEnterPhoneNumber(value)}
           onFocus={(e) => e.currentTarget.select()}
           value={value}
         />
