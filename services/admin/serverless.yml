@@ -48,6 +48,12 @@ provider:
             - cognito-idp:ListUsers
             - cognito-idp:AdminUpdateUserAttributes
           Resource: arn:aws:cognito-idp:${self:provider.region}:*:userpool/${self:custom.userPoolId}
+                  # Add the new IAM CreateRole permission statement
+        - Effect: Allow
+          Action:
+            - iam:CreateRole
+          Resource: arn:aws:iam::${AWS::AccountId}:role/*  # You can restrict this further if necessary
+
 
   environment:
     NODE_OPTIONS: '--enable-source-maps'
