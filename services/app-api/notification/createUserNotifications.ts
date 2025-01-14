@@ -1,6 +1,5 @@
 import dynamoDb from "../libs/dynamodb-lib"; // Import shared DynamoDB library
 import handler from "../libs/handler-lib"; // Lambda handler wrapper
-import { dismissUserNotification } from "./dismissUserNotification";
 import { Notification } from "./notification";
 
 export const getUserTargetedSystemNotifications = async () => {
@@ -111,21 +110,24 @@ export const createUserNotifications = async (userId: string) => {
   );
 
   // mark existing notifications as dismissed
-  existingNotificationIds.forEach(async (notificationId) => {
-    dismissUserNotification(userId, notificationId);
-  });
+  // existingNotificationIds.forEach(async (notificationId) => {
+  //   dismissUserNotification(userId, notificationId);
+  // });
 
   // Step 4: Insert missing notifications
   if (missingNotifications.length > 0) {
     await insertMissingNotifications(userId, missingNotifications);
   }
 
+  //combine new notifications with old
+  const allNotifications = [...userNotifications, ...missingNotifications];
+
   return {
     statusCode: 200,
     body: {
       message: "User notifications synced successfully.",
-      insertedCount: missingNotifications.length,
-      notifications: missingNotifications,
+      insertedCount: allNotifications.length,
+      notifications: allNotifications,
     },
   };
 };
