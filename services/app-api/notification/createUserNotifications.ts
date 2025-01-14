@@ -52,6 +52,7 @@ export const insertMissingNotifications = async (
       ...notification, // Copy notification data from system notification
       pk: `USER#${userId}`,
       dismissed: false, // Default to not dismissed for the user
+      createdAt: new Date().toISOString(),
     };
 
     return {
