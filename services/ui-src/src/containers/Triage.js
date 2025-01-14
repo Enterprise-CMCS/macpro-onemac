@@ -12,20 +12,20 @@ const Triage = () => {
     choicesFromRoute[location.pathname]
   );
   const [choices, setChoices] = useState([...triageData.choices]);
-  const { mmdlNotification } = useFlags();
+  // mmdlFaq is the flag for all MMDL work
+  const { mmdlFaq } = useFlags();
 
   useEffect(() => {
     const tempTriageData = choicesFromRoute[location.pathname];
     // if the mmdl Flag is set to true, cards related to MMDL will not appear
-    if (mmdlNotification) {
+    if (mmdlFaq) {
       tempTriageData.choices = tempTriageData.choices.filter(
         (choice) => !choice.description.includes("MMDL")
       );
     }
-    console.log("tmepTriageChoices: ", tempTriageData.choices);
     setTriageData(tempTriageData);
     setChoices([...tempTriageData.choices]);
-  }, [location, mmdlNotification]);
+  }, [location, mmdlFaq]);
 
   return (
     <>
