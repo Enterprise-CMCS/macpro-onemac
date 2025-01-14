@@ -24,7 +24,7 @@ const NotificationBanner: React.FC<NotificationBannerProps> = (
     (async () => {
       const dissmissed = await NotificationApi.dismissUserNotifications(
         props.userEmail,
-        props.sk
+        props.sk.split("NOTIFICATION#")[1]
       );
       console.log("dissmissed emails: ", dissmissed);
     })();
