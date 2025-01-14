@@ -10,7 +10,7 @@ Feature: SPA Form Logic
     Scenario: Verify the SPA ID format check on Medicaid SPA
         Then click on Medicaid SPA
         Then click All Other Medicaid SPA Submissions
-        Then into "SPA ID" type "MD-22-4235"
+        Then into "SPA ID" type "MD-22-4239"
         Then set "Proposed Effective Date of Medicaid SPA" to 3 months from today
         Then attach "15MB.pdf" file to attachment 1
         Then verify "SPA ID" has no error messages
@@ -21,7 +21,7 @@ Feature: SPA Form Logic
         Then verify the ID error message is "The SPA ID must be in the format of SS-YY-NNNN or SS-YY-NNNN-xxxx"
         Then verify the submit button is disabled
         Then clear the ID Input box
-        Then into "SPA ID" type "MD-22-4235"
+        Then into "SPA ID" type "MD-22-4239"
         Then verify "SPA ID" has no error messages
         Then verify the submit button is not disabled
 

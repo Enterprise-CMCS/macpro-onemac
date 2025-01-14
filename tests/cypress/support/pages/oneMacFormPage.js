@@ -4,10 +4,11 @@ const idElement = "#componentId";
 const parentIdElement = "#parent-componentId";
 const packageFormPt2ErrorMsg = "#componentIdStatusMsg1";
 const typeHeader = "//h3[text()='Type']";
-const modalContainer = "dialog";
+const modalContainer = "#react-aria-modal-dialog";
 const modalTitle = ".ds-c-dialog__header";
 const modalText = ".ds-c-dialog__body";
-const modalCancelBTN = "//dialog//button[text()='Cancel']";
+const modalCancelBTN =
+  "//*[@class='ds-c-dialog__actions']//button[text()='Cancel']";
 const attachmentInfoDescription =
   "//h3[text()='Attachments']/following-sibling::p[1]";
 const enterMacProBtn = "//button[contains(text(),'Enter the MACPro system')]";
