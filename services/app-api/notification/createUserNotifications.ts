@@ -119,8 +119,14 @@ export const createUserNotifications = async (userId: string) => {
     await insertMissingNotifications(userId, missingNotifications);
   }
 
-  //combine new notifications with old
-  const allNotifications = [...userNotifications, ...missingNotifications];
+  // Step 5: Return the combined list of user notifications that have not been dismissed
+  const filteredUserNotifications = userNotifications.filter(
+    (notification) => !notification.dismissed
+  );
+  const allNotifications = [
+    ...filteredUserNotifications,
+    ...missingNotifications,
+  ]; // Combine existing and newly inserted notifications
 
   return {
     statusCode: 200,

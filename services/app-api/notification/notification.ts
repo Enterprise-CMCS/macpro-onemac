@@ -10,4 +10,5 @@ export interface Notification {
   expiryDate?: string;
   activeStatus: boolean;
   notificationType: string;
+  dismissed: boolean;
 }
