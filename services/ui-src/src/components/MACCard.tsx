@@ -47,6 +47,7 @@ export const MACCardWrapper = ({
       <div data-testid="gradient-top" className="mac-card-gradient-top" />
       {children && (
         <div
+          data-testid="MACCard-children"
           className={`${
             withBorder ? "mac-card-border" : ""
           } ${childContainerClassName}`}
@@ -168,18 +169,16 @@ export const MACRemovableCard = ({
 }: MACRemovableCardProps) => {
   return (
     <MACCardWrapper childContainerClassName="mac-card-removable-wrapper">
-      <div>
-        {title && <MACCardTitle title={title} />}
-        {!isReadOnly && hasRoleAccess && renderIf && (
-          <button
-            aria-label={`Self-revoke access to ${title}`}
-            disabled={isReadOnly}
-            onClick={onClick}
-          >
-            <img alt="" className="closing-x" src={closingX} />
-          </button>
-        )}
-      </div>
+      <MACCardTitle title={title} />
+      {!isReadOnly && hasRoleAccess && renderIf && (
+        <button
+          aria-label={`Self-revoke access to ${title}`}
+          disabled={isReadOnly}
+          onClick={onClick}
+        >
+          <img alt="" className="closing-x" src={closingX} />
+        </button>
+      )}
       {description && <span>{description}</span>}
       {children}
     </MACCardWrapper>
