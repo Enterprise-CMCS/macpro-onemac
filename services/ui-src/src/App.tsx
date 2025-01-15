@@ -37,6 +37,7 @@ const DEFAULT_AUTH_STATE: Omit<
 
 const App = () => {
   const [authState, setAuthState] = useState(DEFAULT_AUTH_STATE);
+  const [notifications, setNotifications] = useState<NotificationType[]>([]);
   // mmdlNotification = all notifications
   const { mmdlNotification } = useFlags();
   const [confirmationDialog, setConfirmationDialog] = useState<{
@@ -156,7 +157,6 @@ const App = () => {
       try {
         if (authState.isAuthenticated) {
           const email: any = authState.userProfile.email;
-          let userData: any = authState.userProfile.userData;
 
           let notifications: NotificationType[] = [];
           // if notification flag is on, find and display notifications otherwise keep empty array
@@ -167,10 +167,9 @@ const App = () => {
             );
             if (
               storedNotifications !== undefined &&
-              storedNotifications?.length &&
-              storedNotifications.length > 2
+              storedNotifications?.length
             ) {
-              userData.notifications = JSON.parse(storedNotifications);
+              setNotifications(JSON.parse(storedNotifications));
             } else {
               // get the notifications & set local storage
               notifications = await NotificationsApi.createUserNotifications(
@@ -178,26 +177,14 @@ const App = () => {
               );
               // set the notifications: Needs to be stored locally to persist on reload
               if (notifications) {
-                userData.notifications = notifications;
                 localStorage.setItem(
                   LOCAL_STORAGE_USERNOTIFICATIONS,
                   JSON.stringify(notifications)
                 );
+                setNotifications(notifications);
               }
             }
           }
-          // set authState userData notifications
-          setAuthState((prevState) => ({
-            ...prevState,
-            userProfile: {
-              ...prevState.userProfile,
-              userData: {
-                ...prevState.userProfile?.userData,
-                notifications: notifications,
-                roleList: prevState.userProfile?.userData?.roleList ?? [], // typescript UserProfile type def needs a value
-              },
-            },
-          }));
         }
       } catch (error) {
         console.log("There was an error retreiving notifications.", error);
@@ -253,17 +240,11 @@ const App = () => {
     [authState, setUserInfo, updatePhoneNumber, confirmAction]
   );
 
-  const notifcations = useMemo(() => {
-    if (authState.userProfile.userData?.notifications) {
-      return authState.userProfile.userData?.notifications;
-    } else return [];
-  }, [authState.userProfile.userData]);
-
   return authState.isAuthenticating ? null : (
     <AppContext.Provider value={contextValue}>
       <IdleTimerWrapper />
       <div className="header-and-content">
-        {notifcations.map((n) => (
+        {notifications.map((n: NotificationType) => (
           <NotificationBanner
             key={n.sk}
             {...n}
