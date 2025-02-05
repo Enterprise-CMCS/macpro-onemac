@@ -21,6 +21,7 @@ const allowedRoles = [
 ];
 
 function checkMatchingRoles(arr1, arr2) {
+  console.log("check matching roles called")
   // Iterate through each element in array1
   for (let i = 0; i<arr1.length; i++) {
     // Iterate through each element in array2
@@ -98,7 +99,8 @@ export const main = handler(async (event) => {
     const loggedInUserItem = await getUser(idTokenEmail);
     const queryUserRoleList = JSON.parse(userItem.roleList)
     const loggedInUserRoleList =  JSON.parse(loggedInUserItem.roleList); 
-    const hasMatchingRoles = checkMatchingRoles(loggedInUserRoleList, queryUserRoleList);
+    console.log("both role lists: "+ queryUserRoleList + ", " + loggedInUserRoleList)
+    const hasMatchingRoles = await checkMatchingRoles(loggedInUserRoleList, queryUserRoleList);
     if(!hasMatchingRoles) {
       console.log("permission denied");
       return {
