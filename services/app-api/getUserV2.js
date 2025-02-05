@@ -97,10 +97,10 @@ export const main = handler(async (event) => {
   } else {
     const userItem = (await getUser(event.queryStringParameters.email)) ?? {};
     const loggedInUserItem = await getUser(idTokenEmail);
-    console.log("user Item: " + userItem);
-    console.log("logged user Item: " + loggedInUserItem);
-    const queryUserRoleList = JSON.parse(userItem.roleList)
-    const loggedInUserRoleList =  JSON.parse(loggedInUserItem.roleList); 
+    console.log("user Item: " + JSON.stringify(userItem));
+    console.log("logged user Item: " + JSON.stringify(loggedInUserItem));
+    const queryUserRoleList = JSON.parse(userItem).roleList
+    const loggedInUserRoleList =  JSON.parse(loggedInUserItem).roleList; 
     console.log("both role lists: "+ queryUserRoleList + ", " + loggedInUserRoleList)
     const hasMatchingRoles = await checkMatchingRoles(loggedInUserRoleList, queryUserRoleList);
     if(!hasMatchingRoles) {
