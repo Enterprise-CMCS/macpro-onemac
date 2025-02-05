@@ -38,7 +38,7 @@ function checkMatchingRoles(arr1, arr2) {
 function checkAdminUser(arr) {
   for (let i = 0; i < arr.length; i++) {        
     if (allowedRoles.includes(arr[i])) {
-      console.log("not an admin user");
+      console.log("admin user");
       return true;
     }
   }
@@ -63,9 +63,11 @@ export const main = handler(async (event) => {
   const decodedIdToken = jwt_decode(idToken);
   console.log("decoded id token: ", decodedIdToken);
   const idTokenEmail = decodedIdToken.email; 
-  let userRoles = decodedIdToken.user_roles;
+  let userRoles = decodedIdToken["custom:user_roles"];
+  console.log("user roles: " + userRoles)
 
   if(!userRoles) {
+    console.log("no roles for user")
     const userItem = (await getUser(event.queryStringParameters.email)) ?? {};
     userItem.validRoutes = getUserRoleObj(userItem.roleList).getAccesses();
     return userItem;
