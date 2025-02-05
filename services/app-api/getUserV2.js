@@ -27,11 +27,11 @@ function checkMatchingRoles(arr1, arr2) {
     // Iterate through each element in array2
     for (let j = 0; j<arr2.length; j++) {
       // Check if both role and territory match
-      console.log(JSON.parse(arr1[i]).status)
-      console.log(JSON.parse(arr2[j]).status)
-      console.log(JSON.parse(arr1[i]).territory)
-      console.log(JSON.parse(arr2[j]).territory)
-      if (JSON.parse(arr1[i]).status === "active" && JSON.parse(arr2[j]).status === "active" && JSON.parse(arr1[i]).territory === JSON.parse(arr2[j]).territory) {
+      console.log((arr1[i]).status)
+      console.log((arr2[j]).status)
+      console.log((arr1[i]).territory)
+      console.log((arr2[j]).territory)
+      if ((arr1[i]).status === "active" && (arr2[j]).status === "active" && (arr1[i]).territory === (arr2[j]).territory) {
         console.log("match found")
         return true; 
       }
@@ -97,12 +97,14 @@ export const main = handler(async (event) => {
   } else {
     const userItem = (await getUser(event.queryStringParameters.email)) ?? {};
     const loggedInUserItem = await getUser(idTokenEmail);
-    console.log("user Item: " + JSON.stringify(userItem));
-    console.log("logged user Item: " + JSON.stringify(loggedInUserItem));
-    const queryUserRoleList = JSON.parse(userItem).roleList
-    const loggedInUserRoleList =  JSON.parse(loggedInUserItem).roleList; 
-    console.log("both role lists: "+ queryUserRoleList + ", " + loggedInUserRoleList)
-    const hasMatchingRoles = await checkMatchingRoles(loggedInUserRoleList, queryUserRoleList);
+    // console.log("user Item role list: " + JSON.stringify(JSON.parse(JSON.stringify((userItem)))).roleList);
+    // console.log("logged user Item role list: " + JSON.stringify(JSON.parse(JSON.stringify((loggedInUserItem)))).roleList);
+    console.log("user Item role list: " + JSON.stringify(userItem.roleList));
+    console.log("logged user Item role list: " + JSON.stringify(loggedInUserItem.roleList));
+    // const queryUserRoleList = JSON.parse(userItem).roleList
+    // const loggedInUserRoleList =  JSON.parse(loggedInUserItem).roleList; 
+    // console.log("both role lists: "+ queryUserRoleList + ", " + loggedInUserRoleList)
+    const hasMatchingRoles = await checkMatchingRoles(userItem.roleList, loggedInUserItem.roleList);
     if(!hasMatchingRoles) {
       console.log("permission denied");
       return {
