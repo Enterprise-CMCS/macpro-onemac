@@ -26,7 +26,11 @@ function checkMatchingRoles(arr1, arr2) {
     // Iterate through each element in array2
     for (let j = 0; j<arr2.length; j++) {
       // Check if both role and territory match
-      if (arr1[i].status === "active" && arr2[j].status === "active" && arr1[i].territory === arr2[j].territory) {
+      console.log(JSON.parse(arr1[i]).status)
+      console.log(JSON.parse(arr2[j]).status)
+      console.log(JSON.parse(arr1[i]).territory)
+      console.log(JSON.parse(arr2[j]).territory)
+      if (JSON.parse(arr1[i]).status === "active" && JSON.parse(arr2[j]).status === "active" && JSON.parse(arr1[i]).territory === JSON.parse(arr2[j]).territory) {
         console.log("match found")
         return true; 
       }
