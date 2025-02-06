@@ -31,10 +31,10 @@
     "@launchdarkly/node-server-sdk": "^9.7.2",
     "cmscommonlib": "file:../common",
     "date-fns": "^2.16.1",
-    "dynamodb-local": "^0.0.32",
+    "dynamodb-local": "^0.0.35",
     "joi": "^17.4.0",
     "luxon": "^1.25.0",
-    "serverless-dynamodb-local": "^0.2.39",
+    "serverless-dynamodb-local": "^1.0.2",
     "uuid": "^7.0.3"
   },
   "jest": {
