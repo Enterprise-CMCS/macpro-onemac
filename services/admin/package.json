@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.43.0",
-    "@aws-sdk/lib-dynamodb": "^3.454.0",
+    "@aws-sdk/lib-dynamodb": "^3.726.1",
     "cmscommonlib": "file:../common",
     "csvtojson": "^2.0.10",
     "date-fns": "^2.16.1"
