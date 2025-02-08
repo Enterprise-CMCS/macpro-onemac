@@ -1,6 +1,8 @@
 import handler from "./libs/handler-lib";
 import jwt_decode from "jwt-decode";
 import {getUser} from "./getUser";
+import { Auth } from "aws-amplify";
+import { verifyIdToken } from "./tokenVerificationService";
  
 import { getUserRoleObj } from "cmscommonlib";
 
@@ -55,11 +57,12 @@ export const main = handler(async (event) => {
   console.log("body: ", body)
   const idToken = body.idToken;
   console.log("Received idToken:", idToken);
+  console.log("idtoken valid: "+ verifyIdToken(idToken));
   if (!idToken) {
     console.log("idToken header is missing");
     return {
       statusCode: 400,
-      body: JSON.stringify({ error: "idToken event body missing" }),
+      body: JSON.stringify({ error: "idToken event body missing or invalid" }),
     };
   }
   const decodedIdToken = jwt_decode(idToken);
