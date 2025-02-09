@@ -52,6 +52,6 @@
   },
   "dependencies": {
     "dynamodb-local": "^0.0.32",
-    "serverless-esbuild": "^1.50.1"
+    "serverless-esbuild": "^1.54.6"
   }
 }
