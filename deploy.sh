@@ -36,16 +36,29 @@ deploy() {
 install_deps
 
 # Run deploy for each folder
+# services=(
+#   'ui'
+#   'uploads'
+#   'layers/aws-sdk-v2-layer'
+#   'app-api'
+#   'email'
+#   'one-stream'
+#   'seatool-sink'
+#   'ui-waf-log-assoc'
+#   'ui-auth'
+#   'ui-src'
+#   'admin'
+# )
 services=(
   'ui'
   'uploads'
   'layers/aws-sdk-v2-layer'
-  'app-api'
+  'ui-auth'  # Moved ui-auth to before app-api
+  'app-api' # app-api will now be built after ui-auth
   'email'
   'one-stream'
   'seatool-sink'
   'ui-waf-log-assoc'
-  'ui-auth'
   'ui-src'
   'admin'
 )

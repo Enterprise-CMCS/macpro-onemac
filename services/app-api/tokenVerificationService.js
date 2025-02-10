@@ -9,7 +9,7 @@ import handler from "./libs/handler-lib";
 // const jwksUrl = "https://cognito-idp.us-east-1.amazonaws.com/us-east-1_MBatvwEYE/.well-known/jwks.json";
 // const jwksUrl = "https://cognito-idp.us-east-1.amazonaws.com/us-east-1_KDU39SsRi/.well-known/jwks.json"
 
-const userPoolId = process.env.cognitoUserPoolId;
+const userPoolId = process.env.userPoolId;
 const region = process.env.region; 
 const jwksUrl = 'https://cognito-idp.' + region +'.amazonaws.com/'+ userPoolId +'/.well-known/jwks.json';
 
