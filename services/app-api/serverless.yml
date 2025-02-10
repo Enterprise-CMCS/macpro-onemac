@@ -717,16 +717,3 @@ resources:
   # CloudWatch Alarms
   - ${file(resources/cloudwatch.yml)}
 
-
-
-# # CloudFormation Outputs
-# Outputs:
-#   CognitoUserPool:
-#     Type: AWS::Cognito::UserPool
-#     Properties:
-#       PoolName:  ${self:custom.stage}-user-pool
-#   UserPoolId:
-#     Value: !Ref CognitoUserPool
-#     Export:
-#       Name: ${self:service}-${self:provider.stage}-UserPoolId
-
