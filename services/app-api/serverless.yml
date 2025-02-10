@@ -17,11 +17,12 @@ plugins:
   - serverless-iam-helper
   - serverless-s3-bucket-helper
 custom:
-
   stage: ${opt:stage, self:provider.stage}
   oneMacTableName: onemac-${self:custom.stage}-one
   cognitoUserPool: ${self:custom.stage}-user-pool
+  region: us-east-1
   userPoolId: ${cf:ui-auth-${self:custom.stage}.UserPoolId}
+  # userPoolId: ${self:custom.cognitoUserPool}.UserPoolId
   iamPath: ${ssm:/configuration/${self:custom.stage}/iam/path, ssm:/configuration/default/iam/path, "/"}
   iamPermissionsBoundaryPolicy: ${ssm:/configuration/${self:custom.stage}/iam/permissionsBoundaryPolicy, ssm:/configuration/default/iam/permissionsBoundaryPolicy, ""}
   emailSource: ${ssm:/configuration/${self:custom.stage}/email/cms_spa_form_from_email, ssm:/configuration/default/email/cms_spa_form_from_email, file(resources/ssm-params.yml):Resources.CmsSpaFormFromEmail.Properties.Value}
@@ -103,9 +104,9 @@ functions:
   tokenVerificationService:
     handler: tokenVerificationService.main
     role: LambdaApiRole
-    environment:
-      cognitoUserPoolId: ${self:custom.userPoolId}
-      region: us-east-1
+    # environment:
+    #   cognitoUserPoolId: ${self:custom.userPoolId}
+    #   region: us-east-1
 
   migrate:
     handler: migrate.main

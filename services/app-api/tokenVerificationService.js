@@ -1,26 +1,28 @@
 import jwt from 'jsonwebtoken';
 import jwksClient  from 'jwks-rsa';
 import handler from "./libs/handler-lib";
-const userPoolId = process.env.cognitoUserPoolId;
-const region = process.env.region; 
+
 // const userPoolId = 'pentest-31462-user-pool'
 // const region = 'us-east-1' 
 // Your Cognito user pool JWKS URL (replace with your actual Cognito JWKS URL)
-const jwksUrl = 'https://cognito-idp.' + region +'.amazonaws.com/'+ userPoolId +'/.well-known/jwks.json';
+
 // const jwksUrl = "https://cognito-idp.us-east-1.amazonaws.com/us-east-1_MBatvwEYE/.well-known/jwks.json";
 // const jwksUrl = "https://cognito-idp.us-east-1.amazonaws.com/us-east-1_KDU39SsRi/.well-known/jwks.json"
 
-
-// Initialize the JWKS client
-const client = jwksClient({
-  jwksUri: jwksUrl,
-});
-
+const userPoolId = process.env.cognitoUserPoolId;
+const region = process.env.region; 
+const jwksUrl = 'https://cognito-idp.' + region +'.amazonaws.com/'+ userPoolId +'/.well-known/jwks.json';
 
 
 
 // Function to get the signing key based on the JWT header
 function getSigningKey(kid) {
+
+// Initialize the JWKS client
+const client = jwksClient({
+    jwksUri: jwksUrl,
+  });
+  
 console.log("jwksUrl: " + jwksUrl)
   return new Promise((resolve, reject) => {
     client.getSigningKey(kid, (err, key) => {
