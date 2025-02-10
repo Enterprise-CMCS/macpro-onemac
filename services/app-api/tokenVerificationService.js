@@ -1,8 +1,8 @@
-const jwt = require('jsonwebtoken');
-const jwksClient = require('jwks-rsa');
+import jwt from 'jsonwebtoken';
+import jwksClient  from 'jwks-rsa';
+import handler from "./libs/handler-lib";
 const userPoolId = process.env.userPoolId;
 const region = process.env.region; 
-
 
 // Your Cognito user pool JWKS URL (replace with your actual Cognito JWKS URL)
 const jwksUrl = 'https://cognito-idp.' + region +'.amazonaws.com/'+ userPoolId +'/.well-known/jwks.json';
@@ -12,22 +12,6 @@ const client = jwksClient({
   jwksUri: jwksUrl,
 });
 
-export const main = handler(async (event) => {
-    console.log(" userPool Id: " + userPoolId);
-    console.log(" region: " + region);
-    const idToken = event.idToken;
-    console.log("verify idToken: " + idToken);
-
-    verifyIdToken(idToken).then(isValid => {
-        if (isValid) {
-          console.log('idToken is valid');
-          return true; 
-        } else {
-          console.log('idToken is invalid');
-          return false;
-        }
-      });
-  });
 
 
 
@@ -71,5 +55,21 @@ export async function verifyIdToken(idToken)  {
 }
 
 
+export const main = handler(async (event) => {
+    console.log(" userPool Id: " + userPoolId);
+    console.log(" region: " + region);
+    const idToken = event.idToken;
+    console.log("verify idToken: " + idToken);
+
+    verifyIdToken(idToken).then(isValid => {
+        if (isValid) {
+          console.log('idToken is valid');
+          return true; 
+        } else {
+          console.log('idToken is invalid');
+          return false;
+        }
+      });
+  });
 
 

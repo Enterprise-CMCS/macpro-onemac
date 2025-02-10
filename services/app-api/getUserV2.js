@@ -1,7 +1,6 @@
 import handler from "./libs/handler-lib";
 import jwt_decode from "jwt-decode";
 import {getUser} from "./getUser";
-import { Auth } from "aws-amplify";
 import { verifyIdToken } from "./tokenVerificationService";
  
 import { getUserRoleObj } from "cmscommonlib";
