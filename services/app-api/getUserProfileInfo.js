@@ -4,7 +4,6 @@ import {getUser} from "./getUser";
 import { verifyIdToken } from "./tokenVerificationService";
  
 import { getUserRoleObj } from "cmscommonlib";
-import { is } from "date-fns/locale";
 
 /**
  * returns the User Table entry who's id is this email
