@@ -2,7 +2,6 @@ import handler from "./libs/handler-lib";
 import jwt_decode from "jwt-decode";
 import {getUser} from "./getUser";
 import { verifyIdToken } from "./tokenVerificationService";
- 
 import { getUserRoleObj } from "cmscommonlib";
 
 /**
@@ -10,7 +9,6 @@ import { getUserRoleObj } from "cmscommonlib";
  * @param {String} userEmail User to return
  * @returns {Object} the User json object
  */
-
 
 const allowedRoles = [
   "cmsroleapprover",
@@ -51,15 +49,13 @@ function checkAdminUser(arr) {
 
 // Gets owns user data from User DynamoDB table
 export const main = handler(async (event) => {
-  console.log("get user invoked")
   const body = JSON.parse(event.body);
-  console.log("body: ", body)
   const idToken = body.idToken;
   console.log("Received idToken:", idToken);
   const isIdTokenValid = await verifyIdToken(idToken);
   console.log("idtoken valid: "+ isIdTokenValid);
-  if (!idToken) {
-    console.log("idToken header is missing");
+  if (!idToken || !isIdTokenValid) {
+    console.log("idToken header is missing or invalid");
     return {
       statusCode: 400,
       body: JSON.stringify({ error: "idToken event body missing or invalid" }),

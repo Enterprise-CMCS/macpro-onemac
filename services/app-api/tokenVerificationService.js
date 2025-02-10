@@ -2,18 +2,9 @@ import jwt from 'jsonwebtoken';
 import jwksClient  from 'jwks-rsa';
 import handler from "./libs/handler-lib";
 
-// const userPoolId = 'pentest-31462-user-pool'
-// const region = 'us-east-1' 
-// Your Cognito user pool JWKS URL (replace with your actual Cognito JWKS URL)
-
-// const jwksUrl = "https://cognito-idp.us-east-1.amazonaws.com/us-east-1_MBatvwEYE/.well-known/jwks.json";
-// const jwksUrl = "https://cognito-idp.us-east-1.amazonaws.com/us-east-1_KDU39SsRi/.well-known/jwks.json"
-
 const userPoolId = process.env.userPoolId;
 const region = process.env.region; 
 const jwksUrl = 'https://cognito-idp.' + region +'.amazonaws.com/'+ userPoolId +'/.well-known/jwks.json';
-
-
 
 // Function to get the signing key based on the JWT header
 function getSigningKey(kid) {
@@ -30,7 +21,6 @@ console.log("jwksUrl: " + jwksUrl)
         console.error("Error retrieving signing key: ", err);
         reject(err);
       }
-      console.log("kid used to search: ", kid)
       console.log("key recieved: ", key)
       const signingKey = key.publicKey || key.rsaPublicKey;
       resolve(signingKey);
@@ -40,7 +30,6 @@ console.log("jwksUrl: " + jwksUrl)
 
 // Function to verify the idToken and return true or false based on validity
 export async function verifyIdToken(idToken)  {
-    console.log("verify ID token called")
   try {
     // Decode the token header to get the kid (key id)
     const decodedHeader = jwt.decode(idToken, { complete: true });
@@ -65,13 +54,9 @@ export async function verifyIdToken(idToken)  {
   }
 }
 
-
+// main method not being invoded as getUserProfileInfo calls verifyIdToken directly
 export const main = handler(async (event) => {
-    console.log(" userPool Id: " + userPoolId);
-    console.log(" region: " + region);
     const idToken = event.idToken;
-    console.log("verify idToken: " + idToken);
-
     verifyIdToken(idToken).then(isValid => {
         if (isValid) {
           console.log('idToken is valid');
