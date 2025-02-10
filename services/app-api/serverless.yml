@@ -21,11 +21,7 @@ custom:
   oneMacTableName: onemac-${self:custom.stage}-one
   cognitoUserPool: ${self:custom.stage}-user-pool
   region: us-east-1
-  # cognitoUserPoolId: ${cf:ui-auth-${self:custom.stage}.UserPoolId}
-  # userPoolId: ${ssm:/onemac/develop/cognito/userpoolid} 
   userPoolId: ${cf:ui-auth-${self:custom.stage}.UserPoolId}
-  # userPoolId: some-id
-  # userPoolId: ${stackOutputs.ui-auth-${self:custom.stage}.UserPoolId}
   iamPath: ${ssm:/configuration/${self:custom.stage}/iam/path, ssm:/configuration/default/iam/path, "/"}
   iamPermissionsBoundaryPolicy: ${ssm:/configuration/${self:custom.stage}/iam/permissionsBoundaryPolicy, ssm:/configuration/default/iam/permissionsBoundaryPolicy, ""}
   emailSource: ${ssm:/configuration/${self:custom.stage}/email/cms_spa_form_from_email, ssm:/configuration/default/email/cms_spa_form_from_email, file(resources/ssm-params.yml):Resources.CmsSpaFormFromEmail.Properties.Value}
