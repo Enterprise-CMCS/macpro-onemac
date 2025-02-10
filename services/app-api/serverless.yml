@@ -21,6 +21,7 @@ custom:
   stage: ${opt:stage, self:provider.stage}
   oneMacTableName: onemac-${self:custom.stage}-one
   cognitoUserPool: ${self:custom.stage}-user-pool
+  userPoolId: ${cf:ui-auth-${self:custom.stage}.UserPoolId}
   iamPath: ${ssm:/configuration/${self:custom.stage}/iam/path, ssm:/configuration/default/iam/path, "/"}
   iamPermissionsBoundaryPolicy: ${ssm:/configuration/${self:custom.stage}/iam/permissionsBoundaryPolicy, ssm:/configuration/default/iam/permissionsBoundaryPolicy, ""}
   emailSource: ${ssm:/configuration/${self:custom.stage}/email/cms_spa_form_from_email, ssm:/configuration/default/email/cms_spa_form_from_email, file(resources/ssm-params.yml):Resources.CmsSpaFormFromEmail.Properties.Value}
@@ -103,7 +104,7 @@ functions:
     handler: tokenVerificationService.main
     role: LambdaApiRole
     environment:
-      cognitoUserPoolId: ${self:custom.cognitoUserPool}
+      cognitoUserPoolId: ${self:custom.userPoolId}
       region: us-east-1
 
   migrate:
@@ -583,12 +584,12 @@ functions:
           cors: true
           authorizer: aws_iam
 
-  getUserV2:
-    handler: getUserV2.main
+  getUserProfileInfo:
+    handler: getUserProfileInfo.main
     role: LambdaApiRole
     events:
       - http:
-          path: getUserV2
+          path: getUserProfileInfo
           method: post
           cors: true
           authorizer: aws_iam

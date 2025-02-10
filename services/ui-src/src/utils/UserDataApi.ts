@@ -53,7 +53,7 @@ class UserDataApi {
 
     try {
       const idToken = await this.getIdToken();
-      return await API.post("oneMacAPI", `/getUserV2`, {
+      return await API.post("oneMacAPI", `/getUserProfileInfo`, {
         queryStringParameters: { email: userEmail },
         body: {idToken: idToken}
       });

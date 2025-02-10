@@ -4,6 +4,7 @@ import {getUser} from "./getUser";
 import { verifyIdToken } from "./tokenVerificationService";
  
 import { getUserRoleObj } from "cmscommonlib";
+import { is } from "date-fns/locale";
 
 /**
  * returns the User Table entry who's id is this email
@@ -56,7 +57,8 @@ export const main = handler(async (event) => {
   console.log("body: ", body)
   const idToken = body.idToken;
   console.log("Received idToken:", idToken);
-  console.log("idtoken valid: "+ verifyIdToken(idToken));
+  const isIdTokenValid = await verifyIdToken(idToken);
+  console.log("idtoken valid: "+ isIdTokenValid);
   if (!idToken) {
     console.log("idToken header is missing");
     return {
