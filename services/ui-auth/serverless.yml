@@ -199,9 +199,7 @@ resources:
                         - Ref: AWS::Region
                         - ":"
                         - Ref: AWS::AccountId
-                        - ":"
-                        - ${self:custom.api_gateway_rest_api_name}
-                        - "/*"
+                        - ":*/*"
 
                 - Effect: "Allow"
                   Action:

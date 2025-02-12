@@ -21,7 +21,7 @@ custom:
   oneMacTableName: onemac-${self:custom.stage}-one
   # userPoolId: ${self:custom.stage}-user-pool
   region: us-east-1
-  # userPoolId: ${cf:ui-auth-${self:custom.stage}.UserPoolId}
+  userPoolId: ${cf:ui-auth-${self:custom.stage}.UserPoolId}
   iamPath: ${ssm:/configuration/${self:custom.stage}/iam/path, ssm:/configuration/default/iam/path, "/"}
   iamPermissionsBoundaryPolicy: ${ssm:/configuration/${self:custom.stage}/iam/permissionsBoundaryPolicy, ssm:/configuration/default/iam/permissionsBoundaryPolicy, ""}
   emailSource: ${ssm:/configuration/${self:custom.stage}/email/cms_spa_form_from_email, ssm:/configuration/default/email/cms_spa_form_from_email, file(resources/ssm-params.yml):Resources.CmsSpaFormFromEmail.Properties.Value}
@@ -85,8 +85,8 @@ provider:
   environment:
     NODE_OPTIONS: "--enable-source-maps"
     oneMacTableName: ${self:custom.oneMacTableName}
-    # region:  ${self:custom.region}
-    # userPoolId:  ${self:custom.userPoolId}
+    region:  ${self:custom.region}
+    userPoolId:  ${self:custom.userPoolId}
     emailSource: ${self:custom.emailSource}
     reviewerEmail: ${self:custom.reviewerEmail}
     testingEmail: ${self:custom.testingEmail}
@@ -101,12 +101,12 @@ provider:
       - ${cf:aws-sdk-v2-layer-${self:custom.stage}.AwsSdkV2LambdaLayerQualifiedArn, ""}
 
 functions:
-  # tokenVerificationService:
-  #   handler: tokenVerificationService.main
-  #   role: LambdaApiRole
-  #   environment:
-  #     region: us-east-1
-  #     userPoolId:  ${self:custom.userPoolId}
+  tokenVerificationService:
+    handler: tokenVerificationService.main
+    role: LambdaApiRole
+    environment:
+      region: us-east-1
+      userPoolId:  ${self:custom.userPoolId}
 
   migrate:
     handler: migrate.main

@@ -5,18 +5,5 @@
   "main": "index.js",
   "scripts": {},
   "author": "",
-  "license": "CC0-1.0",
-  "devDependencies": {
-    "aws-sdk": "^2.752.0",  
-    "esbuild": "0.19.12",    
-    "serverless-dotenv-plugin": "^3.12.2",
-    "serverless-esbuild": "^1.48.4",
-    "serverless-offline": "^13.5.0"
-  },
-  "dependencies": {
-    "cmscommonlib": "file:../common",
-    "jsonwebtoken": "^9.0.2",
-    "jwks-rsa": "^3.1.0",
-    "jwt-decode": "^3.1.2"
-  }
+  "license": "CC0-1.0"
 }
