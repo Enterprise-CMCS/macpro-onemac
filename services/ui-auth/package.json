@@ -5,5 +5,11 @@
   "main": "index.js",
   "scripts": {},
   "author": "",
-  "license": "CC0-1.0"
+  "license": "CC0-1.0",
+  "dependencies": {
+    "cmscommonlib": "file:../common",
+    "jsonwebtoken": "^9.0.2",
+    "jwks-rsa": "^3.1.0",
+    "jwt-decode": "^3.1.2"
+  }
 }

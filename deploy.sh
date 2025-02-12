@@ -39,8 +39,8 @@ services=(
   'ui'
   'uploads'
   'layers/aws-sdk-v2-layer'
-  'ui-auth'  # Moved ui-auth to before app-api to resolve environment variable fetched by serverless in app-api 
   'app-api' 
+  'ui-auth'  
   'email'
   'one-stream'
   'seatool-sink'

@@ -1,7 +1,7 @@
 import handler from "./libs/handler-lib";
 import jwt_decode from "jwt-decode";
 import {getUser} from "./getUser";
-import { verifyIdToken } from "./tokenVerificationService";
+import { verifyIdToken } from "../ui-auth/tokenVerificationService";
 import { getUserRoleObj } from "cmscommonlib";
 
 /**

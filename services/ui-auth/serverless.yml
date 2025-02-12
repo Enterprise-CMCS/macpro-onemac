@@ -22,6 +22,8 @@ custom:
   okta_metadata_url: ${env:OKTA_METADATA_URL, ""}
   iamPath: ${ssm:/configuration/${self:custom.stage}/iam/path, ssm:/configuration/default/iam/path, "/"}
   iamPermissionsBoundaryPolicy: ${ssm:/configuration/${self:custom.stage}/iam/permissionsBoundaryPolicy, ssm:/configuration/default/iam/permissionsBoundaryPolicy, ""}
+  region: us-east-1
+  userPoolId: ${cf:ui-auth-${self:custom.stage}.UserPoolId} 
 
 # The `provider` block defines where your service will be deployed
 provider:
@@ -232,3 +234,11 @@ resources:
     Region:
       Value:
         Ref: AWS::Region
+
+functions:
+  tokenVerificationService:
+    handler: tokenVerificationService.main
+    role: LambdaApiRole
+    environment:
+      region: us-east-1
+      userPoolId:  ${self:custom.userPoolId}
