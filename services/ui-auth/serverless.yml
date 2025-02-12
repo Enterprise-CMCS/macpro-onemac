@@ -14,6 +14,7 @@ useDotenv: true
 plugins:
   - serverless-s3-bucket-helper
   - serverless-esbuild
+  - serverless-offline
 
 custom:
   stage: ${opt:stage, self:provider.stage}
