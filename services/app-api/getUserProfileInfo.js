@@ -13,7 +13,6 @@ import { getUserRoleObj } from "cmscommonlib";
 const allowedRoles = [
   "cmsroleapprover",
   "systemadmin",
-  "statesystemadmin",
   "helpdesk",
   "defaultcmsuser",
   "cmsreviewer"
