@@ -17,7 +17,6 @@ plugins:
 custom:
   stage: ${opt:stage, self:provider.stage}
   attachments_bucket_arn: ${cf:uploads-${self:custom.stage}.AttachmentsBucketArn}
-  api_gateway_rest_api_name: ${cf:app-api-${self:custom.stage}.ApiGatewayRestApiName}
   application_endpoint_url: ${cf:ui-${self:custom.stage}.ApplicationEndpointUrl}
   okta_metadata_url: ${env:OKTA_METADATA_URL, ""}
   iamPath: ${ssm:/configuration/${self:custom.stage}/iam/path, ssm:/configuration/default/iam/path, "/"}
@@ -195,9 +194,7 @@ resources:
                         - Ref: AWS::Region
                         - ":"
                         - Ref: AWS::AccountId
-                        - ":"
-                        - ${self:custom.api_gateway_rest_api_name}
-                        - "/*"
+                        - ":*/*"
 
                 - Effect: "Allow"
                   Action:

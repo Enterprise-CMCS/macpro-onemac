@@ -35,17 +35,16 @@ deploy() {
 
 install_deps
 
-# Run deploy for each folder
 services=(
   'ui'
   'uploads'
   'layers/aws-sdk-v2-layer'
-  'app-api'
+  'ui-auth'  # Moved ui-auth to before app-api to resolve environment variable fetched by serverless in app-api 
+  'app-api' 
   'email'
   'one-stream'
   'seatool-sink'
   'ui-waf-log-assoc'
-  'ui-auth'
   'ui-src'
   'admin'
 )
