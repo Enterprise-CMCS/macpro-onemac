@@ -26,8 +26,13 @@ function checkMatchingRoles(arr1, arr2) {
     for (let j = 0; j<arr2.length; j++) {
       // Check if both role and territory match
       if ((arr1[i]).territory === (arr2[j]).territory) {
-        console.log("match found")
-        return true; 
+        if((arr1[i]).status == "active" && (arr2[j]).status == "active") {
+          console.log("match found")
+          return true; 
+        } else if ((arr2[j]).status == "active" && (arr2[j]).role == "statesystemadmin") {
+          console.log("match found")
+          return true; 
+        }
       }
     }
   }
