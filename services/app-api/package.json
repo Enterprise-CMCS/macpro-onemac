@@ -14,6 +14,7 @@
   },
   "devDependencies": {
     "@types/jest": "^29.5.5",
+    "aws-sdk": "^2.752.0",
     "aws-sdk-client-mock": "^0.5.6",
     "esbuild": "^0.19.4",
     "esbuild-jest": "^0.5.0",
@@ -27,13 +28,14 @@
     "xstate": "^4.26.0"
   },
   "dependencies": {
-    "aws-sdk": "^2.752.0",
-    "@aws-sdk/client-dynamodb": "^3.454.0",
-    "@aws-sdk/lib-dynamodb": "^3.454.0",
+    "@launchdarkly/node-server-sdk": "^9.7.2",
     "cmscommonlib": "file:../common",
     "date-fns": "^2.16.1",
     "dynamodb-local": "^0.0.32",
     "joi": "^17.4.0",
+    "jsonwebtoken": "^9.0.2",
+    "jwks-rsa": "^3.1.0",
+    "jwt-decode": "^3.1.2",
     "luxon": "^1.25.0",
     "serverless-dynamodb-local": "^0.2.39",
     "uuid": "^7.0.3"

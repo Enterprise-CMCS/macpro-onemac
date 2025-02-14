@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import HomeHeader from "../components/HomeHeader";
 import HomeFooter from "../components/HomeFooter";
 import AlertBar from "../components/AlertBar";
 import { MACCard } from "../components/MACCard";
-
+import NotificationApi from "../utils/NotificationApi";
+import { NotificationCard } from "../components/NotificationCard";
+import { useFlags } from "launchdarkly-react-client-sdk";
 const stateSubmissionTitle = "How to create a submission";
 const stateSubmissionsList = [
   {
@@ -149,11 +151,39 @@ const renderPaperSubmissionInfo = (renderSubmissionSteps) => {
  */
 export default function Home() {
   const location = useLocation();
+  const { mmdlNotification } = useFlags();
+  const [systemNotifications, setSystemNotifications] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      // mmdlNotification: flag for all notifications
+      if (mmdlNotification) {
+        const notifications =
+          await NotificationApi.getActiveSystemNotifications();
+        if (notifications && notifications.length)
+          setSystemNotifications([...notifications]);
+        else {
+          console.log(
+            "Either no notifications or an error occured",
+            notifications
+          );
+        }
+      }
+    })();
+  }, [mmdlNotification]);
 
   return (
     <>
       <HomeHeader />
       <AlertBar alertCode={location?.state?.passCode} />
+      {mmdlNotification && systemNotifications.length !== 0 && (
+        <div className="home-content-container">
+          <h2>New and Notable</h2>
+          {systemNotifications.map((notification) => (
+            <NotificationCard key={notification.sk} {...notification} />
+          ))}
+        </div>
+      )}
 
       <div className="home-content-container">
         <h1>State Users</h1>

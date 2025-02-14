@@ -59,6 +59,8 @@ jobs:
       name: ${{ startsWith(github.ref_name, 'snyk-') && 'snyk' || github.ref_name }}
       url: "https://onemac.cms.gov"
     steps:
+      - name: Check GITHUB_REF
+        run: echo "GITHUB_REF is $GITHUB_REF"
       - name: set branch_name
         run: echo "branch_name=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
       - name: Check branch name is a legal serverless stage name
@@ -110,6 +112,11 @@ jobs:
         with:
           role-to-assume: ${{ env.AWS_OIDC_ROLE_TO_ASSUME }}
           aws-region: ${{ env.AWS_DEFAULT_REGION }}
+      - name: Fetch SSM Parameter
+        id: fetch_ssm
+        run: |
+          LdClientId=$(aws ssm get-parameter --name "/configuration/onemacmmdl/LdClientId" --query "Parameter.Value" --output text)
+          echo "REACT_APP_LD_CLIENT_ID=${LdClientId}" >> $GITHUB_ENV
       - uses: actions/setup-node@v3
         with:
           node-version: "20.x"
@@ -312,7 +319,7 @@ jobs:
             Profile_View_CMS_User_Denied.spec.feature,
             Profile_View_CMS_User_Revoked.spec.feature,
             Profile_View_Helpdesk_User.spec.feature,
-            Profile_View_Mixed_Case_Emails.spec.feature,
+            Profile_View_Remove_Email_From_URL.spec.feature,
             Profile_View_State_Submitter.spec.feature,
             Profile_View_State_System_Admin.spec.feature,
             Request_A_Role_Change_As_CMS_Read_Only.spec.feature,

@@ -2,7 +2,7 @@ import React, { useCallback, useMemo, useState, useEffect } from "react";
 import { Auth } from "aws-amplify";
 import { set } from "lodash";
 
-import { AppContextValue } from "./domain-types";
+import { AppContextValue, NotificationType } from "./domain-types";
 import { AppContext } from "./libs/contextLib";
 import { devUsers } from "./libs/devUsers";
 import UserDataApi from "./utils/UserDataApi";
@@ -17,6 +17,11 @@ import {
 import IdleTimerWrapper from "./components/IdleTimerWrapper";
 import { ConfirmationDialog } from "./components/ConfirmationDialog";
 
+import NotificationBanner from "./components/NotificationBanner";
+import NotificationsApi from "./utils/NotificationApi";
+import { LOCAL_STORAGE_USERNOTIFICATIONS } from "./utils/StorageKeys";
+import { useFlags } from "launchdarkly-react-client-sdk";
+
 const DEFAULT_AUTH_STATE: Omit<
   AppContextValue,
   "setUserInfo" | "updatePhoneNumber" | "confirmAction"
@@ -30,8 +35,11 @@ const DEFAULT_AUTH_STATE: Omit<
   activeTerritories: null,
 };
 
-export function App() {
+const App = () => {
   const [authState, setAuthState] = useState(DEFAULT_AUTH_STATE);
+  const [notifications, setNotifications] = useState<NotificationType[]>([]);
+  // mmdlNotification = all notifications
+  const { mmdlNotification } = useFlags();
   const [confirmationDialog, setConfirmationDialog] = useState<{
     heading: string;
     acceptText: string;
@@ -99,7 +107,6 @@ export function App() {
               role === "onemac-state-user" || role === "onemac-helpdesk"
           )
           .toString();
-
       setAuthState({
         ...DEFAULT_AUTH_STATE,
         isAuthenticating: false,
@@ -132,13 +139,59 @@ export function App() {
           error
         );
       }
-
       setAuthState({
         ...DEFAULT_AUTH_STATE,
         isAuthenticating: false,
       });
     }
   }, []);
+
+  useEffect(() => {
+    // On initial load of the App, try to set the user info.
+    // It will capture info if they are logged in from a previous session.
+    setUserInfo();
+  }, [setUserInfo]);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        if (authState.isAuthenticated) {
+          const email: any = authState.userProfile.email;
+
+          let notifications: NotificationType[] = [];
+          // if notification flag is on, find and display notifications otherwise keep empty array
+          if (mmdlNotification) {
+            // Check local storage for notifications
+            const storedNotifications = localStorage.getItem(
+              LOCAL_STORAGE_USERNOTIFICATIONS
+            );
+            if (
+              storedNotifications !== undefined &&
+              storedNotifications?.length
+            ) {
+              setNotifications(JSON.parse(storedNotifications));
+            } else {
+              // get the notifications & set local storage
+              notifications = await NotificationsApi.createUserNotifications(
+                email
+              );
+              // set the notifications: Needs to be stored locally to persist on reload
+              if (notifications) {
+                localStorage.setItem(
+                  LOCAL_STORAGE_USERNOTIFICATIONS,
+                  JSON.stringify(notifications)
+                );
+                setNotifications(notifications);
+              }
+            }
+          }
+        }
+      } catch (error) {
+        console.log("There was an error retreiving notifications.", error);
+      }
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [authState.isAuthenticated]);
 
   useEffect(() => {
     // On initial load of the App, try to set the user info.
@@ -191,6 +244,13 @@ export function App() {
     <AppContext.Provider value={contextValue}>
       <IdleTimerWrapper />
       <div className="header-and-content">
+        {notifications.map((n: NotificationType) => (
+          <NotificationBanner
+            key={n.sk}
+            {...n}
+            userEmail={authState.userProfile.email ?? ""}
+          />
+        ))}
         <Header />
         <main id="main">
           <Routes />
@@ -216,4 +276,5 @@ export function App() {
       <Footer />
     </AppContext.Provider>
   );
-}
+};
+export default App;

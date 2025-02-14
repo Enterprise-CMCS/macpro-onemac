@@ -23,3 +23,4 @@ tests/cypress/screenshots
 tests/cypress/fixtures/packageDashboardSPAIDs.json
 tests/cypress/fixtures/packageDashboardWaiverNumbers.json
 tests/cypress/fixtures/savedID.json
+/services/layers/aws-sdk-v2-layer/.serverless

@@ -17,10 +17,11 @@ plugins:
   - serverless-iam-helper
   - serverless-s3-bucket-helper
 custom:
-  esbuild:
-    exclude: []
   stage: ${opt:stage, self:provider.stage}
   oneMacTableName: onemac-${self:custom.stage}-one
+  cognitoUserPool: ${self:custom.stage}-user-pool
+  region: us-east-1
+  userPoolId: ${cf:ui-auth-${self:custom.stage}.UserPoolId}
   iamPath: ${ssm:/configuration/${self:custom.stage}/iam/path, ssm:/configuration/default/iam/path, "/"}
   iamPermissionsBoundaryPolicy: ${ssm:/configuration/${self:custom.stage}/iam/permissionsBoundaryPolicy, ssm:/configuration/default/iam/permissionsBoundaryPolicy, ""}
   emailSource: ${ssm:/configuration/${self:custom.stage}/email/cms_spa_form_from_email, ssm:/configuration/default/email/cms_spa_form_from_email, file(resources/ssm-params.yml):Resources.CmsSpaFormFromEmail.Properties.Value}
@@ -35,6 +36,7 @@ custom:
   applicationEndpoint: ${cf:ui-${self:custom.stage}.ApplicationEndpointUrl, "onemac.cms.gov"}
   attachmentsBucket: ${cf:uploads-${self:custom.stage}.AttachmentsBucketName}
   attachmentsBucketArn: ${cf:uploads-${self:custom.stage}.AttachmentsBucketArn}
+  launchDarklySdkKey: ${ssm:/configuration/${self:custom.stage}/launchdarkly/sdkkey, ssm:/configuration/default/launchdarkly/sdkkey}
   warmupEnabled:
     production: true
     development: false
@@ -83,17 +85,29 @@ provider:
   environment:
     NODE_OPTIONS: "--enable-source-maps"
     oneMacTableName: ${self:custom.oneMacTableName}
+    region:  ${self:custom.region}
+    userPoolId:  ${self:custom.userPoolId}
     emailSource: ${self:custom.emailSource}
     reviewerEmail: ${self:custom.reviewerEmail}
     testingEmail: ${self:custom.testingEmail}
     applicationEndpoint: ${self:custom.applicationEndpoint}
     attachmentsBucket: ${self:custom.attachmentsBucket}
     configurationSetName: 'email-${self:custom.stage}-configuration'
+    launchDarklySdkKey: ${self:custom.launchDarklySdkKey}
   tracing:
     apiGateway: true
     lambda: true
+  layers:
+      - ${cf:aws-sdk-v2-layer-${self:custom.stage}.AwsSdkV2LambdaLayerQualifiedArn, ""}
 
 functions:
+  tokenVerificationService:
+    handler: tokenVerificationService.main
+    role: LambdaApiRole
+    environment:
+      region: us-east-1
+      userPoolId:  ${self:custom.userPoolId}
+
   migrate:
     handler: migrate.main
     role: LambdaApiRole
@@ -571,6 +585,16 @@ functions:
           cors: true
           authorizer: aws_iam
 
+  getUserProfileInfo:
+    handler: getUserProfileInfo.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: getUserProfileInfo
+          method: post
+          cors: true
+          authorizer: aws_iam
+
   getMyUserList:
     handler: getMyUserList.main
     role: LambdaApiRole
@@ -635,7 +659,47 @@ functions:
           cors: true
           authorizer: aws_iam
 
+  getActiveSystemNotifications:
+    handler: notification/getActiveSystemNotifications.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: getActiveSystemNotifications  # The API path
+          method: get
+          cors: true
+
+  getActiveUserNotifications:
+    handler: notification/getActiveUserNotifications.main # Path to your function handler
+    role: LambdaApiRole # Ensure the role has permissions for DynamoDB
+    events:
+      - http:
+          path: getActiveUserNotifications/{userId} # Define your API path
+          method: get
+          cors: true
+          authorizer: aws_iam
+
+  dismissUserNotification:
+    handler: notification/dismissUserNotification.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: dismissNotification/{userId}/{notificationId}
+          method: patch
+          cors: true
+          authorizer: aws_iam
+
+  createUserNotifications:
+    handler: notification/createUserNotifications.main 
+    role: LambdaApiRole
+    events:
+      - http:
+          path: createUserNotifications/{userId}
+          method: post
+          cors: true
+          authorizer: aws_iam
+
 resources:
+  # Other resource files
   - ${file(resources/base.yml)}
 
   # Uploads S3 bucket
@@ -649,6 +713,7 @@ resources:
 
   # SSM Parameters
   - ${file(resources/ssm-params.yml)}
-  
+
   # CloudWatch Alarms
   - ${file(resources/cloudwatch.yml)}
+
