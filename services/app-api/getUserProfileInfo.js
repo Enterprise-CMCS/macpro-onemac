@@ -27,7 +27,13 @@ function checkMatchingRoles(arr1, arr2) {
       // Check if both role and territory match
       if ((arr1[i]).territory === (arr2[j]).territory) {
         console.log("match found")
-        return true; 
+        if((arr1[i]).status == "active" && (arr2[j]).status == "active") {
+          return true; 
+        } else if ((arr2[j]).status != "active") {
+          return false; 
+        } else if ((arr2[j]).status == "active" && (arr2[j]).role == "statesystemadmin") {
+          return true; 
+        }
       }
     }
   }
