@@ -8,7 +8,12 @@ import { MACCard } from "./MACCard";
 
 type FileListProps = {
   heading: ReactNode;
-  uploadList: { filename: string; title: string; url: string }[];
+  uploadList: {
+    filename: string;
+    title: string;
+    url: string;
+    virusScanStatus?: string;
+  }[];
   zipId?: string;
   infoText?: string;
 };
@@ -23,10 +28,14 @@ export default function FileList({
   infoText,
 }: FileListProps) {
   const onDownloadAll = useCallback(async () => {
-    const downloadList = (await Promise.all(
-      uploadList
-        .map(async ({ filename, title, url }) => {
+    const downloadList = (
+      await Promise.all(
+        uploadList.map(async (upload) => {
+          const { filename, title, url } = upload;
           try {
+            if (upload.url === null || upload.virusScanStatus !== "CLEAN") {
+              return;
+            }
             const resp = await fetch(url);
             if (!resp.ok) throw resp;
             return {
@@ -38,8 +47,9 @@ export default function FileList({
             console.error(`Failed to download file: ${filename} ${url}`, e);
           }
         })
-        .filter(Boolean)
-    )) as { filename: string; title: string; contents: Blob }[];
+      )
+    ).filter(Boolean) as { filename: string; title: string; contents: Blob }[];
+    console.log("downloadList", downloadList);
     const zip = new JSZip();
     for (const { filename, title, contents } of downloadList) {
       zip.file(filename, contents, { comment: title });
@@ -58,20 +68,37 @@ export default function FileList({
         </div>
       )}
       {infoText && <div className="choice-info">{infoText}</div>}
-      <div className="file-list-dl-button">
-        <Button onClick={onDownloadAll} variation="primary" id={"dl_" + zipId}>
-          <FontAwesomeIcon icon={faDownload} /> Download All
-        </Button>
-      </div>
+      {uploadList.some((upload) => upload.url !== null) && (
+        <div className="file-list-dl-button">
+          <Button
+            onClick={onDownloadAll}
+            variation="primary"
+            id={"dl_" + zipId}
+          >
+            <FontAwesomeIcon icon={faDownload} /> Download All
+          </Button>
+        </div>
+      )}
       <MACCard childContainerClassName="ds-u-padding--0">
         {uploadList && (
           <ul className="mac-fieldset-options-list">
             {uploadList.map((upload, index) => (
               <li className="choice-list-item" key={index}>
                 <h3>{upload.title}</h3>
-                <a href={upload.url} target="_blank" rel="noopener noreferrer">
-                  {upload.filename}
-                </a>
+                {upload.url ? (
+                  <a
+                    href={upload.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {upload.filename}
+                  </a>
+                ) : (
+                  <span>
+                    {upload.filename} -{" "}
+                    {upload.virusScanStatus || "Pending Scan"}
+                  </span>
+                )}
               </li>
             ))}
           </ul>
