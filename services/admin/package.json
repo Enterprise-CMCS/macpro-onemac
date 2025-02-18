@@ -8,7 +8,7 @@
     "esbuild": "^0.19.4",
     "serverless-dotenv-plugin": "^3.12.2",
     "serverless-esbuild": "^1.48.4",
-    "serverless-offline": "^13.5.0"
+    "serverless-offline": "^14.4.0"
   },
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.43.0",

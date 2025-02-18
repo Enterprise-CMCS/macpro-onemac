@@ -23,7 +23,7 @@
     "serverless-dotenv-plugin": "^3.12.2",
     "serverless-esbuild": "^1.48.4",
     "serverless-iam-helper": "file:../../plugins/serverless-iam-helper",
-    "serverless-offline": "^13.5.0",
+    "serverless-offline": "^14.4.0",
     "serverless-plugin-warmup": "^7.1.0",
     "xstate": "^4.26.0"
   },
@@ -31,13 +31,13 @@
     "@launchdarkly/node-server-sdk": "^9.7.2",
     "cmscommonlib": "file:../common",
     "date-fns": "^2.16.1",
-    "dynamodb-local": "^0.0.32",
+    "dynamodb-local": "^0.0.35",
     "joi": "^17.4.0",
     "jsonwebtoken": "^9.0.2",
     "jwks-rsa": "^3.1.0",
     "jwt-decode": "^3.1.2",
     "luxon": "^1.25.0",
-    "serverless-dynamodb-local": "^0.2.39",
+    "serverless-dynamodb-local": "^1.0.2",
     "uuid": "^7.0.3"
   },
   "jest": {
