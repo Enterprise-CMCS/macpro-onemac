@@ -7,7 +7,9 @@ const handler = async (event) => {
         const user = await getUser(userEmail);
         const roles = [];
         for (const role of user.roleList) {
-            roles.push(role.role)
+            if(role.status == "active") {
+                roles.push(role.role)
+            }
         }
         event.response = event.response || {};
         event.response.claimsOverrideDetails = event.response.claimsOverrideDetails || {};
